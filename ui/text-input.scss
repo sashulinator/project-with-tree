@@ -1,28 +1,101 @@
+/* Static */
 .TextInput {
   display: flex;
   justify-content: center;
   align-items: center;
   width: 100%;
-  background-color: rgba(255, 255, 255, 0.7);
-  border-width: 2px;
   border-style: solid;
-  border-color: var(--gr-text-input-border-color, transparent);
-  border-radius: 0.4rem;
-  transition: border-color 0.3s;
-
-  &.--isFocused {
-    border-width: 2px;
-    border-style: solid;
-    border-color: var(--gr-text-input-border-color--focused, var(--primary));
-  }
 
   & input {
+    height: 100%;
     background: transparent;
-    color: rgba(0, 0, 0, 0.8);
-    height: 2.4rem;
     width: 100%;
     border: 0px;
     outline: none;
-    padding: 0 0.8rem;
+  }
+}
+
+/* Variables */
+.TextInput {
+  background-color: var(--text-input__bg);
+  border-radius: var(--text-input__border-radius);
+  border-width: var(--text-input__border-width);
+  border-color: var(--text-input__border-color);
+  transition: var(--text-input__transition);
+  height: var(--text-input__height);
+  outline-width: var(--text-input__outline-width);
+  outline-color: var(--text-input__outline-color);
+  outline-style: var(--text-input__outline-style);
+  & input {
+    line-height: var(--text-input__line-height);
+    font-size: var(--text-input__font-size);
+    padding: 0 var(--text-input__horizontal-padding);
+    color: var(--text-input__color);
+    transition: var(--text-input__transition);
+  }
+}
+
+/* States */
+.TextInput:hover {
+  border-width: var(--text-input__border-width--hovered, var(--text-input__border-width));
+  border-color: var(--text-input__border-color--hovered, var(--text-input__border-color));
+  transition: var(--text-input__transition--hovered, var(--text-input__transition));
+  background-color: var(--text-input__bg--hovered, var(--text-input__bg));
+  outline-width: var(--text-input__outline-width--hovered, var(--text-input__outline-width));
+  outline-color: var(--text-input__outline-color--hovered, var(--text-input__outline-color));
+  outline-style: var(--text-input__outline-style--hovered, var(--text-input__outline-color));
+  & input {
+    color: var(--text-input__color--hovered, var(--text-input__color));
+    transition: var(--text-input__transition--hovered, var(--text-input__transition));
+  }
+}
+
+.TextInput.--focused {
+  background-color: var(--text-input__bg--focused, var(--text-input__bg));
+  border-width: var(--text-input__border-width--focused, var(--text-input__border-width));
+  border-color: var(--text-input__border-color--focused, var(--text-input__border-color));
+  transition: var(--text-input__transition--focused, var(--text-input__transition));
+  outline-width: var(--text-input__outline-width--focused, var(--text-input__outline-width));
+  outline-color: var(--text-input__outline-color--focused, var(--text-input__outline-color));
+  outline-style: var(--text-input__outline-style--focused, var(--text-input__outline-style));
+  & input {
+    color: var(--text-input__color--focused, var(--text-input__color));
+    transition: var(--text-input__transition--focused, var(--text-input__transition));
+  }
+}
+
+.TextInput.--disabled {
+  background-color: var(--text-input__bg--disabled, var(--text-input__bg));
+  border-width: var(--text-input__border-width--disabled, var(--text-input__border-width));
+  border-color: var(--text-input__border-color--disabled, var(--text-input__border-color));
+  transition: var(--text-input__transition--disabled, var(--text-input__transition));
+  & input {
+    color: var(--text-input__color--disabled, var(--text-input__color));
+    transition: var(--text-input__transition--disabled, var(--text-input__transition));
+  }
+}
+
+.TextInput.--readonly {
+  background-color: var(--text-input__bg--readonly, var(--text-input__bg));
+  border-width: var(--text-input__border-width--readonly, var(--text-input__border-width));
+  border-color: var(--text-input__border-color--readonly, var(--text-input__border-color));
+  transition: var(--text-input__transition--readonly, var(--text-input__transition));
+  & input {
+    color: var(--text-input__color--readonly, var(--text-input__color));
+    transition: var(--text-input__transition--readonly, var(--text-input__transition));
+  }
+}
+
+// Error
+
+.TextInput.--error {
+  background-color: var(--text-input__bg--error, var(--text-input__bg));
+  border-width: var(--text-input__border-width--error, var(--text-input__border-width));
+  border-color: var(--text-input__border-color--error, var(--text-input__border-color));
+  transition: var(--text-input__transition--error, var(--text-input__transition));
+  outline-color: var(--text-input__outline-color--error, var(--text-input__outline-color));
+  & input {
+    color: var(--text-input__color--error, var(--text-input__color));
+    transition: var(--text-input__transition--error, var(--text-input__transition));
   }
 }

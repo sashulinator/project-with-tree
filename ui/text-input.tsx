@@ -20,12 +20,12 @@ const TextInput = forwardRef<HTMLInputElement, TextInputProps>(function TextInpu
     <div
       {...props.root}
       className={c(
-        props.root?.className,
         'TextInput',
-        isFocused && '--isFocused',
+        isFocused && '--focused',
         props.disabled && '--disabled',
         props.isError && '--error',
-        props.readOnly && '--readOnly'
+        props.readOnly && '--readonly',
+        props.root?.className
       )}
     >
       {props?.left}
@@ -37,7 +37,6 @@ const TextInput = forwardRef<HTMLInputElement, TextInputProps>(function TextInpu
   // Private
 
   function handleOnFocus(e: React.FocusEvent<HTMLInputElement, Element>) {
-    console.log('allo')
     setFocused()
     props.onFocus?.(e)
   }
