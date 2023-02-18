@@ -80,6 +80,7 @@
   border-width: var(--text-input__border-width--readonly, var(--text-input__border-width));
   border-color: var(--text-input__border-color--readonly, var(--text-input__border-color));
   transition: var(--text-input__transition--readonly, var(--text-input__transition));
+  outline-color: var(--text-input__outline-color--readonly, var(--text-input__outline-color));
   & input {
     color: var(--text-input__color--readonly, var(--text-input__color));
     transition: var(--text-input__transition--readonly, var(--text-input__transition));

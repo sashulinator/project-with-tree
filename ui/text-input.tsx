@@ -15,21 +15,23 @@ interface TextInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
 
 const TextInput = forwardRef<HTMLInputElement, TextInputProps>(function TextInput(props, ref): JSX.Element {
   const [isFocused, setFocused, unsetFocused] = useBoolean(false)
+  const { className, isError, root, ...restProps } = props
 
   return (
     <div
-      {...props.root}
+      {...root}
       className={c(
         'TextInput',
         isFocused && '--focused',
         props.disabled && '--disabled',
-        props.isError && '--error',
+        isError && '--error',
         props.readOnly && '--readonly',
-        props.root?.className
+        root?.className,
+        className
       )}
     >
       {props?.left}
-      <input {...props} ref={ref} onFocus={handleOnFocus} onBlur={handleOnBlur} />
+      <input {...restProps} ref={ref} onFocus={handleOnFocus} onBlur={handleOnBlur} />
       {props?.right}
     </div>
   )

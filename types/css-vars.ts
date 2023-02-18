@@ -3,11 +3,11 @@ import { ToStringable } from '~/utils/core/types/to-stringable'
 // eslint-disable-next-line import/no-unused-modules
 export interface TextInputCSSVars {
   /* Sizable properties */
-  'text-input__font-size': ToStringable
-  'text-input__height': ToStringable
-  'text-input__line-height': ToStringable
-  'text-input__horizontal-padding': ToStringable
-  'text-input__border-radius': ToStringable
+  'text-input__font-size'?: ToStringable
+  'text-input__height'?: ToStringable
+  'text-input__line-height'?: ToStringable
+  'text-input__horizontal-padding'?: ToStringable
+  'text-input__border-radius'?: ToStringable
 
   'text-input__font-size--s'?: ToStringable
   'text-input__height--s'?: ToStringable
@@ -22,11 +22,11 @@ export interface TextInputCSSVars {
   'text-input__border-radius--l'?: ToStringable
 
   /* Statable properties */
-  'text-input__border-width': ToStringable
-  'text-input__bg': ToStringable
-  'text-input__border-color': ToStringable
-  'text-input__transition': ToStringable
-  'text-input__color': ToStringable
+  'text-input__border-width'?: ToStringable
+  'text-input__bg'?: ToStringable
+  'text-input__border-color'?: ToStringable
+  'text-input__transition'?: ToStringable
+  'text-input__color'?: ToStringable
   'text-input__outline-width'?: ToStringable
   'text-input__outline-color'?: ToStringable
   'text-input__outline-style'?: ToStringable
@@ -57,6 +57,7 @@ export interface TextInputCSSVars {
   'text-input__border-color--readonly'?: ToStringable
   'text-input__transition--readonly'?: ToStringable
   'text-input__color--readonly'?: ToStringable
+  'text-input__outline-color--readonly'?: ToStringable
 
   'text-input__bg--error'?: ToStringable
   'text-input__border-color--error'?: ToStringable
