@@ -1,4 +1,4 @@
-import './text-input.scss'
+import './text-input.css'
 
 import c from 'clsx'
 import { forwardRef } from 'react'
@@ -6,8 +6,7 @@ import { forwardRef } from 'react'
 import { useBoolean } from '~/utils/hooks/boolean'
 
 interface TextInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
-  children?: React.ReactNode
-  root?: React.HTMLAttributes<HTMLDivElement>
+  rootProps?: React.HTMLAttributes<HTMLDivElement>
   isError?: boolean
   left?: React.ReactNode
   right?: React.ReactNode
@@ -15,23 +14,23 @@ interface TextInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
 
 const TextInput = forwardRef<HTMLInputElement, TextInputProps>(function TextInput(props, ref): JSX.Element {
   const [isFocused, setFocused, unsetFocused] = useBoolean(false)
-  const { root, isError, ...restProps } = props
+  const { rootProps, isError, left, right, ...restProps } = props
 
   return (
     <div
-      {...root}
+      {...rootProps}
       className={c(
         'TextInput',
         isFocused && '--focused',
-        props.disabled && '--disabled',
         isError && '--error',
+        props.disabled && '--disabled',
         props.readOnly && '--readonly',
-        root?.className
+        rootProps?.className
       )}
     >
-      {props?.left}
+      {left}
       <input {...restProps} ref={ref} onFocus={handleOnFocus} onBlur={handleOnBlur} />
-      {props?.right}
+      {right}
     </div>
   )
 
