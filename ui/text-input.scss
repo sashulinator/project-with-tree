@@ -17,86 +17,86 @@
 
 /* Variables */
 .TextInput {
-  background-color: var(--text-input__bg);
+  background-color: var(--textInput_bg);
   border-radius: var(--text-input__border-radius);
-  border-width: var(--text-input__border-width);
-  border-color: var(--text-input__border-color);
-  transition: var(--text-input__transition);
+  border-width: var(--textInput_borderWidth);
+  border-color: var(--textInput_borderColor);
+  transition: var(--textInput_transition);
   height: var(--text-input__height);
-  outline-width: var(--text-input__outline-width);
-  outline-color: var(--text-input__outline-color);
-  outline-style: var(--text-input__outline-style);
+  outline-width: var(--textInput_outlineWidth);
+  outline-color: var(--textInput_outlineColor);
+  outline-style: var(--textInput_outlineStyle);
   & input {
     line-height: var(--text-input__line-height);
     font-size: var(--text-input__font-size);
     padding: 0 var(--text-input__horizontal-padding);
-    color: var(--text-input__color);
-    transition: var(--text-input__transition);
+    color: var(--textInput_color);
+    transition: var(--textInput_transition);
   }
 }
 
 /* States */
 .TextInput:hover {
-  border-width: var(--text-input__border-width--hovered, var(--text-input__border-width));
-  border-color: var(--text-input__border-color--hovered, var(--text-input__border-color));
-  transition: var(--text-input__transition--hovered, var(--text-input__transition));
-  background-color: var(--text-input__bg--hovered, var(--text-input__bg));
-  outline-width: var(--text-input__outline-width--hovered, var(--text-input__outline-width));
-  outline-color: var(--text-input__outline-color--hovered, var(--text-input__outline-color));
-  outline-style: var(--text-input__outline-style--hovered, var(--text-input__outline-color));
+  border-width: var(--textInput_borderWidth--hovered, var(--textInput_borderWidth));
+  border-color: var(--textInput_borderColor--hovered, var(--textInput_borderColor));
+  transition: var(--textInput_transition--hovered, var(--textInput_transition));
+  background-color: var(--textInput_bg--hovered, var(--textInput_bg));
+  outline-width: var(--textInput_outlineWidth--hovered, var(--textInput_outlineWidth));
+  outline-color: var(--textInput_outlineColor--hovered, var(--textInput_outlineColor));
+  outline-style: var(--textInput_outlineStyle--hovered, var(--textInput_outlineColor));
   & input {
-    color: var(--text-input__color--hovered, var(--text-input__color));
-    transition: var(--text-input__transition--hovered, var(--text-input__transition));
+    color: var(--textInput_color--hovered, var(--textInput_color));
+    transition: var(--textInput_transition--hovered, var(--textInput_transition));
   }
 }
 
 .TextInput.--focused {
-  background-color: var(--text-input__bg--focused, var(--text-input__bg));
-  border-width: var(--text-input__border-width--focused, var(--text-input__border-width));
-  border-color: var(--text-input__border-color--focused, var(--text-input__border-color));
-  transition: var(--text-input__transition--focused, var(--text-input__transition));
-  outline-width: var(--text-input__outline-width--focused, var(--text-input__outline-width));
-  outline-color: var(--text-input__outline-color--focused, var(--text-input__outline-color));
-  outline-style: var(--text-input__outline-style--focused, var(--text-input__outline-style));
+  background-color: var(--textInput_bg--focused, var(--textInput_bg));
+  border-width: var(--textInput_borderWidth--focused, var(--textInput_borderWidth));
+  border-color: var(--textInput_borderColor--focused, var(--textInput_borderColor));
+  transition: var(--textInput_transition--focused, var(--textInput_transition));
+  outline-width: var(--textInput_outlineWidth--focused, var(--textInput_outlineWidth));
+  outline-color: var(--textInput_outlineColor--focused, var(--textInput_outlineColor));
+  outline-style: var(--textInput_outlineStyle--focused, var(--textInput_outlineStyle));
   & input {
-    color: var(--text-input__color--focused, var(--text-input__color));
-    transition: var(--text-input__transition--focused, var(--text-input__transition));
+    color: var(--textInput_color--focused, var(--textInput_color));
+    transition: var(--textInput_transition--focused, var(--textInput_transition));
   }
 }
 
 .TextInput.--disabled {
-  background-color: var(--text-input__bg--disabled, var(--text-input__bg));
-  border-width: var(--text-input__border-width--disabled, var(--text-input__border-width));
-  border-color: var(--text-input__border-color--disabled, var(--text-input__border-color));
-  transition: var(--text-input__transition--disabled, var(--text-input__transition));
+  background-color: var(--textInput_bg--disabled, var(--textInput_bg));
+  border-width: var(--textInput_borderWidth--disabled, var(--textInput_borderWidth));
+  border-color: var(--textInput_borderColor--disabled, var(--textInput_borderColor));
+  transition: var(--textInput_transition--disabled, var(--textInput_transition));
   & input {
-    color: var(--text-input__color--disabled, var(--text-input__color));
-    transition: var(--text-input__transition--disabled, var(--text-input__transition));
+    color: var(--textInput_color--disabled, var(--textInput_color));
+    transition: var(--textInput_transition--disabled, var(--textInput_transition));
   }
 }
 
 .TextInput.--readonly {
-  background-color: var(--text-input__bg--readonly, var(--text-input__bg));
-  border-width: var(--text-input__border-width--readonly, var(--text-input__border-width));
-  border-color: var(--text-input__border-color--readonly, var(--text-input__border-color));
-  transition: var(--text-input__transition--readonly, var(--text-input__transition));
-  outline-color: var(--text-input__outline-color--readonly, var(--text-input__outline-color));
+  background-color: var(--textInput_bg--readonly, var(--textInput_bg));
+  border-width: var(--textInput_borderWidth--readonly, var(--textInput_borderWidth));
+  border-color: var(--textInput_borderColor--readonly, var(--textInput_borderColor));
+  transition: var(--textInput_transition--readonly, var(--textInput_transition));
+  outline-color: var(--textInput_outlineColor--readonly, var(--textInput_outlineColor));
   & input {
-    color: var(--text-input__color--readonly, var(--text-input__color));
-    transition: var(--text-input__transition--readonly, var(--text-input__transition));
+    color: var(--textInput_color--readonly, var(--textInput_color));
+    transition: var(--textInput_transition--readonly, var(--textInput_transition));
   }
 }
 
 // Error
 
 .TextInput.--error {
-  background-color: var(--text-input__bg--error, var(--text-input__bg));
-  border-width: var(--text-input__border-width--error, var(--text-input__border-width));
-  border-color: var(--text-input__border-color--error, var(--text-input__border-color));
-  transition: var(--text-input__transition--error, var(--text-input__transition));
-  outline-color: var(--text-input__outline-color--error, var(--text-input__outline-color));
+  background-color: var(--textInput_bg--error, var(--textInput_bg));
+  border-width: var(--textInput_borderWidth--error, var(--textInput_borderWidth));
+  border-color: var(--textInput_borderColor--error, var(--textInput_borderColor));
+  transition: var(--textInput_transition--error, var(--textInput_transition));
+  outline-color: var(--textInput_outlineColor--error, var(--textInput_outlineColor));
   & input {
-    color: var(--text-input__color--error, var(--text-input__color));
-    transition: var(--text-input__transition--error, var(--text-input__transition));
+    color: var(--textInput_color--error, var(--textInput_color));
+    transition: var(--textInput_transition--error, var(--textInput_transition));
   }
 }

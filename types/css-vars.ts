@@ -22,46 +22,46 @@ export interface TextInputCSSVars {
   'text-input__border-radius--l'?: ToStringable
 
   /* Statable properties */
-  'text-input__border-width'?: ToStringable
-  'text-input__bg'?: ToStringable
-  'text-input__border-color'?: ToStringable
-  'text-input__transition'?: ToStringable
-  'text-input__color'?: ToStringable
-  'text-input__outline-width'?: ToStringable
-  'text-input__outline-color'?: ToStringable
-  'text-input__outline-style'?: ToStringable
+  textInput_borderWidth?: ToStringable
+  textInput_bg?: ToStringable
+  textInput_borderColor?: ToStringable
+  textInput_transition?: ToStringable
+  textInput_color?: ToStringable
+  textInput_outlineWidth?: ToStringable
+  textInput_outlineColor?: ToStringable
+  textInput_outlineStyle?: ToStringable
 
-  'text-input__bg--hovered'?: ToStringable
-  'text-input__border-color--hovered'?: ToStringable
-  'text-input__transition--hovered'?: ToStringable
-  'text-input__color--hovered'?: ToStringable
-  'text-input__outline-width--hovered'?: ToStringable
-  'text-input__outline-color--hovered'?: ToStringable
-  'text-input__outline-style--hovered'?: ToStringable
+  'textInput_bg--hovered'?: ToStringable
+  'textInput_borderColor--hovered'?: ToStringable
+  'textInput_transition--hovered'?: ToStringable
+  'textInput_color--hovered'?: ToStringable
+  'textInput_outlineWidth--hovered'?: ToStringable
+  'textInput_outlineColor--hovered'?: ToStringable
+  'textInput_outlineStyle--hovered'?: ToStringable
 
-  'text-input__border-width--focused'?: ToStringable
-  'text-input__bg--focused'?: ToStringable
-  'text-input__border-color--focused'?: ToStringable
-  'text-input__transition--focused'?: ToStringable
-  'text-input__color--focused'?: ToStringable
-  'text-input__outline-width--focused'?: ToStringable
-  'text-input__outline-color--focused'?: ToStringable
-  'text-input__outline-style--focused'?: ToStringable
+  'textInput_borderWidth--focused'?: ToStringable
+  'textInput_bg--focused'?: ToStringable
+  'textInput_borderColor--focused'?: ToStringable
+  'textInput_transition--focused'?: ToStringable
+  'textInput_color--focused'?: ToStringable
+  'textInput_outlineWidth--focused'?: ToStringable
+  'textInput_outlineColor--focused'?: ToStringable
+  'textInput_outlineStyle--focused'?: ToStringable
 
-  'text-input__bg--disabled'?: ToStringable
-  'text-input__border-color--disabled'?: ToStringable
-  'text-input__transition--disabled'?: ToStringable
-  'text-input__color--disabled'?: ToStringable
+  'textInput_bg--disabled'?: ToStringable
+  'textInput_borderColor--disabled'?: ToStringable
+  'textInput_transition--disabled'?: ToStringable
+  'textInput_color--disabled'?: ToStringable
 
-  'text-input__bg--readonly'?: ToStringable
-  'text-input__border-color--readonly'?: ToStringable
-  'text-input__transition--readonly'?: ToStringable
-  'text-input__color--readonly'?: ToStringable
-  'text-input__outline-color--readonly'?: ToStringable
+  'textInput_bg--readonly'?: ToStringable
+  'textInput_borderColor--readonly'?: ToStringable
+  'textInput_transition--readonly'?: ToStringable
+  'textInput_color--readonly'?: ToStringable
+  'textInput_outlineColor--readonly'?: ToStringable
 
-  'text-input__bg--error'?: ToStringable
-  'text-input__border-color--error'?: ToStringable
-  'text-input__transition--error'?: ToStringable
-  'text-input__color--error'?: ToStringable
-  'text-input__outline-color--error'?: ToStringable
+  'textInput_bg--error'?: ToStringable
+  'textInput_borderColor--error'?: ToStringable
+  'textInput_transition--error'?: ToStringable
+  'textInput_color--error'?: ToStringable
+  'textInput_outlineColor--error'?: ToStringable
 }
