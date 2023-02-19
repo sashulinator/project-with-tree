@@ -3,23 +3,23 @@ import { ToStringable } from '~/utils/core/types/to-stringable'
 // eslint-disable-next-line import/no-unused-modules
 export interface TextInputCSSVars {
   /* Sizable properties */
-  'text-input__font-size'?: ToStringable
-  'text-input__height'?: ToStringable
-  'text-input__line-height'?: ToStringable
-  'text-input__horizontal-padding'?: ToStringable
-  'text-input__border-radius'?: ToStringable
+  textInput_fontSize?: ToStringable
+  textInput_height?: ToStringable
+  textInput_lineHeight?: ToStringable
+  textInput_horizontalPadding?: ToStringable
+  textInput_borderRadius?: ToStringable
 
-  'text-input__font-size--s'?: ToStringable
-  'text-input__height--s'?: ToStringable
-  'text-input__line-height--s'?: ToStringable
-  'text-input__horizontal-padding--s'?: ToStringable
-  'text-input__border-radius--s'?: ToStringable
+  textInput_fontSize__s?: ToStringable
+  textInput_height__s?: ToStringable
+  textInput_lineHeight__s?: ToStringable
+  textInput_horizontalPadding__s?: ToStringable
+  textInput_borderRadius__s?: ToStringable
 
-  'text-input__font-size--l'?: ToStringable
-  'text-input__height--l'?: ToStringable
-  'text-input__line-height--l'?: ToStringable
-  'text-input__horizontal-padding--l'?: ToStringable
-  'text-input__border-radius--l'?: ToStringable
+  textInput_fontSize__l?: ToStringable
+  textInput_height__l?: ToStringable
+  textInput_lineHeight__l?: ToStringable
+  textInput_horizontalPadding__l?: ToStringable
+  textInput_borderRadius__l?: ToStringable
 
   /* Statable properties */
   textInput_borderWidth?: ToStringable

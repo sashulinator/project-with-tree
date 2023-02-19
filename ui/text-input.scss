@@ -18,18 +18,18 @@
 /* Variables */
 .TextInput {
   background-color: var(--textInput_bg);
-  border-radius: var(--text-input__border-radius);
+  border-radius: var(--textInput_borderRadius);
   border-width: var(--textInput_borderWidth);
   border-color: var(--textInput_borderColor);
   transition: var(--textInput_transition);
-  height: var(--text-input__height);
+  height: var(--textInput_height);
   outline-width: var(--textInput_outlineWidth);
   outline-color: var(--textInput_outlineColor);
   outline-style: var(--textInput_outlineStyle);
   & input {
-    line-height: var(--text-input__line-height);
-    font-size: var(--text-input__font-size);
-    padding: 0 var(--text-input__horizontal-padding);
+    line-height: var(--textInput_lineHeight);
+    font-size: var(--textInput_fontSize);
+    padding: 0 var(--textInput_horizontalPadding);
     color: var(--textInput_color);
     transition: var(--textInput_transition);
   }
