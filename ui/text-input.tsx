@@ -5,7 +5,7 @@ import { forwardRef } from 'react'
 
 import { useBoolean } from '~/utils/hooks/boolean'
 
-interface TextInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
+export interface TextInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   rootProps?: React.HTMLAttributes<HTMLDivElement>
   isError?: boolean
   left?: React.ReactNode
