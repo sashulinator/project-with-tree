@@ -47,4 +47,5 @@ const TextInput = forwardRef<HTMLInputElement, TextInputProps>(function TextInpu
   }
 })
 
+TextInput.displayName = 'TextInput'
 export default TextInput
