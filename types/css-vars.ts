@@ -1,4 +1,4 @@
-import { ToStringable } from '~/utils/core/types/to-stringable'
+import { ToStringable } from '~/utils/core'
 
 // eslint-disable-next-line import/no-unused-modules
 export interface TextInputCSSVars {
