@@ -9,17 +9,9 @@ export interface TextInputCSSVars {
   textInput_horizontalPadding?: ToStringable
   textInput_borderRadius?: ToStringable
 
-  textInput_fontSize__s?: ToStringable
   textInput_height__s?: ToStringable
-  textInput_lineHeight__s?: ToStringable
-  textInput_horizontalPadding__s?: ToStringable
-  textInput_borderRadius__s?: ToStringable
 
-  textInput_fontSize__l?: ToStringable
   textInput_height__l?: ToStringable
-  textInput_lineHeight__l?: ToStringable
-  textInput_horizontalPadding__l?: ToStringable
-  textInput_borderRadius__l?: ToStringable
 
   /* Statable properties */
   textInput_borderWidth?: ToStringable

@@ -24,6 +24,12 @@
   height: var(--textInput_height);
   box-shadow: none;
 }
+.TextInput.--s {
+  height: var(--textInput_height__s);
+}
+.TextInput.--l {
+  height: var(--textInput_height__l);
+}
 .TextInput input {
   line-height: var(--textInput_lineHeight);
   font-size: var(--textInput_fontSize);
