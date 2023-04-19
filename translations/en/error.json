@@ -1,0 +1,4 @@
+{
+  "assertClientHasNoExcessiveTranslation": "<h4>Excessive Translation</h4>You have an excessive Translation on the client side",
+  "assertServerHasNoExcessiveTranslation": "<h4>Excessive Translation</h4>You have an excessive Translation on the server side"
+}

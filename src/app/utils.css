@@ -1,0 +1,16 @@
+/* не могу использовать эти классы из unoCss так как часто устанавливаю через clsx */
+.hidden {
+  visibility: hidden;
+}
+
+.transparent {
+  opacity: 0;
+}
+
+.bg {
+  background-color: var(--bg);
+}
+
+.bg-secondary {
+  background-color: var(--bgSecondary);
+}

@@ -1,0 +1,33 @@
+{
+  "include": ["src/**/*", "@testing-library/jest-dom"],
+  "compilerOptions": {
+    "baseUrl": "./src",
+    "noEmit": true,
+    "target": "ESNext",
+    "module": "ESNext",
+    "moduleResolution": "Node",
+    "jsx": "react-jsx",
+    "types": ["vite/client", "jest", "node"],
+    "exactOptionalPropertyTypes": true,
+    "esModuleInterop": true,
+    "importHelpers": true,
+    "forceConsistentCasingInFileNames": true,
+    "useDefineForClassFields": true,
+    "lib": ["DOM", "DOM.Iterable", "ESNext"],
+    "allowJs": false,
+    "skipLibCheck": true,
+    "allowSyntheticDefaultImports": true,
+    "strict": true,
+    "noImplicitAny": false,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "paths": {
+      "~/*": ["./*"]
+    }
+  },
+  "references": [
+    {
+      "path": "./tsconfig.node.json"
+    }
+  ]
+}

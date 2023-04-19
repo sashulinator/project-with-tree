@@ -1,0 +1,7 @@
+src/ui/text-input           ui-text-input           git@github.com:sashulinator/ui-text-input.git
+src/utils/dictionary        utils-dictionary        git@github.com:sashulinator/utils-dictionary.git
+src/utils/core              utils-core              git@github.com:sashulinator/utils-core.git
+src/utils/list              utils-list              git@github.com:sashulinator/utils-list.git
+src/utils/error             utils-error             git@github.com:sashulinator/utils-error.git
+src/utils/hooks             utils-hooks             git@github.com:sashulinator/utils-hooks.git
+src/utils/types             utils-types             git@github.com:sashulinator/utils-types.git

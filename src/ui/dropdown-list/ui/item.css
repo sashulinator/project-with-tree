@@ -1,0 +1,16 @@
+.ui-DropdownListItem {
+  display: flex;
+  height: 42px;
+  align-items: center;
+  padding: 0 12px;
+}
+
+.ui-DropdownListItem[data-selected='true'] {
+  background-color: var(--bg);
+}
+
+.ui-DropdownListItem[data-checked='true'] {
+  border-top: 1px solid var(--primary);
+  border-bottom: 1px solid var(--primary);
+  background-color: var(--primaryAlpha04);
+}

@@ -1,0 +1,23 @@
+.LayoutPage {
+  position: relative;
+}
+
+.LayoutPage .TreePanel {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 200px;
+  height: 100%;
+  background-color: rgba(12, 12, 12, 0.329);
+  z-index: 299;
+}
+
+.LayoutPage .PropsPanelProps {
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 200px;
+  height: 100%;
+  background-color: rgba(12, 12, 12, 0.329);
+  z-index: 299;
+}

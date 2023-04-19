@@ -1,0 +1,15 @@
+/* TODO удалить файл и создать отдельные компоненты */
+
+a {
+  text-decoration: none;
+  color: var(--linkColor, var(--primary));
+}
+
+h4 {
+  font-weight: bolder;
+}
+
+.label {
+  font-size: 10px;
+  text-transform: uppercase;
+}

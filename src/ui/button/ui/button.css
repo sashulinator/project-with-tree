@@ -1,0 +1,26 @@
+.ui-Button {
+  outline: 0;
+  height: var(--button_height);
+  background-color: transparent;
+  border: 0;
+  color: var(--color);
+  border-radius: 0.4rem;
+  color: var(--button_color, white);
+  /* border-radius: 0.4rem; */
+  /* font-weight: bolder; */
+  background-color: var(--primary);
+  transition: var(--button_transition);
+}
+
+.ui-Button:focus {
+  box-shadow: 0px 0px 0px var(--button_outlineWidth) var(--button_outlineColor);
+  transition: var(--button_transition__focused, var(--button_transition));
+}
+
+.ui-Button.--s {
+  height: var(--button_height__s);
+}
+
+.ui-Button.--l {
+  height: var(--button_height__l);
+}
