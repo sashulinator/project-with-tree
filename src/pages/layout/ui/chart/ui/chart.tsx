@@ -1,5 +1,5 @@
-import { State } from '~/widgets/chart'
-import TreeChart from '~/widgets/tree-chart'
+import { State } from '~/packages/chart'
+import TreeChart from '~/packages/tree-chart'
 
 import Node from './node'
 

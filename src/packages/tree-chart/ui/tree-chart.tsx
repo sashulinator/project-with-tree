@@ -1,8 +1,8 @@
 import { createElement, useEffect, useRef } from 'react'
 
+import { EventNames, State } from '~/packages/chart'
 import { Id } from '~/utils/core'
 import { useForceUpdate } from '~/utils/hooks'
-import { EventNames, State } from '~/widgets/chart'
 
 import { useZoom } from '../lib/use-zoom'
 

@@ -1,6 +1,6 @@
 import './layout.css'
 
-import { create } from '~/widgets/chart'
+import { create } from '~/packages/chart'
 
 import Preview from './ui/chart'
 import PropsPanel from './ui/props-panel'

@@ -2,8 +2,8 @@
 import { select as d3select, zoom as d3zoom, zoomIdentity } from 'd3'
 import { RefObject, useLayoutEffect } from 'react'
 
+import { State } from '~/packages/chart'
 import { Any, isNull } from '~/utils/core'
-import { State } from '~/widgets/chart'
 
 export function useZoom(svgRef: RefObject<SVGSVGElement>, state: State): void {
   useLayoutEffect(() => {
