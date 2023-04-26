@@ -1,7 +1,7 @@
 import { Layout } from '~/entities/layout'
 
 interface PropsPanelPropsProps {
-  layout?: Layout | undefined
+  test?: undefined
 }
 
 export default function PropsPanelProps(props: PropsPanelPropsProps): JSX.Element {
