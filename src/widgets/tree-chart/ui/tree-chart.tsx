@@ -1,15 +1,18 @@
-import { useEffect, useRef } from 'react'
+import { createElement, useEffect, useRef } from 'react'
 
+import { Id } from '~/utils/core'
 import { useForceUpdate } from '~/utils/hooks'
 import { EventNames, State } from '~/widgets/chart'
 
 import { useZoom } from '../lib/use-zoom'
 
-interface TreeChartProps {
+interface TreeChartProps<D extends { id: Id }> {
+  data: D[]
   state: State
+  renderNode: (props: { item: D }) => JSX.Element
 }
 
-export default function TreeChart(props: TreeChartProps): JSX.Element {
+export default function TreeChart<D extends { id: Id }>(props: TreeChartProps<D>): JSX.Element {
   const svgRef = useRef<null | SVGSVGElement>(null)
 
   const update = useForceUpdate()
@@ -23,7 +26,9 @@ export default function TreeChart(props: TreeChartProps): JSX.Element {
   return (
     <svg ref={svgRef} width='100%' height='100%'>
       <g style={{ transform: getTransform() }}>
-        <circle cx='50' cy='50' r='50' />
+        {props.data.map((item) => {
+          return createElement(props.renderNode, { key: item.id, item })
+        })}
       </g>
     </svg>
   )
