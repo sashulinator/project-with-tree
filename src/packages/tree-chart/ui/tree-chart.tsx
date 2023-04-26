@@ -6,13 +6,13 @@ import { useForceUpdate } from '~/utils/hooks'
 
 import { useZoom } from '../lib/use-zoom'
 
-interface TreeChartProps<D extends { id: Id }> {
-  data: D[]
+interface TreeChartProps<D extends { id: Id; children?: Id[] }> {
+  data: Record<Id, D>
   state: State
   renderNode: (props: { item: D }) => JSX.Element
 }
 
-export default function TreeChart<D extends { id: Id }>(props: TreeChartProps<D>): JSX.Element {
+export default function TreeChart<D extends { id: Id; children?: Id[] }>(props: TreeChartProps<D>): JSX.Element {
   const svgRef = useRef<null | SVGSVGElement>(null)
 
   const update = useForceUpdate()
@@ -26,7 +26,7 @@ export default function TreeChart<D extends { id: Id }>(props: TreeChartProps<D>
   return (
     <svg ref={svgRef} width='100%' height='100%'>
       <g style={{ transform: getTransform() }}>
-        {props.data.map((item) => {
+        {Object.values(props.data).map((item) => {
           return createElement(props.renderNode, { key: item.id, item })
         })}
       </g>

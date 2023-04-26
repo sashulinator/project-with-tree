@@ -1,5 +1,7 @@
 import { State } from '~/packages/chart'
 import TreeChart from '~/packages/tree-chart'
+import { assertNotNull } from '~/utils/core'
+import { toDictionary } from '~/utils/list'
 
 import Node from './node'
 
@@ -23,6 +25,8 @@ const data = [
   },
 ]
 
-export default function Preview(props: PreviewProps): JSX.Element {
-  return <TreeChart data={data} state={props.state} renderNode={Node} />
+export default function Preview(props: PreviewProps): JSX.Element | null {
+  const dataDictionary = toDictionary((item) => item.id, data)
+
+  return dataDictionary && <TreeChart data={dataDictionary} state={props.state} renderNode={Node} />
 }
