@@ -1,7 +1,7 @@
 import { FC } from 'react'
 import { RouteProps } from 'react-router-dom'
 
-import Decision from '~/pages/decision'
+import DecisionPage from '~/pages/decision'
 import LoginPage from '~/pages/login'
 import MainPage from '~/pages/main'
 import NotFoundPage from '~/pages/not-found'
@@ -33,12 +33,12 @@ export const routes = {
   createDecision: {
     getName: () => 'Create Decision',
     path: '/decision',
-    element: <Decision />,
+    element: <DecisionPage />,
   },
   decision: {
     getName: () => 'Decision',
-    path: '/layout/:id',
-    element: <Decision />,
+    path: '/decision/:id',
+    element: <DecisionPage />,
   },
   textInput: {
     Header,

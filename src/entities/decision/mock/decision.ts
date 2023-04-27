@@ -1,6 +1,6 @@
 import { Decision } from '../types/decision'
 
-export const layout1: Decision = {
+export const decision: Decision = {
   id: 'id',
   data: [
     {

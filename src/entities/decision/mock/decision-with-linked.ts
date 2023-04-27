@@ -1,7 +1,7 @@
 import { Decision } from '../types/decision'
-import { layout1 } from './decision'
+import { decision } from './decision'
 
-export const layoutWithLinked: Decision = {
+export const decisionWithLinked: Decision = {
   id: '777',
   data: [
     {
@@ -15,7 +15,7 @@ export const layoutWithLinked: Decision = {
     },
     {
       id: '333',
-      linkedId: layout1.id,
+      linkedId: decision.id,
       overwritten: [
         {
           id: 'id2',
