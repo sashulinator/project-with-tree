@@ -1,6 +1,6 @@
 import { AxiosResponse } from 'axios'
 
-import { Layout } from '~/entities/layout'
+import { Decision } from '~/entities/decision'
 import api from '~/shared/axios'
 import { Id } from '~/utils/core'
 
@@ -8,7 +8,7 @@ export interface RequestData {
   id: Id
 }
 
-export type ResponseData = Layout
+export type ResponseData = Decision
 
 export type Response = AxiosResponse<ResponseData>
 

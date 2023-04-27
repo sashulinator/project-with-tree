@@ -1,7 +1,7 @@
 import { FC } from 'react'
 import { RouteProps } from 'react-router-dom'
 
-import Layout from '~/pages/layout'
+import Decision from '~/pages/decision'
 import LoginPage from '~/pages/login'
 import MainPage from '~/pages/main'
 import NotFoundPage from '~/pages/not-found'
@@ -30,15 +30,15 @@ export const routes = {
     path: '/main',
     element: <MainPage />,
   },
-  createLayout: {
-    getName: () => 'CreateLayout',
-    path: '/layout',
-    element: <Layout />,
+  createDecision: {
+    getName: () => 'Create Decision',
+    path: '/decision',
+    element: <Decision />,
   },
-  layout: {
-    getName: () => 'Layout',
+  decision: {
+    getName: () => 'Decision',
     path: '/layout/:id',
-    element: <Layout />,
+    element: <Decision />,
   },
   textInput: {
     Header,
