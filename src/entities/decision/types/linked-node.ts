@@ -5,5 +5,5 @@ import { Node } from './node'
 export interface LinkedNode {
   id: Id
   linkedId: Id
-  overwritten?: (Node | LinkedNode)[]
+  overwritten?: (Node | Partial<LinkedNode>)[]
 }

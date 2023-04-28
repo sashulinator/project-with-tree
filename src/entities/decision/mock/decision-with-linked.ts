@@ -5,11 +5,13 @@ export const decisionWithLinked: Decision = {
   id: '777',
   data: [
     {
+      type: 'CONDITION',
       id: '111',
       name: 'Lena',
       children: ['222', '333'],
     },
     {
+      type: 'CONDITION',
       id: '222',
       name: 'Oleg',
     },
