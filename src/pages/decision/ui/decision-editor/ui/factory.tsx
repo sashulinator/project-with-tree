@@ -1,3 +1,5 @@
+import { useMemo } from 'react'
+
 import { Decision, LinkedNode, Node, isLinkedNode } from '~/entities/decision'
 import { State } from '~/packages/chart'
 import { create } from '~/packages/tree-chart-node'
@@ -22,9 +24,10 @@ export default function Factory(props: FactoryProps): JSX.Element {
           )
         }
 
-        const state = create()
+        // eslint-disable-next-line react-hooks/rules-of-hooks
+        const state = useMemo(create, [])
         props.state.states[node.id] = state
-        return <NodeUI key={node.id} state={state} node={node} />
+        return <NodeUI key={node.id} state={state} node={node} treeState={props.state} />
       })}
     </>
   )
