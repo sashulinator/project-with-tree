@@ -4,7 +4,7 @@ import { EventNames } from '../types/event-names'
 import { Events } from '../types/events'
 import { NormalizeRet, Position, State } from '../types/state'
 
-export function create(defaultState?: State | undefined): State {
+export function create(defaultState?: Partial<State> | undefined): State {
   const m: Emitter<Events> = mitt()
 
   const state: State = {

@@ -7,6 +7,8 @@ export const decision: Decision = {
       type: 'CONDITION',
       id: 'id1',
       name: 'Condition',
+      x: 0,
+      y: 0,
       props: {
         condition: 'age > 10',
       },
@@ -20,11 +22,15 @@ export const decision: Decision = {
       type: 'VOID',
       id: 'id2',
       name: 'void',
+      x: 0,
+      y: 300,
     },
     {
       type: 'MAIL',
       id: 'id3',
       name: 'mail_hello',
+      x: 0,
+      y: 600,
       props: {
         title: 'hello',
         body: 'hello world',

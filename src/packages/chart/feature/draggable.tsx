@@ -1,7 +1,7 @@
 /* eslint-disable eslint-comments/disable-enable-pair, @typescript-eslint/unbound-method */
 import { useDrag } from '@use-gesture/react'
 
-import React, { forwardRef, useRef } from 'react'
+import React, { useRef } from 'react'
 
 import { State, Translate } from '~/packages/chart'
 import { Any } from '~/utils/core'
@@ -11,7 +11,7 @@ interface DraggableProps {
   children: (props: Any) => React.ReactNode
 }
 
-function DraggableComponent(props: DraggableProps): JSX.Element {
+export function Draggable(props: DraggableProps): JSX.Element {
   const { state, children } = props
   const xyRef = useRef<Translate | null>(null)
 
@@ -33,5 +33,4 @@ function DraggableComponent(props: DraggableProps): JSX.Element {
   return <>{children({ ...dragBind() })}</>
 }
 
-export const Draggable = forwardRef<SVGSVGElement, DraggableProps>(DraggableComponent)
 Draggable.displayName = 'Draggable'

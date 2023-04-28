@@ -29,12 +29,14 @@ interface FactoryItemProps extends FactoryProps {
 }
 
 function FactoryItem(props: FactoryItemProps): JSX.Element {
-  if (isLinkedNode(props.item)) {
-    return <LinkedNodeUI item={props.item} state={props.state} data={props.data} decisions={props.decisions} />
+  const item = props.item
+
+  if (isLinkedNode(item)) {
+    return <LinkedNodeUI item={item} state={props.state} data={props.data} decisions={props.decisions} />
   }
 
   // eslint-disable-next-line react-hooks/rules-of-hooks
-  const state = useMemo(create, [])
+  const state = useMemo(() => create({ position: item }), [])
   props.state.states[props.item.id] = state
-  return <NodeUI key={props.item.id} state={state} item={props.item} treeState={props.state} />
+  return <NodeUI key={props.item.id} state={state} item={item} treeState={props.state} />
 }

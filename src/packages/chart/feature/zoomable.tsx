@@ -39,3 +39,5 @@ export function Zoomable(props: ZoomableProps): JSX.Element {
 
   return <>{props.children({ ref: svgRef })}</>
 }
+
+Zoomable.displayName = 'Zoomable'

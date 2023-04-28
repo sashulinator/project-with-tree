@@ -8,12 +8,16 @@ export const decisionWithLinked: Decision = {
       type: 'CONDITION',
       id: '111',
       name: 'Lena',
+      x: 0,
+      y: 0,
       children: ['222', '333'],
     },
     {
       type: 'CONDITION',
       id: '222',
       name: 'Oleg',
+      x: 300,
+      y: 0,
     },
     {
       id: '333',
@@ -22,6 +26,8 @@ export const decisionWithLinked: Decision = {
         {
           id: 'id2',
           name: 'Petya Osipov',
+          x: 0,
+          y: 300,
         },
       ],
     },
