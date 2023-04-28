@@ -17,18 +17,24 @@ export interface FactoryProps {
 export default function Factory(props: FactoryProps): JSX.Element {
   return (
     <>
-      {Object.values(props.data).map((node) => {
-        if (isLinkedNode(node)) {
-          return (
-            <LinkedNodeUI key={node.id} node={node} state={props.state} data={props.data} decisions={props.decisions} />
-          )
-        }
-
-        // eslint-disable-next-line react-hooks/rules-of-hooks
-        const state = useMemo(create, [])
-        props.state.states[node.id] = state
-        return <NodeUI key={node.id} state={state} node={node} treeState={props.state} />
-      })}
+      {Object.values(props.data).map((node) => (
+        <Item key={node.id} node={node} {...props} />
+      ))}
     </>
   )
+}
+
+interface ItemProps extends FactoryProps {
+  node: LinkedNode | Node
+}
+
+function Item(props: ItemProps): JSX.Element {
+  if (isLinkedNode(props.node)) {
+    return <LinkedNodeUI node={props.node} state={props.state} data={props.data} decisions={props.decisions} />
+  }
+
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  const state = useMemo(create, [])
+  props.state.states[props.node.id] = state
+  return <NodeUI key={props.node.id} state={state} node={props.node} treeState={props.state} />
 }
