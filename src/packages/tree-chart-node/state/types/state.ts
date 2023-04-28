@@ -7,8 +7,13 @@ export interface Position {
   y: number
 }
 
+export interface NormalizeRet {
+  position: Position
+}
+
 export interface State {
   mitt: Emitter<Events>
   position: Position
+  normalize: () => NormalizeRet
   setPosition: (position: Position) => void
 }

@@ -1,13 +1,9 @@
-import { isLinkedNode } from '~/entities/decision'
-import { decisions } from '~/entities/decision/mock'
-import { decisionWithLinked } from '~/entities/decision/mock/decision-with-linked'
+import { decision, decisions } from '~/entities/decision/mock'
 import { State } from '~/packages/chart'
 import Chart from '~/ui/chart'
 import { toDictionary } from '~/utils/list'
 
 import Factory from './factory'
-import LinkedNodeUI from './linked-node'
-import NodeUI from './node'
 
 // import NodeFactory from './node-factory'
 
@@ -16,7 +12,7 @@ interface DecisionTreeProps {
 }
 
 export default function DecisionTree(props: DecisionTreeProps): JSX.Element | null {
-  const data = toDictionary((node) => node.id, decisionWithLinked.data)
+  const data = toDictionary((node) => node.id, decision.data)
 
   if (data === null) {
     return null

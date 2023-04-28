@@ -2,12 +2,11 @@ import { animated, useSpring } from '@react-spring/web'
 import { useDrag } from '@use-gesture/react'
 
 import { Node } from '~/entities/decision'
-// import { State } from '~/packages/tree-chart-node'
-import { Id } from '~/utils/core'
+import { State } from '~/packages/tree-chart-node'
 
 export interface NodeProps {
   node: Node
-  // state: State
+  state: State
 }
 
 export default function NodeUI(props: NodeProps): JSX.Element {
