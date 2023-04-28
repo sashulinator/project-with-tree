@@ -3,14 +3,14 @@ import { useDrag } from '@use-gesture/react'
 
 import { useEffect, useRef } from 'react'
 
-import { Node } from '~/entities/decision'
+import { Item } from '~/entities/decision'
 import { State as TreeState } from '~/packages/chart'
 import { EventNames, State as NodeState, Position } from '~/packages/tree-chart-node'
 import { assertNotNull } from '~/utils/core'
 import { useForceUpdate } from '~/utils/hooks'
 
 export interface NodeProps {
-  node: Node
+  item: Item
   state: NodeState
   treeState: TreeState
 }
@@ -43,7 +43,7 @@ export default function NodeUI(props: NodeProps): JSX.Element {
   return (
     <g style={{ transform: getTransform() }} {...dragBind()}>
       <rect width='100' height='100' fill='red' />
-      <text>{props.node.name}</text>
+      <text>{props.item.name}</text>
     </g>
   )
 

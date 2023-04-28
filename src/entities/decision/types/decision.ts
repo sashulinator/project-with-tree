@@ -1,9 +1,9 @@
 import { Id } from '~/utils/core'
 
-import { LinkedNode } from './linked-node'
-import { Node } from './node'
+import { Item } from './item'
+import { LinkedItem } from './linked-item'
 
 export interface Decision {
   id: Id
-  data: (Node | LinkedNode)[]
+  data: (Item | LinkedItem)[]
 }

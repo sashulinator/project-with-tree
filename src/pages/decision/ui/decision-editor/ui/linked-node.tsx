@@ -1,5 +1,5 @@
-import { Decision, Node } from '~/entities/decision'
-import { LinkedNode } from '~/entities/decision/types/linked-node'
+import { Decision, Item } from '~/entities/decision'
+import { LinkedItem } from '~/entities/decision/types/linked-item'
 import { State } from '~/packages/chart'
 import { Dictionary, assertDefined, assertNotNull } from '~/utils/dictionary'
 import { toDictionary } from '~/utils/list'
@@ -10,13 +10,13 @@ import Factory from './factory'
 
 export interface NodeProps {
   state: State
-  node: LinkedNode
-  data: Dictionary<Node | LinkedNode>
+  item: LinkedItem
+  data: Dictionary<Item | LinkedItem>
   decisions: Dictionary<Decision>
 }
 
 export default function LinkedNodeUI(props: NodeProps): JSX.Element {
-  const decision = props.decisions[props.node.linkedId]
+  const decision = props.decisions[props.item.linkedId]
   assertDefined(decision)
   const data = toDictionary((n) => n.id, decision.data)
   assertNotNull(data)

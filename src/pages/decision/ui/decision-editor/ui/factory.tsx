@@ -1,6 +1,6 @@
 import { useMemo } from 'react'
 
-import { Decision, LinkedNode, Node, isLinkedNode } from '~/entities/decision'
+import { Decision, Item, LinkedItem, isLinkedNode } from '~/entities/decision'
 import { State } from '~/packages/chart'
 import { create } from '~/packages/tree-chart-node'
 import { Dictionary } from '~/utils/dictionary'
@@ -10,31 +10,31 @@ import NodeUI from './node'
 
 export interface FactoryProps {
   state: State
-  data: Dictionary<Node | LinkedNode>
+  data: Dictionary<Item | LinkedItem>
   decisions: Dictionary<Decision>
 }
 
 export default function Factory(props: FactoryProps): JSX.Element {
   return (
     <>
-      {Object.values(props.data).map((node) => (
-        <Item key={node.id} node={node} {...props} />
+      {Object.values(props.data).map((item) => (
+        <FactoryItem key={item.id} item={item} {...props} />
       ))}
     </>
   )
 }
 
-interface ItemProps extends FactoryProps {
-  node: LinkedNode | Node
+interface FactoryItemProps extends FactoryProps {
+  item: LinkedItem | Item
 }
 
-function Item(props: ItemProps): JSX.Element {
-  if (isLinkedNode(props.node)) {
-    return <LinkedNodeUI node={props.node} state={props.state} data={props.data} decisions={props.decisions} />
+function FactoryItem(props: FactoryItemProps): JSX.Element {
+  if (isLinkedNode(props.item)) {
+    return <LinkedNodeUI item={props.item} state={props.state} data={props.data} decisions={props.decisions} />
   }
 
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const state = useMemo(create, [])
-  props.state.states[props.node.id] = state
-  return <NodeUI key={props.node.id} state={state} node={props.node} treeState={props.state} />
+  props.state.states[props.item.id] = state
+  return <NodeUI key={props.item.id} state={state} item={props.item} treeState={props.state} />
 }

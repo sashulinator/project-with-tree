@@ -1,8 +1,8 @@
 import { has } from '~/utils/core'
 
-import { LinkedNode } from '../../types/linked-node'
+import { LinkedItem } from '../../types/linked-item'
 
-export function isLinkedNode(val: unknown): val is LinkedNode {
+export function isLinkedNode(val: unknown): val is LinkedItem {
   // eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-return
   return has(val, 'linkedId')
 }
