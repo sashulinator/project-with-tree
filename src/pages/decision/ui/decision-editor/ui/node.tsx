@@ -15,7 +15,6 @@ export default function NodeUI(props: NodeProps): JSX.Element {
   const dragBind = useDrag((event): void => {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
     event.event.stopPropagation()
-
     const x = event.lastOffset[0] + event.movement[0]
     const y = event.lastOffset[1] + event.movement[1]
     api.set({ x, y })

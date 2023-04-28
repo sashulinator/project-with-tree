@@ -13,7 +13,7 @@ export default function DecisionPage(): JSX.Element {
     <main className='DecisionPage'>
       {/* <TreePanel test={undefined} /> */}
       <Preview state={state} />
-      <PropsPanel test={undefined} />
+      <PropsPanel state={state} />
     </main>
   )
 }
