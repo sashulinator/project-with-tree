@@ -15,7 +15,7 @@ export interface StateProps<S> {
   itemStates: Record<Id, S>
 }
 
-export class State<D, S> extends EmittableState<D, Events> {
+export class State<D, S> extends EmittableState<D, Events<S>> {
   translate: Translate
 
   scale: number
@@ -38,6 +38,9 @@ export class State<D, S> extends EmittableState<D, Events> {
     this.mitt.on(EventNames.setTranslate, (event) => {
       this.translate = event.translate
     })
+    this.mitt.on(EventNames.addItem, (event) => {
+      this.itemStates[event.id] = event.state
+    })
   }
 
   setTranslate = (translate: Translate): void => {
@@ -46,5 +49,9 @@ export class State<D, S> extends EmittableState<D, Events> {
 
   setScale = (scale: number): void => {
     this.mitt.emit(EventNames.setScale, { scale })
+  }
+
+  addItem = (id: Id, state: S): void => {
+    this.mitt.emit(EventNames.addItem, { id, state })
   }
 }

@@ -1,3 +1,5 @@
+import uuid from 'uuid-random'
+
 import { Decision, Item } from '~/entities/decision'
 import { State as ChartState } from '~/packages/chart'
 import { State as ItemState } from '~/packages/tree-chart-item'
@@ -10,15 +12,21 @@ export default function PropsPanelProps(props: PropsPanelPropsProps): JSX.Elemen
   return (
     <div className='PropsPanelProps'>
       {props.chartState.data.id}
-      <button>Save</button>
+      <button onClick={onAddVoidClick}>Add VOID node</button>
     </div>
   )
 
   // Private
 
-  // function onClick(): void {
-  //   Object.values(props.state.states).map((state) => {
-  //     console.log(state.normalize())
-  //   })
-  // }
+  function onAddVoidClick(): void {
+    const id = uuid()
+    const decision = {
+      type: 'VOID',
+      id,
+      name: `void_${id}`,
+      x: 10,
+      y: 400,
+    }
+    props.chartState.addItem(id, new ItemState(decision, { position: decision }))
+  }
 }

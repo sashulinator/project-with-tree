@@ -1,11 +1,12 @@
 import { ForwardedRef, forwardRef, useEffect, useRef } from 'react'
 
 import { State as ChartState, EventNames } from '~/packages/chart'
+import { Any } from '~/utils/core'
 import { useForceUpdate } from '~/utils/hooks'
 import { setRefs } from '~/utils/react'
 
 export interface ChartProps extends React.SVGAttributes<SVGSVGElement> {
-  state: ChartState<unknown, unknown>
+  state: ChartState<Any, Any>
   children: React.ReactNode
 }
 
