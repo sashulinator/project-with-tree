@@ -22,7 +22,7 @@ export default function DecisionPage(): JSX.Element {
     }, {})
   }, [decision.data])
 
-  const chartState = new ChartState(decision, { translate: { x: 0, y: 0 }, scale: 0, itemStates })
+  const chartState = new ChartState(decision, { translate: { x: 0, y: 0 }, scale: 1, itemStates })
 
   return (
     <main className='DecisionPage'>
