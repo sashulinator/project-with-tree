@@ -8,13 +8,14 @@ import { EventNames, State as ItemState, Position } from '~/packages/tree-chart-
 import { Any, assertNotNull } from '~/utils/core'
 import { useForceUpdate } from '~/utils/hooks'
 
-export interface NodeProps {
+export interface ChartNodeProps {
+  onClick: (event: MouseEvent) => void
   children: React.ReactNode
   state: ItemState<Item>
   treeState: TreeState<Any, Any>
 }
 
-export default function NodeUI(props: NodeProps): JSX.Element {
+export default function ChartNode(props: ChartNodeProps): JSX.Element {
   const xyRef = useRef<Position | null>(null)
   const update = useForceUpdate()
 
@@ -23,6 +24,9 @@ export default function NodeUI(props: NodeProps): JSX.Element {
     event.event.stopPropagation()
     if (xyRef.current === null) {
       xyRef.current = props.state.position
+    }
+    if (event.last && event.movement[0] === 0 && event.movement[1] === 0 && event.event.type === 'pointerup') {
+      props.onClick(event.event as MouseEvent)
     }
     assertNotNull(xyRef.current)
     const mx = (event.movement[0] * 1) / props.treeState.scale

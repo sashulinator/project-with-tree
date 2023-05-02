@@ -20,12 +20,14 @@ export class State<D, S> extends EmittableState<D, Events<S>> {
 
   scale: number
 
+  selected: Id[]
+
   itemStates: Record<Id, S>
 
   constructor(data: D, props: StateProps<S>) {
     super(data)
     this.subscribe()
-
+    this.selected = []
     this.itemStates = props.itemStates
     this.scale = props.scale
     this.translate = props.translate
@@ -41,6 +43,18 @@ export class State<D, S> extends EmittableState<D, Events<S>> {
     this.mitt.on(EventNames.addItem, (event) => {
       this.itemStates[event.id] = event.state
     })
+    this.mitt.on(EventNames.select, (event) => {
+      this.selected = event.ids
+    })
+    this.mitt.on(EventNames.unselect, (event) => {
+      this.mitt.emit(EventNames.select, { ids: this.selected.filter((s) => !event.ids.includes(s)) })
+    })
+    this.mitt.on(EventNames.selectToggle, (event) => {
+      const isIncludes = this.selected.includes(event.id)
+      isIncludes
+        ? this.mitt.emit(EventNames.unselect, { ids: [event.id] })
+        : this.mitt.emit(EventNames.select, { ids: [...this.selected, event.id] })
+    })
   }
 
   setTranslate = (translate: Translate): void => {
@@ -49,6 +63,18 @@ export class State<D, S> extends EmittableState<D, Events<S>> {
 
   setScale = (scale: number): void => {
     this.mitt.emit(EventNames.setScale, { scale })
+  }
+
+  select = (ids: Id[]): void => {
+    this.mitt.emit(EventNames.select, { ids })
+  }
+
+  unselect = (ids: Id[]): void => {
+    this.mitt.emit(EventNames.unselect, { ids })
+  }
+
+  selectToggle = (id: Id): void => {
+    this.mitt.emit(EventNames.selectToggle, { id })
   }
 
   addItem = (id: Id, state: S): void => {

@@ -1,7 +1,6 @@
 import React, { useEffect, useMemo } from 'react'
 
-import { Decision, Item } from '~/entities/decision'
-import NodeUI from '~/entities/decision/ui/item/ui/item'
+import { Decision, Item, Node } from '~/entities/decision'
 import { State as ChartState, EventNames } from '~/packages/chart'
 import { State as ItemState } from '~/packages/tree-chart-item'
 import ChartLink, { ChartLinkProps } from '~/ui/chart-link'
@@ -41,16 +40,11 @@ export default function DecisionEditor(props: DecisionEditorProps): JSX.Element 
 
   return (
     <Chart state={props.chartState}>
-      {itemStates.map((state) => {
-        return (
-          <NodeUI key={state.data.id} state={state} treeState={props.chartState}>
-            <rect width='200' height='100' fill='red' />
-            <text>{state.data.id}</text>
-          </NodeUI>
-        )
-      })}
       {links?.map((link) => {
         return <ChartLink key={`${link.targetState.data.id}${link.sourceState.data.id}`} {...link} />
+      })}
+      {itemStates.map((state) => {
+        return <Node key={state.data.id} state={state} treeState={props.chartState} />
       })}
     </Chart>
   )
