@@ -5,7 +5,7 @@ import { RefObject, useLayoutEffect } from 'react'
 import { State } from '~/packages/chart'
 import { Any, isNull } from '~/utils/core'
 
-export function useZoom(svgRef: RefObject<SVGSVGElement>, state: State): void {
+export function useZoom(svgRef: RefObject<SVGSVGElement>, state: State<unknown, unknown>): void {
   useLayoutEffect(() => {
     if (isNull(svgRef.current)) return
 

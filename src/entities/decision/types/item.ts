@@ -7,7 +7,7 @@ export interface Item<P = Dictionary<Any>> {
   type: string
   x: number
   y: number
-  links?: Dictionary<Id>
+  links?: { type: string; id: string }[]
   componentName?: string
   props?: P
   children?: Id[]

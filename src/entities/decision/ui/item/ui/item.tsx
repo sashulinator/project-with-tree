@@ -4,14 +4,15 @@ import { useEffect, useRef } from 'react'
 
 import { Item } from '~/entities/decision'
 import { State as TreeState } from '~/packages/chart'
-import { EventNames, State as NodeState, Position } from '~/packages/tree-chart-node'
+import { EventNames, State as ItemState, Position } from '~/packages/tree-chart-item'
 import { assertNotNull } from '~/utils/core'
 import { useForceUpdate } from '~/utils/hooks'
 
 export interface NodeProps {
-  item: Item
-  state: NodeState
-  treeState: TreeState
+  children: React.ReactNode
+  node: Item
+  state: ItemState<Item>
+  treeState: TreeState<unknown, unknown>
 }
 
 export default function NodeUI(props: NodeProps): JSX.Element {
@@ -41,8 +42,7 @@ export default function NodeUI(props: NodeProps): JSX.Element {
 
   return (
     <g style={{ transform: getTransform() }} {...dragBind()}>
-      <rect width='100' height='100' fill='red' />
-      <text>{props.item.name}</text>
+      {props.children}
     </g>
   )
 

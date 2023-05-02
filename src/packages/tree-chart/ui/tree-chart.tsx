@@ -1,6 +1,6 @@
 import { createElement, useEffect, useRef } from 'react'
 
-import { EventNames, State } from '~/packages/chart'
+import { State as ChartState, EventNames } from '~/packages/chart'
 import { Id } from '~/utils/core'
 import { Dictionary } from '~/utils/dictionary'
 import { useForceUpdate } from '~/utils/hooks'
@@ -9,7 +9,7 @@ import { useZoom } from '../lib/use-zoom'
 
 interface TreeChartProps<D extends { id: Id }, P> {
   data: Dictionary<D>
-  state: State
+  state: ChartState<unknown, unknown>
   nodeProps: P
   renderNode: (props: { node: D; data: Dictionary<D> } & P) => JSX.Element
 }

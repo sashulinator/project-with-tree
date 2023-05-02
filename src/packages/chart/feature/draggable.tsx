@@ -3,21 +3,21 @@ import { useDrag } from '@use-gesture/react'
 
 import React, { useRef } from 'react'
 
-import { State, Translate } from '~/packages/chart'
+import { State as ChartState, Translate } from '~/packages/chart'
 import { Any } from '~/utils/core'
 
 interface DraggableProps {
-  state: State
+  chartState: ChartState<unknown, unknown>
   children: (props: Any) => React.ReactNode
 }
 
 export function Draggable(props: DraggableProps): JSX.Element {
-  const { state, children } = props
+  const { chartState: state, children } = props
   const xyRef = useRef<Translate | null>(null)
 
   const dragBind = useDrag((event): void => {
     if (xyRef.current === null) {
-      xyRef.current = props.state.translate
+      xyRef.current = props.chartState.translate
     }
 
     const x = (xyRef.current?.x || 0) + event.movement[0]

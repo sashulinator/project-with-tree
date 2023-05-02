@@ -13,10 +13,16 @@ export const decision: Decision = {
         condition: 'age > 10',
       },
       children: ['id2', 'id3'],
-      links: {
-        true: 'id2',
-        false: 'id3',
-      },
+      links: [
+        {
+          id: 'id2',
+          type: 'true',
+        },
+        {
+          id: 'id3',
+          type: 'false',
+        },
+      ],
     },
     {
       type: 'VOID',

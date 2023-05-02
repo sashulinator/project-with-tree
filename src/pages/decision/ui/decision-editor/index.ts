@@ -1,1 +1,1 @@
-export { default } from './ui/decision-tree'
+export { default } from './ui/decision-editor'
