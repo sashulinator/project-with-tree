@@ -28,7 +28,7 @@ export default function DecisionPage(): JSX.Element {
     <main className='DecisionPage'>
       {/* <TreePanel test={undefined} /> */}
       <Preview chartState={chartState} />
-      <PropsPanel chartState={chartState} />
+      {/* <PropsPanel chartState={chartState} /> */}
     </main>
   )
 }

@@ -16,7 +16,7 @@ export interface StateProps {
   position: Position
 }
 
-export class State<D extends Position> extends EmittableState<D, Events> {
+export class State<D> extends EmittableState<D, Events> {
   position: Position
 
   constructor(data: D, props: StateProps) {

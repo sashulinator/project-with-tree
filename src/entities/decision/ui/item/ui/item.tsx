@@ -10,7 +10,6 @@ import { useForceUpdate } from '~/utils/hooks'
 
 export interface NodeProps {
   children: React.ReactNode
-  node: Item
   state: ItemState<Item>
   treeState: TreeState<unknown, unknown>
 }

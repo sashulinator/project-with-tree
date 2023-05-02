@@ -5,12 +5,12 @@ import { useForceUpdate } from '~/utils/hooks'
 import { setRefs } from '~/utils/react'
 
 export interface ChartProps extends React.SVGAttributes<SVGSVGElement> {
-  chartState: ChartState<unknown, unknown>
+  state: ChartState<unknown, unknown>
   children: React.ReactNode
 }
 
 function ChartComponent(props: ChartProps, ref: ForwardedRef<SVGSVGElement>): JSX.Element {
-  const { chartState: state, children, ...svgProps } = props
+  const { state: state, children, ...svgProps } = props
   const svgRef = useRef<null | SVGSVGElement>(null)
 
   const update = useForceUpdate()
