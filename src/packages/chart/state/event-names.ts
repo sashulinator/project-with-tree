@@ -1,8 +1,6 @@
 export enum EventNames {
   setScale = 'setScale',
   setTranslate = 'setTranslate',
-  addItem = 'addItem',
+  setItemStates = 'setItemStates',
   select = 'select',
-  unselect = 'unselect',
-  selectToggle = 'selectToggle',
 }

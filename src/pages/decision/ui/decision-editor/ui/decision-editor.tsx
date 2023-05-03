@@ -6,7 +6,7 @@ import { State as ItemState } from '~/packages/tree-chart-item'
 import ChartLink, { ChartLinkProps } from '~/ui/chart-link'
 import Chart from '~/ui/chart/ui/chart'
 import { assertDefined } from '~/utils/core'
-import { useForceUpdate } from '~/utils/hooks'
+import { useEventListener, useForceUpdate } from '~/utils/hooks'
 
 interface DecisionEditorProps {
   chartState: ChartState<Decision, ItemState<Item>>
@@ -18,7 +18,17 @@ export default function DecisionEditor(props: DecisionEditorProps): JSX.Element 
   const update = useForceUpdate()
 
   useEffect(() => {
-    props.chartState.mitt.on(EventNames.addItem, update)
+    props.chartState.mitt.on(EventNames.setItemStates, update)
+  })
+
+  useEventListener('keydown', (e) => {
+    if (e.metaKey && e.key === 'z') {
+      if (e.shiftKey) {
+        props.chartState.nextHistory()
+      } else {
+        props.chartState.prevHistory()
+      }
+    }
   })
 
   const links = useMemo(() => {

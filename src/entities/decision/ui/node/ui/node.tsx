@@ -30,9 +30,9 @@ export default function Node(props: ItemNodeProps): JSX.Element {
 
   function onNodeClick(e: MouseEvent): void {
     if (e.metaKey) {
-      props.treeState.mitt.emit(EventNames.selectToggle, props.state.data)
+      props.treeState.selectToggle(props.state.data.id)
     } else {
-      props.treeState.mitt.emit(EventNames.select, { ids: [props.state.data.id] })
+      props.treeState.select([props.state.data.id])
     }
   }
 }

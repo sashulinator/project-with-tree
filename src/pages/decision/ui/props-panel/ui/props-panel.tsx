@@ -27,6 +27,6 @@ export default function PropsPanelProps(props: PropsPanelPropsProps): JSX.Elemen
       x: 10,
       y: 400,
     }
-    props.chartState.addItem(id, new ItemState(decision, { position: decision }))
+    props.chartState.addItemState(id, new ItemState(decision, { position: decision }))
   }
 }

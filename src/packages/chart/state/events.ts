@@ -6,8 +6,6 @@ import { Translate } from './state'
 export type Events<S> = {
   [EventNames.setScale]: { scale: number }
   [EventNames.setTranslate]: { translate: Translate }
-  [EventNames.addItem]: { id: Id; state: S }
+  [EventNames.setItemStates]: { itemStates: Record<Id, S> }
   [EventNames.select]: { ids: Id[] }
-  [EventNames.unselect]: { ids: Id[] }
-  [EventNames.selectToggle]: { id: Id }
 }

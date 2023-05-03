@@ -1,5 +1,8 @@
 import { Id } from '~/utils/core'
+import { add, remove } from '~/utils/dictionary'
 import { EmittableState } from '~/utils/emittable-state/emmitable-state'
+import { emptyFn } from '~/utils/function/empty-fn'
+import { History } from '~/utils/history'
 
 import { EventNames } from './event-names'
 import { Events } from './events'
@@ -7,6 +10,11 @@ import { Events } from './events'
 export interface Translate {
   x: number
   y: number
+}
+
+export interface HistoryItem {
+  setCurrent: () => void
+  setPrevious: () => void
 }
 
 export interface StateProps<S> {
@@ -24,13 +32,33 @@ export class State<D, S> extends EmittableState<D, Events<S>> {
 
   itemStates: Record<Id, S>
 
+  history: History<HistoryItem>
+
   constructor(data: D, props: StateProps<S>) {
     super(data)
     this.subscribe()
-    this.selected = []
-    this.itemStates = props.itemStates
+
     this.scale = props.scale
     this.translate = props.translate
+
+    const initSelected = []
+    const initItemStates = props.itemStates
+
+    this.selected = initSelected
+    this.itemStates = initItemStates
+
+    this.history = new History<HistoryItem>({
+      index: 0,
+      array: [
+        {
+          setPrevious: emptyFn,
+          setCurrent: (): void => {
+            this.mitt.emit(EventNames.setItemStates, { itemStates: initItemStates })
+            this.mitt.emit(EventNames.select, { ids: initSelected })
+          },
+        },
+      ],
+    })
   }
 
   private subscribe = (): void => {
@@ -40,23 +68,32 @@ export class State<D, S> extends EmittableState<D, Events<S>> {
     this.mitt.on(EventNames.setTranslate, (event) => {
       this.translate = event.translate
     })
-    this.mitt.on(EventNames.addItem, (event) => {
-      this.itemStates[event.id] = event.state
+    this.mitt.on(EventNames.setItemStates, (event) => {
+      this.itemStates = event.itemStates
     })
     this.mitt.on(EventNames.select, (event) => {
       this.selected = event.ids
     })
-    this.mitt.on(EventNames.unselect, (event) => {
-      this.mitt.emit(EventNames.select, { ids: this.selected.filter((s) => !event.ids.includes(s)) })
-    })
-    this.mitt.on(EventNames.selectToggle, (event) => {
-      const isIncludes = this.selected.includes(event.id)
-      isIncludes
-        ? this.mitt.emit(EventNames.unselect, { ids: [event.id] })
-        : this.mitt.emit(EventNames.select, { ids: [...this.selected, event.id] })
-    })
   }
 
+  // History
+  addHistory<E extends EventNames>(eventName: E, currentEvent: Events<S>[E], prevEvent: Events<S>[E]): void {
+    const setCurrent = (): void => this.mitt.emit(eventName, currentEvent)
+    const setPrevious = (): void => this.mitt.emit(eventName, prevEvent)
+    this.history.add({ setCurrent, setPrevious })
+  }
+
+  prevHistory(): void {
+    this.history.getCurrent().setPrevious()
+    this.history.previous()
+  }
+
+  nextHistory(): void {
+    this.history.next()
+    this.history.getCurrent().setCurrent()
+  }
+
+  // Camera
   setTranslate = (translate: Translate): void => {
     this.mitt.emit(EventNames.setTranslate, { translate })
   }
@@ -65,19 +102,34 @@ export class State<D, S> extends EmittableState<D, Events<S>> {
     this.mitt.emit(EventNames.setScale, { scale })
   }
 
+  // Select
   select = (ids: Id[]): void => {
+    this.addHistory(EventNames.select, { ids }, { ids: this.selected })
     this.mitt.emit(EventNames.select, { ids })
   }
 
   unselect = (ids: Id[]): void => {
-    this.mitt.emit(EventNames.unselect, { ids })
+    this.select(this.selected.filter((s) => !ids.includes(s)))
   }
 
   selectToggle = (id: Id): void => {
-    this.mitt.emit(EventNames.selectToggle, { id })
+    const isIncludes = this.selected.includes(id)
+    isIncludes ? this.unselect([id]) : this.select([...this.selected, id])
   }
 
-  addItem = (id: Id, state: S): void => {
-    this.mitt.emit(EventNames.addItem, { id, state })
+  // CRUD
+  setItemStates = (itemStates: Record<Id, S>): void => {
+    this.addHistory(EventNames.setItemStates, { itemStates }, { itemStates: this.itemStates })
+    this.mitt.emit(EventNames.setItemStates, { itemStates })
+  }
+
+  addItemState = (id: Id, state: S): void => {
+    const newItemStates = add(this.itemStates, id, state)
+    this.setItemStates(newItemStates)
+  }
+
+  removeItemState = (id: Id): void => {
+    const newItemStates = remove(this.itemStates, id)
+    this.setItemStates(newItemStates)
   }
 }
