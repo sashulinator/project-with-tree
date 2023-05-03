@@ -1,4 +1,4 @@
-import { Id } from '~/utils/core'
+import { Id, assertDefined } from '~/utils/core'
 import { add, remove } from '~/utils/dictionary'
 import { EmittableState } from '~/utils/emittable-state/emmitable-state'
 import { History } from '~/utils/history'
@@ -7,6 +7,11 @@ import { EventNames } from './event-names'
 import { Events } from './events'
 
 export interface Translate {
+  x: number
+  y: number
+}
+
+export interface Position {
   x: number
   y: number
 }
@@ -23,7 +28,12 @@ export interface StateProps<S> {
   itemStates: Record<Id, S>
 }
 
-export class State<D, S> extends EmittableState<D, Events<S>> {
+export interface ItemState {
+  position: Position
+  setPosition: (position: Position) => void
+}
+
+export class State<D, S extends ItemState> extends EmittableState<D, Events<S>> {
   translate: Translate
 
   scale: number
@@ -62,6 +72,11 @@ export class State<D, S> extends EmittableState<D, Events<S>> {
     })
     this.mitt.on(EventNames.select, (event) => {
       this.selected = event.ids
+    })
+    this.mitt.on(EventNames.setItemPosition, (event) => {
+      const state = this.itemStates[event.id]
+      assertDefined(state)
+      state.setPosition(event.position)
     })
   }
 
@@ -129,5 +144,10 @@ export class State<D, S> extends EmittableState<D, Events<S>> {
   removeItemState = (id: Id): void => {
     const newItemStates = remove(this.itemStates, id)
     this.setItemStates(newItemStates)
+  }
+
+  // ItemState
+  setItemPosition(id: Id, position: Position, prevPosition: Position): void {
+    this.addHistory(EventNames.setItemPosition, { id, position }, { id, position: prevPosition })
   }
 }

@@ -6,7 +6,7 @@ import { State } from '~/packages/chart'
 import { Any, isNull } from '~/utils/core'
 
 interface ZoomableProps {
-  state: State<unknown, unknown>
+  state: State<unknown, Any>
   children: (props: Any) => React.ReactNode
 }
 

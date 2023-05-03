@@ -25,8 +25,12 @@ export default function ChartNode(props: ChartNodeProps): JSX.Element {
     if (xyRef.current === null) {
       xyRef.current = props.state.position
     }
-    if (event.last && event.movement[0] === 0 && event.movement[1] === 0 && event.event.type === 'pointerup') {
+    const idle = event.movement[0] === 0 && event.movement[1] === 0
+    if (event.last && idle && event.event.type === 'pointerup') {
       props.onClick(event.event as MouseEvent)
+    }
+    if (idle) {
+      return
     }
     assertNotNull(xyRef.current)
     const mx = (event.movement[0] * 1) / props.treeState.scale
@@ -35,6 +39,9 @@ export default function ChartNode(props: ChartNodeProps): JSX.Element {
     const y = xyRef.current.y + my
     props.state.setPosition({ x, y })
     if (event.last) {
+      if (!idle) {
+        props.treeState.setItemPosition(props.state.data.id, { x, y }, xyRef.current)
+      }
       xyRef.current = null
     }
   })

@@ -7,7 +7,7 @@ import { State as ChartState, Translate } from '~/packages/chart'
 import { Any } from '~/utils/core'
 
 interface DraggableProps {
-  chartState: ChartState<unknown, unknown>
+  chartState: ChartState<unknown, Any>
   children: (props: Any) => React.ReactNode
 }
 
