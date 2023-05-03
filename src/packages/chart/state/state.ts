@@ -1,7 +1,6 @@
 import { Id } from '~/utils/core'
 import { add, remove } from '~/utils/dictionary'
 import { EmittableState } from '~/utils/emittable-state/emmitable-state'
-import { emptyFn } from '~/utils/function/empty-fn'
 import { History } from '~/utils/history'
 
 import { EventNames } from './event-names'
@@ -13,8 +12,9 @@ export interface Translate {
 }
 
 export interface HistoryItem {
-  setCurrent: () => void
-  setPrevious: () => void
+  redo: () => void
+  undo: () => void
+  done: boolean
 }
 
 export interface StateProps<S> {
@@ -47,18 +47,7 @@ export class State<D, S> extends EmittableState<D, Events<S>> {
     this.selected = initSelected
     this.itemStates = initItemStates
 
-    this.history = new History<HistoryItem>({
-      index: 0,
-      array: [
-        {
-          setPrevious: emptyFn,
-          setCurrent: (): void => {
-            this.mitt.emit(EventNames.setItemStates, { itemStates: initItemStates })
-            this.mitt.emit(EventNames.select, { ids: initSelected })
-          },
-        },
-      ],
-    })
+    this.history = new History<HistoryItem>()
   }
 
   private subscribe = (): void => {
@@ -78,19 +67,28 @@ export class State<D, S> extends EmittableState<D, Events<S>> {
 
   // History
   addHistory<E extends EventNames>(eventName: E, currentEvent: Events<S>[E], prevEvent: Events<S>[E]): void {
-    const setCurrent = (): void => this.mitt.emit(eventName, currentEvent)
-    const setPrevious = (): void => this.mitt.emit(eventName, prevEvent)
-    this.history.add({ setCurrent, setPrevious })
+    const redo = (): void => {
+      this.mitt.emit(eventName, currentEvent)
+      item.done = true
+    }
+    const undo = (): void => {
+      this.mitt.emit(eventName, prevEvent)
+      item.done = false
+    }
+    const item: HistoryItem = { done: true, redo, undo }
+    this.history.add(item)
   }
 
   prevHistory(): void {
-    this.history.getCurrent().setPrevious()
+    const { done, undo } = this.history.getCurrent()
     this.history.previous()
+    done ? undo() : this.history.getCurrent()?.undo()
   }
 
   nextHistory(): void {
+    const { done, redo } = this.history.getCurrent()
     this.history.next()
-    this.history.getCurrent().setCurrent()
+    done ? this.history.getCurrent()?.redo() : redo()
   }
 
   // Camera
