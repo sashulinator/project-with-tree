@@ -1,4 +1,6 @@
 /* eslint-disable eslint-comments/disable-enable-pair, @typescript-eslint/unbound-method */
+import { useWheel } from '@use-gesture/react'
+
 import { select as d3select, zoom as d3zoom, zoomIdentity } from 'd3'
 import React, { useLayoutEffect, useRef } from 'react'
 
@@ -14,28 +16,20 @@ export function Zoomable(props: ZoomableProps): JSX.Element {
   const svgRef = useRef<null | SVGSVGElement>(null)
 
   useLayoutEffect(() => {
-    if (isNull(svgRef.current)) return
+    if (svgRef.current === null) return
 
-    const svg = d3select<SVGElement, unknown>(svgRef.current)
-    const z = d3zoom<SVGElement, unknown>()
+    function wheeled(event: WheelEvent): void {
+      event.preventDefault()
+      event.stopPropagation()
+      const ret = props.state.scale + event.deltaY / 777
+      if (ret > 1 || ret < 0.1) return
+      props.state.setScale(ret)
+    }
 
-    // Sets initial offset, so that first pan and zoom does not jump back to default [0,0] coords.
-    svg.call(
-      z.transform,
-      zoomIdentity.translate(props.state.translate.x, props.state.translate.y).scale(props.state.scale)
-    )
+    svgRef.current.addEventListener('wheel', wheeled)
 
-    svg.call(
-      z
-        .scaleExtent([0.1, 1])
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-argument, @typescript-eslint/no-unsafe-member-access
-        .filter((event) => event?.type === 'wheel')
-        .on('zoom', (event: Any) => {
-          // eslint-disable-next-line @typescript-eslint/no-unsafe-argument, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-assignment
-          props.state.setScale(event.transform.k)
-        })
-    )
-  }, [])
+    return () => svgRef.current?.removeEventListener('wheel', wheeled)
+  })
 
   return <>{props.children({ ref: svgRef })}</>
 }
