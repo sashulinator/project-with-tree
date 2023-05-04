@@ -17,7 +17,7 @@ export default function DecisionPage(): JSX.Element {
   const itemStates = useMemo(() => {
     return decision.data.reduce<Record<Id, ItemState<Item>>>((acc, item) => {
       if (isLinkedNode(item)) return acc
-      acc[item.id] = new ItemState(item, { position: item })
+      acc[item.id] = new ItemState(item, { position: item, id: item.id })
       return acc
     }, {})
   }, [decision.data])

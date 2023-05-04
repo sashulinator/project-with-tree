@@ -27,7 +27,7 @@ export default function Node(props: ItemNodeProps): JSX.Element {
 
   // Private
 
-  function onNodeClick(e: MouseEvent): void {
+  function onNodeClick(e: React.MouseEvent<SVGGElement>): void {
     if (e.metaKey) {
       props.treeState.selectToggle(props.state.data.id)
     } else {
