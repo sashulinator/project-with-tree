@@ -1,11 +1,8 @@
 /* eslint-disable eslint-comments/disable-enable-pair, @typescript-eslint/unbound-method */
-import { useWheel } from '@use-gesture/react'
-
-import { select as d3select, zoom as d3zoom, zoomIdentity } from 'd3'
 import React, { useLayoutEffect, useRef } from 'react'
 
-import { State } from '~/packages/chart'
-import { Any, isNull } from '~/utils/core'
+import { Any } from '~/utils/core'
+import { State } from '~/widgets/chart'
 
 interface ZoomableProps {
   state: State<unknown, Any>

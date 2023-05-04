@@ -1,5 +1,5 @@
-import { Position } from '~/packages/chart-item'
 import { Id } from '~/utils/core'
+import { Position } from '~/widgets/chart-item'
 
 import { EventNames } from './event-names'
 import { Translate } from './state'

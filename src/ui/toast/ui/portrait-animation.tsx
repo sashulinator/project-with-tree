@@ -2,7 +2,7 @@ import './portrait-animation.scss'
 
 import { a, useSpring } from '@react-spring/web'
 
-import { Toast } from '~/packages/toast'
+import { Toast } from '~/widgets/toast'
 
 interface ToastPortraitProps {
   toast: Toast

@@ -1,7 +1,7 @@
 import { ForwardedRef, forwardRef, useEffect } from 'react'
 
-import { EventNames } from '~/packages/chart-item'
 import { useForceUpdate } from '~/utils/hooks'
+import { EventNames } from '~/widgets/chart-item'
 
 import { ChartItemProps } from '../types/chart-item-props'
 

@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 
-import { EventNames, State } from '~/packages/chart-item'
 import { useForceUpdate } from '~/utils/hooks'
+import { EventNames, State } from '~/widgets/chart-item'
 
 export interface ChartLinkProps<T> {
   targetState: State<T>

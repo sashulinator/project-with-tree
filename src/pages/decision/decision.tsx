@@ -4,9 +4,9 @@ import { useMemo } from 'react'
 
 import { Item, isLinkedNode } from '~/entities/decision'
 import { decision } from '~/entities/decision/mock'
-import { State as ChartState } from '~/packages/chart'
-import { State as ItemState } from '~/packages/chart-item'
 import { Id } from '~/utils/core'
+import { State as ChartState } from '~/widgets/chart'
+import { State as ItemState } from '~/widgets/chart-item'
 
 import Preview from './ui/decision-editor'
 import PropsPanel from './ui/props-panel'

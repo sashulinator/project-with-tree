@@ -1,4 +1,4 @@
-import AbstractChart, { ChartProps, Draggable, Zoomable } from '~/packages/chart'
+import AbstractChart, { ChartProps, Draggable, Zoomable } from '~/widgets/chart'
 
 export default function Chart(props: ChartProps): JSX.Element {
   return (

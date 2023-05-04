@@ -3,8 +3,8 @@ import { useDrag } from '@use-gesture/react'
 
 import React, { useRef } from 'react'
 
-import { State as ChartState, Translate } from '~/packages/chart'
 import { Any } from '~/utils/core'
+import { State as ChartState, Translate } from '~/widgets/chart'
 
 interface DraggableProps {
   chartState: ChartState<unknown, Any>
