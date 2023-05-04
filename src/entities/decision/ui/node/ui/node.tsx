@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 
 import { EventNames, State as TreeState } from '~/packages/chart'
 import { State as ItemState } from '~/packages/tree-chart-item'
-import ChartNode from '~/ui/chart-node'
+import ChartNode from '~/ui/chart-item'
 import { Any } from '~/utils/core'
 
 import { Item } from '../../../types/item'

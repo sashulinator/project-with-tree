@@ -2,20 +2,13 @@ import { useDrag } from '@use-gesture/react'
 
 import { useEffect, useRef } from 'react'
 
-import { Item } from '~/entities/decision'
-import { State as TreeState } from '~/packages/chart'
-import { EventNames, State as ItemState, Position } from '~/packages/tree-chart-item'
-import { Any, assertNotNull } from '~/utils/core'
+import { EventNames, Position } from '~/packages/tree-chart-item'
+import { assertNotNull } from '~/utils/core'
 import { useForceUpdate } from '~/utils/hooks'
 
-export interface ChartNodeProps {
-  onClick: (event: MouseEvent) => void
-  children: React.ReactNode
-  state: ItemState<Item>
-  treeState: TreeState<Any, Any>
-}
+import { ChartItemProps } from '../types/chart-item-props'
 
-export default function ChartNode(props: ChartNodeProps): JSX.Element {
+export default function ChartItem(props: ChartItemProps): JSX.Element {
   const xyRef = useRef<Position | null>(null)
   const update = useForceUpdate()
 
