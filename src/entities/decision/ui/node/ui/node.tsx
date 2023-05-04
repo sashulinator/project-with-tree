@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react'
 
+import ChartItem from '~/ui/chart-item'
 import { Any } from '~/utils/core'
 import { EventNames, State as TreeState } from '~/widgets/chart'
-import ChartItem, { State as ItemState } from '~/widgets/chart-item'
+import { State as ItemState } from '~/widgets/chart-item'
 
 import { Item } from '../../../types/item'
 
@@ -19,7 +20,7 @@ export default function Node(props: ItemNodeProps): JSX.Element {
   })
 
   return (
-    <ChartItem onClick={onNodeClick} state={props.state}>
+    <ChartItem onMouseDown={onNodeClick} state={props.state} chartState={props.treeState}>
       <rect width={props.state.width} height={props.state.height} fill={isSelected ? 'red' : 'blue'} />
       <text>{props.state.data.id}</text>
     </ChartItem>

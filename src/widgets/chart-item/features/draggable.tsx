@@ -2,21 +2,32 @@ import { useDrag } from '@use-gesture/react'
 
 import React, { useRef } from 'react'
 
-import { Any, Id, assertNotNull } from '~/utils/core'
+import { Id, assertNotNull } from '~/utils/core'
 
 import { State } from '../state'
 import { Position } from '../types/position'
 
-interface DraggableProps {
-  children: (props: Any) => React.ReactNode
+export interface DraggableProps {
   state: State<unknown>
   chartState: {
     scale: number
     setItemPosition: (id: Id, position: Position, previousPosition: Position) => void
   }
+  children: (
+    props: Pick<
+      React.HTMLAttributes<SVGGElement>,
+      | 'onKeyDown'
+      | 'onKeyUp'
+      | 'onLostPointerCapture'
+      | 'onPointerCancel'
+      | 'onPointerDown'
+      | 'onPointerMove'
+      | 'onPointerUp'
+    >
+  ) => React.ReactNode
 }
 
-export default function Draggable(props: DraggableProps): JSX.Element {
+export function Draggable(props: DraggableProps): JSX.Element {
   const xyRef = useRef<Position | null>(null)
 
   const dragBind = useDrag((event): void => {
@@ -42,5 +53,5 @@ export default function Draggable(props: DraggableProps): JSX.Element {
     }
   })
 
-  return <>{props.children({ ...dragBind() })}</>
+  return <>{props.children(dragBind())}</>
 }
