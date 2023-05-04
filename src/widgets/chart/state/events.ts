@@ -1,5 +1,7 @@
+import { Any } from '@react-spring/types'
+
 import { Id } from '~/utils/core'
-import { Position } from '~/widgets/chart-item'
+import { Dictionary } from '~/utils/dictionary'
 
 import { EventNames } from './event-names'
 import { Translate } from './state'
@@ -9,5 +11,5 @@ export type Events<S> = {
   [EventNames.setTranslate]: { translate: Translate }
   [EventNames.setItemStates]: { itemStates: Record<Id, S> }
   [EventNames.select]: { ids: Id[] }
-  [EventNames.setItemPosition]: { id: Id; position: Position }
+  [EventNames.setItemState]: { id: Id; eventName: string; event: Dictionary<Any> }
 }

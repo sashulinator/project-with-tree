@@ -1,5 +1,7 @@
-import { Id, assertDefined } from '~/utils/core'
-import { add, remove } from '~/utils/dictionary'
+import { Emitter } from 'mitt'
+
+import { Any, Id } from '~/utils/core'
+import { Dictionary, add, remove } from '~/utils/dictionary'
 import { EmittableState } from '~/utils/emittable-state/emittable-state'
 import { ActionHistory } from '~/utils/history'
 
@@ -29,8 +31,7 @@ export interface StateProps<S> {
 }
 
 export interface ItemState {
-  position: Position
-  setPosition: (position: Position) => void
+  mitt: Emitter<Any>
 }
 
 export class State<D, S extends ItemState> extends EmittableState<D, Events<S>> {
@@ -73,23 +74,27 @@ export class State<D, S extends ItemState> extends EmittableState<D, Events<S>> 
     this.mitt.on(EventNames.select, (event) => {
       this.selected = event.ids
     })
-    this.mitt.on(EventNames.setItemPosition, (event) => {
+    this.mitt.on(EventNames.setItemState, (event) => {
       const state = this.itemStates[event.id]
-      assertDefined(state)
-      state.setPosition(event.position)
+      state.mitt.emit(event.eventName, event.event)
     })
   }
 
   // History
-  addHistory<E extends EventNames>(eventName: E, currentEvent: Events<S>[E], prevEvent: Events<S>[E]): void {
+  addHistory<E extends EventNames>(eventName: E, redoEvent: Events<S>[E], undoEvent: Events<S>[E]): void {
     const redo = (): void => {
-      this.mitt.emit(eventName, currentEvent)
+      this.mitt.emit(eventName, redoEvent)
     }
     const undo = (): void => {
-      this.mitt.emit(eventName, prevEvent)
+      this.mitt.emit(eventName, undoEvent)
     }
     this.history.add(redo, undo)
     this.history.redo()
+  }
+
+  setItemState<E extends string>(id: Id, eventName: E, redoEvent: Dictionary<Any>, undoEvent: Dictionary<Any>): void {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+    this.addHistory(EventNames.setItemState, { id, eventName, event: redoEvent }, { id, eventName, event: undoEvent })
   }
 
   // Camera
@@ -128,10 +133,5 @@ export class State<D, S extends ItemState> extends EmittableState<D, Events<S>> 
   removeItemState = (id: Id): void => {
     const newItemStates = remove(this.itemStates, id)
     this.setItemStates(newItemStates)
-  }
-
-  // ItemState
-  setItemPosition(id: Id, position: Position, prevPosition: Position): void {
-    this.addHistory(EventNames.setItemPosition, { id, position }, { id, position: prevPosition })
   }
 }

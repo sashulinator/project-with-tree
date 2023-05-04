@@ -3,5 +3,5 @@ export enum EventNames {
   setTranslate = 'setTranslate',
   setItemStates = 'setItemStates',
   select = 'select',
-  setItemPosition = 'setItemPosition',
+  setItemState = 'setItemState',
 }

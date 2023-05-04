@@ -1,15 +1,16 @@
 import React from 'react'
 
-import { Id } from '~/utils/core'
+import { Any, Id } from '~/utils/core'
+import { Dictionary } from '~/utils/dictionary'
 import { fns } from '~/utils/function'
-import WChartItem, { Draggable, Position, State } from '~/widgets/chart-item'
+import WChartItem, { Draggable, State } from '~/widgets/chart-item'
 
 export interface ChartItemProps extends React.HTMLAttributes<SVGGElement> {
   children: React.ReactNode
   state: State<unknown>
   chartState: {
     scale: number
-    setItemPosition: (id: Id, position: Position, previousPosition: Position) => void
+    setItemState: (id: Id, eventName: string, redoEvent: Dictionary<Any>, undoEvent: Dictionary<Any>) => void
   }
 }
 
