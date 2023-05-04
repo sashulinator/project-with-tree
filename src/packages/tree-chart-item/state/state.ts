@@ -18,12 +18,16 @@ export interface StateProps {
 
 export class State<D> extends EmittableState<D, Events> {
   position: Position
+  height: number
+  width: number
 
   constructor(data: D, props: StateProps) {
     super(data)
     this.subscribe()
 
     this.position = props.position
+    this.height = 100
+    this.width = 200
   }
 
   private subscribe = (): void => {

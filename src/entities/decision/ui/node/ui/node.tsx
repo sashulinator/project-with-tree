@@ -21,7 +21,7 @@ export default function Node(props: ItemNodeProps): JSX.Element {
 
   return (
     <ChartNode onClick={onNodeClick} state={props.state} treeState={props.treeState}>
-      <rect width='200' height='100' fill={isSelected ? 'red' : 'blue'} />
+      <rect width={props.state.width} height={props.state.height} fill={isSelected ? 'red' : 'blue'} />
       <text>{props.state.data.id}</text>
     </ChartNode>
   )
