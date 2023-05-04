@@ -1,7 +1,7 @@
 import { Id, assertDefined } from '~/utils/core'
 import { add, remove } from '~/utils/dictionary'
 import { EmittableState } from '~/utils/emittable-state/emittable-state'
-import { History } from '~/utils/history'
+import { ActionHistory } from '~/utils/history'
 
 import { EventNames } from './event-names'
 import { Events } from './events'
@@ -42,7 +42,7 @@ export class State<D, S extends ItemState> extends EmittableState<D, Events<S>> 
 
   itemStates: Record<Id, S>
 
-  history: History<HistoryItem>
+  history: ActionHistory
 
   constructor(data: D, props: StateProps<S>) {
     super(data)
@@ -57,7 +57,7 @@ export class State<D, S extends ItemState> extends EmittableState<D, Events<S>> 
     this.selected = initSelected
     this.itemStates = initItemStates
 
-    this.history = new History<HistoryItem>()
+    this.history = new ActionHistory()
   }
 
   private subscribe = (): void => {
@@ -84,26 +84,12 @@ export class State<D, S extends ItemState> extends EmittableState<D, Events<S>> 
   addHistory<E extends EventNames>(eventName: E, currentEvent: Events<S>[E], prevEvent: Events<S>[E]): void {
     const redo = (): void => {
       this.mitt.emit(eventName, currentEvent)
-      item.done = true
     }
     const undo = (): void => {
       this.mitt.emit(eventName, prevEvent)
-      item.done = false
     }
-    const item: HistoryItem = { done: true, redo, undo }
-    this.history.add(item)
-  }
-
-  prevHistory(): void {
-    const { done, undo } = this.history.getCurrent()
-    this.history.previous()
-    done ? undo() : this.history.getCurrent()?.undo()
-  }
-
-  nextHistory(): void {
-    const { done, redo } = this.history.getCurrent()
-    this.history.next()
-    done ? this.history.getCurrent()?.redo() : redo()
+    this.history.add(redo, undo)
+    this.history.redo()
   }
 
   // Camera
@@ -118,7 +104,6 @@ export class State<D, S extends ItemState> extends EmittableState<D, Events<S>> 
   // Select
   select = (ids: Id[]): void => {
     this.addHistory(EventNames.select, { ids }, { ids: this.selected })
-    this.mitt.emit(EventNames.select, { ids })
   }
 
   unselect = (ids: Id[]): void => {
@@ -133,7 +118,6 @@ export class State<D, S extends ItemState> extends EmittableState<D, Events<S>> 
   // CRUD
   setItemStates = (itemStates: Record<Id, S>): void => {
     this.addHistory(EventNames.setItemStates, { itemStates }, { itemStates: this.itemStates })
-    this.mitt.emit(EventNames.setItemStates, { itemStates })
   }
 
   addItemState = (id: Id, state: S): void => {

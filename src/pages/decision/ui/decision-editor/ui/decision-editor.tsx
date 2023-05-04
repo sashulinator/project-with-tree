@@ -24,9 +24,9 @@ export default function DecisionEditor(props: DecisionEditorProps): JSX.Element 
   useEventListener('keydown', (e) => {
     if (e.metaKey && e.key === 'z') {
       if (e.shiftKey) {
-        props.chartState.nextHistory()
+        props.chartState.history.next()
       } else {
-        props.chartState.prevHistory()
+        props.chartState.history.prev()
       }
     }
   })
