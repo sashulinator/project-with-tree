@@ -2,7 +2,7 @@ import React, { useEffect, useMemo } from 'react'
 
 import { Decision, Item, Node } from '~/entities/decision'
 import { State as ChartState, EventNames } from '~/packages/chart'
-import { State as ItemState } from '~/packages/tree-chart-item'
+import { State as ItemState } from '~/packages/chart-item'
 import ChartLink, { ChartLinkProps } from '~/ui/chart-link'
 import Chart from '~/ui/chart/ui/chart'
 import { assertDefined } from '~/utils/core'

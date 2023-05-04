@@ -1,4 +1,4 @@
-import { EmittableState } from '~/utils/emittable-state/emmitable-state'
+import { EmittableState } from '~/utils/emittable-state'
 
 import { EventNames } from './event-names'
 import { Events } from './events'

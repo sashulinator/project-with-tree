@@ -2,7 +2,7 @@ import { useDrag } from '@use-gesture/react'
 
 import { useEffect, useRef } from 'react'
 
-import { EventNames, Position } from '~/packages/tree-chart-item'
+import { EventNames, Position } from '~/packages/chart-item'
 import { assertNotNull } from '~/utils/core'
 import { useForceUpdate } from '~/utils/hooks'
 

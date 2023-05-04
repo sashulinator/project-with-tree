@@ -1,4 +1,4 @@
-import { Position } from '~/packages/tree-chart-item'
+import { Position } from '~/packages/chart-item'
 import { Id } from '~/utils/core'
 
 import { EventNames } from './event-names'

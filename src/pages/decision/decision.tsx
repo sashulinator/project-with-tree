@@ -5,7 +5,7 @@ import { useMemo } from 'react'
 import { Item, isLinkedNode } from '~/entities/decision'
 import { decision } from '~/entities/decision/mock'
 import { State as ChartState } from '~/packages/chart'
-import { State as ItemState } from '~/packages/tree-chart-item'
+import { State as ItemState } from '~/packages/chart-item'
 import { Id } from '~/utils/core'
 
 import Preview from './ui/decision-editor'

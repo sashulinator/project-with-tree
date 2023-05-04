@@ -1,6 +1,6 @@
 import { Id, assertDefined } from '~/utils/core'
 import { add, remove } from '~/utils/dictionary'
-import { EmittableState } from '~/utils/emittable-state/emmitable-state'
+import { EmittableState } from '~/utils/emittable-state/emittable-state'
 import { History } from '~/utils/history'
 
 import { EventNames } from './event-names'

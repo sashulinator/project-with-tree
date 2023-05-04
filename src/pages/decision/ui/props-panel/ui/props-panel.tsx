@@ -2,7 +2,7 @@ import uuid from 'uuid-random'
 
 import { Decision, Item } from '~/entities/decision'
 import { State as ChartState } from '~/packages/chart'
-import { State as ItemState } from '~/packages/tree-chart-item'
+import { State as ItemState } from '~/packages/chart-item'
 
 interface PropsPanelPropsProps {
   chartState: ChartState<Decision, ItemState<Item>>
