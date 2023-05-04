@@ -1,12 +1,12 @@
 import React, { useEffect, useMemo } from 'react'
 
 import { Decision, Item, Node } from '~/entities/decision'
-import ChartLink, { ChartLinkProps } from '~/ui/chart-link'
 import Chart from '~/ui/chart/ui/chart'
 import { assertDefined } from '~/utils/core'
 import { useEventListener, useForceUpdate } from '~/utils/hooks'
 import { State as ChartState, EventNames } from '~/widgets/chart'
 import { State as ItemState } from '~/widgets/chart-item'
+import ChartLink, { ChartLinkProps } from '~/widgets/chart-link'
 
 interface DecisionEditorProps {
   chartState: ChartState<Decision, ItemState<Item>>

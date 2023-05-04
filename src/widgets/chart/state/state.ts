@@ -1,5 +1,3 @@
-import { Emitter } from 'mitt'
-
 import { Any, Id } from '~/utils/core'
 import { Dictionary, add, remove } from '~/utils/dictionary'
 import { EmittableState } from '~/utils/emittable-state/emittable-state'
@@ -13,28 +11,13 @@ export interface Translate {
   y: number
 }
 
-export interface Position {
-  x: number
-  y: number
-}
-
-export interface HistoryItem {
-  redo: () => void
-  undo: () => void
-  done: boolean
-}
-
 export interface StateProps<S> {
   translate: Translate
   scale: number
   itemStates: Record<Id, S>
 }
 
-export interface ItemState {
-  mitt: Emitter<Any>
-}
-
-export class State<D, S extends ItemState> extends EmittableState<D, Events<S>> {
+export class State<D, S extends EmittableState<unknown, Any>> extends EmittableState<D, Events<S>> {
   translate: Translate
 
   scale: number
