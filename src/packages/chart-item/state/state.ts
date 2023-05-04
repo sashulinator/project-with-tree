@@ -1,16 +1,8 @@
 import { EmittableState } from '~/utils/emittable-state'
 
+import { Position } from '../types/position'
 import { EventNames } from './event-names'
 import { Events } from './events'
-
-export interface Position {
-  x: number
-  y: number
-}
-
-export interface NormalizeRet {
-  position: Position
-}
 
 export interface StateProps {
   position: Position
@@ -34,13 +26,6 @@ export class State<D> extends EmittableState<D, Events> {
     this.mitt.on(EventNames.setPosition, (event) => {
       this.position = event.position
     })
-  }
-
-  normalize = (): D => {
-    return {
-      ...this.data,
-      position: this.position,
-    }
   }
 
   setPosition(position: Position): void {
