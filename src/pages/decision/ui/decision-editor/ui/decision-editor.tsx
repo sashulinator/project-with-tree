@@ -54,7 +54,7 @@ export default function DecisionEditor(props: DecisionEditorProps): JSX.Element 
         return <ChartLink key={`${link.targetState.data.id}${link.sourceState.data.id}`} {...link} />
       })}
       {itemStates.map((state) => {
-        return <Node key={state.data.id} state={state} treeState={props.chartState} />
+        return <Node key={state.data.id} state={state} decisionState={props.chartState} />
       })}
     </Chart>
   )

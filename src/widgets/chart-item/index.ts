@@ -1,6 +1,7 @@
 export { default } from './ui/chart-item'
 
 export * from './features/draggable'
+export * from './features/selectable'
 
 export * from './state'
 

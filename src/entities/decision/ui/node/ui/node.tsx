@@ -1,38 +1,35 @@
-import { useEffect, useState } from 'react'
-
 import ChartItem from '~/ui/chart-item'
 import { Any } from '~/utils/core'
-import { EventNames, State as TreeState } from '~/widgets/chart'
+import { State as TreeState } from '~/widgets/chart'
 import { State as ItemState } from '~/widgets/chart-item'
+import Selectable from '~/widgets/chart-item/features/selectable'
 
 import { Item } from '../../../types/item'
 
 export interface ItemNodeProps {
   state: ItemState<Item>
-  treeState: TreeState<Any, Any>
+  decisionState: TreeState<Any, Any>
 }
 
 export default function Node(props: ItemNodeProps): JSX.Element {
-  const [isSelected, select] = useState(false)
-
-  useEffect(() => {
-    props.treeState.mitt.on(EventNames.select, ({ ids }) => select(ids.includes(props.state.data.id)))
-  })
-
   return (
-    <ChartItem onMouseDown={onNodeClick} state={props.state} chartState={props.treeState}>
-      <rect width={props.state.width} height={props.state.height} fill={isSelected ? 'red' : 'blue'} />
-      <text>{props.state.data.id}</text>
-    </ChartItem>
+    <Selectable id={props.state.id} chartState={props.decisionState}>
+      {(selectableProps): JSX.Element => {
+        return (
+          <ChartItem
+            onMouseDown={(e): void => selectableProps.selectOnMouseAction(e)}
+            state={props.state}
+            chartState={props.decisionState}
+          >
+            <rect
+              width={props.state.width}
+              height={props.state.height}
+              fill={selectableProps.isSelected ? 'red' : 'blue'}
+            />
+            <text>{props.state.data.id}</text>
+          </ChartItem>
+        )
+      }}
+    </Selectable>
   )
-
-  // Private
-
-  function onNodeClick(e: React.MouseEvent<SVGGElement>): void {
-    if (e.metaKey) {
-      props.treeState.selectToggle(props.state.data.id)
-    } else {
-      props.treeState.select([props.state.data.id])
-    }
-  }
 }
