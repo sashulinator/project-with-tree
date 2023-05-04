@@ -5,6 +5,9 @@ import { EventNames } from '~/widgets/chart-item'
 
 import { ChartItemProps } from '../types/chart-item-props'
 
+/**
+ * Основываясь на state отрисовывает Item в нужном месте
+ */
 function ChartItemComponent(props: ChartItemProps, ref: ForwardedRef<SVGGElement>): JSX.Element {
   const { state, ...gProps } = props
 
@@ -27,7 +30,9 @@ function ChartItemComponent(props: ChartItemProps, ref: ForwardedRef<SVGGElement
   // Private
 
   function getTransform(): string {
-    return `translate(${props.state.position.x}px, ${props.state.position.y}px)`
+    const x = props.state.position.x - props.state.width / 2
+    const y = props.state.position.y - props.state.height / 2
+    return `translate(${x}px, ${y}px)`
   }
 
   function subscribeOnUpdates(): void {
