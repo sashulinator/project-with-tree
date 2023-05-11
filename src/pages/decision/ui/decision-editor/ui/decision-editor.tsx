@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo } from 'react'
 
-import { Decision, Item, Node } from '~/entities/decision'
+import { Decision, Node, Point } from '~/entities/decision'
 import Chart from '~/ui/chart/ui/chart'
 import { assertDefined } from '~/utils/core'
 import { useEventListener, useForceUpdate } from '~/utils/hooks'
@@ -9,7 +9,7 @@ import { State as ItemState } from '~/widgets/chart-item'
 import ChartLink, { ChartLinkProps } from '~/widgets/chart-link'
 
 interface DecisionEditorProps {
-  chartState: ChartState<Decision, ItemState<Item>>
+  chartState: ChartState<Decision, ItemState<Point>>
 }
 
 export default function DecisionEditor(props: DecisionEditorProps): JSX.Element {
@@ -32,11 +32,11 @@ export default function DecisionEditor(props: DecisionEditorProps): JSX.Element 
   })
 
   const links = useMemo(() => {
-    return itemStates.reduce<ChartLinkProps<Item>[]>((acc, sourceState) => {
+    return itemStates.reduce<ChartLinkProps<Point>[]>((acc, sourceState) => {
       const linksProps = sourceState.data.links?.map((link) => {
         const targetState = props.chartState.itemStates[link.id]
         assertDefined(targetState)
-        const linkProps: ChartLinkProps<Item> = {
+        const linkProps: ChartLinkProps<Point> = {
           targetState,
           sourceState,
           link,

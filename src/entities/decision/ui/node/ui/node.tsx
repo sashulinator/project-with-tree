@@ -4,11 +4,11 @@ import { State as TreeState } from '~/widgets/chart'
 import { State as ItemState } from '~/widgets/chart-item'
 import Selectable from '~/widgets/chart-item/features/selectable'
 
-import { Item } from '../../../types/item'
+import { Point } from '../../../../point/types/point'
 import ConditionNode from './condition-node'
 
 export interface ItemNodeProps {
-  state: ItemState<Item>
+  state: ItemState<Point>
   decisionState: TreeState<Any, Any>
 }
 
@@ -31,7 +31,7 @@ export default function Node(props: ItemNodeProps): JSX.Element {
 }
 
 interface FactoryProps {
-  state: ItemState<Item>
+  state: ItemState<Point>
   isSelected: boolean
 }
 

@@ -2,7 +2,7 @@ import './decision.css'
 
 import { useMemo } from 'react'
 
-import { Item, isLinkedNode } from '~/entities/decision'
+import { Point, isLinkedNode } from '~/entities/decision'
 import { decision } from '~/entities/decision/mock'
 import { Id } from '~/utils/core'
 import { State as ChartState } from '~/widgets/chart'
@@ -15,7 +15,7 @@ export default function DecisionPage(): JSX.Element {
   // const { id } = useParams()
 
   const itemStates = useMemo(() => {
-    return decision.data.reduce<Record<Id, ItemState<Item>>>((acc, item) => {
+    return decision.data.reduce<Record<Id, ItemState<Point>>>((acc, item) => {
       if (isLinkedNode(item)) return acc
       acc[item.id] = new ItemState(item, { position: item, id: item.id })
       return acc

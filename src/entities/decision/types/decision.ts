@@ -1,9 +1,11 @@
+import { Point } from '~/entities/point'
 import { Id } from '~/utils/core'
 
-import { Item } from './item'
-import { LinkedItem } from './linked-item'
+import { LinkedItem as LinkedDecision } from './linked-item'
 
 export interface Decision {
   id: Id
-  data: (Item | LinkedItem)[]
+  version: string
+  status: string
+  data: (Point | LinkedDecision)[]
 }

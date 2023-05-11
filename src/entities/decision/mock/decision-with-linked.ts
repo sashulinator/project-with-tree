@@ -2,6 +2,8 @@ import { Decision } from '../types/decision'
 import { decision } from './decision'
 
 export const decisionWithLinked: Decision = {
+  version: '2.0',
+  status: 'DRAFT',
   id: '777',
   data: [
     {

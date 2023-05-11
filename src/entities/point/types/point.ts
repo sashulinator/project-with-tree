@@ -6,7 +6,7 @@ export interface Link {
   id: string
 }
 
-export interface Item<P = Dictionary<Any>> {
+export interface Point<P = Dictionary<Any>> {
   id: Id
   name: string
   type: string

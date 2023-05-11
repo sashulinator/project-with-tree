@@ -2,12 +2,12 @@ import React from 'react'
 
 import { State as ItemState } from '~/widgets/chart-item'
 
-import { Item } from '../../../types/item'
+import { Point } from '../../../../point/types/point'
 import { linkOut } from '../constants/link-out'
 import { getLinkOutProps } from '../lib/get-link-out-position'
 
 interface ConditionNodeProps {
-  state: ItemState<Item>
+  state: ItemState<Point>
   isSelected: boolean
 }
 

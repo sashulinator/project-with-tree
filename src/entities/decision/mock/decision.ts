@@ -2,6 +2,8 @@ import { Decision } from '../types/decision'
 
 export const decision: Decision = {
   id: 'id',
+  version: '2.0',
+  status: 'DRAFT',
   data: [
     {
       type: 'CONDITION',
