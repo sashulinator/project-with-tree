@@ -2,8 +2,10 @@ import { Any, Id } from '~/utils/core'
 import { Dictionary } from '~/utils/dictionary'
 
 export interface Link {
-  type: string
   id: string
+  name: string
+  type: string
+  value: string
 }
 
 export interface Point<P = Dictionary<Any>> {

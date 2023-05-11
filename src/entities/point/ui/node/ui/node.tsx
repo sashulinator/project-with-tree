@@ -1,3 +1,6 @@
+import './node.css'
+
+import clsx from 'clsx'
 import React from 'react'
 
 import { State as ItemState } from '~/widgets/chart-item'
@@ -10,18 +13,16 @@ export interface NodeProps {
 }
 
 export default function Node(props: NodeProps): JSX.Element {
+  const { width, height, data } = props.state
+
   return (
-    <>
-      <rect
-        width={props.state.width}
-        height={props.state.height}
-        fill={'yellow'}
-        stroke='black'
-        strokeWidth={props.isSelected ? '1px' : 0}
-      />
-      <text x={20} y={props.state.height - 30}>
-        {props.state.data.id}
-      </text>
-    </>
+    <foreignObject width={width} height={height}>
+      <div className={clsx('PointNode', props.isSelected && '--selected')} style={{ width, height }}>
+        <div className='name'>{props.state.data.name}</div>
+        {data.links?.map((link) => {
+          return <div key={link.id}>{link.name}</div>
+        })}
+      </div>
+    </foreignObject>
   )
 }

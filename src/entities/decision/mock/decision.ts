@@ -6,9 +6,9 @@ export const decision: Decision = {
   status: 'DRAFT',
   data: [
     {
-      type: 'CONDITION',
-      id: 'id1',
-      name: 'Condition',
+      type: 'MAIN',
+      id: 'main',
+      name: 'MAIN',
       x: 0,
       y: 0,
       props: {
@@ -18,10 +18,14 @@ export const decision: Decision = {
       links: [
         {
           id: 'id2',
+          value: 'test',
+          name: 'rule1',
           type: 'true',
         },
         {
           id: 'id3',
+          value: 'test',
+          name: 'rule2',
           type: 'false',
         },
       ],

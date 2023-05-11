@@ -1,0 +1,17 @@
+.PointNode {
+  background-color: yellow;
+  border-width: 1px;
+  border-style: solid;
+  border-color: transparent;
+}
+
+.PointNode.--selected {
+  border-color: black;
+}
+
+.PointNode .name {
+  height: 3rem;
+  display: flex;
+  align-items: flex-end;
+  margin-bottom: 1rem;
+}

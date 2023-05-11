@@ -38,7 +38,7 @@ interface FactoryProps {
 function Factory(props: FactoryProps): JSX.Element {
   const { type } = props.state.data
 
-  if (type === 'CONDITION') {
+  if (type === 'MAIN') {
     return <PointNode {...props} />
   }
 
