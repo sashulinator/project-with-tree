@@ -1,3 +1,4 @@
+import { PointNode } from '~/entities/point'
 import ChartItem from '~/ui/chart-item'
 import { Any } from '~/utils/core'
 import { State as TreeState } from '~/widgets/chart'
@@ -5,7 +6,6 @@ import { State as ItemState } from '~/widgets/chart-item'
 import Selectable from '~/widgets/chart-item/features/selectable'
 
 import { Point } from '../../../../point/types/point'
-import ConditionNode from './condition-node'
 
 export interface ItemNodeProps {
   state: ItemState<Point>
@@ -39,7 +39,7 @@ function Factory(props: FactoryProps): JSX.Element {
   const { type } = props.state.data
 
   if (type === 'CONDITION') {
-    return <ConditionNode {...props} />
+    return <PointNode {...props} />
   }
 
   return (

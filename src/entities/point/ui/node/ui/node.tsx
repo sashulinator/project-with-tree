@@ -3,24 +3,13 @@ import React from 'react'
 import { State as ItemState } from '~/widgets/chart-item'
 
 import { Point } from '../../../../point/types/point'
-import { linkOut } from '../constants/link-out'
-import { getLinkOutProps } from '../lib/get-link-out-position'
 
-interface ConditionNodeProps {
+export interface NodeProps {
   state: ItemState<Point>
   isSelected: boolean
 }
 
-const links = [
-  {
-    fill: 'red',
-  },
-  {
-    fill: 'green',
-  },
-]
-
-export default function ConditionNode(props: ConditionNodeProps): JSX.Element {
+export default function Node(props: NodeProps): JSX.Element {
   return (
     <>
       <rect
@@ -33,9 +22,6 @@ export default function ConditionNode(props: ConditionNodeProps): JSX.Element {
       <text x={20} y={props.state.height - 30}>
         {props.state.data.id}
       </text>
-      {links.map((link, i) => {
-        return <circle key={link.fill} {...link} {...getLinkOutProps(props.state, i)} />
-      })}
     </>
   )
 }
