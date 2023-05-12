@@ -41,13 +41,15 @@ export default function Node(props: NodeProps): JSX.Element {
         ref={setRefs(props.state.setRef, setRef)}
       >
         <div className='name'>{props.state.data.name}</div>
-        {data.links?.map((link) => {
-          return (
-            <div key={link.id} data-id={link.id}>
-              {link.name}
-            </div>
-          )
-        })}
+        <div className='links'>
+          {data.links?.map((link) => {
+            return (
+              <div key={link.id} data-id={link.id}>
+                {link.name}
+              </div>
+            )
+          })}
+        </div>
       </div>
     </foreignObject>
   )
