@@ -1,7 +1,7 @@
 import './node.css'
 
 import clsx from 'clsx'
-import React, { useRef } from 'react'
+import useMeasure from 'react-use-measure'
 
 import { setRefs } from '~/utils/react'
 import { State as ItemState } from '~/widgets/chart-item'
@@ -13,17 +13,20 @@ export interface NodeProps {
   isSelected: boolean
 }
 
+const WIDTH = 200
+
 export default function Node(props: NodeProps): JSX.Element {
-  const { width, height, data } = props.state
+  const { data } = props.state
+  const [ref, { height }] = useMeasure()
 
   return (
-    <foreignObject width={width} height={height}>
+    <foreignObject width={WIDTH} height={height} style={{ overflow: 'visible' }}>
       <div
         data-id={data.id}
         className={clsx('PointNode', props.isSelected && '--selected')}
-        style={{ width, height }}
+        style={{ width: WIDTH }}
         // eslint-disable-next-line @typescript-eslint/unbound-method
-        ref={setRefs(props.state.setRef)}
+        ref={setRefs(props.state.setRef, ref)}
       >
         <div className='name'>{props.state.data.name}</div>
         {data.links?.map((link) => {

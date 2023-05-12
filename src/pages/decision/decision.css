@@ -1,5 +1,6 @@
 .DecisionPage {
   position: relative;
+  background-color: var(--bgSecondary);
 }
 
 .DecisionPage .TreePanel {
