@@ -37,6 +37,8 @@ function ChartItemComponent(props: ChartItemProps, ref: ForwardedRef<SVGGElement
 
   function subscribeOnUpdates(): void {
     state.mitt.on(EventNames.setPosition, update)
+    state.mitt.on(EventNames.setWidth, update)
+    state.mitt.on(EventNames.setHeight, update)
   }
 }
 

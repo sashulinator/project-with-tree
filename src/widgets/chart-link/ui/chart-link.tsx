@@ -16,6 +16,10 @@ export default function ChartLink<T>(props: ChartLinkProps<T>): JSX.Element {
   useEffect(() => {
     props.targetState.mitt.on(EventNames.setPosition, update)
     props.sourceState.mitt.on(EventNames.setPosition, update)
+    props.targetState.mitt.on(EventNames.setHeight, update)
+    props.sourceState.mitt.on(EventNames.setHeight, update)
+    props.targetState.mitt.on(EventNames.setWidth, update)
+    props.sourceState.mitt.on(EventNames.setWidth, update)
     props.sourceState.mitt.on(EventNames.setRef, update)
   })
 

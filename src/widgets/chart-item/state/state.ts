@@ -8,6 +8,8 @@ import { Events } from './events'
 export interface StateProps {
   id: Id
   position: Position
+  width?: number
+  height?: number
 }
 
 export class State<D> extends EmittableState<D, Events> {
@@ -23,8 +25,8 @@ export class State<D> extends EmittableState<D, Events> {
 
     this.id = props.id
     this.position = props.position
-    this.height = 100
-    this.width = 200
+    this.height = props.width || 0
+    this.width = props.height || 0
     this.ref = { current: null }
   }
 
@@ -32,13 +34,27 @@ export class State<D> extends EmittableState<D, Events> {
     this.mitt.on(EventNames.setPosition, (event) => {
       this.position = event.position
     })
+    this.mitt.on(EventNames.setWidth, (event) => {
+      this.width = event.width
+    })
+    this.mitt.on(EventNames.setHeight, (event) => {
+      this.height = event.height
+    })
     this.mitt.on(EventNames.setRef, (event) => {
       this.ref.current = event.element
     })
   }
 
-  setPosition(position: Position): void {
+  setPosition = (position: Position): void => {
     this.mitt.emit(EventNames.setPosition, { position })
+  }
+
+  setWidth = (width: number): void => {
+    this.mitt.emit(EventNames.setWidth, { width })
+  }
+
+  setHeight = (height: number): void => {
+    this.mitt.emit(EventNames.setHeight, { height })
   }
 
   setRef = (element: HTMLElement): void => {
