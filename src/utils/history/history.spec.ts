@@ -32,8 +32,10 @@ describe(History.name, () => {
     h.next()
     expect(h.getCurrent()).toEqual('b')
     h.add('A')
+    h.next()
+    h.next()
 
     expect(h.getCurrent()).toEqual('A')
-    expect(h.array.length).toEqual(3)
+    expect(h.array).toEqual(['a', 'b', 'A'])
   })
 })

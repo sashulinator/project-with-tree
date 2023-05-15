@@ -1,7 +1,7 @@
+import { ActionHistory } from '~/utils/action-history'
 import { Any, Id } from '~/utils/core'
 import { Dictionary, add, remove } from '~/utils/dictionary'
 import { EmittableState } from '~/utils/emittable-state/emittable-state'
-import { ActionHistory } from '~/utils/history'
 
 import { EventNames } from './event-names'
 import { Events } from './events'

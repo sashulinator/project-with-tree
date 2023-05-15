@@ -1,4 +1,4 @@
-import { History, HistoryProps } from './history'
+import { History, HistoryProps } from '../history/history'
 
 export interface HistoryItem {
   redo: () => void
@@ -14,6 +14,8 @@ export class ActionHistory {
   }
 
   add(onRedo: () => void, onUndo: () => void): void {
+    const isCurrentDone = this.history.getCurrent()?.done
+
     const redo = (): void => {
       onRedo()
       item.done = true
@@ -23,6 +25,11 @@ export class ActionHistory {
       item.done = false
     }
     const item: HistoryItem = { done: true, redo, undo }
+
+    if (!isCurrentDone) {
+      this.history.previous()
+    }
+
     this.history.add(item)
   }
 
