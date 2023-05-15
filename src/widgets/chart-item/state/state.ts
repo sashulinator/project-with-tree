@@ -12,15 +12,17 @@ export interface StateProps {
   height?: number
 }
 
-export class State<D> extends EmittableState<D, Events> {
+export class State<D> extends EmittableState<Events> {
   id: Id
   position: Position
   height: number
   width: number
+  data: D
   ref: { current: null | HTMLElement }
 
   constructor(data: D, props: StateProps) {
-    super(data)
+    super()
+    this.data = data
     this.subscribe()
 
     this.id = props.id

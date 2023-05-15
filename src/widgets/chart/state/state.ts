@@ -17,7 +17,7 @@ export interface StateProps<S> {
   itemStates: Record<Id, S>
 }
 
-export class State<D, S extends EmittableState<unknown, Any>> extends EmittableState<D, Events<S>> {
+export class State<D, S extends EmittableState<Any>> extends EmittableState<Events<S>> {
   translate: Translate
 
   scale: number
@@ -25,11 +25,12 @@ export class State<D, S extends EmittableState<unknown, Any>> extends EmittableS
   selected: Id[]
 
   itemStates: Record<Id, S>
-
+  data: D
   history: ActionHistory
 
   constructor(data: D, props: StateProps<S>) {
-    super(data)
+    super()
+    this.data = data
     this.subscribe()
 
     this.scale = props.scale
