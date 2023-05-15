@@ -33,6 +33,8 @@ export function Draggable(props: DraggableProps): JSX.Element {
 
   const dragBind = useDrag((event): void => {
     event.event.stopPropagation()
+    const target = event.event.target as HTMLElement
+    if (!target.classList.contains('name')) return
 
     const isIdle = event.movement[0] === 0 && event.movement[1] === 0
 

@@ -22,7 +22,13 @@ export default function Node(props: ItemNodeProps): JSX.Element {
             state={props.state}
             chartState={props.decisionState}
           >
-            {<Factory state={props.state} isSelected={selectableProps.isSelected} />}
+            {
+              <Factory
+                state={props.state}
+                decisionState={props.decisionState}
+                isSelected={selectableProps.isSelected}
+              />
+            }
           </ChartItem>
         )
       }}
@@ -32,6 +38,7 @@ export default function Node(props: ItemNodeProps): JSX.Element {
 
 interface FactoryProps {
   state: ItemState<Point>
+  decisionState: TreeState<Any, Any>
   isSelected: boolean
 }
 

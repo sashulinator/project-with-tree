@@ -12,12 +12,18 @@
 }
 
 .PointNode .name {
+  cursor: grab;
+  user-select: none;
   height: 3rem;
   display: flex;
   align-items: flex-end;
-  margin-bottom: 1rem;
+  margin-bottom: 0.5rem;
   padding: 8px;
   border-top-left-radius: 8px;
   border-top-right-radius: 8px;
   background-color: var(--bg);
+}
+
+.PointNode .links {
+  padding: 8px;
 }
