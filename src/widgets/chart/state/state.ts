@@ -20,7 +20,7 @@ export interface StateProps<S> {
 }
 
 export class State<D, S extends ItemState<Any>> extends EmittableState<Events<S>> {
-  translate: EmittableProp<Translate, Events<S>>
+  translate: EmittableProp<EventNames.setTranslate, Translate>
 
   scale: number
 
@@ -38,7 +38,7 @@ export class State<D, S extends ItemState<Any>> extends EmittableState<Events<S>
     this.subscribe()
 
     this.scale = props.scale
-    this.translate = new EmittableProp(props.translate, EventNames.setTranslate, this)
+    this.translate = new EmittableProp(EventNames.setTranslate, props.translate, this)
 
     const initSelected = []
     const initItemStates = props.itemStates

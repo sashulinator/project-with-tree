@@ -1,15 +1,19 @@
 import { EventType } from 'mitt'
 
-import { EmittableState } from './emittable-state'
+interface EmittableState {
+  emitter: {
+    emit: (eventName: string, event: unknown) => void
+  }
+}
 
-export class EmittableProp<V, E extends Record<EventType, unknown>> {
+export class EmittableProp<N extends string, V> {
   private _value: V
 
-  private emittableState: EmittableState<E>
+  private emittableState: EmittableState
 
-  private eventName: string
+  private eventName: N
 
-  constructor(value: V, eventName: string, state: EmittableState<E>) {
+  constructor(eventName: N, value: V, state: EmittableState) {
     this._value = value
 
     this.emittableState = state
@@ -23,6 +27,6 @@ export class EmittableProp<V, E extends Record<EventType, unknown>> {
 
   set value(value: V) {
     this._value = value
-    this.emittableState.emitter.emit(this.eventName, { value } as any)
+    this.emittableState.emitter.emit(this.eventName, { value })
   }
 }
