@@ -26,7 +26,7 @@ export default function DecisionEditor(props: DecisionEditorProps): JSX.Element 
       if (e.shiftKey) {
         props.chartState.history.next()
       } else {
-        props.chartState.history.prev()
+        props.chartState.history.previous()
       }
     }
   })

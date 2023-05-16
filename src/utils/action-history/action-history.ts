@@ -34,7 +34,7 @@ export class ActionHistory {
     onRedo()
   }
 
-  prev(): void {
+  previous(): void {
     const { done, undo } = this.history.getCurrent()
     this.history.previous()
     done ? undo() : this.history.getCurrent()?.undo()

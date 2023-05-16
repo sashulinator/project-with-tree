@@ -27,11 +27,11 @@ describe(History.name, () => {
 
     expect(str).toBe('aBCD')
 
-    h.prev()
+    h.previous()
 
     expect(str).toBe('aBC')
 
-    h.prev()
+    h.previous()
 
     expect(str).toBe('aB')
 
@@ -40,13 +40,13 @@ describe(History.name, () => {
 
     expect(str).toBe('aBCD')
 
-    h.prev()
-    h.prev()
-    h.prev()
+    h.previous()
+    h.previous()
+    h.previous()
     // that prevs does not exists
-    h.prev()
-    h.prev()
-    h.prev()
+    h.previous()
+    h.previous()
+    h.previous()
 
     expect(str).toBe('a')
 
@@ -59,13 +59,13 @@ describe(History.name, () => {
     h.next()
     expect(str).toBe('aBCD')
 
-    h.prev()
-    h.prev()
-    h.prev()
+    h.previous()
+    h.previous()
+    h.previous()
     // that prevs does not exists
-    h.prev()
-    h.prev()
-    h.prev()
+    h.previous()
+    h.previous()
+    h.previous()
 
     expect(str).toBe('a')
 
