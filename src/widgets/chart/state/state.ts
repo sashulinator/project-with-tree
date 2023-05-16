@@ -2,6 +2,7 @@ import { ActionHistory } from '~/utils/action-history'
 import { Any, Id } from '~/utils/core'
 import { Dictionary, add, remove } from '~/utils/dictionary'
 import { EmittableState } from '~/utils/emittable-state'
+import { EmittableProp } from '~/utils/emittable-state/emittable-prop'
 import { State as ItemState } from '~/widgets/chart-item'
 
 import { EventNames } from './event-names'
@@ -19,7 +20,7 @@ export interface StateProps<S> {
 }
 
 export class State<D, S extends ItemState<Any>> extends EmittableState<Events<S>> {
-  translate: Translate
+  translate: EmittableProp<Translate, Events<S>>
 
   scale: number
 
@@ -37,7 +38,7 @@ export class State<D, S extends ItemState<Any>> extends EmittableState<Events<S>
     this.subscribe()
 
     this.scale = props.scale
-    this.translate = props.translate
+    this.translate = new EmittableProp(props.translate, EventNames.setTranslate, this)
 
     const initSelected = []
     const initItemStates = props.itemStates
@@ -51,9 +52,6 @@ export class State<D, S extends ItemState<Any>> extends EmittableState<Events<S>
   private subscribe = (): void => {
     this.mitt.on(EventNames.setScale, (event) => {
       this.scale = event.scale
-    })
-    this.mitt.on(EventNames.setTranslate, (event) => {
-      this.translate = event.translate
     })
     this.mitt.on(EventNames.setItemStates, (event) => {
       this.itemStates = event.itemStates
@@ -82,7 +80,7 @@ export class State<D, S extends ItemState<Any>> extends EmittableState<Events<S>
 
   // Camera
   setTranslate = (translate: Translate): void => {
-    this.mitt.emit(EventNames.setTranslate, { translate })
+    this.translate.value = translate
   }
 
   setScale = (scale: number): void => {

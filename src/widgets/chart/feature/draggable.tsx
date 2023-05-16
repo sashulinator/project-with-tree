@@ -17,7 +17,7 @@ export function Draggable(props: DraggableProps): JSX.Element {
 
   const dragBind = useDrag((event): void => {
     if (xyRef.current === null) {
-      xyRef.current = props.chartState.translate
+      xyRef.current = props.chartState.translate.value
     }
 
     const x = (xyRef.current?.x || 0) + event.movement[0]
