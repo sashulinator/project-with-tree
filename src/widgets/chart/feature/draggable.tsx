@@ -19,7 +19,7 @@ export function Draggable(props: DraggableProps): JSX.Element {
     event.event.preventDefault()
 
     if (xyRef.current === null) {
-      xyRef.current = props.chartState.translate.value
+      xyRef.current = props.chartState.translate
     }
 
     const x = (xyRef.current?.x || 0) + event.movement[0]

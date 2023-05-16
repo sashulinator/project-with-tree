@@ -20,13 +20,13 @@ export interface StateProps<S> {
 }
 
 export class State<D, S extends ItemState<Any>> extends EmittableState<Events<S>> {
-  translate: EmittableProp<EventNames.setTranslate, Translate>
+  private _translate: EmittableProp<EventNames.setTranslate, Translate>
 
-  scale: EmittableProp<EventNames.setScale, number>
+  private _scale: EmittableProp<EventNames.setScale, number>
 
   selected: EmittableProp<EventNames.setSelected, Id[]>
 
-  itemStates: Record<Id, S>
+  private _itemStates: EmittableProp<EventNames.setItemStates, Record<Id, S>>
 
   history: ActionHistory
 
@@ -39,19 +39,25 @@ export class State<D, S extends ItemState<Any>> extends EmittableState<Events<S>
 
     this.history = new ActionHistory()
 
-    this.translate = new EmittableProp(EventNames.setTranslate, props.translate, this)
-    this.scale = new EmittableProp(EventNames.setScale, props.scale, this)
+    this._translate = new EmittableProp(EventNames.setTranslate, props.translate, this)
+    this._scale = new EmittableProp(EventNames.setScale, props.scale, this)
     this.selected = new EmittableProp(EventNames.setSelected, [], this)
+    this._itemStates = new EmittableProp(EventNames.setItemStates, props.itemStates, this)
+  }
 
-    const initItemStates = props.itemStates
+  get translate(): Translate {
+    return this._translate.value
+  }
 
-    this.itemStates = initItemStates
+  get scale(): number {
+    return this._scale.value
+  }
+
+  get itemStates(): Record<Id, S> {
+    return this._itemStates.value
   }
 
   private subscribe = (): void => {
-    this.emitter.on(EventNames.setItemStates, (event) => {
-      this.itemStates = event.itemStates
-    })
     this.emitter.on(EventNames.setItemState, (event) => {
       const state = this.itemStates[event.id]
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -73,11 +79,11 @@ export class State<D, S extends ItemState<Any>> extends EmittableState<Events<S>
 
   // Camera
   setTranslate = (translate: Translate): void => {
-    this.translate.value = translate
+    this._translate.value = translate
   }
 
   setScale = (scale: number): void => {
-    this.scale.value = scale
+    this._scale.value = scale
   }
 
   // Select
@@ -95,8 +101,8 @@ export class State<D, S extends ItemState<Any>> extends EmittableState<Events<S>
   }
 
   // CRUD
-  setItemStates = (itemStates: Record<Id, S>): void => {
-    this.addHistory(EventNames.setItemStates, { itemStates }, { itemStates: this.itemStates })
+  setItemStates = (value: Record<Id, S>): void => {
+    this.addHistory(EventNames.setItemStates, { value }, { value: this.itemStates })
   }
 
   addItemState = (id: Id, state: S): void => {

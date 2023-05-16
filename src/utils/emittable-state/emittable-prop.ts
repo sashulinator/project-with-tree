@@ -1,8 +1,11 @@
 import { EventType } from 'mitt'
 
+import { Any } from '../core'
+
 interface EmittableState {
   emitter: {
     emit: (eventName: string, event: unknown) => void
+    on: (eventName: string, fn: (event: Any) => unknown) => void
   }
 }
 
@@ -19,6 +22,10 @@ export class EmittableProp<N extends string, V> {
     this.emittableState = state
 
     this.eventName = eventName
+
+    state.emitter.on(eventName, (event) => {
+      this._value = event.value
+    })
   }
 
   get value(): V {
@@ -26,7 +33,6 @@ export class EmittableProp<N extends string, V> {
   }
 
   set value(value: V) {
-    this._value = value
     this.emittableState.emitter.emit(this.eventName, { value })
   }
 }
