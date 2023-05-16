@@ -1,7 +1,8 @@
 import { ActionHistory } from '~/utils/action-history'
 import { Any, Id } from '~/utils/core'
 import { Dictionary, add, remove } from '~/utils/dictionary'
-import { EmittableState } from '~/utils/emittable-state/emittable-state'
+import { EmittableState } from '~/utils/emittable-state'
+import { State as ItemState } from '~/widgets/chart-item'
 
 import { EventNames } from './event-names'
 import { Events } from './events'
@@ -17,7 +18,7 @@ export interface StateProps<S> {
   itemStates: Record<Id, S>
 }
 
-export class State<D, S extends EmittableState<Any>> extends EmittableState<Events<S>> {
+export class State<D, S extends ItemState<Any>> extends EmittableState<Events<S>> {
   translate: Translate
 
   scale: number
@@ -25,8 +26,10 @@ export class State<D, S extends EmittableState<Any>> extends EmittableState<Even
   selected: Id[]
 
   itemStates: Record<Id, S>
-  data: D
+
   history: ActionHistory
+
+  data: D
 
   constructor(data: D, props: StateProps<S>) {
     super()
@@ -60,7 +63,8 @@ export class State<D, S extends EmittableState<Any>> extends EmittableState<Even
     })
     this.mitt.on(EventNames.setItemState, (event) => {
       const state = this.itemStates[event.id]
-      state.mitt.emit(event.eventName, event.event)
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      state.mitt.emit(event.eventName as any, event.event)
     })
   }
 

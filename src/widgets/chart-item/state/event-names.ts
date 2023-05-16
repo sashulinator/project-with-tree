@@ -3,4 +3,5 @@ export enum EventNames {
   setRef = 'setRef',
   setHeight = 'setHeight',
   setWidth = 'setWidth',
+  addLink = 'addLink',
 }

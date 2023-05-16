@@ -1,3 +1,4 @@
+import { Link } from '~/entities/point'
 import { Id } from '~/utils/core'
 import { EmittableState } from '~/utils/emittable-state'
 
@@ -10,15 +11,23 @@ export interface StateProps {
   position: Position
   width?: number
   height?: number
+  links?: Link[]
 }
 
 export class State<D> extends EmittableState<Events> {
   id: Id
+
   position: Position
+
   height: number
+
   width: number
+
   data: D
+
   ref: { current: null | HTMLElement }
+
+  links: Link[]
 
   constructor(data: D, props: StateProps) {
     super()
@@ -30,6 +39,7 @@ export class State<D> extends EmittableState<Events> {
     this.height = props.width || 0
     this.width = props.height || 0
     this.ref = { current: null }
+    this.links = props.links || []
   }
 
   private subscribe = (): void => {
@@ -44,6 +54,9 @@ export class State<D> extends EmittableState<Events> {
     })
     this.mitt.on(EventNames.setRef, (event) => {
       this.ref.current = event.element
+    })
+    this.mitt.on(EventNames.addLink, (event) => {
+      this.links = [...this.links, event.link]
     })
   }
 
@@ -62,5 +75,9 @@ export class State<D> extends EmittableState<Events> {
   setRef = (element: HTMLElement): void => {
     if (element === this.ref.current) return
     this.mitt.emit(EventNames.setRef, { element })
+  }
+
+  addLink = (link: Link): void => {
+    this.mitt.emit(EventNames.addLink, { link })
   }
 }
