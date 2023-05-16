@@ -31,14 +31,14 @@ export const decision: Decision = {
       ],
     },
     {
-      type: 'VOID',
+      type: 'MAIN',
       id: 'id2',
       name: 'void',
       x: 0,
       y: 300,
     },
     {
-      type: 'MAIL',
+      type: 'MAIN',
       id: 'id3',
       name: 'mail_hello',
       x: 0,

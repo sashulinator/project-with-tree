@@ -50,6 +50,9 @@ export default function Node(props: NodeProps): JSX.Element {
             )
           })}
         </div>
+        <div className='add-rule'>
+          <button>add rule</button>
+        </div>
       </div>
     </foreignObject>
   )
