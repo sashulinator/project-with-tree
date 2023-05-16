@@ -9,7 +9,7 @@ export interface ChartItemProps extends React.HTMLAttributes<SVGGElement> {
   children: React.ReactNode
   state: State<unknown>
   chartState: {
-    scale: number
+    scale: { value: number }
     setItemState: (id: Id, eventName: string, redoEvent: Dictionary<Any>, undoEvent: Dictionary<Any>) => void
   }
 }

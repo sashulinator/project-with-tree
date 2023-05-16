@@ -22,7 +22,7 @@ export interface StateProps<S> {
 export class State<D, S extends ItemState<Any>> extends EmittableState<Events<S>> {
   translate: EmittableProp<EventNames.setTranslate, Translate>
 
-  scale: number
+  scale: EmittableProp<EventNames.setScale, number>
 
   selected: Id[]
 
@@ -37,8 +37,8 @@ export class State<D, S extends ItemState<Any>> extends EmittableState<Events<S>
     this.data = data
     this.subscribe()
 
-    this.scale = props.scale
     this.translate = new EmittableProp(EventNames.setTranslate, props.translate, this)
+    this.scale = new EmittableProp(EventNames.setScale, props.scale, this)
 
     const initSelected = []
     const initItemStates = props.itemStates
@@ -50,9 +50,6 @@ export class State<D, S extends ItemState<Any>> extends EmittableState<Events<S>
   }
 
   private subscribe = (): void => {
-    this.emitter.on(EventNames.setScale, (event) => {
-      this.scale = event.scale
-    })
     this.emitter.on(EventNames.setItemStates, (event) => {
       this.itemStates = event.itemStates
     })
@@ -84,7 +81,7 @@ export class State<D, S extends ItemState<Any>> extends EmittableState<Events<S>
   }
 
   setScale = (scale: number): void => {
-    this.emitter.emit(EventNames.setScale, { scale })
+    this.scale.value = scale
   }
 
   // Select

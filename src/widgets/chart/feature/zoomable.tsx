@@ -18,7 +18,7 @@ export function Zoomable(props: ZoomableProps): JSX.Element {
     function wheeled(event: WheelEvent): void {
       event.preventDefault()
       event.stopPropagation()
-      const ret = props.state.scale + event.deltaY / 777
+      const ret = props.state.scale.value + event.deltaY / 777
       if (ret > 1 || ret < 0.1) return
       props.state.setScale(ret)
     }

@@ -31,7 +31,7 @@ function ChartComponent(props: ChartProps, ref: ForwardedRef<SVGSVGElement>): JS
 
   function getTransform(): string {
     const { translate, scale } = state
-    return `translate(${translate.value.x}px, ${translate.value.y}px) scale(${scale})`
+    return `translate(${translate.value.x}px, ${translate.value.y}px) scale(${scale.value})`
   }
 }
 

@@ -11,7 +11,7 @@ import { Position } from '../types/position'
 export interface DraggableProps {
   state: State<unknown>
   chartState: {
-    scale: number
+    scale: { value: number }
     setItemState: (id: Id, eventName: string, redoEvent: Dictionary<Any>, undoEvent: Dictionary<Any>) => void
   }
   children: (
@@ -43,8 +43,8 @@ export function Draggable(props: DraggableProps): JSX.Element {
     if (xyRef.current === null) xyRef.current = props.state.position
     assertNotNull(xyRef.current)
 
-    const moveX = event.movement[0] / props.chartState.scale
-    const moveY = event.movement[1] / props.chartState.scale
+    const moveX = event.movement[0] / props.chartState.scale.value
+    const moveY = event.movement[1] / props.chartState.scale.value
     const x = xyRef.current.x + moveX
     const y = xyRef.current.y + moveY
 
