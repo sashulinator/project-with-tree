@@ -18,7 +18,7 @@ export default function DecisionEditor(props: DecisionEditorProps): JSX.Element 
   const update = useForceUpdate()
 
   useEffect(() => {
-    props.chartState.mitt.on(EventNames.setItemStates, update)
+    props.chartState.emitter.on(EventNames.setItemStates, update)
   })
 
   useEventListener('keydown', (e) => {

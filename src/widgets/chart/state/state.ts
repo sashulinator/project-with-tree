@@ -50,26 +50,26 @@ export class State<D, S extends ItemState<Any>> extends EmittableState<Events<S>
   }
 
   private subscribe = (): void => {
-    this.mitt.on(EventNames.setScale, (event) => {
+    this.emitter.on(EventNames.setScale, (event) => {
       this.scale = event.scale
     })
-    this.mitt.on(EventNames.setItemStates, (event) => {
+    this.emitter.on(EventNames.setItemStates, (event) => {
       this.itemStates = event.itemStates
     })
-    this.mitt.on(EventNames.select, (event) => {
+    this.emitter.on(EventNames.select, (event) => {
       this.selected = event.ids
     })
-    this.mitt.on(EventNames.setItemState, (event) => {
+    this.emitter.on(EventNames.setItemState, (event) => {
       const state = this.itemStates[event.id]
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      state.mitt.emit(event.eventName as any, event.event)
+      state.emitter.emit(event.eventName as any, event.event)
     })
   }
 
   // History
   addHistory<E extends EventNames>(eventName: E, redoEvent: Events<S>[E], undoEvent: Events<S>[E]): void {
-    const redo = (): void => this.mitt.emit(eventName, redoEvent)
-    const undo = (): void => this.mitt.emit(eventName, undoEvent)
+    const redo = (): void => this.emitter.emit(eventName, redoEvent)
+    const undo = (): void => this.emitter.emit(eventName, undoEvent)
     this.history.add(redo, undo)
   }
 
@@ -84,7 +84,7 @@ export class State<D, S extends ItemState<Any>> extends EmittableState<Events<S>
   }
 
   setScale = (scale: number): void => {
-    this.mitt.emit(EventNames.setScale, { scale })
+    this.emitter.emit(EventNames.setScale, { scale })
   }
 
   // Select

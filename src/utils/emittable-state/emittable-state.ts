@@ -1,9 +1,9 @@
-import mitt, { Emitter, EventType } from 'mitt'
+import createEmitter, { Emitter, EventType } from 'mitt'
 
 export abstract class EmittableState<Events extends Record<EventType, unknown>> {
-  mitt: Emitter<Events>
+  emitter: Emitter<Events>
 
   constructor() {
-    this.mitt = mitt()
+    this.emitter = createEmitter()
   }
 }

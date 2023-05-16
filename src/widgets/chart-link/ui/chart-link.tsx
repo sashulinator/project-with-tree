@@ -14,13 +14,13 @@ export default function ChartLink<T>(props: ChartLinkProps<T>): JSX.Element {
   const update = useForceUpdate()
 
   useEffect(() => {
-    props.targetState.mitt.on(EventNames.setPosition, update)
-    props.sourceState.mitt.on(EventNames.setPosition, update)
-    props.targetState.mitt.on(EventNames.setHeight, update)
-    props.sourceState.mitt.on(EventNames.setHeight, update)
-    props.targetState.mitt.on(EventNames.setWidth, update)
-    props.sourceState.mitt.on(EventNames.setWidth, update)
-    props.sourceState.mitt.on(EventNames.setRef, update)
+    props.targetState.emitter.on(EventNames.setPosition, update)
+    props.sourceState.emitter.on(EventNames.setPosition, update)
+    props.targetState.emitter.on(EventNames.setHeight, update)
+    props.sourceState.emitter.on(EventNames.setHeight, update)
+    props.targetState.emitter.on(EventNames.setWidth, update)
+    props.sourceState.emitter.on(EventNames.setWidth, update)
+    props.sourceState.emitter.on(EventNames.setRef, update)
   })
 
   useLayoutEffect(update, [])

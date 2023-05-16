@@ -43,41 +43,41 @@ export class State<D> extends EmittableState<Events> {
   }
 
   private subscribe = (): void => {
-    this.mitt.on(EventNames.setPosition, (event) => {
+    this.emitter.on(EventNames.setPosition, (event) => {
       this.position = event.position
     })
-    this.mitt.on(EventNames.setWidth, (event) => {
+    this.emitter.on(EventNames.setWidth, (event) => {
       this.width = event.width
     })
-    this.mitt.on(EventNames.setHeight, (event) => {
+    this.emitter.on(EventNames.setHeight, (event) => {
       this.height = event.height
     })
-    this.mitt.on(EventNames.setRef, (event) => {
+    this.emitter.on(EventNames.setRef, (event) => {
       this.ref.current = event.element
     })
-    this.mitt.on(EventNames.addLink, (event) => {
+    this.emitter.on(EventNames.addLink, (event) => {
       this.links = [...this.links, event.link]
     })
   }
 
   setPosition = (position: Position): void => {
-    this.mitt.emit(EventNames.setPosition, { position })
+    this.emitter.emit(EventNames.setPosition, { position })
   }
 
   setWidth = (width: number): void => {
-    this.mitt.emit(EventNames.setWidth, { width })
+    this.emitter.emit(EventNames.setWidth, { width })
   }
 
   setHeight = (height: number): void => {
-    this.mitt.emit(EventNames.setHeight, { height })
+    this.emitter.emit(EventNames.setHeight, { height })
   }
 
   setRef = (element: HTMLElement): void => {
     if (element === this.ref.current) return
-    this.mitt.emit(EventNames.setRef, { element })
+    this.emitter.emit(EventNames.setRef, { element })
   }
 
   addLink = (link: Link): void => {
-    this.mitt.emit(EventNames.addLink, { link })
+    this.emitter.emit(EventNames.addLink, { link })
   }
 }

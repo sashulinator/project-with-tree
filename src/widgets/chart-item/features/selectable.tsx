@@ -17,7 +17,7 @@ export default function Selectable(props: SelectableProps): JSX.Element {
   const [isSelected, select] = useState(false)
 
   useEffect(() => {
-    props.chartState.mitt.on(EventNames.select, ({ ids }) => select(ids.includes(props.id)))
+    props.chartState.emitter.on(EventNames.select, ({ ids }) => select(ids.includes(props.id)))
   })
 
   return <>{props.children({ isSelected, selectOnMouseAction })}</>

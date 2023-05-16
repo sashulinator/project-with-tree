@@ -23,6 +23,6 @@ export class EmittableProp<V, E extends Record<EventType, unknown>> {
 
   set value(value: V) {
     this._value = value
-    this.emittableState.mitt.emit(this.eventName, { value } as any)
+    this.emittableState.emitter.emit(this.eventName, { value } as any)
   }
 }

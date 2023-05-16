@@ -17,8 +17,8 @@ function ChartComponent(props: ChartProps, ref: ForwardedRef<SVGSVGElement>): JS
   const update = useForceUpdate()
 
   useEffect(() => {
-    state.mitt.on(EventNames.setScale, update)
-    state.mitt.on(EventNames.setTranslate, update)
+    state.emitter.on(EventNames.setScale, update)
+    state.emitter.on(EventNames.setTranslate, update)
   }, [])
 
   return (
