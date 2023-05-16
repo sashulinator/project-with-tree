@@ -66,14 +66,9 @@ export class State<D, S extends EmittableState<Any>> extends EmittableState<Even
 
   // History
   addHistory<E extends EventNames>(eventName: E, redoEvent: Events<S>[E], undoEvent: Events<S>[E]): void {
-    const redo = (): void => {
-      this.mitt.emit(eventName, redoEvent)
-    }
-    const undo = (): void => {
-      this.mitt.emit(eventName, undoEvent)
-    }
+    const redo = (): void => this.mitt.emit(eventName, redoEvent)
+    const undo = (): void => this.mitt.emit(eventName, undoEvent)
     this.history.add(redo, undo)
-    this.history.redo()
   }
 
   setItemState<E extends string>(id: Id, eventName: E, redoEvent: Dictionary<Any>, undoEvent: Dictionary<Any>): void {

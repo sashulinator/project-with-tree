@@ -14,16 +14,16 @@ export class ActionHistory {
   }
 
   add(onRedo: () => void, onUndo: () => void): void {
-    const isCurrentDone = this.history.getCurrent()?.done
-
-    const redo = (): void => {
+    function redo(): void {
       onRedo()
       item.done = true
     }
-    const undo = (): void => {
+    function undo(): void {
       onUndo()
       item.done = false
     }
+
+    const isCurrentDone = this.history.getCurrent()?.done
     const item: HistoryItem = { done: true, redo, undo }
 
     if (!isCurrentDone) {
@@ -31,6 +31,7 @@ export class ActionHistory {
     }
 
     this.history.add(item)
+    onRedo()
   }
 
   prev(): void {
