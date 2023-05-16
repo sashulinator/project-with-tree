@@ -24,7 +24,7 @@ export class State<D, S extends ItemState<Any>> extends EmittableState<Events<S>
 
   private _scale: EmittableProp<EventNames.setScale, number>
 
-  selected: EmittableProp<EventNames.setSelected, Id[]>
+  private _selected: EmittableProp<EventNames.setSelected, Id[]>
 
   private _itemStates: EmittableProp<EventNames.setItemStates, Record<Id, S>>
 
@@ -41,7 +41,7 @@ export class State<D, S extends ItemState<Any>> extends EmittableState<Events<S>
 
     this._translate = new EmittableProp(EventNames.setTranslate, props.translate, this)
     this._scale = new EmittableProp(EventNames.setScale, props.scale, this)
-    this.selected = new EmittableProp(EventNames.setSelected, [], this)
+    this._selected = new EmittableProp(EventNames.setSelected, [], this)
     this._itemStates = new EmittableProp(EventNames.setItemStates, props.itemStates, this)
   }
 
@@ -55,6 +55,10 @@ export class State<D, S extends ItemState<Any>> extends EmittableState<Events<S>
 
   get itemStates(): Record<Id, S> {
     return this._itemStates.value
+  }
+
+  get selected(): Id[] {
+    return this._selected.value
   }
 
   private subscribe = (): void => {
@@ -88,16 +92,16 @@ export class State<D, S extends ItemState<Any>> extends EmittableState<Events<S>
 
   // Select
   select = (value: Id[]): void => {
-    this.addHistory(EventNames.setSelected, { value }, { value: this.selected.value })
+    this.addHistory(EventNames.setSelected, { value }, { value: this.selected })
   }
 
   unselect = (ids: Id[]): void => {
-    this.select(this.selected.value.filter((s) => !ids.includes(s)))
+    this.select(this.selected.filter((s) => !ids.includes(s)))
   }
 
   selectToggle = (id: Id): void => {
-    const isIncludes = this.selected.value.includes(id)
-    isIncludes ? this.unselect([id]) : this.select([...this.selected.value, id])
+    const isIncludes = this.selected.includes(id)
+    isIncludes ? this.unselect([id]) : this.select([...this.selected, id])
   }
 
   // CRUD

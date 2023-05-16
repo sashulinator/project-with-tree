@@ -29,7 +29,7 @@ export default function Selectable(props: SelectableProps): JSX.Element {
       props.chartState.selectToggle(props.id)
     } else {
       // Исключаем попадание в историю избыточное выделение
-      if (props.chartState.selected.value.includes(props.id)) return
+      if (props.chartState.selected.includes(props.id)) return
       props.chartState.select([props.id])
     }
   }
