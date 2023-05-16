@@ -24,7 +24,7 @@ export class State<D, S extends ItemState<Any>> extends EmittableState<Events<S>
 
   scale: EmittableProp<EventNames.setScale, number>
 
-  selected: Id[]
+  selected: EmittableProp<EventNames.setSelected, Id[]>
 
   itemStates: Record<Id, S>
 
@@ -37,24 +37,20 @@ export class State<D, S extends ItemState<Any>> extends EmittableState<Events<S>
     this.data = data
     this.subscribe()
 
+    this.history = new ActionHistory()
+
     this.translate = new EmittableProp(EventNames.setTranslate, props.translate, this)
     this.scale = new EmittableProp(EventNames.setScale, props.scale, this)
+    this.selected = new EmittableProp(EventNames.setSelected, [], this)
 
-    const initSelected = []
     const initItemStates = props.itemStates
 
-    this.selected = initSelected
     this.itemStates = initItemStates
-
-    this.history = new ActionHistory()
   }
 
   private subscribe = (): void => {
     this.emitter.on(EventNames.setItemStates, (event) => {
       this.itemStates = event.itemStates
-    })
-    this.emitter.on(EventNames.select, (event) => {
-      this.selected = event.ids
     })
     this.emitter.on(EventNames.setItemState, (event) => {
       const state = this.itemStates[event.id]
@@ -85,17 +81,17 @@ export class State<D, S extends ItemState<Any>> extends EmittableState<Events<S>
   }
 
   // Select
-  select = (ids: Id[]): void => {
-    this.addHistory(EventNames.select, { ids }, { ids: this.selected })
+  select = (value: Id[]): void => {
+    this.addHistory(EventNames.setSelected, { value }, { value: this.selected.value })
   }
 
   unselect = (ids: Id[]): void => {
-    this.select(this.selected.filter((s) => !ids.includes(s)))
+    this.select(this.selected.value.filter((s) => !ids.includes(s)))
   }
 
   selectToggle = (id: Id): void => {
-    const isIncludes = this.selected.includes(id)
-    isIncludes ? this.unselect([id]) : this.select([...this.selected, id])
+    const isIncludes = this.selected.value.includes(id)
+    isIncludes ? this.unselect([id]) : this.select([...this.selected.value, id])
   }
 
   // CRUD

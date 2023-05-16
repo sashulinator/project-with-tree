@@ -17,7 +17,7 @@ export default function Selectable(props: SelectableProps): JSX.Element {
   const [isSelected, select] = useState(false)
 
   useEffect(() => {
-    props.chartState.emitter.on(EventNames.select, ({ ids }) => select(ids.includes(props.id)))
+    props.chartState.emitter.on(EventNames.setSelected, ({ value }) => select(value?.includes(props.id)))
   })
 
   return <>{props.children({ isSelected, selectOnMouseAction })}</>
@@ -29,7 +29,7 @@ export default function Selectable(props: SelectableProps): JSX.Element {
       props.chartState.selectToggle(props.id)
     } else {
       // Исключаем попадание в историю избыточное выделение
-      if (props.chartState.selected.includes(props.id)) return
+      if (props.chartState.selected.value.includes(props.id)) return
       props.chartState.select([props.id])
     }
   }
