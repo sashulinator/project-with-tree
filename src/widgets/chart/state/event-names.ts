@@ -3,5 +3,6 @@ export enum EventNames {
   setTranslate = 'setTranslate',
   setItemStates = 'setItemStates',
   setSelected = 'setSelected',
+  setLinks = 'setLinks',
   setItemState = 'setItemState',
 }

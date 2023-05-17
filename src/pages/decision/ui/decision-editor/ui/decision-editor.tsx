@@ -19,6 +19,7 @@ export default function DecisionEditor(props: DecisionEditorProps): JSX.Element 
 
   useEffect(() => {
     props.chartState.emitter.on(EventNames.setItemStates, update)
+    props.chartState.emitter.on(EventNames.setItemStates, update)
   })
 
   useEventListener('keydown', (e) => {
@@ -33,7 +34,7 @@ export default function DecisionEditor(props: DecisionEditorProps): JSX.Element 
 
   const links = useMemo(() => {
     return itemStates.reduce<ChartLinkProps<Point>[]>((acc, sourceState) => {
-      const linksProps = sourceState.data.links?.map((link) => {
+      const linksProps = sourceState.links?.map((link) => {
         const targetState = props.chartState.itemStates[link.id]
         assertDefined(targetState)
         const linkProps: ChartLinkProps<Point> = {

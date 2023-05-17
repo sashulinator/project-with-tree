@@ -9,9 +9,9 @@ import { Events } from './events'
 export interface StateProps {
   id: Id
   position: Position
-  width?: number
-  height?: number
-  links?: Link[]
+  width?: number | undefined
+  height?: number | undefined
+  links?: Link[] | undefined
 }
 
 export class State<D> extends EmittableState<Events> {
