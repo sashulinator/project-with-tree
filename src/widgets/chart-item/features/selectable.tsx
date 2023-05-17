@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 
 import { Any, Id } from '~/utils/core'
 
-import { State as ChartState, EventNames } from '../../chart/state'
+import { State as ChartState, EventNames } from '../../../entities/decision/state'
 
 export interface SelectableProps {
   children: (props: {

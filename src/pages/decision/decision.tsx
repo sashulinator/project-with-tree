@@ -1,7 +1,7 @@
 import './decision.css'
 
+import { State as ChartState } from '~/entities/decision'
 import { decision } from '~/entities/decision/mock'
-import { State as ChartState } from '~/widgets/chart'
 
 import Preview from './ui/decision-editor'
 import PropsPanel from './ui/props-panel'

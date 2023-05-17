@@ -1,7 +1,7 @@
+import { State as TreeState } from '~/entities/decision'
 import { PointNode } from '~/entities/point'
 import ChartItem from '~/ui/chart-item'
 import { Any } from '~/utils/core'
-import { State as TreeState } from '~/widgets/chart'
 import { State as ItemState } from '~/widgets/chart-item'
 import Selectable from '~/widgets/chart-item/features/selectable'
 

@@ -1,8 +1,8 @@
 /* eslint-disable eslint-comments/disable-enable-pair, @typescript-eslint/unbound-method */
 import React, { useLayoutEffect, useRef } from 'react'
 
+import { State } from '~/entities/decision'
 import { Any } from '~/utils/core'
-import { State } from '~/widgets/chart'
 
 interface ZoomableProps {
   state: State<unknown, Any>

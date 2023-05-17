@@ -1,10 +1,9 @@
 import { useEffect, useMemo } from 'react'
 
-import { Decision, Node, Point } from '~/entities/decision'
+import { State as ChartState, Decision, EventNames, Node, Point } from '~/entities/decision'
 import Chart from '~/ui/chart/ui/chart'
 import { assertDefined } from '~/utils/core'
 import { useEventListener, useForceUpdate } from '~/utils/hooks'
-import { State as ChartState, EventNames } from '~/widgets/chart'
 import { State as ItemState } from '~/widgets/chart-item'
 import ChartLink, { ChartLinkProps } from '~/widgets/chart-link'
 
