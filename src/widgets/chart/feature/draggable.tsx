@@ -3,7 +3,7 @@ import { useDrag } from '@use-gesture/react'
 
 import React, { useRef } from 'react'
 
-import { State as ChartState, Translate } from '~/entities/decision'
+import { DecisionState as ChartState, Translate } from '~/entities/decision'
 import { Any } from '~/utils/core'
 
 interface DraggableProps {

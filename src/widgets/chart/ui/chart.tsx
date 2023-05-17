@@ -1,6 +1,6 @@
 import { ForwardedRef, forwardRef, useEffect, useRef } from 'react'
 
-import { State as ChartState, EventNames } from '~/entities/decision'
+import { DecisionState as ChartState, EventNames } from '~/entities/decision'
 import { Any } from '~/utils/core'
 import { useForceUpdate } from '~/utils/hooks'
 import { setRefs } from '~/utils/react'

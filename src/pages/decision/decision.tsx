@@ -1,6 +1,6 @@
 import './decision.css'
 
-import { State as ChartState } from '~/entities/decision'
+import { DecisionState as ChartState } from '~/entities/decision'
 import { decision } from '~/entities/decision/mock'
 
 import Preview from './ui/decision-editor'

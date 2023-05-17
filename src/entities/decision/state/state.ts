@@ -16,13 +16,13 @@ export interface Translate {
   y: number
 }
 
-export interface StateProps {
+export interface DecisionStateProps {
   translate: Translate
   scale: number
   pointList: (Point | LinkedDecision)[]
 }
 
-export class State<D, S extends ItemState<Any>> extends EmittableState<Events<S>> {
+export class DecisionState<D, S extends ItemState<Any>> extends EmittableState<Events<S>> {
   private _translate: EmittableProp<EventNames.setTranslate, Translate>
 
   private _scale: EmittableProp<EventNames.setScale, number>
@@ -35,7 +35,7 @@ export class State<D, S extends ItemState<Any>> extends EmittableState<Events<S>
 
   data: D
 
-  constructor(data: D, props: StateProps) {
+  constructor(data: D, props: DecisionStateProps) {
     super()
     this.data = data
     this.subscribe()

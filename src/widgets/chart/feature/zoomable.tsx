@@ -1,11 +1,11 @@
 /* eslint-disable eslint-comments/disable-enable-pair, @typescript-eslint/unbound-method */
 import React, { useLayoutEffect, useRef } from 'react'
 
-import { State } from '~/entities/decision'
+import { DecisionState } from '~/entities/decision'
 import { Any } from '~/utils/core'
 
 interface ZoomableProps {
-  state: State<unknown, Any>
+  state: DecisionState<unknown, Any>
   children: (props: Any) => React.ReactNode
 }
 

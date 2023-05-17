@@ -1,6 +1,6 @@
 import { useEffect, useMemo } from 'react'
 
-import { State as ChartState, Decision, EventNames, Node, Point } from '~/entities/decision'
+import { DecisionState as ChartState, Decision, EventNames, Node, Point } from '~/entities/decision'
 import Chart from '~/ui/chart/ui/chart'
 import { assertDefined } from '~/utils/core'
 import { useEventListener, useForceUpdate } from '~/utils/hooks'
