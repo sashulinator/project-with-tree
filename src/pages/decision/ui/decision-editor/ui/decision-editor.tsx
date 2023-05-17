@@ -4,11 +4,11 @@ import { State as ChartState, Decision, EventNames, Node, Point } from '~/entiti
 import Chart from '~/ui/chart/ui/chart'
 import { assertDefined } from '~/utils/core'
 import { useEventListener, useForceUpdate } from '~/utils/hooks'
-import { State as ItemState } from '~/widgets/chart-item'
+import { PointState } from '~/widgets/chart-item'
 import ChartLink, { ChartLinkProps } from '~/widgets/chart-link'
 
 interface DecisionEditorProps {
-  chartState: ChartState<Decision, ItemState<Point>>
+  chartState: ChartState<Decision, PointState<Point>>
 }
 
 export default function DecisionEditor(props: DecisionEditorProps): JSX.Element {

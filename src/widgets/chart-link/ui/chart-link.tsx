@@ -2,11 +2,11 @@ import { useEffect, useLayoutEffect } from 'react'
 
 import { getOffsetInElement } from '~/utils/dom/get-offset-in-element'
 import { useForceUpdate } from '~/utils/hooks'
-import { EventNames, State } from '~/widgets/chart-item'
+import { EventNames, PointState } from '~/widgets/chart-item'
 
 export interface ChartLinkProps<T> {
-  targetState: State<T>
-  sourceState: State<T>
+  targetState: PointState<T>
+  sourceState: PointState<T>
   link: { type: string; id: string }
 }
 

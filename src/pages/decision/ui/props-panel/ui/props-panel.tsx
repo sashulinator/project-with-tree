@@ -1,10 +1,10 @@
 import uuid from 'uuid-random'
 
 import { State as ChartState, Decision, Point } from '~/entities/decision'
-import { State as ItemState } from '~/widgets/chart-item'
+import { PointState } from '~/widgets/chart-item'
 
 interface PropsPanelPropsProps {
-  chartState: ChartState<Decision, ItemState<Point>>
+  chartState: ChartState<Decision, PointState<Point>>
 }
 
 export default function PropsPanelProps(props: PropsPanelPropsProps): JSX.Element {
@@ -26,6 +26,6 @@ export default function PropsPanelProps(props: PropsPanelPropsProps): JSX.Elemen
       x: 10,
       y: 400,
     }
-    props.chartState.addItemState(id, new ItemState(decision, { position: decision, id }))
+    props.chartState.addItemState(id, new PointState(decision, { position: decision, id }))
   }
 }

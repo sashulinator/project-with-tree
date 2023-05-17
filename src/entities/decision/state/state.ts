@@ -1,11 +1,11 @@
-import { Decision, LinkedDecision } from '~/entities/decision'
+import { LinkedDecision } from '~/entities/decision'
 import { Point } from '~/entities/point'
 import { ActionHistory } from '~/utils/action-history'
 import { Any, Id } from '~/utils/core'
 import { Dictionary, add, remove } from '~/utils/dictionary'
 import { EmittableState } from '~/utils/emittable-state'
 import { EmittableProp } from '~/utils/emittable-state/emittable-prop'
-import { State as ItemState } from '~/widgets/chart-item'
+import { PointState as ItemState } from '~/widgets/chart-item'
 
 import { EventNames } from './event-names'
 import { Events } from './events'
@@ -16,7 +16,7 @@ export interface Translate {
   y: number
 }
 
-export interface StateProps<S> {
+export interface StateProps {
   translate: Translate
   scale: number
   pointList: (Point | LinkedDecision)[]
@@ -35,7 +35,7 @@ export class State<D, S extends ItemState<Any>> extends EmittableState<Events<S>
 
   data: D
 
-  constructor(data: D, props: StateProps<S>) {
+  constructor(data: D, props: StateProps) {
     super()
     this.data = data
     this.subscribe()

@@ -2,13 +2,13 @@ import { State as TreeState } from '~/entities/decision'
 import { PointNode } from '~/entities/point'
 import ChartItem from '~/ui/chart-item'
 import { Any } from '~/utils/core'
-import { State as ItemState } from '~/widgets/chart-item'
+import { PointState } from '~/widgets/chart-item'
 import Selectable from '~/widgets/chart-item/features/selectable'
 
 import { Point } from '../../../../point/types/point'
 
 export interface ItemNodeProps {
-  state: ItemState<Point>
+  state: PointState<Point>
   decisionState: TreeState<Any, Any>
 }
 
@@ -37,7 +37,7 @@ export default function Node(props: ItemNodeProps): JSX.Element {
 }
 
 interface FactoryProps {
-  state: ItemState<Point>
+  state: PointState<Point>
   decisionState: TreeState<Any, Any>
   isSelected: boolean
 }

@@ -14,7 +14,7 @@ export interface StateProps {
   links?: Link[] | undefined
 }
 
-export class State<D> extends EmittableState<Events> {
+export class PointState<D> extends EmittableState<Events> {
   id: Id
 
   position: Position

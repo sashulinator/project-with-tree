@@ -5,11 +5,11 @@ import React, { useRef } from 'react'
 import { Any, Id, assertNotNull } from '~/utils/core'
 import { Dictionary } from '~/utils/dictionary'
 
-import { EventNames, State } from '../../../entities/point/state'
+import { EventNames, PointState } from '../../../entities/point/state'
 import { Position } from '../types/position'
 
 export interface DraggableProps {
-  state: State<unknown>
+  state: PointState<unknown>
   chartState: {
     scale: number
     setItemState: (id: Id, eventName: string, redoEvent: Dictionary<Any>, undoEvent: Dictionary<Any>) => void

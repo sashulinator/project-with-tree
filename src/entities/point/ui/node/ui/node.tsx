@@ -6,12 +6,12 @@ import useMeasure from 'react-use-measure'
 
 import { observeResize } from '~/utils/dom'
 import { setRefs } from '~/utils/react'
-import { State as ItemState } from '~/widgets/chart-item'
+import { PointState } from '~/widgets/chart-item'
 
 import { Point } from '../../../../point/types/point'
 
 export interface NodeProps {
-  state: ItemState<Point>
+  state: PointState<Point>
   isSelected: boolean
 }
 
