@@ -1,6 +1,6 @@
 import { Link } from '~/entities/point'
 
-import { Position } from '../types/position'
+import { Position } from '../../../widgets/chart-item/types/position'
 import { EventNames } from './event-names'
 
 export type Events = {

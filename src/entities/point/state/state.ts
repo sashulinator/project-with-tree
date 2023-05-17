@@ -1,8 +1,8 @@
 import { Link } from '~/entities/point'
 import { Id } from '~/utils/core'
 import { EmittableState } from '~/utils/emittable-state'
+import { Position } from '~/widgets/chart-item'
 
-import { Position } from '../types/position'
 import { EventNames } from './event-names'
 import { Events } from './events'
 
