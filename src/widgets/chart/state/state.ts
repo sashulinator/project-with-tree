@@ -1,3 +1,5 @@
+import { Decision, LinkedDecision } from '~/entities/decision'
+import { Point } from '~/entities/point'
 import { ActionHistory } from '~/utils/action-history'
 import { Any, Id } from '~/utils/core'
 import { Dictionary, add, remove } from '~/utils/dictionary'
@@ -7,6 +9,7 @@ import { State as ItemState } from '~/widgets/chart-item'
 
 import { EventNames } from './event-names'
 import { Events } from './events'
+import { PointStatesProp } from './point-states-prop'
 
 export interface Translate {
   x: number
@@ -16,7 +19,7 @@ export interface Translate {
 export interface StateProps<S> {
   translate: Translate
   scale: number
-  itemStates: Record<Id, S>
+  pointList: (Point | LinkedDecision)[]
 }
 
 export class State<D, S extends ItemState<Any>> extends EmittableState<Events<S>> {
@@ -26,7 +29,7 @@ export class State<D, S extends ItemState<Any>> extends EmittableState<Events<S>
 
   private _selected: EmittableProp<EventNames.setSelected, Id[]>
 
-  private _itemStates: EmittableProp<EventNames.setItemStates, Record<Id, S>>
+  private _pointStates: PointStatesProp<EventNames.setItemStates>
 
   history: ActionHistory
 
@@ -42,7 +45,7 @@ export class State<D, S extends ItemState<Any>> extends EmittableState<Events<S>
     this._translate = new EmittableProp(EventNames.setTranslate, props.translate, this)
     this._scale = new EmittableProp(EventNames.setScale, props.scale, this)
     this._selected = new EmittableProp(EventNames.setSelected, [], this)
-    this._itemStates = new EmittableProp(EventNames.setItemStates, props.itemStates, this)
+    this._pointStates = new PointStatesProp(EventNames.setItemStates, props.pointList, this)
   }
 
   get translate(): Translate {
@@ -53,8 +56,8 @@ export class State<D, S extends ItemState<Any>> extends EmittableState<Events<S>
     return this._scale.value
   }
 
-  get itemStates(): Record<Id, S> {
-    return this._itemStates.value
+  get pointStates(): Record<Id, S> {
+    return this._pointStates.value as Record<Id, S>
   }
 
   get selected(): Id[] {
@@ -63,7 +66,7 @@ export class State<D, S extends ItemState<Any>> extends EmittableState<Events<S>
 
   private subscribe = (): void => {
     this.emitter.on(EventNames.setItemState, (event) => {
-      const state = this.itemStates[event.id]
+      const state = this.pointStates[event.id]
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       state.emitter.emit(event.eventName as any, event.event)
     })
@@ -106,16 +109,16 @@ export class State<D, S extends ItemState<Any>> extends EmittableState<Events<S>
 
   // CRUD
   setItemStates = (value: Record<Id, S>): void => {
-    this.addHistory(EventNames.setItemStates, { value }, { value: this.itemStates })
+    this.addHistory(EventNames.setItemStates, { value }, { value: this.pointStates })
   }
 
   addItemState = (id: Id, state: S): void => {
-    const newItemStates = add(this.itemStates, id, state)
+    const newItemStates = add(this.pointStates, id, state)
     this.setItemStates(newItemStates)
   }
 
   removeItemState = (id: Id): void => {
-    const newItemStates = remove(this.itemStates, id)
+    const newItemStates = remove(this.pointStates, id)
     this.setItemStates(newItemStates)
   }
 }

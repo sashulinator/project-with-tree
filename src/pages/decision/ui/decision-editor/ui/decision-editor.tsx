@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo } from 'react'
+import { useEffect, useMemo } from 'react'
 
 import { Decision, Node, Point } from '~/entities/decision'
 import Chart from '~/ui/chart/ui/chart'
@@ -13,7 +13,7 @@ interface DecisionEditorProps {
 }
 
 export default function DecisionEditor(props: DecisionEditorProps): JSX.Element {
-  const itemStates = Object.values(props.chartState.itemStates)
+  const itemStates = Object.values(props.chartState.pointStates)
 
   const update = useForceUpdate()
 
@@ -35,7 +35,7 @@ export default function DecisionEditor(props: DecisionEditorProps): JSX.Element 
   const links = useMemo(() => {
     return itemStates.reduce<ChartLinkProps<Point>[]>((acc, sourceState) => {
       const linksProps = sourceState.links?.map((link) => {
-        const targetState = props.chartState.itemStates[link.id]
+        const targetState = props.chartState.pointStates[link.id]
         assertDefined(targetState)
         const linkProps: ChartLinkProps<Point> = {
           targetState,

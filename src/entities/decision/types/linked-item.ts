@@ -2,8 +2,8 @@ import { Id } from '~/utils/core'
 
 import { Point } from '../../point/types/point'
 
-export interface LinkedItem {
+export interface LinkedDecision {
   id: Id
   linkedId: Id
-  overwritten?: (Point | Partial<LinkedItem>)[]
+  overwritten?: (Point | Partial<LinkedDecision>)[]
 }
