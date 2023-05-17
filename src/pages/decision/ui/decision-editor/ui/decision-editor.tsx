@@ -8,7 +8,7 @@ import { PointState } from '~/widgets/chart-item'
 import ChartLink, { ChartLinkProps } from '~/widgets/chart-link'
 
 interface DecisionEditorProps {
-  chartState: ChartState<Decision, PointState<Point>>
+  chartState: ChartState<Decision, PointState>
 }
 
 export default function DecisionEditor(props: DecisionEditorProps): JSX.Element {
@@ -51,10 +51,10 @@ export default function DecisionEditor(props: DecisionEditorProps): JSX.Element 
   return (
     <Chart state={props.chartState}>
       {links?.map((link) => {
-        return <ChartLink key={`${link.targetState.data.id}${link.sourceState.data.id}`} {...link} />
+        return <ChartLink key={`${link.targetState.point.id}${link.sourceState.point.id}`} {...link} />
       })}
       {itemStates.map((state) => {
-        return <Node key={state.data.id} state={state} decisionState={props.chartState} />
+        return <Node key={state.point.id} state={state} decisionState={props.chartState} />
       })}
     </Chart>
   )

@@ -5,8 +5,8 @@ import { useForceUpdate } from '~/utils/hooks'
 import { EventNames, PointState } from '~/widgets/chart-item'
 
 export interface ChartLinkProps<T> {
-  targetState: PointState<T>
-  sourceState: PointState<T>
+  targetState: PointState
+  sourceState: PointState
   link: { type: string; id: string }
 }
 

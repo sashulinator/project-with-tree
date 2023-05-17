@@ -4,7 +4,7 @@ import { DecisionState as ChartState, Decision, Point } from '~/entities/decisio
 import { PointState } from '~/widgets/chart-item'
 
 interface PropsPanelPropsProps {
-  chartState: ChartState<Decision, PointState<Point>>
+  chartState: ChartState<Decision, PointState>
 }
 
 export default function PropsPanelProps(props: PropsPanelPropsProps): JSX.Element {

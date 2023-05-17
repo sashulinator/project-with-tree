@@ -1,4 +1,4 @@
-import { Link } from '~/entities/point'
+import { Link, Point } from '~/entities/point'
 import { Id } from '~/utils/core'
 import { EmittableState } from '~/utils/emittable-state'
 import { Position } from '~/widgets/chart-item'
@@ -14,7 +14,7 @@ export interface StateProps {
   links?: Link[] | undefined
 }
 
-export class PointState<D> extends EmittableState<Events> {
+export class PointState extends EmittableState<Events> {
   id: Id
 
   position: Position
@@ -23,15 +23,15 @@ export class PointState<D> extends EmittableState<Events> {
 
   width: number
 
-  data: D
+  point: Point
 
   ref: { current: null | HTMLElement }
 
   links: Link[]
 
-  constructor(data: D, props: StateProps) {
+  constructor(point: Point, props: StateProps) {
     super()
-    this.data = data
+    this.point = point
     this.subscribe()
 
     this.id = props.id

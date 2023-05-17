@@ -5,7 +5,7 @@ import { Any, Id } from '~/utils/core'
 import { Dictionary, add, remove } from '~/utils/dictionary'
 import { EmittableState } from '~/utils/emittable-state'
 import { EmittableProp } from '~/utils/emittable-state/emittable-prop'
-import { PointState as ItemState } from '~/widgets/chart-item'
+import { PointState } from '~/widgets/chart-item'
 
 import { EventNames } from './event-names'
 import { Events } from './events'
@@ -22,7 +22,7 @@ export interface DecisionStateProps {
   pointList: (Point | LinkedDecision)[]
 }
 
-export class DecisionState<D, S extends ItemState<Any>> extends EmittableState<Events<S>> {
+export class DecisionState<D, S extends PointState> extends EmittableState<Events<S>> {
   private _translate: EmittableProp<EventNames.setTranslate, Translate>
 
   private _scale: EmittableProp<EventNames.setScale, number>

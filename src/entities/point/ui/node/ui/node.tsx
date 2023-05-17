@@ -8,17 +8,15 @@ import { observeResize } from '~/utils/dom'
 import { setRefs } from '~/utils/react'
 import { PointState } from '~/widgets/chart-item'
 
-import { Point } from '../../../../point/types/point'
-
 export interface NodeProps {
-  state: PointState<Point>
+  state: PointState
   isSelected: boolean
 }
 
 const WIDTH = 200
 
 export default function Node(props: NodeProps): JSX.Element {
-  const { data } = props.state
+  const { point: data } = props.state
   const [setRef, { height }] = useMeasure()
 
   useLayoutEffect(() => {
@@ -40,7 +38,7 @@ export default function Node(props: NodeProps): JSX.Element {
         // eslint-disable-next-line @typescript-eslint/unbound-method
         ref={setRefs(props.state.setRef, setRef)}
       >
-        <div className='name'>{props.state.data.name}</div>
+        <div className='name'>{props.state.point.name}</div>
         <div className='links'>
           {data.links?.map((link) => {
             return (

@@ -9,7 +9,7 @@ import { EventNames, PointState } from '../../../entities/point/state'
 import { Position } from '../types/position'
 
 export interface DraggableProps {
-  state: PointState<unknown>
+  state: PointState
   chartState: {
     scale: number
     setItemState: (id: Id, eventName: string, redoEvent: Dictionary<Any>, undoEvent: Dictionary<Any>) => void

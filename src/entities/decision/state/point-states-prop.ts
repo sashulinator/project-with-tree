@@ -1,12 +1,11 @@
 import { isLinkedNode } from '~/entities/decision'
-import { Point } from '~/entities/point'
 import { Id } from '~/utils/core'
 import { BaseEmittableState, EmittableProp } from '~/utils/emittable-state'
 import { PointState } from '~/widgets/chart-item'
 
 import { DecisionItem } from '../types/decision-item'
 
-type PointStates = Record<Id, PointState<Point>>
+type PointStates = Record<Id, PointState>
 
 export class PointStatesProp<N extends string> extends EmittableProp<N, PointStates> {
   constructor(eventName: N, value: DecisionItem[], state: BaseEmittableState) {

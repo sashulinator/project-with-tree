@@ -5,10 +5,8 @@ import { Any } from '~/utils/core'
 import { PointState } from '~/widgets/chart-item'
 import Selectable from '~/widgets/chart-item/features/selectable'
 
-import { Point } from '../../../../point/types/point'
-
 export interface ItemNodeProps {
-  state: PointState<Point>
+  state: PointState
   decisionState: TreeState<Any, Any>
 }
 
@@ -37,13 +35,13 @@ export default function Node(props: ItemNodeProps): JSX.Element {
 }
 
 interface FactoryProps {
-  state: PointState<Point>
+  state: PointState
   decisionState: TreeState<Any, Any>
   isSelected: boolean
 }
 
 function Factory(props: FactoryProps): JSX.Element {
-  const { type } = props.state.data
+  const { type } = props.state.point
 
   if (type === 'MAIN') {
     return <PointNode {...props} />
@@ -59,7 +57,7 @@ function Factory(props: FactoryProps): JSX.Element {
         strokeWidth={props.isSelected ? '1px' : 0}
       />
       <text x={20} y={props.state.height - 30}>
-        {props.state.data.id}
+        {props.state.point.id}
       </text>
     </>
   )

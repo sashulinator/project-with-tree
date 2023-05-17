@@ -7,7 +7,7 @@ import WChartItem, { Draggable, PointState } from '~/widgets/chart-item'
 
 export interface ChartItemProps extends React.HTMLAttributes<SVGGElement> {
   children: React.ReactNode
-  state: PointState<unknown>
+  state: PointState
   chartState: {
     scale: number
     setItemState: (id: Id, eventName: string, redoEvent: Dictionary<Any>, undoEvent: Dictionary<Any>) => void
