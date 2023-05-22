@@ -3,9 +3,8 @@ import { Any } from '@react-spring/types'
 import { Link } from '~/entities/point'
 import { Id } from '~/utils/core'
 import { Dictionary } from '~/utils/dictionary'
+import { Translate } from '~/widgets/canvas'
 import { PointState } from '~/widgets/chart-item'
-
-import { Translate } from './state'
 
 export type Events = {
   setScale: { value: number }

@@ -6,16 +6,12 @@ import { Any, Id } from '~/utils/core'
 import { Dictionary, add, remove } from '~/utils/dictionary'
 import { Emitterable } from '~/utils/emitterable'
 import { EmitterableProp } from '~/utils/emitterable/emitterable-prop'
+import { Translate } from '~/widgets/canvas'
 import { PointState } from '~/widgets/chart-item'
 
 import { EventNames } from './event-names'
 import { Events } from './events'
 import { PointStatesProp } from './point-states-prop'
-
-export interface Translate {
-  x: number
-  y: number
-}
 
 export interface DecisionStateProps {
   translate: Translate
