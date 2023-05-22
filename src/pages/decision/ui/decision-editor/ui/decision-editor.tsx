@@ -1,7 +1,7 @@
 import { useEffect, useMemo } from 'react'
 
 import { DecisionState as ChartState, Decision, EventNames, Node, Point } from '~/entities/decision'
-import Chart from '~/ui/chart/ui/chart'
+import Canvas from '~/entities/decision/ui/canvas/ui/canvas'
 import { assertDefined } from '~/utils/core'
 import { useEventListener, useForceUpdate } from '~/utils/hooks'
 import { PointState } from '~/widgets/chart-item'
@@ -49,13 +49,13 @@ export default function DecisionEditor(props: DecisionEditorProps): JSX.Element 
   }, [itemStates.length])
 
   return (
-    <Chart state={props.chartState}>
+    <Canvas state={props.chartState}>
       {links?.map((link) => {
         return <ChartLink key={`${link.targetState.point.id}${link.sourceState.point.id}`} {...link} />
       })}
       {itemStates.map((state) => {
         return <Node key={state.point.id} state={state} decisionState={props.chartState} />
       })}
-    </Chart>
+    </Canvas>
   )
 }

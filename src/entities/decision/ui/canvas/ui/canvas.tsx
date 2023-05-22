@@ -1,6 +1,6 @@
 import AbstractChart, { ChartProps, Draggable, Zoomable } from '~/widgets/chart'
 
-export default function Chart(props: ChartProps): JSX.Element {
+export default function Canvas(props: ChartProps): JSX.Element {
   return (
     <Zoomable state={props.state}>
       {(zoomProps): JSX.Element => (
