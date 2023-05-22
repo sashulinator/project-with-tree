@@ -34,6 +34,8 @@ export class CanvasState implements Emitterable<Events> {
 
   decision: Decision
 
+  // 👷 Constructor
+
   constructor(props: DecisionStateProps) {
     this.emitter = mitt()
 
@@ -47,12 +49,22 @@ export class CanvasState implements Emitterable<Events> {
     this._pointStates = new PointStatesProp('setItemStates', props.decision.data, this)
   }
 
+  // 💉 Translate get/set
+
   get translate(): Translate {
     return this._translate.value
   }
+  setTranslate = (translate: Translate): void => {
+    this._translate.value = translate
+  }
+
+  // 💉 scale get/set
 
   get scale(): number {
     return this._scale.value
+  }
+  setScale = (scale: number): void => {
+    this._scale.value = scale
   }
 
   get pointStates(): Record<Id, PointState> {
@@ -63,25 +75,9 @@ export class CanvasState implements Emitterable<Events> {
     return this._selected.value
   }
 
-  // History
-  addHistory<E extends EventNames>(eventName: E, redoEvent: Events[E], undoEvent: Events[E]): void {
-    const redo = (): void => this.emitter.emit(eventName, redoEvent)
-    const undo = (): void => this.emitter.emit(eventName, undoEvent)
-    this.history.add(redo, undo)
-  }
-
-  // Camera
-  setTranslate = (translate: Translate): void => {
-    this._translate.value = translate
-  }
-
-  setScale = (scale: number): void => {
-    this._scale.value = scale
-  }
-
   // Select
   select = (value: Id[]): void => {
-    this.addHistory('setSelected', { value }, { value: this.selected })
+    this._selected.value = value
   }
 
   unselect = (ids: Id[]): void => {
