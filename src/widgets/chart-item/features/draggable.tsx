@@ -2,17 +2,16 @@ import { useDrag } from '@use-gesture/react'
 
 import React, { useRef } from 'react'
 
-import { Any, Id, assertNotNull } from '~/utils/core'
-import { Dictionary } from '~/utils/dictionary'
+import { assertNotNull } from '~/utils/core'
 
-import { EventNames, PointState } from '../../../entities/point/state'
+import { PointState } from '../../../entities/point/state'
 import { Position } from '../types/position'
 
 export interface DraggableProps {
   state: PointState
   chartState: {
     scale: number
-    setItemState: (id: Id, eventName: string, redoEvent: Dictionary<Any>, undoEvent: Dictionary<Any>) => void
+    // setItemState: (id: Id, eventName: string, redoEvent: Dictionary<Any>, undoEvent: Dictionary<Any>) => void
   }
   children: (
     props: Pick<
@@ -51,12 +50,12 @@ export function Draggable(props: DraggableProps): JSX.Element {
     props.state.setPosition({ x, y })
 
     if (event.last) {
-      props.chartState.setItemState(
-        props.state.id,
-        EventNames.setPosition,
-        { position: { x, y } },
-        { position: xyRef.current }
-      )
+      // props.chartState.setItemState(
+      //   props.state.id,
+      //   EventNames.setPosition,
+      //   { position: { x, y } },
+      //   { position: xyRef.current }
+      // )
       xyRef.current = null
     }
   })

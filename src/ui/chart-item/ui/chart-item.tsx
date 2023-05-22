@@ -10,7 +10,7 @@ export interface ChartItemProps extends React.HTMLAttributes<SVGGElement> {
   state: PointState
   chartState: {
     scale: number
-    setItemState: (id: Id, eventName: string, redoEvent: Dictionary<Any>, undoEvent: Dictionary<Any>) => void
+    // setItemState: (id: Id, eventName: string, redoEvent: Dictionary<Any>, undoEvent: Dictionary<Any>) => void
   }
 }
 

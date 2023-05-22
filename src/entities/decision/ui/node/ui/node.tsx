@@ -1,7 +1,6 @@
 import { CanvasState as TreeState } from '~/entities/decision'
 import { PointNode } from '~/entities/point'
 import ChartItem from '~/ui/chart-item'
-import { Any } from '~/utils/core'
 import { PointState } from '~/widgets/chart-item'
 import Selectable from '~/widgets/chart-item/features/selectable'
 
