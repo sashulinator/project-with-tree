@@ -1,5 +1,6 @@
 import clr from 'color'
 
+import { DecisionPointCSSVars } from '~/entities/point'
 import { ButtonCSSVars } from '~/ui/button/types/css-vars'
 import { ListCSSVars } from '~/ui/list/types/css-vars'
 import { TextInputCSSVars } from '~/ui/text-input/types/css-vars'
@@ -62,7 +63,10 @@ const listItem_bg__selected = bg.darken(0.05)
 /* TextInput */
 const button_outlineColor = primary.alpha(0.5)
 
-export const light: Theme & TextInputCSSVars & ListCSSVars & ButtonCSSVars = {
+/* DecisionPoint */
+const decisionPoint_bg = bgSecondary
+
+export const light: Theme & TextInputCSSVars & ListCSSVars & ButtonCSSVars & DecisionPointCSSVars = {
   ...common,
   primary,
   primaryAlpha04,
@@ -98,4 +102,7 @@ export const light: Theme & TextInputCSSVars & ListCSSVars & ButtonCSSVars = {
 
   // Button
   button_outlineColor,
+
+  // DecisionPoint
+  decisionPoint_bg,
 }

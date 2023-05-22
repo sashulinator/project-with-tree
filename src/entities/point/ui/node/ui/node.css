@@ -1,0 +1,33 @@
+.PointNode {
+  background-color: var(--decisionPoint_bg);
+  border-width: 1px;
+  border-style: solid;
+  border-color: transparent;
+  border-radius: 0.5rem;
+  box-shadow: rgba(9, 30, 66, 0.25) 0px 4px 8px -2px, rgba(9, 30, 66, 0.08) 0px 0px 0px 1px;
+}
+
+.PointNode.--selected {
+  border-color: var(--primary);
+}
+
+.PointNode > .name {
+  cursor: grab;
+  user-select: none;
+  height: 3rem;
+  display: flex;
+  align-items: flex-end;
+  margin-bottom: 0.5rem;
+  padding: 0.5rem;
+  border-top-left-radius: 0.5rem;
+  border-top-right-radius: 0.5rem;
+  background-color: var(--bg);
+}
+
+.PointNode > .links {
+  padding: 0.5rem;
+}
+
+.PointNode > .add-rule {
+  padding: 0.5rem;
+}

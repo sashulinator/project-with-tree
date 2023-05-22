@@ -1,7 +1,6 @@
 import { FormEvent, useState } from 'react'
 import { useNavigate } from 'react-router'
 
-import { addToast } from '~/packages/toast'
 import Button from '~/ui/button'
 import CloseIcon from '~/ui/icons/close'
 import EyeOffIcon from '~/ui/icons/eye-off'
@@ -10,6 +9,7 @@ import TextInput from '~/ui/text-input'
 import { useBoolean } from '~/utils/hooks/boolean'
 import { I18nDropdown, useT } from '~/widgets/i18n'
 import { ThemeDropdown } from '~/widgets/theme'
+import { addToast } from '~/widgets/toast'
 
 import { translations } from '../model/translations'
 

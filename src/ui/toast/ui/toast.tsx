@@ -1,13 +1,13 @@
 import './toast.scss'
 
+import { Id } from '~/utils/core'
+import { useForceUpdate, useOnMount } from '~/utils/hooks'
+import { get } from '~/widgets/toast/toast/actions'
+import { ToastEventNames } from '~/widgets/toast/toast/event-names'
+
 import { backgroundColors } from '../constants/background-colors'
 import LandscapeAnimation from './landscape-animation'
 import PortraitAnimation from './portrait-animation'
-
-import { get } from '~/packages/toast/toast/actions'
-import { ToastEventNames } from '~/packages/toast/toast/event-names'
-import { Id } from '~/utils/core'
-import { useForceUpdate, useOnMount } from '~/utils/hooks'
 
 export default function Toast(props: { id: Id; isPortrait: boolean }): JSX.Element | null {
   const toast = get(props.id)
