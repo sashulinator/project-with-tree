@@ -1,10 +1,12 @@
+import mitt, { Emitter } from 'mitt'
+
 import { LinkedDecision } from '~/entities/decision'
 import { Point } from '~/entities/point'
 import { ActionHistory } from '~/utils/action-history'
 import { Any, Id } from '~/utils/core'
 import { Dictionary, add, remove } from '~/utils/dictionary'
-import { EmittableState } from '~/utils/emittable-state'
-import { EmittableProp } from '~/utils/emittable-state/emittable-prop'
+import { Emitterable } from '~/utils/emitterable'
+import { EmitterableProp } from '~/utils/emitterable/emitterable-prop'
 import { PointState } from '~/widgets/chart-item'
 
 import { EventNames } from './event-names'
@@ -22,12 +24,14 @@ export interface DecisionStateProps {
   pointList: (Point | LinkedDecision)[]
 }
 
-export class CanvasState<D, S extends PointState> extends EmittableState<Events<S>> {
-  private _translate: EmittableProp<EventNames.setTranslate, Translate>
+export class CanvasState<D, S extends PointState> implements Emitterable<Events<S>> {
+  emitter: Emitter<Events<S>>
 
-  private _scale: EmittableProp<EventNames.setScale, number>
+  private _translate: EmitterableProp<EventNames.setTranslate, Translate>
 
-  private _selected: EmittableProp<EventNames.setSelected, Id[]>
+  private _scale: EmitterableProp<EventNames.setScale, number>
+
+  private _selected: EmitterableProp<EventNames.setSelected, Id[]>
 
   private _pointStates: PointStatesProp<EventNames.setItemStates>
 
@@ -36,15 +40,16 @@ export class CanvasState<D, S extends PointState> extends EmittableState<Events<
   data: D
 
   constructor(data: D, props: DecisionStateProps) {
-    super()
+    this.emitter = mitt()
+
     this.data = data
     this.subscribe()
 
     this.history = new ActionHistory()
 
-    this._translate = new EmittableProp(EventNames.setTranslate, props.translate, this)
-    this._scale = new EmittableProp(EventNames.setScale, props.scale, this)
-    this._selected = new EmittableProp(EventNames.setSelected, [], this)
+    this._translate = new EmitterableProp(EventNames.setTranslate, props.translate, this)
+    this._scale = new EmitterableProp(EventNames.setScale, props.scale, this)
+    this._selected = new EmitterableProp(EventNames.setSelected, [], this)
     this._pointStates = new PointStatesProp(EventNames.setItemStates, props.pointList, this)
   }
 

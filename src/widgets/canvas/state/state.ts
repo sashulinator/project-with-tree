@@ -1,4 +1,6 @@
-import { EmittableProp, EmittableState } from '~/utils/emittable-state'
+import mitt, { Emitter } from 'mitt'
+
+import { Emitterable, EmitterableProp } from '~/utils/emitterable'
 
 import { Translate } from '../types/translate'
 import { EventNames } from './event-names'
@@ -9,16 +11,17 @@ export interface CanvasStateProps {
   scale: number
 }
 
-export class CanvasState extends EmittableState<Events> {
-  private _translate: EmittableProp<EventNames.setTranslate, Translate>
+export class CanvasState implements Emitterable<Events> {
+  emitter: Emitter<Events>
 
-  private _scale: EmittableProp<EventNames.setScale, number>
+  private _translate: EmitterableProp<EventNames.setTranslate, Translate>
+
+  private _scale: EmitterableProp<EventNames.setScale, number>
 
   constructor(props: CanvasStateProps) {
-    super()
-
-    this._translate = new EmittableProp(EventNames.setTranslate, props.translate, this)
-    this._scale = new EmittableProp(EventNames.setScale, props.scale, this)
+    this.emitter = mitt()
+    this._translate = new EmitterableProp(EventNames.setTranslate, props.translate, this)
+    this._scale = new EmitterableProp(EventNames.setScale, props.scale, this)
   }
 
   get translate(): Translate {

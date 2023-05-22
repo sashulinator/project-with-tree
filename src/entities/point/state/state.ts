@@ -1,6 +1,8 @@
+import mitt, { Emitter } from 'mitt'
+
 import { Link, Point } from '~/entities/point'
 import { Id } from '~/utils/core'
-import { EmittableState } from '~/utils/emittable-state'
+import { Emitterable } from '~/utils/emitterable'
 import { Position } from '~/widgets/chart-item'
 
 import { EventNames } from './event-names'
@@ -14,7 +16,9 @@ export interface StateProps {
   links?: Link[] | undefined
 }
 
-export class PointState extends EmittableState<Events> {
+export class PointState implements Emitterable<Events> {
+  emitter: Emitter<Events>
+
   id: Id
 
   position: Position
@@ -30,7 +34,7 @@ export class PointState extends EmittableState<Events> {
   links: Link[]
 
   constructor(point: Point, props: StateProps) {
-    super()
+    this.emitter = mitt()
     this.point = point
     this.subscribe()
 
