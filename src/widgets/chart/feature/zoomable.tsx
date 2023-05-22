@@ -1,11 +1,11 @@
 /* eslint-disable eslint-comments/disable-enable-pair, @typescript-eslint/unbound-method */
 import React, { useLayoutEffect, useRef } from 'react'
 
-import { DecisionState } from '~/entities/decision'
 import { Any } from '~/utils/core'
 
 interface ZoomableProps {
-  state: DecisionState<unknown, Any>
+  scale: number
+  setScale: (scale: number) => void
   children: (props: Any) => React.ReactNode
 }
 
@@ -18,15 +18,15 @@ export function Zoomable(props: ZoomableProps): JSX.Element {
     function wheeled(event: WheelEvent): void {
       event.preventDefault()
       event.stopPropagation()
-      const ret = props.state.scale + event.deltaY / 777
+      const ret = props.scale + event.deltaY / 777
       if (ret > 1 || ret < 0.1) return
-      props.state.setScale(ret)
+      props.setScale(ret)
     }
 
     svgRef.current.addEventListener('wheel', wheeled)
 
     return () => svgRef.current?.removeEventListener('wheel', wheeled)
-  })
+  }, [])
 
   return <>{props.children({ ref: svgRef })}</>
 }
