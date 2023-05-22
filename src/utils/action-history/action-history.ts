@@ -31,7 +31,6 @@ export class ActionHistory {
     }
 
     this.history.add(item)
-    onRedo()
   }
 
   previous(): void {

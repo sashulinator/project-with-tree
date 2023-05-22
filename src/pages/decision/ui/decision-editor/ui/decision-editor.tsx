@@ -2,28 +2,20 @@ import { useMemo } from 'react'
 
 import { CanvasState as ChartState, Node, Point } from '~/entities/decision'
 import Canvas from '~/entities/decision/ui/canvas/ui/canvas'
+import { ActionHistory } from '~/utils/action-history'
 import { assertDefined } from '~/utils/core'
-import { useEventListener, useUpdate } from '~/utils/hooks'
+import { useUpdate } from '~/utils/hooks'
 import ChartLink, { ChartLinkProps } from '~/widgets/chart-link'
 
 interface DecisionEditorProps {
   chartState: ChartState
+  history: ActionHistory
 }
 
 export default function DecisionEditor(props: DecisionEditorProps): JSX.Element {
   const itemStates = Object.values(props.chartState.pointStates)
 
   useUpdate(updateOnEvents)
-
-  useEventListener('keydown', (e) => {
-    if (e.metaKey && e.key === 'z') {
-      if (e.shiftKey) {
-        props.chartState.history.next()
-      } else {
-        props.chartState.history.previous()
-      }
-    }
-  })
 
   const links = useMemo(() => {
     return itemStates.reduce<ChartLinkProps<Point>[]>((acc, sourceState) => {
