@@ -5,12 +5,12 @@ import { Any } from '~/utils/core'
 import { useForceUpdate } from '~/utils/hooks'
 import { setRefs } from '~/utils/react'
 
-export interface ChartProps extends React.SVGAttributes<SVGSVGElement> {
+export interface CanvasProps extends React.SVGAttributes<SVGSVGElement> {
   state: ChartState<Any, Any>
   children: React.ReactNode
 }
 
-function ChartComponent(props: ChartProps, ref: ForwardedRef<SVGSVGElement>): JSX.Element {
+function CanvasComponent(props: CanvasProps, ref: ForwardedRef<SVGSVGElement>): JSX.Element {
   const { state: state, children, ...svgProps } = props
   const svgRef = useRef<null | SVGSVGElement>(null)
 
@@ -35,6 +35,6 @@ function ChartComponent(props: ChartProps, ref: ForwardedRef<SVGSVGElement>): JS
   }
 }
 
-const Chart = forwardRef<SVGSVGElement, ChartProps>(ChartComponent)
-Chart.displayName = 'Chart'
-export default Chart
+const Canvas = forwardRef<SVGSVGElement, CanvasProps>(CanvasComponent)
+Canvas.displayName = 'Canvas'
+export default Canvas

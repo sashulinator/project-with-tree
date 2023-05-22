@@ -5,7 +5,7 @@ import React, { useRef } from 'react'
 
 import { Any } from '~/utils/core'
 
-type Translate = { x: number; y: number }
+import { Translate } from '../types/translate'
 
 interface DraggableProps {
   translate: Translate
