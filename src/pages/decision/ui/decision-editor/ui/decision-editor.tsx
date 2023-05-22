@@ -1,14 +1,13 @@
 import { useMemo } from 'react'
 
-import { CanvasState as ChartState, Decision, EventNames, Node, Point } from '~/entities/decision'
+import { CanvasState as ChartState, EventNames, Node, Point } from '~/entities/decision'
 import Canvas from '~/entities/decision/ui/canvas/ui/canvas'
 import { assertDefined } from '~/utils/core'
 import { useEventListener, useUpdate } from '~/utils/hooks'
-import { PointState } from '~/widgets/chart-item'
 import ChartLink, { ChartLinkProps } from '~/widgets/chart-link'
 
 interface DecisionEditorProps {
-  chartState: ChartState<Decision, PointState>
+  chartState: ChartState
 }
 
 export default function DecisionEditor(props: DecisionEditorProps): JSX.Element {

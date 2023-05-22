@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 
 import { Any, Id } from '~/utils/core'
 
-import { CanvasState as ChartState, EventNames } from '../../../entities/decision/ui/canvas/state'
+import { CanvasState, EventNames } from '../../../entities/decision/ui/canvas/state'
 
 export interface SelectableProps {
   children: (props: {
@@ -10,7 +10,7 @@ export interface SelectableProps {
     selectOnMouseAction(e: React.MouseEvent<SVGGElement>): void
   }) => React.ReactNode
   id: Id
-  chartState: ChartState<Any, Any>
+  chartState: CanvasState
 }
 
 export default function Selectable(props: SelectableProps): JSX.Element {

@@ -9,7 +9,7 @@ import PropsPanel from './ui/props-panel'
 export default function DecisionPage(): JSX.Element {
   // const { id } = useParams()
 
-  const chartState = new CanvasState(decision, { translate: { x: 0, y: 0 }, scale: 1, pointList: decision.data })
+  const chartState = new CanvasState({ translate: { x: 0, y: 0 }, scale: 1, decision })
 
   return (
     <main className='DecisionPage'>

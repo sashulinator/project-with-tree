@@ -1,7 +1,6 @@
 import mitt, { Emitter } from 'mitt'
 
-import { LinkedDecision } from '~/entities/decision'
-import { Point } from '~/entities/point'
+import { Decision } from '~/entities/decision'
 import { ActionHistory } from '~/utils/action-history'
 import { Any, Id } from '~/utils/core'
 import { Dictionary, add, remove } from '~/utils/dictionary'
@@ -21,11 +20,11 @@ export interface Translate {
 export interface DecisionStateProps {
   translate: Translate
   scale: number
-  pointList: (Point | LinkedDecision)[]
+  decision: Decision
 }
 
-export class CanvasState<D, S extends PointState> implements Emitterable<Events<S>> {
-  emitter: Emitter<Events<S>>
+export class CanvasState implements Emitterable<Events> {
+  emitter: Emitter<Events>
 
   private _translate: EmitterableProp<EventNames.setTranslate, Translate>
 
@@ -37,12 +36,13 @@ export class CanvasState<D, S extends PointState> implements Emitterable<Events<
 
   history: ActionHistory
 
-  data: D
+  decision: Decision
 
-  constructor(data: D, props: DecisionStateProps) {
+  constructor(props: DecisionStateProps) {
     this.emitter = mitt()
 
-    this.data = data
+    this.decision = props.decision
+
     this.subscribe()
 
     this.history = new ActionHistory()
@@ -50,7 +50,7 @@ export class CanvasState<D, S extends PointState> implements Emitterable<Events<
     this._translate = new EmitterableProp(EventNames.setTranslate, props.translate, this)
     this._scale = new EmitterableProp(EventNames.setScale, props.scale, this)
     this._selected = new EmitterableProp(EventNames.setSelected, [], this)
-    this._pointStates = new PointStatesProp(EventNames.setItemStates, props.pointList, this)
+    this._pointStates = new PointStatesProp(EventNames.setItemStates, props.decision.data, this)
   }
 
   get translate(): Translate {
@@ -61,8 +61,8 @@ export class CanvasState<D, S extends PointState> implements Emitterable<Events<
     return this._scale.value
   }
 
-  get pointStates(): Record<Id, S> {
-    return this._pointStates.value as Record<Id, S>
+  get pointStates(): Record<Id, PointState> {
+    return this._pointStates.value
   }
 
   get selected(): Id[] {
@@ -78,7 +78,7 @@ export class CanvasState<D, S extends PointState> implements Emitterable<Events<
   }
 
   // History
-  addHistory<E extends EventNames>(eventName: E, redoEvent: Events<S>[E], undoEvent: Events<S>[E]): void {
+  addHistory<E extends EventNames>(eventName: E, redoEvent: Events[E], undoEvent: Events[E]): void {
     const redo = (): void => this.emitter.emit(eventName, redoEvent)
     const undo = (): void => this.emitter.emit(eventName, undoEvent)
     this.history.add(redo, undo)
@@ -113,11 +113,11 @@ export class CanvasState<D, S extends PointState> implements Emitterable<Events<
   }
 
   // CRUD
-  setItemStates = (value: Record<Id, S>): void => {
+  setItemStates = (value: Record<Id, PointState>): void => {
     this.addHistory(EventNames.setItemStates, { value }, { value: this.pointStates })
   }
 
-  addItemState = (id: Id, state: S): void => {
+  addItemState = (id: Id, state: PointState): void => {
     const newItemStates = add(this.pointStates, id, state)
     this.setItemStates(newItemStates)
   }

@@ -7,7 +7,7 @@ import Selectable from '~/widgets/chart-item/features/selectable'
 
 export interface ItemNodeProps {
   state: PointState
-  decisionState: TreeState<Any, Any>
+  decisionState: TreeState
 }
 
 export default function Node(props: ItemNodeProps): JSX.Element {
@@ -36,7 +36,7 @@ export default function Node(props: ItemNodeProps): JSX.Element {
 
 interface FactoryProps {
   state: PointState
-  decisionState: TreeState<Any, Any>
+  decisionState: TreeState
   isSelected: boolean
 }
 

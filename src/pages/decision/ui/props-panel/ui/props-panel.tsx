@@ -4,13 +4,13 @@ import { CanvasState as ChartState, Decision } from '~/entities/decision'
 import { PointState } from '~/widgets/chart-item'
 
 interface PropsPanelPropsProps {
-  chartState: ChartState<Decision, PointState>
+  chartState: ChartState
 }
 
 export default function PropsPanelProps(props: PropsPanelPropsProps): JSX.Element {
   return (
     <div className='PropsPanelProps'>
-      {props.chartState.data.id}
+      {props.chartState.decision.id}
       <button onClick={onAddVoidClick}>Add VOID node</button>
     </div>
   )

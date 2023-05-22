@@ -5,7 +5,7 @@ import AbstractCanvas, { Draggable, Zoomable } from '~/widgets/canvas'
 import { CanvasState, EventNames } from '../state'
 
 export interface CanvasProps {
-  canvasState: CanvasState<Any, Any>
+  canvasState: CanvasState
   children: React.ReactNode
 }
 
