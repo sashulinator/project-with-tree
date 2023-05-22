@@ -19,13 +19,13 @@ export interface DecisionStateProps {
 export class CanvasState implements Emitterable<Events> {
   emitter: Emitter<Events>
 
-  private _translate: Prop<'setTranslate', Translate>
+  _translate: Prop<'setTranslate', Translate>
 
-  private _scale: Prop<'setScale', number>
+  _scale: Prop<'setScale', number>
 
-  private _selected: Prop<'setSelected', Id[]>
+  _selected: Prop<'setSelected', Id[]>
 
-  private _pointStates: PointStatesProp<'setItemStates'>
+  _pointStates: PointStatesProp<'setItemStates'>
 
   decision: Decision
 

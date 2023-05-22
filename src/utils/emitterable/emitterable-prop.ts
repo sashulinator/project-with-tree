@@ -25,8 +25,8 @@ export class EmitterableProp<N extends string, V> {
   }
 
   set value(value: V) {
+    this.previousValue = this._value
     this._value = value
-    this.previousValue = value
     this.emittableState.emitter.emit(this.eventName, { value })
   }
 }
