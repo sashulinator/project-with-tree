@@ -1,15 +1,12 @@
 import mitt, { Emitter } from 'mitt'
 
 import { Decision } from '~/entities/decision'
-import { ActionHistory } from '~/utils/action-history'
-import { Any, Id } from '~/utils/core'
-import { Dictionary } from '~/utils/dictionary'
+import { Id } from '~/utils/core'
 import { Emitterable } from '~/utils/emitterable'
 import { EmitterableProp as Prop } from '~/utils/emitterable/emitterable-prop'
 import { Translate } from '~/widgets/canvas'
 import { PointState } from '~/widgets/chart-item'
 
-import { EventNames } from './event-names'
 import { Events } from './events'
 import { PointStatesProp } from './point-states-prop'
 
@@ -30,19 +27,13 @@ export class CanvasState implements Emitterable<Events> {
 
   private _pointStates: PointStatesProp<'setItemStates'>
 
-  history: ActionHistory
-
   decision: Decision
 
   // 👷 Constructor
 
   constructor(props: DecisionStateProps) {
     this.emitter = mitt()
-
     this.decision = props.decision
-
-    this.history = new ActionHistory()
-
     this._translate = new Prop('setTranslate', props.translate, this)
     this._scale = new Prop('setScale', props.scale, this)
     this._selected = new Prop('setSelected', [], this)
