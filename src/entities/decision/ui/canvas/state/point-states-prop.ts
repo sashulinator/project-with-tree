@@ -3,7 +3,7 @@ import { Id } from '~/utils/core'
 import { BaseEmittableState, EmittableProp } from '~/utils/emittable-state'
 import { PointState } from '~/widgets/chart-item'
 
-import { DecisionItem } from '../types/decision-item'
+import { DecisionItem } from '../../../types/decision-item'
 
 type PointStates = Record<Id, PointState>
 
