@@ -1,8 +1,7 @@
-import { ForwardedRef, forwardRef, useEffect, useRef } from 'react'
+import { ForwardedRef, forwardRef, useRef } from 'react'
 
-import { DecisionState as ChartState, EventNames } from '~/entities/decision'
+import { DecisionState as ChartState } from '~/entities/decision'
 import { Any } from '~/utils/core'
-import { useForceUpdate } from '~/utils/hooks'
 import { setRefs } from '~/utils/react'
 
 export interface CanvasProps extends React.SVGAttributes<SVGSVGElement> {
@@ -13,13 +12,6 @@ export interface CanvasProps extends React.SVGAttributes<SVGSVGElement> {
 function CanvasComponent(props: CanvasProps, ref: ForwardedRef<SVGSVGElement>): JSX.Element {
   const { state: state, children, ...svgProps } = props
   const svgRef = useRef<null | SVGSVGElement>(null)
-
-  const update = useForceUpdate()
-
-  useEffect(() => {
-    state.emitter.on(EventNames.setScale, update)
-    state.emitter.on(EventNames.setTranslate, update)
-  }, [])
 
   return (
     <svg width='100%' height='100%' {...svgProps} ref={setRefs(svgRef, ref)}>

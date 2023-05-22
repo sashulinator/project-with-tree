@@ -1,6 +1,8 @@
 import { useState } from 'react'
 
-export function useForceUpdate() {
+export type Update = () => void
+
+export function useForceUpdate(): Update {
   const [, setUpdate] = useState({})
 
   return () => setUpdate({})
