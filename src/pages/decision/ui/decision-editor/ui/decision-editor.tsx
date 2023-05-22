@@ -1,6 +1,6 @@
 import { useMemo } from 'react'
 
-import { CanvasState as ChartState, EventNames, Node, Point } from '~/entities/decision'
+import { CanvasState as ChartState, Node, Point } from '~/entities/decision'
 import Canvas from '~/entities/decision/ui/canvas/ui/canvas'
 import { assertDefined } from '~/utils/core'
 import { useEventListener, useUpdate } from '~/utils/hooks'
@@ -56,7 +56,7 @@ export default function DecisionEditor(props: DecisionEditorProps): JSX.Element 
   // Private
 
   function updateOnEvents(update: () => void): void {
-    props.chartState.emitter.on(EventNames.setItemStates, update)
-    props.chartState.emitter.on(EventNames.setItemStates, update)
+    props.chartState.emitter.on('setItemStates', update)
+    props.chartState.emitter.on('setItemStates', update)
   }
 }

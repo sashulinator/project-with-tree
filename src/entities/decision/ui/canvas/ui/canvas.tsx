@@ -1,8 +1,7 @@
-import { Any } from '~/utils/core'
 import { useUpdate } from '~/utils/hooks/update'
 import AbstractCanvas, { Draggable, Zoomable } from '~/widgets/canvas'
 
-import { CanvasState, EventNames } from '../state'
+import { CanvasState } from '../state'
 
 export interface CanvasProps {
   canvasState: CanvasState
@@ -36,7 +35,7 @@ export default function Canvas(props: CanvasProps): JSX.Element {
   // Private
 
   function updateOnEvents(update: () => void): void {
-    props.canvasState.emitter.on(EventNames.setScale, update)
-    props.canvasState.emitter.on(EventNames.setTranslate, update)
+    props.canvasState.emitter.on('setScale', update)
+    props.canvasState.emitter.on('setTranslate', update)
   }
 }

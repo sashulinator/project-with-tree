@@ -26,13 +26,13 @@ export interface DecisionStateProps {
 export class CanvasState implements Emitterable<Events> {
   emitter: Emitter<Events>
 
-  private _translate: EmitterableProp<EventNames.setTranslate, Translate>
+  private _translate: EmitterableProp<'setTranslate', Translate>
 
-  private _scale: EmitterableProp<EventNames.setScale, number>
+  private _scale: EmitterableProp<'setScale', number>
 
-  private _selected: EmitterableProp<EventNames.setSelected, Id[]>
+  private _selected: EmitterableProp<'setSelected', Id[]>
 
-  private _pointStates: PointStatesProp<EventNames.setItemStates>
+  private _pointStates: PointStatesProp<'setItemStates'>
 
   history: ActionHistory
 
@@ -47,10 +47,10 @@ export class CanvasState implements Emitterable<Events> {
 
     this.history = new ActionHistory()
 
-    this._translate = new EmitterableProp(EventNames.setTranslate, props.translate, this)
-    this._scale = new EmitterableProp(EventNames.setScale, props.scale, this)
-    this._selected = new EmitterableProp(EventNames.setSelected, [], this)
-    this._pointStates = new PointStatesProp(EventNames.setItemStates, props.decision.data, this)
+    this._translate = new EmitterableProp('setTranslate', props.translate, this)
+    this._scale = new EmitterableProp('setScale', props.scale, this)
+    this._selected = new EmitterableProp('setSelected', [], this)
+    this._pointStates = new PointStatesProp('setItemStates', props.decision.data, this)
   }
 
   get translate(): Translate {
@@ -70,7 +70,7 @@ export class CanvasState implements Emitterable<Events> {
   }
 
   private subscribe = (): void => {
-    this.emitter.on(EventNames.setItemState, (event) => {
+    this.emitter.on('setItemState', (event) => {
       const state = this.pointStates[event.id]
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       state.emitter.emit(event.eventName as any, event.event)
@@ -86,7 +86,7 @@ export class CanvasState implements Emitterable<Events> {
 
   setItemState<E extends string>(id: Id, eventName: E, redoEvent: Dictionary<Any>, undoEvent: Dictionary<Any>): void {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-    this.addHistory(EventNames.setItemState, { id, eventName, event: redoEvent }, { id, eventName, event: undoEvent })
+    this.addHistory('setItemState', { id, eventName, event: redoEvent }, { id, eventName, event: undoEvent })
   }
 
   // Camera
@@ -100,7 +100,7 @@ export class CanvasState implements Emitterable<Events> {
 
   // Select
   select = (value: Id[]): void => {
-    this.addHistory(EventNames.setSelected, { value }, { value: this.selected })
+    this.addHistory('setSelected', { value }, { value: this.selected })
   }
 
   unselect = (ids: Id[]): void => {
@@ -114,7 +114,7 @@ export class CanvasState implements Emitterable<Events> {
 
   // CRUD
   setItemStates = (value: Record<Id, PointState>): void => {
-    this.addHistory(EventNames.setItemStates, { value }, { value: this.pointStates })
+    this.addHistory('setItemStates', { value }, { value: this.pointStates })
   }
 
   addItemState = (id: Id, state: PointState): void => {

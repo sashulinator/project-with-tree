@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
 
-import { Any, Id } from '~/utils/core'
+import { Id } from '~/utils/core'
 
-import { CanvasState, EventNames } from '../../../entities/decision/ui/canvas/state'
+import { CanvasState } from '../../../entities/decision/ui/canvas/state'
 
 export interface SelectableProps {
   children: (props: {
@@ -17,7 +17,7 @@ export default function Selectable(props: SelectableProps): JSX.Element {
   const [isSelected, select] = useState(false)
 
   useEffect(() => {
-    props.chartState.emitter.on(EventNames.setSelected, ({ value }) => select(value?.includes(props.id)))
+    props.chartState.emitter.on('setSelected', ({ value }) => select(value?.includes(props.id)))
   })
 
   return <>{props.children({ isSelected, selectOnMouseAction })}</>
