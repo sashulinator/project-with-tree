@@ -22,7 +22,7 @@ export interface DecisionStateProps {
   pointList: (Point | LinkedDecision)[]
 }
 
-export class DecisionState<D, S extends PointState> extends EmittableState<Events<S>> {
+export class CanvasState<D, S extends PointState> extends EmittableState<Events<S>> {
   private _translate: EmittableProp<EventNames.setTranslate, Translate>
 
   private _scale: EmittableProp<EventNames.setScale, number>

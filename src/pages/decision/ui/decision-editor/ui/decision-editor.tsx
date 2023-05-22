@@ -1,9 +1,9 @@
-import { useEffect, useMemo } from 'react'
+import { useMemo } from 'react'
 
-import { DecisionState as ChartState, Decision, EventNames, Node, Point } from '~/entities/decision'
+import { CanvasState as ChartState, Decision, EventNames, Node, Point } from '~/entities/decision'
 import Canvas from '~/entities/decision/ui/canvas/ui/canvas'
 import { assertDefined } from '~/utils/core'
-import { useEventListener, useForceUpdate } from '~/utils/hooks'
+import { useEventListener, useUpdate } from '~/utils/hooks'
 import { PointState } from '~/widgets/chart-item'
 import ChartLink, { ChartLinkProps } from '~/widgets/chart-link'
 
@@ -14,12 +14,7 @@ interface DecisionEditorProps {
 export default function DecisionEditor(props: DecisionEditorProps): JSX.Element {
   const itemStates = Object.values(props.chartState.pointStates)
 
-  const update = useForceUpdate()
-
-  useEffect(() => {
-    props.chartState.emitter.on(EventNames.setItemStates, update)
-    props.chartState.emitter.on(EventNames.setItemStates, update)
-  })
+  useUpdate(updateOnEvents)
 
   useEventListener('keydown', (e) => {
     if (e.metaKey && e.key === 'z') {
@@ -49,7 +44,7 @@ export default function DecisionEditor(props: DecisionEditorProps): JSX.Element 
   }, [itemStates.length])
 
   return (
-    <Canvas state={props.chartState}>
+    <Canvas canvasState={props.chartState}>
       {links?.map((link) => {
         return <ChartLink key={`${link.targetState.point.id}${link.sourceState.point.id}`} {...link} />
       })}
@@ -58,4 +53,11 @@ export default function DecisionEditor(props: DecisionEditorProps): JSX.Element 
       })}
     </Canvas>
   )
+
+  // Private
+
+  function updateOnEvents(update: () => void): void {
+    props.chartState.emitter.on(EventNames.setItemStates, update)
+    props.chartState.emitter.on(EventNames.setItemStates, update)
+  }
 }

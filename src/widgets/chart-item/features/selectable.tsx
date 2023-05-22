@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 
 import { Any, Id } from '~/utils/core'
 
-import { DecisionState as ChartState, EventNames } from '../../../entities/decision/ui/canvas/state'
+import { CanvasState as ChartState, EventNames } from '../../../entities/decision/ui/canvas/state'
 
 export interface SelectableProps {
   children: (props: {

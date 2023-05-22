@@ -1,17 +1,20 @@
 import { ForwardedRef, forwardRef, useRef } from 'react'
 
-import { DecisionState as ChartState } from '~/entities/decision'
-import { Any } from '~/utils/core'
 import { setRefs } from '~/utils/react'
 
+import { Translate } from '../types/translate'
+
 export interface CanvasProps extends React.SVGAttributes<SVGSVGElement> {
-  state: ChartState<Any, Any>
+  translate: Translate
+  scale: number
   children: React.ReactNode
 }
 
 function CanvasComponent(props: CanvasProps, ref: ForwardedRef<SVGSVGElement>): JSX.Element {
-  const { state: state, children, ...svgProps } = props
+  const { children, translate, scale, ...svgProps } = props
   const svgRef = useRef<null | SVGSVGElement>(null)
+
+  console.log('props', props)
 
   return (
     <svg width='100%' height='100%' {...svgProps} ref={setRefs(svgRef, ref)}>
@@ -22,7 +25,6 @@ function CanvasComponent(props: CanvasProps, ref: ForwardedRef<SVGSVGElement>): 
   // Private
 
   function getTransform(): string {
-    const { translate, scale } = state
     return `translate(${translate.x}px, ${translate.y}px) scale(${scale})`
   }
 }

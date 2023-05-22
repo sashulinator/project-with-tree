@@ -1,17 +1,32 @@
+import { Any } from '~/utils/core'
 import { useUpdate } from '~/utils/hooks/update'
-import AbstractCanvas, { CanvasProps, Draggable, Zoomable } from '~/widgets/canvas'
+import AbstractCanvas, { Draggable, Zoomable } from '~/widgets/canvas'
 
-import { EventNames } from '../state'
+import { CanvasState, EventNames } from '../state'
+
+export interface CanvasProps {
+  canvasState: CanvasState<Any, Any>
+  children: React.ReactNode
+}
 
 export default function Canvas(props: CanvasProps): JSX.Element {
   useUpdate(updateOnEvents)
 
   return (
-    <Zoomable setScale={props.state.setScale} scale={props.state.scale}>
+    <Zoomable setScale={props.canvasState.setScale} scale={props.canvasState.scale}>
       {(zoomProps): JSX.Element => (
-        <Draggable translate={props.state.translate} setTranslate={props.state.setTranslate}>
+        <Draggable translate={props.canvasState.translate} setTranslate={props.canvasState.setTranslate}>
           {(dragProps): JSX.Element => {
-            return <AbstractCanvas {...props} {...dragProps} {...zoomProps} />
+            return (
+              <AbstractCanvas
+                scale={props.canvasState.scale}
+                translate={props.canvasState.translate}
+                {...dragProps}
+                {...zoomProps}
+              >
+                {props.children}
+              </AbstractCanvas>
+            )
           }}
         </Draggable>
       )}
@@ -21,7 +36,7 @@ export default function Canvas(props: CanvasProps): JSX.Element {
   // Private
 
   function updateOnEvents(update: () => void): void {
-    props.state.emitter.on(EventNames.setScale, update)
-    props.state.emitter.on(EventNames.setTranslate, update)
+    props.canvasState.emitter.on(EventNames.setScale, update)
+    props.canvasState.emitter.on(EventNames.setTranslate, update)
   }
 }

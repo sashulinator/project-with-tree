@@ -1,4 +1,4 @@
-import { DecisionState as TreeState } from '~/entities/decision'
+import { CanvasState as TreeState } from '~/entities/decision'
 import { PointNode } from '~/entities/point'
 import ChartItem from '~/ui/chart-item'
 import { Any } from '~/utils/core'
