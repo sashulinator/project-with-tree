@@ -11,7 +11,7 @@
     "preview": "vite preview",
     "lint": "eslint --fix \"./src/**/*.{js,jsx,ts,tsx,json}\"",
     "test": "jest",
-    "postinstall": "scripts/add-remotes.sh && husky install",
+    "postinstall": "husky install",
     "prepack": "pinst --disable",
     "postpack": "pinst --enable"
   },
