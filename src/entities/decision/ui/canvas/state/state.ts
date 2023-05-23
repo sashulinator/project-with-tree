@@ -2,10 +2,9 @@ import mitt, { Emitter } from 'mitt'
 
 import { Decision } from '~/entities/decision'
 import { Id } from '~/utils/core'
-import { Emitterable } from '~/utils/emitterable'
-import { EmitterableProp as Prop } from '~/utils/emitterable/emitterable-prop'
+import { Emitterable, EmitterableProp as Prop } from '~/utils/emitterable'
 import { Translate } from '~/widgets/canvas'
-import { PointState } from '~/widgets/chart-item'
+import { EventNames as PointEventNames, Events as PointEvents, PointState } from '~/widgets/chart-item'
 
 import { Events } from './events'
 import { PointStatesProp } from './point-states-prop'
@@ -58,8 +57,13 @@ export class CanvasState implements Emitterable<Events> {
     this._scale.value = scale
   }
 
+  // 💉 pointStates get and other
+
   get pointStates(): Record<Id, PointState> {
     return this._pointStates.value
+  }
+  emitPointState = <E extends PointEventNames>(id: Id, eventName: E, event: PointEvents[E]): void => {
+    this._pointStates.emitPointState(id, eventName, event)
   }
 
   get selected(): Id[] {

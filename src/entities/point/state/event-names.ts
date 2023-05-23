@@ -1,7 +1,1 @@
-export enum EventNames {
-  setPosition = 'setPosition',
-  setRef = 'setRef',
-  setHeight = 'setHeight',
-  setWidth = 'setWidth',
-  addLink = 'addLink',
-}
+export type EventNames = 'setPosition' | 'setRef' | 'setHeight' | 'setWidth' | 'addLink'

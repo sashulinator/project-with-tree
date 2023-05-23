@@ -1,6 +1,6 @@
 import { useMemo } from 'react'
 
-import { CanvasState as ChartState, Node, Point } from '~/entities/decision'
+import { CanvasState as ChartState, Node } from '~/entities/decision'
 import Canvas from '~/entities/decision/ui/canvas/ui/canvas'
 import { ActionHistory } from '~/utils/action-history'
 import { assertDefined } from '~/utils/core'
@@ -18,11 +18,11 @@ export default function DecisionEditor(props: DecisionEditorProps): JSX.Element 
   useUpdate(updateOnEvents)
 
   const links = useMemo(() => {
-    return itemStates.reduce<ChartLinkProps<Point>[]>((acc, sourceState) => {
+    return itemStates.reduce<ChartLinkProps[]>((acc, sourceState) => {
       const linksProps = sourceState.links?.map((link) => {
         const targetState = props.chartState.pointStates[link.id]
         assertDefined(targetState)
-        const linkProps: ChartLinkProps<Point> = {
+        const linkProps: ChartLinkProps = {
           targetState,
           sourceState,
           link,

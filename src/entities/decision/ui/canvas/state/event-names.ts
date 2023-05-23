@@ -1,1 +1,8 @@
-export type EventNames = 'setScale' | 'setTranslate' | 'setItemStates' | 'setSelected' | 'setLinks' | 'setItemState'
+export type EventNames =
+  | 'setScale'
+  | 'setTranslate'
+  | 'setPosition'
+  | 'setItemStates'
+  | 'setSelected'
+  | 'setLinks'
+  | 'setItemState'

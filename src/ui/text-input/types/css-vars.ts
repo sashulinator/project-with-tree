@@ -1,5 +1,6 @@
 import { ToStringable } from '~/utils/core'
 
+// eslint-disable-next-line import/no-unused-modules
 export interface TextInputCSSVars {
   /* Sizable properties */
   textInput_fontSize?: ToStringable
