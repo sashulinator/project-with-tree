@@ -1,10 +1,8 @@
 import mitt, { Emitter } from 'mitt'
 
 import { Decision } from '~/entities/decision'
-import { Id } from '~/utils/core'
 import { Emitterable, EmitterableProp as Prop } from '~/utils/emitterable'
 import { Translate } from '~/widgets/canvas'
-import { EventNames as PointEventNames, Events as PointEvents, PointState } from '~/widgets/chart-item'
 
 import { Events } from './events'
 import { PointStatesProp } from './point-states-prop'

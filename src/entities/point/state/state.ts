@@ -2,10 +2,11 @@ import mitt, { Emitter } from 'mitt'
 
 import { Link, Point } from '~/entities/point'
 import { Id } from '~/utils/core'
-import { Emitterable, EmitterableProp } from '~/utils/emitterable'
+import { Emitterable, EmitterableProp as Prop } from '~/utils/emitterable'
 import { Position } from '~/widgets/chart-item'
 
 import { Events } from './events'
+import { PositionProp } from './position-prop'
 
 export interface StateProps {
   id: Id
@@ -20,7 +21,7 @@ export class PointState implements Emitterable<Events> {
 
   id: Id
 
-  position: EmitterableProp<'setPosition', Position>
+  position: PositionProp<'setPosition'>
 
   height: number
 
@@ -38,7 +39,7 @@ export class PointState implements Emitterable<Events> {
     this.subscribe()
 
     this.id = props.id
-    this.position = new EmitterableProp('setPosition', props.position, this)
+    this.position = new PositionProp('setPosition', props.position, this)
     this.height = props.width || 0
     this.width = props.height || 0
     this.ref = { current: null }

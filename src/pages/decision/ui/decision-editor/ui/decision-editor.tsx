@@ -13,14 +13,14 @@ interface DecisionEditorProps {
 }
 
 export default function DecisionEditor(props: DecisionEditorProps): JSX.Element {
-  const itemStates = Object.values(props.chartState.pointStates)
+  const itemStates = Object.values(props.chartState.pointStates.value)
 
   useUpdate(updateOnEvents)
 
   const links = useMemo(() => {
     return itemStates.reduce<ChartLinkProps[]>((acc, sourceState) => {
       const linksProps = sourceState.links?.map((link) => {
-        const targetState = props.chartState.pointStates[link.id]
+        const targetState = props.chartState.pointStates.value[link.id]
         assertDefined(targetState)
         const linkProps: ChartLinkProps = {
           targetState,

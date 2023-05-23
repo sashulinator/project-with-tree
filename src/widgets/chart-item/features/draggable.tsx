@@ -1,11 +1,8 @@
 import { useDrag } from '@use-gesture/react'
 
-import React, { useRef } from 'react'
-
-import { assertNotNull } from '~/utils/core'
+import React from 'react'
 
 import { PointState } from '../../../entities/point/state'
-import { Position } from '../types/position'
 
 export interface DraggableProps {
   state: PointState
@@ -28,8 +25,6 @@ export interface DraggableProps {
 }
 
 export function Draggable(props: DraggableProps): JSX.Element {
-  const xyRef = useRef<Position | null>(null)
-
   const dragBind = useDrag((event): void => {
     event.event.stopPropagation()
     const target = event.event.target as HTMLElement
@@ -39,25 +34,12 @@ export function Draggable(props: DraggableProps): JSX.Element {
 
     if (isIdle) return
 
-    if (xyRef.current === null) xyRef.current = props.state.position.value
-    assertNotNull(xyRef.current)
-
     const moveX = event.movement[0] / props.chartState.scale
     const moveY = event.movement[1] / props.chartState.scale
-    const x = xyRef.current.x + moveX
-    const y = xyRef.current.y + moveY
+    const x = props.state.position.last.x + moveX
+    const y = props.state.position.last.y + moveY
 
-    props.state.position.value = { x, y }
-
-    if (event.last) {
-      // props.chartState.setItemState(
-      //   props.state.id,
-      //   EventNames.setPosition,
-      //   { position: { x, y } },
-      //   { position: xyRef.current }
-      // )
-      xyRef.current = null
-    }
+    props.state.position.set({ x, y }, event.last)
   })
 
   return <>{props.children(dragBind())}</>
