@@ -39,7 +39,7 @@ export function Draggable(props: DraggableProps): JSX.Element {
 
     if (isIdle) return
 
-    if (xyRef.current === null) xyRef.current = props.state.position
+    if (xyRef.current === null) xyRef.current = props.state.position.value
     assertNotNull(xyRef.current)
 
     const moveX = event.movement[0] / props.chartState.scale
@@ -47,7 +47,7 @@ export function Draggable(props: DraggableProps): JSX.Element {
     const x = xyRef.current.x + moveX
     const y = xyRef.current.y + moveY
 
-    props.state.setPosition({ x, y })
+    props.state.position.value = { x, y }
 
     if (event.last) {
       // props.chartState.setItemState(

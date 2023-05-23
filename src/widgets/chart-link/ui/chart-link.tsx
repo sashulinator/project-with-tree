@@ -32,10 +32,10 @@ export default function ChartLink(props: ChartLinkProps): JSX.Element {
   function drawPath(): string {
     const srcLinkEl = props.sourceState.ref.current?.querySelector(`[data-id="${props.link.id}"]`) as HTMLElement
     const srcLinkOffset = getOffsetInElement(srcLinkEl, props.sourceState.ref.current)
-    const sx = props.sourceState.position.x + props.sourceState.width / 2
-    const sy = props.sourceState.position.y - props.sourceState.height / 2 + srcLinkOffset.top
-    const tx = props.targetState.position.x - props.targetState.width / 2
-    const ty = props.targetState.position.y
+    const sx = props.sourceState.position.value.x + props.sourceState.width / 2
+    const sy = props.sourceState.position.value.y - props.sourceState.height / 2 + srcLinkOffset.top
+    const tx = props.targetState.position.value.x - props.targetState.width / 2
+    const ty = props.targetState.position.value.y
     return `M${sx},${sy}L${tx},${ty}`
   }
 }

@@ -1,7 +1,6 @@
 import { ForwardedRef, forwardRef, useEffect } from 'react'
 
 import { useForceUpdate } from '~/utils/hooks'
-import { EventNames } from '~/widgets/chart-item'
 
 import { ChartItemProps } from '../types/chart-item-props'
 
@@ -30,8 +29,8 @@ function ChartItemComponent(props: ChartItemProps, ref: ForwardedRef<SVGGElement
   // Private
 
   function getTransform(): string {
-    const x = props.state.position.x - props.state.width / 2
-    const y = props.state.position.y - props.state.height / 2
+    const x = props.state.position.value.x - props.state.width / 2
+    const y = props.state.position.value.y - props.state.height / 2
     return `translate(${x}px, ${y}px)`
   }
 
