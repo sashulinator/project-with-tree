@@ -8,6 +8,7 @@ import { EventNames as PointEventNames, Events as PointEvents, PointState } from
 
 import { Events } from './events'
 import { PointStatesProp } from './point-states-prop'
+import { SelectedProp } from './selected-prop'
 
 export interface DecisionStateProps {
   translate: Translate
@@ -18,11 +19,11 @@ export interface DecisionStateProps {
 export class CanvasState implements Emitterable<Events> {
   emitter: Emitter<Events>
 
+  selected: SelectedProp<'setSelected'>
+
   _translate: Prop<'setTranslate', Translate>
 
   _scale: Prop<'setScale', number>
-
-  _selected: Prop<'setSelected', Id[]>
 
   _pointStates: PointStatesProp<'setItemStates'>
 
@@ -33,9 +34,9 @@ export class CanvasState implements Emitterable<Events> {
   constructor(props: DecisionStateProps) {
     this.emitter = mitt()
     this.decision = props.decision
+    this.selected = new SelectedProp('setSelected', [], this)
     this._translate = new Prop('setTranslate', props.translate, this)
     this._scale = new Prop('setScale', props.scale, this)
-    this._selected = new Prop('setSelected', [], this)
     this._pointStates = new PointStatesProp('setItemStates', props.decision.data, this)
   }
 
@@ -62,25 +63,8 @@ export class CanvasState implements Emitterable<Events> {
   get pointStates(): Record<Id, PointState> {
     return this._pointStates.value
   }
+
   emitPointState = <E extends PointEventNames>(id: Id, eventName: E, event: PointEvents[E]): void => {
     this._pointStates.emitPointState(id, eventName, event)
-  }
-
-  get selected(): Id[] {
-    return this._selected.value
-  }
-
-  // Select
-  select = (value: Id[]): void => {
-    this._selected.value = value
-  }
-
-  unselect = (ids: Id[]): void => {
-    this.select(this.selected.filter((s) => !ids.includes(s)))
-  }
-
-  selectToggle = (id: Id): void => {
-    const isIncludes = this.selected.includes(id)
-    isIncludes ? this.unselect([id]) : this.select([...this.selected, id])
   }
 }

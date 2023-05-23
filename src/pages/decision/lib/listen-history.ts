@@ -11,7 +11,7 @@ export function listenHistory<E extends EventNames>(
   if (event.isHistory) return
 
   if (eventName === 'setSelected') {
-    const prev = state._selected.previousValue
+    const prev = state.selected.previousValue
     const redo = (): void => {
       state.emitter.emit(eventName, { ...event, isHistory: true })
     }

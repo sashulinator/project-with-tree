@@ -26,11 +26,11 @@ export default function Selectable(props: SelectableProps): JSX.Element {
 
   function selectOnMouseAction(e: React.MouseEvent<SVGGElement>): void {
     if (e.metaKey) {
-      props.chartState.selectToggle(props.id)
+      props.chartState.selected.toggle(props.id)
     } else {
       // Исключаем попадание в историю избыточное выделение
-      if (props.chartState.selected.includes(props.id)) return
-      props.chartState.select([props.id])
+      if (props.chartState.selected.isSelected(props.id)) return
+      props.chartState.selected.add(props.id)
     }
   }
 }

@@ -5,7 +5,6 @@ import { Id } from '~/utils/core'
 import { Emitterable } from '~/utils/emitterable'
 import { Position } from '~/widgets/chart-item'
 
-import { EventNames } from './event-names'
 import { Events } from './events'
 
 export interface StateProps {
