@@ -36,9 +36,9 @@ function ChartItemComponent(props: ChartItemProps, ref: ForwardedRef<SVGGElement
   }
 
   function subscribeOnUpdates(): void {
-    state.emitter.on(EventNames.setPosition, update)
-    state.emitter.on(EventNames.setWidth, update)
-    state.emitter.on(EventNames.setHeight, update)
+    state.emitter.on('setPosition', update)
+    state.emitter.on('setWidth', update)
+    state.emitter.on('setHeight', update)
   }
 }
 

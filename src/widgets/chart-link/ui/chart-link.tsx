@@ -2,25 +2,25 @@ import { useEffect, useLayoutEffect } from 'react'
 
 import { getOffsetInElement } from '~/utils/dom/get-offset-in-element'
 import { useForceUpdate } from '~/utils/hooks'
-import { EventNames, PointState } from '~/widgets/chart-item'
+import { PointState } from '~/widgets/chart-item'
 
-export interface ChartLinkProps<T> {
+export interface ChartLinkProps {
   targetState: PointState
   sourceState: PointState
   link: { type: string; id: string }
 }
 
-export default function ChartLink<T>(props: ChartLinkProps<T>): JSX.Element {
+export default function ChartLink(props: ChartLinkProps): JSX.Element {
   const update = useForceUpdate()
 
   useEffect(() => {
-    props.targetState.emitter.on(EventNames.setPosition, update)
-    props.sourceState.emitter.on(EventNames.setPosition, update)
-    props.targetState.emitter.on(EventNames.setHeight, update)
-    props.sourceState.emitter.on(EventNames.setHeight, update)
-    props.targetState.emitter.on(EventNames.setWidth, update)
-    props.sourceState.emitter.on(EventNames.setWidth, update)
-    props.sourceState.emitter.on(EventNames.setRef, update)
+    props.targetState.emitter.on('setPosition', update)
+    props.sourceState.emitter.on('setPosition', update)
+    props.targetState.emitter.on('setHeight', update)
+    props.sourceState.emitter.on('setHeight', update)
+    props.targetState.emitter.on('setWidth', update)
+    props.sourceState.emitter.on('setWidth', update)
+    props.sourceState.emitter.on('setRef', update)
   })
 
   useLayoutEffect(update, [])

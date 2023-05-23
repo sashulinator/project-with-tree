@@ -47,41 +47,41 @@ export class PointState implements Emitterable<Events> {
   }
 
   private subscribe = (): void => {
-    this.emitter.on(EventNames.setPosition, (event) => {
+    this.emitter.on('setPosition', (event) => {
       this.position = event.position
     })
-    this.emitter.on(EventNames.setWidth, (event) => {
+    this.emitter.on('setWidth', (event) => {
       this.width = event.width
     })
-    this.emitter.on(EventNames.setHeight, (event) => {
+    this.emitter.on('setHeight', (event) => {
       this.height = event.height
     })
-    this.emitter.on(EventNames.setRef, (event) => {
+    this.emitter.on('setRef', (event) => {
       this.ref.current = event.element
     })
-    this.emitter.on(EventNames.addLink, (event) => {
+    this.emitter.on('addLink', (event) => {
       this.links = [...this.links, event.link]
     })
   }
 
   setPosition = (position: Position): void => {
-    this.emitter.emit(EventNames.setPosition, { position })
+    this.emitter.emit('setPosition', { position })
   }
 
   setWidth = (width: number): void => {
-    this.emitter.emit(EventNames.setWidth, { width })
+    this.emitter.emit('setWidth', { width })
   }
 
   setHeight = (height: number): void => {
-    this.emitter.emit(EventNames.setHeight, { height })
+    this.emitter.emit('setHeight', { height })
   }
 
   setRef = (element: HTMLElement): void => {
     if (element === this.ref.current) return
-    this.emitter.emit(EventNames.setRef, { element })
+    this.emitter.emit('setRef', { element })
   }
 
   addLink = (link: Link): void => {
-    this.emitter.emit(EventNames.addLink, { link })
+    this.emitter.emit('addLink', { link })
   }
 }

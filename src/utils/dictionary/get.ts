@@ -1,7 +1,6 @@
 import { Key } from '../core'
 import { has } from '../core/is/has'
 import { BaseError } from '../error'
-import { Dictionary } from './types/dictionary'
 
 /**
  * Returns the value associated with the given key in the dictionary, or throws an error if the dictionary or key is undefined.
@@ -16,7 +15,7 @@ import { Dictionary } from './types/dictionary'
  *
  * @returns {Required<D>[K]} - The value associated with the key in the dictionary object.
  */
-export function get<D extends Dictionary<K>, K extends Key>(dictionary?: D, key?: K): Required<D>[K] {
+export function get<D extends Record<K, unknown>, K extends Key>(dictionary?: D, key?: K): Required<D>[K] {
   if (key === undefined || dictionary === undefined || !has(dictionary, key)) {
     throw new BaseError(`Cannot get a Dictionary item`, { key, dictionary })
   }
