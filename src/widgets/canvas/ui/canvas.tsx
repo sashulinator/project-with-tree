@@ -14,10 +14,14 @@ function CanvasComponent(props: CanvasProps, ref: ForwardedRef<SVGSVGElement>): 
   const { children, translate, scale, ...svgProps } = props
   const svgRef = useRef<null | SVGSVGElement>(null)
 
-  console.log('props', props)
-
   return (
-    <svg width='100%' height='100%' {...svgProps} ref={setRefs(svgRef, ref)}>
+    <svg
+      width='100%'
+      height='100%'
+      {...svgProps}
+      style={{ touchAction: 'none', ...svgProps.style }}
+      ref={setRefs(svgRef, ref)}
+    >
       <g style={{ transform: getTransform() }}>{children}</g>
     </svg>
   )

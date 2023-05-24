@@ -8,9 +8,9 @@ export class EmitterableProp<N extends string, V> {
 
   previousValue: V
 
-  private emittableState: Emitterable<Any>
+  emittableState: Emitterable<Any>
 
-  private eventName: N
+  eventName: N
 
   constructor(eventName: N, value: V, state: Emitterable<Any>) {
     this._value = value
@@ -18,6 +18,11 @@ export class EmitterableProp<N extends string, V> {
     this.previousValue = value
     this.emittableState = state
     this.eventName = eventName
+
+    this.emittableState.emitter.on(this.eventName, ({ value }) => {
+      this.previousValue = this._value
+      this._value = value
+    })
   }
 
   get value(): V {
@@ -25,8 +30,10 @@ export class EmitterableProp<N extends string, V> {
   }
 
   set value(value: V) {
-    this.previousValue = this._value
-    this._value = value
     this.emittableState.emitter.emit(this.eventName, { value })
+  }
+
+  set = (value: V, event?: Record<string, unknown> | undefined): void => {
+    this.emittableState.emitter.emit(this.eventName, { value, ...event })
   }
 }

@@ -22,15 +22,29 @@ export function listenHistory<E extends EventNames>(
     history.add(redo, undo)
   }
 
-  // if (eventName === 'setPosition' && (event as Events['setPosition'])) {
-  //   const prev = state._selected.previousValue
-  //   const redo = (): void => {
-  //     state.emitter.emit(eventName, { ...event, isHistory: true })
-  //   }
-  //   const undo = (): void => {
-  //     // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-  //     state.emitter.emit(eventName, { value: prev, isHistory: true } as Any)
-  //   }
-  //   history.add(redo, undo)
-  // }
+  if (eventName === 'setPosition') {
+    const e = event as Events['setPosition']
+
+    if (!e.isLast) return
+
+    const pointState = state.pointStates.get(e.pointStateId)
+    const previousValue = pointState.position.previous
+
+    const redo = (): void => {
+      const redoEvent: Events['setPosition'] & { isHistory: true } = { ...e, isHistory: true }
+      state.pointStates.emit(e.pointStateId, eventName, redoEvent)
+    }
+    const undo = (): void => {
+      const undoEvent: Events['setPosition'] & { isHistory: true } = {
+        pointStateId: e.pointStateId,
+        value: previousValue,
+        isLast: true,
+        isHistory: true,
+      }
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+      state.pointStates.emit(e.pointStateId, eventName, undoEvent as Any)
+    }
+
+    history.add(redo, undo)
+  }
 }

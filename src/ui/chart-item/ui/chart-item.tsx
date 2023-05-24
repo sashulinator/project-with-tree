@@ -1,7 +1,5 @@
 import React from 'react'
 
-import { Any, Id } from '~/utils/core'
-import { Dictionary } from '~/utils/dictionary'
 import { fns } from '~/utils/function'
 import WChartItem, { Draggable, PointState } from '~/widgets/chart-item'
 
@@ -22,6 +20,7 @@ export default function ChartItem(props: ChartItemProps): JSX.Element {
         return (
           <WChartItem
             {...chartItemProps}
+            style={{ touchAction: 'none' }}
             onKeyDown={fns(draggableProps.onKeyDown, chartItemProps.onKeyDown)}
             onKeyUp={fns(draggableProps.onKeyUp, chartItemProps.onKeyUp)}
             onLostPointerCapture={fns(draggableProps.onLostPointerCapture, chartItemProps.onLostPointerCapture)}

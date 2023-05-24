@@ -39,7 +39,7 @@ export function Draggable(props: DraggableProps): JSX.Element {
     const x = props.state.position.last.x + moveX
     const y = props.state.position.last.y + moveY
 
-    props.state.position.set({ x, y }, event.last)
+    props.state.position.move({ x, y }, event.last)
   })
 
   return <>{props.children(dragBind())}</>

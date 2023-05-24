@@ -2,7 +2,7 @@ import mitt, { Emitter } from 'mitt'
 
 import { Link, Point } from '~/entities/point'
 import { Id } from '~/utils/core'
-import { Emitterable, EmitterableProp as Prop } from '~/utils/emitterable'
+import { Emitterable } from '~/utils/emitterable'
 import { Position } from '~/widgets/chart-item'
 
 import { Events } from './events'
