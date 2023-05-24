@@ -1,4 +1,4 @@
-import { CanvasState as TreeState } from '~/entities/decision'
+import { CanvasState } from '~/entities/decision'
 import { PointNode } from '~/entities/point'
 import ChartItem from '~/ui/chart-item'
 import { PointState } from '~/widgets/chart-item'
@@ -6,7 +6,8 @@ import Selectable from '~/widgets/chart-item/features/selectable'
 
 export interface ItemNodeProps {
   state: PointState
-  decisionState: TreeState
+  decisionState: CanvasState
+  linksContainer: SVGGElement
 }
 
 export default function Node(props: ItemNodeProps): JSX.Element {
@@ -21,6 +22,7 @@ export default function Node(props: ItemNodeProps): JSX.Element {
           >
             {
               <Factory
+                linksContainer={props.linksContainer}
                 state={props.state}
                 decisionState={props.decisionState}
                 isSelected={selectableProps.isSelected}
@@ -35,7 +37,8 @@ export default function Node(props: ItemNodeProps): JSX.Element {
 
 interface FactoryProps {
   state: PointState
-  decisionState: TreeState
+  decisionState: CanvasState
+  linksContainer: SVGGElement
   isSelected: boolean
 }
 
