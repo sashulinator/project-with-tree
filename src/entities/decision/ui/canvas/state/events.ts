@@ -12,6 +12,6 @@ export type Events = {
   setSelected: { value: Id[] }
   setLinks: { value: Link[] }
   setItemStates: { value: Record<Id, PointState> }
-  setPosition: { position: Position; pointStateId: Id }
+  setPosition: { pointStateId: Id; value: Position; isLast: boolean }
   setItemState: { id: Id; eventName: string; event: Dictionary<Any> }
 }

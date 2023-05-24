@@ -23,8 +23,12 @@ export class PointStatesProp<N extends string> extends EmitterableProp<N, PointS
     super(eventName, pointStates, canvasState)
   }
 
-  emitPointState = <E extends PointEventNames>(id: Id, eventName: E, event: PointEvents[E]): void => {
-    const state = get(this.value, id)
+  emit = <E extends PointEventNames>(id: Id, eventName: E, event: PointEvents[E]): void => {
+    const state = this.get(id)
     state.emitter.emit(eventName, event)
+  }
+
+  get = (id: Id): PointState => {
+    return get(this.value, id)
   }
 }

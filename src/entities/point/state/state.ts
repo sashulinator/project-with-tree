@@ -6,6 +6,7 @@ import { Emitterable } from '~/utils/emitterable'
 import { Position } from '~/widgets/chart-item'
 
 import { Events } from './events'
+import { PositionProp } from './position-prop'
 
 export interface StateProps {
   id: Id
@@ -20,7 +21,7 @@ export class PointState implements Emitterable<Events> {
 
   id: Id
 
-  position: Position
+  position: PositionProp<'setPosition'>
 
   height: number
 
@@ -38,7 +39,7 @@ export class PointState implements Emitterable<Events> {
     this.subscribe()
 
     this.id = props.id
-    this.position = props.position
+    this.position = new PositionProp('setPosition', props.position, this)
     this.height = props.width || 0
     this.width = props.height || 0
     this.ref = { current: null }
@@ -46,9 +47,6 @@ export class PointState implements Emitterable<Events> {
   }
 
   private subscribe = (): void => {
-    this.emitter.on('setPosition', (event) => {
-      this.position = event.position
-    })
     this.emitter.on('setWidth', (event) => {
       this.width = event.width
     })
@@ -61,10 +59,6 @@ export class PointState implements Emitterable<Events> {
     this.emitter.on('addLink', (event) => {
       this.links = [...this.links, event.link]
     })
-  }
-
-  setPosition = (position: Position): void => {
-    this.emitter.emit('setPosition', { position })
   }
 
   setWidth = (width: number): void => {

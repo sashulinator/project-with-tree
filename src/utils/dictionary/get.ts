@@ -15,7 +15,10 @@ import { BaseError } from '../error'
  *
  * @returns {Required<D>[K]} - The value associated with the key in the dictionary object.
  */
-export function get<D extends Record<K, unknown>, K extends Key>(dictionary?: D, key?: K): Required<D>[K] {
+export function get<D extends Record<K, unknown>, K extends Key>(
+  dictionary: D | undefined,
+  key: K | undefined
+): Required<D>[K] {
   if (key === undefined || dictionary === undefined || !has(dictionary, key)) {
     throw new BaseError(`Cannot get a Dictionary item`, { key, dictionary })
   }
