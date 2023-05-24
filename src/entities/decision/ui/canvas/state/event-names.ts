@@ -4,5 +4,5 @@ export type EventNames =
   | 'setPosition'
   | 'setItemStates'
   | 'setSelected'
-  | 'setLinks'
+  | 'setRuleList'
   | 'setItemState'

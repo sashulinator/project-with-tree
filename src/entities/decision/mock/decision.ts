@@ -15,15 +15,17 @@ export const decision: Decision = {
         condition: 'age > 10',
       },
       children: ['id2', 'id3'],
-      links: [
+      rules: [
         {
-          id: 'id2',
+          id: 'ruleId1',
+          pointId: 'id2',
           value: 'test',
           name: 'rule1',
           type: 'true',
         },
         {
-          id: 'id3',
+          id: 'ruleId2',
+          pointId: 'id3',
           value: 'test',
           name: 'rule2',
           type: 'false',

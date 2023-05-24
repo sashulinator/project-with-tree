@@ -1,12 +1,6 @@
+import { Rule } from '~/entities/rule'
 import { Any, Id } from '~/utils/core'
 import { Dictionary } from '~/utils/dictionary'
-
-export interface Link {
-  id: string
-  name: string
-  type: string
-  value: string
-}
 
 export interface Point<P = Dictionary<Any>> {
   id: Id
@@ -14,7 +8,7 @@ export interface Point<P = Dictionary<Any>> {
   type: string
   x: number
   y: number
-  links?: Link[]
+  rules?: Rule[]
   componentName?: string
   props?: P
   children?: Id[]

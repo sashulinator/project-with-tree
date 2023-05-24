@@ -3,6 +3,7 @@ import './node.css'
 import clsx from 'clsx'
 import { useLayoutEffect } from 'react'
 import useMeasure from 'react-use-measure'
+import uniqid from 'uniqid'
 
 import { observeResize } from '~/utils/dom'
 import { setRefs } from '~/utils/react'
@@ -40,16 +41,26 @@ export default function Node(props: NodeProps): JSX.Element {
       >
         <div className='name'>{props.state.point.name}</div>
         <div className='links'>
-          {data.links?.map((link) => {
+          {data.rules?.map((link) => {
             return (
-              <div key={link.id} data-id={link.id}>
+              <div key={link.pointId} data-id={link.pointId}>
                 {link.name}
               </div>
             )
           })}
         </div>
         <div className='add-rule'>
-          <button>add rule</button>
+          <button
+            onClick={(): void =>
+              props.state.ruleList.add({
+                id: uniqid(),
+                name: `name_${uniqid()}`,
+                type: 'test',
+              })
+            }
+          >
+            add rule
+          </button>
         </div>
       </div>
     </foreignObject>

@@ -1,5 +1,6 @@
 import { useEffect, useLayoutEffect } from 'react'
 
+import { Rule } from '~/entities/rule'
 import { getOffsetInElement } from '~/utils/dom/get-offset-in-element'
 import { useForceUpdate } from '~/utils/hooks'
 import { PointState } from '~/widgets/chart-item'
@@ -7,7 +8,7 @@ import { PointState } from '~/widgets/chart-item'
 export interface ChartLinkProps {
   targetState: PointState
   sourceState: PointState
-  link: { type: string; id: string }
+  rule: Rule
 }
 
 export default function ChartLink(props: ChartLinkProps): JSX.Element {
@@ -30,7 +31,9 @@ export default function ChartLink(props: ChartLinkProps): JSX.Element {
   // Private
 
   function drawPath(): string {
-    const srcLinkEl = props.sourceState.ref.current?.querySelector(`[data-id="${props.link.id}"]`) as HTMLElement
+    const srcLinkEl = props.sourceState.ref.current?.querySelector(
+      `[data-id="${props.rule.pointId as string}"]`
+    ) as HTMLElement
     const srcLinkOffset = getOffsetInElement(srcLinkEl, props.sourceState.ref.current)
     const sx = props.sourceState.position.value.x + props.sourceState.width / 2
     const sy = props.sourceState.position.value.y - props.sourceState.height / 2 + srcLinkOffset.top

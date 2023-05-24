@@ -19,16 +19,20 @@ export default function DecisionEditor(props: DecisionEditorProps): JSX.Element 
 
   const links = useMemo(() => {
     return itemStates.reduce<ChartLinkProps[]>((acc, sourceState) => {
-      const linksProps = sourceState.links?.map((link) => {
-        const targetState = props.chartState.pointStates.value[link.id]
+      const linksProps = sourceState.ruleList.value?.reduce<ChartLinkProps[]>((acc, rule) => {
+        if (!rule.pointId) {
+          return acc
+        }
+        const targetState = props.chartState.pointStates.value[rule.pointId]
         assertDefined(targetState)
         const linkProps: ChartLinkProps = {
           targetState,
           sourceState,
-          link,
+          rule: rule,
         }
-        return linkProps
-      })
+        acc.push(linkProps)
+        return acc
+      }, [])
       if (linksProps) acc = [...acc, ...linksProps]
       return acc
     }, [])
