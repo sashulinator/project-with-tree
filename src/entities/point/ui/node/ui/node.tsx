@@ -7,6 +7,7 @@ import useMeasure from 'react-use-measure'
 import uniqid from 'uniqid'
 
 import { CanvasState } from '~/entities/decision'
+import { Any } from '~/utils/core'
 import { observeResize } from '~/utils/dom'
 import { useUpdate } from '~/utils/hooks'
 import { setRefs } from '~/utils/react'
@@ -31,16 +32,6 @@ export default function Node(props: NodeProps): JSX.Element {
 
   return (
     <>
-      {createPortal(
-        <>
-          {props.state.ruleList.value.map((rule) => {
-            if (!rule.pointId) return null
-            const state = props.decisionState.pointStates.get(rule.pointId)
-            return <ChartLink key={rule.pointId} rule={rule} sourceState={props.state} targetState={state} />
-          })}
-        </>,
-        props.linksContainer
-      )}
       <foreignObject width={WIDTH} height={height} style={{ overflow: 'visible' }}>
         <div
           data-id={data.id}
@@ -52,10 +43,22 @@ export default function Node(props: NodeProps): JSX.Element {
           <div className='name'>{props.state.point.name}</div>
           <div className='links'>
             {props.state.ruleList.value?.map((rule) => {
+              let renderedLink: Any = null
+              if (rule.pointId) {
+                const targetState = props.decisionState.pointStates.get(rule.pointId)
+                renderedLink = createPortal(
+                  <ChartLink key={rule.pointId} rule={rule} sourceState={props.state} targetState={targetState} />,
+                  props.linksContainer
+                )
+              }
               return (
-                <div key={rule.id} data-id={rule.pointId}>
-                  {rule.name}
-                </div>
+                <>
+                  <div key={rule.id} data-id={rule.pointId}>
+                    {rule.name}
+                    <button>+</button>
+                  </div>
+                  {renderedLink}
+                </>
               )
             })}
           </div>
