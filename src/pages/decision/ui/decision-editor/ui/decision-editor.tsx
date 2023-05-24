@@ -18,7 +18,7 @@ export default function DecisionEditor(props: DecisionEditorProps): JSX.Element 
 
   return (
     <Canvas canvasState={props.chartState}>
-      <g ref={setLinksContainer}></g>
+      <g ref={setLinksContainer} style={{ outline: 'none' }}></g>
       {linksContainer && (
         <>
           {itemStates.map((state) => {

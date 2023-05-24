@@ -26,7 +26,7 @@ export function Zoomable(props: ZoomableProps): JSX.Element {
     svgRef.current.addEventListener('wheel', wheeled)
 
     return () => svgRef.current?.removeEventListener('wheel', wheeled)
-  }, [])
+  }, [props.scale])
 
   return <>{props.children({ ref: svgRef })}</>
 }

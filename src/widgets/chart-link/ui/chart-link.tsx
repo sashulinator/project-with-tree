@@ -1,3 +1,5 @@
+import './chart-link.css'
+
 import { useEffect, useLayoutEffect } from 'react'
 
 import { Rule } from '~/entities/rule'
@@ -26,7 +28,14 @@ export default function ChartLink(props: ChartLinkProps): JSX.Element {
 
   useLayoutEffect(update, [])
 
-  return <path stroke='black' d={drawPath()} strokeWidth={2} />
+  return (
+    <path
+      className='CanvasLink'
+      d={drawPath()}
+      strokeWidth={2}
+      onClick={(): void => props.sourceState.ruleList.removeLink(props.rule.id)}
+    />
+  )
 
   // Private
 

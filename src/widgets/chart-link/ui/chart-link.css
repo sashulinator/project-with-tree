@@ -1,0 +1,7 @@
+.CanvasLink {
+  stroke: black;
+}
+
+.CanvasLink:hover {
+  stroke: red;
+}
