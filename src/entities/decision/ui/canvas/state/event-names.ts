@@ -6,3 +6,4 @@ export type EventNames =
   | 'setSelected'
   | 'setRuleList'
   | 'setItemState'
+  | 'setPaintingPanelRef'

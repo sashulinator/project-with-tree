@@ -27,10 +27,13 @@ export class CanvasState implements Emitterable<Events> {
 
   decision: Decision
 
+  paintingPanelRef: { current: null | SVGGElement }
+
   // 👷 Constructor
 
   constructor(props: DecisionStateProps) {
     this.emitter = mitt()
+    this.paintingPanelRef = { current: null }
     this.decision = props.decision
     this.selected = new SelectedProp('setSelected', [], this)
     this.pointStates = new PointStatesProp('setItemStates', props.decision.data, this)
@@ -54,5 +57,10 @@ export class CanvasState implements Emitterable<Events> {
   }
   setScale = (scale: number): void => {
     this._scale.value = scale
+  }
+
+  setPaintingPanelRef = (element: SVGGElement): void => {
+    if (element === this.paintingPanelRef.current) return
+    this.emitter.emit('setPaintingPanelRef', { element })
   }
 }

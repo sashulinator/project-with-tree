@@ -1,5 +1,5 @@
 import { useUpdate } from '~/utils/hooks/update'
-import AbstractCanvas, { Draggable, Zoomable } from '~/widgets/canvas'
+import AbstractCanvasBoard, { Draggable, Zoomable } from '~/widgets/canvas'
 
 import { CanvasState } from '../state'
 
@@ -17,14 +17,15 @@ export default function Canvas(props: CanvasProps): JSX.Element {
         <Draggable translate={props.canvasState.translate} setTranslate={props.canvasState.setTranslate}>
           {(dragProps): JSX.Element => {
             return (
-              <AbstractCanvas
+              <AbstractCanvasBoard
                 scale={props.canvasState.scale}
                 translate={props.canvasState.translate}
+                paintingPanelProps={{ ref: props.canvasState.setPaintingPanelRef }}
                 {...dragProps}
                 {...zoomProps}
               >
                 {props.children}
-              </AbstractCanvas>
+              </AbstractCanvasBoard>
             )
           }}
         </Draggable>

@@ -1,17 +1,19 @@
+import clsx from 'clsx'
 import { ForwardedRef, forwardRef, useRef } from 'react'
 
 import { setRefs } from '~/utils/react'
 
 import { Translate } from '../types/translate'
 
-export interface CanvasProps extends React.SVGAttributes<SVGSVGElement> {
+export interface CanvasBoardProps extends React.SVGAttributes<SVGSVGElement> {
   translate: Translate
   scale: number
   children: React.ReactNode
+  paintingPanelProps?: React.HTMLAttributes<SVGGElement> & { ref?: ForwardedRef<SVGGElement> }
 }
 
-function CanvasComponent(props: CanvasProps, ref: ForwardedRef<SVGSVGElement>): JSX.Element {
-  const { children, translate, scale, ...svgProps } = props
+function CanvasBoardComponent(props: CanvasBoardProps, ref: ForwardedRef<SVGSVGElement>): JSX.Element {
+  const { children, translate, scale, paintingPanelProps, ...svgProps } = props
   const svgRef = useRef<null | SVGSVGElement>(null)
 
   return (
@@ -19,10 +21,16 @@ function CanvasComponent(props: CanvasProps, ref: ForwardedRef<SVGSVGElement>): 
       width='100%'
       height='100%'
       {...svgProps}
-      style={{ touchAction: 'none', ...svgProps.style }}
+      className={clsx('CanvasBoard', props.className)}
       ref={setRefs(svgRef, ref)}
     >
-      <g style={{ transform: getTransform() }}>{children}</g>
+      <g
+        {...paintingPanelProps}
+        className={clsx('painting-panel', paintingPanelProps?.className)}
+        style={{ transform: getTransform() }}
+      >
+        {children}
+      </g>
     </svg>
   )
 
@@ -33,6 +41,6 @@ function CanvasComponent(props: CanvasProps, ref: ForwardedRef<SVGSVGElement>): 
   }
 }
 
-const Canvas = forwardRef<SVGSVGElement, CanvasProps>(CanvasComponent)
-Canvas.displayName = 'Canvas'
-export default Canvas
+const CanvasBoard = forwardRef<SVGSVGElement, CanvasBoardProps>(CanvasBoardComponent)
+CanvasBoard.displayName = 'CanvasBoard'
+export default CanvasBoard
