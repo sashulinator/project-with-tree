@@ -14,12 +14,13 @@ export default function Canvas(props: CanvasProps): JSX.Element {
   return (
     <Zoomable setScale={props.canvasState.setScale} scale={props.canvasState.scale}>
       {(zoomProps): JSX.Element => (
-        <Draggable translate={props.canvasState.translate} setTranslate={props.canvasState.setTranslate}>
+        <Draggable state={props.canvasState}>
           {(dragProps): JSX.Element => {
             return (
               <AbstractCanvasBoard
                 scale={props.canvasState.scale}
                 translate={props.canvasState.translate}
+                ref={props.canvasState.setCanvasBoardRef}
                 paintingPanelProps={{ ref: props.canvasState.setPaintingPanelRef }}
                 {...dragProps}
                 {...zoomProps}

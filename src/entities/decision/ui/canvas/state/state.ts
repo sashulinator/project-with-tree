@@ -29,16 +29,26 @@ export class CanvasState implements Emitterable<Events> {
 
   paintingPanelRef: { current: null | SVGGElement }
 
+  canvasBoardRef: { current: null | SVGSVGElement }
+
   // 👷 Constructor
 
   constructor(props: DecisionStateProps) {
     this.emitter = mitt()
     this.paintingPanelRef = { current: null }
+    this.canvasBoardRef = { current: null }
     this.decision = props.decision
     this.selected = new SelectedProp('setSelected', [], this)
     this.pointStates = new PointStatesProp('setItemStates', props.decision.data, this)
     this._translate = new Prop('setTranslate', props.translate, this)
     this._scale = new Prop('setScale', props.scale, this)
+
+    this.emitter.on('setPaintingPanelRef', (event) => {
+      this.paintingPanelRef.current = event.element
+    })
+    this.emitter.on('setCanvasBoardRef', (event) => {
+      this.paintingPanelRef.current = event.element
+    })
   }
 
   // 💉 Translate get/set
@@ -46,7 +56,8 @@ export class CanvasState implements Emitterable<Events> {
   get translate(): Translate {
     return this._translate.value
   }
-  setTranslate = (translate: Translate): void => {
+  setTranslate = (x: number, y: number): void => {
+    const translate: Translate = { x: Math.round(x), y: Math.round(y) }
     this._translate.value = translate
   }
 
@@ -62,5 +73,9 @@ export class CanvasState implements Emitterable<Events> {
   setPaintingPanelRef = (element: SVGGElement): void => {
     if (element === this.paintingPanelRef.current) return
     this.emitter.emit('setPaintingPanelRef', { element })
+  }
+  setCanvasBoardRef = (element: SVGSVGElement): void => {
+    if (element === this.paintingPanelRef.current) return
+    this.emitter.emit('setCanvasBoardRef', { element })
   }
 }

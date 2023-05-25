@@ -9,6 +9,7 @@ import { PointState, Position } from '~/widgets/chart-item'
 export type Events = {
   setScale: { value: number }
   setPaintingPanelRef: { element: SVGGElement }
+  setCanvasBoardRef: { element: SVGSVGElement }
   setTranslate: { value: Translate }
   setSelected: { value: Id[] }
   setRuleList: { value: Rule[] }

@@ -21,7 +21,8 @@ export class PositionProp<N extends string> extends EmitterableProp<N, Position>
     })
   }
 
-  move = (position: Position, isLast: boolean): void => {
+  move = (x: number, y: number, isLast: boolean): void => {
+    const position = { x: Math.round(x), y: Math.round(y) }
     this.set(position, { isLast })
   }
 }

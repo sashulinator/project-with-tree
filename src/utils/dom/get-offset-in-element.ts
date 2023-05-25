@@ -1,6 +1,11 @@
 import { Offset } from './types/offset'
 
-export function getOffsetInElement(el: HTMLElement | null, inEl: HTMLElement | null | undefined): Offset {
+interface Element {
+  offsetTop: number
+  offsetLeft: number
+}
+
+export function getOffsetInElement(el: Element | null, inEl: Element | null | undefined): Offset {
   const offset = { top: 0, left: 0 }
   if (!el || !inEl) return offset
 
