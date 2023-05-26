@@ -1,5 +1,8 @@
+import clsx from 'clsx'
+
 import { useUpdate } from '~/utils/hooks/update'
-import AbstractCanvasBoard, { Draggable, Zoomable } from '~/widgets/canvas'
+import { setRefs } from '~/utils/react/set-refs'
+import AbstractCanvasBoard, { Draggable, PaintingPanel, Zoomable } from '~/widgets/canvas'
 
 import { CanvasState } from '../state'
 
@@ -18,14 +21,18 @@ export default function Canvas(props: CanvasProps): JSX.Element {
           {(dragProps): JSX.Element => {
             return (
               <AbstractCanvasBoard
-                scale={props.canvasState.scale}
-                translate={props.canvasState.translate}
-                ref={props.canvasState.setCanvasBoardRef}
-                paintingPanelProps={{ ref: props.canvasState.setPaintingPanelRef }}
                 {...dragProps}
-                {...zoomProps}
+                ref={setRefs(props.canvasState.setCanvasBoardRef, zoomProps.ref)}
+                style={{ touchAction: 'none' }}
               >
-                {props.children}
+                <PaintingPanel
+                  scale={props.canvasState.scale}
+                  translate={props.canvasState.translate}
+                  className={clsx('mainPaintingPanel')}
+                  ref={props.canvasState.setPaintingPanelRef}
+                >
+                  {props.children}
+                </PaintingPanel>
               </AbstractCanvasBoard>
             )
           }}
