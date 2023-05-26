@@ -85,11 +85,10 @@ export default function ChartLink(props: ChartLinkProps): JSX.Element {
       `[data-id="${props.rule.id as string}"]`
     ) as HTMLElement
     const srcLinkOffset = getOffsetInElement(srcLinkEl, props.sourceState?.ref.current)
-    console.log('sourcePosition', state.position.value.x + state.width / 2)
-
+    const srcLinkRect = srcLinkEl?.getBoundingClientRect() || { height: 0 }
     return {
       x: state.position.value.x + state.width / 2,
-      y: state.position.value.y - state.height / 2 + srcLinkOffset.top,
+      y: state.position.value.y - state.height / 2 + srcLinkOffset.top + srcLinkRect.height / 2,
     }
   }
 

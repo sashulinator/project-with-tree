@@ -20,7 +20,7 @@
 .PointNode > .name {
   cursor: grab;
   user-select: none;
-  height: 3rem;
+  min-height: 3rem;
   display: flex;
   align-items: flex-end;
   margin-bottom: 0.5rem;
@@ -35,6 +35,16 @@
   flex-direction: column;
   align-items: flex-start;
   padding: 0.5rem;
+}
+
+.PointNode > .links > * {
+  display: flex;
+  text-align: left;
+  justify-content: space-between;
+  padding: 5px;
+  min-height: 2rem;
+  border-top: 1px solid var(--color);
+  width: 100%;
 }
 
 .PointNode > .add-rule {
