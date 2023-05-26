@@ -1,4 +1,4 @@
-import { Link } from '~/entities/point'
+import { Rule } from '~/entities/rule'
 
 import { Position } from '../../../widgets/chart-item/types/position'
 
@@ -7,5 +7,5 @@ export type Events = {
   setRef: { element: HTMLElement }
   setWidth: { width: number }
   setHeight: { height: number }
-  addLink: { link: Link }
+  setRuleList: { link: Rule }
 }

@@ -1,1 +1,1 @@
-export type EventNames = 'setPosition' | 'setRef' | 'setHeight' | 'setWidth' | 'addLink'
+export type EventNames = 'setPosition' | 'setRef' | 'setHeight' | 'setWidth' | 'setRuleList'

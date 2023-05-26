@@ -12,7 +12,7 @@ export class PointStatesProp<N extends string> extends EmitterableProp<N, PointS
   constructor(eventName: N, value: DecisionItem[], canvasState: CanvasState) {
     const pointStates = value.reduce<PointStates>((acc, item) => {
       if (isLinkedNode(item)) return acc
-      const state = new PointState(item, { position: item, id: item.id, links: item.links })
+      const state = new PointState(item, { position: item, id: item.id, ruleList: item.rules })
       acc[item.id] = state
       state.emitter.on('*', (eventName, event) =>
         canvasState.emitter.emit(eventName as Any, { pointStateId: item.id, ...(event as Any) })

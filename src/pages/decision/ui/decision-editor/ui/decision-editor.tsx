@@ -1,11 +1,10 @@
-import { useMemo } from 'react'
+import { useState } from 'react'
 
 import { CanvasState as ChartState, Node } from '~/entities/decision'
 import Canvas from '~/entities/decision/ui/canvas/ui/canvas'
 import { ActionHistory } from '~/utils/action-history'
-import { assertDefined } from '~/utils/core'
 import { useUpdate } from '~/utils/hooks'
-import ChartLink, { ChartLinkProps } from '~/widgets/chart-link'
+import ChartLink from '~/widgets/chart-link'
 
 interface DecisionEditorProps {
   chartState: ChartState
@@ -14,34 +13,34 @@ interface DecisionEditorProps {
 
 export default function DecisionEditor(props: DecisionEditorProps): JSX.Element {
   const itemStates = Object.values(props.chartState.pointStates.value)
+  const [linksContainer, setLinksContainer] = useState<SVGGElement | null>()
 
   useUpdate(updateOnEvents)
 
-  const links = useMemo(() => {
-    return itemStates.reduce<ChartLinkProps[]>((acc, sourceState) => {
-      const linksProps = sourceState.links?.map((link) => {
-        const targetState = props.chartState.pointStates.value[link.id]
-        assertDefined(targetState)
-        const linkProps: ChartLinkProps = {
-          targetState,
-          sourceState,
-          link,
-        }
-        return linkProps
-      })
-      if (linksProps) acc = [...acc, ...linksProps]
-      return acc
-    }, [])
-  }, [itemStates.length])
-
   return (
-    <Canvas canvasState={props.chartState}>
-      {links?.map((link) => {
-        return <ChartLink key={`${link.targetState.point.id}${link.sourceState.point.id}`} {...link} />
-      })}
-      {itemStates.map((state) => {
-        return <Node key={state.point.id} state={state} decisionState={props.chartState} />
-      })}
+    <Canvas
+      canvasState={props.chartState}
+      abovePaintingPanelChildren={
+        props.chartState.editingLink.value && (
+          <ChartLink decisionState={props.chartState} {...props.chartState.editingLink.value} />
+        )
+      }
+    >
+      <g ref={setLinksContainer} style={{ outline: 'none' }}></g>
+      {linksContainer && (
+        <>
+          {itemStates.map((state) => {
+            return (
+              <Node
+                linksContainer={linksContainer}
+                key={state.point.id}
+                state={state}
+                decisionState={props.chartState}
+              />
+            )
+          })}
+        </>
+      )}
     </Canvas>
   )
 
@@ -50,5 +49,6 @@ export default function DecisionEditor(props: DecisionEditorProps): JSX.Element 
   function updateOnEvents(update: () => void): void {
     props.chartState.emitter.on('setItemStates', update)
     props.chartState.emitter.on('setItemStates', update)
+    props.chartState.emitter.on('setEditingLink', update)
   }
 }

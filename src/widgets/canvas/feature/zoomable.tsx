@@ -1,12 +1,10 @@
 /* eslint-disable eslint-comments/disable-enable-pair, @typescript-eslint/unbound-method */
-import React, { useLayoutEffect, useRef } from 'react'
-
-import { Any } from '~/utils/core'
+import React, { ForwardedRef, useLayoutEffect, useRef } from 'react'
 
 interface ZoomableProps {
   scale: number
   setScale: (scale: number) => void
-  children: (props: Any) => React.ReactNode
+  children: (props: { ref: ForwardedRef<SVGSVGElement> }) => React.ReactNode
 }
 
 export function Zoomable(props: ZoomableProps): JSX.Element {
@@ -26,7 +24,7 @@ export function Zoomable(props: ZoomableProps): JSX.Element {
     svgRef.current.addEventListener('wheel', wheeled)
 
     return () => svgRef.current?.removeEventListener('wheel', wheeled)
-  }, [])
+  }, [props.scale])
 
   return <>{props.children({ ref: svgRef })}</>
 }

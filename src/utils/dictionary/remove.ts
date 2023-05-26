@@ -11,7 +11,7 @@ import { Dictionary } from './types/dictionary'
  *
  * @returns {Omit<D, K>} - A new dictionary object without the specified property/key.
  */
-export function remove<D extends Dictionary<unknown>, K extends keyof D>(dictionary: D, key: K): Omit<D, K> {
+export function remove<D extends Dictionary<any>, K extends keyof D>(dictionary: D, key: K): Omit<D, K> {
   const { [key]: removed, ...newObject } = dictionary
   return newObject
 }

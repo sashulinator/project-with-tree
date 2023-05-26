@@ -3,13 +3,13 @@ import { useDrag } from '@use-gesture/react'
 
 import React, { useRef } from 'react'
 
+import { CanvasState } from '~/entities/decision'
 import { Any } from '~/utils/core'
 
 import { Translate } from '../types/translate'
 
 interface DraggableProps {
-  translate: Translate
-  setTranslate: (translate: Translate) => void
+  state: CanvasState
   children: (props: Any) => React.ReactNode
 }
 
@@ -21,13 +21,13 @@ export function Draggable(props: DraggableProps): JSX.Element {
     event.event.preventDefault()
 
     if (xyRef.current === null) {
-      xyRef.current = props.translate
+      xyRef.current = props.state.translate
     }
 
     const x = (xyRef.current?.x || 0) + event.movement[0]
     const y = (xyRef.current?.y || 0) + event.movement[1]
 
-    props.setTranslate({ x, y })
+    props.state.setTranslate(x, y)
 
     if (event.last) {
       xyRef.current = null
