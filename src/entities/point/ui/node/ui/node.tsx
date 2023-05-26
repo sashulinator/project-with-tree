@@ -24,7 +24,7 @@ export interface NodeProps {
 const WIDTH = 200
 
 export default function Node(props: NodeProps): JSX.Element {
-  const { point: data } = props.state
+  const { point } = props.state
   const [setRef, { height }] = useMeasure()
 
   useLayoutEffect(observeSize, [])
@@ -34,7 +34,7 @@ export default function Node(props: NodeProps): JSX.Element {
     <>
       <foreignObject width={WIDTH} height={height} style={{ overflow: 'visible' }}>
         <div
-          data-id={data.id}
+          data-id={point.id}
           className={clsx('PointNode', props.isSelected && '--selected')}
           style={{ width: WIDTH }}
           // eslint-disable-next-line @typescript-eslint/unbound-method
@@ -47,18 +47,22 @@ export default function Node(props: NodeProps): JSX.Element {
               if (rule.pointId) {
                 const targetState = props.decisionState.pointStates.get(rule.pointId)
                 renderedLink = createPortal(
-                  <ChartLink key={rule.pointId} rule={rule} sourceState={props.state} targetState={targetState} />,
+                  <ChartLink
+                    key={rule.id}
+                    decisionState={props.decisionState}
+                    rule={rule}
+                    sourceState={props.state}
+                    targetState={targetState}
+                  />,
                   props.linksContainer
                 )
               }
               return (
-                <>
-                  <div key={rule.id} data-id={rule.pointId}>
-                    {rule.name}
-                    <button>+</button>
-                  </div>
+                <div key={rule.id} data-id={rule.pointId}>
+                  {rule.name}
+                  {!rule.pointId && <button>+</button>}
                   {renderedLink}
-                </>
+                </div>
               )
             })}
           </div>
