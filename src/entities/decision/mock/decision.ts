@@ -137,7 +137,7 @@ export const decision: Decision = {
       ],
     },
     {
-      type: 'MAIN',
+      type: 'OFFER',
       id: 'id8',
       name: 'Предложить тариф супер',
       x: 450,
