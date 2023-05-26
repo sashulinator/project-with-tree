@@ -15,7 +15,8 @@ export class RuleListProp<N extends string> extends EmitterableProp<N, Rule[]> {
   }
 
   update = (rule: Rule): void => {
-    this.value = this.value.map((irule) => (irule.id === rule.id ? rule : irule))
+    const newRules = this.value.map((irule) => (irule.id === rule.id ? rule : irule))
+    this.value = newRules
   }
 
   removeLink = (id: Id): void => {

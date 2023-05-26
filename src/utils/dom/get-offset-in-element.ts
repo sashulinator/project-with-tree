@@ -1,16 +1,16 @@
 import { Offset } from './types/offset'
 
-interface Element {
-  offsetTop: number
-  offsetLeft: number
-}
+type Element = Pick<HTMLElement, 'getBoundingClientRect'>
 
 export function getOffsetInElement(el: Element | null, inEl: Element | null | undefined): Offset {
   const offset = { top: 0, left: 0 }
   if (!el || !inEl) return offset
 
-  offset.top = el.offsetTop - inEl.offsetTop
-  offset.left = el.offsetLeft - inEl.offsetTop
+  const elRect = el.getBoundingClientRect()
+  const inElRect = inEl.getBoundingClientRect()
+
+  offset.top = elRect.top - inElRect.top
+  offset.left = elRect.left - inElRect.left
 
   return offset
 }

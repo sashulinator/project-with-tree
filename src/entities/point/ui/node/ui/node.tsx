@@ -33,7 +33,11 @@ export default function Node(props: NodeProps): JSX.Element {
   return (
     <>
       <foreignObject width={WIDTH} height={height} style={{ overflow: 'visible' }}>
-        <div
+        <button
+          onClick={(): void => {
+            if (!props.decisionState.editingLink.value) return
+            props.decisionState.editingLink.finish(point.id)
+          }}
           data-id={point.id}
           className={clsx('PointNode', props.isSelected && '--selected')}
           style={{ width: WIDTH }}
@@ -58,9 +62,21 @@ export default function Node(props: NodeProps): JSX.Element {
                 )
               }
               return (
-                <div key={rule.id} data-id={rule.pointId}>
+                <div key={rule.id} data-id={rule.id}>
                   {rule.name}
-                  {!rule.pointId && <button>+</button>}
+                  {!rule.pointId && (
+                    <button
+                      onClick={(e): void => {
+                        e.stopPropagation()
+                        props.decisionState.editingLink.add({
+                          rule,
+                          sourceState: props.state,
+                        })
+                      }}
+                    >
+                      +
+                    </button>
+                  )}
                   {renderedLink}
                 </div>
               )
@@ -79,7 +95,7 @@ export default function Node(props: NodeProps): JSX.Element {
               add rule
             </button>
           </div>
-        </div>
+        </button>
       </foreignObject>
     </>
   )

@@ -9,6 +9,7 @@ import { CanvasState } from '../state'
 export interface CanvasProps {
   canvasState: CanvasState
   children: React.ReactNode
+  abovePaintingPanelChildren: React.ReactNode
 }
 
 export default function Canvas(props: CanvasProps): JSX.Element {
@@ -25,6 +26,13 @@ export default function Canvas(props: CanvasProps): JSX.Element {
                 ref={setRefs(props.canvasState.setCanvasBoardRef, zoomProps.ref)}
                 style={{ touchAction: 'none' }}
               >
+                <PaintingPanel
+                  scale={props.canvasState.scale}
+                  translate={props.canvasState.translate}
+                  className={clsx('abovePaintingPanel')}
+                >
+                  {props.abovePaintingPanelChildren}
+                </PaintingPanel>
                 <PaintingPanel
                   scale={props.canvasState.scale}
                   translate={props.canvasState.translate}

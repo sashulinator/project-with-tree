@@ -7,16 +7,17 @@ import { Translate } from '../types/translate'
 interface PaintingPanelProps extends React.SVGAttributes<SVGGElement> {
   translate: Translate
   scale: number
-  children: React.ReactNode
+  children?: React.ReactNode
 }
 
 function PaintingPanelComponent(props: PaintingPanelProps, ref: ForwardedRef<SVGGElement>): JSX.Element {
+  const { translate, scale, ...gProps } = props
   return (
     <g
-      {...props}
+      {...gProps}
       ref={ref}
       className={clsx('PaintingPanel', props?.className)}
-      style={{ transform: getTransform(props.translate, props.scale), ...props.style }}
+      style={{ transform: getTransform(translate, scale), ...props.style }}
     />
   )
 }

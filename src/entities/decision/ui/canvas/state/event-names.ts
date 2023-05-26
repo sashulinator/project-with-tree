@@ -8,3 +8,4 @@ export type EventNames =
   | 'setItemState'
   | 'setPaintingPanelRef'
   | 'setCanvasBoardRef'
+  | 'setEditingLink'

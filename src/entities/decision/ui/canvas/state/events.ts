@@ -6,6 +6,8 @@ import { Dictionary } from '~/utils/dictionary'
 import { Translate } from '~/widgets/canvas'
 import { PointState, Position } from '~/widgets/chart-item'
 
+import { Link } from '../types/link'
+
 export type Events = {
   setScale: { value: number }
   setPaintingPanelRef: { element: SVGGElement }
@@ -16,4 +18,5 @@ export type Events = {
   setItemStates: { value: Record<Id, PointState> }
   setPosition: { pointStateId: Id; value: Position; isLast: boolean }
   setItemState: { id: Id; eventName: string; event: Dictionary<Any> }
+  setEditingLink: { value: Link }
 }

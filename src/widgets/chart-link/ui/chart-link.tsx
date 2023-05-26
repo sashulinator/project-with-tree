@@ -4,8 +4,9 @@ import { useEffect, useLayoutEffect, useState } from 'react'
 
 import { CanvasState } from '~/entities/decision'
 import { Rule } from '~/entities/rule'
-import { assertNotNil } from '~/utils/core'
+import { assertDefined } from '~/utils/core'
 import { getOffsetInElement } from '~/utils/dom/get-offset-in-element'
+import { emptyFn } from '~/utils/function/empty-fn'
 import { useForceUpdate } from '~/utils/hooks'
 import { PointState, Position } from '~/widgets/chart-item'
 
@@ -13,7 +14,7 @@ export interface ChartLinkProps {
   decisionState: CanvasState
   targetState?: PointState | undefined
   sourceState?: PointState | undefined
-  rule: Rule
+  rule?: Rule
 }
 
 export default function ChartLink(props: ChartLinkProps): JSX.Element {
@@ -30,13 +31,9 @@ export default function ChartLink(props: ChartLinkProps): JSX.Element {
     props.sourceState?.emitter.on('setRef', update)
 
     function updateMousePosition(ev: MouseEvent): void {
-      const el = props.targetState ? props.targetState.ref.current : props.sourceState?.ref.current
-      assertNotNil(el)
-      const rect = el.getBoundingClientRect()
-
       setMousePosition({
-        x: ev.clientX - rect.left,
-        y: ev.clientY - rect.top,
+        x: Math.round(ev.clientX),
+        y: Math.round(ev.clientY),
       })
     }
 
@@ -57,7 +54,11 @@ export default function ChartLink(props: ChartLinkProps): JSX.Element {
       className='CanvasLink'
       d={drawPath()}
       strokeWidth={2}
-      onClick={(): void => props.sourceState?.ruleList.removeLink(props.rule.id)}
+      onClick={
+        props.sourceState && props.targetState && props.rule
+          ? (): void => props.sourceState?.ruleList.removeLink((props.rule as Rule).id)
+          : emptyFn
+      }
     />
   )
 
@@ -79,10 +80,13 @@ export default function ChartLink(props: ChartLinkProps): JSX.Element {
       }
     }
 
+    assertDefined(props.rule)
     const srcLinkEl = props.sourceState?.ref.current?.querySelector(
-      `[data-id="${props.rule.pointId as string}"]`
+      `[data-id="${props.rule.id as string}"]`
     ) as HTMLElement
     const srcLinkOffset = getOffsetInElement(srcLinkEl, props.sourceState?.ref.current)
+    console.log('sourcePosition', state.position.value.x + state.width / 2)
+
     return {
       x: state.position.value.x + state.width / 2,
       y: state.position.value.y - state.height / 2 + srcLinkOffset.top,
@@ -91,12 +95,9 @@ export default function ChartLink(props: ChartLinkProps): JSX.Element {
 
   function targetPosition(state: PointState | undefined): Position {
     if (!state) {
-      const rect = (props.decisionState.paintingPanelRef.current as SVGGElement).getBoundingClientRect()
-      // console.log('rect', rect, mousePosition.x, props.decisionState.translate.x)
-
       return {
-        x: rect.x + mousePosition.x - props.decisionState.translate.x,
-        y: rect.y + mousePosition.y - props.decisionState.translate.y,
+        x: mousePosition.x - props.decisionState.translate.x / props.decisionState.scale,
+        y: mousePosition.y - props.decisionState.translate.y / props.decisionState.scale,
       }
     }
 

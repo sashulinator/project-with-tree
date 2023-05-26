@@ -4,6 +4,7 @@ import { Decision } from '~/entities/decision'
 import { Emitterable, EmitterableProp as Prop } from '~/utils/emitterable'
 import { Translate } from '~/widgets/canvas'
 
+import { EditingLinkProp } from './editing-link-prop'
 import { Events } from './events'
 import { PointStatesProp } from './point-states-prop'
 import { SelectedProp } from './selected-prop'
@@ -31,6 +32,8 @@ export class CanvasState implements Emitterable<Events> {
 
   canvasBoardRef: { current: null | SVGSVGElement }
 
+  editingLink: EditingLinkProp<'setEditingLink'>
+
   // 👷 Constructor
 
   constructor(props: DecisionStateProps) {
@@ -42,12 +45,13 @@ export class CanvasState implements Emitterable<Events> {
     this.pointStates = new PointStatesProp('setItemStates', props.decision.data, this)
     this._translate = new Prop('setTranslate', props.translate, this)
     this._scale = new Prop('setScale', props.scale, this)
+    this.editingLink = new EditingLinkProp('setEditingLink', null, this)
 
     this.emitter.on('setPaintingPanelRef', (event) => {
       this.paintingPanelRef.current = event.element
     })
     this.emitter.on('setCanvasBoardRef', (event) => {
-      this.paintingPanelRef.current = event.element
+      this.canvasBoardRef.current = event.element
     })
   }
 
