@@ -4,7 +4,7 @@ import { Point } from '~/entities/point'
 import { Rule } from '~/entities/rule'
 import { Id } from '~/utils/core'
 import { Emitterable } from '~/utils/emitterable'
-import { Position } from '~/widgets/chart-item'
+import { Position } from '~/widgets/canvas/ui/item'
 
 import { Events } from './events'
 import { PositionProp } from './position-prop'

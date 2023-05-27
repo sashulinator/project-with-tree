@@ -3,12 +3,13 @@ import './chart-link.css'
 import { useEffect, useLayoutEffect, useState } from 'react'
 
 import { CanvasState } from '~/entities/decision'
+import { PointState } from '~/entities/point/state'
 import { Rule } from '~/entities/rule'
 import { assertDefined } from '~/utils/core'
 import { getOffsetInElement } from '~/utils/dom/get-offset-in-element'
 import { emptyFn } from '~/utils/function/empty-fn'
 import { useForceUpdate } from '~/utils/hooks'
-import { PointState, Position } from '~/widgets/chart-item'
+import { Position } from '~/widgets/canvas/ui/item'
 
 export interface ChartLinkProps {
   decisionState: CanvasState

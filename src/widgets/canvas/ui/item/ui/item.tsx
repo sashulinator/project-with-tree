@@ -1,13 +1,17 @@
 import { ForwardedRef, forwardRef, useEffect } from 'react'
 
+import { PointState } from '~/entities/point/state'
 import { useForceUpdate } from '~/utils/hooks'
 
-import { ChartItemProps } from '../types/chart-item-props'
+export interface ItemProps extends React.HTMLAttributes<SVGGElement> {
+  children: React.ReactNode
+  state: PointState
+}
 
 /**
  * Основываясь на state отрисовывает Item в нужном месте
  */
-function ChartItemComponent(props: ChartItemProps, ref: ForwardedRef<SVGGElement>): JSX.Element {
+function ItemComponent(props: ItemProps, ref: ForwardedRef<SVGGElement>): JSX.Element {
   const { state, ...gProps } = props
 
   const update = useForceUpdate()
@@ -41,6 +45,6 @@ function ChartItemComponent(props: ChartItemProps, ref: ForwardedRef<SVGGElement
   }
 }
 
-const ChartItem = forwardRef(ChartItemComponent)
+const ChartItem = forwardRef(ItemComponent)
 ChartItem.displayName = 'ChartItem'
 export default ChartItem

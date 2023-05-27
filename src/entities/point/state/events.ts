@@ -1,6 +1,6 @@
 import { Rule } from '~/entities/rule'
 
-import { Position } from '../../../widgets/chart-item/types/position'
+import { Position } from '../../../widgets/canvas/types/position'
 
 export type Events = {
   setPosition: { value: Position }

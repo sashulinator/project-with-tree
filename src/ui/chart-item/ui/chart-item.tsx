@@ -1,7 +1,8 @@
 import React from 'react'
 
+import { PointState } from '~/entities/point/state'
 import { fns } from '~/utils/function'
-import WChartItem, { Draggable, PointState } from '~/widgets/chart-item'
+import WChartItem, { Draggable } from '~/widgets/canvas/ui/item'
 
 export interface ChartItemProps extends React.HTMLAttributes<SVGGElement> {
   children: React.ReactNode

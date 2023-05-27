@@ -1,8 +1,8 @@
 import { CanvasState } from '~/entities/decision'
 import { PointNode } from '~/entities/point'
+import { PointState } from '~/entities/point/state'
 import ChartItem from '~/ui/chart-item'
-import { PointState } from '~/widgets/chart-item'
-import Selectable from '~/widgets/chart-item/features/selectable'
+import Selectable from '~/widgets/canvas/ui/item/features/selectable'
 
 export interface ItemNodeProps {
   state: PointState

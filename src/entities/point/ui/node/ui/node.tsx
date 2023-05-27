@@ -7,11 +7,11 @@ import useMeasure from 'react-use-measure'
 import uniqid from 'uniqid'
 
 import { CanvasState } from '~/entities/decision'
+import { PointState } from '~/entities/point/state'
 import { Any } from '~/utils/core'
 import { observeResize } from '~/utils/dom'
 import { useUpdate } from '~/utils/hooks'
 import { setRefs } from '~/utils/react'
-import { PointState } from '~/widgets/chart-item'
 import ChartLink from '~/widgets/chart-link'
 
 export interface NodeProps {

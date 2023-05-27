@@ -6,7 +6,7 @@ import React, { useRef } from 'react'
 import { CanvasState } from '~/entities/decision'
 import { Any } from '~/utils/core'
 
-import { Translate } from '../types/translate'
+import { Translate } from '../../../types/translate'
 
 interface DraggableProps {
   state: CanvasState

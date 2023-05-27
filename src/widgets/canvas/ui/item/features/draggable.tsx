@@ -2,7 +2,7 @@ import { useDrag } from '@use-gesture/react'
 
 import React from 'react'
 
-import { PointState } from '../../../entities/point/state'
+import { PointState } from '../../../../../entities/point/state'
 
 export interface DraggableProps {
   state: PointState

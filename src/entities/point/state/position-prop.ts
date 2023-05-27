@@ -1,5 +1,5 @@
 import { EmitterableProp } from '~/utils/emitterable'
-import { Position } from '~/widgets/chart-item'
+import { Position } from '~/widgets/canvas/ui/item'
 
 import { PointState } from './state'
 
