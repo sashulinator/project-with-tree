@@ -42,7 +42,7 @@ export default function Node(props: NodeProps): JSX.Element {
           data-id={point.id}
           className={clsx('PointNode', props.isSelected && '--selected')}
           style={{ width: WIDTH }}
-          ref={setRefs(props.state.setRef, setRef)}
+          ref={setRefs(props.state.ref.set, setRef)}
         >
           <div className='name'>{props.state.point.name}</div>
           <div className='links'>
@@ -112,8 +112,8 @@ export default function Node(props: NodeProps): JSX.Element {
   }
 
   function observeSize(): (() => void) | void {
-    if (!props.state.ref.current) return
-    const unsubscribe = observeResize(props.state.ref.current, (entry) => {
+    if (!props.state.ref.value) return
+    const unsubscribe = observeResize(props.state.ref.value, (entry) => {
       const rect = entry.target.getBoundingClientRect()
       props.state.width.value = Math.round(rect.width)
       props.state.height.value = Math.round(rect.height)

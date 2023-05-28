@@ -82,10 +82,10 @@ export default function ChartLink(props: ChartLinkProps): JSX.Element {
     }
 
     assertDefined(props.rule)
-    const srcLinkEl = props.sourceState?.ref.current?.querySelector(
+    const srcLinkEl = props.sourceState?.ref.value?.querySelector(
       `[data-id="${props.rule.id as string}"]`
     ) as HTMLElement
-    const srcLinkOffset = getOffsetInElement(srcLinkEl, props.sourceState?.ref.current)
+    const srcLinkOffset = getOffsetInElement(srcLinkEl, props.sourceState?.ref.value)
     const srcLinkRect = srcLinkEl?.getBoundingClientRect() || { height: 0 }
     return {
       x: state.position.value.x + state.width.value / 2,

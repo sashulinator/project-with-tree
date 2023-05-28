@@ -31,32 +31,21 @@ export class PointState implements Emitterable<Emitter<Events>> {
 
   point: Point
 
-  ref: { current: null | HTMLElement }
+  ref: EmitterableProp<'setRef', null | HTMLElement>
 
   ruleList: RuleListProp<'setRuleList'>
 
   constructor(point: Point, props: StateProps) {
     this.emitter = mitt()
     this.point = point
-    this.subscribe()
 
     this.id = props.id
+
     this.height = new EmitterableProp('setHeight', props.height || 0, this)
     this.width = new EmitterableProp('setWidth', props.width || 0, this)
-    this.ref = { current: null }
+    this.ref = new EmitterableProp<'setRef', null | HTMLElement>('setRef', null, this)
 
     this.position = new PositionProp('setPosition', props.position, this)
     this.ruleList = new RuleListProp('setRuleList', props.ruleList || [], this)
-  }
-
-  private subscribe = (): void => {
-    this.emitter.on('setRef', (event) => {
-      this.ref.current = event.element
-    })
-  }
-
-  setRef = (element: HTMLElement): void => {
-    if (element === this.ref.current) return
-    this.emitter.emit('setRef', { element })
   }
 }
