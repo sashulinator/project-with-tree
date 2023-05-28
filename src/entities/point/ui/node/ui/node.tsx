@@ -115,8 +115,8 @@ export default function Node(props: NodeProps): JSX.Element {
     if (!props.state.ref.current) return
     const unsubscribe = observeResize(props.state.ref.current, (entry) => {
       const rect = entry.target.getBoundingClientRect()
-      props.state.setWidth(Math.round(rect.width))
-      props.state.setHeight(Math.round(rect.height))
+      props.state.width.value = Math.round(rect.width)
+      props.state.height.value = Math.round(rect.height)
     })
     return () => unsubscribe?.()
   }

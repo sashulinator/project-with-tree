@@ -52,13 +52,13 @@ function Factory(props: FactoryProps): JSX.Element {
   return (
     <>
       <rect
-        width={props.state.width}
-        height={props.state.height}
+        width={props.state.width.value}
+        height={props.state.height.value}
         fill={'yellow'}
         stroke='black'
         strokeWidth={props.isSelected ? '1px' : 0}
       />
-      <text x={20} y={props.state.height - 30}>
+      <text x={20} y={props.state.height.value - 30}>
         {props.state.point.id}
       </text>
     </>

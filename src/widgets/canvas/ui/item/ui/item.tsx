@@ -33,8 +33,8 @@ function ItemComponent(props: ItemProps, ref: ForwardedRef<SVGGElement>): JSX.El
   // Private
 
   function getTransform(): string {
-    const x = props.state.position.value.x - props.state.width / 2
-    const y = props.state.position.value.y - props.state.height / 2
+    const x = props.state.position.value.x - props.state.width.value / 2
+    const y = props.state.position.value.y - props.state.height.value / 2
     return `translate(${x}px, ${y}px)`
   }
 

@@ -3,7 +3,7 @@ import mitt, { Emitter } from 'mitt'
 import { Point } from '~/entities/point'
 import { Rule } from '~/entities/rule'
 import { Id } from '~/utils/core'
-import { AnyEmitter, Emitterable } from '~/utils/emitterable'
+import { Emitterable, EmitterableProp } from '~/utils/emitterable'
 import { Position } from '~/widgets/canvas/ui/item'
 
 import { Events } from './events'
@@ -25,9 +25,9 @@ export class PointState implements Emitterable<Emitter<Events>> {
 
   position: PositionProp<'setPosition'>
 
-  height: number
+  height: EmitterableProp<'setHeight', number>
 
-  width: number
+  width: EmitterableProp<'setWidth', number>
 
   point: Point
 
@@ -41,8 +41,8 @@ export class PointState implements Emitterable<Emitter<Events>> {
     this.subscribe()
 
     this.id = props.id
-    this.height = props.width || 0
-    this.width = props.height || 0
+    this.height = new EmitterableProp('setHeight', props.height || 0, this)
+    this.width = new EmitterableProp('setWidth', props.width || 0, this)
     this.ref = { current: null }
 
     this.position = new PositionProp('setPosition', props.position, this)
@@ -50,23 +50,9 @@ export class PointState implements Emitterable<Emitter<Events>> {
   }
 
   private subscribe = (): void => {
-    this.emitter.on('setWidth', (event) => {
-      this.width = event.width
-    })
-    this.emitter.on('setHeight', (event) => {
-      this.height = event.height
-    })
     this.emitter.on('setRef', (event) => {
       this.ref.current = event.element
     })
-  }
-
-  setWidth = (width: number): void => {
-    this.emitter.emit('setWidth', { width })
-  }
-
-  setHeight = (height: number): void => {
-    this.emitter.emit('setHeight', { height })
   }
 
   setRef = (element: HTMLElement): void => {
