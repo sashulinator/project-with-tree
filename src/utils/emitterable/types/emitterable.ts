@@ -1,7 +1,7 @@
 import { Any } from '~/utils/core'
 
-import { Emitter, EventType } from './emitter'
+import { AnyEmitter } from './emitter'
 
-export interface Emitterable<Events extends Record<EventType, Any>> {
-  emitter: Emitter<Events>
+export interface Emitterable<E extends AnyEmitter> {
+  emitter: E
 }

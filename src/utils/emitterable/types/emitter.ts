@@ -12,9 +12,11 @@ export type WildCardEventHandlerList<T = Record<string, Any>> = Array<WildcardHa
 export interface Emitter<Events extends Record<EventType, Any>> {
   // all: EventHandlerMap<Events>
   on<Key extends keyof Events>(type: Key, handler: Handler<Events[Key]>): void
-  on(type: '*', handler: WildcardHandler<Events>): void
+  // on(type: '*', handler: WildcardHandler<Events>): void
   off<Key extends keyof Events>(type: Key, handler?: Handler<Events[Key]>): void
-  off(type: '*', handler: WildcardHandler<Events>): void
+  // off(type: '*', handler: WildcardHandler<Events>): void
   emit<Key extends keyof Events>(type: Key, event: Events[Key]): void
   emit<Key extends keyof Events>(type: undefined extends Events[Key] ? Key : never): void
 }
+
+export type AnyEmitter = Emitter<Record<EventType, Any>>

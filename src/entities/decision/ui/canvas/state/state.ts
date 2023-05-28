@@ -15,7 +15,7 @@ export interface DecisionStateProps {
   decision: Decision
 }
 
-export class CanvasState implements Emitterable<Events> {
+export class CanvasState implements Emitterable<Emitter<Events>> {
   emitter: Emitter<Events>
 
   selected: SelectedProp<'setSelected'>

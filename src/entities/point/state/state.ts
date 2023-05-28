@@ -3,7 +3,7 @@ import mitt, { Emitter } from 'mitt'
 import { Point } from '~/entities/point'
 import { Rule } from '~/entities/rule'
 import { Id } from '~/utils/core'
-import { Emitterable } from '~/utils/emitterable'
+import { AnyEmitter, Emitterable } from '~/utils/emitterable'
 import { Position } from '~/widgets/canvas/ui/item'
 
 import { Events } from './events'
@@ -18,7 +18,7 @@ export interface StateProps {
   ruleList?: Rule[] | undefined
 }
 
-export class PointState implements Emitterable<Events> {
+export class PointState implements Emitterable<Emitter<Events>> {
   emitter: Emitter<Events>
 
   id: Id
