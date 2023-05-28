@@ -10,6 +10,7 @@ import { CanvasState } from '~/entities/decision'
 import { PointState } from '~/entities/point/state'
 import { Any } from '~/utils/core'
 import { observeResize } from '~/utils/dom'
+import { keyListener } from '~/utils/dom/key-listener'
 import { useUpdate } from '~/utils/hooks'
 import { setRefs } from '~/utils/react'
 import ChartLink from '~/widgets/chart-link'
@@ -33,15 +34,14 @@ export default function Node(props: NodeProps): JSX.Element {
   return (
     <>
       <foreignObject width={WIDTH} height={height} style={{ overflow: 'visible' }}>
-        <button
-          onClick={(): void => {
-            if (!props.decisionState.editingLink.value) return
-            props.decisionState.editingLink.finish(point.id)
-          }}
+        <div
+          tabIndex={0}
+          role='button'
+          onKeyDown={keyListener('Enter', finishLinkEditing)}
+          onClick={finishLinkEditing}
           data-id={point.id}
           className={clsx('PointNode', props.isSelected && '--selected')}
           style={{ width: WIDTH }}
-          // eslint-disable-next-line @typescript-eslint/unbound-method
           ref={setRefs(props.state.setRef, setRef)}
         >
           <div className='name'>{props.state.point.name}</div>
@@ -95,12 +95,17 @@ export default function Node(props: NodeProps): JSX.Element {
               add rule
             </button>
           </div>
-        </button>
+        </div>
       </foreignObject>
     </>
   )
 
   // Private
+
+  function finishLinkEditing(): void {
+    if (!props.decisionState.editingLink.value) return
+    props.decisionState.editingLink.finish(point.id)
+  }
 
   function updateOnEvents(update: () => void): void {
     props.state.emitter.on('setRuleList', update)
