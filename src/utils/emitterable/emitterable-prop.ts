@@ -1,18 +1,22 @@
 import { Any } from '../core'
 import { Emitterable } from './types/emitterable'
 
-export class EmitterableProp<N extends string, V> {
-  private _value: V
+export class EmitterableProp<
+  TEventName extends string,
+  TValue,
+  TEmitterable extends Emitterable<Any> = Emitterable<Any>
+> {
+  private _value: TValue
 
-  initialValue: V
+  initialValue: TValue
 
-  previousValue: V
+  previousValue: TValue
 
-  emittableState: Emitterable<Any>
+  emittableState: TEmitterable
 
-  eventName: N
+  eventName: TEventName
 
-  constructor(eventName: N, value: V, state: Emitterable<Any>) {
+  constructor(eventName: TEventName, value: TValue, state: TEmitterable) {
     this._value = value
     this.initialValue = value
     this.previousValue = value
@@ -25,15 +29,15 @@ export class EmitterableProp<N extends string, V> {
     })
   }
 
-  get value(): V {
+  get value(): TValue {
     return this._value
   }
 
-  set value(value: V) {
+  set value(value: TValue) {
     this.emittableState.emitter.emit(this.eventName, { value })
   }
 
-  set = (value: V, event?: Record<string, unknown> | undefined): void => {
+  set = (value: TValue, event?: Record<string, unknown> | undefined): void => {
     this.emittableState.emitter.emit(this.eventName, { value, ...event })
   }
 }

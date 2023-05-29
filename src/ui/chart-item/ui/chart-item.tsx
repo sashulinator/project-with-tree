@@ -14,13 +14,17 @@ export interface ChartItemProps extends React.HTMLAttributes<SVGGElement> {
 }
 
 export default function ChartItem(props: ChartItemProps): JSX.Element {
-  const { chartState, ...chartItemProps } = props
+  const { chartState, state, ...chartItemProps } = props
   return (
     <Draggable chartState={chartState} state={props.state}>
       {(draggableProps): JSX.Element => {
         return (
           <WChartItem
             {...chartItemProps}
+            height={state.height.value}
+            width={state.width.value}
+            y={state.position.value.y}
+            x={state.position.value.x}
             style={{ touchAction: 'none' }}
             onKeyDown={fns(draggableProps.onKeyDown, chartItemProps.onKeyDown)}
             onKeyUp={fns(draggableProps.onKeyUp, chartItemProps.onKeyUp)}

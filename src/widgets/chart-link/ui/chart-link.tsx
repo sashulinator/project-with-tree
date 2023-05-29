@@ -88,8 +88,8 @@ export default function ChartLink(props: ChartLinkProps): JSX.Element {
     const srcLinkOffset = getOffsetInElement(srcLinkEl, props.sourceState?.ref.value)
     const srcLinkRect = srcLinkEl?.getBoundingClientRect() || { height: 0 }
     return {
-      x: state.position.value.x + state.width.value / 2,
-      y: state.position.value.y - state.height.value / 2 + srcLinkOffset.top + srcLinkRect.height / 2,
+      x: state.position.value.x + state.width.value,
+      y: state.position.value.y + srcLinkOffset.top + srcLinkRect.height / 2,
     }
   }
 
@@ -102,8 +102,8 @@ export default function ChartLink(props: ChartLinkProps): JSX.Element {
     }
 
     return {
-      x: state.position.value.x - state.width.value / 2,
-      y: state.position.value.y,
+      x: state.position.value.x,
+      y: state.position.value.y + state.height.value / 2,
     }
   }
 }

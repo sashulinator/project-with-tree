@@ -2,6 +2,7 @@ import { CanvasState } from '~/entities/decision'
 import { PointNode } from '~/entities/point'
 import { PointState } from '~/entities/point/state'
 import ChartItem from '~/ui/chart-item'
+import { useUpdate } from '~/utils/hooks'
 import Selectable from '~/widgets/canvas/ui/item/features/selectable'
 
 export interface ItemNodeProps {
@@ -11,6 +12,8 @@ export interface ItemNodeProps {
 }
 
 export default function Node(props: ItemNodeProps): JSX.Element {
+  useUpdate(subscribeOnUpdates)
+
   return (
     <Selectable id={props.state.id} chartState={props.decisionState}>
       {(selectableProps): JSX.Element => {
@@ -33,6 +36,12 @@ export default function Node(props: ItemNodeProps): JSX.Element {
       }}
     </Selectable>
   )
+
+  function subscribeOnUpdates(update: () => void): void {
+    props.state.emitter.on('setPosition', update)
+    props.state.emitter.on('setWidth', update)
+    props.state.emitter.on('setHeight', update)
+  }
 }
 
 interface FactoryProps {

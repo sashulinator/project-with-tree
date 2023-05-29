@@ -3,7 +3,6 @@ import './node.css'
 import clsx from 'clsx'
 import { useLayoutEffect } from 'react'
 import { createPortal } from 'react-dom'
-import useMeasure from 'react-use-measure'
 import uniqid from 'uniqid'
 
 import { CanvasState } from '~/entities/decision'
@@ -26,78 +25,73 @@ const WIDTH = 200
 
 export default function Node(props: NodeProps): JSX.Element {
   const { point } = props.state
-  const [setRef, { height }] = useMeasure()
 
   useLayoutEffect(observeSize, [])
   useUpdate(updateOnEvents)
 
   return (
-    <>
-      <foreignObject width={WIDTH} height={height} style={{ overflow: 'visible' }}>
-        <div
-          tabIndex={0}
-          role='button'
-          onKeyDown={keyListener('Enter', finishLinkEditing)}
-          onClick={finishLinkEditing}
-          data-id={point.id}
-          className={clsx('PointNode', props.isSelected && '--selected')}
-          style={{ width: WIDTH }}
-          ref={setRefs(props.state.ref.set, setRef)}
+    <div
+      tabIndex={0}
+      role='button'
+      onKeyDown={keyListener('Enter', finishLinkEditing)}
+      onClick={finishLinkEditing}
+      data-id={point.id}
+      className={clsx('PointNode', props.isSelected && '--selected')}
+      style={{ width: WIDTH }}
+      ref={setRefs(props.state.ref.set)}
+    >
+      <div className='name'>{props.state.point.name}</div>
+      <div className='links'>
+        {props.state.ruleList.value?.map((rule) => {
+          let renderedLink: Any = null
+          if (rule.pointId) {
+            const targetState = props.decisionState.pointStates.get(rule.pointId)
+            renderedLink = createPortal(
+              <ChartLink
+                key={rule.id}
+                decisionState={props.decisionState}
+                rule={rule}
+                sourceState={props.state}
+                targetState={targetState}
+              />,
+              props.linksContainer
+            )
+          }
+          return (
+            <div key={rule.id} data-id={rule.id}>
+              {rule.name}
+              {!rule.pointId && (
+                <button
+                  onClick={(e): void => {
+                    e.stopPropagation()
+                    props.decisionState.editingLink.add({
+                      rule,
+                      sourceState: props.state,
+                    })
+                  }}
+                >
+                  +
+                </button>
+              )}
+              {renderedLink}
+            </div>
+          )
+        })}
+      </div>
+      <div className='add-rule'>
+        <button
+          onClick={(): void =>
+            props.state.ruleList.add({
+              id: uniqid(),
+              name: `name_${uniqid()}`,
+              type: 'test',
+            })
+          }
         >
-          <div className='name'>{props.state.point.name}</div>
-          <div className='links'>
-            {props.state.ruleList.value?.map((rule) => {
-              let renderedLink: Any = null
-              if (rule.pointId) {
-                const targetState = props.decisionState.pointStates.get(rule.pointId)
-                renderedLink = createPortal(
-                  <ChartLink
-                    key={rule.id}
-                    decisionState={props.decisionState}
-                    rule={rule}
-                    sourceState={props.state}
-                    targetState={targetState}
-                  />,
-                  props.linksContainer
-                )
-              }
-              return (
-                <div key={rule.id} data-id={rule.id}>
-                  {rule.name}
-                  {!rule.pointId && (
-                    <button
-                      onClick={(e): void => {
-                        e.stopPropagation()
-                        props.decisionState.editingLink.add({
-                          rule,
-                          sourceState: props.state,
-                        })
-                      }}
-                    >
-                      +
-                    </button>
-                  )}
-                  {renderedLink}
-                </div>
-              )
-            })}
-          </div>
-          <div className='add-rule'>
-            <button
-              onClick={(): void =>
-                props.state.ruleList.add({
-                  id: uniqid(),
-                  name: `name_${uniqid()}`,
-                  type: 'test',
-                })
-              }
-            >
-              add rule
-            </button>
-          </div>
-        </div>
-      </foreignObject>
-    </>
+          add rule
+        </button>
+      </div>
+    </div>
   )
 
   // Private
