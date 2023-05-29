@@ -1,6 +1,6 @@
 import mitt, { Emitter as Mitt } from 'mitt'
 
-import { AnyEvent, Handler, Emitter as IEmitter, WildcardHandler } from '~/utils/emitterable'
+import { AnyEvent, Handler, Emitter as IEmitter, WildcardHandler } from '~/utils/emitter'
 
 export class Emitter<E extends AnyEvent> implements IEmitter<E> {
   protected _emitter: Mitt<E>

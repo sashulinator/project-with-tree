@@ -1,7 +1,7 @@
 import mitt, { Emitter } from 'mitt'
 
 import { Decision } from '~/entities/decision'
-import { Emitterable, EmitterableProp as Prop } from '~/utils/emitterable'
+import { Emitterable, EmitterableProp as Prop } from '~/utils/emitter'
 import { Translate } from '~/widgets/canvas'
 
 import { EditingLinkProp } from './editing-link-prop'

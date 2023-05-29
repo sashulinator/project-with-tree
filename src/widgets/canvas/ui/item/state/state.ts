@@ -1,6 +1,6 @@
 import { Emitter } from '~/lib/emitter/emitter'
 import { Id } from '~/utils/core'
-import { Emitterable, EmitterableProp } from '~/utils/emitterable'
+import { Emitterable, EmitterableProp } from '~/utils/emitter'
 
 import { Position } from '../../../types/position'
 import { Events } from './events'

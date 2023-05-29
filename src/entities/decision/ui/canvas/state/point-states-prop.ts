@@ -2,7 +2,7 @@ import { CanvasState, isLinkedNode } from '~/entities/decision'
 import { EventNames, Events, PointState } from '~/entities/point'
 import { Any, Id } from '~/utils/core'
 import { get } from '~/utils/dictionary'
-import { EmitterableProp } from '~/utils/emitterable'
+import { EmitterableProp } from '~/utils/emitter'
 
 import { DecisionItem } from '../../../types/decision-item'
 

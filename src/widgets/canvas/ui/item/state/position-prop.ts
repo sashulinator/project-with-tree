@@ -1,4 +1,4 @@
-import { EmitterableProp } from '~/utils/emitterable'
+import { EmitterableProp } from '~/utils/emitter'
 import { Position } from '~/widgets/canvas/ui/item'
 
 import { Events } from './events'

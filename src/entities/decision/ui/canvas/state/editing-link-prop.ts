@@ -1,6 +1,6 @@
 import { Rule } from '~/entities/rule'
 import { Id, assertDefined } from '~/utils/core'
-import { EmitterableProp } from '~/utils/emitterable'
+import { EmitterableProp } from '~/utils/emitter'
 
 import { Link } from '../types/link'
 
