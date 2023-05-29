@@ -9,20 +9,11 @@ export interface ItemProps extends React.HTMLAttributes<SVGForeignObjectElement>
 }
 
 /**
- * Основываясь на state отрисовывает Item в нужном месте
+ * Отрисовывает  HTMLElement'ы в заданных координатах
  */
 function CanvasItemComponent(props: ItemProps, ref: ForwardedRef<SVGForeignObjectElement>): JSX.Element {
-  const { ...gProps } = props
-
   return (
-    <foreignObject
-      {...gProps}
-      ref={ref}
-      style={{
-        overflow: 'visible',
-        ...gProps.style,
-      }}
-    >
+    <foreignObject {...props} ref={ref} style={{ overflow: 'visible', ...props.style }}>
       {props.children}
     </foreignObject>
   )

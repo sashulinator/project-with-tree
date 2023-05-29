@@ -18,9 +18,9 @@ export interface ChartLinkProps {
   rule?: Rule
 }
 
-export default function ChartLink(props: ChartLinkProps): JSX.Element {
+export default function ChartLink(props: ChartLinkProps): JSX.Element | null {
   const update = useForceUpdate()
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
+  const [mousePosition, setMousePosition] = useState<null | Position>(null)
 
   useEffect(() => {
     props.targetState?.emitter.on('setPosition', update)
@@ -50,10 +50,14 @@ export default function ChartLink(props: ChartLinkProps): JSX.Element {
 
   useLayoutEffect(update, [])
 
+  const path = drawPath()
+
+  if (!path) return null
+
   return (
     <path
       className='CanvasLink'
-      d={drawPath()}
+      d={path}
       strokeWidth={2}
       onClick={
         props.sourceState && props.targetState && props.rule
@@ -65,15 +69,18 @@ export default function ChartLink(props: ChartLinkProps): JSX.Element {
 
   // Private
 
-  function drawPath(): string {
+  function drawPath(): string | null {
     const s = sourcePosition(props.sourceState)
     const t = targetPosition(props.targetState)
+
+    if (s === null || t === null) return null
 
     return `M${s.x},${s.y}L${t.x},${t.y}`
   }
 
-  function sourcePosition(state: PointState | undefined): Position {
+  function sourcePosition(state: PointState | undefined): Position | null {
     if (!state) {
+      if (mousePosition === null) return null
       const rect = (props.decisionState.paintingPanelRef.current as SVGGElement).getBoundingClientRect()
       return {
         x: mousePosition.x + rect.x,
@@ -93,8 +100,9 @@ export default function ChartLink(props: ChartLinkProps): JSX.Element {
     }
   }
 
-  function targetPosition(state: PointState | undefined): Position {
+  function targetPosition(state: PointState | undefined): Position | null {
     if (!state) {
+      if (mousePosition === null) return null
       return {
         x: mousePosition.x - props.decisionState.translate.x / props.decisionState.scale,
         y: mousePosition.y - props.decisionState.translate.y / props.decisionState.scale,
