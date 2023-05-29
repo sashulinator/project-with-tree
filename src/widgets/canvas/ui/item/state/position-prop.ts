@@ -1,14 +1,15 @@
 import { EmitterableProp } from '~/utils/emitterable'
 import { Position } from '~/widgets/canvas/ui/item'
 
-import { PointState } from './state'
+import { Events } from './events'
+import { CanvasItemState } from './state'
 
-export class PositionProp<N extends string> extends EmitterableProp<N, Position, PointState> {
+export class PositionProp<N extends string> extends EmitterableProp<N, Position, CanvasItemState<Events>> {
   previous: Position
 
   last: Position
 
-  constructor(eventName: N, value: Position, state: PointState) {
+  constructor(eventName: N, value: Position, state: CanvasItemState<Events>) {
     super(eventName, value, state)
     this.previous = value
     this.last = value

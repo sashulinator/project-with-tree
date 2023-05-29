@@ -14,8 +14,8 @@ export class PointStatesProp<N extends string> extends EmitterableProp<N, PointS
       if (isLinkedNode(item)) return acc
       const state = new PointState(item, { position: item, id: item.id, ruleList: item.rules })
       acc[item.id] = state
-      state.emitter.on('*', (eventName, event) =>
-        canvasState.emitter.emit(eventName as Any, { pointStateId: item.id, ...(event as Any) })
+      state.emitter.onAll((eventName, event) =>
+        canvasState.emitter.emit(eventName as any, { pointStateId: item.id, ...(event as Any) })
       )
       return acc
     }, {})

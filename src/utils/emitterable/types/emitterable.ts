@@ -1,7 +1,3 @@
-import { Any } from '~/utils/core'
-
-import { AnyEmitter } from './emitter'
-
-export interface Emitterable<E extends AnyEmitter> {
+export interface Emitterable<E> {
   emitter: E
 }
