@@ -2,13 +2,13 @@ import { FullGestureState } from '@use-gesture/react'
 
 import React from 'react'
 
-import { PointState } from '~/entities/point/state'
+import { Any } from '~/utils/core'
 import { fns } from '~/utils/function'
-import WChartItem, { CanvasItemDraggable } from '~/widgets/canvas/ui/item'
+import WChartItem, { CanvasItemDraggable, CanvasItemState } from '~/widgets/canvas/ui/item'
 
 export interface ChartItemProps extends React.HTMLAttributes<SVGGElement> {
   children: React.ReactNode
-  state: PointState
+  state: CanvasItemState<Any>
   chartState: {
     scale: number
     // setItemState: (id: Id, eventName: string, redoEvent: Dictionary<Any>, undoEvent: Dictionary<Any>) => void
@@ -20,7 +20,7 @@ export interface ChartItemProps extends React.HTMLAttributes<SVGGElement> {
   ) => boolean
 }
 
-export default function ChartItem(props: ChartItemProps): JSX.Element {
+export default function CanvasItem(props: ChartItemProps): JSX.Element {
   const { chartState, state, isDrag, ...chartItemProps } = props
   return (
     <CanvasItemDraggable isDrag={isDrag} boardState={chartState} itemState={props.state}>
