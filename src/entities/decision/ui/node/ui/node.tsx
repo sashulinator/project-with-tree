@@ -1,3 +1,5 @@
+import { FullGestureState } from '@use-gesture/react'
+
 import { CanvasState } from '~/entities/decision'
 import { PointNode } from '~/entities/point'
 import { PointState } from '~/entities/point/state'
@@ -19,13 +21,10 @@ export default function Node(props: ItemNodeProps): JSX.Element {
       {(selectableProps): JSX.Element => {
         return (
           <CanvasItem
-            isDrag={(event): boolean => {
-              const target = event.event.target as HTMLElement
-              return target.classList.contains('name')
-            }}
+            isDrag={isDrag}
             onMouseDown={(e): void => selectableProps.selectOnMouseAction(e)}
             state={props.state}
-            chartState={props.decisionState}
+            scale={props.decisionState.scale}
           >
             {
               <Factory
@@ -41,10 +40,21 @@ export default function Node(props: ItemNodeProps): JSX.Element {
     </CanvasItemSelectable>
   )
 
+  // Private
+
   function subscribeOnUpdates(update: () => void): void {
     props.state.emitter.on('setPosition', update)
     props.state.emitter.on('setWidth', update)
     props.state.emitter.on('setHeight', update)
+  }
+
+  function isDrag(
+    event: Omit<FullGestureState<'drag'>, 'event'> & {
+      event: PointerEvent | MouseEvent | TouchEvent | KeyboardEvent
+    }
+  ): boolean {
+    const target = event.event.target as HTMLElement
+    return target.classList.contains('name')
   }
 }
 

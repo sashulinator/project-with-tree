@@ -1,32 +1,24 @@
-import { FullGestureState } from '@use-gesture/react'
-
 import React from 'react'
 
 import { Any } from '~/utils/core'
 import { fns } from '~/utils/function'
-import WChartItem, { CanvasItemDraggable, CanvasItemState } from '~/widgets/canvas/ui/item'
+import AbstractCanvasItem, { CanvasItemDraggable, CanvasItemState, IsDragEvent } from '~/widgets/canvas/ui/item'
 
 export interface ChartItemProps extends React.HTMLAttributes<SVGGElement> {
   children: React.ReactNode
   state: CanvasItemState<Any>
-  chartState: {
-    scale: number
-    // setItemState: (id: Id, eventName: string, redoEvent: Dictionary<Any>, undoEvent: Dictionary<Any>) => void
-  }
-  isDrag: (
-    event: Omit<FullGestureState<'drag'>, 'event'> & {
-      event: PointerEvent | MouseEvent | TouchEvent | KeyboardEvent
-    }
-  ) => boolean
+  scale: number
+  isDrag: (event: IsDragEvent) => boolean
 }
 
 export default function CanvasItem(props: ChartItemProps): JSX.Element {
-  const { chartState, state, isDrag, ...chartItemProps } = props
+  const { scale, state, isDrag, ...chartItemProps } = props
+
   return (
-    <CanvasItemDraggable isDrag={isDrag} boardState={chartState} itemState={props.state}>
+    <CanvasItemDraggable isDrag={isDrag} scale={scale} itemState={props.state}>
       {(draggableProps): JSX.Element => {
         return (
-          <WChartItem
+          <AbstractCanvasItem
             {...chartItemProps}
             height={state.height.value}
             width={state.width.value}
