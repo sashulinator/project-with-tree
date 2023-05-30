@@ -96,7 +96,10 @@ export default function ChartLink(props: ChartLinkProps): JSX.Element | null {
     const srcLinkRect = srcLinkEl?.getBoundingClientRect() || { height: 0 }
     return {
       x: state.position.value.x + state.width.value,
-      y: state.position.value.y + srcLinkOffset.top + srcLinkRect.height / 2,
+      y:
+        state.position.value.y +
+        srcLinkOffset.top / props.decisionState.scale +
+        srcLinkRect.height / 2 / props.decisionState.scale,
     }
   }
 
@@ -104,8 +107,8 @@ export default function ChartLink(props: ChartLinkProps): JSX.Element | null {
     if (!state) {
       if (mousePosition === null) return null
       return {
-        x: mousePosition.x - props.decisionState.translate.x / props.decisionState.scale,
-        y: mousePosition.y - props.decisionState.translate.y / props.decisionState.scale,
+        x: (mousePosition.x - props.decisionState.translate.value.x) / props.decisionState.scale,
+        y: (mousePosition.y - props.decisionState.translate.value.y) / props.decisionState.scale,
       }
     }
 

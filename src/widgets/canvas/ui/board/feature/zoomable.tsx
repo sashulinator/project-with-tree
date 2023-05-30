@@ -1,5 +1,6 @@
-/* eslint-disable eslint-comments/disable-enable-pair, @typescript-eslint/unbound-method */
 import React, { ForwardedRef, useLayoutEffect, useRef } from 'react'
+
+import { assertNotNull } from '~/utils/core'
 
 export interface CanvasBoardZoomableProps {
   scale: number
@@ -10,23 +11,25 @@ export interface CanvasBoardZoomableProps {
 export function CanvasBoardZoomable(props: CanvasBoardZoomableProps): JSX.Element {
   const svgRef = useRef<null | SVGSVGElement>(null)
 
-  useLayoutEffect(() => {
-    if (svgRef.current === null) return
+  useLayoutEffect(subscribeOnWheel, [props.scale])
 
+  return <>{props.children({ ref: svgRef })}</>
+
+  // Private
+
+  function subscribeOnWheel(): () => void {
     function wheeled(event: WheelEvent): void {
       event.preventDefault()
       event.stopPropagation()
-      const ret = props.scale + event.deltaY / 777
-      if (ret > 1 || ret < 0.1) return
+      const newScale = props.scale + event.deltaY / 777
+      const ret = newScale > 1 ? 1 : newScale < 0.1 ? 0.1 : newScale
       props.setScale(ret)
     }
 
+    assertNotNull(svgRef.current)
     svgRef.current.addEventListener('wheel', wheeled)
-
     return () => svgRef.current?.removeEventListener('wheel', wheeled)
-  }, [props.scale])
-
-  return <>{props.children({ ref: svgRef })}</>
+  }
 }
 
 CanvasBoardZoomable.displayName = 'CanvasBoardZoomable'

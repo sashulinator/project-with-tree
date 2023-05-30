@@ -1,3 +1,5 @@
+import { FullGestureState } from '@use-gesture/react'
+
 import React from 'react'
 
 import { PointState } from '~/entities/point/state'
@@ -11,12 +13,17 @@ export interface ChartItemProps extends React.HTMLAttributes<SVGGElement> {
     scale: number
     // setItemState: (id: Id, eventName: string, redoEvent: Dictionary<Any>, undoEvent: Dictionary<Any>) => void
   }
+  isDrag: (
+    event: Omit<FullGestureState<'drag'>, 'event'> & {
+      event: PointerEvent | MouseEvent | TouchEvent | KeyboardEvent
+    }
+  ) => boolean
 }
 
 export default function ChartItem(props: ChartItemProps): JSX.Element {
-  const { chartState, state, ...chartItemProps } = props
+  const { chartState, state, isDrag, ...chartItemProps } = props
   return (
-    <CanvasItemDraggable chartState={chartState} state={props.state}>
+    <CanvasItemDraggable isDrag={isDrag} boardState={chartState} itemState={props.state}>
       {(draggableProps): JSX.Element => {
         return (
           <WChartItem

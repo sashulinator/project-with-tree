@@ -28,14 +28,14 @@ export default function Canvas(props: CanvasProps): JSX.Element {
               >
                 <PaintingPanel
                   scale={props.canvasState.scale}
-                  translate={props.canvasState.translate}
+                  translate={props.canvasState.translate.value}
                   className={clsx('abovePaintingPanel')}
                 >
                   {props.abovePaintingPanelChildren}
                 </PaintingPanel>
                 <PaintingPanel
                   scale={props.canvasState.scale}
-                  translate={props.canvasState.translate}
+                  translate={props.canvasState.translate.value}
                   className={clsx('mainPaintingPanel')}
                   ref={props.canvasState.setPaintingPanelRef}
                 >

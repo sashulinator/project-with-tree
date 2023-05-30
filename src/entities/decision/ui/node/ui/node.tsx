@@ -19,6 +19,10 @@ export default function Node(props: ItemNodeProps): JSX.Element {
       {(selectableProps): JSX.Element => {
         return (
           <ChartItem
+            isDrag={(event): boolean => {
+              const target = event.event.target as HTMLElement
+              return target.classList.contains('name')
+            }}
             onMouseDown={(e): void => selectableProps.selectOnMouseAction(e)}
             state={props.state}
             chartState={props.decisionState}
