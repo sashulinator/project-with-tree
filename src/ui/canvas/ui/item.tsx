@@ -1,30 +1,35 @@
 import React from 'react'
 
-import { Any } from '~/utils/core'
 import { fns } from '~/utils/function'
-import AbstractCanvasItem, { CanvasItemDraggable, CanvasItemState, IsDragEvent } from '~/widgets/canvas/ui/item'
+import { Position } from '~/widgets/canvas'
+import AbstractCanvasItem, { CanvasItemDraggable, IsDragEvent } from '~/widgets/canvas/ui/item'
 
 export interface CanvasItemProps extends React.HTMLAttributes<SVGGElement> {
-  children: React.ReactNode
-  state: CanvasItemState<Any>
+  width: number
+  height: number
+  position: Position
+  lastPosition: Position
   scale: number
-  move: (x: number, y: number, isLast: boolean) => void
+  children: React.ReactNode
+  onMove: (x: number, y: number, isLast: boolean) => void
   isDrag: (event: IsDragEvent) => boolean
 }
 
+/**
+ * Элемент Canvas с фичами
+ * 1. Перетаскивание
+ */
 export default function CanvasItem(props: CanvasItemProps): JSX.Element {
-  const { scale, state, isDrag, move, ...chartItemProps } = props
+  const { scale, position, lastPosition, isDrag, onMove: move, ...chartItemProps } = props
 
   return (
-    <CanvasItemDraggable lastPosition={state.position.last} move={move} isDrag={isDrag} scale={scale}>
+    <CanvasItemDraggable lastPosition={lastPosition} onMove={move} isDrag={isDrag} scale={scale}>
       {(draggableProps): JSX.Element => {
         return (
           <AbstractCanvasItem
             {...chartItemProps}
-            height={state.height.value}
-            width={state.width.value}
-            y={state.position.value.y}
-            x={state.position.value.x}
+            y={position.y}
+            x={position.x}
             style={{ touchAction: 'none' }}
             onKeyDown={fns(draggableProps.onKeyDown, chartItemProps.onKeyDown)}
             onKeyUp={fns(draggableProps.onKeyUp, chartItemProps.onKeyUp)}

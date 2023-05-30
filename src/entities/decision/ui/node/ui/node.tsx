@@ -5,6 +5,7 @@ import { PointNode } from '~/entities/point'
 import { PointState } from '~/entities/point/state'
 import CanvasItem from '~/ui/canvas'
 import { useUpdate } from '~/utils/hooks'
+import { IsDragEvent } from '~/widgets/canvas'
 import CanvasItemSelectable from '~/widgets/canvas/ui/item/features/selectable'
 
 export interface ItemNodeProps {
@@ -21,11 +22,14 @@ export default function Node(props: ItemNodeProps): JSX.Element {
       {(selectableProps): JSX.Element => {
         return (
           <CanvasItem
-            move={props.state.position.move}
-            isDrag={isDrag}
-            onMouseDown={(e): void => selectableProps.selectOnMouseAction(e)}
-            state={props.state}
+            width={props.state.width.value}
+            height={props.state.height.value}
+            position={props.state.position.value}
+            lastPosition={props.state.position.last}
             scale={props.decisionState.scale}
+            onMouseDown={(e): void => selectableProps.selectOnMouseAction(e)}
+            onMove={props.state.position.move}
+            isDrag={isDrag}
           >
             {
               <Factory
@@ -49,11 +53,7 @@ export default function Node(props: ItemNodeProps): JSX.Element {
     props.state.emitter.on('setHeight', update)
   }
 
-  function isDrag(
-    event: Omit<FullGestureState<'drag'>, 'event'> & {
-      event: PointerEvent | MouseEvent | TouchEvent | KeyboardEvent
-    }
-  ): boolean {
+  function isDrag(event: IsDragEvent): boolean {
     const target = event.event.target as HTMLElement
     return target.classList.contains('name')
   }

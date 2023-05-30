@@ -12,7 +12,7 @@ export interface CanvasItemDraggableProps {
   scale: number
   lastPosition: Position
   isDrag: (event: IsDragEvent) => boolean
-  move: (x: number, y: number, isLast: boolean) => void
+  onMove: (x: number, y: number, isLast: boolean) => void
   children: (
     props: Pick<
       React.HTMLAttributes<SVGGElement>,
@@ -40,7 +40,7 @@ export function CanvasItemDraggable(props: CanvasItemDraggableProps): JSX.Elemen
     const x = props.lastPosition.x + moveX
     const y = props.lastPosition.y + moveY
 
-    props.move(x, y, event.last)
+    props.onMove(x, y, event.last)
   })
 
   return <>{props.children(dragBind())}</>
