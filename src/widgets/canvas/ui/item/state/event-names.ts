@@ -1,1 +1,1 @@
-export type EventNames = 'setHeight'
+export type CanvasItemEventNames = 'setHeight'

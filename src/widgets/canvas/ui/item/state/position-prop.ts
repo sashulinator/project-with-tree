@@ -1,7 +1,8 @@
 import { Emitter } from '~/lib/emitter/emitter'
 import { Any } from '~/utils/core'
 import { Emitterable, EmitterableProp } from '~/utils/emitter'
-import { Position } from '~/widgets/canvas/ui/item'
+
+import { Position } from '../../../types/position'
 
 type PositionPropEmitterable = Emitterable<Emitter<Any>> & {
   height: EmitterableProp<string, number, Any>

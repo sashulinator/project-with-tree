@@ -3,7 +3,7 @@ import { Id } from '~/utils/core'
 import { Emitterable, EmitterableProp } from '~/utils/emitter'
 
 import { Position } from '../../../types/position'
-import { Events } from './events'
+import { CanvasItemEvents } from './events'
 import { PositionProp } from './position-prop'
 
 export interface CanvasItemStateProps {
@@ -13,7 +13,7 @@ export interface CanvasItemStateProps {
   position: Position
 }
 
-export class CanvasItemState<E extends Events> implements Emitterable<Emitter<E>> {
+export class CanvasItemState<E extends CanvasItemEvents> implements Emitterable<Emitter<E>> {
   emitter: Emitter<E>
 
   id: Id

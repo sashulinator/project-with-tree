@@ -4,7 +4,7 @@ import React from 'react'
 
 import { PointState } from '../../../../../entities/point/state'
 
-export interface DraggableProps {
+export interface CanvasItemDraggableProps {
   state: PointState
   chartState: {
     scale: number
@@ -24,7 +24,7 @@ export interface DraggableProps {
   ) => React.ReactNode
 }
 
-export function Draggable(props: DraggableProps): JSX.Element {
+export function CanvasItemDraggable(props: CanvasItemDraggableProps): JSX.Element {
   const dragBind = useDrag((event): void => {
     event.event.stopPropagation()
     const target = event.event.target as HTMLElement

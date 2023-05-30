@@ -2,7 +2,7 @@ import React from 'react'
 
 import { PointState } from '~/entities/point/state'
 import { fns } from '~/utils/function'
-import WChartItem, { Draggable } from '~/widgets/canvas/ui/item'
+import WChartItem, { CanvasItemDraggable } from '~/widgets/canvas/ui/item'
 
 export interface ChartItemProps extends React.HTMLAttributes<SVGGElement> {
   children: React.ReactNode
@@ -16,7 +16,7 @@ export interface ChartItemProps extends React.HTMLAttributes<SVGGElement> {
 export default function ChartItem(props: ChartItemProps): JSX.Element {
   const { chartState, state, ...chartItemProps } = props
   return (
-    <Draggable chartState={chartState} state={props.state}>
+    <CanvasItemDraggable chartState={chartState} state={props.state}>
       {(draggableProps): JSX.Element => {
         return (
           <WChartItem
@@ -36,6 +36,6 @@ export default function ChartItem(props: ChartItemProps): JSX.Element {
           />
         )
       }}
-    </Draggable>
+    </CanvasItemDraggable>
   )
 }

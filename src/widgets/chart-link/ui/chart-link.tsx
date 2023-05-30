@@ -9,7 +9,7 @@ import { assertDefined } from '~/utils/core'
 import { getOffsetInElement } from '~/utils/dom/get-offset-in-element'
 import { emptyFn } from '~/utils/function/empty-fn'
 import { useForceUpdate } from '~/utils/hooks'
-import { Position } from '~/widgets/canvas/ui/item'
+import { Position } from '~/widgets/canvas'
 
 export interface ChartLinkProps {
   decisionState: CanvasState

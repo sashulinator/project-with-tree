@@ -1,8 +1,8 @@
 import clsx from 'clsx'
 import React, { ForwardedRef, forwardRef } from 'react'
 
+import { getTransform } from '../../../lib/get-transform'
 import { Translate } from '../../../types/translate'
-import { getTransform } from '../../canvas-board/lib/get-transform'
 
 interface PaintingPanelProps extends React.SVGAttributes<SVGGElement> {
   translate: Translate

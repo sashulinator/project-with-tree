@@ -3,7 +3,7 @@ import { PointNode } from '~/entities/point'
 import { PointState } from '~/entities/point/state'
 import ChartItem from '~/ui/chart-item'
 import { useUpdate } from '~/utils/hooks'
-import Selectable from '~/widgets/canvas/ui/item/features/selectable'
+import CanvasItemSelectable from '~/widgets/canvas/ui/item/features/selectable'
 
 export interface ItemNodeProps {
   state: PointState
@@ -15,7 +15,7 @@ export default function Node(props: ItemNodeProps): JSX.Element {
   useUpdate(subscribeOnUpdates)
 
   return (
-    <Selectable id={props.state.id} chartState={props.decisionState}>
+    <CanvasItemSelectable id={props.state.id} chartState={props.decisionState}>
       {(selectableProps): JSX.Element => {
         return (
           <ChartItem
@@ -34,7 +34,7 @@ export default function Node(props: ItemNodeProps): JSX.Element {
           </ChartItem>
         )
       }}
-    </Selectable>
+    </CanvasItemSelectable>
   )
 
   function subscribeOnUpdates(update: () => void): void {
