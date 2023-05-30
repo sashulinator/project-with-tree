@@ -50,7 +50,7 @@ export default function Node(props: NodeProps): JSX.Element {
               <ChartLink
                 key={rule.id}
                 decisionState={props.decisionState}
-                rule={rule}
+                id={rule.id}
                 sourceState={props.state}
                 targetState={targetState}
               />,

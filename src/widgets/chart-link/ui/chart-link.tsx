@@ -2,8 +2,7 @@ import './chart-link.css'
 
 import { CanvasState } from '~/entities/decision'
 import { PointState } from '~/entities/point/state'
-import { Rule } from '~/entities/rule'
-import { assertDefined } from '~/utils/core'
+import { Id, assertDefined } from '~/utils/core'
 import { getOffsetInElement } from '~/utils/dom'
 import { emptyFn } from '~/utils/function/empty-fn'
 import { useForceUpdate, useOnMount, useUpdate } from '~/utils/hooks'
@@ -13,7 +12,7 @@ export interface ChartLinkProps {
   decisionState: CanvasState
   targetState?: PointState | undefined
   sourceState?: PointState | undefined
-  rule?: Rule
+  id?: Id | undefined
 }
 
 export default function ChartLink(props: ChartLinkProps): JSX.Element | null {
@@ -29,8 +28,8 @@ export default function ChartLink(props: ChartLinkProps): JSX.Element | null {
       sourcePosition={sourcePosition()}
       targetPosition={targetPosition()}
       onClick={
-        props.sourceState && props.targetState && props.rule
-          ? (): void => props.sourceState?.ruleList.removeLink((props.rule as Rule).id)
+        props.sourceState && props.targetState
+          ? (): void => props.sourceState?.ruleList.removeLink(props.id || '')
           : emptyFn
       }
     />
@@ -41,10 +40,8 @@ export default function ChartLink(props: ChartLinkProps): JSX.Element | null {
   function sourcePosition(): Position | null {
     if (props.sourceState === undefined) return null
 
-    assertDefined(props.rule)
-    const srcLinkEl = props.sourceState?.ref.value?.querySelector(
-      `[data-id="${props.rule.id as string}"]`
-    ) as HTMLElement
+    assertDefined(props.id)
+    const srcLinkEl = props.sourceState?.ref.value?.querySelector(`[data-id="${props.id.toString()}"]`) as HTMLElement
     const srcLinkOffset = getOffsetInElement(srcLinkEl, props.sourceState?.ref.value)
     const srcLinkRect = srcLinkEl?.getBoundingClientRect() || { height: 0 }
     return {

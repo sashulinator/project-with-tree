@@ -22,7 +22,11 @@ export default function DecisionEditor(props: DecisionEditorProps): JSX.Element 
       canvasState={props.chartState}
       abovePaintingPanelChildren={
         props.chartState.editingLink.value && (
-          <ChartLink decisionState={props.chartState} {...props.chartState.editingLink.value} />
+          <ChartLink
+            id={props.chartState.editingLink.value.rule?.id}
+            decisionState={props.chartState}
+            {...props.chartState.editingLink.value}
+          />
         )
       }
     >
