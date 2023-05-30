@@ -6,7 +6,7 @@ import React, { useRef } from 'react'
 import { CanvasState } from '~/entities/decision'
 import { Any } from '~/utils/core'
 
-import { Translate } from '../../../types/translate'
+import { Position } from '../../../types/position'
 
 export interface CanvasBoardDraggableProps {
   state: CanvasState
@@ -15,7 +15,7 @@ export interface CanvasBoardDraggableProps {
 
 export function CanvasBoardDraggable(props: CanvasBoardDraggableProps): JSX.Element {
   const { children } = props
-  const xyRef = useRef<Translate | null>(null)
+  const xyRef = useRef<Position | null>(null)
 
   const dragBind = useDrag((event): void => {
     event.event.preventDefault()

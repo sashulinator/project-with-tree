@@ -1,7 +1,7 @@
 import { Decision } from '~/entities/decision'
 import { Emitter } from '~/lib/emitter/emitter'
 import { Emitterable, EmitterableProp as Prop } from '~/utils/emitter'
-import { Translate } from '~/widgets/canvas'
+import { Position } from '~/widgets/canvas'
 
 import { EditingLinkProp } from './editing-link-prop'
 import { Events } from './events'
@@ -9,7 +9,7 @@ import { PointStatesProp } from './point-states-prop'
 import { SelectedProp } from './selected-prop'
 
 export interface DecisionStateProps {
-  translate: Translate
+  translate: Position
   scale: number
   decision: Decision
 }
@@ -19,7 +19,7 @@ export class CanvasState implements Emitterable<Emitter<Events>> {
 
   selected: SelectedProp<'setSelected'>
 
-  _translate: Prop<'setTranslate', Translate>
+  _translate: Prop<'setTranslate', Position>
 
   _scale: Prop<'setScale', number>
 
@@ -56,11 +56,11 @@ export class CanvasState implements Emitterable<Emitter<Events>> {
 
   // 💉 Translate get/set
 
-  get translate(): Translate {
+  get translate(): Position {
     return this._translate.value
   }
   setTranslate = (x: number, y: number): void => {
-    const translate: Translate = { x: Math.round(x), y: Math.round(y) }
+    const translate: Position = { x: Math.round(x), y: Math.round(y) }
     this._translate.value = translate
   }
 

@@ -1,7 +1,8 @@
 // common
-export * from './types/translate'
+
 export * from './types/position'
 export * from './lib/get-transform'
+export * from './state/position-prop'
 
 // canvas-board
 export { default } from './ui/board/ui/canvas-board'

@@ -2,9 +2,9 @@ import { Emitter } from '~/lib/emitter/emitter'
 import { Id } from '~/utils/core'
 import { Emitterable, EmitterableProp } from '~/utils/emitter'
 
+import { PositionProp } from '../../../state/position-prop'
 import { Position } from '../../../types/position'
 import { CanvasItemEvents } from './events'
-import { PositionProp } from './position-prop'
 
 export interface CanvasItemStateProps {
   id: Id

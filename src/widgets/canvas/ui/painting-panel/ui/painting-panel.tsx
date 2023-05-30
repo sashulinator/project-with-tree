@@ -2,10 +2,10 @@ import clsx from 'clsx'
 import React, { ForwardedRef, forwardRef } from 'react'
 
 import { getTransform } from '../../../lib/get-transform'
-import { Translate } from '../../../types/translate'
+import { Position } from '../../../types/position'
 
 interface PaintingPanelProps extends React.SVGAttributes<SVGGElement> {
-  translate: Translate
+  translate: Position
   scale: number
   children?: React.ReactNode
 }
