@@ -1,6 +1,6 @@
 import { Emitter } from '~/lib/emitter/emitter'
 import { Id } from '~/utils/core'
-import { Emitterable, EmitterableProp } from '~/utils/emitter'
+import { AnyEvent, Emitterable, EmitterableProp } from '~/utils/emitter'
 
 import { Position } from '../../../types/position'
 import { Events } from './events'
@@ -37,7 +37,6 @@ export class CanvasItemState<E extends Events> implements Emitterable<Emitter<E>
 
     this.ref = new EmitterableProp<'setRef', null | HTMLElement>('setRef', null, this)
 
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument, @typescript-eslint/no-explicit-any
-    this.position = new PositionProp('setPosition', props.position, this as any)
+    this.position = new PositionProp('setPosition', props.position, this)
   }
 }

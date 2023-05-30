@@ -7,24 +7,24 @@ export class EmitterableProp<
   TValue,
   TEmitterable extends Emitterable<Emitter<Any>> = Emitterable<Emitter<Any>>
 > {
-  private _value: TValue
+  emitterable: TEmitterable
+
+  eventName: TEventName
 
   initialValue: TValue
 
   previousValue: TValue
 
-  emittableState: TEmitterable
+  private _value: TValue
 
-  eventName: TEventName
-
-  constructor(eventName: TEventName, value: TValue, state: TEmitterable) {
+  constructor(eventName: TEventName, value: TValue, emitterable: TEmitterable) {
     this._value = value
     this.initialValue = value
     this.previousValue = value
-    this.emittableState = state
+    this.emitterable = emitterable
     this.eventName = eventName
 
-    this.emittableState.emitter.on(this.eventName, ({ value }) => {
+    this.emitterable.emitter.on(this.eventName, ({ value }) => {
       this.previousValue = this._value
       this._value = value
     })
@@ -35,10 +35,10 @@ export class EmitterableProp<
   }
 
   set value(value: TValue) {
-    this.emittableState.emitter.emit(this.eventName, { value })
+    this.emitterable.emitter.emit(this.eventName, { value })
   }
 
   set = (value: TValue, event?: Record<string, unknown> | undefined): void => {
-    this.emittableState.emitter.emit(this.eventName, { value, ...event })
+    this.emitterable.emitter.emit(this.eventName, { value, ...event })
   }
 }

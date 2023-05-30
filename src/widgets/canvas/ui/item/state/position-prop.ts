@@ -1,21 +1,24 @@
-import { EmitterableProp } from '~/utils/emitter'
+import { Emitter } from '~/lib/emitter/emitter'
+import { Any } from '~/utils/core'
+import { Emitterable, EmitterableProp } from '~/utils/emitter'
 import { Position } from '~/widgets/canvas/ui/item'
 
-import { Events } from './events'
-import { CanvasItemState } from './state'
+type PositionPropEmitterable = Emitterable<Emitter<Any>> & {
+  height: EmitterableProp<string, number, Any>
+  width: EmitterableProp<string, number, Any>
+}
 
-export class PositionProp<N extends string> extends EmitterableProp<N, Position, CanvasItemState<Events>> {
+export class PositionProp<N extends string> extends EmitterableProp<N, Position, PositionPropEmitterable> {
   previous: Position
 
   last: Position
 
-  constructor(eventName: N, value: Position, state: CanvasItemState<Events>) {
-    super(eventName, value, state)
+  constructor(eventName: N, value: Position, emitterable: PositionPropEmitterable) {
+    super(eventName, value, emitterable)
     this.previous = value
     this.last = value
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    this.emittableState.emitter.on(this.eventName as any, (event: { isLast: boolean; value: Position }) => {
+    this.emitterable.emitter.on(this.eventName, (event: { isLast: boolean; value: Position }) => {
       if (event.isLast) {
         this.previous = this.last
         this.last = event.value
@@ -25,8 +28,8 @@ export class PositionProp<N extends string> extends EmitterableProp<N, Position,
 
   get center(): Position {
     return {
-      x: this.value.x + this.emittableState.width.value / 2,
-      y: this.value.y + this.emittableState.height.value / 2,
+      x: this.value.x + this.emitterable.width.value / 2,
+      y: this.value.y + this.emitterable.height.value / 2,
     }
   }
 
