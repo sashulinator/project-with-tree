@@ -8,12 +8,12 @@ import { Any } from '~/utils/core'
 
 import { Translate } from '../../../types/translate'
 
-interface DraggableProps {
+export interface CanvasBoardDraggableProps {
   state: CanvasState
   children: (props: Any) => React.ReactNode
 }
 
-export function Draggable(props: DraggableProps): JSX.Element {
+export function CanvasBoardDraggable(props: CanvasBoardDraggableProps): JSX.Element {
   const { children } = props
   const xyRef = useRef<Translate | null>(null)
 
@@ -37,4 +37,4 @@ export function Draggable(props: DraggableProps): JSX.Element {
   return <>{children({ ...dragBind() })}</>
 }
 
-Draggable.displayName = 'Draggable'
+CanvasBoardDraggable.displayName = 'CanvasBoardDraggable'

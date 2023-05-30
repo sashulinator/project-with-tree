@@ -1,13 +1,13 @@
 /* eslint-disable eslint-comments/disable-enable-pair, @typescript-eslint/unbound-method */
 import React, { ForwardedRef, useLayoutEffect, useRef } from 'react'
 
-interface ZoomableProps {
+export interface CanvasBoardZoomableProps {
   scale: number
   setScale: (scale: number) => void
   children: (props: { ref: ForwardedRef<SVGSVGElement> }) => React.ReactNode
 }
 
-export function Zoomable(props: ZoomableProps): JSX.Element {
+export function CanvasBoardZoomable(props: CanvasBoardZoomableProps): JSX.Element {
   const svgRef = useRef<null | SVGSVGElement>(null)
 
   useLayoutEffect(() => {
@@ -29,4 +29,4 @@ export function Zoomable(props: ZoomableProps): JSX.Element {
   return <>{props.children({ ref: svgRef })}</>
 }
 
-Zoomable.displayName = 'Zoomable'
+CanvasBoardZoomable.displayName = 'CanvasBoardZoomable'
