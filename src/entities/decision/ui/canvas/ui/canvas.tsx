@@ -23,7 +23,7 @@ export default function Canvas(props: CanvasProps): JSX.Element {
             return (
               <AbstractCanvasBoard
                 {...dragProps}
-                ref={setRefs(props.canvasState.setCanvasBoardRef, zoomProps.ref)}
+                ref={setRefs(props.canvasState.canvasBoardRef.set, zoomProps.ref)}
                 style={{ touchAction: 'none' }}
               >
                 <PaintingPanel
@@ -37,7 +37,7 @@ export default function Canvas(props: CanvasProps): JSX.Element {
                   scale={props.canvasState.scale.value}
                   translate={props.canvasState.translate.value}
                   className={clsx('mainPaintingPanel')}
-                  ref={props.canvasState.setPaintingPanelRef}
+                  ref={setRefs(props.canvasState.paintingPanelRef.set)}
                 >
                   {props.children}
                 </PaintingPanel>

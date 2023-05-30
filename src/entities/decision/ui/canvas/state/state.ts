@@ -27,9 +27,9 @@ export class CanvasState implements Emitterable<Emitter<Events>> {
 
   decision: Decision
 
-  paintingPanelRef: { current: null | SVGGElement }
+  canvasBoardRef: Prop<'setCanvasBoardRef', null | SVGSVGElement>
 
-  canvasBoardRef: { current: null | SVGSVGElement }
+  paintingPanelRef: Prop<'setPaintingPanelRef', null | SVGGElement>
 
   editingLink: EditingLinkProp<'setEditingLink'>
 
@@ -37,29 +37,13 @@ export class CanvasState implements Emitterable<Emitter<Events>> {
 
   constructor(props: DecisionStateProps) {
     this.emitter = new Emitter<Events>()
-    this.paintingPanelRef = { current: null }
-    this.canvasBoardRef = { current: null }
+    this.paintingPanelRef = new Prop<'setPaintingPanelRef', null | SVGGElement>('setPaintingPanelRef', null, this)
+    this.canvasBoardRef = new Prop<'setCanvasBoardRef', null | SVGSVGElement>('setCanvasBoardRef', null, this)
     this.decision = props.decision
     this.selected = new SelectedProp('setSelected', [], this)
     this.pointStates = new PointStatesProp('setItemStates', props.decision.data, this)
     this.translate = new PositionProp('setTranslate', props.translate, this)
     this.scale = new Prop('setScale', props.scale, this)
     this.editingLink = new EditingLinkProp('setEditingLink', null, this)
-
-    this.emitter.on('setPaintingPanelRef', (event) => {
-      this.paintingPanelRef.current = event.element
-    })
-    this.emitter.on('setCanvasBoardRef', (event) => {
-      this.canvasBoardRef.current = event.element
-    })
-  }
-
-  setPaintingPanelRef = (element: SVGGElement): void => {
-    if (element === this.paintingPanelRef.current) return
-    this.emitter.emit('setPaintingPanelRef', { element })
-  }
-  setCanvasBoardRef = (element: SVGSVGElement): void => {
-    if (element === this.paintingPanelRef.current) return
-    this.emitter.emit('setCanvasBoardRef', { element })
   }
 }

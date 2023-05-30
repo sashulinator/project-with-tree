@@ -81,7 +81,7 @@ export default function ChartLink(props: ChartLinkProps): JSX.Element | null {
   function sourcePosition(state: PointState | undefined): Position | null {
     if (!state) {
       if (mousePosition === null) return null
-      const rect = (props.decisionState.paintingPanelRef.current as SVGGElement).getBoundingClientRect()
+      const rect = (props.decisionState.paintingPanelRef.value as SVGGElement).getBoundingClientRect()
       return {
         x: mousePosition.x + rect.x,
         y: mousePosition.y + rect.y,
