@@ -144,14 +144,14 @@ export const decision: Decision = {
       y: 500,
     },
     {
-      type: 'OFFER',
+      type: 'MAIN',
       id: 'id9',
       name: 'Предложить тариф мега',
       x: 450,
       y: 700,
     },
     {
-      type: 'OFFER',
+      type: 'MAIN',
       id: 'id10',
       name: 'Предложить тариф максимальный',
       x: 450,

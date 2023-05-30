@@ -1,8 +1,8 @@
 import { CanvasState, isLinkedNode } from '~/entities/decision'
+import { EventNames, Events, PointState } from '~/entities/point'
 import { Any, Id } from '~/utils/core'
 import { get } from '~/utils/dictionary'
-import { EmitterableProp } from '~/utils/emitterable'
-import { EventNames as PointEventNames, Events as PointEvents, PointState } from '~/widgets/chart-item'
+import { EmitterableProp } from '~/utils/emitter'
 
 import { DecisionItem } from '../../../types/decision-item'
 
@@ -14,8 +14,8 @@ export class PointStatesProp<N extends string> extends EmitterableProp<N, PointS
       if (isLinkedNode(item)) return acc
       const state = new PointState(item, { position: item, id: item.id, ruleList: item.rules })
       acc[item.id] = state
-      state.emitter.on('*', (eventName, event) =>
-        canvasState.emitter.emit(eventName as Any, { pointStateId: item.id, ...(event as Any) })
+      state.emitter.onAll((eventName, event) =>
+        canvasState.emitter.emit(eventName as any, { pointStateId: item.id, ...(event as Any) })
       )
       return acc
     }, {})
@@ -23,7 +23,7 @@ export class PointStatesProp<N extends string> extends EmitterableProp<N, PointS
     super(eventName, pointStates, canvasState)
   }
 
-  emit = <E extends PointEventNames>(id: Id, eventName: E, event: PointEvents[E]): void => {
+  emit = <E extends EventNames>(id: Id, eventName: E, event: Events[E]): void => {
     const state = this.get(id)
     state.emitter.emit(eventName, event)
   }

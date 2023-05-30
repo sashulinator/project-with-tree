@@ -1,8 +1,9 @@
 import { CanvasState } from '~/entities/decision'
 import { PointNode } from '~/entities/point'
+import { PointState } from '~/entities/point/state'
 import ChartItem from '~/ui/chart-item'
-import { PointState } from '~/widgets/chart-item'
-import Selectable from '~/widgets/chart-item/features/selectable'
+import { useUpdate } from '~/utils/hooks'
+import CanvasItemSelectable from '~/widgets/canvas/ui/item/features/selectable'
 
 export interface ItemNodeProps {
   state: PointState
@@ -11,11 +12,17 @@ export interface ItemNodeProps {
 }
 
 export default function Node(props: ItemNodeProps): JSX.Element {
+  useUpdate(subscribeOnUpdates)
+
   return (
-    <Selectable id={props.state.id} chartState={props.decisionState}>
+    <CanvasItemSelectable id={props.state.id} chartState={props.decisionState}>
       {(selectableProps): JSX.Element => {
         return (
           <ChartItem
+            isDrag={(event): boolean => {
+              const target = event.event.target as HTMLElement
+              return target.classList.contains('name')
+            }}
             onMouseDown={(e): void => selectableProps.selectOnMouseAction(e)}
             state={props.state}
             chartState={props.decisionState}
@@ -31,8 +38,14 @@ export default function Node(props: ItemNodeProps): JSX.Element {
           </ChartItem>
         )
       }}
-    </Selectable>
+    </CanvasItemSelectable>
   )
+
+  function subscribeOnUpdates(update: () => void): void {
+    props.state.emitter.on('setPosition', update)
+    props.state.emitter.on('setWidth', update)
+    props.state.emitter.on('setHeight', update)
+  }
 }
 
 interface FactoryProps {
@@ -52,13 +65,13 @@ function Factory(props: FactoryProps): JSX.Element {
   return (
     <>
       <rect
-        width={props.state.width}
-        height={props.state.height}
+        width={props.state.width.value}
+        height={props.state.height.value}
         fill={'yellow'}
         stroke='black'
         strokeWidth={props.isSelected ? '1px' : 0}
       />
-      <text x={20} y={props.state.height - 30}>
+      <text x={20} y={props.state.height.value - 30}>
         {props.state.point.id}
       </text>
     </>

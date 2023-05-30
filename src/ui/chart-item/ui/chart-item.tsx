@@ -1,7 +1,10 @@
+import { FullGestureState } from '@use-gesture/react'
+
 import React from 'react'
 
+import { PointState } from '~/entities/point/state'
 import { fns } from '~/utils/function'
-import WChartItem, { Draggable, PointState } from '~/widgets/chart-item'
+import WChartItem, { CanvasItemDraggable } from '~/widgets/canvas/ui/item'
 
 export interface ChartItemProps extends React.HTMLAttributes<SVGGElement> {
   children: React.ReactNode
@@ -10,16 +13,25 @@ export interface ChartItemProps extends React.HTMLAttributes<SVGGElement> {
     scale: number
     // setItemState: (id: Id, eventName: string, redoEvent: Dictionary<Any>, undoEvent: Dictionary<Any>) => void
   }
+  isDrag: (
+    event: Omit<FullGestureState<'drag'>, 'event'> & {
+      event: PointerEvent | MouseEvent | TouchEvent | KeyboardEvent
+    }
+  ) => boolean
 }
 
 export default function ChartItem(props: ChartItemProps): JSX.Element {
-  const { chartState, ...chartItemProps } = props
+  const { chartState, state, isDrag, ...chartItemProps } = props
   return (
-    <Draggable chartState={chartState} state={props.state}>
+    <CanvasItemDraggable isDrag={isDrag} boardState={chartState} itemState={props.state}>
       {(draggableProps): JSX.Element => {
         return (
           <WChartItem
             {...chartItemProps}
+            height={state.height.value}
+            width={state.width.value}
+            y={state.position.value.y}
+            x={state.position.value.x}
             style={{ touchAction: 'none' }}
             onKeyDown={fns(draggableProps.onKeyDown, chartItemProps.onKeyDown)}
             onKeyUp={fns(draggableProps.onKeyUp, chartItemProps.onKeyUp)}
@@ -31,6 +43,6 @@ export default function ChartItem(props: ChartItemProps): JSX.Element {
           />
         )
       }}
-    </Draggable>
+    </CanvasItemDraggable>
   )
 }

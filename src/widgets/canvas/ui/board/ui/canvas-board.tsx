@@ -1,5 +1,5 @@
 import clsx from 'clsx'
-import { ForwardedRef, forwardRef, useRef } from 'react'
+import { ForwardedRef, forwardRef } from 'react'
 
 import { setRefs } from '~/utils/react'
 
@@ -8,19 +8,8 @@ export interface CanvasBoardProps extends React.SVGAttributes<SVGSVGElement> {
 }
 
 function CanvasBoardComponent(props: CanvasBoardProps, ref: ForwardedRef<SVGSVGElement>): JSX.Element {
-  const { children, ...svgProps } = props
-  const svgRef = useRef<null | SVGSVGElement>(null)
-
   return (
-    <svg
-      width='100%'
-      height='100%'
-      {...svgProps}
-      className={clsx('CanvasBoard', props.className)}
-      ref={setRefs(svgRef, ref)}
-    >
-      {children}
-    </svg>
+    <svg width='100%' height='100%' {...props} className={clsx('CanvasBoard', props.className)} ref={setRefs(ref)} />
   )
 }
 

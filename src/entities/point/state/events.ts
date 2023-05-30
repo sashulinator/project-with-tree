@@ -1,11 +1,7 @@
 import { Rule } from '~/entities/rule'
 
-import { Position } from '../../../widgets/chart-item/types/position'
+import { CanvasItemEvents } from '../../../widgets/canvas/ui/item'
 
-export type Events = {
-  setPosition: { value: Position }
-  setRef: { element: HTMLElement }
-  setWidth: { width: number }
-  setHeight: { height: number }
+export type Events = CanvasItemEvents & {
   setRuleList: { link: Rule }
 }

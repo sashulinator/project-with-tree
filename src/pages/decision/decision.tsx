@@ -9,7 +9,8 @@ import { useEventListener } from '~/utils/hooks'
 
 import { listenHistory } from './lib/listen-history'
 import Preview from './ui/decision-editor'
-import PropsPanel from './ui/props-panel'
+
+// import PropsPanel from './ui/props-panel'
 
 export default function DecisionPage(): JSX.Element {
   // const { id } = useParams()
@@ -18,7 +19,7 @@ export default function DecisionPage(): JSX.Element {
   const history = useMemo(() => new ActionHistory(), [])
 
   useEffect(() => {
-    state.emitter.on('*', (eventName, events) => listenHistory(history, state, eventName, events))
+    state.emitter.onAll((eventName, events) => listenHistory(history, state, eventName, events))
   }, [])
 
   useEventListener('keydown', (e) => {
@@ -35,7 +36,7 @@ export default function DecisionPage(): JSX.Element {
     <main className='DecisionPage'>
       {/* <TreePanel test={undefined} /> */}
       <Preview chartState={state} history={history} />
-      <PropsPanel chartState={state} />
+      {/* <PropsPanel chartState={state} /> */}
     </main>
   )
 

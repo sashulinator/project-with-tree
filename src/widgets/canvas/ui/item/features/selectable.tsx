@@ -2,9 +2,9 @@ import React, { useEffect, useState } from 'react'
 
 import { Id } from '~/utils/core'
 
-import { CanvasState } from '../../../entities/decision/ui/canvas/state'
+import { CanvasState } from '../../../../../entities/decision/ui/canvas/state'
 
-export interface SelectableProps {
+export interface CanvasItemSelectableProps {
   children: (props: {
     isSelected: boolean
     selectOnMouseAction(e: React.MouseEvent<SVGGElement>): void
@@ -13,7 +13,7 @@ export interface SelectableProps {
   chartState: CanvasState
 }
 
-export default function Selectable(props: SelectableProps): JSX.Element {
+export default function CanvasItemSelectable(props: CanvasItemSelectableProps): JSX.Element {
   const [isSelected, select] = useState(false)
 
   useEffect(() => {

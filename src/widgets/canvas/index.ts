@@ -1,11 +1,20 @@
-export { default } from './ui/canvas'
+// common
 
-export * from './feature/draggable'
-export * from './feature/zoomable'
-
+export * from './types/position'
 export * from './lib/get-transform'
+export * from './state/position-prop'
 
-export * from './ui/canvas'
-export { default as PaintingPanel } from './ui/painting-panel'
+// canvas-board
+export { default } from './ui/board/ui/canvas-board'
 
-export * from './types/translate'
+export * from './ui/board/feature/draggable'
+export * from './ui/board/feature/zoomable'
+
+export * from './ui/board/ui/canvas-board'
+
+// painting-panel
+export { default as PaintingPanel } from './ui/painting-panel/ui/painting-panel'
+
+// item
+export { default as CanvasItem } from './ui/item'
+export * from './ui/item'

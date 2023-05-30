@@ -1,7 +1,7 @@
 import { Rule } from '~/entities/rule'
 import { Id, assertDefined } from '~/utils/core'
 import { remove } from '~/utils/dictionary'
-import { EmitterableProp } from '~/utils/emitterable'
+import { EmitterableProp } from '~/utils/emitter'
 
 export class RuleListProp<N extends string> extends EmitterableProp<N, Rule[]> {
   get = (id: Id): Rule => {

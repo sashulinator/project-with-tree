@@ -1,10 +1,10 @@
 import { Any } from '@react-spring/types'
 
+import { PointState } from '~/entities/point'
 import { Rule } from '~/entities/rule'
 import { Id } from '~/utils/core'
 import { Dictionary } from '~/utils/dictionary'
-import { Translate } from '~/widgets/canvas'
-import { PointState, Position } from '~/widgets/chart-item'
+import { Position } from '~/widgets/canvas'
 
 import { Link } from '../types/link'
 
@@ -12,7 +12,7 @@ export type Events = {
   setScale: { value: number }
   setPaintingPanelRef: { element: SVGGElement }
   setCanvasBoardRef: { element: SVGSVGElement }
-  setTranslate: { value: Translate }
+  setTranslate: { value: Position }
   setSelected: { value: Id[] }
   setRuleList: { value: Rule[] }
   setItemStates: { value: Record<Id, PointState> }

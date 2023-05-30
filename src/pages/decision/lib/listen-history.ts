@@ -34,6 +34,7 @@ export function listenHistory<E extends EventNames>(
       const redoEvent: Events['setPosition'] & { isHistory: true } = { ...e, isHistory: true }
       state.pointStates.emit(e.pointStateId, eventName, redoEvent)
     }
+
     const undo = (): void => {
       const undoEvent: Events['setPosition'] & { isHistory: true } = {
         pointStateId: e.pointStateId,

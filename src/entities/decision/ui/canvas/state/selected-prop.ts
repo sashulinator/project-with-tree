@@ -1,5 +1,5 @@
 import { Id } from '~/utils/core'
-import { EmitterableProp } from '~/utils/emitterable'
+import { EmitterableProp } from '~/utils/emitter'
 
 export class SelectedProp<N extends string> extends EmitterableProp<N, Id[]> {
   // Select

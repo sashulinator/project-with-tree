@@ -2,7 +2,7 @@ import clsx from 'clsx'
 
 import { useUpdate } from '~/utils/hooks/update'
 import { setRefs } from '~/utils/react/set-refs'
-import AbstractCanvasBoard, { Draggable, PaintingPanel, Zoomable } from '~/widgets/canvas'
+import AbstractCanvasBoard, { CanvasBoardDraggable, CanvasBoardZoomable, PaintingPanel } from '~/widgets/canvas'
 
 import { CanvasState } from '../state'
 
@@ -16,9 +16,9 @@ export default function Canvas(props: CanvasProps): JSX.Element {
   useUpdate(updateOnEvents)
 
   return (
-    <Zoomable setScale={props.canvasState.setScale} scale={props.canvasState.scale}>
+    <CanvasBoardZoomable setScale={props.canvasState.setScale} scale={props.canvasState.scale}>
       {(zoomProps): JSX.Element => (
-        <Draggable state={props.canvasState}>
+        <CanvasBoardDraggable state={props.canvasState}>
           {(dragProps): JSX.Element => {
             return (
               <AbstractCanvasBoard
@@ -28,14 +28,14 @@ export default function Canvas(props: CanvasProps): JSX.Element {
               >
                 <PaintingPanel
                   scale={props.canvasState.scale}
-                  translate={props.canvasState.translate}
+                  translate={props.canvasState.translate.value}
                   className={clsx('abovePaintingPanel')}
                 >
                   {props.abovePaintingPanelChildren}
                 </PaintingPanel>
                 <PaintingPanel
                   scale={props.canvasState.scale}
-                  translate={props.canvasState.translate}
+                  translate={props.canvasState.translate.value}
                   className={clsx('mainPaintingPanel')}
                   ref={props.canvasState.setPaintingPanelRef}
                 >
@@ -44,9 +44,9 @@ export default function Canvas(props: CanvasProps): JSX.Element {
               </AbstractCanvasBoard>
             )
           }}
-        </Draggable>
+        </CanvasBoardDraggable>
       )}
-    </Zoomable>
+    </CanvasBoardZoomable>
   )
 
   // Private
