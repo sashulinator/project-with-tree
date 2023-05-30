@@ -21,7 +21,7 @@ export class CanvasState implements Emitterable<Emitter<Events>> {
 
   translate: PositionProp<'setTranslate'>
 
-  _scale: Prop<'setScale', number>
+  scale: Prop<'setScale', number>
 
   pointStates: PointStatesProp<'setItemStates'>
 
@@ -43,7 +43,7 @@ export class CanvasState implements Emitterable<Emitter<Events>> {
     this.selected = new SelectedProp('setSelected', [], this)
     this.pointStates = new PointStatesProp('setItemStates', props.decision.data, this)
     this.translate = new PositionProp('setTranslate', props.translate, this)
-    this._scale = new Prop('setScale', props.scale, this)
+    this.scale = new Prop('setScale', props.scale, this)
     this.editingLink = new EditingLinkProp('setEditingLink', null, this)
 
     this.emitter.on('setPaintingPanelRef', (event) => {
@@ -52,15 +52,6 @@ export class CanvasState implements Emitterable<Emitter<Events>> {
     this.emitter.on('setCanvasBoardRef', (event) => {
       this.canvasBoardRef.current = event.element
     })
-  }
-
-  // 💉 scale get/set
-
-  get scale(): number {
-    return this._scale.value
-  }
-  setScale = (scale: number): void => {
-    this._scale.value = scale
   }
 
   setPaintingPanelRef = (element: SVGGElement): void => {

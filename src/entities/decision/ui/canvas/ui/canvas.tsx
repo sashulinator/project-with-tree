@@ -16,7 +16,7 @@ export default function Canvas(props: CanvasProps): JSX.Element {
   useUpdate(updateOnEvents)
 
   return (
-    <CanvasBoardZoomable setScale={props.canvasState.setScale} scale={props.canvasState.scale}>
+    <CanvasBoardZoomable setScale={props.canvasState.scale.set} scale={props.canvasState.scale.value}>
       {(zoomProps): JSX.Element => (
         <CanvasBoardDraggable state={props.canvasState}>
           {(dragProps): JSX.Element => {
@@ -27,14 +27,14 @@ export default function Canvas(props: CanvasProps): JSX.Element {
                 style={{ touchAction: 'none' }}
               >
                 <PaintingPanel
-                  scale={props.canvasState.scale}
+                  scale={props.canvasState.scale.value}
                   translate={props.canvasState.translate.value}
                   className={clsx('abovePaintingPanel')}
                 >
                   {props.abovePaintingPanelChildren}
                 </PaintingPanel>
                 <PaintingPanel
-                  scale={props.canvasState.scale}
+                  scale={props.canvasState.scale.value}
                   translate={props.canvasState.translate.value}
                   className={clsx('mainPaintingPanel')}
                   ref={props.canvasState.setPaintingPanelRef}

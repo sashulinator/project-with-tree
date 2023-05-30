@@ -26,7 +26,7 @@ export default function Node(props: ItemNodeProps): JSX.Element {
             height={props.state.height.value}
             position={props.state.position.value}
             lastPosition={props.state.position.last}
-            scale={props.decisionState.scale}
+            scale={props.decisionState.scale.value}
             onMouseDown={(e): void => selectableProps.selectOnMouseAction(e)}
             onMove={props.state.position.move}
             isDrag={isDrag}
