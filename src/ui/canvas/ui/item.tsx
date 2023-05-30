@@ -4,18 +4,19 @@ import { Any } from '~/utils/core'
 import { fns } from '~/utils/function'
 import AbstractCanvasItem, { CanvasItemDraggable, CanvasItemState, IsDragEvent } from '~/widgets/canvas/ui/item'
 
-export interface ChartItemProps extends React.HTMLAttributes<SVGGElement> {
+export interface CanvasItemProps extends React.HTMLAttributes<SVGGElement> {
   children: React.ReactNode
   state: CanvasItemState<Any>
   scale: number
+  move: (x: number, y: number, isLast: boolean) => void
   isDrag: (event: IsDragEvent) => boolean
 }
 
-export default function CanvasItem(props: ChartItemProps): JSX.Element {
-  const { scale, state, isDrag, ...chartItemProps } = props
+export default function CanvasItem(props: CanvasItemProps): JSX.Element {
+  const { scale, state, isDrag, move, ...chartItemProps } = props
 
   return (
-    <CanvasItemDraggable isDrag={isDrag} scale={scale} itemState={props.state}>
+    <CanvasItemDraggable lastPosition={state.position.last} move={move} isDrag={isDrag} scale={scale}>
       {(draggableProps): JSX.Element => {
         return (
           <AbstractCanvasItem

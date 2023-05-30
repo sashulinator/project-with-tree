@@ -21,6 +21,7 @@ export default function Node(props: ItemNodeProps): JSX.Element {
       {(selectableProps): JSX.Element => {
         return (
           <CanvasItem
+            move={props.state.position.move}
             isDrag={isDrag}
             onMouseDown={(e): void => selectableProps.selectOnMouseAction(e)}
             state={props.state}
