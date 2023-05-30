@@ -1,5 +1,6 @@
 export * from './is/element'
 export * from './is/is-element-focusable'
+export * from './get-offset-in-element'
 export * from './types/side'
 export * from './css-variable'
 export * from './get-window'
