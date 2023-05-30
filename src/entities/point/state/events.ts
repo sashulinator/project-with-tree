@@ -6,6 +6,6 @@ export type Events = {
   setPosition: { value: Position }
   setRef: { element: HTMLElement }
   setWidth: { width: number }
-  setHeight: { height: number }
+  setHeight: { value: number }
   setRuleList: { link: Rule }
 }

@@ -1,6 +1,5 @@
-import mitt, { Emitter } from 'mitt'
-
 import { Decision } from '~/entities/decision'
+import { Emitter } from '~/lib/emitter/emitter'
 import { Emitterable, EmitterableProp as Prop } from '~/utils/emitter'
 import { Translate } from '~/widgets/canvas'
 
@@ -37,7 +36,7 @@ export class CanvasState implements Emitterable<Emitter<Events>> {
   // 👷 Constructor
 
   constructor(props: DecisionStateProps) {
-    this.emitter = mitt()
+    this.emitter = new Emitter<Events>()
     this.paintingPanelRef = { current: null }
     this.canvasBoardRef = { current: null }
     this.decision = props.decision

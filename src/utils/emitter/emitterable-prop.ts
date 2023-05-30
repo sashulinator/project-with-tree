@@ -1,10 +1,11 @@
 import { Any } from '../core'
+import { Emitter } from './types/emitter'
 import { Emitterable } from './types/emitterable'
 
 export class EmitterableProp<
   TEventName extends string,
   TValue,
-  TEmitterable extends Emitterable<Any> = Emitterable<Any>
+  TEmitterable extends Emitterable<Emitter<Any>> = Emitterable<Emitter<Any>>
 > {
   private _value: TValue
 

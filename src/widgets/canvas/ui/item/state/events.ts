@@ -1,3 +1,3 @@
 export type Events = {
-  setHeight: { height: number }
+  setHeight: { value: number }
 }

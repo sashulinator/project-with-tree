@@ -18,7 +18,7 @@ export default function DecisionPage(): JSX.Element {
   const history = useMemo(() => new ActionHistory(), [])
 
   useEffect(() => {
-    state.emitter.on('*', (eventName, events) => listenHistory(history, state, eventName, events))
+    state.emitter.onAll((eventName, events) => listenHistory(history, state, eventName, events))
   }, [])
 
   useEventListener('keydown', (e) => {
