@@ -1,8 +1,11 @@
+import { FullGestureState } from '@use-gesture/react'
+
 import { CanvasState } from '~/entities/decision'
 import { PointNode } from '~/entities/point'
 import { PointState } from '~/entities/point/state'
-import ChartItem from '~/ui/chart-item'
+import CanvasItem from '~/ui/canvas'
 import { useUpdate } from '~/utils/hooks'
+import { IsDragEvent } from '~/widgets/canvas'
 import CanvasItemSelectable from '~/widgets/canvas/ui/item/features/selectable'
 
 export interface ItemNodeProps {
@@ -18,14 +21,15 @@ export default function Node(props: ItemNodeProps): JSX.Element {
     <CanvasItemSelectable id={props.state.id} chartState={props.decisionState}>
       {(selectableProps): JSX.Element => {
         return (
-          <ChartItem
-            isDrag={(event): boolean => {
-              const target = event.event.target as HTMLElement
-              return target.classList.contains('name')
-            }}
+          <CanvasItem
+            width={props.state.width.value}
+            height={props.state.height.value}
+            position={props.state.position.value}
+            lastPosition={props.state.position.last}
+            scale={props.decisionState.scale.value}
             onMouseDown={(e): void => selectableProps.selectOnMouseAction(e)}
-            state={props.state}
-            chartState={props.decisionState}
+            onMove={props.state.position.move}
+            isDrag={isDrag}
           >
             {
               <Factory
@@ -35,16 +39,23 @@ export default function Node(props: ItemNodeProps): JSX.Element {
                 isSelected={selectableProps.isSelected}
               />
             }
-          </ChartItem>
+          </CanvasItem>
         )
       }}
     </CanvasItemSelectable>
   )
 
+  // Private
+
   function subscribeOnUpdates(update: () => void): void {
     props.state.emitter.on('setPosition', update)
     props.state.emitter.on('setWidth', update)
     props.state.emitter.on('setHeight', update)
+  }
+
+  function isDrag(event: IsDragEvent): boolean {
+    const target = event.event.target as HTMLElement
+    return target.classList.contains('name')
   }
 }
 

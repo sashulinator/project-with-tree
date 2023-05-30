@@ -81,7 +81,7 @@ export default function ChartLink(props: ChartLinkProps): JSX.Element | null {
   function sourcePosition(state: PointState | undefined): Position | null {
     if (!state) {
       if (mousePosition === null) return null
-      const rect = (props.decisionState.paintingPanelRef.current as SVGGElement).getBoundingClientRect()
+      const rect = (props.decisionState.paintingPanelRef.value as SVGGElement).getBoundingClientRect()
       return {
         x: mousePosition.x + rect.x,
         y: mousePosition.y + rect.y,
@@ -98,8 +98,8 @@ export default function ChartLink(props: ChartLinkProps): JSX.Element | null {
       x: state.position.value.x + state.width.value,
       y:
         state.position.value.y +
-        srcLinkOffset.top / props.decisionState.scale +
-        srcLinkRect.height / 2 / props.decisionState.scale,
+        srcLinkOffset.top / props.decisionState.scale.value +
+        srcLinkRect.height / 2 / props.decisionState.scale.value,
     }
   }
 
@@ -107,8 +107,8 @@ export default function ChartLink(props: ChartLinkProps): JSX.Element | null {
     if (!state) {
       if (mousePosition === null) return null
       return {
-        x: (mousePosition.x - props.decisionState.translate.value.x) / props.decisionState.scale,
-        y: (mousePosition.y - props.decisionState.translate.value.y) / props.decisionState.scale,
+        x: (mousePosition.x - props.decisionState.translate.value.x) / props.decisionState.scale.value,
+        y: (mousePosition.y - props.decisionState.translate.value.y) / props.decisionState.scale.value,
       }
     }
 
