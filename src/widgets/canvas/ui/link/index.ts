@@ -1,2 +1,2 @@
-export { default } from './ui/link'
-export * from './ui/link'
+export { default } from './ui/depricated-link'
+export * from './ui/depricated-link'

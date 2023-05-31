@@ -6,7 +6,8 @@ import { Id, assertDefined } from '~/utils/core'
 import { getOffsetInElement } from '~/utils/dom'
 import { emptyFn } from '~/utils/function/empty-fn'
 import { useForceUpdate, useOnMount, useUpdate } from '~/utils/hooks'
-import { Link, Position } from '~/widgets/canvas'
+import { Position } from '~/widgets/canvas'
+import Link from '~/widgets/canvas/ui/link/ui/depricated-link'
 
 export interface ChartLinkProps {
   decisionState: CanvasState
