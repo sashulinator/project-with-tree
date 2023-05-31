@@ -4,27 +4,37 @@ import { Position } from '../../../types/position'
 
 export interface CanvasItemSelectableProps {
   enabled: boolean
+  canvasTranslate: Position
+  scale: number
   children: (props: { mousePosition: null | Position }) => React.ReactNode
 }
 
 export default function MousePositionable(props: CanvasItemSelectableProps): JSX.Element {
-  const [mousePosition, setMousePosition] = useState<null | Position>(null)
+  const [clientPosition, setClientPosition] = useState<null | Position>(null)
 
   useEffect(subscribeOnMouseMove, [props.enabled])
 
-  return <>{props.children({ mousePosition })}</>
+  return <>{props.children({ mousePosition: getMousePosition() })}</>
 
   // Private
+
+  function getMousePosition(): Position | null {
+    if (clientPosition === null) return null
+    return {
+      x: (clientPosition.x - props.canvasTranslate.x) / props.scale,
+      y: (clientPosition.y - props.canvasTranslate.y) / props.scale,
+    }
+  }
 
   function subscribeOnMouseMove(): (() => void) | void {
     function updateMousePosition(ev: MouseEvent): void {
       const x = Math.round(ev.clientX)
       const y = Math.round(ev.clientY)
-      setMousePosition({ x, y })
+      setClientPosition({ x, y })
     }
 
     if (!props.enabled) {
-      setMousePosition(null)
+      setClientPosition(null)
       return
     }
 
