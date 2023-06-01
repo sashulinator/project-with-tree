@@ -5,12 +5,12 @@ export interface Theme {
   bgSecondary: ToStringable
   color: ToStringable
   primary: ToStringable
-  primaryAlpha04: ToStringable
   caretColor: ToStringable
   selectionColor: ToStringable
   selectionBg: ToStringable
+  outlineColor: ToStringable
 
   /* Misc */
-  input_borderColor: ToStringable
+  borderColor: ToStringable
   errorColor: ToStringable
 }
