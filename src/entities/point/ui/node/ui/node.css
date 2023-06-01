@@ -38,7 +38,12 @@
   word-break: break-all;
 }
 
-.PointNode > .links > * {
+.PointNode > .add-rule {
+  padding: 0.5rem;
+}
+
+/* RuleSet */
+.PointNode > .links > .RuleSet {
   display: flex;
   text-align: left;
   justify-content: space-between;
@@ -50,6 +55,8 @@
   width: 100%;
 }
 
-.PointNode > .add-rule {
-  padding: 0.5rem;
+.PointNode > .links > .RuleSet > .addLink {
+  top: 50%;
+  right: -14px;
+  transform: translateY(-50%);
 }

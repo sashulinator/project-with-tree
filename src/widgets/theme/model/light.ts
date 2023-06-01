@@ -1,6 +1,7 @@
 import clr from 'color'
 
 import { DecisionPointCSSVars } from '~/entities/point'
+import { NodeRuleSetCSSVars } from '~/entities/point/widgets/node/ui/rule-set/types/css-vars'
 import { ButtonCSSVars } from '~/ui/button/types/css-vars'
 import { ListCSSVars } from '~/ui/list/types/css-vars'
 import { TextInputCSSVars } from '~/ui/text-input/types/css-vars'
@@ -66,43 +67,54 @@ const button_outlineColor = primary.alpha(0.5)
 /* DecisionPoint */
 const decisionPoint_bg = bgSecondary
 
-export const light: Theme & TextInputCSSVars & ListCSSVars & ButtonCSSVars & DecisionPointCSSVars = {
-  ...common,
-  primary,
-  primaryAlpha04,
-  color,
-  bg,
-  bgSecondary,
-  caretColor,
-  selectionColor,
-  selectionBg,
+/* NodeRuleSet */
+const nodeRuleSet_bg = bg.darken(0.3)
+const nodeRuleSet_bg__hovered = primary
+const nodeRuleSet_bg__editing = primary
 
-  errorColor,
-  input_borderColor,
+export const light: Theme & TextInputCSSVars & ListCSSVars & ButtonCSSVars & DecisionPointCSSVars & NodeRuleSetCSSVars =
+  {
+    ...common,
+    primary,
+    primaryAlpha04,
+    color,
+    bg,
+    bgSecondary,
+    caretColor,
+    selectionColor,
+    selectionBg,
 
-  // TextInput
-  textInput_color,
-  textInput_bg,
-  textInput_borderColor,
-  textInput_outlineColor,
-  textInput_outlineColor__focused,
-  textInput_bg__hovered,
-  textInput_borderColor__hovered,
-  textInput_borderColor__focused,
-  textInput_bg__error,
-  textInput_outlineColor__error,
-  textInput_borderColor__error,
-  textInput_bg__disabled,
-  textInput_borderColor__disabled,
-  textInput_color__disabled,
+    errorColor,
+    input_borderColor,
 
-  // List
-  listItem_bg__hovered,
-  listItem_bg__selected,
+    // TextInput
+    textInput_color,
+    textInput_bg,
+    textInput_borderColor,
+    textInput_outlineColor,
+    textInput_outlineColor__focused,
+    textInput_bg__hovered,
+    textInput_borderColor__hovered,
+    textInput_borderColor__focused,
+    textInput_bg__error,
+    textInput_outlineColor__error,
+    textInput_borderColor__error,
+    textInput_bg__disabled,
+    textInput_borderColor__disabled,
+    textInput_color__disabled,
 
-  // Button
-  button_outlineColor,
+    // List
+    listItem_bg__hovered,
+    listItem_bg__selected,
 
-  // DecisionPoint
-  decisionPoint_bg,
-}
+    // Button
+    button_outlineColor,
+
+    // DecisionPoint
+    decisionPoint_bg,
+
+    /* NodeRule */
+    nodeRuleSet_bg,
+    nodeRuleSet_bg__hovered,
+    nodeRuleSet_bg__editing,
+  }
