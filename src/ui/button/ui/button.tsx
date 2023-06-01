@@ -8,13 +8,14 @@ import { Dictionary } from '~/utils/dictionary'
 export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement>, Dictionary<Any> {
   className?: undefined | string
   height?: 's' | 'm' | 'l'
+  variant?: 'outlined' | 'primary'
 }
 
 export default function Button(props: ButtonProps): JSX.Element {
-  const { height = 'm' } = props
+  const { height = 'm', variant = 'primary' } = props
 
   return (
-    <button className={c('ui-Button', `--${height}`, props.className)} {...props}>
+    <button {...props} className={c('ui-Button', `--${height}`, `--${variant}`, props.className)}>
       {props.children}
     </button>
   )

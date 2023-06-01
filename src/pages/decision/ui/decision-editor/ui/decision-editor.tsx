@@ -25,10 +25,11 @@ export default function DecisionEditor(props: DecisionEditorProps): JSX.Element 
       abovePaintingPanelChildren={
         props.chartState.editingLink.value && (
           <Link
+            sourceState={props.chartState.editingLink.value.sourceState}
+            targetState={props.chartState.editingLink.value.targetState}
             targetOffset={null}
             sourceOffset={getSourceOffset()}
             decisionState={props.chartState}
-            {...props.chartState.editingLink.value}
           />
         )
       }

@@ -7,6 +7,8 @@ import uniqid from 'uniqid'
 
 import { CanvasState } from '~/entities/decision'
 import { PointState } from '~/entities/point/state'
+import { RuleSet } from '~/entities/point/widgets/node/ui/rule-set'
+import Button from '~/ui/button'
 import { Any, Id, Offset } from '~/utils/core'
 import { getOffsetInElement, observeResize } from '~/utils/dom'
 import { keyListener } from '~/utils/dom/key-listener'
@@ -61,29 +63,29 @@ export default function Node(props: NodeProps): JSX.Element {
             )
           }
           return (
-            <div key={rule.id} data-id={rule.id}>
+            <RuleSet
+              key={rule.id}
+              id={rule.id}
+              isLinked={Boolean(rule.pointId)}
+              onAddLink={(): void => {
+                props.decisionState.editingLink.add({
+                  rule,
+                  sourceState: props.state,
+                  sourceRuleId: rule.id,
+                })
+              }}
+            >
               {rule.name}
-              {!rule.pointId && (
-                <button
-                  onClick={(e): void => {
-                    e.stopPropagation()
-                    props.decisionState.editingLink.add({
-                      rule,
-                      sourceState: props.state,
-                      sourceRuleId: rule.id,
-                    })
-                  }}
-                >
-                  +
-                </button>
-              )}
               {renderedLink}
-            </div>
+            </RuleSet>
           )
         })}
       </div>
       <div className='add-rule'>
-        <button
+        <Button
+          height='s'
+          variant='outlined'
+          className='uppercase'
           onClick={(): void =>
             props.state.ruleList.add({
               id: uniqid(),
@@ -93,7 +95,7 @@ export default function Node(props: NodeProps): JSX.Element {
           }
         >
           add rule
-        </button>
+        </Button>
       </div>
     </div>
   )

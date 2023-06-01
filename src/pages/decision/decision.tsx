@@ -6,6 +6,7 @@ import { CanvasState } from '~/entities/decision'
 import { decision } from '~/entities/decision/mock'
 import { ActionHistory } from '~/utils/action-history'
 import { useEventListener } from '~/utils/hooks'
+import { ThemeDropdown } from '~/widgets/theme'
 
 import { listenHistory } from './lib/listen-history'
 import Preview from './ui/decision-editor'
@@ -34,6 +35,7 @@ export default function DecisionPage(): JSX.Element {
 
   return (
     <main className='DecisionPage'>
+      <ThemeDropdown />
       {/* <TreePanel test={undefined} /> */}
       <Preview chartState={state} history={history} />
       {/* <PropsPanel chartState={state} /> */}

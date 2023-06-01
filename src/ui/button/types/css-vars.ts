@@ -11,4 +11,11 @@ export interface ButtonCSSVars {
   button_outlineWidth?: ToStringable
 
   button_transition?: ToStringable
+
+  button_color?: ToStringable
+  button_bg?: ToStringable
+  button_border?: ToStringable
+
+  button_color__outlined?: ToStringable
+  button_border__outlined?: ToStringable
 }
