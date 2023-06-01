@@ -1,14 +1,13 @@
 .ui-Button {
   outline: 0;
+  border-width: 2px;
+  border-style: solid;
+  border-color: var(--button_border);
   height: var(--button_height);
-  background-color: transparent;
-  border: 0;
-  color: var(--color);
+  color: var(--button_color);
   border-radius: 0.4rem;
   color: var(--button_color, white);
-  /* border-radius: 0.4rem; */
-  /* font-weight: bolder; */
-  background-color: var(--primary);
+  background-color: var(--button_bg);
   transition: var(--button_transition);
 }
 
@@ -23,4 +22,10 @@
 
 .ui-Button.--l {
   height: var(--button_height__l);
+}
+
+.ui-Button.--outlined {
+  color: var(--button_color__outlined);
+  border-color: var(--button_border__outlined);
+  background: transparent;
 }

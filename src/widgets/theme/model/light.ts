@@ -61,8 +61,13 @@ const textInput_color__disabled = textInput_color.lighten(1.5)
 const listItem_bg__hovered = bg
 const listItem_bg__selected = bg.darken(0.05)
 
-/* TextInput */
+/* Button */
 const button_outlineColor = primary.alpha(0.5)
+const button_color = clr('#fff')
+const button_bg = primary
+const button_border = primary
+const button_color__outlined = primary
+const button_border__outlined = primary
 
 /* DecisionPoint */
 const decisionPoint_bg = bgSecondary
@@ -109,6 +114,11 @@ export const light: Theme & TextInputCSSVars & ListCSSVars & ButtonCSSVars & Dec
 
     // Button
     button_outlineColor,
+    button_color,
+    button_bg,
+    button_border,
+    button_color__outlined,
+    button_border__outlined,
 
     // DecisionPoint
     decisionPoint_bg,

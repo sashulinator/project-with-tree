@@ -84,6 +84,8 @@ export default function Node(props: NodeProps): JSX.Element {
       <div className='add-rule'>
         <Button
           height='s'
+          variant='outlined'
+          className='uppercase'
           onClick={(): void =>
             props.state.ruleList.add({
               id: uniqid(),
