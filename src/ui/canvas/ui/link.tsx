@@ -5,14 +5,13 @@ import { Position } from '~/widgets/canvas'
 import MousePositionable from '~/widgets/canvas/ui/link/features/mouse-positionable'
 import AbstractLink from '~/widgets/canvas/ui/link/ui/link'
 
-interface LinkProps extends React.HTMLAttributes<SVGPathElement> {
+export interface LinkProps extends React.HTMLAttributes<SVGPathElement> {
   scale: number
   canvasTranslate: Position
-  sourcePosition: Position | null
-  targetPosition: Position | null
+  sourcePosition: Position | undefined
+  targetPosition: Position | undefined
   sourceOffset: Offset | null
   targetOffset: Offset | null
-  children: React.ReactNode
 }
 
 /**
@@ -31,9 +30,7 @@ export default function Link(props: LinkProps): JSX.Element {
             {...pathProps}
             sourcePosition={getPosition(sourcePosition, sourceOffset) || mousePosition}
             targetPosition={getPosition(targetPosition, targetOffset) || mousePosition}
-          >
-            {props.children}
-          </AbstractLink>
+          />
         )
       }}
     </MousePositionable>
@@ -41,8 +38,8 @@ export default function Link(props: LinkProps): JSX.Element {
 
   // Private
 
-  function getPosition(position: Position | null, offset: Offset | null): Position | null {
-    if (position === null) return null
+  function getPosition(position: Position | undefined, offset: Offset | null): Position | null {
+    if (position === undefined) return null
     offset = offset || { left: 0, top: 0 }
     const x = position.x + offset.left
     const y = position.y + offset.top
