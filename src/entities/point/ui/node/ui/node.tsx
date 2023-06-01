@@ -7,12 +7,13 @@ import uniqid from 'uniqid'
 
 import { CanvasState } from '~/entities/decision'
 import { PointState } from '~/entities/point/state'
-import { Any } from '~/utils/core'
-import { observeResize } from '~/utils/dom'
+import { Any, Id, Offset } from '~/utils/core'
+import { getOffsetInElement, observeResize } from '~/utils/dom'
 import { keyListener } from '~/utils/dom/key-listener'
 import { useUpdate } from '~/utils/hooks'
 import { setRefs } from '~/utils/react'
-import ChartLink from '~/widgets/chart-link'
+
+import Link from '../../link'
 
 export interface NodeProps {
   state: PointState
@@ -47,12 +48,14 @@ export default function Node(props: NodeProps): JSX.Element {
           if (rule.pointId) {
             const targetState = props.decisionState.pointStates.get(rule.pointId)
             renderedLink = createPortal(
-              <ChartLink
+              <Link
                 key={rule.id}
+                sourceOffset={getSourceOffset(rule.id)}
+                targetOffset={{ top: targetState.height.value / 2, left: 0 }}
                 decisionState={props.decisionState}
-                id={rule.id}
                 sourceState={props.state}
                 targetState={targetState}
+                onClick={(): void => props.state?.ruleList.removeLink(rule.id)}
               />,
               props.linksContainer
             )
@@ -67,6 +70,7 @@ export default function Node(props: NodeProps): JSX.Element {
                     props.decisionState.editingLink.add({
                       rule,
                       sourceState: props.state,
+                      sourceRuleId: rule.id,
                     })
                   }}
                 >
@@ -95,6 +99,17 @@ export default function Node(props: NodeProps): JSX.Element {
   )
 
   // Private
+
+  function getSourceOffset(id: Id): Offset {
+    const srcLinkEl = props.state?.ref.value?.querySelector(`[data-id="${id.toString()}"]`) as HTMLElement
+    const srcLinkOffset = getOffsetInElement(srcLinkEl, props.state?.ref.value)
+    const srcLinkRect = srcLinkEl?.getBoundingClientRect() || { height: 0 }
+
+    return {
+      left: props.state.width.value,
+      top: (srcLinkOffset.top + srcLinkRect.height / 2) / props.decisionState.scale.value,
+    }
+  }
 
   function finishLinkEditing(): void {
     if (!props.decisionState.editingLink.value) return

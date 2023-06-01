@@ -18,7 +18,16 @@ function LinkComponent(props: LinkProps, ref: ForwardedRef<SVGPathElement>): JSX
 
   if (!path) return null
 
-  return <path d={path} strokeWidth={2} {...pathProp} className={clsx('CanvasLink', props.className)} ref={ref} />
+  return (
+    <path
+      d={path}
+      strokeWidth={2}
+      stroke='black'
+      {...pathProp}
+      className={clsx('CanvasLink', props.className)}
+      ref={ref}
+    />
+  )
 
   // Private
 
