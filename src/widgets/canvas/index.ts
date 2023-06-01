@@ -18,3 +18,7 @@ export { default as PaintingPanel } from './ui/painting-panel/ui/painting-panel'
 // item
 export { default as CanvasItem } from './ui/item'
 export * from './ui/item'
+
+// item
+export { default as Link } from './ui/link'
+export * from './ui/link'
