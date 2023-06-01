@@ -4,7 +4,7 @@ import { DecisionPointCSSVars } from '~/entities/point'
 import { NodeRuleSetCSSVars } from '~/entities/point/widgets/node/ui/rule-set/types/css-vars'
 import { ButtonCSSVars } from '~/ui/button/types/css-vars'
 import { ListCSSVars } from '~/ui/list/types/css-vars'
-import { TextInputCSSVars } from '~/ui/text-input/types/css-vars'
+import { TextInputCSSVars } from '~/widgets/text-input/types/css-vars'
 
 import { Theme } from '../types/theme'
 import { common } from './common'

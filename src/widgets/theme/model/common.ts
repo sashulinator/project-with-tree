@@ -1,5 +1,5 @@
 import { ButtonCSSVars } from '~/ui/button/types/css-vars'
-import { TextInputCSSVars } from '~/ui/text-input/types/css-vars'
+import { TextInputCSSVars } from '~/widgets/text-input/types/css-vars'
 
 // Input
 const input_height = '36px'
