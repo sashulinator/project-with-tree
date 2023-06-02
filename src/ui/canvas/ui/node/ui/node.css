@@ -1,0 +1,9 @@
+.ui-Node > .contaner {
+  padding: 20px;
+  border: 1px solid black;
+}
+
+.ui-Node > .contaner > .title {
+  border: 1px solid black;
+  margin-bottom: 10px;
+}

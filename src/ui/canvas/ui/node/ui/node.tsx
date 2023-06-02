@@ -1,3 +1,5 @@
+import './node.css'
+
 import clsx from 'clsx'
 import React, { useRef } from 'react'
 
@@ -14,7 +16,7 @@ export interface NodeProps extends React.HTMLAttributes<SVGForeignObjectElement>
   scale: number
   children: React.ReactNode
   onMove: (x: number, y: number, isLast: boolean) => void
-  isDrag: (event: IsDragEvent) => boolean
+  isDrag?: (event: IsDragEvent) => boolean
 }
 
 /**
@@ -23,21 +25,26 @@ export interface NodeProps extends React.HTMLAttributes<SVGForeignObjectElement>
  * 2. Перетаскивание по тайтлу
  * 3. Стили позиционирования
  */
-export default function Node(props: NodeProps): JSX.Element {
+export function Node(props: NodeProps): JSX.Element {
+  const { nodeTitle, ...foreignObjectProps } = props
+
   const titleRef = useRef(null)
 
   return (
-    <Item className={clsx(props.className, 'ui-Node')} {...props} isDrag={isDrag}>
+    <Item className={clsx(props.className, 'ui-Node')} {...foreignObjectProps} isDrag={isDrag}>
       <div className={clsx('contaner')}>
         <div className={clsx('title')} ref={titleRef}>
-          {props.nodeTitle}
+          {nodeTitle}
         </div>
+        {props.children}
       </div>
     </Item>
   )
 
   function isDrag(event: IsDragEvent): boolean {
-    return event.event.target === titleRef.current
+    const isDraggable = event.event.target === titleRef.current
+    if (isDraggable) props.isDrag?.(event)
+    return isDraggable
   }
 }
 

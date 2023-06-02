@@ -28,6 +28,9 @@ export default function Nav(): JSX.Element {
         <ol>
           <Link to={routes.speechBubble.path}>Balloon</Link>
         </ol>
+        <ol>
+          <Link to={routes.uiNode.path}>Node</Link>
+        </ol>
       </ul>
     </nav>
   )
