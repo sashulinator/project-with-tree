@@ -14,7 +14,7 @@ interface DecisionEditorProps {
 }
 
 export default function DecisionEditor(props: DecisionEditorProps): JSX.Element {
-  const itemStates = Object.values(props.chartState.pointStates.value)
+  const itemStates = Object.values(props.chartState.itemStates.value)
   const [linksContainer, setLinksContainer] = useState<SVGGElement | null>()
 
   useUpdate(updateOnEvents)

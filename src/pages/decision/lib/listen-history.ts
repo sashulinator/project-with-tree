@@ -27,12 +27,12 @@ export function listenHistory<E extends EventNames>(
 
     if (!e.isLast) return
 
-    const pointState = state.pointStates.get(e.pointStateId)
+    const pointState = state.itemStates.get(e.pointStateId)
     const previousValue = pointState.position.previous
 
     const redo = (): void => {
       const redoEvent: Events['setPosition'] & { isHistory: true } = { ...e, isHistory: true }
-      state.pointStates.emit(e.pointStateId, eventName, redoEvent)
+      state.itemStates.emit(e.pointStateId, eventName, redoEvent)
     }
 
     const undo = (): void => {
@@ -43,7 +43,7 @@ export function listenHistory<E extends EventNames>(
         isHistory: true,
       }
       // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-      state.pointStates.emit(e.pointStateId, eventName, undoEvent as Any)
+      state.itemStates.emit(e.pointStateId, eventName, undoEvent as Any)
     }
 
     history.add(redo, undo)

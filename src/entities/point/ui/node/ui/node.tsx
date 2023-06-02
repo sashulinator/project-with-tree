@@ -48,7 +48,7 @@ export default function Node(props: NodeProps): JSX.Element {
         {props.state.ruleList.value?.map((rule) => {
           let renderedLink: Any = null
           if (rule.pointId) {
-            const targetState = props.decisionState.pointStates.get(rule.pointId)
+            const targetState = props.decisionState.itemStates.get(rule.pointId)
             renderedLink = createPortal(
               <Link
                 key={rule.id}

@@ -20,7 +20,7 @@ export class CanvasState extends BoardState<Events> {
 
   selected: SelectedProp<'setSelected'>
 
-  pointStates: PointStatesProp<'setItemStates'>
+  itemStates: PointStatesProp<'setItemStates'>
 
   decision: Decision
 
@@ -43,7 +43,7 @@ export class CanvasState extends BoardState<Events> {
 
     this.selected = new SelectedProp('setSelected', [], this)
 
-    this.pointStates = new PointStatesProp('setItemStates', props.decision.data, this)
+    this.itemStates = new PointStatesProp('setItemStates', props.decision.data, this)
 
     this.editingLink = new EditingLinkProp('setEditingLink', null, this)
   }
