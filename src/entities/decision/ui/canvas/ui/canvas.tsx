@@ -2,7 +2,7 @@ import clsx from 'clsx'
 
 import { useUpdate } from '~/utils/hooks/update'
 import { setRefs } from '~/utils/react/set-refs'
-import AbstractCanvasBoard, { CanvasBoardDraggable, CanvasBoardZoomable, PaintingPanel } from '~/widgets/canvas'
+import { Board as AbstractBoard, BoardDraggable, BoardZoomable, PaintingPanel } from '~/widgets/canvas'
 
 import { CanvasState } from '../state'
 
@@ -16,12 +16,12 @@ export default function Canvas(props: CanvasProps): JSX.Element {
   useUpdate(updateOnEvents)
 
   return (
-    <CanvasBoardZoomable setScale={props.canvasState.scale.set} scale={props.canvasState.scale.value}>
+    <BoardZoomable setScale={props.canvasState.scale.set} scale={props.canvasState.scale.value}>
       {(zoomProps): JSX.Element => (
-        <CanvasBoardDraggable state={props.canvasState}>
+        <BoardDraggable state={props.canvasState}>
           {(dragProps): JSX.Element => {
             return (
-              <AbstractCanvasBoard
+              <AbstractBoard
                 {...dragProps}
                 ref={setRefs(props.canvasState.canvasBoardRef.set, zoomProps.ref)}
                 style={{ touchAction: 'none' }}
@@ -41,12 +41,12 @@ export default function Canvas(props: CanvasProps): JSX.Element {
                 >
                   {props.children}
                 </PaintingPanel>
-              </AbstractCanvasBoard>
+              </AbstractBoard>
             )
           }}
-        </CanvasBoardDraggable>
+        </BoardDraggable>
       )}
-    </CanvasBoardZoomable>
+    </BoardZoomable>
   )
 
   // Private

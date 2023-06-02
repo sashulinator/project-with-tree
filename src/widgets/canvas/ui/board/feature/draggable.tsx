@@ -6,12 +6,12 @@ import React from 'react'
 
 import { CanvasState } from '~/entities/decision'
 
-export interface CanvasBoardDraggableProps {
+export interface BoardDraggableProps {
   state: CanvasState
   children: (props: ReactDOMAttributes) => React.ReactNode
 }
 
-export function CanvasBoardDraggable(props: CanvasBoardDraggableProps): JSX.Element {
+export function BoardDraggable(props: BoardDraggableProps): JSX.Element {
   const { children } = props
 
   const dragBind = useDrag((event): void => {
@@ -26,4 +26,4 @@ export function CanvasBoardDraggable(props: CanvasBoardDraggableProps): JSX.Elem
   return <>{children({ ...dragBind() })}</>
 }
 
-CanvasBoardDraggable.displayName = 'CanvasBoardDraggable'
+BoardDraggable.displayName = 'CanvasBoardDraggable'

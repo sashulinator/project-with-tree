@@ -24,7 +24,7 @@ function LinkComponent(props: LinkProps, ref: ForwardedRef<SVGPathElement>): JSX
       strokeWidth={2}
       stroke='black'
       {...pathProp}
-      className={clsx('CanvasLink', props.className)}
+      className={clsx(props.className, 'a-CanvasLink')}
       ref={ref}
     />
   )
@@ -39,5 +39,5 @@ function LinkComponent(props: LinkProps, ref: ForwardedRef<SVGPathElement>): JSX
 }
 
 const Link = forwardRef(LinkComponent)
-Link.displayName = 'CanvasLink'
+Link.displayName = 'AbstarctCanvasLink'
 export default Link

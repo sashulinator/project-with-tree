@@ -8,7 +8,7 @@ export interface CanvasBoardZoomableProps {
   children: (props: { ref: ForwardedRef<SVGSVGElement> }) => React.ReactNode
 }
 
-export function CanvasBoardZoomable(props: CanvasBoardZoomableProps): JSX.Element {
+export function BoardZoomable(props: CanvasBoardZoomableProps): JSX.Element {
   const svgRef = useRef<null | SVGSVGElement>(null)
 
   useLayoutEffect(subscribeOnWheel, [props.scale])
@@ -32,4 +32,4 @@ export function CanvasBoardZoomable(props: CanvasBoardZoomableProps): JSX.Elemen
   }
 }
 
-CanvasBoardZoomable.displayName = 'CanvasBoardZoomable'
+BoardZoomable.displayName = 'CanvasBoardZoomable'

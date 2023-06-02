@@ -10,9 +10,9 @@ export interface ItemProps extends React.HTMLAttributes<SVGForeignObjectElement>
 }
 
 /**
- * Отрисовывает  HTMLElement'ы в заданных координатах
+ * Отрисовывает HTMLElement'ы в заданных координатах
  */
-function CanvasItemComponent(props: ItemProps, ref: ForwardedRef<SVGForeignObjectElement>): JSX.Element {
+function ItemComponent(props: ItemProps, ref: ForwardedRef<SVGForeignObjectElement>): JSX.Element {
   return (
     <foreignObject
       {...props}
@@ -25,6 +25,6 @@ function CanvasItemComponent(props: ItemProps, ref: ForwardedRef<SVGForeignObjec
   )
 }
 
-const CanvasItem = forwardRef(CanvasItemComponent)
-CanvasItem.displayName = 'CanvasItem'
-export default CanvasItem
+const Item = forwardRef(ItemComponent)
+Item.displayName = 'AbstractCanvasItem'
+export { Item }
