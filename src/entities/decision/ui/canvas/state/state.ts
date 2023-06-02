@@ -1,7 +1,8 @@
 import { Decision } from '~/entities/decision'
 import { Emitter } from '~/lib/emitter/emitter'
-import { Emitterable, EmitterableProp as Prop } from '~/utils/emitter'
-import { Position, PositionProp } from '~/widgets/canvas'
+import { EmitterableProp as Prop } from '~/utils/emitter'
+import { Position } from '~/widgets/canvas'
+import { BoardState } from '~/widgets/canvas/ui/board/state'
 
 import { EditingLinkProp } from './editing-link-prop'
 import { Events } from './events'
@@ -14,14 +15,10 @@ export interface DecisionStateProps {
   decision: Decision
 }
 
-export class CanvasState implements Emitterable<Emitter<Events>> {
+export class CanvasState extends BoardState<Events> {
   emitter: Emitter<Events>
 
   selected: SelectedProp<'setSelected'>
-
-  translate: PositionProp<'setTranslate'>
-
-  scale: Prop<'setScale', number>
 
   pointStates: PointStatesProp<'setItemStates'>
 
@@ -33,17 +30,21 @@ export class CanvasState implements Emitterable<Emitter<Events>> {
 
   editingLink: EditingLinkProp<'setEditingLink'>
 
-  // 👷 Constructor
-
   constructor(props: DecisionStateProps) {
+    super(props)
+
     this.emitter = new Emitter<Events>()
+
     this.paintingPanelRef = new Prop<'setPaintingPanelRef', null | SVGGElement>('setPaintingPanelRef', null, this)
+
     this.canvasBoardRef = new Prop<'setCanvasBoardRef', null | SVGSVGElement>('setCanvasBoardRef', null, this)
+
     this.decision = props.decision
+
     this.selected = new SelectedProp('setSelected', [], this)
+
     this.pointStates = new PointStatesProp('setItemStates', props.decision.data, this)
-    this.translate = new PositionProp('setTranslate', props.translate, this)
-    this.scale = new Prop('setScale', props.scale, this)
+
     this.editingLink = new EditingLinkProp('setEditingLink', null, this)
   }
 }
