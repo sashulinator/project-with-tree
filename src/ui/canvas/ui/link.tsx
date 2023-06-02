@@ -19,7 +19,7 @@ export interface LinkProps extends React.HTMLAttributes<SVGPathElement> {
  * если один из них не передан то возьмет позицию курсора
  * если оба не переданы то ничего не отрисует
  */
-export default function Link(props: LinkProps): JSX.Element {
+export function Link(props: LinkProps): JSX.Element {
   const { sourcePosition, targetPosition, sourceOffset, targetOffset, scale, canvasTranslate, ...pathProps } = props
 
   return (

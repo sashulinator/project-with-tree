@@ -1,7 +1,7 @@
 import { CanvasState } from '~/entities/decision'
 import { PointNode } from '~/entities/point'
 import { PointState } from '~/entities/point/state'
-import { CanvasItem } from '~/ui/canvas'
+import { Item } from '~/ui/canvas'
 import { useUpdate } from '~/utils/hooks'
 import { IsDragEvent } from '~/widgets/canvas'
 import CanvasItemSelectable from '~/widgets/canvas/ui/item/features/selectable'
@@ -19,7 +19,7 @@ export default function Node(props: ItemNodeProps): JSX.Element {
     <CanvasItemSelectable id={props.state.id} chartState={props.decisionState}>
       {(selectableProps): JSX.Element => {
         return (
-          <CanvasItem
+          <Item
             width={props.state.width.value}
             height={props.state.height.value}
             position={props.state.position.value}
@@ -37,7 +37,7 @@ export default function Node(props: ItemNodeProps): JSX.Element {
                 isSelected={selectableProps.isSelected}
               />
             }
-          </CanvasItem>
+          </Item>
         )
       }}
     </CanvasItemSelectable>
