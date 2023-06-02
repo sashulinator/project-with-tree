@@ -19,7 +19,7 @@ export interface CanvasItemProps extends React.HTMLAttributes<SVGGElement> {
  * Элемент Canvas с фичами
  * 1. Перетаскивание
  */
-export default function CanvasItem(props: CanvasItemProps): JSX.Element {
+export function CanvasItem(props: CanvasItemProps): JSX.Element {
   const { scale, position, lastPosition, isDrag, onMove: move, ...chartItemProps } = props
 
   return (

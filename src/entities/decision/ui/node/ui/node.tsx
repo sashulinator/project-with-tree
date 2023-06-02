@@ -1,9 +1,7 @@
-import { FullGestureState } from '@use-gesture/react'
-
 import { CanvasState } from '~/entities/decision'
 import { PointNode } from '~/entities/point'
 import { PointState } from '~/entities/point/state'
-import CanvasItem from '~/ui/canvas'
+import { CanvasItem } from '~/ui/canvas'
 import { useUpdate } from '~/utils/hooks'
 import { IsDragEvent } from '~/widgets/canvas'
 import CanvasItemSelectable from '~/widgets/canvas/ui/item/features/selectable'
