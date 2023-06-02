@@ -39,12 +39,9 @@ export default function DecisionEditor(props: DecisionEditorProps): JSX.Element 
         <>
           {itemStates.map((state) => {
             return (
-              <Node
-                linksContainer={linksContainer}
-                key={state.point.id}
-                state={state}
-                decisionState={props.chartState}
-              />
+              <Node key={state.point.id} state={state} decisionState={props.chartState}>
+                Test
+              </Node>
             )
           })}
         </>
