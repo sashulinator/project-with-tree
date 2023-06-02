@@ -19,9 +19,9 @@ export type Fail = 0
  * // see in `tst` folder
  * ```
  */
-export declare function check<Type, Expect, Outcome extends Boolean>(
-  debug?: Type
-): Equals<Equals<Type, Expect>, Outcome>
+export function check<Type, Expect, Outcome extends Boolean>(debug?: Type): Equals<Equals<Type, Expect>, Outcome> {
+  return undefined as any
+}
 
 /**
  * Validates a batch of [[check]]
