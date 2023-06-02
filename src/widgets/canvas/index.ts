@@ -2,7 +2,7 @@ export * from './lib/get-transform'
 
 export * from './state/position-prop'
 
-export * from './types/position'
+export * from '~/utils/core/types/position'
 
 export * from './ui/board'
 export * from './ui/painting-panel'
