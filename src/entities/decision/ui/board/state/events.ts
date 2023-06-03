@@ -6,7 +6,7 @@ import { Id } from '~/utils/core'
 import { Dictionary } from '~/utils/dictionary'
 import { Position } from '~/widgets/canvas'
 
-import { Link } from '../types/link'
+import { Link } from '../../canvas/types/link'
 
 export type Events = {
   setScale: { value: number }

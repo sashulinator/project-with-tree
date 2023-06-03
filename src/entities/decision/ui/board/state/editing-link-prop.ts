@@ -2,7 +2,7 @@ import { Rule } from '~/entities/rule'
 import { Id, assertDefined } from '~/utils/core'
 import { EmitterableProp } from '~/utils/emitter'
 
-import { Link } from '../types/link'
+import { Link } from '../../canvas/types/link'
 
 export class EditingLinkProp<N extends string> extends EmitterableProp<N, Link | null> {
   add = (editingLink: Link): void => {

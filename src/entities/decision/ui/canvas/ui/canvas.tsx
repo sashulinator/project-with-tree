@@ -4,7 +4,7 @@ import { useUpdate } from '~/utils/hooks/update'
 import { setRefs } from '~/utils/react/set-refs'
 import { Board as AbstractBoard, BoardDraggable, BoardZoomable, PaintingPanel } from '~/widgets/canvas'
 
-import { CanvasState } from '../state'
+import { CanvasState } from '../../board/state'
 
 export interface CanvasProps {
   canvasState: CanvasState
