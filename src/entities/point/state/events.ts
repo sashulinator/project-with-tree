@@ -1,7 +1,7 @@
 import { Rule } from '~/entities/rule'
 
-import { CanvasItemEvents } from '../../../widgets/canvas/ui/item'
+import { ItemEvents } from '../../../widgets/canvas/ui/item'
 
-export type Events = CanvasItemEvents & {
+export type Events = ItemEvents & {
   setRuleList: { link: Rule }
 }

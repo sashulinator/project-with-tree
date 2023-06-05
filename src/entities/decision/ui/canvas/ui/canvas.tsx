@@ -2,9 +2,9 @@ import clsx from 'clsx'
 
 import { useUpdate } from '~/utils/hooks/update'
 import { setRefs } from '~/utils/react/set-refs'
-import AbstractCanvasBoard, { CanvasBoardDraggable, CanvasBoardZoomable, PaintingPanel } from '~/widgets/canvas'
+import { Board as AbstractBoard, BoardDraggable, BoardZoomable, PaintingPanel } from '~/widgets/canvas'
 
-import { CanvasState } from '../state'
+import { CanvasState } from '../../board/state'
 
 export interface CanvasProps {
   canvasState: CanvasState
@@ -16,16 +16,20 @@ export default function Canvas(props: CanvasProps): JSX.Element {
   useUpdate(updateOnEvents)
 
   return (
-    <CanvasBoardZoomable setScale={props.canvasState.scale.set} scale={props.canvasState.scale.value}>
+    <BoardZoomable setScale={props.canvasState.scale.set} scale={props.canvasState.scale.value}>
       {(zoomProps): JSX.Element => (
-        <CanvasBoardDraggable state={props.canvasState}>
+        <BoardDraggable
+          lastTranslate={props.canvasState.translate.last}
+          onTranslate={(...args): void => props.canvasState.translate.move(...args)}
+        >
           {(dragProps): JSX.Element => {
             return (
-              <AbstractCanvasBoard
+              <AbstractBoard
                 {...dragProps}
                 ref={setRefs(props.canvasState.canvasBoardRef.set, zoomProps.ref)}
                 style={{ touchAction: 'none' }}
               >
+                {<>{console.log(props.canvasState.translate.value)}</>}
                 <PaintingPanel
                   scale={props.canvasState.scale.value}
                   translate={props.canvasState.translate.value}
@@ -41,12 +45,12 @@ export default function Canvas(props: CanvasProps): JSX.Element {
                 >
                   {props.children}
                 </PaintingPanel>
-              </AbstractCanvasBoard>
+              </AbstractBoard>
             )
           }}
-        </CanvasBoardDraggable>
+        </BoardDraggable>
       )}
-    </CanvasBoardZoomable>
+    </BoardZoomable>
   )
 
   // Private

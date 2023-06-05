@@ -27,7 +27,7 @@ export interface CanvasItemDraggableProps {
   ) => React.ReactNode
 }
 
-export function CanvasItemDraggable(props: CanvasItemDraggableProps): JSX.Element {
+export function ItemDraggable(props: CanvasItemDraggableProps): JSX.Element {
   const dragBind = useDrag((event): void => {
     event.event.stopPropagation()
     if (!props.isDrag(event)) return
@@ -45,3 +45,5 @@ export function CanvasItemDraggable(props: CanvasItemDraggableProps): JSX.Elemen
 
   return <>{props.children(dragBind())}</>
 }
+
+ItemDraggable.displayName = 'CanvasItemDraggable'

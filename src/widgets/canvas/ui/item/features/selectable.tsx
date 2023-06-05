@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 
 import { Id } from '~/utils/core'
 
-import { CanvasState } from '../../../../../entities/decision/ui/canvas/state'
+import { CanvasState } from '../../../../../entities/decision/ui/board/state'
 
 export interface CanvasItemSelectableProps {
   children: (props: {
@@ -13,7 +13,10 @@ export interface CanvasItemSelectableProps {
   chartState: CanvasState
 }
 
-export default function CanvasItemSelectable(props: CanvasItemSelectableProps): JSX.Element {
+/**
+ * @deprecated
+ */
+export default function ItemSelectable(props: CanvasItemSelectableProps): JSX.Element {
   const [isSelected, select] = useState(false)
 
   useEffect(() => {
@@ -34,3 +37,5 @@ export default function CanvasItemSelectable(props: CanvasItemSelectableProps): 
     }
   }
 }
+
+ItemSelectable.displayName = 'CanvasItemSelectable'

@@ -1,3 +1,4 @@
+import clsx from 'clsx'
 import { ForwardedRef, forwardRef } from 'react'
 
 export interface ItemProps extends React.HTMLAttributes<SVGForeignObjectElement> {
@@ -9,16 +10,21 @@ export interface ItemProps extends React.HTMLAttributes<SVGForeignObjectElement>
 }
 
 /**
- * Отрисовывает  HTMLElement'ы в заданных координатах
+ * Отрисовывает HTMLElement'ы в заданных координатах
  */
-function CanvasItemComponent(props: ItemProps, ref: ForwardedRef<SVGForeignObjectElement>): JSX.Element {
+function ItemComponent(props: ItemProps, ref: ForwardedRef<SVGForeignObjectElement>): JSX.Element {
   return (
-    <foreignObject {...props} ref={ref} style={{ overflow: 'visible', ...props.style }}>
+    <foreignObject
+      {...props}
+      className={clsx(props.className, 'a-CanvasItem')}
+      style={{ overflow: 'visible', ...props.style }}
+      ref={ref}
+    >
       {props.children}
     </foreignObject>
   )
 }
 
-const CanvasItem = forwardRef(CanvasItemComponent)
-CanvasItem.displayName = 'CanvasItem'
-export default CanvasItem
+const Item = forwardRef(ItemComponent)
+Item.displayName = 'AbstractCanvasItem'
+export { Item }

@@ -9,7 +9,7 @@ export interface CanvasItemSelectableProps {
   children: (props: { mousePosition: null | Position }) => React.ReactNode
 }
 
-export default function MousePositionable(props: CanvasItemSelectableProps): JSX.Element {
+export default function LinkMousePositionable(props: CanvasItemSelectableProps): JSX.Element {
   const [clientPosition, setClientPosition] = useState<null | Position>(null)
 
   useEffect(subscribeOnMouseMove, [props.enabled])
@@ -47,3 +47,5 @@ export default function MousePositionable(props: CanvasItemSelectableProps): JSX
     }
   }
 }
+
+LinkMousePositionable.displayName = 'CanvasLinkMousePositionable'

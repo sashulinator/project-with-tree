@@ -1,1 +1,1 @@
-export { default } from './ui/painting-panel'
+export * from './ui/painting-panel'

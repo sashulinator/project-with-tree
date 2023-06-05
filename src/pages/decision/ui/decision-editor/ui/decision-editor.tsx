@@ -1,29 +1,26 @@
-import { useState } from 'react'
-
-import { CanvasState as ChartState, Node } from '~/entities/decision'
-import Canvas from '~/entities/decision/ui/canvas/ui/canvas'
+import { CanvasState, Node } from '~/entities/decision'
 import Link from '~/entities/point/ui/link'
+import { Board } from '~/ui/canvas/ui/board'
 import { ActionHistory } from '~/utils/action-history'
 import { Offset } from '~/utils/core'
 import { getOffsetInElement } from '~/utils/dom'
 import { useUpdate } from '~/utils/hooks'
+import { PaintingPanel } from '~/widgets/canvas'
 
 interface DecisionEditorProps {
-  chartState: ChartState
+  chartState: CanvasState
   history: ActionHistory
 }
 
 export default function DecisionEditor(props: DecisionEditorProps): JSX.Element {
-  const itemStates = Object.values(props.chartState.pointStates.value)
-  const [linksContainer, setLinksContainer] = useState<SVGGElement | null>()
+  const itemStates = Object.values(props.chartState.itemStates.value)
 
   useUpdate(updateOnEvents)
 
   return (
-    <Canvas
-      canvasState={props.chartState}
-      abovePaintingPanelChildren={
-        props.chartState.editingLink.value && (
+    <Board state={props.chartState}>
+      <PaintingPanel translate={props.chartState.translate.value} scale={props.chartState.scale.value}>
+        {props.chartState.editingLink.value && (
           <Link
             sourceState={props.chartState.editingLink.value.sourceState}
             targetState={props.chartState.editingLink.value.targetState}
@@ -31,25 +28,18 @@ export default function DecisionEditor(props: DecisionEditorProps): JSX.Element 
             sourceOffset={getSourceOffset()}
             decisionState={props.chartState}
           />
-        )
-      }
-    >
-      <g ref={setLinksContainer} style={{ outline: 'none' }}></g>
-      {linksContainer && (
-        <>
-          {itemStates.map((state) => {
-            return (
-              <Node
-                linksContainer={linksContainer}
-                key={state.point.id}
-                state={state}
-                decisionState={props.chartState}
-              />
-            )
-          })}
-        </>
-      )}
-    </Canvas>
+        )}
+      </PaintingPanel>
+      <PaintingPanel translate={props.chartState.translate.value} scale={props.chartState.scale.value}>
+        {itemStates.map((state) => {
+          return (
+            <Node key={state.point.id} state={state} decisionState={props.chartState}>
+              Test
+            </Node>
+          )
+        })}
+      </PaintingPanel>
+    </Board>
   )
 
   // Private

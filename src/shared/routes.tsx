@@ -10,6 +10,7 @@ import Balloon from '~/pages/ui/balloon'
 import CalloutPage from '~/pages/ui/callout'
 import DropdownPage from '~/pages/ui/dropdown'
 import ListPage from '~/pages/ui/list'
+import UINodePage from '~/pages/ui/node'
 import PopoverPage from '~/pages/ui/popover'
 import TextInputPage from '~/pages/ui/text-input'
 import Header from '~/ui/header'
@@ -40,13 +41,31 @@ export const routes = {
     path: '/decision/:id',
     element: <DecisionPage />,
   },
-  textInput: {
+  // Other
+  settings: {
     Header,
     Nav,
-    getName: () => 'TextInput',
-    path: '/ui/text-input',
-    element: <TextInputPage />,
+    getName: () => 'Settings',
+    path: '/settings',
+    element: <SettingsPage />,
   },
+  login: {
+    // Header,
+    // Nav,
+    getName: () => 'Login',
+    path: '/login',
+    element: <LoginPage />,
+  },
+  notFound: {
+    Header,
+    Nav,
+    getName: () => 'notFound',
+    path: '*',
+    element: <NotFoundPage />,
+  },
+
+  /* UI */
+
   callout: {
     Header,
     Nav,
@@ -82,27 +101,19 @@ export const routes = {
     path: '/ui/speech-bubble',
     element: <Balloon />,
   },
-  // Other
-  settings: {
+  textInput: {
     Header,
     Nav,
-    getName: () => 'Settings',
-    path: '/settings',
-    element: <SettingsPage />,
+    getName: () => 'TextInput',
+    path: '/ui/text-input',
+    element: <TextInputPage />,
   },
-  login: {
-    // Header,
-    // Nav,
-    getName: () => 'Login',
-    path: '/login',
-    element: <LoginPage />,
-  },
-  notFound: {
+  uiNode: {
     Header,
     Nav,
-    getName: () => 'notFound',
-    path: '*',
-    element: <NotFoundPage />,
+    getName: () => 'Node',
+    path: '/ui/node',
+    element: <UINodePage />,
   },
 } as const
 

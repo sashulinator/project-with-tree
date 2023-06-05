@@ -1,5 +1,4 @@
 import { Decision } from '../types/decision'
-import { decision } from './decision'
 
 export const decisionWithLinked: Decision = {
   version: '2.0',
@@ -20,18 +19,6 @@ export const decisionWithLinked: Decision = {
       name: 'Oleg',
       x: 300,
       y: 0,
-    },
-    {
-      id: '333',
-      linkedId: decision.id,
-      overwritten: [
-        {
-          id: 'id2',
-          name: 'Petya Osipov',
-          x: 0,
-          y: 300,
-        },
-      ],
     },
   ],
 }

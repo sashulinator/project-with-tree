@@ -1,10 +1,11 @@
+import clsx from 'clsx'
 import React from 'react'
 
 import { fns } from '~/utils/function'
 import { Position } from '~/widgets/canvas'
-import AbstractCanvasItem, { CanvasItemDraggable, IsDragEvent } from '~/widgets/canvas/ui/item'
+import { Item as AbstractItem, IsDragEvent, ItemDraggable } from '~/widgets/canvas/ui/item'
 
-export interface CanvasItemProps extends React.HTMLAttributes<SVGGElement> {
+export interface CanvasItemProps extends React.HTMLAttributes<SVGForeignObjectElement> {
   width: number
   height: number
   position: Position
@@ -19,15 +20,16 @@ export interface CanvasItemProps extends React.HTMLAttributes<SVGGElement> {
  * Элемент Canvas с фичами
  * 1. Перетаскивание
  */
-export default function CanvasItem(props: CanvasItemProps): JSX.Element {
+export function Item(props: CanvasItemProps): JSX.Element {
   const { scale, position, lastPosition, isDrag, onMove: move, ...chartItemProps } = props
 
   return (
-    <CanvasItemDraggable lastPosition={lastPosition} onMove={move} isDrag={isDrag} scale={scale}>
+    <ItemDraggable lastPosition={lastPosition} onMove={move} isDrag={isDrag} scale={scale}>
       {(draggableProps): JSX.Element => {
         return (
-          <AbstractCanvasItem
+          <AbstractItem
             {...chartItemProps}
+            className={clsx(props.className, 'ui-CanvasItem')}
             y={position.y}
             x={position.x}
             style={{ touchAction: 'none' }}
@@ -41,6 +43,8 @@ export default function CanvasItem(props: CanvasItemProps): JSX.Element {
           />
         )
       }}
-    </CanvasItemDraggable>
+    </ItemDraggable>
   )
 }
+
+Item.displayName = 'UICanvasItem'

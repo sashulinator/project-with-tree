@@ -2,7 +2,7 @@ import React from 'react'
 
 import { Offset } from '~/utils/core'
 import { Position } from '~/widgets/canvas'
-import MousePositionable from '~/widgets/canvas/ui/link/features/mouse-positionable'
+import LinkMousePositionable from '~/widgets/canvas/ui/link/features/mouse-positionable'
 import AbstractLink from '~/widgets/canvas/ui/link/ui/link'
 
 export interface LinkProps extends React.HTMLAttributes<SVGPathElement> {
@@ -19,11 +19,11 @@ export interface LinkProps extends React.HTMLAttributes<SVGPathElement> {
  * если один из них не передан то возьмет позицию курсора
  * если оба не переданы то ничего не отрисует
  */
-export default function Link(props: LinkProps): JSX.Element {
+export function Link(props: LinkProps): JSX.Element {
   const { sourcePosition, targetPosition, sourceOffset, targetOffset, scale, canvasTranslate, ...pathProps } = props
 
   return (
-    <MousePositionable enabled={!sourcePosition || !targetPosition} scale={scale} canvasTranslate={canvasTranslate}>
+    <LinkMousePositionable enabled={!sourcePosition || !targetPosition} scale={scale} canvasTranslate={canvasTranslate}>
       {({ mousePosition }): JSX.Element => {
         return (
           <AbstractLink
@@ -33,7 +33,7 @@ export default function Link(props: LinkProps): JSX.Element {
           />
         )
       }}
-    </MousePositionable>
+    </LinkMousePositionable>
   )
 
   // Private

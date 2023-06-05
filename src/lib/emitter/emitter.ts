@@ -13,8 +13,9 @@ export class Emitter<E extends AnyEvent> implements IEmitter<E> {
   get all(): EventHandlerMap<E> {
     return this._emitter.all
   }
-  on<Key extends keyof E>(type: Key, handler: Handler<E[Key]>): void {
+  on<Key extends keyof E>(type: Key, handler: Handler<E[Key]>): () => void {
     this._emitter.on(type, handler)
+    return () => this._emitter.off(type, handler)
   }
 
   off<Key extends keyof E>(type: Key, handler?: Handler<E[Key]> | undefined): void {

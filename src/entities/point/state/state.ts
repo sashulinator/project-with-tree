@@ -1,15 +1,15 @@
 import { Point } from '~/entities/point'
 import { Rule } from '~/entities/rule'
-import { CanvasItemState, CanvasItemStateProps } from '~/widgets/canvas/ui/item/state'
+import { ItemState, ItemStateProps } from '~/widgets/canvas/ui/item/state'
 
 import { Events } from './events'
 import { RuleListProp } from './rule-list-prop'
 
-export interface StateProps extends CanvasItemStateProps {
+export interface StateProps extends ItemStateProps {
   ruleList?: Rule[] | undefined
 }
 
-export class PointState extends CanvasItemState<Events> {
+export class PointState extends ItemState<Events> {
   point: Point
 
   ruleList: RuleListProp<'setRuleList'>
