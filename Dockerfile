@@ -17,9 +17,9 @@ RUN yarn install
 RUN yarn build
 
 # Stage nginx
-FROM alpine:3.2
+FROM alpine:3.18
 
-ENV NGINX_VERSION nginx-1.14.1
+ENV NGINX_VERSION nginx-1.22.1
 
 RUN apk --update add openssl-dev pcre-dev zlib-dev wget build-base \
     libxml2-dev libxslt-dev gd-dev perl-dev && \
