@@ -2,7 +2,7 @@ import { FullGestureState, useDrag } from '@use-gesture/react'
 
 import React from 'react'
 
-import { Position } from '~/widgets/canvas'
+import { Position } from '~/abstract/canvas'
 
 export type IsDragEvent = Omit<FullGestureState<'drag'>, 'event'> & {
   event: PointerEvent | MouseEvent | TouchEvent | KeyboardEvent

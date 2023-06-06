@@ -1,7 +1,7 @@
+import { BoardState, Position } from '~/abstract/canvas'
 import { Decision } from '~/entities/decision'
 import { PointState } from '~/entities/point'
 import { EmitterableProp as Prop } from '~/utils/emitter'
-import { BoardState, Position } from '~/widgets/canvas'
 
 import { EditingLinkProp } from './editing-link-prop'
 import { Events } from './events'

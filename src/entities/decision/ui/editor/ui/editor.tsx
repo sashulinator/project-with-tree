@@ -1,3 +1,4 @@
+import { PaintingPanel } from '~/abstract/canvas'
 import { CanvasState, Node } from '~/entities/decision'
 import Link from '~/entities/point/ui/link'
 import { Board } from '~/ui/canvas/ui/board'
@@ -5,7 +6,6 @@ import { ActionHistory } from '~/utils/action-history'
 import { Offset } from '~/utils/core'
 import { getOffsetInElement } from '~/utils/dom'
 import { useUpdate } from '~/utils/hooks'
-import { PaintingPanel } from '~/widgets/canvas'
 
 interface EditorProps {
   chartState: CanvasState

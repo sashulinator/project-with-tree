@@ -1,9 +1,9 @@
 import clsx from 'clsx'
 import React from 'react'
 
+import { Position } from '~/abstract/canvas'
+import { Item as AbstractItem, IsDragEvent, ItemDraggable } from '~/abstract/canvas/ui/item'
 import { fns } from '~/utils/function'
-import { Position } from '~/widgets/canvas'
-import { Item as AbstractItem, IsDragEvent, ItemDraggable } from '~/widgets/canvas/ui/item'
 
 export interface CanvasItemProps extends React.HTMLAttributes<SVGForeignObjectElement> {
   width: number

@@ -4,7 +4,7 @@ import { ReactDOMAttributes } from '@use-gesture/react/dist/declarations/src/typ
 
 import React from 'react'
 
-import { Position } from '~/widgets/canvas'
+import { Position } from '~/abstract/canvas'
 
 export interface BoardDraggableProps {
   lastTranslate: Position

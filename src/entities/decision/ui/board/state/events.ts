@@ -1,10 +1,10 @@
 import { Any } from '@react-spring/types'
 
+import { Position } from '~/abstract/canvas'
 import { PointState } from '~/entities/point'
 import { Rule } from '~/entities/rule'
 import { Id } from '~/utils/core'
 import { Dictionary } from '~/utils/dictionary'
-import { Position } from '~/widgets/canvas'
 
 import { Link } from '../../canvas/types/link'
 

@@ -1,4 +1,4 @@
-import TextInputUI, { TextInputProps } from '~/widgets/text-input'
+import TextInputUI, { TextInputProps } from '~/abstract/text-input'
 
 export type { TextInputProps }
 

@@ -1,12 +1,12 @@
 import { useEffect, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 
+import { addToast } from '~/abstract/toast'
 import { i18n } from '~/shared/i18n'
 import { Any } from '~/utils/core'
 import { isDev } from '~/utils/core/is/dev'
 import { Dictionary } from '~/utils/dictionary'
 import { tryCatch } from '~/utils/error/try-catch'
-import { addToast } from '~/widgets/toast'
 
 import { ReplaceValuesByGetter } from '../types/replace-values-by-getter'
 import { assertNoExcessiveTranslation } from './assertions/no-excessive-translations'

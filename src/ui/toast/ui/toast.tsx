@@ -1,9 +1,9 @@
 import './toast.scss'
 
+import { get } from '~/abstract/toast/toast/actions'
+import { ToastEventNames } from '~/abstract/toast/toast/event-names'
 import { Id } from '~/utils/core'
 import { useForceUpdate, useOnMount } from '~/utils/hooks'
-import { get } from '~/widgets/toast/toast/actions'
-import { ToastEventNames } from '~/widgets/toast/toast/event-names'
 
 import { backgroundColors } from '../constants/background-colors'
 import LandscapeAnimation from './landscape-animation'

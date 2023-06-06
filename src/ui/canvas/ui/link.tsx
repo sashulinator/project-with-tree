@@ -1,9 +1,9 @@
 import React from 'react'
 
+import { Position } from '~/abstract/canvas'
+import LinkMousePositionable from '~/abstract/canvas/ui/link/features/mouse-positionable'
+import AbstractLink from '~/abstract/canvas/ui/link/ui/link'
 import { Offset } from '~/utils/core'
-import { Position } from '~/widgets/canvas'
-import LinkMousePositionable from '~/widgets/canvas/ui/link/features/mouse-positionable'
-import AbstractLink from '~/widgets/canvas/ui/link/ui/link'
 
 export interface LinkProps extends React.HTMLAttributes<SVGPathElement> {
   scale: number

@@ -1,11 +1,11 @@
 import clsx from 'clsx'
 import { useState } from 'react'
 
+import { IsDragEvent } from '~/abstract/canvas'
 import { CanvasState } from '~/entities/decision'
 import { PointState } from '~/entities/point/state'
 import { Node as UINode } from '~/ui/canvas'
 import { useOnMount, useUpdate } from '~/utils/hooks'
-import { IsDragEvent } from '~/widgets/canvas'
 
 export interface ItemNodeProps {
   state: PointState
