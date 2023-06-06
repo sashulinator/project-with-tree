@@ -1,8 +1,8 @@
 import clsx from 'clsx'
 
+import { Board as AbstractBoard, BoardDraggable, BoardZoomable, PaintingPanel } from '~/abstract/canvas'
 import { useUpdate } from '~/utils/hooks/update'
 import { setRefs } from '~/utils/react/set-refs'
-import { Board as AbstractBoard, BoardDraggable, BoardZoomable, PaintingPanel } from '~/widgets/canvas'
 
 import { CanvasState } from '../../board/state'
 

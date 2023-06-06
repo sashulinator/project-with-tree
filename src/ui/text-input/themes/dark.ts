@@ -1,6 +1,6 @@
+import { TextInputCSSVars } from '~/abstract/text-input/types/css-vars'
 import { outlineWidth } from '~/shared/theme/common'
 import { dark } from '~/shared/theme/dark'
-import { TextInputCSSVars } from '~/widgets/text-input/types/css-vars'
 
 const textInput_bg = dark.bg
 const textInput_color = dark.color

@@ -3,7 +3,7 @@ import './node.css'
 import clsx from 'clsx'
 import React, { useRef } from 'react'
 
-import { IsDragEvent, Position } from '~/widgets/canvas'
+import { IsDragEvent, Position } from '~/abstract/canvas'
 
 import { Item } from '../../item'
 

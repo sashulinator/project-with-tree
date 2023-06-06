@@ -1,7 +1,7 @@
+import { Position, PositionProp } from '~/abstract/canvas'
 import { Emitter } from '~/lib/emitter'
 import { Any } from '~/utils/core'
 import { Emitterable, EmitterableProp as Prop } from '~/utils/emitter'
-import { Position, PositionProp } from '~/widgets/canvas'
 
 import { ItemState } from '../../item'
 import { BoardEvents } from './events'

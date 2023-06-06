@@ -2,13 +2,13 @@ import './container.scss'
 
 import { useEffect, useMemo } from 'react'
 
+import { findToast } from '~/abstract/toast'
+import { add, get } from '~/abstract/toast/container/actions'
+import { ContainerEventNames } from '~/abstract/toast/container/event-names'
+import { ToastEventNames } from '~/abstract/toast/toast/event-names'
 import { useForceUpdate, useOnMount } from '~/utils/hooks'
 import { useMediaQuery } from '~/utils/hooks/media-query'
 import { useOnUnmount } from '~/utils/hooks/on-unmount'
-import { findToast } from '~/widgets/toast'
-import { add, get } from '~/widgets/toast/container/actions'
-import { ContainerEventNames } from '~/widgets/toast/container/event-names'
-import { ToastEventNames } from '~/widgets/toast/toast/event-names'
 
 import { backgroundColors } from '../constants/background-colors'
 import { getDefaultThemeColor } from '../lib/get-default-theme-color'

@@ -1,4 +1,4 @@
-src/widgets/text-input      widgets-text-input      git@github.com:sashulinator/widgets-text-input.git
+src/abstract/text-input     abstract-text-input     git@github.com:sashulinator/abstract-text-input.git
 src/utils/dictionary        utils-dictionary        git@github.com:sashulinator/utils-dictionary.git
 src/utils/core              utils-core              git@github.com:sashulinator/utils-core.git
 src/utils/list              utils-list              git@github.com:sashulinator/utils-list.git

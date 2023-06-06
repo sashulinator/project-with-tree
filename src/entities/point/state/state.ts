@@ -1,6 +1,6 @@
+import { ItemState, ItemStateProps } from '~/abstract/canvas/ui/item/state'
 import { Point } from '~/entities/point'
 import { Rule } from '~/entities/rule'
-import { ItemState, ItemStateProps } from '~/widgets/canvas/ui/item/state'
 
 import { Events } from './events'
 import { RuleListProp } from './rule-list-prop'

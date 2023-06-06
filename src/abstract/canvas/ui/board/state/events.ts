@@ -1,5 +1,5 @@
+import { Position } from '~/abstract/canvas'
 import { typeTest } from '~/utils/core'
-import { Position } from '~/widgets/canvas'
 
 import { BoardEventNames } from './event-names'
 

@@ -1,6 +1,6 @@
+import { Board as AbstractBoard, BoardDraggable, BoardState, BoardZoomable, ItemState } from '~/abstract/canvas'
 import { Any } from '~/utils/core'
 import { setRefs } from '~/utils/react/set-refs'
-import { Board as AbstractBoard, BoardDraggable, BoardState, BoardZoomable, ItemState } from '~/widgets/canvas'
 
 export interface BoardProps {
   state: BoardState<Any, Any>
