@@ -7,12 +7,12 @@ import { getOffsetInElement } from '~/utils/dom'
 import { useUpdate } from '~/utils/hooks'
 import { PaintingPanel } from '~/widgets/canvas'
 
-interface DecisionEditorProps {
+interface EditorProps {
   chartState: CanvasState
   history: ActionHistory
 }
 
-export default function DecisionEditor(props: DecisionEditorProps): JSX.Element {
+export function Editor(props: EditorProps): JSX.Element {
   const itemStates = Object.values(props.chartState.itemStates.value)
 
   useUpdate(updateOnEvents)
@@ -65,3 +65,5 @@ export default function DecisionEditor(props: DecisionEditorProps): JSX.Element 
     props.chartState.emitter.on('setEditingLink', update)
   }
 }
+
+Editor.displayName = 'DecisionEditor'
