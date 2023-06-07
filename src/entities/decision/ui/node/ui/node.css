@@ -9,13 +9,13 @@
   border: 0;
 }
 
-.point-Node > .container > .title {
+.point-Node > .container > .content > .title {
   padding: 1.2rem 0.8rem 0.6rem 0.8rem;
   box-sizing: border-box;
   border-width: 0;
 }
 
-.point-Node > .container > .description:not(:empty) {
+.point-Node > .container > .content > .description:not(:empty) {
   padding: 0 0.8rem 0.8rem 0.8rem;
   box-sizing: border-box;
   font-size: 0.8em;

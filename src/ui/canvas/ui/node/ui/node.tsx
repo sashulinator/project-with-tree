@@ -13,6 +13,7 @@ export interface NodeProps extends React.HTMLAttributes<SVGForeignObjectElement>
   nodeDescription?: React.ReactNode | undefined
   width: number
   height: number
+  left?: React.ReactNode
   position: Position
   lastPosition: Position
   scale: number
@@ -28,7 +29,7 @@ export interface NodeProps extends React.HTMLAttributes<SVGForeignObjectElement>
  * 3. Стили позиционирования
  */
 export function Node(props: NodeProps): JSX.Element {
-  const { nodeTitle, nodeDescription, ...foreignObjectProps } = props
+  const { nodeTitle, nodeDescription, left, ...foreignObjectProps } = props
 
   const titleRef = useRef(null)
   const [containerRef, { height: containerHeight }] = useMeasure()
@@ -37,11 +38,14 @@ export function Node(props: NodeProps): JSX.Element {
   return (
     <Item {...foreignObjectProps} height={height} className={clsx(props.className, 'ui-Node')} isDrag={isDrag}>
       <div className={clsx('container')} ref={containerRef}>
-        <div className={clsx('title')} ref={titleRef}>
-          {nodeTitle}
+        {left}
+        <div className='content'>
+          <div className={clsx('title')} ref={titleRef}>
+            {nodeTitle}
+          </div>
+          <div className={clsx('description')}>{nodeDescription}</div>
+          {props.children}
         </div>
-        <div className={clsx('description')}>{nodeDescription}</div>
-        {props.children}
       </div>
     </Item>
   )

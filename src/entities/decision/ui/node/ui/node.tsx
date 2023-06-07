@@ -12,6 +12,7 @@ import { useOnMount, useUpdate } from '~/utils/hooks'
 export interface NodeProps {
   state: PointState
   decisionState: CanvasState
+  left?: React.ReactNode
   children?: React.ReactNode
   isDrag?: (event: IsDragEvent) => boolean
 }
@@ -24,6 +25,7 @@ export function Node(props: NodeProps): JSX.Element {
 
   return (
     <UINode
+      left={props.left}
       className={clsx('point-Node', isSelected && '--selected')}
       nodeTitle={props.state.point.name}
       nodeDescription={props.state.point.description}
