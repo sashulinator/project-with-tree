@@ -1,7 +1,6 @@
 import clr from 'color'
 
 import { darkTheme as pointNode } from '~/entities/decision/ui/node/themes/dark'
-import { PointNodeCSSVars } from '~/entities/point'
 import { dark } from '~/shared/theme/dark'
 import { ButtonCSSVars } from '~/ui/button/types/css-vars'
 import { darkTheme as textInput } from '~/ui/text-input/themes/dark'
@@ -19,7 +18,7 @@ const button_outlineColor = dark.outlineColor
 /* DecisionPoint */
 const pointNode_bg = dark.bg
 
-export const darkTheme: Theme & ButtonCSSVars & PointNodeCSSVars = {
+export const darkTheme: Theme & ButtonCSSVars = {
   ...commonTheme,
   ...dark,
   errorColor,
