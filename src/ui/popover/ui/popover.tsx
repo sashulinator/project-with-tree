@@ -1,6 +1,6 @@
 import * as React from 'react'
 
-import Align from '~/ui/align'
+import Align from '~/abstract/align'
 import { Any } from '~/utils/core'
 import { fns } from '~/utils/function'
 import { useEventListener, useOnClickOutside } from '~/utils/hooks'

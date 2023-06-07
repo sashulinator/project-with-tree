@@ -1,7 +1,7 @@
 import { Offset } from 'dom-align-ts'
 import { forwardRef, useMemo, useRef } from 'react'
 
-import Align from '~/ui/align'
+import Align from '~/abstract/align'
 import { ListProps as ListRenderProps } from '~/ui/dropdown'
 import { ListState } from '~/ui/list'
 import ControlledList, { ControllableListProps } from '~/ui/list/ui/controlled-list'

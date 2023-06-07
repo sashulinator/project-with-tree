@@ -7,7 +7,7 @@ import uniqid from 'uniqid'
 
 import { CanvasState } from '~/entities/decision'
 import { PointState } from '~/entities/point/state'
-import { RuleSet } from '~/entities/point/widgets/node/ui/rule-set'
+import { RuleSet } from '~/entities/point/ui/rule-set'
 import Button from '~/ui/button'
 import { Any, Id, Offset } from '~/utils/core'
 import { getOffsetInElement, observeResize } from '~/utils/dom'
@@ -15,7 +15,7 @@ import { keyListener } from '~/utils/dom/key-listener'
 import { useUpdate } from '~/utils/hooks'
 import { setRefs } from '~/utils/react'
 
-import Link from '../../link'
+import { Link } from '../../link'
 
 export interface NodeProps {
   state: PointState
@@ -26,7 +26,7 @@ export interface NodeProps {
 
 const WIDTH = 200
 
-export default function Node(props: NodeProps): JSX.Element {
+export function Node(props: NodeProps): JSX.Element {
   const { point } = props.state
 
   useLayoutEffect(observeSize, [])
@@ -132,3 +132,5 @@ export default function Node(props: NodeProps): JSX.Element {
     return () => unsubscribe?.()
   }
 }
+
+Node.displayName = 'PointNode'

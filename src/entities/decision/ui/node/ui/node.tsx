@@ -1,3 +1,5 @@
+import './node.css'
+
 import clsx from 'clsx'
 import { useState } from 'react'
 
@@ -7,14 +9,14 @@ import { PointState } from '~/entities/point/state'
 import { Node as UINode } from '~/ui/canvas'
 import { useOnMount, useUpdate } from '~/utils/hooks'
 
-export interface ItemNodeProps {
+export interface NodeProps {
   state: PointState
   decisionState: CanvasState
-  children: React.ReactNode
+  children?: React.ReactNode
   isDrag?: (event: IsDragEvent) => boolean
 }
 
-export default function Node(props: ItemNodeProps): JSX.Element {
+export function Node(props: NodeProps): JSX.Element {
   useUpdate(subscribeOnUpdates)
   useOnMount(subscribeOnSelected)
 

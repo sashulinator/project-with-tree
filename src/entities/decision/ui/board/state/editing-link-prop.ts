@@ -1,11 +1,16 @@
+/* eslint-disable eslint-comments/disable-enable-pair */
+
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { Rule } from '~/entities/rule'
 import { Id, assertDefined } from '~/utils/core'
 import { EmitterableProp } from '~/utils/emitter'
 
-import { Link } from '../../canvas/types/link'
-
-export class EditingLinkProp<N extends string> extends EmitterableProp<N, Link | null> {
-  add = (editingLink: Link): void => {
+export class EditingLinkProp<N extends string> extends EmitterableProp<N, any | null> {
+  add = (editingLink: any): void => {
     this.value = editingLink
   }
 

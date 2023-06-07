@@ -3,10 +3,8 @@ import React, { useCallback, useLayoutEffect } from 'react'
 import { createPortal } from 'react-dom'
 
 import { listenParentScrolls, observeResize } from '~/utils/dom'
-import { useEventListener } from '~/utils/hooks'
-import { useLatest } from '~/utils/hooks/latest'
-import { setRefs } from '~/utils/react'
-import { assertValidElement } from '~/utils/react/assertions/valid-element'
+import { useEventListener, useLatest } from '~/utils/hooks'
+import { assertValidElement, setRefs } from '~/utils/react'
 
 import { AlignProps } from '../types/align-props'
 
@@ -47,4 +45,4 @@ export default function Align(props: AlignProps): JSX.Element {
   }
 }
 
-Align.displayName = 'Align'
+Align.displayName = 'AbstractAlign'
