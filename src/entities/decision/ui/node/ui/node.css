@@ -1,10 +1,12 @@
 .point-Node {
-  background: var(--pointNode_bg);
   user-select: none;
 }
 
 .point-Node > .container {
+  background: var(--pointNode_bg);
+  border-radius: 8px;
   width: 100%;
+  border: 0;
 }
 
 .point-Node > .container > .title {

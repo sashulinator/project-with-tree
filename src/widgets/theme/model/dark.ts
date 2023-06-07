@@ -2,45 +2,26 @@ import clr from 'color'
 
 import { darkTheme as pointNode } from '~/entities/decision/ui/node/themes/dark'
 import { PointNodeCSSVars } from '~/entities/point'
+import { dark } from '~/shared/theme/dark'
 import { ButtonCSSVars } from '~/ui/button/types/css-vars'
 import { darkTheme as textInput } from '~/ui/text-input/themes/dark'
 
 import { Theme } from '../types/theme'
 import { commonTheme } from './common'
 
-/* Main */
-const primary = clr('#027ffe')
-
-const outlineColor = primary.alpha(0.5)
-const color = clr('#b2bac2')
-const bg = clr('#0a1929')
-const bgSecondary = clr('#011e3c')
-const caretColor = clr('yellow')
-const selectionColor = color
-const selectionBg = clr('yellow')
-
 /* Misc */
 const input_borderColor = clr('#265d97')
 const errorColor = clr('#d2302f')
 
 // Button
-const button_outlineColor = outlineColor
+const button_outlineColor = dark.outlineColor
 
 /* DecisionPoint */
-const pointNode_bg = bg
+const pointNode_bg = dark.bg
 
-export const dark: Theme & ButtonCSSVars & PointNodeCSSVars = {
+export const darkTheme: Theme & ButtonCSSVars & PointNodeCSSVars = {
   ...commonTheme,
-  primary,
-
-  color,
-  bg,
-  bgSecondary,
-  caretColor,
-  selectionColor,
-  selectionBg,
-
-  outlineColor,
+  ...dark,
   errorColor,
   borderColor: input_borderColor,
 

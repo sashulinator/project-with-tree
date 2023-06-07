@@ -34,8 +34,6 @@ export function Node(props: NodeProps): JSX.Element {
   const [containerRef, { height: containerHeight }] = useMeasure()
   const height = Math.max(containerHeight, foreignObjectProps.height)
 
-  console.log(containerHeight)
-
   return (
     <Item {...foreignObjectProps} height={height} className={clsx(props.className, 'ui-Node')} isDrag={isDrag}>
       <div className={clsx('container')} ref={containerRef}>
