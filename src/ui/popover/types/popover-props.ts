@@ -1,6 +1,6 @@
 import { Offset, Point, Points, alignElement } from 'dom-align-ts'
 
-import { Overflow } from '~/ui/align'
+import { Overflow } from '~/abstract/align'
 import { ReactElementWithRef } from '~/utils/react'
 
 /**
