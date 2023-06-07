@@ -12,7 +12,7 @@ export interface ChartLinkProps extends React.HTMLAttributes<SVGPathElement> {
   sourceOffset: Offset | null
 }
 
-export default function Link(props: ChartLinkProps): JSX.Element | null {
+export function Link(props: ChartLinkProps): JSX.Element | null {
   const { decisionState, targetState, sourceState, ...pathProps } = props
 
   useOnMount(useForceUpdate())
@@ -40,3 +40,5 @@ export default function Link(props: ChartLinkProps): JSX.Element | null {
     props.sourceState?.emitter.on('setRef', update)
   }
 }
+
+Link.displayName = 'PointLink'

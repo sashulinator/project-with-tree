@@ -6,8 +6,6 @@ import { Rule } from '~/entities/rule'
 import { Id } from '~/utils/core'
 import { Dictionary } from '~/utils/dictionary'
 
-import { Link } from '../../canvas/types/link'
-
 export type Events = {
   setScale: { value: number }
   setPaintingPanelRef: { element: SVGGElement }
@@ -18,5 +16,6 @@ export type Events = {
   setItemStates: { value: Record<Id, PointState> }
   setPosition: { itemId: Id; value: Position; isLast: boolean }
   setItemState: { id: Id; eventName: string; event: Dictionary<Any> }
-  setEditingLink: { value: Link }
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  setEditingLink: { value: any }
 }

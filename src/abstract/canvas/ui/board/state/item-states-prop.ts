@@ -13,8 +13,6 @@ export class ItemStatesProp<N extends string, S extends ItemState<Any>> extends 
   constructor(eventName: N, itemStatesList: S[], boardState: BoardState<Any, Any>) {
     const itemStates = toDictionary((item) => item.id, itemStatesList) || {}
 
-    console.log(itemStates)
-
     super(eventName, itemStates, boardState)
 
     for (let index = 0; index < itemStatesList.length; index++) {
@@ -30,7 +28,7 @@ export class ItemStatesProp<N extends string, S extends ItemState<Any>> extends 
     state.emitter.emit(eventName, event)
   }
 
-  get = (id: Id): S => {
+  get = (id: Id | undefined): S => {
     return get(this.value, id)
   }
 }

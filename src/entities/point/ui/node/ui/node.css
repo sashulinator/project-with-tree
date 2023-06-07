@@ -1,5 +1,5 @@
 .PointNode {
-  background-color: var(--decisionPoint_bg);
+  background-color: var(--pointNode_bg);
   border-width: 1px;
   border-style: solid;
   border-color: transparent;

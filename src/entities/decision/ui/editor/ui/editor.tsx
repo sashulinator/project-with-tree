@@ -1,9 +1,10 @@
 import { PaintingPanel } from '~/abstract/canvas'
 import { CanvasState, Node } from '~/entities/decision'
-import Link from '~/entities/point/ui/link'
+import { Link } from '~/entities/point'
+import { SiftNode } from '~/entities/point/ui/node.sift'
 import { Board } from '~/ui/canvas/ui/board'
 import { ActionHistory } from '~/utils/action-history'
-import { Offset } from '~/utils/core'
+import { Id, Offset } from '~/utils/core'
 import { getOffsetInElement } from '~/utils/dom'
 import { useUpdate } from '~/utils/hooks'
 
@@ -25,18 +26,31 @@ export function Editor(props: EditorProps): JSX.Element {
             sourceState={props.chartState.editingLink.value.sourceState}
             targetState={props.chartState.editingLink.value.targetState}
             targetOffset={null}
-            sourceOffset={getSourceOffset()}
+            sourceOffset={getSourceOffset(props.chartState.editingLink.value?.sourceRuleId)}
             decisionState={props.chartState}
           />
         )}
       </PaintingPanel>
       <PaintingPanel translate={props.chartState.translate.value} scale={props.chartState.scale.value}>
+        {itemStates.flatMap((state) => {
+          return state.ruleList.value.map((rule) => {
+            const targetState = props.chartState.itemStates.get(rule.pointId)
+            return (
+              <Link
+                sourceOffset={getSourceOffset(state.id)}
+                targetOffset={{ top: 0, left: 0 }}
+                key={state.point.id}
+                sourceState={state}
+                targetState={targetState}
+                decisionState={props.chartState}
+              />
+            )
+          })
+        })}
+      </PaintingPanel>
+      <PaintingPanel translate={props.chartState.translate.value} scale={props.chartState.scale.value}>
         {itemStates.map((state) => {
-          return (
-            <Node key={state.point.id} state={state} decisionState={props.chartState}>
-              Test
-            </Node>
-          )
+          return <SiftNode key={state.point.id} state={state} decisionState={props.chartState} />
         })}
       </PaintingPanel>
     </Board>
@@ -44,9 +58,8 @@ export function Editor(props: EditorProps): JSX.Element {
 
   // Private
 
-  function getSourceOffset(): Offset | null {
+  function getSourceOffset(id: Id | undefined): Offset | null {
     const sourceState = props.chartState.editingLink.value?.sourceState
-    const id = props.chartState.editingLink.value?.sourceRuleId
     if (!id) return null
     const srcLinkEl = sourceState?.ref.value?.querySelector(`[data-id="${id.toString()}"]`)
     if (!srcLinkEl || !sourceState) return null

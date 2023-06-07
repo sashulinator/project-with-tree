@@ -1,7 +1,6 @@
 import clr from 'color'
 
-import { DecisionPointCSSVars } from '~/entities/point'
-import { NodeRuleSetCSSVars } from '~/entities/point/widgets/node/ui/rule-set/types/css-vars'
+import { PointNodeCSSVars } from '~/entities/point'
 import { ButtonCSSVars } from '~/ui/button/types/css-vars'
 import { darkTheme as textInput } from '~/ui/text-input/themes/dark'
 
@@ -27,14 +26,9 @@ const errorColor = clr('#d2302f')
 const button_outlineColor = outlineColor
 
 /* DecisionPoint */
-const decisionPoint_bg = bg
+const pointNode_bg = bg
 
-/* NodeRuleSet */
-const nodeRuleSet_bg = bg.lighten(0.3)
-const nodeRuleSet_bg__hovered = primary
-const nodeRuleSet_bg__editing = primary
-
-export const dark: Theme & ButtonCSSVars & DecisionPointCSSVars & NodeRuleSetCSSVars = {
+export const dark: Theme & ButtonCSSVars & PointNodeCSSVars = {
   ...commonTheme,
   primary,
 
@@ -53,12 +47,7 @@ export const dark: Theme & ButtonCSSVars & DecisionPointCSSVars & NodeRuleSetCSS
   button_outlineColor,
 
   // DecisionPoint
-  decisionPoint_bg,
-
-  /* NodeRule */
-  nodeRuleSet_bg,
-  nodeRuleSet_bg__hovered,
-  nodeRuleSet_bg__editing,
+  pointNode_bg,
 
   ...textInput,
 }
