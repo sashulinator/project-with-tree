@@ -5,6 +5,7 @@ import { Dictionary } from '~/utils/dictionary'
 export interface Point<P = Dictionary<Any>> {
   id: Id
   name: string
+  description?: string
   type: string
   x: number
   y: number

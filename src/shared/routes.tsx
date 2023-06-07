@@ -1,4 +1,4 @@
-import { FC } from 'react'
+import { FC, lazy } from 'react'
 import { RouteProps } from 'react-router-dom'
 
 import DecisionPage from '~/pages/decision'
@@ -15,6 +15,8 @@ import PopoverPage from '~/pages/ui/popover'
 import TextInputPage from '~/pages/ui/text-input'
 import Header from '~/ui/header'
 import Nav from '~/ui/nav'
+
+const PointNodePage = lazy(() => import('~/pages/storybook/entities/point/node'))
 
 type Route = Omit<RouteProps, 'path'> & {
   Header?: FC
@@ -62,6 +64,16 @@ export const routes = {
     getName: () => 'notFound',
     path: '*',
     element: <NotFoundPage />,
+  },
+
+  /* ABSTRACT */
+
+  pointNode: {
+    Header,
+    Nav,
+    getName: () => 'PointNode',
+    path: '/storybook/entities/point/node',
+    element: <PointNodePage />,
   },
 
   /* UI */

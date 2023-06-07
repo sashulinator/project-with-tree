@@ -77,7 +77,7 @@ function removeToast(toast: Toast) {
 
 // Private
 
-function generate(contaner?: Partial<Container>): Container {
+function generate(container?: Partial<Container>): Container {
   store.containerSequenceId += 1
   const generatedContainer = {
     id: store.containerSequenceId,
@@ -105,9 +105,9 @@ function generate(contaner?: Partial<Container>): Container {
       maxShowingTransition: 5000,
       exitTransitionMs: 0,
       type: 'default',
-      ...contaner?.defaultToast,
+      ...container?.defaultToast,
     },
-    ...contaner,
+    ...container,
   }
   return generatedContainer
 }

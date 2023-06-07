@@ -1,5 +1,6 @@
 import clr from 'color'
 
+import { darkTheme as pointNode } from '~/entities/decision/ui/node/themes/dark'
 import { PointNodeCSSVars } from '~/entities/point'
 import { ButtonCSSVars } from '~/ui/button/types/css-vars'
 import { darkTheme as textInput } from '~/ui/text-input/themes/dark'
@@ -50,4 +51,5 @@ export const dark: Theme & ButtonCSSVars & PointNodeCSSVars = {
   pointNode_bg,
 
   ...textInput,
+  ...pointNode,
 }
