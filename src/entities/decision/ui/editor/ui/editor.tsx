@@ -76,6 +76,8 @@ export function Editor(props: EditorProps): JSX.Element {
     props.chartState.emitter.on('setItemStates', update)
     props.chartState.emitter.on('setItemStates', update)
     props.chartState.emitter.on('setEditingLink', update)
+    props.chartState.emitter.on('setTranslate', update)
+    props.chartState.emitter.on('setScale', update)
   }
 }
 
