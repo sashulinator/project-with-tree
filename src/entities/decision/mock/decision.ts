@@ -15,15 +15,6 @@ export const decision: Decision = {
         condition: 'age > 10',
       },
       children: ['id2'],
-      rules: [
-        {
-          id: 'ruleId1',
-          pointId: 'id2',
-          value: 'test',
-          name: 'вход',
-          type: 'true',
-        },
-      ],
     },
     {
       type: 'MAIN',
@@ -32,15 +23,6 @@ export const decision: Decision = {
       x: 450,
       y: 200,
       children: ['id3'],
-      rules: [
-        {
-          id: 'ruleId2',
-          pointId: 'id3',
-          value: 'test',
-          name: 'B2C_сегмент, физ_лицо, не_ЕКГ',
-          type: 'false',
-        },
-      ],
     },
     {
       type: 'MAIN',
@@ -48,15 +30,6 @@ export const decision: Decision = {
       name: 'Продуктовые исключения',
       x: 700,
       y: 200,
-      rules: [
-        {
-          id: 'id1',
-          pointId: 'id4',
-          value: 'test',
-          name: 'не_безлимитный_интернет, не_безлимитные_минуты',
-          type: 'false',
-        },
-      ],
     },
     {
       type: 'MAIN',
@@ -64,15 +37,6 @@ export const decision: Decision = {
       name: 'Политика контактов',
       x: 950,
       y: 200,
-      rules: [
-        {
-          id: 'id1',
-          value: 'test',
-          name: 'отказ_от_предложенией, недавно_звонили',
-          type: 'false',
-          pointId: 'id5',
-        },
-      ],
     },
     {
       type: 'MAIN',
@@ -80,15 +44,6 @@ export const decision: Decision = {
       name: 'Конфликтующие тарифы',
       x: 1200,
       y: 200,
-      rules: [
-        {
-          id: 'id1',
-          value: 'test',
-          name: 'установлен_супер_тариф, установлен_мега_тариф',
-          type: 'false',
-          pointId: 'id6',
-        },
-      ],
     },
     {
       type: 'MAIN',
@@ -96,15 +51,6 @@ export const decision: Decision = {
       name: 'Срок жизни тарифа',
       x: 1450,
       y: 200,
-      rules: [
-        {
-          id: 'id1',
-          value: 'test',
-          name: 'на_тарифе_больше_30_дней',
-          type: 'false',
-          pointId: 'id8',
-        },
-      ],
     },
     {
       type: 'MAIN',
@@ -112,29 +58,6 @@ export const decision: Decision = {
       name: 'Какой тариф предложить',
       x: 200,
       y: 500,
-      rules: [
-        {
-          id: 'id1',
-          value: 'test',
-          name: 'ARPU 0-200',
-          type: 'false',
-          pointId: 'id8',
-        },
-        {
-          id: 'id2',
-          value: 'test',
-          name: 'ARPU 200-400',
-          type: 'false',
-          pointId: 'id9',
-        },
-        {
-          id: 'id3',
-          value: 'test',
-          name: 'ARPU от 400',
-          type: 'false',
-          pointId: 'id10',
-        },
-      ],
     },
     {
       type: 'MAIN',

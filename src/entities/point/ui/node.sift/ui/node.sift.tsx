@@ -1,6 +1,6 @@
 import { Node, NodeProps } from '~/entities/point'
 
-import { RuleSet } from '../../rule-set'
+// import { RuleSet } from '../../rule-set'
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 export interface SiftNodeProps extends NodeProps {}
@@ -11,7 +11,7 @@ export interface SiftNodeProps extends NodeProps {}
 export function SiftNode(props: SiftNodeProps): JSX.Element {
   return (
     <Node {...props}>
-      {props.state.ruleList.value?.map((rule) => {
+      {/* {props.state.ruleList.value?.map((rule) => {
         return (
           <RuleSet
             key={rule.id}
@@ -28,7 +28,7 @@ export function SiftNode(props: SiftNodeProps): JSX.Element {
             {rule.name}
           </RuleSet>
         )
-      })}
+      })} */}
     </Node>
   )
 }

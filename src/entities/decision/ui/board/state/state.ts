@@ -25,9 +25,7 @@ export class CanvasState extends BoardState<Events, PointState> {
   editingLink: EditingLinkProp<'setEditingLink'>
 
   constructor(props: DecisionStateProps) {
-    const itemStateList = props.decision.data.map(
-      (item) => new PointState(item, { position: item, id: item.id, ruleList: item.rules })
-    )
+    const itemStateList = props.decision.data.map((item) => new PointState(item, { position: item, id: item.id }))
 
     super({ ...props, itemStateList })
 

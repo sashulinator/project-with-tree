@@ -1,6 +1,6 @@
 import { Rule } from '~/entities/rule'
 import { Id, assertDefined } from '~/utils/core'
-import { remove } from '~/utils/dictionary'
+// import { remove } from '~/utils/dictionary'
 import { EmitterableProp } from '~/utils/emitter'
 
 export class RuleListProp<N extends string> extends EmitterableProp<N, Rule[]> {
@@ -20,8 +20,8 @@ export class RuleListProp<N extends string> extends EmitterableProp<N, Rule[]> {
   }
 
   removeLink = (id: Id): void => {
-    const rule = this.get(id)
-    const newRule = remove(rule, 'pointId')
-    this.update(newRule)
+    // const rule = this.get(id)
+    // const newRule = remove(rule, 'pointId')
+    // this.update(newRule)
   }
 }

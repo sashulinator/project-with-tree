@@ -20,17 +20,7 @@ export function Editor(props: EditorProps): JSX.Element {
 
   return (
     <Board state={props.chartState}>
-      <PaintingPanel translate={props.chartState.translate.value} scale={props.chartState.scale.value}>
-        {props.chartState.editingLink.value && (
-          <Link
-            sourceState={props.chartState.editingLink.value.sourceState}
-            targetState={props.chartState.editingLink.value.targetState}
-            targetOffset={null}
-            sourceOffset={getSourceOffset(props.chartState.editingLink.value?.sourceRuleId)}
-            decisionState={props.chartState}
-          />
-        )}
-      </PaintingPanel>
+      {/* <PaintingPanel translate={props.chartState.translate.value} scale={props.chartState.scale.value}></PaintingPanel>
       <PaintingPanel translate={props.chartState.translate.value} scale={props.chartState.scale.value}>
         {itemStates.flatMap((state) => {
           return state.ruleList.value.map((rule) => {
@@ -47,7 +37,7 @@ export function Editor(props: EditorProps): JSX.Element {
             )
           })
         })}
-      </PaintingPanel>
+      </PaintingPanel> */}
       <PaintingPanel translate={props.chartState.translate.value} scale={props.chartState.scale.value}>
         {itemStates.map((state) => {
           return <SiftNode key={state.point.id} state={state} decisionState={props.chartState} />
