@@ -1,4 +1,4 @@
-import { Node, NodeProps } from '~/entities/decision'
+import { Node, NodeProps } from '~/entities/point'
 
 import { RuleSet } from '../../rule-set'
 

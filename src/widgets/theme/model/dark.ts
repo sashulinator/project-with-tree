@@ -1,6 +1,6 @@
 import clr from 'color'
 
-import { darkTheme as pointNode } from '~/entities/decision/ui/node/themes/dark'
+import { darkTheme as pointNode } from '~/entities/point/ui/node/themes/dark'
 import { dark } from '~/shared/theme/dark'
 import { ButtonCSSVars } from '~/ui/button/types/css-vars'
 import { darkTheme as textInput } from '~/ui/text-input/themes/dark'

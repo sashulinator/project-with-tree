@@ -1,6 +1,5 @@
 // import Callout, { top } from '~/ui/callout'
-import { Node } from '~/entities/decision'
-import { emptyFn } from '~/utils/function/empty-fn'
+import { Node } from '~/entities/point'
 
 import { boardState } from '../mocks/board-state'
 import { state } from '../mocks/node-state'
