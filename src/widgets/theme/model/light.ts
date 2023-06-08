@@ -1,5 +1,6 @@
 import clr from 'color'
 
+import { lightTheme as pointNode } from '~/entities/point/ui/node/themes/light'
 import { ButtonCSSVars } from '~/ui/button/types/css-vars'
 import { ListCSSVars } from '~/ui/list/types/css-vars'
 import { lightTheme as textInput } from '~/ui/text-input/themes/light'
@@ -73,5 +74,6 @@ export const light: Theme & ListCSSVars & ButtonCSSVars = {
   button_color__outlined,
   button_border__outlined,
 
+  ...pointNode,
   ...textInput,
 }

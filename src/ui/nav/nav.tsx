@@ -31,6 +31,10 @@ export default function Nav(): JSX.Element {
         <ol>
           <Link to={routes.uiNode.path}>Node</Link>
         </ol>
+        entities
+        <ol>
+          <Link to={routes.pointNode.path}>PointNode</Link>
+        </ol>
       </ul>
     </nav>
   )

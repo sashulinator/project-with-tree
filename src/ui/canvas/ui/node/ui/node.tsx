@@ -2,6 +2,7 @@ import './node.css'
 
 import clsx from 'clsx'
 import React, { useRef } from 'react'
+import useMeasure from 'react-use-measure'
 
 import { IsDragEvent, Position } from '~/abstract/canvas'
 
@@ -9,8 +10,10 @@ import { Item } from '../../item'
 
 export interface NodeProps extends React.HTMLAttributes<SVGForeignObjectElement> {
   nodeTitle: React.ReactNode
+  nodeDescription?: React.ReactNode | undefined
   width: number
   height: number
+  left?: React.ReactNode
   position: Position
   lastPosition: Position
   scale: number
@@ -26,17 +29,23 @@ export interface NodeProps extends React.HTMLAttributes<SVGForeignObjectElement>
  * 3. Стили позиционирования
  */
 export function Node(props: NodeProps): JSX.Element {
-  const { nodeTitle, ...foreignObjectProps } = props
+  const { nodeTitle, nodeDescription, left, ...foreignObjectProps } = props
 
   const titleRef = useRef(null)
+  const [containerRef, { height: containerHeight }] = useMeasure()
+  const height = Math.max(containerHeight, foreignObjectProps.height)
 
   return (
-    <Item className={clsx(props.className, 'ui-Node')} {...foreignObjectProps} isDrag={isDrag}>
-      <div className={clsx('contaner')}>
-        <div className={clsx('title')} ref={titleRef}>
-          {nodeTitle}
+    <Item {...foreignObjectProps} height={height} className={clsx(props.className, 'ui-Node')} isDrag={isDrag}>
+      <div className={clsx('container')} ref={containerRef}>
+        {left}
+        <div className='content'>
+          <div className={clsx('title')} ref={titleRef}>
+            {nodeTitle}
+          </div>
+          <div className={clsx('description')}>{nodeDescription}</div>
+          {props.children}
         </div>
-        {props.children}
       </div>
     </Item>
   )

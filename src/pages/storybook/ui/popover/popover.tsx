@@ -45,7 +45,7 @@ export default function PopoverPage(): JSX.Element {
                 onChange={toggleIsMainContainerRelative}
               />
               <label htmlFor='isMainContainerRelative' className='label'>
-                Main contaner position &apos;relative&apos;
+                Main container position &apos;relative&apos;
               </label>
             </div>
             <div>

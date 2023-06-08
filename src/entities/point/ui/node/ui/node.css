@@ -1,62 +1,22 @@
-.PointNode {
-  background-color: var(--pointNode_bg);
-  border-width: 1px;
-  border-style: solid;
-  border-color: transparent;
-  border-radius: 0.5rem;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  flex-direction: column;
-  align-items: stretch;
-  color: var(--color);
-  box-shadow: rgba(9, 30, 66, 0.25) 0px 4px 8px -2px, rgba(9, 30, 66, 0.08) 0px 0px 0px 1px;
-}
-
-.PointNode.--selected {
-  border-color: var(--primary);
-}
-
-.PointNode > .name {
-  cursor: grab;
+.point-Node {
   user-select: none;
-  min-height: 3rem;
-  display: flex;
-  align-items: flex-end;
-  margin-bottom: 0.5rem;
-  padding: 0.5rem;
-  border-top-left-radius: 0.5rem;
-  border-top-right-radius: 0.5rem;
-  background-color: var(--bg);
 }
 
-.PointNode > .links {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  padding: 0.5rem;
-  word-break: break-all;
-}
-
-.PointNode > .add-rule {
-  padding: 0.5rem;
-}
-
-/* RuleSet */
-.PointNode > .links > .RuleSet {
-  display: flex;
-  text-align: left;
-  justify-content: space-between;
-  padding: 5px;
-  min-height: 2rem;
-  background-color: var(--bg);
-  margin-bottom: 2px;
-  border-radius: 2px;
+.point-Node > .container {
+  background: var(--pointNode_bg);
+  border-radius: 8px;
   width: 100%;
+  border: 0;
 }
 
-.PointNode > .links > .RuleSet > .addLink {
-  top: 50%;
-  right: -14px;
-  transform: translateY(-50%);
+.point-Node > .container > .content > .title {
+  padding: 1.2rem 0.8rem 0.6rem 0.8rem;
+  box-sizing: border-box;
+  border-width: 0;
+}
+
+.point-Node > .container > .content > .description:not(:empty) {
+  padding: 0 0.8rem 0.8rem 0.8rem;
+  box-sizing: border-box;
+  font-size: 0.8em;
 }

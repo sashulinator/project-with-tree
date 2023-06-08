@@ -1,5 +1,5 @@
 import { PaintingPanel } from '~/abstract/canvas'
-import { CanvasState, Node } from '~/entities/decision'
+import { CanvasState } from '~/entities/decision'
 import { Link } from '~/entities/point'
 import { SiftNode } from '~/entities/point/ui/node.sift'
 import { Board } from '~/ui/canvas/ui/board'
@@ -76,6 +76,8 @@ export function Editor(props: EditorProps): JSX.Element {
     props.chartState.emitter.on('setItemStates', update)
     props.chartState.emitter.on('setItemStates', update)
     props.chartState.emitter.on('setEditingLink', update)
+    props.chartState.emitter.on('setTranslate', update)
+    props.chartState.emitter.on('setScale', update)
   }
 }
 

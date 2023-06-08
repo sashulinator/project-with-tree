@@ -35,8 +35,8 @@ export class ItemState<E extends ItemEvents> implements Emitterable<Emitter<E>> 
 
     this.position = new PositionProp('setPosition', props.position, this)
 
-    this.width = new EmitterableProp('setWidth', props.width || 0, this)
+    this.width = new EmitterableProp('setWidth', props.width || 200, this)
 
-    this.height = new EmitterableProp('setHeight', props.height || 0, this)
+    this.height = new EmitterableProp('setHeight', props.height || 100, this)
   }
 }

@@ -5,5 +5,3 @@ export * from '../point/types/point'
 export * from './ui/board'
 
 export * from './ui/editor'
-
-export * from './ui/node'

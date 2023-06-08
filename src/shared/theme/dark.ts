@@ -5,8 +5,8 @@ import { Theme } from '~/widgets/theme/types/theme'
 
 const primary = clr('#027ffe')
 const color = clr('#b2bac2')
-const bg = clr('#0a1929')
-const bgSecondary = clr('#011e3c')
+const bg = clr('#202124')
+const bgSecondary = clr('#303134')
 
 export const dark = {
   primary,
