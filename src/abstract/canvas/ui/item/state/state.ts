@@ -27,6 +27,6 @@ export class ItemState<E extends ItemEvents> implements Emitterable<Emitter<E>> 
 
     this.ref = new Prop<'ref', null | HTMLElement>('ref', null, this.emitter)
 
-    this.position = new PositionProp('setPosition', props.position, this)
+    this.position = new PositionProp('setPosition', props.position, this.emitter)
   }
 }

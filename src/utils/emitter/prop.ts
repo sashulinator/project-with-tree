@@ -2,6 +2,7 @@ import { Any } from '../core'
 import { Emitter } from './types/emitter'
 
 /**
+ * @final
  * Пропс для Emitterable
  * 1. Подписывается на вызов события по изменению value
  * 2. Вызывает событие при изменении value
