@@ -3,8 +3,8 @@ import { ForwardedRef, forwardRef } from 'react'
 
 export interface ItemProps extends React.HTMLAttributes<SVGForeignObjectElement> {
   children: React.ReactNode
-  height: number
-  width: number
+  height?: number | undefined
+  width?: number | undefined
   x: number
   y: number
 }

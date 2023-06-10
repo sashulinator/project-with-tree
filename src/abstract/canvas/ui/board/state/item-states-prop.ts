@@ -23,7 +23,8 @@ export class ItemStatesProp<N extends string, S extends ItemState<Any>> extends 
     }
   }
 
-  emit = <E extends EventNames>(id: Id, eventName: E, event: Events[E]): void => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  emit = <E extends EventNames>(id: Id, eventName: E, event: any): void => {
     const state = this.get(id)
     state.emitter.emit(eventName, event)
   }

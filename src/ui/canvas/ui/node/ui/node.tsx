@@ -11,8 +11,8 @@ import { Item } from '../../item'
 export interface NodeProps extends React.HTMLAttributes<SVGForeignObjectElement> {
   nodeTitle: React.ReactNode
   nodeDescription?: React.ReactNode | undefined
-  width: number
-  height: number
+  width?: number | undefined
+  height?: number | undefined
   left?: React.ReactNode
   position: Position
   lastPosition: Position
@@ -32,8 +32,7 @@ export function Node(props: NodeProps): JSX.Element {
   const { nodeTitle, nodeDescription, left, ...foreignObjectProps } = props
 
   const titleRef = useRef(null)
-  const [containerRef, { height: containerHeight }] = useMeasure()
-  const height = Math.max(containerHeight, foreignObjectProps.height)
+  const [containerRef, { height }] = useMeasure()
 
   return (
     <Item {...foreignObjectProps} height={height} className={clsx(props.className, 'ui-Node')} isDrag={isDrag}>

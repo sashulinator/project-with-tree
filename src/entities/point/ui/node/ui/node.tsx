@@ -29,8 +29,6 @@ export function Node(props: NodeProps): JSX.Element {
       className={clsx('point-Node', isSelected && '--selected')}
       nodeTitle={props.state.point.name}
       nodeDescription={props.state.point.description}
-      width={props.state.width.value}
-      height={props.state.height.value}
       position={props.state.position.value}
       lastPosition={props.state.position.last}
       scale={props.decisionState.scale.value}

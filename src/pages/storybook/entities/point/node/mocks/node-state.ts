@@ -10,4 +10,4 @@ export const point: Point = {
   children: ['id3'],
 }
 
-export const state = new PointState(point, { id: '1', height: 100, width: 200, position: { x: 10, y: 40 } })
+export const state = new PointState(point, { id: '1', position: { x: 10, y: 40 } })

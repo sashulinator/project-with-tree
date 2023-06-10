@@ -6,8 +6,8 @@ import { Item as AbstractItem, IsDragEvent, ItemDraggable } from '~/abstract/can
 import { fns } from '~/utils/function'
 
 export interface CanvasItemProps extends React.HTMLAttributes<SVGForeignObjectElement> {
-  width: number
-  height: number
+  width?: number | undefined
+  height?: number | undefined
   position: Position
   lastPosition: Position
   scale: number

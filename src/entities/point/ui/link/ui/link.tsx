@@ -37,7 +37,7 @@ export function Link(props: ChartLinkProps): JSX.Element | null {
     props.sourceState?.emitter.on('setHeight', update)
     props.targetState?.emitter.on('setWidth', update)
     props.sourceState?.emitter.on('setWidth', update)
-    props.sourceState?.emitter.on('setRef', update)
+    props.sourceState?.emitter.on('ref', update)
   }
 }
 
