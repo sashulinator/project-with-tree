@@ -1,7 +1,7 @@
 import { Position, PositionProp } from '~/abstract/canvas'
 import { Emitter } from '~/lib/emitter'
 import { Any } from '~/utils/core'
-import { Emitterable, EmitterableProp } from '~/utils/emitter'
+import { Emitterable, EmitterableProp, Prop } from '~/utils/emitter'
 
 import { ItemState } from '../../item'
 import { BoardEvents } from './events'
@@ -20,7 +20,7 @@ export class BoardState<TEvents extends BoardEvents, TItemState extends ItemStat
 
   translate: PositionProp<'setTranslate'>
 
-  scale: EmitterableProp<'setScale', number>
+  scale: Prop<'setScale', number>
 
   itemStates: ItemStatesProp<'setItemStates', TItemState>
 
@@ -29,7 +29,7 @@ export class BoardState<TEvents extends BoardEvents, TItemState extends ItemStat
 
     this.translate = new PositionProp('setTranslate', props.translate, this.emitter)
 
-    this.scale = new EmitterableProp('setScale', props.scale, this)
+    this.scale = new Prop('setScale', props.scale, this.emitter)
 
     this.itemStates = new ItemStatesProp('setItemStates', props.itemStateList, this)
   }
