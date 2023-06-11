@@ -20,16 +20,12 @@ export class DecisionState extends BoardState<Events, PointState> {
 
   canvasBoardRef: Prop<'setCanvasBoardRef', null | SVGSVGElement>
 
-  paintingPanelRef: Prop<'setPaintingPanelRef', null | SVGGElement>
-
   editingLink: EditingLinkProp<'setEditingLink'>
 
   constructor(props: DecisionStateProps) {
     const itemStateList = props.decision.data.map((item) => new PointState(item, { position: item, id: item.id }))
 
     super({ ...props, itemStateList })
-
-    this.paintingPanelRef = new Prop<'setPaintingPanelRef', null | SVGGElement>('setPaintingPanelRef', null, this)
 
     this.canvasBoardRef = new Prop<'setCanvasBoardRef', null | SVGSVGElement>('setCanvasBoardRef', null, this)
 

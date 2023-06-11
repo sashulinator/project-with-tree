@@ -27,8 +27,8 @@ export class Prop<TEventName extends string, TValue, TEmitter extends Emitter<An
    */
   private _value: TValue
 
-  constructor(eventName: TEventName, value: TValue, emitterable: TEmitter) {
-    this.emitter = emitterable
+  constructor(eventName: TEventName, value: TValue, emitter: TEmitter) {
+    this.emitter = emitter
 
     this.eventName = eventName
 
