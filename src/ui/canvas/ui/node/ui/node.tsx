@@ -2,7 +2,6 @@ import './node.css'
 
 import clsx from 'clsx'
 import React, { useRef } from 'react'
-import useMeasure from 'react-use-measure'
 
 import { IsDragEvent, Position } from '~/abstract/canvas'
 
@@ -32,11 +31,10 @@ export function Node(props: NodeProps): JSX.Element {
   const { nodeTitle, nodeDescription, left, ...foreignObjectProps } = props
 
   const titleRef = useRef(null)
-  const [containerRef, { height }] = useMeasure()
 
   return (
-    <Item {...foreignObjectProps} height={height} className={clsx(props.className, 'ui-Node')} isDrag={isDrag}>
-      <div className={clsx('container')} ref={containerRef}>
+    <Item {...foreignObjectProps} className={clsx(props.className, 'ui-Node')} isDrag={isDrag}>
+      <div className={clsx('container')}>
         {left}
         <div className='content'>
           <div className={clsx('title')} ref={titleRef}>

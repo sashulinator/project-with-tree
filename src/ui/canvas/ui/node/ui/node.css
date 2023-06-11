@@ -1,6 +1,7 @@
 .ui-Node > .container {
   border: 1px solid black;
   display: flex;
+  width: 200px !important;
 }
 
 .ui-Node > .container > .content > .title {
