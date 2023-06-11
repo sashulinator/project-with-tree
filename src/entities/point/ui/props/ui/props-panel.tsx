@@ -1,10 +1,10 @@
 // import uuid from 'uuid-random'
-import { CanvasState as ChartState } from '~/entities/decision'
+import { DecisionState } from '~/entities/decision'
 
 // import { PointState } from '~/widgets/chart-item'
 
 interface PropsPanelPropsProps {
-  chartState: ChartState
+  chartState: DecisionState
 }
 
 export default function PropsPanelProps(props: PropsPanelPropsProps): JSX.Element {

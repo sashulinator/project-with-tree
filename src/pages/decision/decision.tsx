@@ -2,7 +2,7 @@ import './decision.css'
 
 import { useEffect, useMemo } from 'react'
 
-import { CanvasState } from '~/entities/decision'
+import { DecisionState } from '~/entities/decision'
 import { decision } from '~/entities/decision/mock'
 import { ActionHistory } from '~/utils/action-history'
 import { useEventListener } from '~/utils/hooks'
@@ -16,7 +16,7 @@ import { listenHistory } from './lib/listen-history'
 export default function DecisionPage(): JSX.Element {
   // const { id } = useParams()
 
-  const state = useMemo(() => new CanvasState({ translate: { x: 0, y: 0 }, scale: 1, decision }), [])
+  const state = useMemo(() => new DecisionState({ translate: { x: 0, y: 0 }, scale: 1, decision }), [])
   const history = useMemo(() => new ActionHistory(), [])
 
   useEffect(() => {
@@ -36,7 +36,7 @@ export default function DecisionPage(): JSX.Element {
   return (
     <main className='DecisionPage'>
       <ThemeDropdown />
-      <Editor chartState={state} history={history} />
+      <Editor decision={state} history={history} />
     </main>
   )
 

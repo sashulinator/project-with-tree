@@ -13,7 +13,7 @@ export interface DecisionStateProps {
   scale: number
 }
 
-export class CanvasState extends BoardState<Events, PointState> {
+export class DecisionState extends BoardState<Events, PointState> {
   selected: SelectedProp<'setSelected'>
 
   decision: Decision

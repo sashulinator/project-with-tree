@@ -1,6 +1,5 @@
 import { PaintingPanel } from '~/abstract/canvas'
-import { CanvasState } from '~/entities/decision'
-import { Link } from '~/entities/point'
+import { DecisionState } from '~/entities/decision'
 import { SiftNode } from '~/entities/point/ui/node.sift'
 import { Board } from '~/ui/canvas/ui/board'
 import { ActionHistory } from '~/utils/action-history'
@@ -9,17 +8,17 @@ import { getOffsetInElement } from '~/utils/dom'
 import { useUpdate } from '~/utils/hooks'
 
 interface EditorProps {
-  chartState: CanvasState
+  decision: DecisionState
   history: ActionHistory
 }
 
 export function Editor(props: EditorProps): JSX.Element {
-  const itemStates = Object.values(props.chartState.itemStates.value)
+  const itemStates = Object.values(props.decision.itemStates.value)
 
   useUpdate(updateOnEvents)
 
   return (
-    <Board state={props.chartState}>
+    <Board state={props.decision}>
       {/* <PaintingPanel translate={props.chartState.translate.value} scale={props.chartState.scale.value}></PaintingPanel>
       <PaintingPanel translate={props.chartState.translate.value} scale={props.chartState.scale.value}>
         {itemStates.flatMap((state) => {
@@ -38,9 +37,9 @@ export function Editor(props: EditorProps): JSX.Element {
           })
         })}
       </PaintingPanel> */}
-      <PaintingPanel translate={props.chartState.translate.value} scale={props.chartState.scale.value}>
+      <PaintingPanel translate={props.decision.translate.value} scale={props.decision.scale.value}>
         {itemStates.map((state) => {
-          return <SiftNode key={state.point.id} state={state} decisionState={props.chartState} />
+          return <SiftNode key={state.point.id} state={state} decisionState={props.decision} />
         })}
       </PaintingPanel>
     </Board>
@@ -48,26 +47,26 @@ export function Editor(props: EditorProps): JSX.Element {
 
   // Private
 
-  function getSourceOffset(id: Id | undefined): Offset | null {
-    const sourceState = props.chartState.editingLink.value?.sourceState
-    if (!id) return null
-    const srcLinkEl = sourceState?.ref.value?.querySelector(`[data-id="${id.toString()}"]`)
-    if (!srcLinkEl || !sourceState) return null
-    const srcLinkOffset = getOffsetInElement(srcLinkEl, sourceState?.ref.value)
-    const srcLinkRect = srcLinkEl?.getBoundingClientRect() || { height: 0 }
+  // function getSourceOffset(id: Id | undefined): Offset | null {
+  //   const sourceState = props.decision.editingLink.value?.sourceState
+  //   if (!id) return null
+  //   const srcLinkEl = sourceState?.ref.value?.querySelector(`[data-id="${id.toString()}"]`)
+  //   if (!srcLinkEl || !sourceState) return null
+  //   const srcLinkOffset = getOffsetInElement(srcLinkEl, sourceState?.ref.value)
+  //   const srcLinkRect = srcLinkEl?.getBoundingClientRect() || { height: 0 }
 
-    return {
-      left: sourceState.width.value,
-      top: (srcLinkOffset.top + srcLinkRect.height / 2) / props.chartState.scale.value,
-    }
-  }
+  //   return {
+  //     left: sourceState.width.value,
+  //     top: (srcLinkOffset.top + srcLinkRect.height / 2) / props.decision.scale.value,
+  //   }
+  // }
 
   function updateOnEvents(update: () => void): void {
-    props.chartState.emitter.on('setItemStates', update)
-    props.chartState.emitter.on('setItemStates', update)
-    props.chartState.emitter.on('setEditingLink', update)
-    props.chartState.emitter.on('setTranslate', update)
-    props.chartState.emitter.on('setScale', update)
+    props.decision.emitter.on('setItemStates', update)
+    props.decision.emitter.on('setItemStates', update)
+    props.decision.emitter.on('setEditingLink', update)
+    props.decision.emitter.on('setTranslate', update)
+    props.decision.emitter.on('setScale', update)
   }
 }
 
