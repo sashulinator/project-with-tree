@@ -3,12 +3,12 @@ import './node.css'
 import clsx from 'clsx'
 
 import { IsDragEvent } from '~/abstract/canvas'
-import { PointState } from '~/entities/point/ui/node/state'
+import { NodeState } from '~/entities/point/ui/node/state'
 import { Node as UINode } from '~/ui/canvas'
 import { useUpdate } from '~/utils/hooks'
 
 export interface NodeProps {
-  state: PointState
+  state: NodeState
   scale: number
   left?: React.ReactNode
   children?: React.ReactNode

@@ -2,7 +2,7 @@ import { Emitter } from '~/lib/emitter'
 import { toDictionary } from '~/utils/list'
 
 import { Any, Id } from '../core'
-import { Dictionary as IDictionary, get } from '../dictionary'
+import { Dictionary as IDictionary, find, get } from '../dictionary'
 import { AnyEvent, Emitter as IEmitter } from './types/emitter'
 import { Emitterable } from './types/emitterable'
 
@@ -55,6 +55,10 @@ export class EmitterableDictionary<E extends AnyEvent, S extends IEmitter<Any>> 
 
   get = (id: Id | undefined): S => {
     return get(this.items, id)
+  }
+
+  find = (id: Id | undefined): S | undefined => {
+    return find(this.items, id)
   }
 
   add = (item: S) => {

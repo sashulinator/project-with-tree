@@ -34,6 +34,7 @@ export default function NodePage(): JSX.Element {
                 scale={1}
                 onMove={(): void => console.log('move!')}
                 isDrag={emptyFn}
+                left={<div>left</div>}
               >
                 Children
               </Node>

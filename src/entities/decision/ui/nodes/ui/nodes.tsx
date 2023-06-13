@@ -1,17 +1,15 @@
-import React from 'react'
-
-import { PointState, SiftNode } from '~/entities/point'
+import { NodeState, SiftNode } from '~/entities/point'
 import { LinkState } from '~/entities/rule'
 import { Any } from '~/utils/core'
 import { EmitterableDictionary } from '~/utils/emitter/dictionary'
 
-interface LinksProps {
+interface NodesProps {
   scale: number
   linkStates: EmitterableDictionary<Any, LinkState<Any>>
-  nodeStates: EmitterableDictionary<Any, PointState>
+  nodeStates: EmitterableDictionary<Any, NodeState>
 }
 
-export default function Links(props: LinksProps): JSX.Element {
+export function Nodes(props: NodesProps): JSX.Element {
   return (
     <>
       {props.nodeStates.values().map((nodeState) => {

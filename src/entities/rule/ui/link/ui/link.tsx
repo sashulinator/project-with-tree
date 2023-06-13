@@ -1,27 +1,27 @@
-import { EditorState } from '~/entities/decision'
-import { PointState } from '~/entities/point/ui/node/state'
+import { NodeState } from '~/entities/point/ui/node/state'
 import { Link as UILink } from '~/ui/canvas'
-import { Offset } from '~/utils/core'
+import { Offset, Position } from '~/utils/core'
 import { useForceUpdate, useOnMount, useUpdate } from '~/utils/hooks'
 
 export interface ChartLinkProps extends React.HTMLAttributes<SVGPathElement> {
-  decisionState: EditorState
-  targetState?: PointState | undefined
-  sourceState?: PointState | undefined
+  scale: number
+  canvasTranslate: Position
+  targetState?: NodeState | undefined
+  sourceState?: NodeState | undefined
   targetOffset: Offset | null
   sourceOffset: Offset | null
 }
 
 export function Link(props: ChartLinkProps): JSX.Element | null {
-  const { decisionState, targetState, sourceState, ...pathProps } = props
+  const { scale, canvasTranslate, targetState, sourceState, ...pathProps } = props
 
   useOnMount(useForceUpdate())
   useUpdate(subscribeOnUpdates)
 
   return (
     <UILink
-      scale={decisionState.scale.value}
-      canvasTranslate={decisionState.translate.value}
+      scale={scale}
+      canvasTranslate={canvasTranslate}
       sourcePosition={sourceState?.position.value}
       targetPosition={targetState?.position.value}
       {...pathProps}

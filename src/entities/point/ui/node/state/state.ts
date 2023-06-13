@@ -1,21 +1,20 @@
-import { ItemState, ItemStateProps } from '~/abstract/canvas/ui/item/state'
+import { ItemState } from '~/abstract/canvas/ui/item/state'
 import { Point } from '~/entities/point'
-import { Id } from '~/utils/core'
 
 import { Events } from './events'
 
 // import { RuleListProp } from './rule-list-prop'
 
-export interface StateProps {
+export interface NodeStateProps {
   point: Point
 }
 
-export class PointState extends ItemState<Events> {
+export class NodeState extends ItemState<Events> {
   point: Point
 
   // ruleList: RuleListProp<'setRuleList'>
 
-  constructor(props: StateProps) {
+  constructor(props: NodeStateProps) {
     super({ id: props.point.id, position: props.point })
 
     this.point = props.point
