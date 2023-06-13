@@ -15,9 +15,7 @@ type Events<I> = {
 /**
  * Позволяет производить CRUD операции и подписывает `emitter` на все события `emitter`a элемента
  */
-export class EmitterableDictionary<E extends AnyEvent, S extends Emitterable<IEmitter<Any>>>
-  implements Emitterable<IEmitter<Any>>
-{
+export class EmitterableDictionary<E extends AnyEvent, S extends IEmitter<Any>> implements Emitterable<IEmitter<Any>> {
   emitter: IEmitter<E & Events<S>>
 
   items: IDictionary<S>
@@ -39,7 +37,7 @@ export class EmitterableDictionary<E extends AnyEvent, S extends Emitterable<IEm
   private subscribeToItemEvents(emitterables: S[]) {
     for (let index = 0; index < emitterables.length; index++) {
       const item = emitterables[index]
-      item.emitter.onAll((eventName, event) => {
+      item.onAll((eventName, event) => {
         this.emitter.emit(eventName, { itemId: this.getKey(item), ...event })
       })
     }
@@ -49,6 +47,10 @@ export class EmitterableDictionary<E extends AnyEvent, S extends Emitterable<IEm
     this.emitter.on('add', (event) => (this.items[this.getKey(event.item)] = event.item))
     this.emitter.on('update', (event) => (this.items[this.getKey(event.item)] = event.item))
     this.emitter.on('remove', (event) => delete this.items[event.key])
+  }
+
+  values(): S[] {
+    return Object.values(this.items)
   }
 
   get = (id: Id | undefined): S => {

@@ -11,5 +11,4 @@ export interface Point<P = Dictionary<Any>> {
   y: number
   componentName?: string
   props?: P
-  children?: Id[]
 }

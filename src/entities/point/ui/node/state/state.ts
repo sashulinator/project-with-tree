@@ -1,13 +1,13 @@
 import { ItemState, ItemStateProps } from '~/abstract/canvas/ui/item/state'
 import { Point } from '~/entities/point'
-import { Rule } from '~/entities/rule'
+import { Id } from '~/utils/core'
 
 import { Events } from './events'
 
 // import { RuleListProp } from './rule-list-prop'
 
-export interface StateProps extends ItemStateProps {
-  ruleList?: Rule[] | undefined
+export interface StateProps {
+  point: Point
 }
 
 export class PointState extends ItemState<Events> {
@@ -15,10 +15,10 @@ export class PointState extends ItemState<Events> {
 
   // ruleList: RuleListProp<'setRuleList'>
 
-  constructor(point: Point, props: StateProps) {
-    super(props)
+  constructor(props: StateProps) {
+    super({ id: props.point.id, position: props.point })
 
-    this.point = point
+    this.point = props.point
 
     // this.ruleList = new RuleListProp('setRuleList', props.ruleList || [], this)
   }

@@ -1,21 +1,35 @@
-// import { PaintingPanel } from '~/abstract/canvas'
 import { useEffect, useMemo } from 'react'
 
+import { PaintingPanel } from '~/abstract/canvas'
 import { Decision, EditorState } from '~/entities/decision'
+import { PointState } from '~/entities/point'
+import { LinkState, Rule } from '~/entities/rule'
 // import { SiftNode } from '~/entities/point/ui/node.sift'
 import { Board } from '~/ui/canvas'
 import { ActionHistory } from '~/utils/action-history'
+import { EmitterableDictionary } from '~/utils/emitter/dictionary'
 import { useEventListener, useUpdate } from '~/utils/hooks'
 
 import { listenHistory } from '../lib/listen-history'
+import Links from './links'
 
 interface EditorProps {
   decision: Decision
+  ruleList: Rule[]
 }
 
 export function Editor(props: EditorProps): JSX.Element {
   const editorState = useMemo(() => new EditorState({ translate: { x: 0, y: 0 }, scale: 1 }), [])
+
   const history = useMemo(() => new ActionHistory(), [])
+
+  const linkStateList = useMemo(() => props.ruleList.map((l) => new LinkState({ id: l.id })), [])
+
+  const nodeStateList = useMemo(() => props.decision.data.map((point) => new PointState({ point })), [])
+
+  const linkStates = useMemo(() => new EmitterableDictionary(linkStateList, (l) => l.id.toString()), [])
+
+  const nodeStates = useMemo(() => new EmitterableDictionary(nodeStateList, (l) => l.id.toString()), [])
 
   useUpdate(updateOnEvents)
 
@@ -35,24 +49,10 @@ export function Editor(props: EditorProps): JSX.Element {
 
   return (
     <Board state={editorState}>
-      {/* <PaintingPanel translate={props.chartState.translate.value} scale={props.chartState.scale.value}></PaintingPanel>
-      <PaintingPanel translate={props.chartState.translate.value} scale={props.chartState.scale.value}>
-        {itemStates.flatMap((state) => {
-          return state.ruleList.value.map((rule) => {
-            const targetState = props.chartState.itemStates.get(rule.pointId)
-            return (
-              <Link
-                sourceOffset={getSourceOffset(state.id)}
-                targetOffset={{ top: 0, left: 0 }}
-                key={state.point.id}
-                sourceState={state}
-                targetState={targetState}
-                decisionState={props.chartState}
-              />
-            )
-          })
-        })}
-      </PaintingPanel> */}
+      <PaintingPanel translate={editorState.translate.value} scale={editorState.scale.value}>
+        <Links linkStates={linkStates} nodeStates={nodeStates} />
+      </PaintingPanel>
+
       {/* <PaintingPanel translate={props.decision.translate.value} scale={props.decision.scale.value}>
         {itemStates.map((state) => {
           return <SiftNode key={state.point.id} state={state} decisionState={props.decision} />

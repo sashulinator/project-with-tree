@@ -4,6 +4,7 @@ import { useEffect, useMemo } from 'react'
 
 import { EditorState } from '~/entities/decision'
 import { decision } from '~/entities/decision/mock'
+import { ruleList } from '~/mocks/rule-list'
 import { ActionHistory } from '~/utils/action-history'
 import { useEventListener } from '~/utils/hooks'
 import { ThemeDropdown } from '~/widgets/theme'
@@ -19,7 +20,7 @@ export default function DecisionPage(): JSX.Element {
   return (
     <main className='DecisionPage'>
       <ThemeDropdown />
-      <Editor decision={decision} />
+      <Editor decision={decision} ruleList={ruleList} />
     </main>
   )
 

@@ -14,7 +14,6 @@ export const decision: Decision = {
       props: {
         condition: 'age > 10',
       },
-      children: ['id2'],
     },
     {
       type: 'MAIN',
@@ -22,7 +21,6 @@ export const decision: Decision = {
       name: 'Базовые условия',
       x: 450,
       y: 200,
-      children: ['id3'],
     },
     {
       type: 'MAIN',

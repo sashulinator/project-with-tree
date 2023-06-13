@@ -31,13 +31,13 @@ export function Link(props: ChartLinkProps): JSX.Element | null {
   // Private
 
   function subscribeOnUpdates(update: () => void): void {
-    props.targetState?.emitter.on('setPosition', update)
-    props.sourceState?.emitter.on('setPosition', update)
-    props.targetState?.emitter.on('setHeight', update)
-    props.sourceState?.emitter.on('setHeight', update)
-    props.targetState?.emitter.on('setWidth', update)
-    props.sourceState?.emitter.on('setWidth', update)
-    props.sourceState?.emitter.on('ref', update)
+    props.targetState?.on('setPosition', update)
+    props.sourceState?.on('setPosition', update)
+    props.targetState?.on('setHeight', update)
+    props.sourceState?.on('setHeight', update)
+    props.targetState?.on('setWidth', update)
+    props.sourceState?.on('setWidth', update)
+    props.sourceState?.on('ref', update)
   }
 }
 

@@ -48,9 +48,9 @@ export function Node(props: NodeProps): JSX.Element {
   }
 
   function subscribeOnUpdates(update: () => void, uns: (() => void)[]): void {
-    uns.push(props.state.emitter.on('setPosition', update))
-    uns.push(props.state.emitter.on('setWidth', update))
-    uns.push(props.state.emitter.on('setHeight', update))
+    uns.push(props.state.on('setPosition', update))
+    uns.push(props.state.on('setWidth', update))
+    uns.push(props.state.on('setHeight', update))
   }
 
   function selectOnMouseAction(e: React.MouseEvent<SVGGElement>): void {
