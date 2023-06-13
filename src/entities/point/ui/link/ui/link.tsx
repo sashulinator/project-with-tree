@@ -1,11 +1,11 @@
-import { DecisionState } from '~/entities/decision'
+import { EditorState } from '~/entities/decision'
 import { PointState } from '~/entities/point/ui/node/state'
 import { Link as UILink } from '~/ui/canvas'
 import { Offset } from '~/utils/core'
 import { useForceUpdate, useOnMount, useUpdate } from '~/utils/hooks'
 
 export interface ChartLinkProps extends React.HTMLAttributes<SVGPathElement> {
-  decisionState: DecisionState
+  decisionState: EditorState
   targetState?: PointState | undefined
   sourceState?: PointState | undefined
   targetOffset: Offset | null

@@ -1,10 +1,10 @@
-import { DecisionState, Events } from '~/entities/decision'
+import { EditorState, Events } from '~/entities/decision'
 import { ActionHistory } from '~/utils/action-history'
 import { Any } from '~/utils/core'
 
 // import { AnyEvent } from '~/utils/emitter'
 
-export function listenHistory(history: ActionHistory, state: DecisionState, eventName: string, event: Any): void {
+export function listenHistory(history: ActionHistory, state: EditorState, eventName: string, event: Any): void {
   // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
   if (event.isHistory) return
 

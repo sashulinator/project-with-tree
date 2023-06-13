@@ -4,14 +4,14 @@ import clsx from 'clsx'
 import { useState } from 'react'
 
 import { IsDragEvent } from '~/abstract/canvas'
-import { DecisionState } from '~/entities/decision'
+import { EditorState } from '~/entities/decision'
 import { PointState } from '~/entities/point/ui/node/state'
 import { Node as UINode } from '~/ui/canvas'
 import { useOnMount, useUpdate } from '~/utils/hooks'
 
 export interface NodeProps {
   state: PointState
-  decisionState: DecisionState
+  decisionState: EditorState
   left?: React.ReactNode
   children?: React.ReactNode
   isDrag?: (event: IsDragEvent) => boolean

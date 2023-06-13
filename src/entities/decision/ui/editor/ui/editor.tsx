@@ -1,20 +1,40 @@
 // import { PaintingPanel } from '~/abstract/canvas'
-import { DecisionState } from '~/entities/decision'
+import { useEffect, useMemo } from 'react'
+
+import { Decision, EditorState } from '~/entities/decision'
 // import { SiftNode } from '~/entities/point/ui/node.sift'
 import { Board } from '~/ui/canvas'
 import { ActionHistory } from '~/utils/action-history'
-import { useUpdate } from '~/utils/hooks'
+import { useEventListener, useUpdate } from '~/utils/hooks'
+
+import { listenHistory } from '../lib/listen-history'
 
 interface EditorProps {
-  decision: DecisionState
-  history: ActionHistory
+  decision: Decision
 }
 
 export function Editor(props: EditorProps): JSX.Element {
+  const editorState = useMemo(() => new EditorState({ translate: { x: 0, y: 0 }, scale: 1 }), [])
+  const history = useMemo(() => new ActionHistory(), [])
+
   useUpdate(updateOnEvents)
 
+  useEventListener('keydown', (e) => {
+    if (e.metaKey && e.key === 'z') {
+      if (e.shiftKey) {
+        history.next()
+      } else {
+        history.previous()
+      }
+    }
+  })
+
+  useEffect(() => {
+    editorState.onAll((eventName, events) => listenHistory(history, editorState, eventName, events))
+  }, [])
+
   return (
-    <Board state={props.decision}>
+    <Board state={editorState}>
       {/* <PaintingPanel translate={props.chartState.translate.value} scale={props.chartState.scale.value}></PaintingPanel>
       <PaintingPanel translate={props.chartState.translate.value} scale={props.chartState.scale.value}>
         {itemStates.flatMap((state) => {
@@ -58,8 +78,8 @@ export function Editor(props: EditorProps): JSX.Element {
   // }
 
   function updateOnEvents(update: () => void): void {
-    props.decision.on('translate', update)
-    props.decision.on('scale', update)
+    editorState.on('translate', update)
+    editorState.on('scale', update)
   }
 }
 
