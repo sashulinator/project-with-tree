@@ -12,6 +12,7 @@ import { useEventListener, useUpdate } from '~/utils/hooks'
 
 import { listenHistory } from '../lib/listen-history'
 import Links from './links'
+import Nodes from './nodes'
 
 interface EditorProps {
   decision: Decision
@@ -50,14 +51,9 @@ export function Editor(props: EditorProps): JSX.Element {
   return (
     <Board state={editorState}>
       <PaintingPanel translate={editorState.translate.value} scale={editorState.scale.value}>
-        <Links linkStates={linkStates} nodeStates={nodeStates} />
+        <Links scale={editorState.scale.value} linkStates={linkStates} nodeStates={nodeStates} />
+        <Nodes scale={editorState.scale.value} linkStates={linkStates} nodeStates={nodeStates} />
       </PaintingPanel>
-
-      {/* <PaintingPanel translate={props.decision.translate.value} scale={props.decision.scale.value}>
-        {itemStates.map((state) => {
-          return <SiftNode key={state.point.id} state={state} decisionState={props.decision} />
-        })}
-      </PaintingPanel> */}
     </Board>
   )
 

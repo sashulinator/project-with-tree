@@ -1,9 +1,16 @@
-import { Node, NodeProps } from '~/entities/point'
+import { IsDragEvent } from '~/abstract/canvas'
+import { Node, PointState } from '~/entities/point'
 
 // import { RuleSet } from '../../rule-set'
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
-export interface SiftNodeProps extends NodeProps {}
+export interface SiftNodeProps {
+  state: PointState
+  scale: number
+  left?: React.ReactNode
+  children?: React.ReactNode
+  isDrag?: (event: IsDragEvent) => boolean
+}
 
 /**
  * Node типа sift

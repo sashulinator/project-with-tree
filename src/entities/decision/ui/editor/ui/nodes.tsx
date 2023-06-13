@@ -1,7 +1,7 @@
 import React from 'react'
 
-import { PointState } from '~/entities/point'
-import { Link, LinkState } from '~/entities/rule'
+import { PointState, SiftNode } from '~/entities/point'
+import { LinkState } from '~/entities/rule'
 import { Any } from '~/utils/core'
 import { EmitterableDictionary } from '~/utils/emitter/dictionary'
 
@@ -14,8 +14,8 @@ interface LinksProps {
 export default function Links(props: LinksProps): JSX.Element {
   return (
     <>
-      {props.linkStates.values().map((l) => {
-        return <div key={l.id} />
+      {props.nodeStates.values().map((nodeState) => {
+        return <SiftNode key={nodeState.id} state={nodeState} scale={props.scale} />
       })}
     </>
   )

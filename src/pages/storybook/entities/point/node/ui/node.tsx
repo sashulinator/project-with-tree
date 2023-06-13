@@ -24,7 +24,7 @@ export default function NodePage(): JSX.Element {
 
           <div>
             <svg height='100%' width='100%' style={{ border: '1px solid red' }}>
-              <Node state={state} decisionState={boardState} left={<div>hello</div>} />
+              <Node state={state} scale={boardState.scale.value} left={<div>hello</div>} />
             </svg>
           </div>
         </div>
