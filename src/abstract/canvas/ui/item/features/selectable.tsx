@@ -20,7 +20,7 @@ export default function ItemSelectable(props: CanvasItemSelectableProps): JSX.El
   const [isSelected, select] = useState(false)
 
   useEffect(() => {
-    props.chartState.emitter.on('setSelected', ({ value }) => select(value?.includes(props.id)))
+    props.chartState.on('selected', ({ value }) => select(value?.includes(props.id)))
   })
 
   return <>{props.children({ isSelected, selectOnMouseAction })}</>

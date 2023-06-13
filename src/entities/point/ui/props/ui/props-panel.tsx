@@ -10,7 +10,6 @@ interface PropsPanelPropsProps {
 export default function PropsPanelProps(props: PropsPanelPropsProps): JSX.Element {
   return (
     <div className='PropsPanelProps'>
-      {props.chartState.decision.id}
       <button onClick={onAddVoidClick}>Add VOID node</button>
     </div>
   )

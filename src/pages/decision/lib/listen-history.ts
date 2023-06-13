@@ -1,26 +1,25 @@
-import { DecisionState, EventNames, Events } from '~/entities/decision'
+import { DecisionState, Events } from '~/entities/decision'
 import { ActionHistory } from '~/utils/action-history'
 import { Any } from '~/utils/core'
 
-export function listenHistory<E extends EventNames>(
-  history: ActionHistory,
-  state: DecisionState,
-  eventName: E,
-  event: Events[E] & { isHistory?: true }
-): void {
+// import { AnyEvent } from '~/utils/emitter'
+
+export function listenHistory(history: ActionHistory, state: DecisionState, eventName: string, event: Any): void {
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
   if (event.isHistory) return
 
-  if (eventName === 'setSelected') {
-    const prev = state.selected.previousValue
-    const redo = (): void => {
-      state.emitter.emit(eventName, { ...event, isHistory: true })
-    }
-    const undo = (): void => {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-      state.emitter.emit(eventName, { value: prev, isHistory: true } as Any)
-    }
-    history.add(redo, undo)
-  }
+  // if (eventName === 'selected') {
+  //   const prev = state.selected.previousValue
+  //   const redo = (): void => {
+  //     // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+  //     state.emit(eventName as any, { ...event, isHistory: true })
+  //   }
+  //   const undo = (): void => {
+  //     // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+  //     state.emit(eventName as any, { value: prev, isHistory: true } as Any)
+  //   }
+  //   history.add(redo, undo)
+  // }
 
   // if (eventName === 'setPosition') {
   //   const e = event as Events['setPosition']

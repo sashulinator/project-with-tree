@@ -3,7 +3,6 @@ import { Decision } from '~/entities/decision'
 import { PointState } from '~/entities/point'
 import { EmitterableProp as Prop } from '~/utils/emitter'
 
-import { EditingLinkProp } from './editing-link-prop'
 import { Events } from './events'
 import { SelectedProp } from './selected-prop'
 
@@ -13,26 +12,12 @@ export interface DecisionStateProps {
   scale: number
 }
 
-export class DecisionState extends BoardState<Events, PointState> {
-  selected: SelectedProp<'setSelected'>
-
-  decision: Decision
-
-  canvasBoardRef: Prop<'setCanvasBoardRef', null | SVGSVGElement>
-
-  editingLink: EditingLinkProp<'setEditingLink'>
+export class DecisionState extends BoardState<Events> {
+  selected: SelectedProp<'selected'>
 
   constructor(props: DecisionStateProps) {
-    const itemStateList = props.decision.data.map((item) => new PointState(item, { position: item, id: item.id }))
+    super({ ...props })
 
-    super({ ...props, itemStateList })
-
-    this.canvasBoardRef = new Prop<'setCanvasBoardRef', null | SVGSVGElement>('setCanvasBoardRef', null, this)
-
-    this.decision = props.decision
-
-    this.selected = new SelectedProp('setSelected', [], this)
-
-    this.editingLink = new EditingLinkProp('setEditingLink', null, this)
+    this.selected = new SelectedProp('selected', [], this)
   }
 }

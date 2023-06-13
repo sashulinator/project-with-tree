@@ -16,11 +16,11 @@ import { listenHistory } from './lib/listen-history'
 export default function DecisionPage(): JSX.Element {
   // const { id } = useParams()
 
-  const state = useMemo(() => new DecisionState({ translate: { x: 0, y: 0 }, scale: 1, decision }), [])
+  const decisionState = useMemo(() => new DecisionState({ translate: { x: 0, y: 0 }, scale: 1, decision }), [])
   const history = useMemo(() => new ActionHistory(), [])
 
   useEffect(() => {
-    state.emitter.onAll((eventName, events) => listenHistory(history, state, eventName, events))
+    decisionState.onAll((eventName, events) => listenHistory(history, decisionState, eventName, events))
   }, [])
 
   useEventListener('keydown', (e) => {
@@ -36,7 +36,7 @@ export default function DecisionPage(): JSX.Element {
   return (
     <main className='DecisionPage'>
       <ThemeDropdown />
-      <Editor decision={state} history={history} />
+      <Editor decision={decisionState} history={history} />
     </main>
   )
 

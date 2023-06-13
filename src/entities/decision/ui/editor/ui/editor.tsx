@@ -1,10 +1,8 @@
-import { PaintingPanel } from '~/abstract/canvas'
+// import { PaintingPanel } from '~/abstract/canvas'
 import { DecisionState } from '~/entities/decision'
-import { SiftNode } from '~/entities/point/ui/node.sift'
-import { Board } from '~/ui/canvas/ui/board'
+// import { SiftNode } from '~/entities/point/ui/node.sift'
+import { Board } from '~/ui/canvas'
 import { ActionHistory } from '~/utils/action-history'
-import { Id, Offset } from '~/utils/core'
-import { getOffsetInElement } from '~/utils/dom'
 import { useUpdate } from '~/utils/hooks'
 
 interface EditorProps {
@@ -13,8 +11,6 @@ interface EditorProps {
 }
 
 export function Editor(props: EditorProps): JSX.Element {
-  const itemStates = Object.values(props.decision.itemStates.value)
-
   useUpdate(updateOnEvents)
 
   return (
@@ -37,11 +33,11 @@ export function Editor(props: EditorProps): JSX.Element {
           })
         })}
       </PaintingPanel> */}
-      <PaintingPanel translate={props.decision.translate.value} scale={props.decision.scale.value}>
+      {/* <PaintingPanel translate={props.decision.translate.value} scale={props.decision.scale.value}>
         {itemStates.map((state) => {
           return <SiftNode key={state.point.id} state={state} decisionState={props.decision} />
         })}
-      </PaintingPanel>
+      </PaintingPanel> */}
     </Board>
   )
 
@@ -62,11 +58,8 @@ export function Editor(props: EditorProps): JSX.Element {
   // }
 
   function updateOnEvents(update: () => void): void {
-    props.decision.emitter.on('setItemStates', update)
-    props.decision.emitter.on('setItemStates', update)
-    props.decision.emitter.on('setEditingLink', update)
-    props.decision.emitter.on('setTranslate', update)
-    props.decision.emitter.on('setScale', update)
+    props.decision.on('translate', update)
+    props.decision.on('scale', update)
   }
 }
 

@@ -43,9 +43,7 @@ export function Node(props: NodeProps): JSX.Element {
   // Private
 
   function subscribeOnSelected(): () => void {
-    const unsubscribe = props.decisionState.emitter.on('setSelected', ({ value }) =>
-      select(value?.includes(props.state.id))
-    )
+    const unsubscribe = props.decisionState.on('selected', ({ value }) => select(value?.includes(props.state.id)))
     return unsubscribe
   }
 

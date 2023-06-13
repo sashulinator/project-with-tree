@@ -1,7 +1,7 @@
 import { Id } from '~/utils/core'
-import { EmitterableProp } from '~/utils/emitter'
+import { Prop } from '~/utils/emitter'
 
-export class SelectedProp<N extends string> extends EmitterableProp<N, Id[]> {
+export class SelectedProp<N extends string> extends Prop<N, Id[]> {
   // Select
   add = (value: Id): void => {
     this.value = [value]
