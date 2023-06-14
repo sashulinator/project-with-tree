@@ -1,6 +1,8 @@
 import { NodeState } from '~/entities/point'
 import { Link, LinkState } from '~/entities/rule'
-import { Any, Position } from '~/utils/core'
+import { Any, Id, Offset, Position } from '~/utils/core'
+import { getOffsetInElement } from '~/utils/dom'
+import { getStyle } from '~/utils/dom/get-style'
 import { EmitterableDictionary } from '~/utils/emitter/dictionary'
 
 interface LinksProps {
@@ -19,16 +21,35 @@ export function Links(props: LinksProps): JSX.Element {
 
         return (
           <Link
+            data-id={linkState.id}
             key={linkState.id}
             scale={props.scale}
             canvasTranslate={props.canvasTranslate}
             sourceState={source}
             targetState={target}
-            sourceOffset={{ left: 0, top: 0 }}
-            targetOffset={{ left: 0, top: 0 }}
+            sourceOffset={getOffset(linkState.id, source)}
+            targetOffset={getOffset(linkState.id, target)}
           />
         )
       })}
     </>
   )
+
+  function getOffset(id: Id | undefined, nodeState: NodeState | undefined): Offset | null {
+    if (!id) return null
+
+    const jointEl = nodeState?.ref.value?.querySelector(`[data-link-id="${id.toString()}"]`)
+
+    if (!jointEl || !nodeState) return null
+
+    const OffsetInElement = getOffsetInElement(jointEl, nodeState?.ref.value)
+    const jointRect = jointEl?.getBoundingClientRect() || { height: 0 }
+
+    const ret = {
+      left: (OffsetInElement.left + jointRect.width / 2) / props.scale,
+      top: (OffsetInElement.top + jointRect.height / 2) / props.scale,
+    }
+
+    return ret
+  }
 }

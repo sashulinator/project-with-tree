@@ -1,7 +1,7 @@
 import './node.css'
 
 import clsx from 'clsx'
-import React, { useRef } from 'react'
+import React, { ForwardedRef, forwardRef, useRef } from 'react'
 
 import { IsDragEvent, Position } from '~/abstract/canvas'
 
@@ -27,13 +27,13 @@ export interface NodeProps extends React.HTMLAttributes<SVGForeignObjectElement>
  * 2. Перетаскивание по тайтлу
  * 3. Стили позиционирования
  */
-export function Node(props: NodeProps): JSX.Element {
+export function NodeComponent(props: NodeProps, ref: ForwardedRef<SVGForeignObjectElement>): JSX.Element {
   const { nodeTitle, nodeDescription, left, ...foreignObjectProps } = props
 
   const titleRef = useRef(null)
 
   return (
-    <Item {...foreignObjectProps} className={clsx(props.className, 'ui-Node')} isDrag={isDrag}>
+    <Item {...foreignObjectProps} ref={ref} className={clsx(props.className, 'ui-Node')} isDrag={isDrag}>
       <div className={clsx('container')}>
         {left}
         <div className='content'>
@@ -54,4 +54,6 @@ export function Node(props: NodeProps): JSX.Element {
   }
 }
 
+const Node = forwardRef(NodeComponent)
 Node.displayName = 'UICanvasNode'
+export { Node }

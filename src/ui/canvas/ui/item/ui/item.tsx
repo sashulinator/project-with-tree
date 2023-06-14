@@ -1,5 +1,5 @@
 import clsx from 'clsx'
-import React from 'react'
+import React, { ForwardedRef, forwardRef } from 'react'
 
 import { Position } from '~/abstract/canvas'
 import { Item as AbstractItem, IsDragEvent, ItemDraggable } from '~/abstract/canvas/ui/item'
@@ -20,7 +20,7 @@ export interface CanvasItemProps extends React.HTMLAttributes<SVGForeignObjectEl
  * Элемент Canvas с фичами
  * 1. Перетаскивание
  */
-export function Item(props: CanvasItemProps): JSX.Element {
+export function ItemComponent(props: CanvasItemProps, ref: ForwardedRef<SVGForeignObjectElement>): JSX.Element {
   const { scale, position, lastPosition, isDrag, onMove: move, ...chartItemProps } = props
 
   return (
@@ -29,6 +29,7 @@ export function Item(props: CanvasItemProps): JSX.Element {
         return (
           <AbstractItem
             {...chartItemProps}
+            ref={ref}
             className={clsx(props.className, 'ui-CanvasItem')}
             y={position.y}
             x={position.x}
@@ -47,4 +48,6 @@ export function Item(props: CanvasItemProps): JSX.Element {
   )
 }
 
+const Item = forwardRef(ItemComponent)
 Item.displayName = 'UICanvasItem'
+export { Item }
