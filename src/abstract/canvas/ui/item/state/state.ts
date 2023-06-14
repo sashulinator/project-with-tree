@@ -14,7 +14,7 @@ export interface ItemStateProps {
 export class ItemState<E extends ItemEvents> extends Emitter<E> {
   id: Id
 
-  ref: Prop<'ref', null | HTMLElement>
+  ref: Prop<'ref', null | Element>
 
   position: PositionProp<'setPosition'>
 
@@ -23,7 +23,7 @@ export class ItemState<E extends ItemEvents> extends Emitter<E> {
 
     this.id = props.id
 
-    this.ref = new Prop<'ref', null | HTMLElement>('ref', null, this)
+    this.ref = new Prop<'ref', null | Element>('ref', null, this)
 
     this.position = new PositionProp('setPosition', props.position, this)
   }

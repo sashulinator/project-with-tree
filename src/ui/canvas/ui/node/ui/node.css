@@ -9,7 +9,6 @@
 }
 
 .ui-Node > .container > .content > .title {
-  border: 1px solid black;
   margin-bottom: 10px;
   cursor: grab;
 }

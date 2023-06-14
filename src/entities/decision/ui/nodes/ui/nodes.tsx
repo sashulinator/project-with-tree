@@ -1,4 +1,4 @@
-import { NodeState, SiftNode } from '~/entities/point'
+import { EnterNode, NodeState, SiftNode } from '~/entities/point'
 import { Any } from '~/utils/core'
 import { EmitterableDictionary } from '~/utils/emitter/dictionary'
 
@@ -14,6 +14,9 @@ export function Nodes(props: NodesProps): JSX.Element {
   return (
     <>
       {props.nodeStates.values().map((nodeState) => {
+        if (nodeState.point.type === 'MAIN') {
+          return <EnterNode key={nodeState.id} state={nodeState} scale={props.scale} linkStates={props.linkStates} />
+        }
         return <SiftNode key={nodeState.id} state={nodeState} scale={props.scale} linkStates={props.linkStates} />
       })}
     </>

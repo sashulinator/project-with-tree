@@ -1,0 +1,10 @@
+.point-Node.--sift > .container > .incoming-links {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 18px;
+}
+.point-Node.--sift > .container > .incoming-links > *:not(:last-child) {
+  margin-bottom: 8px;
+}

@@ -13,6 +13,7 @@ export interface NodeProps extends React.HTMLAttributes<SVGForeignObjectElement>
   width?: number | undefined
   height?: number | undefined
   left?: React.ReactNode
+  right?: React.ReactNode
   position: Position
   lastPosition: Position
   scale: number
@@ -28,7 +29,7 @@ export interface NodeProps extends React.HTMLAttributes<SVGForeignObjectElement>
  * 3. Стили позиционирования
  */
 export function NodeComponent(props: NodeProps, ref: ForwardedRef<SVGForeignObjectElement>): JSX.Element {
-  const { nodeTitle, nodeDescription, left, ...foreignObjectProps } = props
+  const { nodeTitle, nodeDescription, left, right, ...foreignObjectProps } = props
 
   const titleRef = useRef(null)
 
@@ -43,6 +44,7 @@ export function NodeComponent(props: NodeProps, ref: ForwardedRef<SVGForeignObje
           <div className={clsx('description')}>{nodeDescription}</div>
           {props.children}
         </div>
+        {right}
       </div>
     </Item>
   )

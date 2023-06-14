@@ -3,23 +3,21 @@ import { Node, NodeState } from '~/entities/point'
 
 import { Joint } from '../../joint'
 
-// import { RuleSet } from '../../rule-set'
-
-// eslint-disable-next-line @typescript-eslint/no-empty-interface
-export interface SiftNodeProps {
+export interface EnterNodeProps {
   state: NodeState
   scale: number
   linkStates: LinkStateDictionary
 }
 
 /**
- * Node типа sift
+ * Node типа enter
  */
-export function SiftNode(props: SiftNodeProps): JSX.Element {
+export function EnterNode(props: EnterNodeProps): JSX.Element {
   return (
     <Node
       state={props.state}
       scale={props.scale}
+      className='--enter'
       left={
         <div className='incoming-links'>
           {props.linkStates.getLinksByTargetId(props.state.id).map((s) => {
@@ -27,15 +25,17 @@ export function SiftNode(props: SiftNodeProps): JSX.Element {
           })}
         </div>
       }
-    >
-      {props.linkStates.getLinksBySourceId(props.state.id).map((s) => {
-        return (
-          <div key={s.id} className='flex' style={{ justifyContent: 'space-between' }}>
-            <div>{s.rule.name}</div>
-            <Joint linkId={s.id} />
-          </div>
-        )
-      })}
-    </Node>
+      right={
+        <div className='outcomming-links'>
+          {props.linkStates.getLinksBySourceId(props.state.id).map((s) => {
+            return (
+              <div key={s.id} className='flex' style={{ justifyContent: 'space-between' }}>
+                <Joint linkId={s.id} />
+              </div>
+            )
+          })}
+        </div>
+      }
+    ></Node>
   )
 }

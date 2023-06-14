@@ -2,56 +2,38 @@ import './node.css'
 
 import clsx from 'clsx'
 
-import { IsDragEvent } from '~/abstract/canvas'
-import { LinkStateDictionary } from '~/entities/decision/ui/links/state/state'
 import { NodeState } from '~/entities/point/ui/node/state'
 import { Node as UINode } from '~/ui/canvas'
 import { useUpdate } from '~/utils/hooks'
 import { setRefs } from '~/utils/react'
 
-import { Joint } from '../../joint'
-
-export interface NodeProps {
+export interface NodeProps extends React.HTMLAttributes<SVGForeignObjectElement> {
   state: NodeState
   scale: number
-  linkStates: LinkStateDictionary
   left?: React.ReactNode
-  children?: React.ReactNode
-  isDrag?: (event: IsDragEvent) => boolean
+  right?: React.ReactNode
 }
 
 export function Node(props: NodeProps): JSX.Element {
+  const { state, scale, left, right, ...foreignObjectProps } = props
+
   useUpdate(subscribeOnUpdates)
 
   return (
     <UINode
-      left={
-        <div>
-          {props.linkStates.getLinksByTargetId(props.state.id).map((s) => {
-            return <Joint key={s.id} linkId={s.id} />
-          })}
-        </div>
-      }
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-      ref={setRefs(props.state.ref.set as any)}
+      {...foreignObjectProps}
+      ref={setRefs(state.ref.set)}
       className={clsx('point-Node')}
-      nodeTitle={props.state.point.name}
-      nodeDescription={props.state.point.description}
-      position={props.state.position.value}
-      lastPosition={props.state.position.last}
-      scale={props.scale}
-      onMove={props.state.position.move}
+      nodeTitle={state.point.name}
+      nodeDescription={state.point.description}
+      position={state.position.value}
+      lastPosition={state.position.last}
+      scale={scale}
+      onMove={state.position.move}
+      left={left}
+      right={right}
     >
-      <div>
-        {props.linkStates.getLinksBySourceId(props.state.id).map((s) => {
-          return (
-            <div key={s.id} className='flex' style={{ justifyContent: 'space-between' }}>
-              <div>{s.rule.name}</div>
-              <Joint linkId={s.id} />
-            </div>
-          )
-        })}
-      </div>
+      {props.children}
     </UINode>
   )
 

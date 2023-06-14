@@ -2,7 +2,6 @@ import { NodeState } from '~/entities/point'
 import { Link, LinkState } from '~/entities/rule'
 import { Any, Id, Offset, Position } from '~/utils/core'
 import { getOffsetInElement } from '~/utils/dom'
-import { getStyle } from '~/utils/dom/get-style'
 import { EmitterableDictionary } from '~/utils/emitter/dictionary'
 
 interface LinksProps {

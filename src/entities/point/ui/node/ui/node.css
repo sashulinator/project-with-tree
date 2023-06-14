@@ -21,3 +21,15 @@
   box-sizing: border-box;
   font-size: 0.8em;
 }
+
+.point-Node > .container > .incoming-links,
+.point-Node > .container > .outcomming-links {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 18px;
+}
+.point-Node > .container > .incoming-links > *:not(:last-child) {
+  margin-bottom: 8px;
+}
