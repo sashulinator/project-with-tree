@@ -1,6 +1,6 @@
 import { EnterNode, NodeState, SiftNode } from '~/entities/point'
+import { EmitterableDictionary } from '~/lib/emitter/dictionary'
 import { Any } from '~/utils/core'
-import { EmitterableDictionary } from '~/utils/emitter/dictionary'
 
 import { LinkStateDictionary } from '../../links/state/state'
 

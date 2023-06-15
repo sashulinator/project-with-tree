@@ -1,7 +1,7 @@
 import { LinkState } from '~/entities/rule'
 import { Rule } from '~/entities/rule/types/rule'
+import { EmitterableDictionary } from '~/lib/emitter/dictionary'
 import { Any, Id } from '~/utils/core'
-import { EmitterableDictionary } from '~/utils/emitter/dictionary'
 
 export interface LinkStateProps {
   id: Id
