@@ -1,5 +1,3 @@
-import { useEffect } from 'react'
-
 import { LinkStateDictionary } from '~/entities/decision/ui/links/state/state'
 import { Node, NodeState } from '~/entities/point'
 

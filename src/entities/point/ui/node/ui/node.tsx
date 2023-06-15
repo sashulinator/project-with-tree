@@ -2,6 +2,7 @@ import './node.css'
 
 import clsx from 'clsx'
 
+import { LinkStateDictionary } from '~/entities/decision/ui/links/state/state'
 import { NodeState } from '~/entities/point/ui/node/state'
 import { Node as UINode } from '~/ui/canvas'
 import { useUpdate } from '~/utils/hooks'
@@ -12,6 +13,7 @@ export interface NodeProps extends React.HTMLAttributes<SVGForeignObjectElement>
   scale: number
   left?: React.ReactNode
   right?: React.ReactNode
+  linkStates: LinkStateDictionary
 }
 
 export function Node(props: NodeProps): JSX.Element {

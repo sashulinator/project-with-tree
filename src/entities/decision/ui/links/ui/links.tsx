@@ -1,17 +1,22 @@
 import { NodeState } from '~/entities/point'
-import { Link, LinkState } from '~/entities/rule'
+import { Link } from '~/entities/rule'
 import { EmitterableDictionary } from '~/lib/emitter/dictionary'
 import { Any, Id, Offset, Position } from '~/utils/core'
 import { getOffsetInElement } from '~/utils/dom'
+import { useUpdate } from '~/utils/hooks'
+
+import { LinkStateDictionary } from '../state/state'
 
 interface LinksProps {
   scale: number
   canvasTranslate: Position
-  linkStates: EmitterableDictionary<Any, LinkState<Any>>
+  linkStates: LinkStateDictionary
   nodeStates: EmitterableDictionary<Any, NodeState>
 }
 
 export function Links(props: LinksProps): JSX.Element {
+  useUpdate(subscribeOnUpdates)
+
   return (
     <>
       {props.linkStates.values().map((linkState) => {
@@ -24,8 +29,6 @@ export function Links(props: LinksProps): JSX.Element {
             key={linkState.id}
             scale={props.scale}
             canvasTranslate={props.canvasTranslate}
-            sourceState={source}
-            targetState={target}
             sourceOffset={getOffset(linkState.id, source)}
             targetOffset={getOffset(linkState.id, target)}
           />
@@ -33,6 +36,10 @@ export function Links(props: LinksProps): JSX.Element {
       })}
     </>
   )
+
+  function subscribeOnUpdates(update: () => void): void {
+    props.linkStates.on('add', update)
+  }
 
   function getOffset(id: Id | undefined, nodeState: NodeState | undefined): Offset | null {
     if (!id) return null

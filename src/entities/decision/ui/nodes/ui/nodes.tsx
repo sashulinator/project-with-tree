@@ -1,3 +1,5 @@
+import { memo } from 'react'
+
 import { EnterNode, NodeState, SiftNode } from '~/entities/point'
 import { EmitterableDictionary } from '~/lib/emitter/dictionary'
 import { Any } from '~/utils/core'
@@ -10,7 +12,7 @@ interface NodesProps {
   nodeStates: EmitterableDictionary<Any, NodeState>
 }
 
-export function Nodes(props: NodesProps): JSX.Element {
+export function NodesComponent(props: NodesProps): JSX.Element {
   return (
     <>
       {props.nodeStates.values().map((nodeState) => {
@@ -22,3 +24,5 @@ export function Nodes(props: NodesProps): JSX.Element {
     </>
   )
 }
+
+export const Nodes = memo(NodesComponent)

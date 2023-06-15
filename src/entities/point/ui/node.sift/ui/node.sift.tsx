@@ -1,5 +1,9 @@
+import uuid from 'uuid-random'
+
 import { LinkStateDictionary } from '~/entities/decision/ui/links/state/state'
 import { Node, NodeState } from '~/entities/point'
+import { LinkState, Rule } from '~/entities/rule'
+import { useUpdate } from '~/utils/hooks'
 
 import { Joint } from '../../joint'
 
@@ -16,8 +20,11 @@ export interface SiftNodeProps {
  * Node типа sift
  */
 export function SiftNode(props: SiftNodeProps): JSX.Element {
+  useUpdate(subscribeOnUpdates)
+
   return (
     <Node
+      linkStates={props.linkStates}
       state={props.state}
       scale={props.scale}
       left={
@@ -27,6 +34,10 @@ export function SiftNode(props: SiftNodeProps): JSX.Element {
           })}
         </div>
       }
+      onClick={(): void => {
+        if (!props.linkStates.editingId || props.state.id === props.linkStates.editingId) return
+        props.linkStates.finishEditing(props.state.id)
+      }}
     >
       {props.linkStates.getLinksBySourceId(props.state.id).map((s) => {
         return (
@@ -36,6 +47,35 @@ export function SiftNode(props: SiftNodeProps): JSX.Element {
           </div>
         )
       })}
+      <button
+        onClick={(e): void => {
+          if (props.linkStates.editingId) return
+          const rule: Rule = {
+            id: uuid(),
+            name: 'new-rule',
+            sourceId: props.state.id,
+          }
+          props.linkStates.add(new LinkState({ id: rule.id, rule }))
+          e.stopPropagation()
+        }}
+      >
+        ДОБАВИТЬ
+      </button>
     </Node>
   )
+
+  // Private
+
+  function subscribeOnUpdates(update: () => void): void {
+    props.linkStates.on('add', ({ item }) => {
+      if (item.rule.sourceId === props.state.id || item.rule.targetId === props.state.id) update()
+    })
+    props.linkStates.on('update', ({ item }) => {
+      if (item.rule.sourceId === props.state.id || item.rule.targetId === props.state.id) update()
+    })
+    props.linkStates.on('remove', ({ key }) => {
+      const item = props.linkStates.get(key)
+      if (item.rule.sourceId === props.state.id || item.rule.targetId === props.state.id) update()
+    })
+  }
 }
