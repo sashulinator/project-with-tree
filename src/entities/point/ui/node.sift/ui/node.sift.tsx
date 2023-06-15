@@ -24,7 +24,6 @@ export function SiftNode(props: SiftNodeProps): JSX.Element {
 
   return (
     <Node
-      linkStates={props.linkStates}
       state={props.state}
       scale={props.scale}
       left={
@@ -35,21 +34,22 @@ export function SiftNode(props: SiftNodeProps): JSX.Element {
         </div>
       }
       onClick={(): void => {
-        if (!props.linkStates.editingId || props.state.id === props.linkStates.editingId) return
+        if (!props.linkStates.editingId.value || props.state.id === props.linkStates.editingId.value) return
+
         props.linkStates.finishEditing(props.state.id)
       }}
     >
       {props.linkStates.getLinksBySourceId(props.state.id).map((s) => {
         return (
           <div key={s.id} className='flex' style={{ justifyContent: 'space-between' }}>
-            <div>{s.rule.name}</div>
+            <div>{s.rule.value.name}</div>
             <Joint linkId={s.id} />
           </div>
         )
       })}
       <button
         onClick={(e): void => {
-          if (props.linkStates.editingId) return
+          if (props.linkStates.editingId.value) return
           const rule: Rule = {
             id: uuid(),
             name: 'new-rule',
@@ -66,16 +66,22 @@ export function SiftNode(props: SiftNodeProps): JSX.Element {
 
   // Private
 
-  function subscribeOnUpdates(update: () => void): void {
-    props.linkStates.on('add', ({ item }) => {
-      if (item.rule.sourceId === props.state.id || item.rule.targetId === props.state.id) update()
-    })
-    props.linkStates.on('update', ({ item }) => {
-      if (item.rule.sourceId === props.state.id || item.rule.targetId === props.state.id) update()
-    })
-    props.linkStates.on('remove', ({ key }) => {
-      const item = props.linkStates.get(key)
-      if (item.rule.sourceId === props.state.id || item.rule.targetId === props.state.id) update()
-    })
+  function subscribeOnUpdates(update: () => void, uns: (() => void)[]): void {
+    uns.push(
+      props.linkStates.on('add', ({ item }) => {
+        if (item.rule.value.sourceId === props.state.id || item.rule.value.targetId === props.state.id) update()
+      })
+    )
+    uns.push(
+      props.linkStates.on('update', ({ item }) => {
+        if (item.rule.value.sourceId === props.state.id || item.rule.value.targetId === props.state.id) update()
+      })
+    )
+    uns.push(
+      props.linkStates.on('remove', ({ key }) => {
+        const item = props.linkStates.get(key)
+        if (item.rule.value.sourceId === props.state.id || item.rule.value.targetId === props.state.id) update()
+      })
+    )
   }
 }

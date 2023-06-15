@@ -1,28 +1,46 @@
 import { memo } from 'react'
 
 import { EnterNode, NodeState, SiftNode } from '~/entities/point'
-import { EmitterableDictionary } from '~/lib/emitter/dictionary'
-import { Any } from '~/utils/core'
+import { useUpdate } from '~/utils/hooks'
 
 import { LinkStateDictionary } from '../../links/state/state'
+import { NodeStateDictionary } from '../state/state'
 
 interface NodesProps {
   scale: number
   linkStates: LinkStateDictionary
-  nodeStates: EmitterableDictionary<Any, NodeState>
+  nodeStates: NodeStateDictionary
 }
 
 export function NodesComponent(props: NodesProps): JSX.Element {
   return (
     <>
       {props.nodeStates.values().map((nodeState) => {
-        if (nodeState.point.type === 'MAIN') {
-          return <EnterNode key={nodeState.id} state={nodeState} scale={props.scale} linkStates={props.linkStates} />
-        }
-        return <SiftNode key={nodeState.id} state={nodeState} scale={props.scale} linkStates={props.linkStates} />
+        return <MapNode key={nodeState.id} state={nodeState} scale={props.scale} linkStates={props.linkStates} />
       })}
     </>
   )
 }
 
 export const Nodes = memo(NodesComponent)
+
+// Private
+
+interface MapNodeProps {
+  state: NodeState
+  scale: number
+  linkStates: LinkStateDictionary
+}
+
+function MapNode(props: MapNodeProps): JSX.Element {
+  useUpdate(subscribeOnUpdates)
+
+  if (props.state.point.type === 'MAIN') {
+    return <EnterNode state={props.state} scale={props.scale} linkStates={props.linkStates} />
+  }
+  return <SiftNode key={props.state.id} state={props.state} scale={props.scale} linkStates={props.linkStates} />
+
+  function subscribeOnUpdates(update: () => void): void {
+    props.linkStates.on('editingId', update)
+  }
+}

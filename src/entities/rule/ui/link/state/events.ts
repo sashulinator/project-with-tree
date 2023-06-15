@@ -1,4 +1,6 @@
+import { Rule } from '~/entities/rule/types/rule'
+
 // eslint-disable-next-line @typescript-eslint/ban-types
 export type LinkEvents = {
-  test: 'test'
+  rule: { value: Rule }
 }

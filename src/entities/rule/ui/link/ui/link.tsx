@@ -3,7 +3,7 @@ import { Link as UILink } from '~/ui/canvas'
 import { Offset, Position } from '~/utils/core'
 import { useForceUpdate, useOnMount, useUpdate } from '~/utils/hooks'
 
-export interface ChartLinkProps extends React.HTMLAttributes<SVGPathElement> {
+export interface LinkProps extends React.HTMLAttributes<SVGPathElement> {
   scale: number
   canvasTranslate: Position
   targetState?: NodeState | undefined
@@ -12,11 +12,11 @@ export interface ChartLinkProps extends React.HTMLAttributes<SVGPathElement> {
   sourceOffset: Offset | null
 }
 
-export function Link(props: ChartLinkProps): JSX.Element | null {
+export function Link(props: LinkProps): JSX.Element | null {
   const { scale, canvasTranslate, targetState, sourceState, ...pathProps } = props
 
   useOnMount(useForceUpdate())
-  useUpdate(subscribeOnUpdates)
+  useUpdate(subscribeOnUpdates, [targetState, sourceState])
 
   return (
     <UILink
@@ -31,13 +31,13 @@ export function Link(props: ChartLinkProps): JSX.Element | null {
   // Private
 
   function subscribeOnUpdates(update: () => void): void {
-    props.targetState?.on('setPosition', update)
-    props.sourceState?.on('setPosition', update)
-    props.targetState?.on('setHeight', update)
-    props.sourceState?.on('setHeight', update)
-    props.targetState?.on('setWidth', update)
-    props.sourceState?.on('setWidth', update)
-    props.sourceState?.on('ref', update)
+    targetState?.on('setPosition', update)
+    sourceState?.on('setPosition', update)
+    targetState?.on('setHeight', update)
+    sourceState?.on('setHeight', update)
+    targetState?.on('setWidth', update)
+    sourceState?.on('setWidth', update)
+    sourceState?.on('ref', update)
   }
 }
 

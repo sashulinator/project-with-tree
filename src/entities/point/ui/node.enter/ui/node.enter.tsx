@@ -18,7 +18,6 @@ export function EnterNode(props: EnterNodeProps): JSX.Element {
 
   return (
     <Node
-      linkStates={props.linkStates}
       state={props.state}
       scale={props.scale}
       className='--enter'

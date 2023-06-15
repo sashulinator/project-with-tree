@@ -1,10 +1,12 @@
+import { memo } from 'react'
+
 import { NodeState } from '~/entities/point'
-import { Link } from '~/entities/rule'
+import { Link, LinkState } from '~/entities/rule'
 import { EmitterableDictionary } from '~/lib/emitter/dictionary'
-import { Any, Id, Offset, Position } from '~/utils/core'
-import { getOffsetInElement } from '~/utils/dom'
+import { Any, Position } from '~/utils/core'
 import { useUpdate } from '~/utils/hooks'
 
+import { getOffset } from '../get-offset'
 import { LinkStateDictionary } from '../state/state'
 
 interface LinksProps {
@@ -14,48 +16,68 @@ interface LinksProps {
   nodeStates: EmitterableDictionary<Any, NodeState>
 }
 
-export function Links(props: LinksProps): JSX.Element {
+function LinksComponent(props: LinksProps): JSX.Element {
   useUpdate(subscribeOnUpdates)
 
   return (
     <>
       {props.linkStates.values().map((linkState) => {
-        const source = props.nodeStates.find(linkState.rule.sourceId)
-        const target = props.nodeStates.find(linkState.rule.targetId)
-
         return (
-          <Link
-            data-id={linkState.id}
+          <MapLink
             key={linkState.id}
             scale={props.scale}
             canvasTranslate={props.canvasTranslate}
-            sourceOffset={getOffset(linkState.id, source)}
-            targetOffset={getOffset(linkState.id, target)}
+            nodeStates={props.nodeStates}
+            linkState={linkState}
+            linkStates={props.linkStates}
           />
         )
       })}
     </>
   )
 
-  function subscribeOnUpdates(update: () => void): void {
-    props.linkStates.on('add', update)
+  function subscribeOnUpdates(update: () => void, uns: (() => void)[]): void {
+    uns.push(props.linkStates.on('add', () => setTimeout(update)))
+    uns.push(props.linkStates.on('remove', update))
+    uns.push(props.linkStates.on('update', update))
   }
+}
 
-  function getOffset(id: Id | undefined, nodeState: NodeState | undefined): Offset | null {
-    if (!id) return null
+export const Links = memo(LinksComponent)
 
-    const jointEl = nodeState?.ref.value?.querySelector(`[data-link-id="${id.toString()}"]`)
+// Private
 
-    if (!jointEl || !nodeState) return null
+interface MapLinkProp {
+  scale: number
+  canvasTranslate: Position
+  targetState?: NodeState | undefined
+  sourceState?: NodeState | undefined
+  nodeStates: EmitterableDictionary<Any, NodeState>
+  linkState: LinkState
+  linkStates: LinkStateDictionary
+}
 
-    const OffsetInElement = getOffsetInElement(jointEl, nodeState?.ref.value)
-    const jointRect = jointEl?.getBoundingClientRect() || { height: 0 }
+function MapLink(props: MapLinkProp): JSX.Element {
+  useUpdate(subscribeOnUpdates)
 
-    const ret = {
-      left: (OffsetInElement.left + jointRect.width / 2) / props.scale,
-      top: (OffsetInElement.top + jointRect.height / 2) / props.scale,
-    }
+  const sourceState = props.nodeStates.find(props.linkState.rule.value.sourceId)
+  const targetState = props.nodeStates.find(props.linkState.rule.value.targetId)
 
-    return ret
+  return (
+    <Link
+      data-id={props.linkState.id}
+      key={props.linkState.id}
+      targetState={targetState}
+      sourceState={sourceState}
+      scale={props.scale}
+      canvasTranslate={props.canvasTranslate}
+      sourceOffset={getOffset(props.linkState.id, sourceState?.ref.value, props.scale)}
+      targetOffset={getOffset(props.linkState.id, targetState?.ref.value, props.scale)}
+    />
+  )
+
+  function subscribeOnUpdates(update: () => void, uns: (() => void)[]): void {
+    // Запускаем update с timeout для того чтобы обновить сначала Node
+    uns.push(props.linkStates.on('editingId', () => setTimeout(update)))
   }
 }

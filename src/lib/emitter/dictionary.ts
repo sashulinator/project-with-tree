@@ -33,9 +33,9 @@ export class EmitterableDictionary<E extends Events<S>, S extends Emitter<Any>> 
   private subscribeToItemEvents(emitterables: S[]): void {
     for (let index = 0; index < emitterables.length; index++) {
       const item = emitterables[index]
-      item.onAll((eventName, event) => {
+      item.onAll((eventName, ev) => {
         // eslint-disable-next-line @typescript-eslint/no-unsafe-argument, @typescript-eslint/no-explicit-any
-        this.emit(eventName as any, { itemId: this.getKey(item), ...event })
+        this.emit(eventName as any, { itemId: this.getKey(item), ...ev })
       })
     }
   }
