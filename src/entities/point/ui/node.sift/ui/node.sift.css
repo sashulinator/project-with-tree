@@ -1,4 +1,4 @@
-.point-Node.--sift > .container > .incoming-links {
+.point-Node.--sift > .container > .target-links {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -6,11 +6,11 @@
   width: 18px;
 }
 
-.point-Node.--sift > .container > .incoming-links > *:not(:last-child) {
+.point-Node.--sift > .container > .target-links > *:not(:last-child) {
   margin-bottom: 8px;
 }
 
-.point-Node.--sift > .container > .content > .new-link {
+.point-Node.--sift > .container > .content > .new-source-link {
   display: flex;
 }
 
@@ -28,7 +28,7 @@
   background-color: rgb(83, 160, 255);
 }
 
-.point-Node .new-link {
+.point-Node .new-source-link {
   display: flex;
   justify-content: space-between;
   align-items: center;

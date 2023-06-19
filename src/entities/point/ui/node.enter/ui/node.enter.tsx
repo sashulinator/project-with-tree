@@ -22,7 +22,7 @@ export function EnterNode(props: EnterNodeProps): JSX.Element {
       scale={props.scale}
       className='--enter'
       left={
-        <div className='incoming-links'>
+        <div className='target-links'>
           {targetLinks.map((s) => {
             return <Joint key={s.id} linkId={s.id} isLinked={true} />
           })}

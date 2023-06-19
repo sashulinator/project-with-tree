@@ -14,9 +14,6 @@ import { useUpdate } from '~/utils/hooks'
 import { Joint } from '../../joint'
 import { RuleSet } from '../../rule-set'
 
-// import { RuleSet } from '../../rule-set'
-
-// eslint-disable-next-line @typescript-eslint/no-empty-interface
 export interface SiftNodeProps {
   state: NodeState
   scale: number
@@ -27,11 +24,18 @@ export interface SiftNodeProps {
  * Node типа sift
  */
 export function SiftNode(props: SiftNodeProps): JSX.Element {
-  const [jointInLink, setJointInLink] = useState(() => LinkState.createDefaultInstance({ targetId: props.state.id }))
-  const [jointOutLink, setJointOutLink] = useState(() => LinkState.createDefaultInstance({ sourceId: props.state.id }))
+  const [newJointTargetLink, setNewJointTargetLink] = useState(() =>
+    LinkState.createDefaultInstance({ targetId: props.state.id })
+  )
+  const [newJointSourceLink, setNewJointSourceLink] = useState(() =>
+    LinkState.createDefaultInstance({ sourceId: props.state.id })
+  )
 
   useUpdate(subscribeOnUpdates)
-  useUpdate(subscribeOnNewJointRuleEdited, [jointInLink, jointOutLink])
+  useUpdate(subscribeOnNewJointRuleEdited, [newJointTargetLink, newJointSourceLink])
+
+  const targetLinks = props.linkStates.getLinksByTargetId(props.state.id)
+  const sourceLinks = props.linkStates.getLinksBySourceId(props.state.id)
 
   return (
     <Node
@@ -39,30 +43,30 @@ export function SiftNode(props: SiftNodeProps): JSX.Element {
       state={props.state}
       scale={props.scale}
       left={
-        <div className='incoming-links'>
-          {props.linkStates.getLinksByTargetId(props.state.id).map((linkState) => {
-            if (linkState.id === jointInLink.id) return null
+        <div className='target-links'>
+          {targetLinks.map((linkState) => {
+            if (linkState.id === newJointTargetLink.id) return null
 
             return (
               <Joint
                 key={linkState.id}
                 linkId={linkState.id}
                 isLinked={true}
-                onClick={fns(stopPropagation, () => emitInJoint(linkState))}
+                onClick={fns(stopPropagation, () => emitJointTarget(linkState))}
               />
             )
           })}
           <Joint
             className='--new'
-            linkId={jointInLink.id}
+            linkId={newJointTargetLink.id}
             isLinked={false}
-            onClick={fns(stopPropagation, emitNewInJoint)}
+            onClick={fns(stopPropagation, emitNewJointTarget)}
           />
         </div>
       }
     >
-      {props.linkStates.getLinksBySourceId(props.state.id).map((linkState) => {
-        if (linkState.id === jointOutLink.id) return null
+      {sourceLinks.map((linkState) => {
+        if (linkState.id === newJointSourceLink.id) return null
 
         return (
           <RuleSet
@@ -77,13 +81,13 @@ export function SiftNode(props: SiftNodeProps): JSX.Element {
           </RuleSet>
         )
       })}
-      <div className='new-link'>
+      <div className='new-source-link'>
         <button onClick={fns(stopPropagation, emitCreateRuleButton)}>+</button>
         <Joint
           className='--new'
-          linkId={jointOutLink.id}
+          linkId={newJointSourceLink.id}
           isLinked={false}
-          onClick={fns(stopPropagation, emitNewOutJoint)}
+          onClick={fns(stopPropagation, emitNewJointSource)}
         />
       </div>
     </Node>
@@ -91,13 +95,12 @@ export function SiftNode(props: SiftNodeProps): JSX.Element {
 
   // Private
 
-  // это NEW!!!
-  function emitNewInJoint(): void {
+  function emitNewJointTarget(): void {
     const editingLinkState = props.linkStates.findEditingLinkState()
 
     if (!editingLinkState) {
-      props.linkStates.editingId.value = jointInLink.id
-      props.linkStates.add(jointInLink)
+      props.linkStates.editingId.value = newJointTargetLink.id
+      props.linkStates.add(newJointTargetLink)
       return
     }
 
@@ -120,7 +123,7 @@ export function SiftNode(props: SiftNodeProps): JSX.Element {
     props.linkStates.editingId.value = undefined
   }
 
-  function emitInJoint(linkState: LinkState): void {
+  function emitJointTarget(linkState: LinkState): void {
     const editingLinkState = props.linkStates.findEditingLinkState()
 
     if (!editingLinkState) {
@@ -143,18 +146,29 @@ export function SiftNode(props: SiftNodeProps): JSX.Element {
 
     if (!editingLinkState) {
       if (linkState.rule.value.targetId) {
-        linkState.rule.value = remove(linkState.rule.value, 'sourceId')
+        const newLinkState = LinkState.createDefaultInstance({ targetId: linkState.rule.value.targetId })
+        props.linkStates.add(newLinkState)
+        linkState.rule.value = remove(linkState.rule.value, 'targetId')
+        props.linkStates.editingId.value = newLinkState.id
+        return
       }
       props.linkStates.editingId.value = linkState.id
       return
     }
-    // TODO выкинуть ошибку
     if (editingLinkState.rule.value.sourceId === props.state.id) {
       addToast({ data: 'Ошибка', type: 'error' })
       return
     }
+    if (!editingLinkState.rule.value.targetId) {
+      addToast({ data: 'Нельзя линковать правило с правилом', type: 'error' })
+      return
+    }
     if (editingLinkState.rule.value.targetId === props.state.id) {
       addToast({ data: 'Ошибка', type: 'error' })
+      return
+    }
+    if (linkState.rule.value.targetId) {
+      addToast({ data: 'Связь уже существует', type: 'error' })
       return
     }
 
@@ -170,12 +184,12 @@ export function SiftNode(props: SiftNodeProps): JSX.Element {
     return linkState
   }
 
-  function emitNewOutJoint(): void {
+  function emitNewJointSource(): void {
     const editingLinkState = props.linkStates.findEditingLinkState()
 
     if (!editingLinkState) {
-      props.linkStates.editingId.value = jointOutLink.id
-      props.linkStates.add(jointOutLink)
+      props.linkStates.editingId.value = newJointSourceLink.id
+      props.linkStates.add(newJointSourceLink)
       return
     }
 
@@ -194,13 +208,13 @@ export function SiftNode(props: SiftNodeProps): JSX.Element {
 
   function subscribeOnNewJointRuleEdited(_, uns: (() => void)[]): void {
     uns.push(
-      jointInLink.on('rule', ({ value }) => {
-        if (value.sourceId) setJointInLink(LinkState.createDefaultInstance({ targetId: props.state.id }))
+      newJointTargetLink.on('rule', ({ value }) => {
+        if (value.sourceId) setNewJointTargetLink(LinkState.createDefaultInstance({ targetId: props.state.id }))
       })
     )
     uns.push(
-      jointOutLink.on('rule', ({ value }) => {
-        if (value.targetId) setJointOutLink(LinkState.createDefaultInstance({ sourceId: props.state.id }))
+      newJointSourceLink.on('rule', ({ value }) => {
+        if (value.targetId) setNewJointSourceLink(LinkState.createDefaultInstance({ sourceId: props.state.id }))
       })
     )
   }

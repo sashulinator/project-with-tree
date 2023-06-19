@@ -22,7 +22,7 @@
   font-size: 0.8em;
 }
 
-.point-Node > .container > .incoming-links,
+.point-Node > .container > .target-links,
 .point-Node > .container > .outcomming-links {
   display: flex;
   flex-direction: column;
@@ -30,6 +30,6 @@
   align-items: center;
   width: 18px;
 }
-.point-Node > .container > .incoming-links > *:not(:last-child) {
+.point-Node > .container > .target-links > *:not(:last-child) {
   margin-bottom: 8px;
 }
