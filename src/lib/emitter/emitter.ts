@@ -26,8 +26,9 @@ export class Emitter<E extends AnyEvent> implements IEmitter<E> {
     this._emitter.emit(type, event)
   }
 
-  offAll(handler: WildcardHandler<E>): void {
-    this._emitter.off('*', handler)
+  offAll(handler?: WildcardHandler<E> | undefined): void {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-argument
+    this._emitter.off('*', handler as any)
   }
 
   onAll(handler: WildcardHandler<E>): void {

@@ -63,11 +63,14 @@ function MapLink(props: MapLinkProp): JSX.Element | null {
   const sourceState = props.nodeStates.find(props.linkState.rule.value.sourceId)
   const targetState = props.nodeStates.find(props.linkState.rule.value.targetId)
 
+  const isCurrentEditing = props.linkStates.editingId.value === props.linkState.id
+
+  if ((!sourceState || !targetState) && !isCurrentEditing) return null
+
   return (
     <Link
       key={props.linkState.id}
       state={props.linkState}
-      linkStates={props.linkStates}
       targetState={targetState}
       sourceState={sourceState}
       scale={props.scale}
@@ -81,5 +84,6 @@ function MapLink(props: MapLinkProp): JSX.Element | null {
   function subscribeOnUpdates(update: () => void, uns: (() => void)[]): void {
     // Запускаем update с timeout для того чтобы обновить сначала Node
     uns.push(props.linkStates.on('editingId', () => setTimeout(update)))
+    uns.push(props.linkStates.on('rule', () => setTimeout(update)))
   }
 }

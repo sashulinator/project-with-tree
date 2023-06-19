@@ -18,7 +18,5 @@ export class NodeState extends ItemState<Events> {
     super({ id: props.point.id, position: props.point })
 
     this.point = props.point
-
-    // this.ruleList = new RuleListProp('setRuleList', props.ruleList || [], this)
   }
 }

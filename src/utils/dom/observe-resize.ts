@@ -1,5 +1,5 @@
-export function observeResize(element: HTMLElement | null, callback: (entry: ResizeObserverEntry) => void) {
-  if (element === null) {
+export function observeResize(element: Element | null | undefined, callback: (entry: ResizeObserverEntry) => void) {
+  if (!element) {
     return
   }
 

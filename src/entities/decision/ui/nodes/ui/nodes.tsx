@@ -41,6 +41,8 @@ function MapNode(props: MapNodeProps): JSX.Element {
   return <SiftNode key={props.state.id} state={props.state} scale={props.scale} linkStates={props.linkStates} />
 
   function subscribeOnUpdates(update: () => void): void {
+    // TODO сейчас обновляет все ноды, а надо только те что надо
     props.linkStates.on('editingId', update)
+    props.linkStates.on('rule', update)
   }
 }

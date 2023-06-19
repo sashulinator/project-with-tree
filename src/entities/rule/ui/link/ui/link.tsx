@@ -2,10 +2,10 @@ import './link.css'
 
 import clsx from 'clsx'
 
-import { LinkStateDictionary } from '~/entities/decision/ui/links/state/state'
 import { NodeState } from '~/entities/point/ui/node/state'
 import { Link as UILink } from '~/ui/canvas'
 import { Offset, Position } from '~/utils/core'
+import { remove } from '~/utils/dictionary'
 import { useForceUpdate, useOnMount, useUpdate } from '~/utils/hooks'
 
 import { LinkState } from '../state'
@@ -17,12 +17,11 @@ export interface LinkProps extends React.HTMLAttributes<SVGPathElement> {
   sourceState?: NodeState | undefined
   targetOffset: Offset | null
   sourceOffset: Offset | null
-  linkStates: LinkStateDictionary
   state: LinkState
 }
 
 export function Link(props: LinkProps): JSX.Element | null {
-  const { scale, canvasTranslate, linkStates, targetState, sourceState, ...pathProps } = props
+  const { scale, state, canvasTranslate, targetState, sourceState, ...pathProps } = props
 
   useOnMount(useForceUpdate())
   useUpdate(subscribeOnUpdates, [targetState, sourceState])
@@ -30,7 +29,7 @@ export function Link(props: LinkProps): JSX.Element | null {
   return (
     <UILink
       onClick={(): void => {
-        linkStates.remove(props.state.id)
+        state.rule.value = remove(state.rule.value, 'targetId')
       }}
       scale={scale}
       className={clsx('rule-Link')}

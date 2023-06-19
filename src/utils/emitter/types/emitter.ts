@@ -23,7 +23,7 @@ export interface Emitter<Events extends AnyEvent> {
   onAll(handler: WildcardHandler<Events>): void
   off<Key extends keyof Events>(type: Key, handler?: Handler<Events[Key]>): void
   off(type: string, handler?: Handler<Any>): void
-  offAll(handler: WildcardHandler<Events>): void
+  offAll(handler?: WildcardHandler<Events> | undefined): void
   emit<Key extends keyof Events>(type: Key, event: Events[Key]): void
   emit(type: string, event: Any): void
 }

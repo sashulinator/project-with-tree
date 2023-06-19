@@ -43,7 +43,11 @@ export class EmitterableDictionary<E extends Events<S>, S extends Emitter<Any>> 
   private subscribeToCRUDEvents(): void {
     this.on('add', (event) => (this.items[this.getKey(event.item)] = event.item))
     this.on('update', (event) => (this.items[this.getKey(event.item)] = event.item))
-    this.on('remove', (event) => setTimeout(() => delete this.items[event.key]))
+    this.on('remove', (event) => {
+      const item = this.get(event.key)
+      item.offAll()
+      setTimeout(() => delete this.items[event.key])
+    })
   }
 
   values(): S[] {
@@ -60,10 +64,12 @@ export class EmitterableDictionary<E extends Events<S>, S extends Emitter<Any>> 
 
   add = (item: S): void => {
     this.emit('add', { item })
+    this.subscribeToItemEvents([item])
   }
 
   update = (item: S): void => {
     this.emit('update', { item })
+    this.subscribeToItemEvents([item])
   }
 
   remove = (key: Id): void => {

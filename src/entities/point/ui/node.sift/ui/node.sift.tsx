@@ -108,6 +108,13 @@ export function SiftNode(props: SiftNodeProps): JSX.Element {
       })
       return
     }
+    if (editingLinkState.rule.value.sourceId === props.state.id) {
+      addToast({
+        data: 'Нельзя прикрепить линку к той же карточке',
+        type: 'error',
+      })
+      return
+    }
 
     editingLinkState.rule.value = add(editingLinkState.rule.value, 'targetId', props.state.id)
     props.linkStates.editingId.value = undefined
