@@ -23,7 +23,7 @@ export function Node(props: NodeProps): JSX.Element {
     <UINode
       {...foreignObjectProps}
       ref={setRefs(state.ref.set)}
-      className={clsx('point-Node')}
+      className={clsx('point-Node', props.className)}
       nodeTitle={state.point.name}
       nodeDescription={state.point.description}
       position={state.position.value}

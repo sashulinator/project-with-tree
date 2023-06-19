@@ -5,6 +5,33 @@
   align-items: center;
   width: 18px;
 }
+
 .point-Node.--sift > .container > .incoming-links > *:not(:last-child) {
   margin-bottom: 8px;
+}
+
+.point-Node.--sift > .container > .content > .new-link {
+  display: flex;
+}
+
+.point-Node.--sift > .container > .content > .RuleSet {
+  margin: 0 8px 8px 0;
+}
+
+.point-Node.--sift .point-Joint {
+  background-color: rgb(255, 255, 255);
+}
+.point-Node.--sift .point-Joint.--new {
+  background-color: rgb(84, 222, 104);
+}
+.point-Node.--sift .point-Joint.--linked {
+  background-color: rgb(83, 160, 255);
+}
+
+.point-Node .new-link {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0 8px 0 0;
+  padding: 8px;
 }

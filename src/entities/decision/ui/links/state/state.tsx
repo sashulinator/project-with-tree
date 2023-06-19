@@ -1,7 +1,7 @@
 import { LinkState } from '~/entities/rule'
 import { Rule } from '~/entities/rule/types/rule'
 import { EmitterableDictionary } from '~/lib/emitter/dictionary'
-import { Id, assertDefined } from '~/utils/core'
+import { Id } from '~/utils/core'
 import { Prop } from '~/utils/emitter'
 
 export interface LinkStateProps {
@@ -24,32 +24,14 @@ export class LinkStateDictionary extends EmitterableDictionary<Events, LinkState
     super(linkStateList, (l) => l.id.toString())
 
     this.editingId = new Prop<'editingId', Id | undefined>('editingId', undefined, this)
-
-    this.handleEditingId()
   }
 
-  private handleEditingId = (): void => {
-    this.on('add', ({ item }) => {
-      if (item.rule.value.sourceId && item.rule.value.targetId) return
-      this.editingId.value = item.id
-    })
-    this.on('update', ({ item }) => {
-      if (item.rule.value.sourceId && item.rule.value.targetId) return
-      this.editingId.value = item.id
-    })
+  getEditingLinkState = (): LinkState => {
+    return this.get(this.editingId.value)
   }
 
-  finishEditing = (nodeId: Id): void => {
-    const linkState = this.get(this.editingId.value)
-    assertDefined(this.editingId)
-    const rule = { ...linkState.rule.value }
-    if (!rule.sourceId) {
-      rule.sourceId = nodeId
-    } else {
-      rule.targetId = nodeId
-    }
-    linkState.rule.value = rule
-    this.editingId.value = undefined
+  findEditingLinkState = (): LinkState | undefined => {
+    return this.find(this.editingId.value)
   }
 
   getLinksBySourceId = (id: Id): LinkState[] => {

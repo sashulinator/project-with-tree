@@ -24,7 +24,7 @@ export function EnterNode(props: EnterNodeProps): JSX.Element {
       left={
         <div className='incoming-links'>
           {targetLinks.map((s) => {
-            return <Joint key={s.id} linkId={s.id} />
+            return <Joint key={s.id} linkId={s.id} isLinked={true} />
           })}
         </div>
       }
@@ -33,7 +33,7 @@ export function EnterNode(props: EnterNodeProps): JSX.Element {
           {sourceLinks.map((s) => {
             return (
               <div key={s.id} className='flex' style={{ justifyContent: 'space-between' }}>
-                <Joint linkId={s.id} />
+                <Joint linkId={s.id} isLinked={Boolean(s.rule.value.targetId)} />
               </div>
             )
           })}

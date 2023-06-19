@@ -57,7 +57,7 @@ interface MapLinkProp {
   linkStates: LinkStateDictionary
 }
 
-function MapLink(props: MapLinkProp): JSX.Element {
+function MapLink(props: MapLinkProp): JSX.Element | null {
   useUpdate(subscribeOnUpdates)
 
   const sourceState = props.nodeStates.find(props.linkState.rule.value.sourceId)

@@ -1,11 +1,18 @@
 import './joint.css'
 
+import clsx from 'clsx'
+
 import { Id } from '~/utils/core'
 
-interface JointProps {
+export interface JointProps extends React.HTMLAttributes<HTMLDivElement> {
   linkId: Id
+  isLinked: boolean
 }
 
 export function Joint(props: JointProps): JSX.Element {
-  return <div data-link-id={props.linkId} className='point-Joint' />
+  const { linkId, isLinked, ...divProps } = props
+
+  return (
+    <div {...divProps} data-link-id={linkId} className={clsx('point-Joint', props.className, isLinked && '--linked')} />
+  )
 }

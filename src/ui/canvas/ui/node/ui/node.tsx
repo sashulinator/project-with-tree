@@ -9,6 +9,7 @@ import { Item } from '../../item'
 
 export interface NodeProps extends React.HTMLAttributes<SVGForeignObjectElement> {
   nodeTitle: React.ReactNode
+  titleProps?: React.HTMLAttributes<HTMLDivElement>
   nodeDescription?: React.ReactNode | undefined
   width?: number | undefined
   height?: number | undefined
@@ -29,7 +30,7 @@ export interface NodeProps extends React.HTMLAttributes<SVGForeignObjectElement>
  * 3. Стили позиционирования
  */
 export function NodeComponent(props: NodeProps, ref: ForwardedRef<SVGForeignObjectElement>): JSX.Element {
-  const { nodeTitle, nodeDescription, left, right, ...foreignObjectProps } = props
+  const { nodeTitle, titleProps, nodeDescription, left, right, ...foreignObjectProps } = props
 
   const titleRef = useRef(null)
 
@@ -38,7 +39,7 @@ export function NodeComponent(props: NodeProps, ref: ForwardedRef<SVGForeignObje
       <div className={clsx('container')}>
         {left}
         <div className='content'>
-          <div className={clsx('title')} ref={titleRef}>
+          <div ref={titleRef} {...titleProps} className={clsx('title', titleProps?.className)}>
             {nodeTitle}
           </div>
           <div className={clsx('description')}>{nodeDescription}</div>
