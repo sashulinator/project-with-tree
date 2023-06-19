@@ -38,8 +38,8 @@ function LinksComponent(props: LinksProps): JSX.Element {
 
   function subscribeOnUpdates(update: () => void, uns: (() => void)[]): void {
     uns.push(props.linkStates.on('add', () => setTimeout(update)))
-    uns.push(props.linkStates.on('remove', update))
-    uns.push(props.linkStates.on('update', update))
+    uns.push(props.linkStates.on('remove', () => setTimeout(update)))
+    uns.push(props.linkStates.on('update', () => setTimeout(update)))
   }
 }
 
@@ -65,14 +65,16 @@ function MapLink(props: MapLinkProp): JSX.Element | null {
 
   return (
     <Link
-      data-id={props.linkState.id}
       key={props.linkState.id}
+      state={props.linkState}
+      linkStates={props.linkStates}
       targetState={targetState}
       sourceState={sourceState}
       scale={props.scale}
       canvasTranslate={props.canvasTranslate}
       sourceOffset={getOffset(props.linkState.id, sourceState?.ref.value, props.scale)}
       targetOffset={getOffset(props.linkState.id, targetState?.ref.value, props.scale)}
+      data-id={props.linkState.id}
     />
   )
 

@@ -25,9 +25,9 @@ export class EmitterableDictionary<E extends Events<S>, S extends Emitter<Any>> 
 
     this.items = toDictionary(getKey, emitterables) || {}
 
-    this.subscribeToItemEvents(emitterables)
-
     this.subscribeToCRUDEvents()
+
+    this.subscribeToItemEvents(emitterables)
   }
 
   private subscribeToItemEvents(emitterables: S[]): void {

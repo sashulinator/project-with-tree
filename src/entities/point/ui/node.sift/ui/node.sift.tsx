@@ -212,7 +212,8 @@ export function SiftNode(props: SiftNodeProps): JSX.Element {
     uns.push(
       props.linkStates.on('remove', ({ key }) => {
         const item = props.linkStates.get(key)
-        if (item.rule.value.sourceId === props.state.id || item.rule.value.targetId === props.state.id) update()
+        if (item.rule.value.sourceId === props.state.id || item.rule.value.targetId === props.state.id)
+          setTimeout(update)
       })
     )
   }
