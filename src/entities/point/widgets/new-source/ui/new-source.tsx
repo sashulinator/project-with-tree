@@ -2,7 +2,7 @@ import './new-source.css'
 
 import React from 'react'
 
-import { Joint, JointProps } from '../../../ui/joint'
+import { Joint, JointProps } from '../../joint'
 
 interface NewSourceProps {
   jointProps: Omit<JointProps, 'variant'>
