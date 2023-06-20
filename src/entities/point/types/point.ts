@@ -10,5 +10,6 @@ export interface Point<P = Dictionary<Any>> {
   x: number
   y: number
   componentName?: string
+  computation?: 'parallel' | 'successively'
   props?: P
 }

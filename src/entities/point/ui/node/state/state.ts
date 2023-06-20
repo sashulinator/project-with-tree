@@ -1,5 +1,6 @@
 import { ItemState } from '~/abstract/canvas/ui/item/state'
 import { Point } from '~/entities/point'
+import { Prop } from '~/utils/emitter'
 
 import { Events } from './events'
 
@@ -12,11 +13,15 @@ export interface NodeStateProps {
 export class NodeState extends ItemState<Events> {
   point: Point
 
+  computation: Prop<'computation', 'parallel' | 'successively' | undefined>
+
   // ruleList: RuleListProp<'setRuleList'>
 
   constructor(props: NodeStateProps) {
     super({ id: props.point.id, position: props.point })
 
     this.point = props.point
+
+    this.computation = new Prop('computation', props.point.computation, this)
   }
 }

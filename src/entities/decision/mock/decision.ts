@@ -18,6 +18,7 @@ export const decision: Decision = {
     {
       type: 'SIFT',
       id: 'id2',
+      computation: 'parallel',
       name: 'Базовые условия',
       x: 550,
       y: 200,
@@ -25,12 +26,14 @@ export const decision: Decision = {
     {
       type: 'SIFT',
       id: 'id3',
+      computation: 'successively',
       name: 'Продуктовые исключения',
       x: 800,
       y: 200,
     },
     {
       type: 'SIFT',
+      computation: 'successively',
       id: 'id4',
       name: 'Политика контактов',
       x: 1100,
@@ -39,6 +42,7 @@ export const decision: Decision = {
     {
       type: 'SIFT',
       id: 'id5',
+      computation: 'successively',
       name: 'Конфликтующие тарифы',
       x: 1200,
       y: 200,
@@ -46,6 +50,7 @@ export const decision: Decision = {
     {
       type: 'SIFT',
       id: 'id6',
+      computation: 'successively',
       name: 'Срок жизни тарифа',
       x: 1850,
       y: 200,
@@ -53,6 +58,7 @@ export const decision: Decision = {
     {
       type: 'SIFT',
       id: 'id8',
+      computation: 'successively',
       name: 'Какой тариф предложить',
       x: 200,
       y: 500,
@@ -60,6 +66,7 @@ export const decision: Decision = {
     {
       type: 'SIFT',
       id: 'id8',
+      computation: 'successively',
       name: 'Предложить тариф супер',
       x: 450,
       y: 500,
@@ -67,6 +74,7 @@ export const decision: Decision = {
     {
       type: 'SIFT',
       id: 'id9',
+      computation: 'successively',
       name: 'Предложить тариф мега',
       x: 450,
       y: 700,
@@ -74,6 +82,7 @@ export const decision: Decision = {
     {
       type: 'SIFT',
       id: 'id10',
+      computation: 'successively',
       name: 'Предложить тариф максимальный',
       x: 450,
       y: 900,
