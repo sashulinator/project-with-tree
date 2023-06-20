@@ -12,9 +12,9 @@ import { stopPropagation } from '~/utils/dom'
 import { fns } from '~/utils/function'
 import { useUpdate } from '~/utils/hooks'
 
+import NewSource from '../../../widgets/new-source/ui/new-source'
 import { Joint } from '../../joint'
 import { RuleSet } from '../../rule-set'
-import NewSource from './new-source'
 
 export interface SiftNodeProps {
   state: NodeState

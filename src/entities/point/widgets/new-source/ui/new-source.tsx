@@ -2,7 +2,7 @@ import './new-source.css'
 
 import React from 'react'
 
-import { Joint, JointProps } from '../../joint'
+import { Joint, JointProps } from '../../../ui/joint'
 
 interface NewSourceProps {
   jointProps: JointProps
@@ -19,3 +19,5 @@ export default function NewSource(props: NewSourceProps): JSX.Element {
     </div>
   )
 }
+
+NewSource.displayName = 'NewSource'
