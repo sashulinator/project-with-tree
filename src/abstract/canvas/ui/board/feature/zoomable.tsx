@@ -26,6 +26,10 @@ export function BoardZoomable(props: CanvasBoardZoomableProps): JSX.Element {
       props.setScale(ret)
     }
 
+    // TODO сделать translate при зуме
+    // x: props.transform.x - deltaScale * event.clientX,
+    // y: props.transform.y - deltaScale * event.clientY,
+
     assertNotNull(svgRef.current)
     svgRef.current.addEventListener('wheel', wheeled)
     return () => svgRef.current?.removeEventListener('wheel', wheeled)
