@@ -1,0 +1,20 @@
+.point-NewSource {
+  display: flex;
+  align-items: center;
+  margin: 0 8px 0 0;
+  padding: 0 8px 0 0;
+  background-color: rgba(141, 61, 215, 0.416);
+  border-radius: 4px;
+}
+
+.point-NewSource button {
+  background-color: transparent;
+  border: 0;
+  width: 32px;
+  height: 32px;
+  color: var(--color);
+  margin: 0 10px 0 0;
+}
+.point-NewSource button:hover {
+  background-color: rgba(0, 0, 0, 0.221);
+}

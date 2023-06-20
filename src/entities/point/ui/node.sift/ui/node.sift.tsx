@@ -14,6 +14,7 @@ import { useUpdate } from '~/utils/hooks'
 
 import { Joint } from '../../joint'
 import { RuleSet } from '../../rule-set'
+import NewSource from './new-source'
 
 export interface SiftNodeProps {
   state: NodeState
@@ -90,13 +91,16 @@ export function SiftNode(props: SiftNodeProps): JSX.Element {
           </RuleSet>
         )
       })}
-      <div className='new-source-link'>
-        <button onClick={fns(stopPropagation, emitCreateRuleButton)}>+</button>
-        <Joint
-          className='--new'
-          linkId={newJointSourceLink.id}
-          isLinked={false}
-          onClick={fns(stopPropagation, emitNewJointSource)}
+      <div style={{ display: 'flex', justifyContent: 'end' }}>
+        <NewSource
+          buttonProps={{
+            onClick: fns(stopPropagation, emitCreateRuleButton),
+          }}
+          jointProps={{
+            linkId: newJointSourceLink.id,
+            isLinked: false,
+            onClick: fns(stopPropagation, emitNewJointSource),
+          }}
         />
       </div>
     </Node>
@@ -230,22 +234,22 @@ export function SiftNode(props: SiftNodeProps): JSX.Element {
 
   function subscribeOnUpdates(update: () => void, uns: (() => void)[]): void {
     uns.push(props.state.on('computation', update))
-    // uns.push(
-    //   props.linkStates.on('add', ({ item }) => {
-    //     if (item.rule.value.sourceId === props.state.id || item.rule.value.targetId === props.state.id) update()
-    //   })
-    // )
-    // uns.push(
-    //   props.linkStates.on('update', ({ item }) => {
-    //     if (item.rule.value.sourceId === props.state.id || item.rule.value.targetId === props.state.id) update()
-    //   })
-    // )
-    // uns.push(
-    //   props.linkStates.on('remove', ({ key }) => {
-    //     const item = props.linkStates.get(key)
-    //     if (item.rule.value.sourceId === props.state.id || item.rule.value.targetId === props.state.id)
-    //       setTimeout(update)
-    //   })
-    // )
+    uns.push(
+      props.linkStates.on('add', ({ item }) => {
+        if (item.rule.value.sourceId === props.state.id || item.rule.value.targetId === props.state.id) update()
+      })
+    )
+    uns.push(
+      props.linkStates.on('update', ({ item }) => {
+        if (item.rule.value.sourceId === props.state.id || item.rule.value.targetId === props.state.id) update()
+      })
+    )
+    uns.push(
+      props.linkStates.on('remove', ({ key }) => {
+        const item = props.linkStates.get(key)
+        if (item.rule.value.sourceId === props.state.id || item.rule.value.targetId === props.state.id)
+          setTimeout(update)
+      })
+    )
   }
 }

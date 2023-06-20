@@ -10,10 +10,6 @@
   margin-bottom: 8px;
 }
 
-.point-Node.--sift > .container > .content > .new-source-link {
-  display: flex;
-}
-
 .point-Node.--sift > .container > .content > .RuleSet {
   margin: 0 8px 8px 0;
 }
@@ -26,14 +22,6 @@
 }
 .point-Node.--sift .point-Joint.--linked {
   background-color: rgb(83, 160, 255);
-}
-
-.point-Node.--sift .new-source-link {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin: 0 8px 0 0;
-  padding: 8px;
 }
 
 .point-Node.--sift > .container {
@@ -53,4 +41,8 @@
 }
 .point-Node.--sift > .container > .content > .computation.--successively {
   background-color: rgba(84, 255, 249, 0.38);
+}
+
+.point-Node.--sift .container > .content > div > .point-NewSource {
+  margin-bottom: 10px;
 }
