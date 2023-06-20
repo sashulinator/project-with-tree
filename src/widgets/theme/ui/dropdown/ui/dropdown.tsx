@@ -1,7 +1,8 @@
+import { ChangeEvent } from 'react'
+
 import { getCurrentThemeName } from '../../../lib/get-current-theme-name'
 import { getThemeNames } from '../../../lib/get-theme-names'
 import { setTheme } from '../../../lib/set-theme'
-import { ChangeEvent } from 'react'
 
 export default function ThemeDropdown(): JSX.Element {
   const options = getThemeNames()
@@ -19,7 +20,7 @@ export default function ThemeDropdown(): JSX.Element {
     </select>
   )
 
-  function onChange(e: ChangeEvent<HTMLSelectElement>) {
+  function onChange(e: ChangeEvent<HTMLSelectElement>): void {
     setTheme(e.target.value)
   }
 }

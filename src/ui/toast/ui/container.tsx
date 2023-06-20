@@ -2,7 +2,6 @@ import './container.scss'
 
 import { useEffect, useMemo } from 'react'
 
-import { findToast } from '~/abstract/toast'
 import { add, get } from '~/abstract/toast/container/actions'
 import { ContainerEventNames } from '~/abstract/toast/container/event-names'
 import { ToastEventNames } from '~/abstract/toast/toast/event-names'
@@ -10,9 +9,6 @@ import { useForceUpdate, useOnMount } from '~/utils/hooks'
 import { useMediaQuery } from '~/utils/hooks/media-query'
 import { useOnUnmount } from '~/utils/hooks/on-unmount'
 
-import { backgroundColors } from '../constants/background-colors'
-import { getDefaultThemeColor } from '../lib/get-default-theme-color'
-import { useColorifyBrowser } from '../lib/use-colorify-browser'
 import Toast from './toast'
 
 export default function ToastContainer(): JSX.Element {
@@ -22,10 +18,6 @@ export default function ToastContainer(): JSX.Element {
   const toastIds = [...container.toastIds].reverse()
   const update = useForceUpdate()
 
-  useColorifyBrowser(
-    backgroundColors[findToast(toastIds[0])?.type] || getDefaultThemeColor(),
-    backgroundColors[findToast(toastIds[1])?.type]
-  )
   useOnMount(() => {
     container.emitter.on(ContainerEventNames.addedToast, update)
     container.emitter.on(ContainerEventNames.removedToast, update)

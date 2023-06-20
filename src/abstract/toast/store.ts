@@ -1,7 +1,7 @@
+import { Dictionary } from '~/utils/dictionary'
+
 import { Container } from './container/types'
 import { Toast } from './toast/types'
-
-import { Dictionary } from '~/utils/dictionary'
 
 export interface Store {
   containers: Dictionary<Container>

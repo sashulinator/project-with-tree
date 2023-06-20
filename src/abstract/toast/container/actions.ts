@@ -48,11 +48,11 @@ function change(container?: Partial<Container>): Container {
 }
 
 function remove(id: Id): void {
-  store[id].emitter.all.clear()
+  store.containers[id].emitter.all.clear()
   delete store[id]
 }
 
-function addToast(toast: Toast) {
+function addToast(toast: Toast): void {
   const container = find(toast.containerId)
   if (container === undefined) {
     return
@@ -65,7 +65,7 @@ function addToast(toast: Toast) {
   container.emitter.emit(ContainerEventNames.addedToast, toast.id)
 }
 
-function removeToast(toast: Toast) {
+function removeToast(toast: Toast): void {
   const container = find(toast.containerId)
   if (container === undefined) {
     return
@@ -112,7 +112,7 @@ function generate(container?: Partial<Container>): Container {
   return generatedContainer
 }
 
-function subscribe(container: Container) {
+function subscribe(container: Container): void {
   container.emitter.on(ContainerEventNames.unmount, remove)
   container.emitter.on(ContainerEventNames.addToast, addToast)
   container.emitter.on(ContainerEventNames.removeToast, removeToast)
