@@ -6,13 +6,13 @@ import { Id } from '~/utils/core'
 
 export interface JointProps extends React.HTMLAttributes<HTMLDivElement> {
   linkId: Id
-  isLinked: boolean
+  variant: 'unlinked' | 'new' | 'linked'
 }
 
 export function Joint(props: JointProps): JSX.Element {
-  const { linkId, isLinked, ...divProps } = props
+  const { linkId, ...divProps } = props
 
   return (
-    <div {...divProps} data-link-id={linkId} className={clsx('point-Joint', props.className, isLinked && '--linked')} />
+    <div {...divProps} data-link-id={linkId} className={clsx('point-Joint', `--${props.variant}`, props.className)} />
   )
 }

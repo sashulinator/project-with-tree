@@ -45,7 +45,7 @@ export function SiftNode(props: SiftNodeProps): JSX.Element {
       state={props.state}
       scale={props.scale}
       left={
-        <div className='target-links'>
+        <div className='targetLinks'>
           {targetLinks.map((linkState) => {
             if (linkState.id === newJointTargetLink.id) return null
 
@@ -53,17 +53,12 @@ export function SiftNode(props: SiftNodeProps): JSX.Element {
               <Joint
                 key={linkState.id}
                 linkId={linkState.id}
-                isLinked={true}
+                variant='linked'
                 onClick={fns(stopPropagation, () => emitJointTarget(linkState))}
               />
             )
           })}
-          <Joint
-            className='--new'
-            linkId={newJointTargetLink.id}
-            isLinked={false}
-            onClick={fns(stopPropagation, emitNewJointTarget)}
-          />
+          <Joint variant='new' linkId={newJointTargetLink.id} onClick={fns(stopPropagation, emitNewJointTarget)} />
         </div>
       }
     >
@@ -83,7 +78,7 @@ export function SiftNode(props: SiftNodeProps): JSX.Element {
             key={linkState.id}
             jointProps={{
               linkId: linkState.id,
-              isLinked: Boolean(linkState.rule.value.targetId),
+              variant: Boolean(linkState.rule.value.targetId) ? 'linked' : 'unlinked',
               onClick: fns(stopPropagation, () => emitRuleJoint(linkState)),
             }}
           >
@@ -98,7 +93,6 @@ export function SiftNode(props: SiftNodeProps): JSX.Element {
           }}
           jointProps={{
             linkId: newJointSourceLink.id,
-            isLinked: false,
             onClick: fns(stopPropagation, emitNewJointSource),
           }}
         />

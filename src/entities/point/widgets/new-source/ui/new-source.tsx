@@ -5,7 +5,7 @@ import React from 'react'
 import { Joint, JointProps } from '../../../ui/joint'
 
 interface NewSourceProps {
-  jointProps: JointProps
+  jointProps: Omit<JointProps, 'variant'>
   buttonProps: React.HTMLAttributes<HTMLButtonElement>
 }
 
@@ -15,7 +15,7 @@ export default function NewSource(props: NewSourceProps): JSX.Element {
   return (
     <div className='point-NewSource'>
       <button {...buttonProps}>+</button>
-      <Joint {...jointProps} className='--new' />
+      <Joint {...jointProps} variant='new' />
     </div>
   )
 }
