@@ -12,8 +12,9 @@ import { stopPropagation } from '~/utils/dom'
 import { fns } from '~/utils/function'
 import { useUpdate } from '~/utils/hooks'
 
-import { Joint } from '../../joint'
-import { RuleSet } from '../../rule-set'
+import { Joint } from '../../../widgets/joint'
+import NewSource from '../../../widgets/new-source/ui/new-source'
+import { RuleSet } from '../../../widgets/rule-set'
 
 export interface SiftNodeProps {
   state: NodeState
@@ -44,7 +45,7 @@ export function SiftNode(props: SiftNodeProps): JSX.Element {
       state={props.state}
       scale={props.scale}
       left={
-        <div className='target-links'>
+        <div className='targetLinks'>
           {targetLinks.map((linkState) => {
             if (linkState.id === newJointTargetLink.id) return null
 
@@ -52,17 +53,12 @@ export function SiftNode(props: SiftNodeProps): JSX.Element {
               <Joint
                 key={linkState.id}
                 linkId={linkState.id}
-                isLinked={true}
+                variant='linked'
                 onClick={fns(stopPropagation, () => emitJointTarget(linkState))}
               />
             )
           })}
-          <Joint
-            className='--new'
-            linkId={newJointTargetLink.id}
-            isLinked={false}
-            onClick={fns(stopPropagation, emitNewJointTarget)}
-          />
+          <Joint variant='new' linkId={newJointTargetLink.id} onClick={fns(stopPropagation, emitNewJointTarget)} />
         </div>
       }
     >
@@ -82,7 +78,7 @@ export function SiftNode(props: SiftNodeProps): JSX.Element {
             key={linkState.id}
             jointProps={{
               linkId: linkState.id,
-              isLinked: Boolean(linkState.rule.value.targetId),
+              variant: Boolean(linkState.rule.value.targetId) ? 'linked' : 'unlinked',
               onClick: fns(stopPropagation, () => emitRuleJoint(linkState)),
             }}
           >
@@ -90,13 +86,15 @@ export function SiftNode(props: SiftNodeProps): JSX.Element {
           </RuleSet>
         )
       })}
-      <div className='new-source-link'>
-        <button onClick={fns(stopPropagation, emitCreateRuleButton)}>+</button>
-        <Joint
-          className='--new'
-          linkId={newJointSourceLink.id}
-          isLinked={false}
-          onClick={fns(stopPropagation, emitNewJointSource)}
+      <div style={{ display: 'flex', justifyContent: 'end' }}>
+        <NewSource
+          buttonProps={{
+            onClick: fns(stopPropagation, emitCreateRuleButton),
+          }}
+          jointProps={{
+            linkId: newJointSourceLink.id,
+            onClick: fns(stopPropagation, emitNewJointSource),
+          }}
         />
       </div>
     </Node>
@@ -230,22 +228,22 @@ export function SiftNode(props: SiftNodeProps): JSX.Element {
 
   function subscribeOnUpdates(update: () => void, uns: (() => void)[]): void {
     uns.push(props.state.on('computation', update))
-    // uns.push(
-    //   props.linkStates.on('add', ({ item }) => {
-    //     if (item.rule.value.sourceId === props.state.id || item.rule.value.targetId === props.state.id) update()
-    //   })
-    // )
-    // uns.push(
-    //   props.linkStates.on('update', ({ item }) => {
-    //     if (item.rule.value.sourceId === props.state.id || item.rule.value.targetId === props.state.id) update()
-    //   })
-    // )
-    // uns.push(
-    //   props.linkStates.on('remove', ({ key }) => {
-    //     const item = props.linkStates.get(key)
-    //     if (item.rule.value.sourceId === props.state.id || item.rule.value.targetId === props.state.id)
-    //       setTimeout(update)
-    //   })
-    // )
+    uns.push(
+      props.linkStates.on('add', ({ item }) => {
+        if (item.rule.value.sourceId === props.state.id || item.rule.value.targetId === props.state.id) update()
+      })
+    )
+    uns.push(
+      props.linkStates.on('update', ({ item }) => {
+        if (item.rule.value.sourceId === props.state.id || item.rule.value.targetId === props.state.id) update()
+      })
+    )
+    uns.push(
+      props.linkStates.on('remove', ({ key }) => {
+        const item = props.linkStates.get(key)
+        if (item.rule.value.sourceId === props.state.id || item.rule.value.targetId === props.state.id)
+          setTimeout(update)
+      })
+    )
   }
 }
