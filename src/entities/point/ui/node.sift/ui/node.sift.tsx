@@ -13,8 +13,8 @@ import { fns } from '~/utils/function'
 import { useUpdate } from '~/utils/hooks'
 
 import NewSource from '../../../widgets/new-source/ui/new-source'
+import { RuleSet } from '../../../widgets/rule-set'
 import { Joint } from '../../joint'
-import { RuleSet } from '../../rule-set'
 
 export interface SiftNodeProps {
   state: NodeState
