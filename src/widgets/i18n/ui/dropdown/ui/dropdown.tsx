@@ -19,7 +19,7 @@ export default function I18nDropdown(): JSX.Element {
     </select>
   )
 
-  function onChange(e: ChangeEvent<HTMLSelectElement>) {
+  function onChange(e: ChangeEvent<HTMLSelectElement>): void {
     changeLanguage(e.target.value)
   }
 }
