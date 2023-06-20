@@ -3,7 +3,7 @@ import { Any } from '~/utils/core'
 import { setRefs } from '~/utils/react/set-refs'
 
 export interface BoardProps {
-  state: BoardState<Any, Any>
+  state: BoardState<Any>
   children: React.ReactNode
 }
 

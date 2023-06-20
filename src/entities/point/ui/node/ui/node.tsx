@@ -1,42 +1,37 @@
 import './node.css'
 
 import clsx from 'clsx'
-import { useState } from 'react'
 
-import { IsDragEvent } from '~/abstract/canvas'
-import { CanvasState } from '~/entities/decision'
-import { PointState } from '~/entities/point/ui/node/state'
+import { NodeState } from '~/entities/point/ui/node/state'
 import { Node as UINode } from '~/ui/canvas'
-import { useOnMount, useUpdate } from '~/utils/hooks'
+import { useUpdate } from '~/utils/hooks'
+import { setRefs } from '~/utils/react'
 
-export interface NodeProps {
-  state: PointState
-  decisionState: CanvasState
+export interface NodeProps extends React.HTMLAttributes<SVGForeignObjectElement> {
+  state: NodeState
+  scale: number
   left?: React.ReactNode
-  children?: React.ReactNode
-  isDrag?: (event: IsDragEvent) => boolean
+  right?: React.ReactNode
 }
 
 export function Node(props: NodeProps): JSX.Element {
-  useUpdate(subscribeOnUpdates)
-  useOnMount(subscribeOnSelected)
+  const { state, scale, left, right, ...foreignObjectProps } = props
 
-  const [isSelected, select] = useState(false)
+  useUpdate(subscribeOnUpdates)
 
   return (
     <UINode
-      left={props.left}
-      className={clsx('point-Node', isSelected && '--selected')}
-      nodeTitle={props.state.point.name}
-      nodeDescription={props.state.point.description}
-      width={props.state.width.value}
-      height={props.state.height.value}
-      position={props.state.position.value}
-      lastPosition={props.state.position.last}
-      scale={props.decisionState.scale.value}
-      onMouseDown={selectOnMouseAction}
-      onMove={props.state.position.move}
-      onClick={selectOnMouseAction}
+      {...foreignObjectProps}
+      ref={setRefs(state.ref.set)}
+      className={clsx('point-Node', props.className)}
+      nodeTitle={state.point.name}
+      nodeDescription={state.point.description}
+      position={state.position.value}
+      lastPosition={state.position.last}
+      scale={scale}
+      onMove={state.position.move}
+      left={left}
+      right={right}
     >
       {props.children}
     </UINode>
@@ -44,26 +39,9 @@ export function Node(props: NodeProps): JSX.Element {
 
   // Private
 
-  function subscribeOnSelected(): () => void {
-    const unsubscribe = props.decisionState.emitter.on('setSelected', ({ value }) =>
-      select(value?.includes(props.state.id))
-    )
-    return unsubscribe
-  }
-
   function subscribeOnUpdates(update: () => void, uns: (() => void)[]): void {
-    uns.push(props.state.emitter.on('setPosition', update))
-    uns.push(props.state.emitter.on('setWidth', update))
-    uns.push(props.state.emitter.on('setHeight', update))
-  }
-
-  function selectOnMouseAction(e: React.MouseEvent<SVGGElement>): void {
-    if (e.metaKey) {
-      props.decisionState.selected.toggle(props.state.id)
-    } else {
-      // Исключаем попадание в историю избыточное выделение
-      if (props.decisionState.selected.isSelected(props.state.id)) return
-      props.decisionState.selected.add(props.state.id)
-    }
+    uns.push(props.state.on('setPosition', update))
+    uns.push(props.state.on('setWidth', update))
+    uns.push(props.state.on('setHeight', update))
   }
 }

@@ -5,7 +5,7 @@ import { ItemEventNames } from './event-names'
 
 export type ItemEvents = {
   setPosition: { value: Position }
-  setRef: { value: HTMLElement }
+  ref: { value: HTMLElement }
   setWidth: { value: number }
   setHeight: { value: number }
 }

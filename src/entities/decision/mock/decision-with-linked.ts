@@ -11,7 +11,6 @@ export const decisionWithLinked: Decision = {
       name: 'Lena',
       x: 0,
       y: 0,
-      children: ['222', '333'],
     },
     {
       type: 'CONDITION',

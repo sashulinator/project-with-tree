@@ -1,8 +1,7 @@
 import './node.css'
 
 import clsx from 'clsx'
-import React, { useRef } from 'react'
-import useMeasure from 'react-use-measure'
+import React, { ForwardedRef, forwardRef, useRef } from 'react'
 
 import { IsDragEvent, Position } from '~/abstract/canvas'
 
@@ -10,10 +9,12 @@ import { Item } from '../../item'
 
 export interface NodeProps extends React.HTMLAttributes<SVGForeignObjectElement> {
   nodeTitle: React.ReactNode
+  titleProps?: React.HTMLAttributes<HTMLDivElement>
   nodeDescription?: React.ReactNode | undefined
-  width: number
-  height: number
+  width?: number | undefined
+  height?: number | undefined
   left?: React.ReactNode
+  right?: React.ReactNode
   position: Position
   lastPosition: Position
   scale: number
@@ -28,24 +29,23 @@ export interface NodeProps extends React.HTMLAttributes<SVGForeignObjectElement>
  * 2. Перетаскивание по тайтлу
  * 3. Стили позиционирования
  */
-export function Node(props: NodeProps): JSX.Element {
-  const { nodeTitle, nodeDescription, left, ...foreignObjectProps } = props
+export function NodeComponent(props: NodeProps, ref: ForwardedRef<SVGForeignObjectElement>): JSX.Element {
+  const { nodeTitle, titleProps, nodeDescription, left, right, ...foreignObjectProps } = props
 
   const titleRef = useRef(null)
-  const [containerRef, { height: containerHeight }] = useMeasure()
-  const height = Math.max(containerHeight, foreignObjectProps.height)
 
   return (
-    <Item {...foreignObjectProps} height={height} className={clsx(props.className, 'ui-Node')} isDrag={isDrag}>
-      <div className={clsx('container')} ref={containerRef}>
+    <Item {...foreignObjectProps} ref={ref} className={clsx(props.className, 'ui-Node')} isDrag={isDrag}>
+      <div className={clsx('container')}>
         {left}
         <div className='content'>
-          <div className={clsx('title')} ref={titleRef}>
+          <div ref={titleRef} {...titleProps} className={clsx('title', titleProps?.className)}>
             {nodeTitle}
           </div>
           <div className={clsx('description')}>{nodeDescription}</div>
           {props.children}
         </div>
+        {right}
       </div>
     </Item>
   )
@@ -57,4 +57,6 @@ export function Node(props: NodeProps): JSX.Element {
   }
 }
 
+const Node = forwardRef(NodeComponent)
 Node.displayName = 'UICanvasNode'
+export { Node }

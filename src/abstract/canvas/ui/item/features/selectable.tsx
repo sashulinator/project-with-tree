@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 
 import { Id } from '~/utils/core'
 
-import { CanvasState } from '../../../../../entities/decision/ui/board/state'
+import { EditorState } from '../../../../../entities/decision/ui/editor/state'
 
 export interface CanvasItemSelectableProps {
   children: (props: {
@@ -10,7 +10,7 @@ export interface CanvasItemSelectableProps {
     selectOnMouseAction(e: React.MouseEvent<SVGGElement>): void
   }) => React.ReactNode
   id: Id
-  chartState: CanvasState
+  chartState: EditorState
 }
 
 /**
@@ -20,7 +20,7 @@ export default function ItemSelectable(props: CanvasItemSelectableProps): JSX.El
   const [isSelected, select] = useState(false)
 
   useEffect(() => {
-    props.chartState.emitter.on('setSelected', ({ value }) => select(value?.includes(props.id)))
+    props.chartState.on('selected', ({ value }) => select(value?.includes(props.id)))
   })
 
   return <>{props.children({ isSelected, selectOnMouseAction })}</>

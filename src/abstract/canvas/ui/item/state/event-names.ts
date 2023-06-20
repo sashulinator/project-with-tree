@@ -1,1 +1,1 @@
-export type ItemEventNames = 'setHeight' | 'setRef' | 'setWidth' | 'setPosition'
+export type ItemEventNames = 'setHeight' | 'ref' | 'setWidth' | 'setPosition'

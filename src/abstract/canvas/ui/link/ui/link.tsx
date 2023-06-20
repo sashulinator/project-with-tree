@@ -1,3 +1,5 @@
+import './link.css'
+
 import clsx from 'clsx'
 import { ForwardedRef, forwardRef } from 'react'
 
@@ -18,16 +20,7 @@ function LinkComponent(props: LinkProps, ref: ForwardedRef<SVGPathElement>): JSX
 
   if (!path) return null
 
-  return (
-    <path
-      d={path}
-      strokeWidth={2}
-      stroke='black'
-      {...pathProp}
-      className={clsx(props.className, 'a-CanvasLink')}
-      ref={ref}
-    />
-  )
+  return <path d={path} strokeWidth={2} {...pathProp} className={clsx(props.className, 'a-CanvasLink')} ref={ref} />
 
   // Private
 

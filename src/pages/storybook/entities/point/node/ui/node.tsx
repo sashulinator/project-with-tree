@@ -1,4 +1,5 @@
 // import Callout, { top } from '~/ui/callout'
+import { LinkStateDictionary } from '~/entities/decision/ui/links/state/state'
 import { Node } from '~/entities/point'
 
 import { boardState } from '../mocks/board-state'
@@ -23,8 +24,8 @@ export default function NodePage(): JSX.Element {
           </label>
 
           <div>
-            <svg height='100%' width='100%' style={{ border: '1px solid red' }}>
-              <Node state={state} decisionState={boardState} left={<div>hello</div>} />
+            <svg height='500px' width='100%' style={{ border: '1px solid red' }}>
+              <Node state={state} scale={boardState.scale.value} left={<div>left</div>} />
             </svg>
           </div>
         </div>

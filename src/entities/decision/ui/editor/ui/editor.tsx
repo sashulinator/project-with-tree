@@ -1,83 +1,79 @@
+import { useEffect, useMemo } from 'react'
+
 import { PaintingPanel } from '~/abstract/canvas'
-import { CanvasState } from '~/entities/decision'
-import { Link } from '~/entities/point'
-import { SiftNode } from '~/entities/point/ui/node.sift'
-import { Board } from '~/ui/canvas/ui/board'
+import { Decision, EditorState } from '~/entities/decision'
+import { NodeState } from '~/entities/point'
+import { LinkState, Rule } from '~/entities/rule'
+import { EmitterableDictionary } from '~/lib/emitter/dictionary'
+import { Board } from '~/ui/canvas'
 import { ActionHistory } from '~/utils/action-history'
-import { Id, Offset } from '~/utils/core'
-import { getOffsetInElement } from '~/utils/dom'
-import { useUpdate } from '~/utils/hooks'
+import { useBoolean, useEventListener, useOnMount, useUpdate } from '~/utils/hooks'
+
+import { Links } from '../../links'
+import { LinkStateDictionary } from '../../links/state/state'
+import { Nodes } from '../../nodes'
+import { listenHistory } from '../lib/listen-history'
 
 interface EditorProps {
-  chartState: CanvasState
-  history: ActionHistory
+  decision: Decision
+  ruleList: Rule[]
 }
 
 export function Editor(props: EditorProps): JSX.Element {
-  const itemStates = Object.values(props.chartState.itemStates.value)
+  const [isRenderLinks, setIsRenderLinks] = useBoolean(false)
+  useOnMount(setIsRenderLinks)
+
+  const history = useMemo(() => new ActionHistory(), [])
+
+  const editorState = useMemo(() => new EditorState({ translate: { x: 0, y: 0 }, scale: 1 }), [])
+
+  const linkStateList = useMemo(() => props.ruleList.map((rule) => new LinkState({ id: rule.id, rule })), [])
+
+  const nodeStateList = useMemo(() => props.decision.data.map((point) => new NodeState({ point })), [])
+
+  const linkStates = useMemo(() => new LinkStateDictionary(linkStateList), [])
+
+  const nodeStates = useMemo(() => new EmitterableDictionary(nodeStateList, (l) => l.id.toString()), [])
 
   useUpdate(updateOnEvents)
 
+  useEventListener('keydown', onKeyDown)
+
+  useEffect(() => {
+    editorState.onAll((eventName, events) => listenHistory(history, editorState, eventName, events))
+  }, [])
+
   return (
-    <Board state={props.chartState}>
-      <PaintingPanel translate={props.chartState.translate.value} scale={props.chartState.scale.value}>
-        {props.chartState.editingLink.value && (
-          <Link
-            sourceState={props.chartState.editingLink.value.sourceState}
-            targetState={props.chartState.editingLink.value.targetState}
-            targetOffset={null}
-            sourceOffset={getSourceOffset(props.chartState.editingLink.value?.sourceRuleId)}
-            decisionState={props.chartState}
+    <Board state={editorState}>
+      <PaintingPanel translate={editorState.translate.value} scale={editorState.scale.value}>
+        {isRenderLinks && (
+          <Links
+            canvasTranslate={editorState.translate.value}
+            scale={editorState.scale.value}
+            linkStates={linkStates}
+            nodeStates={nodeStates}
           />
         )}
-      </PaintingPanel>
-      <PaintingPanel translate={props.chartState.translate.value} scale={props.chartState.scale.value}>
-        {itemStates.flatMap((state) => {
-          return state.ruleList.value.map((rule) => {
-            const targetState = props.chartState.itemStates.get(rule.pointId)
-            return (
-              <Link
-                sourceOffset={getSourceOffset(state.id)}
-                targetOffset={{ top: 0, left: 0 }}
-                key={state.point.id}
-                sourceState={state}
-                targetState={targetState}
-                decisionState={props.chartState}
-              />
-            )
-          })
-        })}
-      </PaintingPanel>
-      <PaintingPanel translate={props.chartState.translate.value} scale={props.chartState.scale.value}>
-        {itemStates.map((state) => {
-          return <SiftNode key={state.point.id} state={state} decisionState={props.chartState} />
-        })}
+        <Nodes scale={editorState.scale.value} linkStates={linkStates} nodeStates={nodeStates} />
       </PaintingPanel>
     </Board>
   )
 
   // Private
 
-  function getSourceOffset(id: Id | undefined): Offset | null {
-    const sourceState = props.chartState.editingLink.value?.sourceState
-    if (!id) return null
-    const srcLinkEl = sourceState?.ref.value?.querySelector(`[data-id="${id.toString()}"]`)
-    if (!srcLinkEl || !sourceState) return null
-    const srcLinkOffset = getOffsetInElement(srcLinkEl, sourceState?.ref.value)
-    const srcLinkRect = srcLinkEl?.getBoundingClientRect() || { height: 0 }
+  function onKeyDown(ev: KeyboardEvent): void {
+    if (!ev.metaKey || ev.key !== 'z') return
 
-    return {
-      left: sourceState.width.value,
-      top: (srcLinkOffset.top + srcLinkRect.height / 2) / props.chartState.scale.value,
+    if (ev.shiftKey) {
+      history.next()
+    } else {
+      history.previous()
     }
   }
 
   function updateOnEvents(update: () => void): void {
-    props.chartState.emitter.on('setItemStates', update)
-    props.chartState.emitter.on('setItemStates', update)
-    props.chartState.emitter.on('setEditingLink', update)
-    props.chartState.emitter.on('setTranslate', update)
-    props.chartState.emitter.on('setScale', update)
+    editorState.on('translate', update)
+    editorState.on('scale', update)
   }
 }
 

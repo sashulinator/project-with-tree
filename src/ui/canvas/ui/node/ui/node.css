@@ -1,10 +1,14 @@
 .ui-Node > .container {
   border: 1px solid black;
   display: flex;
+  width: 300px;
+}
+
+.ui-Node > .container > .content {
+  width: 100%;
 }
 
 .ui-Node > .container > .content > .title {
-  border: 1px solid black;
   margin-bottom: 10px;
   cursor: grab;
 }

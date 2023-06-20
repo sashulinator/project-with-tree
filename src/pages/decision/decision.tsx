@@ -1,42 +1,18 @@
 import './decision.css'
 
-import { useEffect, useMemo } from 'react'
-
-import { CanvasState } from '~/entities/decision'
 import { decision } from '~/entities/decision/mock'
-import { ActionHistory } from '~/utils/action-history'
-import { useEventListener } from '~/utils/hooks'
+import { ruleList } from '~/mocks/rule-list'
 import { ThemeDropdown } from '~/widgets/theme'
 
 import { Editor } from '../../entities/decision/ui/editor'
-import { listenHistory } from './lib/listen-history'
-
-// import PropsPanel from './ui/props-panel'
 
 export default function DecisionPage(): JSX.Element {
   // const { id } = useParams()
 
-  const state = useMemo(() => new CanvasState({ translate: { x: 0, y: 0 }, scale: 1, decision }), [])
-  const history = useMemo(() => new ActionHistory(), [])
-
-  useEffect(() => {
-    state.emitter.onAll((eventName, events) => listenHistory(history, state, eventName, events))
-  }, [])
-
-  useEventListener('keydown', (e) => {
-    if (e.metaKey && e.key === 'z') {
-      if (e.shiftKey) {
-        history.next()
-      } else {
-        history.previous()
-      }
-    }
-  })
-
   return (
     <main className='DecisionPage'>
       <ThemeDropdown />
-      <Editor chartState={state} history={history} />
+      <Editor decision={decision} ruleList={ruleList} />
     </main>
   )
 

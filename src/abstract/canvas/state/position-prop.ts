@@ -1,34 +1,28 @@
 import { Emitter } from '~/lib/emitter/emitter'
 import { Any } from '~/utils/core'
-import { Emitterable, EmitterableProp } from '~/utils/emitter'
+import { Prop } from '~/utils/emitter'
 
 import { Position } from '../types/position'
-
-// type PositionPropEmitterable = Emitterable<Emitter<Any>> & {
-//   height: EmitterableProp<string, number, Any>
-//   width: EmitterableProp<string, number, Any>
-// }
 
 export interface PositionPropEvent {
   isLast: boolean
   value: Position
 }
 
-export class PositionProp<N extends string> extends EmitterableProp<N, Position, Emitterable<Emitter<Any>>> {
-  previous: Position
-
+/**
+ * @final
+ */
+export class PositionProp<N extends string> extends Prop<N, Position> {
   last: Position
 
-  constructor(eventName: N, value: Position, emitterable: Emitterable<Emitter<Any>>) {
-    super(eventName, value, emitterable)
-    this.previous = value
+  constructor(eventName: N, value: Position, emitter: Emitter<Any>) {
+    super(eventName, value, emitter)
+
     this.last = value
 
-    this.emitterable.emitter.on(this.eventName, (event: PositionPropEvent) => {
-      if (event.isLast) {
-        this.previous = this.last
-        this.last = event.value
-      }
+    this.emitter.on(this.eventName, (event: PositionPropEvent) => {
+      if (!event.isLast) return
+      this.last = event.value
     })
   }
 

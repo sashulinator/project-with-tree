@@ -1,36 +1,28 @@
 import { Position, PositionProp } from '~/abstract/canvas'
 import { Emitter } from '~/lib/emitter'
-import { Any } from '~/utils/core'
-import { Emitterable, EmitterableProp as Prop } from '~/utils/emitter'
+import { AnyEvent, Prop } from '~/utils/emitter'
 
-import { ItemState } from '../../item'
 import { BoardEvents } from './events'
-import { ItemStatesProp } from './item-states-prop'
 
-export interface BoardStateProps<I extends ItemState<Any>> {
+export interface BoardStateProps {
   translate: Position
   scale: number
-  itemStateList: I[]
 }
 
-export class BoardState<TEvents extends BoardEvents, TItemState extends ItemState<Any> = ItemState<Any>>
-  implements Emitterable<Emitter<TEvents>>
-{
-  emitter: Emitter<TEvents>
+export class BoardState<TEvents extends AnyEvent> extends Emitter<TEvents & BoardEvents> {
+  canvasBoardRef: Prop<'canvasBoardRef', null | SVGSVGElement>
 
-  translate: PositionProp<'setTranslate'>
+  translate: PositionProp<'translate'>
 
-  scale: Prop<'setScale', number>
+  scale: Prop<'scale', number>
 
-  itemStates: ItemStatesProp<'setItemStates', TItemState>
+  constructor(props: BoardStateProps) {
+    super()
 
-  constructor(props: BoardStateProps<TItemState>) {
-    this.emitter = new Emitter<TEvents>()
+    this.canvasBoardRef = new Prop<'canvasBoardRef', null | SVGSVGElement>('canvasBoardRef', null, this)
 
-    this.translate = new PositionProp('setTranslate', props.translate, this)
+    this.translate = new PositionProp('translate', props.translate, this)
 
-    this.scale = new Prop('setScale', props.scale, this)
-
-    this.itemStates = new ItemStatesProp('setItemStates', props.itemStateList, this)
+    this.scale = new Prop('scale', props.scale, this)
   }
 }

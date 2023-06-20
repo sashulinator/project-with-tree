@@ -1,16 +1,15 @@
 // import uuid from 'uuid-random'
-import { CanvasState as ChartState } from '~/entities/decision'
+import { EditorState } from '~/entities/decision'
 
 // import { PointState } from '~/widgets/chart-item'
 
 interface PropsPanelPropsProps {
-  chartState: ChartState
+  chartState: EditorState
 }
 
 export default function PropsPanelProps(props: PropsPanelPropsProps): JSX.Element {
   return (
     <div className='PropsPanelProps'>
-      {props.chartState.decision.id}
       <button onClick={onAddVoidClick}>Add VOID node</button>
     </div>
   )
