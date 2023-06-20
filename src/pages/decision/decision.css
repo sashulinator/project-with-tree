@@ -1,6 +1,8 @@
 .DecisionPage {
   position: relative;
   background-color: var(--bgSecondary);
+  overflow: hidden;
+  overscroll-behavior: none;
 }
 
 .DecisionPage .TreePanel {
@@ -21,4 +23,8 @@
   height: 100%;
   background-color: rgba(12, 12, 12, 0.329);
   z-index: 299;
+}
+
+.DecisionPage .tools {
+  position: absolute;
 }

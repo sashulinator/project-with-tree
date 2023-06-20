@@ -11,7 +11,9 @@ export default function DecisionPage(): JSX.Element {
 
   return (
     <main className='DecisionPage'>
-      <ThemeDropdown />
+      <div className='tools'>
+        <ThemeDropdown />
+      </div>
       <Editor decision={decision} ruleList={ruleList} />
     </main>
   )

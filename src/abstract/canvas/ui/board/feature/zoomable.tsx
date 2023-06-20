@@ -1,39 +1,34 @@
-import React, { ForwardedRef, useLayoutEffect, useRef } from 'react'
+import { useWheel } from '@use-gesture/react'
 
-import { assertNotNull } from '~/utils/core'
+import React from 'react'
+
+import { Any, Position } from '~/utils/core'
 
 export interface CanvasBoardZoomableProps {
   scale: number
+  translate: Position
   setScale: (scale: number) => void
-  children: (props: { ref: ForwardedRef<SVGSVGElement> }) => React.ReactNode
+  setTranslate: (x: number, y: number, last: boolean) => void
+  children: (props: Any) => React.ReactNode
 }
 
 export function BoardZoomable(props: CanvasBoardZoomableProps): JSX.Element {
-  const svgRef = useRef<null | SVGSVGElement>(null)
+  const wheelBind = useWheel(
+    (ev): void => {
+      ev.event.stopPropagation()
+      const newScale = props.scale + ev.event.deltaY / 777
+      const retScale = newScale > 1 ? 1 : newScale < 0.1 ? 0.1 : newScale
+      const deltaScale = retScale - props.scale
+      const x = props.translate.x - deltaScale * ev.event.clientX
+      const y = props.translate.y - deltaScale * ev.event.clientY
 
-  useLayoutEffect(subscribeOnWheel, [props.scale])
+      props.setScale(retScale)
+      props.setTranslate(x, y, ev.last)
+    },
+    { preventDefault: true }
+  )
 
-  return <>{props.children({ ref: svgRef })}</>
-
-  // Private
-
-  function subscribeOnWheel(): () => void {
-    function wheeled(event: WheelEvent): void {
-      event.preventDefault()
-      event.stopPropagation()
-      const newScale = props.scale + event.deltaY / 777
-      const ret = newScale > 1 ? 1 : newScale < 0.1 ? 0.1 : newScale
-      props.setScale(ret)
-    }
-
-    // TODO сделать translate при зуме
-    // x: props.transform.x - deltaScale * event.clientX,
-    // y: props.transform.y - deltaScale * event.clientY,
-
-    assertNotNull(svgRef.current)
-    svgRef.current.addEventListener('wheel', wheeled)
-    return () => svgRef.current?.removeEventListener('wheel', wheeled)
-  }
+  return <>{props.children(wheelBind())}</>
 }
 
 BoardZoomable.displayName = 'CanvasBoardZoomable'
