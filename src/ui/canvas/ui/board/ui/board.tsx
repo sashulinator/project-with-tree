@@ -1,6 +1,5 @@
-import { Board as AbstractBoard, BoardDraggable, BoardState, BoardZoomable, ItemState } from '~/abstract/canvas'
+import { Board as AbstractBoard, BoardDraggable, BoardState, BoardZoomable } from '~/abstract/canvas'
 import { Any } from '~/utils/core'
-import { setRefs } from '~/utils/react/set-refs'
 
 export interface BoardProps {
   state: BoardState<Any>
@@ -9,7 +8,12 @@ export interface BoardProps {
 
 export function Board(props: BoardProps): JSX.Element {
   return (
-    <BoardZoomable setScale={(...qrgs): void => props.state.scale.set(...qrgs)} scale={props.state.scale.value}>
+    <BoardZoomable
+      translate={props.state.translate.value}
+      setTranslate={(...args): void => props.state.translate.move(...args)}
+      setScale={(...qrgs): void => props.state.scale.set(...qrgs)}
+      scale={props.state.scale.value}
+    >
       {(zoomProps): JSX.Element => (
         <BoardDraggable
           lastTranslate={props.state.translate.last}
@@ -17,7 +21,7 @@ export function Board(props: BoardProps): JSX.Element {
         >
           {(dragProps): JSX.Element => {
             return (
-              <AbstractBoard {...dragProps} ref={setRefs(zoomProps.ref)} style={{ touchAction: 'none' }}>
+              <AbstractBoard {...dragProps} {...zoomProps} style={{ touchAction: 'none' }}>
                 {props.children}
               </AbstractBoard>
             )
