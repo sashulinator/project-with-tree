@@ -1,15 +1,16 @@
+import mitt from 'mitt'
+
+import { Id } from '~/utils/core'
+import { BaseError } from '~/utils/error'
+
 import { get as getContainer } from '../container/actions'
 import { ContainerEventNames } from '../container/event-names'
 import { Container } from '../container/types'
 import { store } from '../store'
 import { ToastEventNames } from './event-names'
 import { Toast } from './types'
-import mitt from 'mitt'
 
-import { Id } from '~/utils/core'
-import { BaseError } from '~/utils/error'
-
-export function find(id: Id) {
+export function find(id: Id): Toast | undefined {
   return store.toasts[id]
 }
 
@@ -23,7 +24,7 @@ export function get(id: Id): Toast {
   return toast
 }
 
-export function add(toast?: Partial<Toast>) {
+export function add(toast?: Partial<Toast>): void {
   const container = getContainer(toast?.containerId)
   const generatedToast = generate(toast, container)
   subscribe(generatedToast)
@@ -32,7 +33,7 @@ export function add(toast?: Partial<Toast>) {
   generatedToast.emitter.emit(ToastEventNames.setEntering)
 }
 
-function setEntering(id: Id) {
+function setEntering(id: Id): void {
   const toast = get(id)
   toast.isEntering = true
   toast.isExiting = false
@@ -40,7 +41,7 @@ function setEntering(id: Id) {
   toast.emitter.emit(ToastEventNames.transitEntering)
 }
 
-function setShowing(id: Id) {
+function setShowing(id: Id): void {
   const toast = store.toasts[id]
   if (toast === undefined) {
     return
@@ -51,7 +52,7 @@ function setShowing(id: Id) {
   toast.emitter.emit(ToastEventNames.transitShowing)
 }
 
-function setExiting(id: Id) {
+function setExiting(id: Id): void {
   const toast = store.toasts[id]
   if (toast === undefined) {
     return
@@ -62,36 +63,36 @@ function setExiting(id: Id) {
   toast.emitter.emit(ToastEventNames.transitExiting)
 }
 
-function transitEntering(id: Id) {
+function transitEntering(id: Id): void {
   transite(id, 'Entering', (toast) => toast.emitter.emit(ToastEventNames.setShowing))
 }
-function transitShowing(id: Id) {
+function transitShowing(id: Id): void {
   transite(id, 'Showing', (toast) => toast.emitter.emit(ToastEventNames.setExiting))
 }
-function transitExiting(id: Id) {
+function transitExiting(id: Id): void {
   transite(id, 'Exiting', (toast) => toast.emitter.emit(ToastEventNames.remove))
 }
 
-function stopShowingTransition(id: Id) {
+function stopShowingTransition(id: Id): void {
   stopTransition(id, 'Showing')
 }
-function stopEnteringTransition(id: Id) {
+function stopEnteringTransition(id: Id): void {
   stopTransition(id, 'Entering')
 }
-function stopExitingTransition(id: Id) {
+function stopExitingTransition(id: Id): void {
   stopTransition(id, 'Exiting')
 }
-function continueShowingTransition(id: Id) {
+function continueShowingTransition(id: Id): void {
   continueTransition(id, 'Showing')
 }
-function continueEnteringTransition(id: Id) {
+function continueEnteringTransition(id: Id): void {
   continueTransition(id, 'Entering')
 }
-function continueExitingTransition(id: Id) {
+function continueExitingTransition(id: Id): void {
   continueTransition(id, 'Exiting')
 }
 
-function remove(id: Id) {
+function remove(id: Id): void {
   const toast = store.toasts[id]
   if (toast === undefined) {
     return
@@ -131,7 +132,7 @@ function subscribe(toast: Toast<unknown>): void {
   toast.emitter.on(ToastEventNames.remove, () => remove(toast.id))
 }
 
-function transite(id: Id, type: 'Entering' | 'Exiting' | 'Showing', onExit: (toast: Toast) => void) {
+function transite(id: Id, type: 'Entering' | 'Exiting' | 'Showing', onExit: (toast: Toast) => void): void {
   const toast = store.toasts[id]
   if (toast === undefined) {
     return
@@ -153,7 +154,7 @@ function transite(id: Id, type: 'Entering' | 'Exiting' | 'Showing', onExit: (toa
   }
 }
 
-function stopTransition(id: Id, type: 'Showing' | 'Entering' | 'Exiting') {
+function stopTransition(id: Id, type: 'Showing' | 'Entering' | 'Exiting'): void {
   const toast = store.toasts[id]
   if (toast === undefined) {
     return
@@ -161,7 +162,7 @@ function stopTransition(id: Id, type: 'Showing' | 'Entering' | 'Exiting') {
   toast[`is${type}TransitionStopped`] = true
 }
 
-function continueTransition(id: Id, type: 'Showing' | 'Entering' | 'Exiting') {
+function continueTransition(id: Id, type: 'Showing' | 'Entering' | 'Exiting'): void {
   const toast = store.toasts[id]
   if (toast === undefined) {
     return

@@ -1,8 +1,9 @@
-import { Toast } from '../toast/types'
 import { Emitter } from 'mitt'
 
 import { Id } from '~/utils/core'
 import { Dictionary } from '~/utils/dictionary'
+
+import { Toast } from '../toast/types'
 
 export interface Container {
   id: Id
