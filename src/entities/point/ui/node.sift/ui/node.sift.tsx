@@ -8,6 +8,7 @@ import { LinkStateDictionary } from '~/entities/decision/ui/links/state/state'
 import { Node, NodeState } from '~/entities/point'
 import { LinkState, Rule } from '~/entities/rule'
 import Editable from '~/ui/editable'
+import UnstyledButton from '~/ui/unstyled-button'
 import { add, remove } from '~/utils/dictionary'
 import { stopPropagation } from '~/utils/dom'
 import { fns } from '~/utils/function'
@@ -77,14 +78,6 @@ export function SiftNode(props: SiftNodeProps): JSX.Element {
         </div>
       }
     >
-      <button
-        onClick={(): void => {
-          props.state.computation.value = props.state.computation.value === 'parallel' ? 'successively' : 'parallel'
-        }}
-        className={clsx('computation', `--${props.state.computation.value || ''}`)}
-      >
-        {props.state.computation.value === 'parallel' ? 'Параллельно' : 'Последовательно'}
-      </button>
       {sourceLinks.map((linkState) => {
         if (linkState.id === newJointSourceLink.id) return null
 
@@ -112,6 +105,14 @@ export function SiftNode(props: SiftNodeProps): JSX.Element {
           }}
         />
       </div>
+      <UnstyledButton
+        onClick={(): void => {
+          props.state.computation.value = props.state.computation.value === 'parallel' ? 'successively' : 'parallel'
+        }}
+        className={clsx('computation', `--${props.state.computation.value || ''}`)}
+      >
+        {props.state.computation.value === 'parallel' ? 'Параллельно' : 'Последовательно'}
+      </UnstyledButton>
     </Node>
   )
 

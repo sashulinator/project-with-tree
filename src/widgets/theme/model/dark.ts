@@ -6,6 +6,7 @@ import { dark } from '~/shared/theme/dark'
 import { ButtonCSSVars } from '~/ui/button/types/css-vars'
 import { darkTheme as editable } from '~/ui/editable'
 import { darkTheme as textInput } from '~/ui/text-input'
+import { darkTheme as unstyledButton } from '~/ui/unstyled-button'
 
 import { Theme } from '../types/theme'
 import { commonTheme } from './common'
@@ -36,4 +37,5 @@ export const darkTheme: Theme & ButtonCSSVars = {
   ...pointNode,
   ...editable,
   ...pointJoint,
+  ...unstyledButton,
 }
