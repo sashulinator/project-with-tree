@@ -10,13 +10,15 @@ export interface TextInputProps extends React.InputHTMLAttributes<HTMLInputEleme
   isError?: boolean
   left?: React.ReactNode
   right?: React.ReactNode
+  borderless?: boolean | undefined
+  transparent?: boolean | undefined
   height?: 's' | 'l' | 'm'
 }
 
 const TextInput = forwardRef<HTMLInputElement, TextInputProps>(function TextInput(props, ref): JSX.Element {
   const [isFocused, setFocused, unsetFocused] = useBoolean(false)
   // eslint-disable-next-line react/prop-types
-  const { rootProps, isError, left, right, height = 'm', ...restProps } = props
+  const { rootProps, isError, left, right, height = 'm', borderless, transparent, ...restProps } = props
 
   return (
     <div
@@ -27,6 +29,8 @@ const TextInput = forwardRef<HTMLInputElement, TextInputProps>(function TextInpu
         isError && '--error',
         props.disabled && '--disabled',
         props.readOnly && '--readonly',
+        borderless && `--borderless`,
+        transparent && `--transparent`,
         `--${height}`,
         rootProps?.className
       )}

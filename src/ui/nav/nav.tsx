@@ -17,6 +17,9 @@ export default function Nav(): JSX.Element {
           <Link to={routes.dropdown.path}>Dropdown</Link>
         </ol>
         <ol>
+          <Link to={routes.editable.path}>Editable</Link>
+        </ol>
+        <ol>
           <Link to={routes.list.path}>List</Link>
         </ol>
         <ol>

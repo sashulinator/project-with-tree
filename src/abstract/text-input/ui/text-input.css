@@ -13,6 +13,15 @@
   outline: none;
 }
 
+/* Variants */
+
+.TextInput.--borderless {
+  border: transparent;
+}
+.TextInput.--transparent {
+  background-color: transparent;
+}
+
 /* Variables */
 
 .TextInput {
