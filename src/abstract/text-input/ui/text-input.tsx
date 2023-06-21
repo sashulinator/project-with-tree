@@ -18,21 +18,22 @@ export interface TextInputProps extends React.InputHTMLAttributes<HTMLInputEleme
 const TextInput = forwardRef<HTMLInputElement, TextInputProps>(function TextInput(props, ref): JSX.Element {
   const [isFocused, setFocused, unsetFocused] = useBoolean(false)
   // eslint-disable-next-line react/prop-types
-  const { rootProps, isError, left, right, height = 'm', borderless, transparent, ...restProps } = props
+  const { rootProps, isError, left, right, height = 'm', borderless, transparent, className, ...restProps } = props
 
   return (
     <div
       {...rootProps}
       className={c(
         'TextInput',
+        className,
+        rootProps?.className,
         isFocused && '--focused',
         isError && '--error',
         props.disabled && '--disabled',
         props.readOnly && '--readonly',
         borderless && `--borderless`,
         transparent && `--transparent`,
-        `--${height}`,
-        rootProps?.className
+        `--${height}`
       )}
     >
       {left}

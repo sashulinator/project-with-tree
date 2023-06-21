@@ -3,7 +3,8 @@ import clr from 'color'
 import { darkTheme as pointNode } from '~/entities/point/ui/node/themes/dark'
 import { dark } from '~/shared/theme/dark'
 import { ButtonCSSVars } from '~/ui/button/types/css-vars'
-import { darkTheme as textInput } from '~/ui/text-input/themes/dark'
+import { darkTheme as editable } from '~/ui/editable'
+import { darkTheme as textInput } from '~/ui/text-input'
 
 import { Theme } from '../types/theme'
 import { commonTheme } from './common'
@@ -32,4 +33,5 @@ export const darkTheme: Theme & ButtonCSSVars = {
 
   ...textInput,
   ...pointNode,
+  ...editable,
 }
