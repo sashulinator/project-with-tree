@@ -1,9 +1,9 @@
 :root {
-  --xs: 0.125rem;
-  --s: 0.25rem;
-  --m: 0.5rem;
-  --l: 0.75rem;
-  --xl: 1rem;
-  --xxl: 1.5rem;
-  --xxxl: 2rem;
+  --xs: 0.125rem; /* 2px */
+  --s: 0.25rem; /* 4px */
+  --m: 0.5rem; /* 8px */
+  --l: 0.75rem; /* 12px */
+  --xl: 1rem; /* 16px */
+  --xxl: 1.5rem; /* 24px */
+  --xxxl: 2rem; /* 32px */
 }
