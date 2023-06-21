@@ -11,6 +11,7 @@ export const common = {
   textInput_outlineWidth: outlineWidth,
   textInput_height__s: input_height__s,
   textInput_height__l: input_height__l,
+
   // --focused
   textInput_outlineStyle__focused: `solid`,
 }
