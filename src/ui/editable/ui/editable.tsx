@@ -13,10 +13,11 @@ import { setRefs } from '~/utils/react'
 export type EditableProps = Omit<TextInputProps, 'onChange'> & {
   onChange?: (ev: React.FocusEvent<HTMLInputElement> | React.KeyboardEvent<HTMLInputElement>) => void
   blurOnSubmit?: boolean | undefined
+  cannotBeEmpty?: boolean | undefined
 }
 
 function EditableComponent(props: EditableProps, forwardedRef: ForwardedRef<HTMLInputElement>): JSX.Element {
-  const { onChange, blurOnSubmit, ...inputProps } = props
+  const { onChange, blurOnSubmit, cannotBeEmpty, ...inputProps } = props
 
   const update = useForceUpdate()
 
@@ -50,7 +51,9 @@ function EditableComponent(props: EditableProps, forwardedRef: ForwardedRef<HTML
 
   function handleChange(ev: React.FocusEvent<HTMLInputElement> | React.KeyboardEvent<HTMLInputElement>): void {
     if (!ev.currentTarget.value) {
-      reset()
+      if (cannotBeEmpty) {
+        reset()
+      }
       return
     }
     onChange?.(ev)

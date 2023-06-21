@@ -48,7 +48,15 @@ export function SiftNode(props: SiftNodeProps): JSX.Element {
       nodeTitle={
         <Editable
           value={props.state.title.value}
+          cannotBeEmpty={true}
           onChange={(ev): void => props.state.title.set(ev.currentTarget.value)}
+        />
+      }
+      nodeDescription={
+        <Editable
+          value={props.state.description.value}
+          placeholder='Описание'
+          onChange={(ev): void => props.state.description.set(ev.currentTarget.value)}
         />
       }
       left={

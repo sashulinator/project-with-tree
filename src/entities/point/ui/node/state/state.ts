@@ -17,6 +17,8 @@ export class NodeState extends ItemState<Events> {
 
   title: Prop<'title', string>
 
+  description: Prop<'description', string | undefined>
+
   // ruleList: RuleListProp<'setRuleList'>
 
   constructor(props: NodeStateProps) {
@@ -25,6 +27,8 @@ export class NodeState extends ItemState<Events> {
     this.point = props.point
 
     this.title = new Prop('title', props.point.name, this)
+
+    this.description = new Prop('description', props.point.description, this)
 
     this.computation = new Prop('computation', props.point.computation, this)
   }

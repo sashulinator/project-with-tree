@@ -13,10 +13,11 @@ export interface NodeProps extends React.HTMLAttributes<SVGForeignObjectElement>
   left?: React.ReactNode
   right?: React.ReactNode
   nodeTitle?: React.ReactNode | undefined
+  nodeDescription?: React.ReactNode | undefined
 }
 
 export function Node(props: NodeProps): JSX.Element {
-  const { state, scale, left, right, nodeTitle, ...foreignObjectProps } = props
+  const { state, scale, left, right, nodeTitle, nodeDescription, ...foreignObjectProps } = props
 
   useUpdate(subscribeOnUpdates)
 
@@ -26,7 +27,7 @@ export function Node(props: NodeProps): JSX.Element {
       ref={setRefs(state.ref.set)}
       className={clsx('point-Node', props.className)}
       nodeTitle={nodeTitle || state.point.name}
-      nodeDescription={state.point.description}
+      nodeDescription={nodeDescription || state.point.description}
       position={state.position.value}
       lastPosition={state.position.last}
       scale={scale}

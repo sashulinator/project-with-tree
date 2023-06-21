@@ -9,6 +9,5 @@
 }
 
 .ui-Node > .container > .content > .title {
-  margin-bottom: 10px;
   cursor: grab;
 }
