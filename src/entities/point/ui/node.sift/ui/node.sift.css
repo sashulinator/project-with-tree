@@ -7,7 +7,10 @@
 }
 
 .point-Node.--sift > .container > .content > .title {
-  padding: 1.4rem 0.6rem 0.2rem 0;
+  padding: var(--xl) var(--m) var(--s) 0;
+}
+.point-Node.--sift > .container > .content > .description {
+  padding: 0 var(--m) var(--m) 0;
 }
 
 .point-Node.--sift > .container > .targetLinks > *:not(:last-child) {
