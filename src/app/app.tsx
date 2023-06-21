@@ -1,6 +1,7 @@
 import './reset.css'
 
 import './app.css'
+import './measures.css'
 import './utils.css'
 // 🟢 Отключаем eslint т.к. этот файл генерируется динамически
 // eslint-disable-next-line import/no-unresolved
