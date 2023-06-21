@@ -1,11 +1,6 @@
+import { input_height, input_height__l, input_height__s, outlineWidth } from '~/shared/theme/common'
 import { ButtonCSSVars } from '~/ui/button/types/css-vars'
 import { common as textInput } from '~/ui/text-input/themes/common'
-
-// Input
-const input_height = '36px'
-const input_height__s = '28px'
-const input_height__l = '42px'
-const outlineWidth = '4px'
 
 // TextInputCSSVars
 

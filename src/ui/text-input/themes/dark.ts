@@ -10,6 +10,7 @@ export const darkTheme: TextInputCSSVars = {
   textInput_bg,
   textInput_borderColor: dark.borderColor,
   textInput_outlineWidth: outlineWidth,
+
   // --hovered
   textInput_bg__hovered: textInput_bg.lighten(0.05),
 
@@ -20,6 +21,7 @@ export const darkTheme: TextInputCSSVars = {
   textInput_bg__error: dark.errorColor.darken(0.9),
   textInput_outlineColor__error: dark.errorColor.alpha(0.5),
   textInput_borderColor__error: dark.errorColor,
+
   // --disabled
   textInput_bg__disabled: textInput_bg.darken(0.5),
   textInput_borderColor__disabled: textInput_bg.darken(0.5),

@@ -1,3 +1,6 @@
+import './editable.css'
+
+import clsx from 'clsx'
 import { ForwardedRef, forwardRef, useEffect, useRef, useState } from 'react'
 
 import TextInput, { TextInputProps } from '~/ui/text-input'
@@ -29,6 +32,7 @@ function EditableComponent(props: EditableProps, forwardedRef: ForwardedRef<HTML
       borderless={true}
       transparent={true}
       {...inputProps}
+      className={clsx('ui-Editable', inputProps.className)}
       ref={setRefs(forwardedRef, ref)}
       onBlur={fns(handleChange, props.onBlur)}
       onChange={(e): void => setValue(e.target.value)}
