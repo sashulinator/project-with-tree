@@ -10,6 +10,11 @@ export default function Nav(): JSX.Element {
   return (
     <nav className='pt-5rem pl-2rem'>
       <ul>
+        abstract
+        <ol>
+          <Link to={routes.abstractButton.path}>Button</Link>
+        </ol>
+        ui
         <ol>
           <Link to={routes.callout.path}>Callout</Link>
         </ol>

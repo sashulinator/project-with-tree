@@ -1,17 +1,23 @@
 .point-Joint {
-  width: 10px;
-  height: 10px;
-  border-radius: 5px;
+  padding: 0;
+  margin: 0;
+  width: 0.6rem;
+  height: 0.6rem;
+  border-radius: 0.2rem;
   background-color: red;
   cursor: pointer;
 }
 
+/* Variants */
+
 .point-Joint.--unlinked {
-  background-color: rgb(255, 255, 255);
+  background-color: var(--pointJoint_bg__unlinked);
 }
-.point-Joint.--new {
-  background-color: rgb(84, 222, 104);
-}
+
 .point-Joint.--linked {
-  background-color: rgb(83, 160, 255);
+  background-color: var(--pointJoint_bg__linked);
+}
+
+.point-Joint.--new {
+  background-color: var(--pointJoint_bg__new);
 }

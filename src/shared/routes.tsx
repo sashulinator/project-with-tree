@@ -16,6 +16,7 @@ import TextInputPage from '~/pages/storybook/ui/text-input'
 import Header from '~/ui/header'
 import Nav from '~/ui/nav'
 
+const AbstractButtonPage = lazy(() => import('~/pages/storybook/abstract/button'))
 const PointNodePage = lazy(() => import('~/pages/storybook/entities/point/node'))
 const UIEditablePage = lazy(() => import('~/pages/storybook/ui/editable'))
 
@@ -68,6 +69,16 @@ export const routes = {
   },
 
   /* ABSTRACT */
+
+  abstractButton: {
+    Header,
+    Nav,
+    getName: () => 'AbstractButton',
+    path: '/storybook/abstract/button',
+    element: <AbstractButtonPage />,
+  },
+
+  /* ENTITIES */
 
   pointNode: {
     Header,
