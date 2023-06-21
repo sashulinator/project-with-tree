@@ -7,6 +7,7 @@ import { addToast } from '~/abstract/toast'
 import { LinkStateDictionary } from '~/entities/decision/ui/links/state/state'
 import { Node, NodeState } from '~/entities/point'
 import { LinkState, Rule } from '~/entities/rule'
+import Editable from '~/ui/editable'
 import { add, remove } from '~/utils/dictionary'
 import { stopPropagation } from '~/utils/dom'
 import { fns } from '~/utils/function'
@@ -44,6 +45,12 @@ export function SiftNode(props: SiftNodeProps): JSX.Element {
       className='--sift'
       state={props.state}
       scale={props.scale}
+      nodeTitle={
+        <Editable
+          value={props.state.title.value}
+          onChange={(ev): void => props.state.title.set(ev.currentTarget.value)}
+        />
+      }
       left={
         <div className='targetLinks'>
           {targetLinks.map((linkState) => {
@@ -228,6 +235,7 @@ export function SiftNode(props: SiftNodeProps): JSX.Element {
 
   function subscribeOnUpdates(update: () => void, uns: (() => void)[]): void {
     uns.push(props.state.on('computation', update))
+    uns.push(props.state.on('title', update))
     uns.push(
       props.linkStates.on('add', ({ item }) => {
         if (item.rule.value.sourceId === props.state.id || item.rule.value.targetId === props.state.id) update()
