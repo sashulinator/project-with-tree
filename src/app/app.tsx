@@ -1,7 +1,6 @@
 import './reset.css'
 
 import './app.css'
-import './tags.css'
 import './utils.css'
 // 🟢 Отключаем eslint т.к. этот файл генерируется динамически
 // eslint-disable-next-line import/no-unresolved
@@ -20,8 +19,9 @@ import { getCurrentThemeName, setTheme } from '~/widgets/theme'
 import '../shared/dayjs'
 import Layout from './layout'
 
-export default function App() {
+export default function App(): JSX.Element {
   setTheme(getCurrentThemeName())
+
   // prettier-ignore
   return (
     <Suspense>
