@@ -17,6 +17,7 @@ import Header from '~/ui/header'
 import Nav from '~/ui/nav'
 
 const PointNodePage = lazy(() => import('~/pages/storybook/entities/point/node'))
+const UIEditablePage = lazy(() => import('~/pages/storybook/ui/editable'))
 
 type Route = Omit<RouteProps, 'path'> & {
   Header?: FC
@@ -126,6 +127,13 @@ export const routes = {
     getName: () => 'Node',
     path: '/ui/node',
     element: <UINodePage />,
+  },
+  editable: {
+    Header,
+    Nav,
+    getName: () => 'Editable',
+    path: '/ui/editable',
+    element: <UIEditablePage />,
   },
 } as const
 

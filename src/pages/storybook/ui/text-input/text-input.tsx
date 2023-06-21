@@ -64,6 +64,19 @@ export default function TextInputPage(): JSX.Element {
             value='Readonly'
           />
         </div>
+        <div className='mt-1rem'>
+          <label htmlFor='readonly' className='label ml-0.25rem'>
+            Borderless & Transparent
+          </label>
+          <TextInput
+            borderless={true}
+            transparent={true}
+            rootProps={{ className: 'mt-0.5rem' }}
+            id='borderless'
+            autoComplete='off'
+            value='Borderless'
+          />
+        </div>
       </div>
     </main>
   )
