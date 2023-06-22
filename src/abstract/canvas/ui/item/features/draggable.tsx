@@ -15,7 +15,7 @@ export interface CanvasItemDraggableProps {
   onMove: (x: number, y: number, isLast: boolean) => void
   children: (
     props: Pick<
-      React.HTMLAttributes<SVGGElement>,
+      React.HTMLAttributes<Element>,
       | 'onKeyDown'
       | 'onKeyUp'
       | 'onLostPointerCapture'

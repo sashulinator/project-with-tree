@@ -1,13 +1,13 @@
 import './node.css'
 
-import clsx from 'clsx'
+import { clsx } from 'clsx'
 
 import { NodeState } from '~/entities/point/ui/node/state'
 import { Node as UINode } from '~/ui/canvas'
 import { useUpdate } from '~/utils/hooks'
 import { setRefs } from '~/utils/react'
 
-export interface NodeProps extends React.HTMLAttributes<SVGForeignObjectElement> {
+export interface NodeProps extends React.HTMLAttributes<HTMLDivElement> {
   state: NodeState
   scale: number
   left?: React.ReactNode
