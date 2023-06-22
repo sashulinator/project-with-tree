@@ -3,7 +3,7 @@
   "packageManager": "yarn@3.3.0",
   "version": "0.0.0",
   "description": "Best template",
-  "homepage": "https://sashulinator.github.io/project-with-tree",
+  "homepage": "http://sashulinator.github.io/project-with-tree",
   "author": "Savchenko Alexander",
   "license": "UNLICENSED",
   "scripts": {
