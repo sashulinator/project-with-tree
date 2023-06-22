@@ -16,7 +16,7 @@ export function BoardZoomable(props: CanvasBoardZoomableProps): JSX.Element {
   const wheelBind = useWheel(
     (ev): void => {
       ev.event.stopPropagation()
-      const newScale = props.scale + ev.event.deltaY / 777
+      const newScale = props.scale + ev.event.deltaY / -777
       const retScale = newScale > 1.5 ? 1.5 : newScale < 0.1 ? 0.1 : newScale
       const deltaScale = retScale - props.scale
       const x = props.translate.x - deltaScale * ev.event.clientX
