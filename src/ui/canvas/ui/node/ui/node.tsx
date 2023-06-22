@@ -1,13 +1,13 @@
 import './node.css'
 
-import clsx from 'clsx'
+import { clsx } from 'clsx'
 import React, { ForwardedRef, forwardRef, useRef } from 'react'
 
 import { IsDragEvent, Position } from '~/abstract/canvas'
 
 import { Item } from '../../item'
 
-export interface NodeProps extends React.HTMLAttributes<SVGForeignObjectElement> {
+export interface NodeProps extends React.HTMLAttributes<HTMLDivElement> {
   nodeTitle: React.ReactNode
   titleProps?: React.HTMLAttributes<HTMLDivElement>
   nodeDescription?: React.ReactNode | undefined
@@ -29,7 +29,7 @@ export interface NodeProps extends React.HTMLAttributes<SVGForeignObjectElement>
  * 2. Перетаскивание по тайтлу
  * 3. Стили позиционирования
  */
-export function NodeComponent(props: NodeProps, ref: ForwardedRef<SVGForeignObjectElement>): JSX.Element {
+export function NodeComponent(props: NodeProps, ref: ForwardedRef<HTMLDivElement>): JSX.Element {
   const { nodeTitle, titleProps, nodeDescription, left, right, ...foreignObjectProps } = props
 
   const titleRef = useRef(null)

@@ -1,10 +1,11 @@
+import './editor.css'
+
 import { useEffect, useMemo } from 'react'
 
 import { PaintingPanel } from '~/abstract/canvas'
 import { Decision, EditorState } from '~/entities/decision'
 import { NodeState } from '~/entities/point'
 import { LinkState, Rule } from '~/entities/rule'
-import { EmitterableDictionary } from '~/lib/emitter/dictionary'
 import { Board } from '~/ui/canvas'
 import { ActionHistory } from '~/utils/action-history'
 import { useBoolean, useEventListener, useOnMount, useUpdate } from '~/utils/hooks'
@@ -12,6 +13,7 @@ import { useBoolean, useEventListener, useOnMount, useUpdate } from '~/utils/hoo
 import { Links } from '../../links'
 import { LinkStateDictionary } from '../../links/state/state'
 import { Nodes } from '../../nodes'
+import { NodeStateDictionary } from '../../nodes/state/state'
 import { listenHistory } from '../lib/listen-history'
 
 interface EditorProps {
@@ -31,11 +33,11 @@ export function Editor(props: EditorProps): JSX.Element {
 
   const nodeStateList = useMemo(() => props.decision.data.map((point) => new NodeState({ point })), [])
 
-  const linkStates = useMemo(() => new LinkStateDictionary(linkStateList), [])
+  const linkStates = useMemo(() => new LinkStateDictionary(linkStateList), [linkStateList])
 
-  const nodeStates = useMemo(() => new EmitterableDictionary(nodeStateList, (l) => l.id.toString()), [])
+  const nodeStates = useMemo(() => new NodeStateDictionary(nodeStateList), [])
 
-  useUpdate(updateOnEvents)
+  useUpdate(updateOnEvents, [linkStates])
 
   useEventListener('keydown', onKeyDown)
 
@@ -44,7 +46,7 @@ export function Editor(props: EditorProps): JSX.Element {
   }, [])
 
   return (
-    <Board state={editorState}>
+    <Board state={editorState} className='decision-EditorBoard'>
       <PaintingPanel translate={editorState.translate.value} scale={editorState.scale.value}>
         {isRenderLinks && (
           <Links
@@ -74,6 +76,11 @@ export function Editor(props: EditorProps): JSX.Element {
   function updateOnEvents(update: () => void): void {
     editorState.on('translate', update)
     editorState.on('scale', update)
+    nodeStates.onAll(() => {
+      const svg = document.querySelector<SVGSVGElement>('svg')
+
+      document.body.style.width = `100.0${Math.random()}%`
+    })
   }
 }
 

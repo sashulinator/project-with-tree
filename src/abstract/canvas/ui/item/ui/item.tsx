@@ -1,10 +1,13 @@
-import clsx from 'clsx'
-import { ForwardedRef, forwardRef } from 'react'
+import { clsx } from 'clsx'
+import { ForwardedRef, forwardRef, useEffect, useState } from 'react'
 
-export interface ItemProps extends React.HTMLAttributes<SVGForeignObjectElement> {
+import { observeResize } from '~/utils/dom'
+import { getStyle } from '~/utils/dom/get-style'
+import { useForceUpdate } from '~/utils/hooks'
+import { setRefs } from '~/utils/react'
+
+export interface ItemProps extends React.HTMLAttributes<HTMLDivElement> {
   children: React.ReactNode
-  height?: number | undefined
-  width?: number | undefined
   x: number
   y: number
 }
@@ -12,15 +15,25 @@ export interface ItemProps extends React.HTMLAttributes<SVGForeignObjectElement>
 /**
  * Отрисовывает HTMLElement'ы в заданных координатах
  */
-function ItemComponent(props: ItemProps, ref: ForwardedRef<SVGForeignObjectElement>): JSX.Element {
+function ItemComponent(props: ItemProps, ref: ForwardedRef<HTMLDivElement>): JSX.Element {
+  const { x, y, ...divProps } = props
+
+  const [measureRef, setMeasureRef] = useState<HTMLElement | null>(null)
+  const styles = getStyle(measureRef)
+  const update = useForceUpdate()
+
+  useEffect(() => observeResize(measureRef, update), [measureRef])
+
   return (
-    <foreignObject
-      {...props}
-      className={clsx(props.className, 'a-CanvasItem')}
-      style={{ overflow: 'visible', ...props.style }}
-      ref={ref}
-    >
-      {props.children}
+    <foreignObject x={x} y={y} height={styles?.height} width={styles?.width}>
+      <div
+        {...divProps}
+        className={clsx(props.className, 'a-CanvasItem')}
+        style={{ height: 'fit-content', width: 'fit-content', ...props.style }}
+        ref={setRefs(setMeasureRef, ref)}
+      >
+        {props.children}
+      </div>
     </foreignObject>
   )
 }

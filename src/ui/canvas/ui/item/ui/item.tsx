@@ -1,11 +1,11 @@
-import clsx from 'clsx'
+import { clsx } from 'clsx'
 import React, { ForwardedRef, forwardRef } from 'react'
 
 import { Position } from '~/abstract/canvas'
 import { Item as AbstractItem, IsDragEvent, ItemDraggable } from '~/abstract/canvas/ui/item'
 import { fns } from '~/utils/function'
 
-export interface CanvasItemProps extends React.HTMLAttributes<SVGForeignObjectElement> {
+export interface CanvasItemProps extends React.HTMLAttributes<HTMLDivElement> {
   width?: number | undefined
   height?: number | undefined
   position: Position
@@ -20,7 +20,7 @@ export interface CanvasItemProps extends React.HTMLAttributes<SVGForeignObjectEl
  * Элемент Canvas с фичами
  * 1. Перетаскивание
  */
-export function ItemComponent(props: CanvasItemProps, ref: ForwardedRef<SVGForeignObjectElement>): JSX.Element {
+export function ItemComponent(props: CanvasItemProps, ref: ForwardedRef<HTMLDivElement>): JSX.Element {
   const { scale, position, lastPosition, isDrag, onMove: move, ...chartItemProps } = props
 
   return (
