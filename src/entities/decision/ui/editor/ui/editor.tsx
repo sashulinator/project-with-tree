@@ -18,18 +18,18 @@ import { listenHistory } from '../lib/listen-history'
 
 interface EditorProps {
   decision: Decision
-  ruleList: Rule[]
 }
 
 export function Editor(props: EditorProps): JSX.Element {
   const [isRenderLinks, setIsRenderLinks] = useBoolean(false)
   useOnMount(setIsRenderLinks)
+  const rules = props.decision.rules || []
 
   const history = useMemo(() => new ActionHistory(), [])
 
   const editorState = useMemo(() => new EditorState({ translate: { x: 0, y: 0 }, scale: 1 }), [])
 
-  const linkStateList = useMemo(() => props.ruleList.map((rule) => new LinkState({ id: rule.id, rule })), [])
+  const linkStateList = useMemo(() => rules?.map((rule) => new LinkState({ id: rule.id, rule })), [])
 
   const nodeStateList = useMemo(() => props.decision.data.map((point) => new NodeState({ point })), [])
 
