@@ -2,11 +2,12 @@ import { createInstance } from 'i18next'
 import HttpApi from 'i18next-http-backend'
 import { initReactI18next } from 'react-i18next'
 
-import { getCurrentLanguage } from '~/widgets/i18n/lib/get-current-language'
+import { getCurrentLanguage } from '~/lib/i18n'
 
 const lng = getCurrentLanguage()
 export const i18n = createInstance()
 
+// eslint-disable-next-line @typescript-eslint/no-floating-promises
 i18n
   .use(initReactI18next)
   .use(HttpApi)
