@@ -1,4 +1,4 @@
-import * as themes from '../model/index'
+import { themes } from '~/shared/theme/themes'
 
 export function getThemeNames(): string[] {
   return Object.keys(themes)

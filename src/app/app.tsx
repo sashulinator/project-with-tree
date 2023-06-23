@@ -13,15 +13,19 @@ import { QueryClientProvider } from 'react-query'
 import { ReactQueryDevtools } from 'react-query/devtools'
 import { BrowserRouter } from 'react-router-dom'
 
+import { THEME as ThemelocalStarageName } from '~/constants/local-storage'
+import { DEFAULT_THEME } from '~/constants/theme'
+import { getCurrentThemeName } from '~/lib/theme'
 import { queryClient } from '~/shared/react-query'
+import { themes } from '~/shared/theme/themes'
 import { Container } from '~/ui/toast'
-import { getCurrentThemeName, setTheme } from '~/widgets/theme'
+import { setTheme } from '~/utils/theme'
 
 import '../shared/dayjs'
 import Layout from './layout'
 
 export default function App(): JSX.Element {
-  setTheme(getCurrentThemeName())
+  setTheme(getCurrentThemeName(), DEFAULT_THEME, themes, ThemelocalStarageName)
 
   // prettier-ignore
   return (

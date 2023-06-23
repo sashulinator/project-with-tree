@@ -20,12 +20,8 @@
 .point-Node.--sift > .container > .content > .RuleSet {
   margin: 0 var(--m) var(--m) 0;
 }
-/*
-.point-Node.--sift > .container {
-  position: relative;
-} */
+
 .point-Node.--sift > .container > .content > .computation {
-  position: absolute;
   right: 0.6rem;
   top: 0;
   font-size: 10px;

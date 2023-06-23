@@ -1,7 +1,7 @@
 import clr from 'color'
 
+import { Theme } from '~/utils/theme/types/theme'
 import { Pass, check } from '~/utils/types/test'
-import { Theme } from '~/widgets/theme/types/theme'
 
 // 🟢 See index.html
 const defaultPrimary = localStorage.getItem('--default-primary')
@@ -28,15 +28,11 @@ export const light = {
   color,
   bg,
   bgSecondary,
-
   caretColor: clr('black'),
-
   selectionColor: clr('white'),
   selectionBg: primary,
-
   outlineColor: primary.alpha(0.5),
   borderColor: clr('#cdd2d6'),
-
   errorColor: clr('#d2302f'),
 }
 

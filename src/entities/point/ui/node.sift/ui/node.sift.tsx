@@ -54,11 +54,13 @@ export function SiftNode(props: SiftNodeProps): JSX.Element {
         />
       }
       nodeDescription={
-        <Editable
-          value={props.state.description.value}
-          placeholder='Описание'
-          onChange={(ev): void => props.state.description.set(ev.currentTarget.value)}
-        />
+        props.state.description.value ? (
+          <Editable
+            value={props.state.description.value}
+            placeholder='Описание'
+            onChange={(ev): void => props.state.description.set(ev.currentTarget.value)}
+          />
+        ) : null
       }
       left={
         <div className='targetLinks'>
