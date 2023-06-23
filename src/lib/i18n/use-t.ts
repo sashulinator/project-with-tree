@@ -8,10 +8,10 @@ import { isDev } from '~/utils/core/is/dev'
 import { Dictionary } from '~/utils/dictionary'
 import { tryCatch } from '~/utils/error/try-catch'
 
-import { ReplaceValuesByGetter } from '../types/replace-values-by-getter'
-import { assertNoExcessiveTranslation } from './assertions/no-excessive-translations'
+import { assertNoExcessiveTranslation } from './assertions/_no-excessive-translations'
 import { generateSchema } from './generate-schema'
 import { translateError } from './translate-error'
+import { ReplaceValuesByGetter } from './types/_replace-values-by-getter'
 
 export function useT<T extends Dictionary<Any>>(dictionary: T, ns: string): ReplaceValuesByGetter<T> {
   useTranslation([ns], { i18n })

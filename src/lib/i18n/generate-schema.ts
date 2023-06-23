@@ -2,7 +2,7 @@ import { i18n } from '~/shared/i18n'
 import { Any } from '~/utils/core'
 import { Dictionary, isObject, setPath, walk } from '~/utils/dictionary'
 
-import { ReplaceValuesByGetter } from '../types/replace-values-by-getter'
+import { ReplaceValuesByGetter } from './types/_replace-values-by-getter'
 
 /**
  * Transforms data "{ a: { b: '', c: '' }, d: '' }" to

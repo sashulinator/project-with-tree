@@ -2,14 +2,15 @@ import { FormEvent, useState } from 'react'
 import { useNavigate } from 'react-router'
 
 import { addToast } from '~/abstract/toast'
+import { useT } from '~/lib/i18n/use-t'
 import Button from '~/ui/button'
 import CloseIcon from '~/ui/icons/close'
 import EyeOffIcon from '~/ui/icons/eye-off'
 import EyeOnIcon from '~/ui/icons/eye-on'
+import I18nDropdown from '~/ui/language-dropdown'
 import TextInput from '~/ui/text-input'
 import ThemeDropdown from '~/ui/theme-dropdown'
 import { useBoolean } from '~/utils/hooks/boolean'
-import { I18nDropdown, useT } from '~/widgets/i18n'
 
 import { translations } from '../model/translations'
 
