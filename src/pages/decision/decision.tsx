@@ -2,7 +2,7 @@ import './decision.css'
 
 import { decision } from '~/entities/decision/mock'
 import { ruleList } from '~/mocks/rule-list'
-import { ThemeDropdown } from '~/widgets/theme'
+import ThemeDropdown from '~/ui/theme-dropdown'
 
 import { Editor } from '../../entities/decision/ui/editor'
 

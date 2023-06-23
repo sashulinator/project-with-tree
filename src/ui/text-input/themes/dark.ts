@@ -1,6 +1,7 @@
 import { TextInputCSSVars } from '~/abstract/text-input/types/css-vars'
-import { outlineWidth } from '~/shared/theme/common'
 import { dark } from '~/shared/theme/dark'
+
+import { common } from './_common'
 
 const textInput_bg = dark.bg
 const textInput_color = dark.color
@@ -9,7 +10,6 @@ export const darkTheme: TextInputCSSVars = {
   textInput_color,
   textInput_bg,
   textInput_borderColor: dark.borderColor,
-  textInput_outlineWidth: outlineWidth,
 
   // --hovered
   textInput_bg__hovered: textInput_bg.lighten(0.05),
@@ -26,4 +26,5 @@ export const darkTheme: TextInputCSSVars = {
   textInput_bg__disabled: textInput_bg.darken(0.5),
   textInput_borderColor__disabled: textInput_bg.darken(0.5),
   textInput_color__disabled: textInput_color.darken(0.4),
+  ...common,
 }

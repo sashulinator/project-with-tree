@@ -1,7 +1,7 @@
 import clr from 'color'
 
+import { Theme } from '~/utils/theme/types/theme'
 import { Pass, check } from '~/utils/types/test'
-import { Theme } from '~/widgets/theme/types/theme'
 
 const primary = clr('#027ffe')
 const color = clr('#b2bac2')
@@ -13,15 +13,11 @@ export const dark = {
   color,
   bg,
   bgSecondary,
-
   caretColor: clr('yellow'),
-
   selectionColor: color,
   selectionBg: clr('yellow'),
-
   outlineColor: primary.alpha(0.5),
   borderColor: clr('#265d97'),
-
   errorColor: clr('#d2302f'),
 }
 

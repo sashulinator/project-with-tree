@@ -7,9 +7,9 @@ import CloseIcon from '~/ui/icons/close'
 import EyeOffIcon from '~/ui/icons/eye-off'
 import EyeOnIcon from '~/ui/icons/eye-on'
 import TextInput from '~/ui/text-input'
+import ThemeDropdown from '~/ui/theme-dropdown'
 import { useBoolean } from '~/utils/hooks/boolean'
 import { I18nDropdown, useT } from '~/widgets/i18n'
-import { ThemeDropdown } from '~/widgets/theme'
 
 import { translations } from '../model/translations'
 
