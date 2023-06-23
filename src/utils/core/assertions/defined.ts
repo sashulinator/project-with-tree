@@ -5,7 +5,6 @@
  * @param {T | undefined} val - The value to check.
  * @param {string} [msg] - An optional error message to include if the check fails.
  * @throws {Error} if the value is undefined.
- * @returns {T} the checked value, if not undefined.
  */
 export function assertDefined<T>(val: T | undefined, msg?: string): asserts val is T {
   if (val === undefined) {

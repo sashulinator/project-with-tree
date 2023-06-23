@@ -5,7 +5,6 @@
  * @param {T | null} val - The value to check.
  * @param {string} [msg] - An optional error message to include if the check fails.
  * @throws {Error} if the value is null.
- * @returns {T} the checked value, if not null.
  */
 export function assertNotNull<T>(val: T | null, msg?: string): asserts val is T {
   if (val === null) {
