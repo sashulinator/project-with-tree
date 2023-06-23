@@ -1,7 +1,7 @@
 // import List, { top } from '~/ui/List'
 import { useMemo, useState } from 'react'
 
-import { User, groupedUserList, userList } from '~/mocks/user-list'
+import { User, groupedUserList, userList } from '~/mocks/deprecated/user-list'
 import { EventNames, ItemProps } from '~/ui/list'
 import ControlledList, { ControllableItemProps } from '~/ui/list/ui/controlled-list'
 
