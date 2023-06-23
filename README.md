@@ -85,3 +85,6 @@
     </script>
 ```
 ### 3. Заменить урлы с `/assets` на `/project-with-tree/assets`
+### 4. Скопировать папку `mocks` в `dist`
+### 5. Запустить `yarn gh-pages -d dist`
+
