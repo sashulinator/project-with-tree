@@ -88,6 +88,29 @@ const mock: Decision = {
       y: 900,
     },
   ],
+  rules: [
+    {
+      id: 'mockId1',
+      name: 'name000',
+      value: '',
+      sourceId: 'mockId2',
+      targetId: 'mockId4',
+    },
+    {
+      id: 'mockId2',
+      name: 'name111',
+      value: '',
+      sourceId: 'mockId3',
+      targetId: 'mockId4',
+    },
+    {
+      id: 'mockId3',
+      name: 'first',
+      value: '',
+      sourceId: 'main',
+      targetId: 'mockId2',
+    },
+  ],
 }
 
 export default mock
