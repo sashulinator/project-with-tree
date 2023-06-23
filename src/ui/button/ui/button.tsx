@@ -1,7 +1,9 @@
 import './button.css'
 
-import c from 'clsx'
+import { clsx } from 'clsx'
+import { forwardRef } from 'react'
 
+import UnstyledButton from '~/ui/unstyled-button'
 import { Any } from '~/utils/core'
 import { Dictionary } from '~/utils/dictionary'
 
@@ -11,12 +13,16 @@ export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElemen
   variant?: 'outlined' | 'primary'
 }
 
-export default function Button(props: ButtonProps): JSX.Element {
+function ButtonComponent(props: ButtonProps): JSX.Element {
   const { height = 'm', variant = 'primary' } = props
 
   return (
-    <button {...props} className={c('ui-Button', `--${height}`, `--${variant}`, props.className)}>
+    <UnstyledButton {...props} className={clsx('ui-Button', `--${height}`, `--${variant}`, props.className)}>
       {props.children}
-    </button>
+    </UnstyledButton>
   )
 }
+
+const Button = forwardRef(ButtonComponent)
+export default Button
+Button.displayName = 'UIButton'
