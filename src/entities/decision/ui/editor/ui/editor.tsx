@@ -11,6 +11,7 @@ import { ActionHistory } from '~/utils/action-history'
 import { useBoolean, useEventListener, useOnMount, useUpdate } from '~/utils/hooks'
 
 import DecisionPanel from '../../decision-panel/ui/decision-panel'
+import ItemPanel from '../../items-panel'
 import { Links } from '../../links'
 import { LinkStateDictionary } from '../../links/state/state'
 import { Nodes } from '../../nodes'
@@ -52,6 +53,7 @@ export function Editor(props: EditorProps): JSX.Element {
   return (
     <div className='decision-Editor'>
       <DecisionPanel state={editorState} />
+      <ItemPanel nodeStateList={nodeStateList} />
       <Board state={editorState}>
         <PaintingPanel translate={editorState.translate.value} scale={editorState.scale.value}>
           {isRenderLinks && (

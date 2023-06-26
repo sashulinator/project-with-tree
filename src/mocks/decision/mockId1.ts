@@ -66,7 +66,7 @@ const mock: Decision = {
     },
     {
       type: 'SIFT',
-      id: 'mockId8',
+      id: 'mockId9',
       computation: 'successively',
       name: 'Предложить тариф супер',
       x: 450,
@@ -74,7 +74,7 @@ const mock: Decision = {
     },
     {
       type: 'SIFT',
-      id: 'mockId9',
+      id: 'mockId10',
       computation: 'successively',
       name: 'Предложить тариф мега',
       x: 450,
@@ -82,7 +82,7 @@ const mock: Decision = {
     },
     {
       type: 'SIFT',
-      id: 'd10',
+      id: 'mockId11',
       computation: 'successively',
       name: 'Предложить тариф максимальный',
       x: 450,

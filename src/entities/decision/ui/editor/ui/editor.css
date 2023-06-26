@@ -1,4 +1,5 @@
 .decision-Editor {
+  --decisionPanel_height: 64px;
   position: relative;
   width: 100%;
   height: 100%;
@@ -11,7 +12,6 @@
 }
 
 .decision-DecisionPanel {
-  --decisionPanel_height: 64px;
   background-color: rgba(214, 214, 214, 0.092);
   width: 100%;
   height: var(--decisionPanel_height);
