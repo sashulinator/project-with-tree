@@ -21,6 +21,7 @@ export function EnterNode(props: EnterNodeProps): JSX.Element {
       state={props.state}
       scale={props.scale}
       className='--enter'
+      dataId={props.state.id}
       left={
         <div className='targetLinks'>
           {targetLinks.map((s) => {

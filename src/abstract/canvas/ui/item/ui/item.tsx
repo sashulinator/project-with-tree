@@ -1,6 +1,7 @@
 import { clsx } from 'clsx'
 import { ForwardedRef, forwardRef, useEffect, useState } from 'react'
 
+import { Id } from '~/utils/core'
 import { observeResize } from '~/utils/dom'
 import { getStyle } from '~/utils/dom/get-style'
 import { useForceUpdate } from '~/utils/hooks'
@@ -10,13 +11,14 @@ export interface ItemProps extends React.HTMLAttributes<HTMLDivElement> {
   children: React.ReactNode
   x: number
   y: number
+  dataId: Id
 }
 
 /**
  * Отрисовывает HTMLElement'ы в заданных координатах
  */
 function ItemComponent(props: ItemProps, ref: ForwardedRef<HTMLDivElement>): JSX.Element {
-  const { x, y, ...divProps } = props
+  const { x, y, dataId, ...divProps } = props
 
   const [measureRef, setMeasureRef] = useState<HTMLElement | null>(null)
   const styles = getStyle(measureRef)
@@ -25,7 +27,7 @@ function ItemComponent(props: ItemProps, ref: ForwardedRef<HTMLDivElement>): JSX
   useEffect(() => observeResize(measureRef, update), [measureRef])
 
   return (
-    <foreignObject x={x} y={y} height={styles?.height} width={styles?.width}>
+    <foreignObject data-id={dataId} x={x} y={y} height={styles?.height} width={styles?.width}>
       <div
         {...divProps}
         className={clsx(props.className, 'a-CanvasItem')}

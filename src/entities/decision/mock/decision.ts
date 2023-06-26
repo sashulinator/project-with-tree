@@ -1,6 +1,7 @@
 import { Decision } from '../types/decision'
 
 export const decision: Decision = {
+  name: 'editorMock1',
   id: 'id',
   version: '2.0',
   status: 'DRAFT',

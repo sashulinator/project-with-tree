@@ -4,10 +4,12 @@ import { clsx } from 'clsx'
 import React, { ForwardedRef, forwardRef, useRef } from 'react'
 
 import { IsDragEvent, Position } from '~/abstract/canvas'
+import { Id } from '~/utils/core'
 
 import { Item } from '../../item'
 
 export interface NodeProps extends React.HTMLAttributes<HTMLDivElement> {
+  dataId: Id
   nodeTitle: React.ReactNode
   titleProps?: React.HTMLAttributes<HTMLDivElement>
   nodeDescription?: React.ReactNode | undefined
@@ -30,12 +32,18 @@ export interface NodeProps extends React.HTMLAttributes<HTMLDivElement> {
  * 3. Стили позиционирования
  */
 export function NodeComponent(props: NodeProps, ref: ForwardedRef<HTMLDivElement>): JSX.Element {
-  const { nodeTitle, titleProps, nodeDescription, left, right, ...foreignObjectProps } = props
+  const { nodeTitle, titleProps, nodeDescription, left, right, dataId, ...foreignObjectProps } = props
 
   const titleRef = useRef(null)
 
   return (
-    <Item {...foreignObjectProps} ref={ref} className={clsx(props.className, 'ui-Node')} isDrag={isDrag}>
+    <Item
+      {...foreignObjectProps}
+      dataId={dataId}
+      ref={ref}
+      className={clsx(props.className, 'ui-Node')}
+      isDrag={isDrag}
+    >
       <div className={clsx('container')}>
         {left}
         <div className='content'>

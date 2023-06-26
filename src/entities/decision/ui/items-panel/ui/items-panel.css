@@ -1,0 +1,21 @@
+.ItemPanel {
+  position: absolute;
+  z-index: 10;
+  left: 0;
+  top: var(--decisionPanel_height);
+  width: 15rem;
+  height: 100%;
+  background-color: rgba(214, 214, 214, 0.092);
+  display: flex;
+  flex-direction: column;
+}
+
+.ItemPanel li button {
+  width: 100%;
+  height: 2rem;
+}
+
+.ItemPanel li {
+  display: flex;
+  align-items: center;
+}
