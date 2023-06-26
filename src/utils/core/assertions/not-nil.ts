@@ -5,7 +5,6 @@
  * @param {T | null | undefined} val - The value to check.
  * @param {string} [msg] - An optional error message to include if the check fails.
  * @throws {Error} if the value is null or undefined.
- * @return {T} the checked value, if not null or undefined.
  */
 export function assertNotNil<T>(val: T | null | undefined, msg?: string): asserts val is T {
   if (val === null || val === undefined) {

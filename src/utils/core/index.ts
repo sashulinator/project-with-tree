@@ -4,6 +4,7 @@ export * from './assertions/defined'
 
 export * from './is/dev'
 export * from './is/has'
+export * from './is/promise'
 export * from './is/null'
 export * from './is/undefined'
 
