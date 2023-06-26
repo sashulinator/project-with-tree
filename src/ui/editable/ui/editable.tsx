@@ -50,7 +50,7 @@ function EditableComponent(props: EditableProps, forwardedRef: ForwardedRef<HTML
   // Private
 
   function handleChange(ev: React.FocusEvent<HTMLInputElement> | React.KeyboardEvent<HTMLInputElement>): void {
-    if (!ev.currentTarget.value) {
+    if (!ev.currentTarget.value.trim()) {
       if (cannotBeEmpty) {
         reset()
       }

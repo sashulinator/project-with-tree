@@ -3,9 +3,11 @@ import React, { ForwardedRef, forwardRef } from 'react'
 
 import { Position } from '~/abstract/canvas'
 import { Item as AbstractItem, IsDragEvent, ItemDraggable } from '~/abstract/canvas/ui/item'
+import { Id } from '~/utils/core'
 import { fns } from '~/utils/function'
 
 export interface CanvasItemProps extends React.HTMLAttributes<HTMLDivElement> {
+  dataId: Id
   width?: number | undefined
   height?: number | undefined
   position: Position
@@ -29,6 +31,7 @@ export function ItemComponent(props: CanvasItemProps, ref: ForwardedRef<HTMLDivE
         return (
           <AbstractItem
             {...chartItemProps}
+            dataId={props.dataId}
             ref={ref}
             className={clsx(props.className, 'ui-CanvasItem')}
             y={position.y}

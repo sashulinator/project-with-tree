@@ -5,9 +5,11 @@ import { useState } from 'react'
 import { NodeState } from '~/entities/point'
 import TextInput from '~/ui/text-input'
 import UnstyledButton from '~/ui/unstyled-button'
+import { Id } from '~/utils/core'
 
 interface ItemPanelProps {
   nodeStateList: NodeState[]
+  centerNode: (id: Id) => void
 }
 
 export default function ItemPanel(props: ItemPanelProps): JSX.Element {
@@ -21,8 +23,8 @@ export default function ItemPanel(props: ItemPanelProps): JSX.Element {
       <ul>
         {filtered.map((state) => {
           return (
-            <li key={state.point.id}>
-              <UnstyledButton>{state.point.name}</UnstyledButton>
+            <li key={state.id}>
+              <UnstyledButton onClick={(): void => props.centerNode(state.id)}>{state.point.name}</UnstyledButton>
             </li>
           )
         })}

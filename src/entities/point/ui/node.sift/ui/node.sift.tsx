@@ -46,6 +46,7 @@ export function SiftNode(props: SiftNodeProps): JSX.Element {
       className='--sift'
       state={props.state}
       scale={props.scale}
+      dataId={props.state.id}
       nodeTitle={
         <Editable
           value={props.state.title.value}

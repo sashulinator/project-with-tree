@@ -53,7 +53,7 @@ export function Editor(props: EditorProps): JSX.Element {
   return (
     <div className='decision-Editor'>
       <DecisionPanel state={editorState} />
-      <ItemPanel nodeStateList={nodeStateList} />
+      <ItemPanel centerNode={editorState.centerNode} nodeStateList={nodeStateList} />
       <Board state={editorState}>
         <PaintingPanel translate={editorState.translate.value} scale={editorState.scale.value}>
           {isRenderLinks && (

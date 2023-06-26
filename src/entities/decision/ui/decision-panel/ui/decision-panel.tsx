@@ -2,6 +2,7 @@ import './decision-panel.css'
 
 import Editable from '~/ui/editable'
 import ThemeDropdown from '~/ui/theme-dropdown'
+import { useUpdate } from '~/utils/hooks'
 
 import { EditorState } from '../../editor'
 
@@ -10,6 +11,8 @@ interface DecisionPanelProps {
 }
 
 export default function DecisionPanel(props: DecisionPanelProps): JSX.Element {
+  useUpdate(subscribeOnUpdates)
+
   return (
     <div className='decision-DecisionPanel'>
       <div className='tools'>
@@ -18,6 +21,7 @@ export default function DecisionPanel(props: DecisionPanelProps): JSX.Element {
 
       <div className='name'>
         <Editable
+          cannotBeEmpty={true}
           value={props.state.name.value}
           placeholder='Имя'
           onChange={(ev): void => props.state.name.set(ev.currentTarget.value)}
@@ -25,4 +29,8 @@ export default function DecisionPanel(props: DecisionPanelProps): JSX.Element {
       </div>
     </div>
   )
+
+  function subscribeOnUpdates(update: () => void, uns: (() => void)[]): void {
+    uns.push(props.state.on('name', update))
+  }
 }

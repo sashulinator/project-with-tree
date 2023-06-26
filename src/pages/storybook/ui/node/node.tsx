@@ -26,6 +26,7 @@ export default function NodePage(): JSX.Element {
           <div>
             <svg height='100%' width='100%' style={{ border: '1px solid red' }}>
               <Node
+                dataId='test'
                 nodeTitle='Hello World'
                 width={200}
                 height={200}
