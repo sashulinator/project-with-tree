@@ -5,11 +5,12 @@ import { useEffect, useMemo } from 'react'
 import { PaintingPanel } from '~/abstract/canvas'
 import { Decision, EditorState } from '~/entities/decision'
 import { NodeState } from '~/entities/point'
-import { LinkState, Rule } from '~/entities/rule'
+import { LinkState } from '~/entities/rule'
 import { Board } from '~/ui/canvas'
 import { ActionHistory } from '~/utils/action-history'
 import { useBoolean, useEventListener, useOnMount, useUpdate } from '~/utils/hooks'
 
+import DecisionPanel from '../../decision-panel/ui/decision-panel'
 import { Links } from '../../links'
 import { LinkStateDictionary } from '../../links/state/state'
 import { Nodes } from '../../nodes'
@@ -27,7 +28,10 @@ export function Editor(props: EditorProps): JSX.Element {
 
   const history = useMemo(() => new ActionHistory(), [])
 
-  const editorState = useMemo(() => new EditorState({ translate: { x: 0, y: 0 }, scale: 1 }), [])
+  const editorState = useMemo(
+    () => new EditorState({ translate: { x: 0, y: 0 }, scale: 1, decision: props.decision }),
+    []
+  )
 
   const linkStateList = useMemo(() => rules?.map((rule) => new LinkState({ id: rule.id, rule })), [])
 
@@ -46,19 +50,22 @@ export function Editor(props: EditorProps): JSX.Element {
   }, [])
 
   return (
-    <Board state={editorState} className='decision-EditorBoard'>
-      <PaintingPanel translate={editorState.translate.value} scale={editorState.scale.value}>
-        {isRenderLinks && (
-          <Links
-            canvasTranslate={editorState.translate.value}
-            scale={editorState.scale.value}
-            linkStates={linkStates}
-            nodeStates={nodeStates}
-          />
-        )}
-        <Nodes scale={editorState.scale.value} linkStates={linkStates} nodeStates={nodeStates} />
-      </PaintingPanel>
-    </Board>
+    <div className='decision-Editor'>
+      <DecisionPanel state={editorState} />
+      <Board state={editorState}>
+        <PaintingPanel translate={editorState.translate.value} scale={editorState.scale.value}>
+          {isRenderLinks && (
+            <Links
+              canvasTranslate={editorState.translate.value}
+              scale={editorState.scale.value}
+              linkStates={linkStates}
+              nodeStates={nodeStates}
+            />
+          )}
+          <Nodes scale={editorState.scale.value} linkStates={linkStates} nodeStates={nodeStates} />
+        </PaintingPanel>
+      </Board>
+    </div>
   )
 
   // Private

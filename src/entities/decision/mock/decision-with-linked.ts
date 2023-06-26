@@ -1,6 +1,7 @@
 import { Decision } from '../types/decision'
 
 export const decisionWithLinked: Decision = {
+  name: 'decisionMock1',
   version: '2.0',
   status: 'DRAFT',
   id: '777',
