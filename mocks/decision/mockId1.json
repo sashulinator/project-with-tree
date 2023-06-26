@@ -1,4 +1,5 @@
 {
+  "name": "mockedDecision111111",
   "id": "mockId1",
   "version": "2.0",
   "status": "DRAFT",
@@ -63,7 +64,7 @@
     },
     {
       "type": "SIFT",
-      "id": "mockId8",
+      "id": "mockId9",
       "computation": "successively",
       "name": "Предложить тариф супер",
       "x": 450,
@@ -71,7 +72,7 @@
     },
     {
       "type": "SIFT",
-      "id": "mockId9",
+      "id": "mockId10",
       "computation": "successively",
       "name": "Предложить тариф мега",
       "x": 450,
@@ -79,7 +80,7 @@
     },
     {
       "type": "SIFT",
-      "id": "d10",
+      "id": "mockId11",
       "computation": "successively",
       "name": "Предложить тариф максимальный",
       "x": 450,
@@ -88,21 +89,21 @@
   ],
   "rules": [
     {
-      "id": "mockId1",
+      "id": "linkMockId1",
       "name": "name000",
       "value": "",
-      "sourceId": "mockId2",
+      "sourceId": "linkMockId2",
       "targetId": "mockId4"
     },
     {
       "id": "mockId2",
       "name": "name111",
       "value": "",
-      "sourceId": "mockId3",
+      "sourceId": "linkMockId3",
       "targetId": "mockId4"
     },
     {
-      "id": "mockId3",
+      "id": "linkMockId3",
       "name": "first",
       "value": "",
       "sourceId": "main",
