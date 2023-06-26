@@ -1,34 +1,42 @@
-import { useWheel } from '@use-gesture/react'
+import { select, zoom, zoomIdentity } from 'd3'
+import React, { ForwardedRef, useLayoutEffect, useRef } from 'react'
 
-import React from 'react'
-
-import { Any, Position } from '~/utils/core'
+import { Position, assertNotNull } from '~/utils/core'
 
 export interface CanvasBoardZoomableProps {
   scale: number
   translate: Position
   setScale: (scale: number) => void
   setTranslate: (x: number, y: number, last: boolean) => void
-  children: (props: Any) => React.ReactNode
+  children: (props: { ref: ForwardedRef<Element> }) => React.ReactNode
 }
 
 export function BoardZoomable(props: CanvasBoardZoomableProps): JSX.Element {
-  const wheelBind = useWheel(
-    (ev): void => {
-      ev.event.stopPropagation()
-      const newScale = props.scale + ev.event.deltaY / -777
-      const retScale = newScale > 1.5 ? 1.5 : newScale < 0.1 ? 0.1 : newScale
-      const deltaScale = retScale - props.scale
-      const x = props.translate.x - deltaScale * ev.event.clientX
-      const y = props.translate.y - deltaScale * ev.event.clientY
+  const ref = useRef<Element>(null)
 
-      props.setScale(retScale)
-      props.setTranslate(x, y, ev.last)
-    },
-    { preventDefault: true }
-  )
+  useLayoutEffect(() => {
+    function zoomed(zEvent: { transform: Record<'k' | 'x' | 'y', number> }): void {
+      props.setScale(zEvent.transform.k)
+      props.setTranslate(zEvent.transform.x, zEvent.transform.y, false)
+    }
 
-  return <>{props.children(wheelBind())}</>
+    const zoomBehavior = zoom()
+      .on('zoom', zoomed)
+      .filter((ev: WheelEvent | MouseEvent) => {
+        if (ev.type === 'wheel') {
+          return true
+        }
+        return ev.target === ref.current
+      })
+    const identity = zoomIdentity.translate(props.translate.x, props.translate.y).scale(props.scale)
+
+    assertNotNull(ref.current)
+    const selection = select(ref.current)
+    // eslint-disable-next-line @typescript-eslint/unbound-method
+    selection.call(zoomBehavior, identity)
+  }, [props.scale, props.translate.x, props.translate.y])
+
+  return <>{props.children({ ref })}</>
 }
 
 BoardZoomable.displayName = 'CanvasBoardZoomable'

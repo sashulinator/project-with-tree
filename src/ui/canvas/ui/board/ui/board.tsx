@@ -1,5 +1,6 @@
 import { Board as AbstractBoard, BoardDraggable, BoardState, BoardZoomable } from '~/abstract/canvas'
 import { Any } from '~/utils/core'
+import { setRefs } from '~/utils/react'
 
 export interface BoardProps extends React.SVGAttributes<SVGSVGElement> {
   state: BoardState<Any>
@@ -16,20 +17,13 @@ export function Board(props: BoardProps): JSX.Element {
       setScale={(...qrgs): void => state.scale.set(...qrgs)}
       scale={state.scale.value}
     >
-      {(zoomProps): JSX.Element => (
-        <BoardDraggable
-          lastTranslate={state.translate.last}
-          onTranslate={(...args): void => state.translate.move(...args)}
-        >
-          {(dragProps): JSX.Element => {
-            return (
-              <AbstractBoard {...dragProps} {...zoomProps} {...svgProps} style={{ touchAction: 'none' }}>
-                {props.children}
-              </AbstractBoard>
-            )
-          }}
-        </BoardDraggable>
-      )}
+      {(dragProps): JSX.Element => {
+        return (
+          <AbstractBoard ref={setRefs(dragProps.ref)} {...svgProps} style={{ touchAction: 'none' }}>
+            {props.children}
+          </AbstractBoard>
+        )
+      }}
     </BoardZoomable>
   )
 }

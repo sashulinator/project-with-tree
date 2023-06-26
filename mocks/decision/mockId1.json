@@ -89,21 +89,21 @@
   ],
   "rules": [
     {
-      "id": "mockId1",
+      "id": "linkMockId1",
       "name": "name000",
       "value": "",
-      "sourceId": "mockId2",
+      "sourceId": "linkMockId2",
       "targetId": "mockId4"
     },
     {
       "id": "mockId2",
       "name": "name111",
       "value": "",
-      "sourceId": "mockId3",
+      "sourceId": "linkMockId3",
       "targetId": "mockId4"
     },
     {
-      "id": "mockId3",
+      "id": "linkMockId3",
       "name": "first",
       "value": "",
       "sourceId": "main",

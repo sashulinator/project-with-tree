@@ -1,8 +1,10 @@
+import { interpolateNumber, transition } from 'd3'
+
 import { BoardState, Position } from '~/abstract/canvas'
 import { Decision } from '~/entities/decision/types/decision'
-import { Id } from '~/utils/core'
-import { getStyle } from '~/utils/dom'
+import { Id, assertNotNull } from '~/utils/core'
 import { Prop } from '~/utils/emitter'
+import { emptyFn } from '~/utils/function/empty-fn'
 
 import { Events } from './events'
 import { SelectedProp } from './selected-prop'
@@ -30,10 +32,29 @@ export class EditorState extends BoardState<Events> {
     this.selected = new SelectedProp('selected', [], this)
   }
 
-  centerNode = (id: Id): void => {
+  centerNode = (id: Id, duration = 400, delay = 0): void => {
     const nodeEl = document.querySelector(`svg [data-id="${id}"]`)
+
     const x = parseInt(nodeEl?.getAttribute('x') || '', 10)
     const y = parseInt(nodeEl?.getAttribute('y') || '', 10)
-    this.translate.value = { x: x - window.innerWidth / 2, y: y - window.innerHeight / 2 }
+    const mx = -x + window.innerWidth / 2
+    const my = -y + window.innerHeight / 2
+
+    assertNotNull(nodeEl)
+
+    transition()
+      .delay(delay)
+      .duration(duration)
+      .tween(
+        'scroll',
+        (() => () => {
+          const ix = interpolateNumber(this.translate.value.x, mx)
+          const iy = interpolateNumber(this.translate.value.y, my)
+
+          return (t: number) => {
+            this.translate.move(ix(t), iy(t), false)
+          }
+        })()
+      )
   }
 }
