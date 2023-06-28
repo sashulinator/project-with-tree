@@ -1,7 +1,7 @@
 import './button.css'
 
 import { clsx } from 'clsx'
-import { forwardRef } from 'react'
+import { ForwardedRef, forwardRef } from 'react'
 
 import UnstyledButton from '~/ui/unstyled-button'
 import { Any } from '~/utils/core'
@@ -13,11 +13,11 @@ export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElemen
   variant?: 'outlined' | 'primary'
 }
 
-function ButtonComponent(props: ButtonProps): JSX.Element {
+function ButtonComponent(props: ButtonProps, ref: ForwardedRef<HTMLButtonElement>): JSX.Element {
   const { height = 'm', variant = 'primary' } = props
 
   return (
-    <UnstyledButton {...props} className={clsx('ui-Button', `--${height}`, `--${variant}`, props.className)}>
+    <UnstyledButton {...props} ref={ref} className={clsx('ui-Button', `--${height}`, `--${variant}`, props.className)}>
       {props.children}
     </UnstyledButton>
   )
