@@ -1,11 +1,11 @@
 import { interpolateNumber, transition } from 'd3'
 
-import { BoardState, Position } from '~/abstract/canvas'
+import { BoardEvents, BoardState, Position } from '~/abstract/canvas'
 import { Decision } from '~/entities/decision/types/decision'
 import { Id, assertNotNull } from '~/utils/core'
 import { Prop } from '~/utils/emitter'
-import { emptyFn } from '~/utils/function/empty-fn'
 
+import { D3Prop } from './d3'
 import { Events } from './events'
 import { SelectedProp } from './selected-prop'
 
@@ -22,6 +22,8 @@ export class EditorState extends BoardState<Events> {
 
   name: Prop<'name', string>
 
+  d3: D3Prop<Events & BoardEvents>
+
   constructor(props: EditorStateProps) {
     super({ ...props })
 
@@ -30,6 +32,8 @@ export class EditorState extends BoardState<Events> {
     this.name = new Prop('name', props.decision.name, this)
 
     this.selected = new SelectedProp('selected', [], this)
+
+    this.d3 = new D3Prop(this)
   }
 
   centerNode = (id: Id, duration = 400, delay = 0): void => {

@@ -19,7 +19,7 @@ export function Board(props: BoardProps): JSX.Element {
     >
       {(dragProps): JSX.Element => {
         return (
-          <AbstractBoard ref={setRefs(dragProps.ref)} {...svgProps} style={{ touchAction: 'none' }}>
+          <AbstractBoard ref={setRefs(dragProps.ref, state.ref.set)} {...svgProps} style={{ touchAction: 'none' }}>
             {props.children}
           </AbstractBoard>
         )
