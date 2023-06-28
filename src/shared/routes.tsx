@@ -1,7 +1,8 @@
 import { FC, lazy } from 'react'
 import { RouteProps } from 'react-router-dom'
 
-import DecisionPage from '~/pages/decision'
+import DecisionListPage from '~/pages/decision'
+import DecisionIdPage from '~/pages/decision/id'
 import LoginPage from '~/pages/login'
 import MainPage from '~/pages/main'
 import NotFoundPage from '~/pages/not-found'
@@ -35,15 +36,17 @@ export const routes = {
     path: '/project-with-tree/main',
     element: <MainPage />,
   },
-  createDecision: {
-    getName: () => 'Create Decision',
+  decisionList: {
+    Header,
+    Nav,
+    getName: () => 'Decision List',
     path: '/project-with-tree/decision',
-    element: <DecisionPage />,
+    element: <DecisionListPage />,
   },
-  decision: {
+  decisionId: {
     getName: () => 'Decision',
     path: '/project-with-tree/decision/:id',
-    element: <DecisionPage />,
+    element: <DecisionIdPage />,
   },
   // Other
   settings: {

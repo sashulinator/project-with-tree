@@ -1,8 +1,8 @@
 import { Decision } from '~/entities/decision'
 
 const mock: Decision = {
-  name: 'mockedDecision111111',
-  id: 'mockId1',
+  name: 'mockedDecision2222',
+  id: 'mockId2',
   version: '2.0',
   status: 'DRAFT',
   data: [
@@ -26,10 +26,26 @@ const mock: Decision = {
     },
     {
       type: 'SIFT',
+      id: 'mockId3',
+      computation: 'successively',
+      name: 'Продуктовые исключения',
+      x: 800,
+      y: 200,
+    },
+    {
+      type: 'SIFT',
       computation: 'successively',
       id: 'mockId4',
       name: 'Политика контактов',
       x: 1100,
+      y: 200,
+    },
+    {
+      type: 'SIFT',
+      id: 'mockId5',
+      computation: 'successively',
+      name: 'Конфликтующие тарифы',
+      x: 1200,
       y: 200,
     },
     {
@@ -39,6 +55,14 @@ const mock: Decision = {
       name: 'Срок жизни тарифа',
       x: 1850,
       y: 200,
+    },
+    {
+      type: 'SIFT',
+      id: 'mockId8',
+      computation: 'successively',
+      name: 'Какой тариф предложить',
+      x: 200,
+      y: 500,
     },
     {
       type: 'SIFT',
@@ -66,6 +90,20 @@ const mock: Decision = {
     },
   ],
   rules: [
+    {
+      id: 'linkMockId1',
+      name: 'name000',
+      value: '',
+      sourceId: 'linkMockId2',
+      targetId: 'mockId4',
+    },
+    {
+      id: 'mockId2',
+      name: 'name111',
+      value: '',
+      sourceId: 'linkMockId3',
+      targetId: 'mockId4',
+    },
     {
       id: 'linkMockId3',
       name: 'first',

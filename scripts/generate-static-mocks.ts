@@ -16,30 +16,32 @@ fs.rm(path.join(`${__dirname}/../${STATIC_MOCKS_FOLDER}`), { recursive: true, fo
       if (entityName === 'deprecated') return
 
       // Получаем IDишки сущностей
-      fs.readdir(`${MOCKS_FOLDER}/${entityName}`, async (err, recordName) => {
+      fs.readdir(`${MOCKS_FOLDER}/${entityName}`, async (err, recordNames) => {
         if (err) throw err
 
-        const record = await import(`../${MOCKS_FOLDER}/${entityName}/${recordName}`)
+        recordNames.forEach(async (recordName) => {
+          const record = await import(`../${MOCKS_FOLDER}/${entityName}/${recordName}`)
 
-        // Проверяем существует ли путь для статических моков
-        fs.mkdir(
-          path.join(`${__dirname}/../${STATIC_MOCKS_FOLDER}/${entityName}`),
-          { recursive: true },
-          function (err) {
-            if (err) throw err
+          // Проверяем существует ли путь для статических моков
+          fs.mkdir(
+            path.join(`${__dirname}/../${STATIC_MOCKS_FOLDER}/${entityName}`),
+            { recursive: true },
+            function (err) {
+              if (err) throw err
 
-            // Пишем обьект в JSON файл
-            fs.writeFileSync(
-              path.join(
-                `${__dirname}/../${STATIC_MOCKS_FOLDER}/${entityName}/${recordName
-                  .toString()
-                  .replace(/\.ts$/, '.json')}`
-              ),
-              JSON.stringify(record.default, null, 2),
-              'utf-8'
-            )
-          }
-        )
+              // Пишем обьект в JSON файл
+              fs.writeFileSync(
+                path.join(
+                  `${__dirname}/../${STATIC_MOCKS_FOLDER}/${entityName}/${recordName
+                    .toString()
+                    .replace(/\.ts$/, '.json')}`
+                ),
+                JSON.stringify(record.default, null, 2),
+                'utf-8'
+              )
+            }
+          )
+        })
       })
     })
   })
