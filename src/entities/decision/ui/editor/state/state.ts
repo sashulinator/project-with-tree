@@ -46,11 +46,13 @@ export class EditorState extends BoardState<Events> {
 
     const x = parseInt(nodeEl?.getAttribute('x') || '', 10)
     const y = parseInt(nodeEl?.getAttribute('y') || '', 10)
-    const mx = -x + window.innerWidth / 2
-    const my = -y + window.innerHeight / 2
+    const width = parseInt(nodeEl?.getAttribute('width') || '', 10)
+    const height = parseInt(nodeEl?.getAttribute('height') || '', 10)
+
+    const mx = -x + window.innerWidth / 2 - width / 2
+    const my = -y + window.innerHeight / 2 - height / 2
 
     assertNotNull(nodeEl)
-    console.log('mx', mx, my)
 
     this.d3zoom.setTranslate({ x: mx, y: my })
   }

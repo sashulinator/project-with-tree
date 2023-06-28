@@ -15,11 +15,15 @@ interface ItemPanelProps {
 export default function ItemPanel(props: ItemPanelProps): JSX.Element {
   const [value, setValue] = useState<string>('')
 
-  const filtered = props.nodeStateList.filter((node) => new RegExp(value, 'gi').test(node.point.name))
+  const filtered = props.nodeStateList.filter(
+    (node) => node.point.name.toUpperCase().indexOf(value.toUpperCase()) !== -1
+  )
 
   return (
     <div className='ItemPanel'>
-      <TextInput value={value} onChange={(ev): void => setValue(ev.currentTarget.value)} />
+      <div className='search'>
+        <TextInput value={value} onChange={(ev): void => setValue(ev.currentTarget.value)} placeholder='Поиск' />
+      </div>
       <ul>
         {filtered.map((state) => {
           return (
