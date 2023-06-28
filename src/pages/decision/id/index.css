@@ -1,0 +1,5 @@
+.DecisionIdPage {
+  background-color: var(--bgSecondary);
+  overflow: hidden;
+  overscroll-behavior: none;
+}

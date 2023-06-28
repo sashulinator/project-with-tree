@@ -1,7 +1,7 @@
 import { Decision } from '~/entities/decision'
 
 const mock: Decision = {
-  name: 'mockedDecision111111',
+  name: 'mockedDecision2222',
   id: 'mockId2',
   version: '2.0',
   status: 'DRAFT',

@@ -11,7 +11,7 @@ import { routes } from '~/shared/routes'
 export default function MainPage(): JSX.Element {
   return (
     <main className='pt-5rem flex flex-col'>
-      <Link to={routes.decision.path.replace('/:id', '')}>Layout</Link>
+      <Link to={routes.decisionList.path.replace('/:id', '')}>Layout</Link>
     </main>
   )
 }
