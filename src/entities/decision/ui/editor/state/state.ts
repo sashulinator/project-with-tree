@@ -5,7 +5,8 @@ import { Decision } from '~/entities/decision/types/decision'
 import { Id, assertNotNull } from '~/utils/core'
 import { Prop } from '~/utils/emitter'
 
-import { D3Prop } from './d3'
+import { D3Selection } from './d3-selection'
+import { D3Zoom } from './d3-zoom'
 import { Events } from './events'
 import { SelectedProp } from './selected-prop'
 
@@ -22,7 +23,9 @@ export class EditorState extends BoardState<Events> {
 
   name: Prop<'name', string>
 
-  d3: D3Prop<Events & BoardEvents>
+  d3selection: D3Selection<Events & BoardEvents>
+
+  d3zoom: D3Zoom<Events & BoardEvents>
 
   constructor(props: EditorStateProps) {
     super({ ...props })
@@ -33,10 +36,12 @@ export class EditorState extends BoardState<Events> {
 
     this.selected = new SelectedProp('selected', [], this)
 
-    this.d3 = new D3Prop(this)
+    this.d3selection = new D3Selection(this)
+
+    this.d3zoom = new D3Zoom(this)
   }
 
-  centerNode = (id: Id, duration = 400, delay = 0): void => {
+  centerNode = (id: Id): void => {
     const nodeEl = document.querySelector(`svg [data-id="${id}"]`)
 
     const x = parseInt(nodeEl?.getAttribute('x') || '', 10)
@@ -45,20 +50,8 @@ export class EditorState extends BoardState<Events> {
     const my = -y + window.innerHeight / 2
 
     assertNotNull(nodeEl)
+    console.log('mx', mx, my)
 
-    transition()
-      .delay(delay)
-      .duration(duration)
-      .tween(
-        'scroll',
-        (() => () => {
-          const ix = interpolateNumber(this.translate.value.x, mx)
-          const iy = interpolateNumber(this.translate.value.y, my)
-
-          return (t: number) => {
-            this.translate.move(ix(t), iy(t), false)
-          }
-        })()
-      )
+    this.d3zoom.setTranslate({ x: mx, y: my })
   }
 }
