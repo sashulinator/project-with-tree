@@ -10,7 +10,7 @@ export interface BoardStateProps {
 }
 
 export class BoardState<TEvents extends AnyEvent> extends Emitter<TEvents & BoardEvents> {
-  canvasBoardRef: Prop<'canvasBoardRef', null | SVGSVGElement>
+  ref: Prop<'ref', null | SVGSVGElement>
 
   translate: PositionProp<'translate'>
 
@@ -19,7 +19,7 @@ export class BoardState<TEvents extends AnyEvent> extends Emitter<TEvents & Boar
   constructor(props: BoardStateProps) {
     super()
 
-    this.canvasBoardRef = new Prop<'canvasBoardRef', null | SVGSVGElement>('canvasBoardRef', null, this)
+    this.ref = new Prop<'ref', null | SVGSVGElement>('ref', null, this)
 
     this.translate = new PositionProp('translate', props.translate, this)
 
