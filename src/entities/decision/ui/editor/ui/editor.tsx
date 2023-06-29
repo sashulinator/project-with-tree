@@ -5,7 +5,7 @@ import { useEffect, useMemo } from 'react'
 import { PaintingPanel } from '~/abstract/canvas'
 import { Decision, EditorState } from '~/entities/decision'
 import { NodeState } from '~/entities/point'
-import { LinkState } from '~/entities/rule'
+import { RuleLinkState } from '~/entities/rule'
 import { Board } from '~/ui/canvas'
 import { ActionHistory } from '~/utils/action-history'
 import { useBoolean, useEventListener, useOnMount, useUpdate } from '~/utils/hooks'
@@ -34,7 +34,7 @@ export function Editor(props: EditorProps): JSX.Element {
     []
   )
 
-  const linkStateList = useMemo(() => rules?.map((rule) => new LinkState({ id: rule.id, rule })), [])
+  const linkStateList = useMemo(() => rules?.map((rule) => new RuleLinkState({ id: rule.id, rule })), [])
 
   const nodeStateList = useMemo(() => props.decision.data.map((point) => new NodeState({ point })), [])
 

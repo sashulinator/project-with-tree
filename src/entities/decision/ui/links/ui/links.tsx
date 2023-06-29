@@ -1,7 +1,7 @@
 import { memo } from 'react'
 
 import { NodeState } from '~/entities/point'
-import { Link, LinkState } from '~/entities/rule'
+import { RuleLink, RuleLinkState } from '~/entities/rule'
 import { EmitterableDictionary } from '~/lib/emitter/dictionary'
 import { Any, Position } from '~/utils/core'
 import { useUpdate } from '~/utils/hooks'
@@ -53,7 +53,7 @@ interface MapLinkProp {
   targetState?: NodeState | undefined
   sourceState?: NodeState | undefined
   nodeStates: EmitterableDictionary<Any, NodeState>
-  linkState: LinkState
+  linkState: RuleLinkState
   linkStates: LinkStateDictionary
 }
 
@@ -68,7 +68,7 @@ function MapLink(props: MapLinkProp): JSX.Element | null {
   if ((!sourceState || !targetState) && !isCurrentEditing) return null
 
   return (
-    <Link
+    <RuleLink
       key={props.linkState.id}
       state={props.linkState}
       targetState={targetState}
