@@ -1,4 +1,4 @@
-import { ItemState } from '~/abstract/canvas/ui/item/state'
+import { ItemState } from '~/abstract/canvas/widgets/item/state'
 import { Point } from '~/entities/point'
 import { Prop } from '~/utils/emitter'
 

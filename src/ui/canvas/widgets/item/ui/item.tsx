@@ -2,7 +2,7 @@ import { clsx } from 'clsx'
 import React, { ForwardedRef, forwardRef } from 'react'
 
 import { Position } from '~/abstract/canvas'
-import { Item as AbstractItem, IsDragEvent, ItemDraggable } from '~/abstract/canvas/ui/item'
+import { Item as AbstractItem, IsDragEvent, ItemDraggable } from '~/abstract/canvas/widgets/item'
 import { Id } from '~/utils/core'
 import { fns } from '~/utils/function'
 

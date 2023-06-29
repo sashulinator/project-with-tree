@@ -4,7 +4,7 @@ export * from './state/position-prop'
 
 export * from '~/utils/core/types/position'
 
-export * from './ui/board'
-export * from './ui/painting-panel'
-export * from './ui/item'
-export * from './ui/link'
+export * from './widgets/board'
+export * from './widgets/painting-panel'
+export * from './widgets/item'
+export * from './widgets/link'
