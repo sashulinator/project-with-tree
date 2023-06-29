@@ -75,8 +75,8 @@ function MapLink(props: MapLinkProp): JSX.Element | null {
       sourceState={sourceState}
       scale={props.scale}
       canvasTranslate={props.canvasTranslate}
-      sourceOffset={getOffset(props.linkState.id, sourceState?.ref.value, props.scale)}
-      targetOffset={getOffset(props.linkState.id, targetState?.ref.value, props.scale)}
+      sourceOffset={getOffset(props.linkState.id, sourceState?.ref.value)}
+      targetOffset={getOffset(props.linkState.id, targetState?.ref.value)}
       data-id={props.linkState.id}
     />
   )

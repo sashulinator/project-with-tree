@@ -2,15 +2,12 @@ import { Offset } from './types/offset'
 
 type Element = Pick<HTMLElement, 'getBoundingClientRect'>
 
-export function getOffsetInElement(el: Element | null, inEl: Element | null | undefined): Offset {
+export function getOffsetInElement(el: HTMLElement | null, parentEl: HTMLElement | null | undefined): Offset {
   const offset = { top: 0, left: 0 }
-  if (!el || !inEl) return offset
+  if (!el || !parentEl) return offset
 
-  const elRect = el.getBoundingClientRect()
-  const inElRect = inEl.getBoundingClientRect()
-
-  offset.top = elRect.top - inElRect.top
-  offset.left = elRect.left - inElRect.left
+  offset.top = el.offsetTop - parentEl.offsetTop
+  offset.left = el.offsetLeft - parentEl.offsetLeft
 
   return offset
 }
