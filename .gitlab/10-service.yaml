@@ -1,0 +1,26 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    run: main-front
+  name: rtm-main-svc
+  namespace: rtm
+spec:
+  externalIPs:
+  - 10.4.87.21
+  - 10.4.87.22
+  externalTrafficPolicy: Local
+  internalTrafficPolicy: Cluster
+  ipFamilies:
+  - IPv4
+  ipFamilyPolicy: SingleStack
+  ports:
+  - name: http
+    port: 18180
+    protocol: TCP
+    targetPort: 80
+  selector:
+    run: main-front
+  sessionAffinity: None
+  type: NodePort
+

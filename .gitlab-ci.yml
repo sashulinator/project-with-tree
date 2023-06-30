@@ -1,0 +1,48 @@
+
+variables:
+  VERSION: "0.3"
+  DOCKER_HOST: "tcp://docker:2376"
+  DOCKER_TLS_CERTDIR: "/certs"
+  DOCKER_TLS_VERIFY: 1
+  DOCKER_CERT_PATH: "$DOCKER_TLS_CERTDIR/client"
+  PROJECT_NAME: "colibri-develop/project-with-tree"
+build-job:
+  stage: build
+  image: docker:20.10.7
+  services:
+    - name: docker:20.10.7-dind
+      command: ["--mtu=1450"]
+  before_script:
+    - sleep 3
+    - docker info
+    - echo "$DOCKER_REGISTRY_PASS" | docker login $CI_REGISTRY --username $DOCKER_REGISTRY_USER --password-stdin
+  script:
+    #- sleep 1
+    - docker build . -t $CI_REGISTRY/${PROJECT_NAME}/front:$VERSION
+    - docker push $CI_REGISTRY/${PROJECT_NAME}/front:$VERSION    
+
+test-job1:
+  stage: test
+  script:
+    - echo "This job tests something"
+
+test-job2:
+  stage: test
+  script:
+    - echo "This job tests something, but takes more time than test-job1."
+    - sleep 1
+
+deploy-prod:
+  stage: deploy
+  image:
+    name: bitnami/kubectl:latest
+    entrypoint: ['']
+  before_script:
+    - kubectl config get-contexts
+    #- kubectl get pods
+  script:
+    - kubectl config use-context colibri-develop/project-with-tree:main-agent
+    ### Insecure after changing context TBD
+    #- kubectl --insecure-skip-tls-verify=true get deployment -A
+    - kubectl --insecure-skip-tls-verify=true rollout restart deployment/front --namespace rtm
+

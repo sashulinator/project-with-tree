@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: front
+  namespace: rtm
+spec:
+  selector:
+    matchLabels:
+      run: main-front
+  replicas: 1
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        run: main-front
+    spec:
+      containers:
+        - name: front
+          image: registry.colibriproject.ru/colibri-develop/project-with-tree/front:0.3
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 80
+              protocol: TCP
+
