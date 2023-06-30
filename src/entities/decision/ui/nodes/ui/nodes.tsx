@@ -13,6 +13,8 @@ interface NodesProps {
 }
 
 export function NodesComponent(props: NodesProps): JSX.Element {
+  useUpdate(subscribeOnUpdates)
+
   return (
     <>
       {props.nodeStates.values().map((nodeState) => {
@@ -20,6 +22,12 @@ export function NodesComponent(props: NodesProps): JSX.Element {
       })}
     </>
   )
+
+  function subscribeOnUpdates(update: () => void, uns: (() => void)[]): void {
+    uns.push(props.nodeStates.on('update', update))
+    uns.push(props.nodeStates.on('add', update))
+    uns.push(props.nodeStates.on('remove', update))
+  }
 }
 
 export const Nodes = memo(NodesComponent)

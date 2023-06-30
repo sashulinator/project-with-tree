@@ -1,14 +1,15 @@
 import './editor.css'
 
 import { useEffect, useMemo } from 'react'
+import uuid from 'uuid-random'
 
 import { PaintingPanel } from '~/abstract/canvas'
-import { Decision, EditorState } from '~/entities/decision'
+import { Decision, EditorState, Point } from '~/entities/decision'
 import { NodeState } from '~/entities/point'
 import { RuleLinkState } from '~/entities/rule'
 import { Board } from '~/ui/canvas'
 import { ActionHistory } from '~/utils/action-history'
-import { Id, assertDefined } from '~/utils/core'
+import { Id, assertDefined, assertNotNull } from '~/utils/core'
 import { useBoolean, useEventListener, useOnMount, useUpdate } from '~/utils/hooks'
 
 import DecisionPanel from '../../decision-panel/ui/decision-panel'
@@ -54,7 +55,7 @@ export function Editor(props: EditorProps): JSX.Element {
   return (
     <div className='decision-Editor'>
       <DecisionPanel state={editorState} />
-      <ItemPanel centerNode={centerNode} nodeStateList={nodeStateList} />
+      <ItemPanel centerNode={centerNode} nodeStateList={nodeStateList} addNode={addNode} />
       <Board state={editorState}>
         <PaintingPanel translate={editorState.translate.value} scale={editorState.scale.value}>
           {isRenderLinks && (
@@ -72,6 +73,20 @@ export function Editor(props: EditorProps): JSX.Element {
   )
 
   // Private
+
+  function addNode(): void {
+    const rect = editorState.ref.value?.getBoundingClientRect()
+    assertDefined(rect)
+    const point: Point = {
+      type: 'SIFT',
+      id: uuid(),
+      computation: 'successively',
+      name: 'new',
+      x: -editorState.translate.value.x + rect?.width / 2 - 200,
+      y: -editorState.translate.value.y + rect?.height / 2 - 150,
+    }
+    nodeStates.add(new NodeState({ point }))
+  }
 
   function centerNode(id: Id): void {
     const nodeState = nodeStates.get(id)

@@ -9,6 +9,7 @@ import { Id } from '~/utils/core'
 
 interface ItemPanelProps {
   nodeStateList: NodeState[]
+  addNode: () => void
   centerNode: (id: Id) => void
 }
 
@@ -21,6 +22,7 @@ export default function ItemPanel(props: ItemPanelProps): JSX.Element {
 
   return (
     <div className='ItemPanel'>
+      <button onClick={props.addNode}>+</button>
       <div className='search'>
         <TextInput value={value} onChange={(ev): void => setValue(ev.currentTarget.value)} placeholder='Поиск' />
       </div>
