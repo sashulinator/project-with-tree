@@ -4,7 +4,7 @@ import clsx from 'clsx'
 import { useState } from 'react'
 
 import { addToast } from '~/abstract/toast'
-import { LinkStateDictionary } from '~/entities/decision/ui/links/state/state'
+import { LinkStateDictionary } from '~/entities/decision/ui/editor/widgets/_links/state/state'
 import { Node, NodeState } from '~/entities/point'
 import { Rule, RuleLinkState } from '~/entities/rule'
 import Editable from '~/ui/editable'

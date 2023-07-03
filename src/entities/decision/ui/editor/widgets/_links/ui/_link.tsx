@@ -1,51 +1,11 @@
-import { memo } from 'react'
-
 import { NodeState } from '~/entities/point'
 import { RuleLink, RuleLinkState } from '~/entities/rule'
 import { EmitterableDictionary } from '~/lib/emitter/dictionary'
 import { Any, Position } from '~/utils/core'
 import { useUpdate } from '~/utils/hooks'
 
-import { getOffset } from '../get-offset'
+import { getOffset } from '../lib/_get-offset'
 import { LinkStateDictionary } from '../state/state'
-
-interface LinksProps {
-  scale: number
-  canvasTranslate: Position
-  linkStates: LinkStateDictionary
-  nodeStates: EmitterableDictionary<Any, NodeState>
-}
-
-function LinksComponent(props: LinksProps): JSX.Element {
-  useUpdate(subscribeOnUpdates)
-
-  return (
-    <>
-      {props.linkStates.values().map((linkState) => {
-        return (
-          <MapLink
-            key={linkState.id}
-            scale={props.scale}
-            canvasTranslate={props.canvasTranslate}
-            nodeStates={props.nodeStates}
-            linkState={linkState}
-            linkStates={props.linkStates}
-          />
-        )
-      })}
-    </>
-  )
-
-  function subscribeOnUpdates(update: () => void, uns: (() => void)[]): void {
-    uns.push(props.linkStates.on('add', () => setTimeout(update)))
-    uns.push(props.linkStates.on('remove', () => setTimeout(update)))
-    uns.push(props.linkStates.on('update', () => setTimeout(update)))
-  }
-}
-
-export const Links = memo(LinksComponent)
-
-// Private
 
 interface MapLinkProp {
   scale: number
@@ -57,7 +17,7 @@ interface MapLinkProp {
   linkStates: LinkStateDictionary
 }
 
-function MapLink(props: MapLinkProp): JSX.Element | null {
+export function Link(props: MapLinkProp): JSX.Element | null {
   useUpdate(subscribeOnUpdates)
 
   const sourceState = props.nodeStates.find(props.linkState.rule.value.sourceId)

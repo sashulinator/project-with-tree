@@ -1,4 +1,4 @@
-import { LinkStateDictionary } from '~/entities/decision/ui/links/state/state'
+import { LinkStateDictionary } from '~/entities/decision/ui/editor/widgets/_links/state/state'
 import { Node, NodeState } from '~/entities/point'
 
 import { Joint } from '../../../widgets/joint'

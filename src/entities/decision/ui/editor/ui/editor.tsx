@@ -12,13 +12,13 @@ import { ActionHistory } from '~/utils/action-history'
 import { Id, assertDefined } from '~/utils/core'
 import { useBoolean, useEventListener, useOnMount, useUpdate } from '~/utils/hooks'
 
-import { Links } from '../../links'
-import { LinkStateDictionary } from '../../links/state/state'
-import { Nodes } from '../../nodes'
-import { NodeStateDictionary } from '../../nodes/state/state'
 import { listenHistory } from '../lib/_listen-history'
 import DecisionPanel from '../widgets/_decision-panel'
 import ItemPanel from '../widgets/_items-panel'
+import { Links } from '../widgets/_links'
+import { LinkStateDictionary } from '../widgets/_links/state/state'
+import { Nodes } from '../widgets/_nodes'
+import { NodeStateDictionary } from '../widgets/_nodes/state/state'
 
 interface EditorProps {
   decision: Decision
