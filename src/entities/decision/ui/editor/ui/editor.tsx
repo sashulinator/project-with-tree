@@ -1,13 +1,15 @@
 import './editor.css'
 
 import { useEffect, useMemo } from 'react'
+import uuid from 'uuid-random'
 
 import { PaintingPanel } from '~/abstract/canvas'
-import { Decision, EditorState } from '~/entities/decision'
+import { Decision, EditorState, Point } from '~/entities/decision'
 import { NodeState } from '~/entities/point'
-import { LinkState } from '~/entities/rule'
+import { RuleLinkState } from '~/entities/rule'
 import { Board } from '~/ui/canvas'
 import { ActionHistory } from '~/utils/action-history'
+import { Id, assertDefined, assertNotNull } from '~/utils/core'
 import { useBoolean, useEventListener, useOnMount, useUpdate } from '~/utils/hooks'
 
 import DecisionPanel from '../../decision-panel/ui/decision-panel'
@@ -34,7 +36,7 @@ export function Editor(props: EditorProps): JSX.Element {
     []
   )
 
-  const linkStateList = useMemo(() => rules?.map((rule) => new LinkState({ id: rule.id, rule })), [])
+  const linkStateList = useMemo(() => rules?.map((rule) => new RuleLinkState({ id: rule.id, rule })), [])
 
   const nodeStateList = useMemo(() => props.decision.data.map((point) => new NodeState({ point })), [])
 
@@ -53,7 +55,7 @@ export function Editor(props: EditorProps): JSX.Element {
   return (
     <div className='decision-Editor'>
       <DecisionPanel state={editorState} />
-      <ItemPanel centerNode={editorState.centerNode} nodeStateList={nodeStateList} />
+      <ItemPanel centerNode={centerNode} nodeStateList={nodeStateList} addNode={addNode} />
       <Board state={editorState}>
         <PaintingPanel translate={editorState.translate.value} scale={editorState.scale.value}>
           {isRenderLinks && (
@@ -72,6 +74,29 @@ export function Editor(props: EditorProps): JSX.Element {
 
   // Private
 
+  function addNode(): void {
+    const rect = editorState.ref.value?.getBoundingClientRect()
+    assertDefined(rect)
+    const point: Point = {
+      type: 'SIFT',
+      id: uuid(),
+      computation: 'successively',
+      name: 'new',
+      x: -editorState.translate.value.x + rect?.width / 2 - 200,
+      y: -editorState.translate.value.y + rect?.height / 2 - 150,
+    }
+    nodeStates.add(new NodeState({ point }))
+  }
+
+  function centerNode(id: Id): void {
+    const nodeState = nodeStates.get(id)
+    const rect = nodeState.ref.value?.getBoundingClientRect()
+    assertDefined(rect)
+    const mx = -nodeState.position.value.x + window.innerWidth / 2 - rect.width / 2
+    const my = -nodeState.position.value.y + window.innerHeight / 2 - rect.height / 2
+    editorState.d3zoom.setTranslate({ x: mx, y: my })
+  }
+
   function onKeyDown(ev: KeyboardEvent): void {
     if (!ev.metaKey || ev.key !== 'z') return
 
@@ -85,11 +110,11 @@ export function Editor(props: EditorProps): JSX.Element {
   function updateOnEvents(update: () => void): void {
     editorState.on('translate', update)
     editorState.on('scale', update)
-    nodeStates.onAll(() => {
-      const svg = document.querySelector<SVGSVGElement>('svg')
-
-      document.body.style.width = `100.0${Math.random()}%`
-    })
+    // ЧТО ТУТ ПРОИСХОДИЛО??
+    // nodeStates.onAll(() => {
+    //   const svg = document.querySelector<SVGSVGElement>('svg')
+    //   document.body.style.width = `100.0${Math.random()}%`
+    // })
   }
 }
 

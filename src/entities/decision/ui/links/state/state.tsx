@@ -1,4 +1,4 @@
-import { LinkState } from '~/entities/rule'
+import { RuleLinkState } from '~/entities/rule'
 import { Rule } from '~/entities/rule/types/rule'
 import { EmitterableDictionary } from '~/lib/emitter/dictionary'
 import { Id } from '~/utils/core'
@@ -10,35 +10,35 @@ export interface LinkStateProps {
 }
 
 type Events = {
-  add: { item: LinkState }
-  update: { item: LinkState }
+  add: { item: RuleLinkState }
+  update: { item: RuleLinkState }
   remove: { key: Id }
   editingId: { value: Id }
   rule: { id: Id; value: Rule }
 }
 
-export class LinkStateDictionary extends EmitterableDictionary<Events, LinkState> {
+export class LinkStateDictionary extends EmitterableDictionary<Events, RuleLinkState> {
   editingId: Prop<'editingId', Id | undefined>
 
-  constructor(linkStateList: LinkState[]) {
+  constructor(linkStateList: RuleLinkState[]) {
     super(linkStateList, (l) => l.id.toString())
 
     this.editingId = new Prop<'editingId', Id | undefined>('editingId', undefined, this)
   }
 
-  getEditingLinkState = (): LinkState => {
+  getEditingLinkState = (): RuleLinkState => {
     return this.get(this.editingId.value)
   }
 
-  findEditingLinkState = (): LinkState | undefined => {
+  findEditingLinkState = (): RuleLinkState | undefined => {
     return this.find(this.editingId.value)
   }
 
-  getLinksBySourceId = (id: Id): LinkState[] => {
+  getLinksBySourceId = (id: Id): RuleLinkState[] => {
     return this.values().filter((state) => state.rule.value.sourceId === id)
   }
 
-  getLinksByTargetId = (id: Id): LinkState[] => {
+  getLinksByTargetId = (id: Id): RuleLinkState[] => {
     return this.values().filter((state) => state.rule.value.targetId === id)
   }
 }

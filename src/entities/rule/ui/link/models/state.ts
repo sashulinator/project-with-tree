@@ -1,22 +1,25 @@
 import uuid from 'uuid-random'
 
-import { Rule } from '~/entities/rule/types/rule'
 import { Emitter } from '~/lib/emitter'
 import { Id } from '~/utils/core'
 import { Prop } from '~/utils/emitter'
 
-import { LinkEvents } from './events'
+import { Rule } from '../../../types/rule'
 
-export interface LinkStateProps {
+export type Events = {
+  rule: { value: Rule }
+}
+
+export interface StateProps {
   id: Id
   rule: Rule
 }
 
-export class LinkState extends Emitter<LinkEvents> {
+export class State extends Emitter<Events> {
   id: Id
 
   rule: Prop<'rule', Rule>
-  constructor(props: LinkStateProps) {
+  constructor(props: StateProps) {
     super()
 
     this.id = props.id
@@ -32,8 +35,8 @@ export class LinkState extends Emitter<LinkEvents> {
     }
   }
 
-  static createDefaultInstance(rule: Partial<Rule>): LinkState {
-    const newRule = LinkState.createDefaultRule(rule)
-    return new LinkState({ id: newRule.id, rule: newRule })
+  static createDefaultInstance(rule: Partial<Rule>): State {
+    const newRule = State.createDefaultRule(rule)
+    return new State({ id: newRule.id, rule: newRule })
   }
 }

@@ -1,46 +1,49 @@
 import './link.css'
 
-import clsx from 'clsx'
+import { clsx } from 'clsx'
 
-import { NodeState } from '~/entities/point/ui/node/state'
-import { Link as UILink } from '~/ui/canvas'
+import { NodeState } from '~/entities/point'
+import { Link } from '~/ui/canvas'
 import { Offset, Position } from '~/utils/core'
 import { remove } from '~/utils/dictionary'
+import { fns } from '~/utils/function'
 import { useForceUpdate, useOnMount, useUpdate } from '~/utils/hooks'
 
-import { LinkState } from '../state'
+import { State } from '../models/state'
 
-export interface LinkProps extends React.HTMLAttributes<SVGPathElement> {
+export interface Props extends React.HTMLAttributes<SVGPathElement> {
   scale: number
   canvasTranslate: Position
   targetState?: NodeState | undefined
   sourceState?: NodeState | undefined
   targetOffset: Offset | null
   sourceOffset: Offset | null
-  state: LinkState
+  state: State
 }
 
-export function Link(props: LinkProps): JSX.Element | null {
+export function Component(props: Props): JSX.Element | null {
   const { scale, state, canvasTranslate, targetState, sourceState, ...pathProps } = props
 
   useOnMount(useForceUpdate())
   useUpdate(subscribeOnUpdates, [targetState, sourceState])
 
   return (
-    <UILink
-      onClick={(): void => {
-        state.rule.value = remove(state.rule.value, 'targetId')
-      }}
+    <Link
+      {...pathProps}
+      className={clsx(pathProps.className, 'rule-Link')}
       scale={scale}
-      className={clsx('rule-Link')}
       canvasTranslate={canvasTranslate}
       sourcePosition={sourceState?.position.value}
       targetPosition={targetState?.position.value}
-      {...pathProps}
+      onClick={fns(pathProps.onClick, removeLink)}
     />
   )
 
   // Private
+
+  function removeLink(): void {
+    state.rule.value = remove(state.rule.value, 'targetId')
+  }
 
   function subscribeOnUpdates(update: () => void): void {
     targetState?.on('setPosition', update)
@@ -53,4 +56,4 @@ export function Link(props: LinkProps): JSX.Element | null {
   }
 }
 
-Link.displayName = 'PointLink'
+Component.displayName = 'RuleLink'

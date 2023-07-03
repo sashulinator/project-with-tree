@@ -40,20 +40,4 @@ export class EditorState extends BoardState<Events> {
 
     this.d3zoom = new D3Zoom(this)
   }
-
-  centerNode = (id: Id): void => {
-    const nodeEl = document.querySelector(`svg [data-id="${id}"]`)
-
-    const x = parseInt(nodeEl?.getAttribute('x') || '', 10)
-    const y = parseInt(nodeEl?.getAttribute('y') || '', 10)
-    const width = parseInt(nodeEl?.getAttribute('width') || '', 10)
-    const height = parseInt(nodeEl?.getAttribute('height') || '', 10)
-
-    const mx = -x + window.innerWidth / 2 - width / 2
-    const my = -y + window.innerHeight / 2 - height / 2
-
-    assertNotNull(nodeEl)
-
-    this.d3zoom.setTranslate({ x: mx, y: my })
-  }
 }

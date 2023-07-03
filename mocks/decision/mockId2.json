@@ -92,15 +92,15 @@
       "id": "linkMockId1",
       "name": "name000",
       "value": "",
-      "sourceId": "linkMockId2",
+      "sourceId": "mockId3",
       "targetId": "mockId4"
     },
     {
-      "id": "mockId2",
+      "id": "linkMockId2",
       "name": "name111",
       "value": "",
-      "sourceId": "linkMockId3",
-      "targetId": "mockId4"
+      "sourceId": "mockId4",
+      "targetId": "mockId5"
     },
     {
       "id": "linkMockId3",
