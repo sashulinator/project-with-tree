@@ -9,7 +9,7 @@ import { Node, NodeState } from '~/entities/point'
 import { Rule, RuleLinkState } from '~/entities/rule'
 import Editable from '~/ui/editable'
 import UnstyledButton from '~/ui/unstyled-button'
-import { add, remove } from '~/utils/dictionary'
+import { Id, add, remove } from '~/utils/dictionary'
 import { stopPropagation } from '~/utils/dom'
 import { fns } from '~/utils/function'
 import { useUpdate } from '~/utils/hooks'
@@ -22,6 +22,7 @@ export interface SiftNodeProps {
   state: NodeState
   scale: number
   linkStates: LinkStateDictionary
+  removeNode: (id: Id) => void
 }
 
 /**
@@ -48,11 +49,14 @@ export function SiftNode(props: SiftNodeProps): JSX.Element {
       scale={props.scale}
       dataId={props.state.id}
       nodeTitle={
-        <Editable
-          value={props.state.title.value}
-          cannotBeEmpty={true}
-          onChange={(ev): void => props.state.title.set(ev.currentTarget.value)}
-        />
+        <>
+          <button onClick={(): void => props.removeNode(props.state.id)}>delete</button>
+          <Editable
+            value={props.state.title.value}
+            cannotBeEmpty={true}
+            onChange={(ev): void => props.state.title.set(ev.currentTarget.value)}
+          />
+        </>
       }
       nodeDescription={
         props.state.description.value ? (

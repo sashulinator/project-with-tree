@@ -1,6 +1,7 @@
 import { memo } from 'react'
 
 import { EnterNode, NodeState, SiftNode } from '~/entities/point'
+import { Id } from '~/utils/core'
 import { useUpdate } from '~/utils/hooks'
 
 import { LinkStateDictionary } from '../../links/state/state'
@@ -18,7 +19,15 @@ export function NodesComponent(props: NodesProps): JSX.Element {
   return (
     <>
       {props.nodeStates.values().map((nodeState) => {
-        return <MapNode key={nodeState.id} state={nodeState} scale={props.scale} linkStates={props.linkStates} />
+        return (
+          <MapNode
+            key={nodeState.id}
+            state={nodeState}
+            nodeStates={props.nodeStates}
+            scale={props.scale}
+            linkStates={props.linkStates}
+          />
+        )
       })}
     </>
   )
@@ -26,7 +35,7 @@ export function NodesComponent(props: NodesProps): JSX.Element {
   function subscribeOnUpdates(update: () => void, uns: (() => void)[]): void {
     uns.push(props.nodeStates.on('update', update))
     uns.push(props.nodeStates.on('add', update))
-    uns.push(props.nodeStates.on('remove', update))
+    uns.push(props.nodeStates.on('remove', () => setTimeout(update)))
   }
 }
 
@@ -38,6 +47,7 @@ interface MapNodeProps {
   state: NodeState
   scale: number
   linkStates: LinkStateDictionary
+  nodeStates: NodeStateDictionary
 }
 
 function MapNode(props: MapNodeProps): JSX.Element {
@@ -46,7 +56,15 @@ function MapNode(props: MapNodeProps): JSX.Element {
   if (props.state.point.type === 'MAIN') {
     return <EnterNode state={props.state} scale={props.scale} linkStates={props.linkStates} />
   }
-  return <SiftNode key={props.state.id} state={props.state} scale={props.scale} linkStates={props.linkStates} />
+  return (
+    <SiftNode
+      removeNode={props.nodeStates.remove}
+      key={props.state.id}
+      state={props.state}
+      scale={props.scale}
+      linkStates={props.linkStates}
+    />
+  )
 
   function subscribeOnUpdates(update: () => void): void {
     // TODO сейчас обновляет все ноды, а надо только те что надо
