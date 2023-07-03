@@ -1,4 +1,4 @@
-import { EditorState, Events } from '~/entities/decision'
+import { EditorState } from '~/entities/decision'
 import { ActionHistory } from '~/utils/action-history'
 import { Any } from '~/utils/core'
 

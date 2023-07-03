@@ -1,4 +1,4 @@
-import './items-panel.css'
+import './_items-panel.css'
 
 import { useState } from 'react'
 

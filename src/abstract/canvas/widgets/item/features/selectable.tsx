@@ -2,7 +2,8 @@ import React, { useEffect, useState } from 'react'
 
 import { Id } from '~/utils/core'
 
-import { EditorState } from '../../../../../entities/decision/ui/editor/state'
+// TODO нельзя импортировать из entities в abstract
+import { EditorState } from '../../../../../entities/decision/ui/editor/state/state'
 
 export interface CanvasItemSelectableProps {
   children: (props: {

@@ -1,10 +1,10 @@
-import './decision-panel.css'
+import './_decision-panel.css'
 
 import Editable from '~/ui/editable'
 import ThemeDropdown from '~/ui/theme-dropdown'
 import { useUpdate } from '~/utils/hooks'
 
-import { EditorState } from '../../editor'
+import { EditorState } from '../../../../editor'
 
 interface DecisionPanelProps {
   state: EditorState

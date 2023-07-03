@@ -9,16 +9,16 @@ import { NodeState } from '~/entities/point'
 import { RuleLinkState } from '~/entities/rule'
 import { Board } from '~/ui/canvas'
 import { ActionHistory } from '~/utils/action-history'
-import { Id, assertDefined, assertNotNull } from '~/utils/core'
+import { Id, assertDefined } from '~/utils/core'
 import { useBoolean, useEventListener, useOnMount, useUpdate } from '~/utils/hooks'
 
-import DecisionPanel from '../../decision-panel/ui/decision-panel'
-import ItemPanel from '../../items-panel'
 import { Links } from '../../links'
 import { LinkStateDictionary } from '../../links/state/state'
 import { Nodes } from '../../nodes'
 import { NodeStateDictionary } from '../../nodes/state/state'
-import { listenHistory } from '../lib/listen-history'
+import { listenHistory } from '../lib/_listen-history'
+import DecisionPanel from '../widgets/_decision-panel'
+import ItemPanel from '../widgets/_items-panel'
 
 interface EditorProps {
   decision: Decision
