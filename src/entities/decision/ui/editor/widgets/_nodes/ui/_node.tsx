@@ -1,7 +1,9 @@
-import { EnterNode, NodeState, SiftNode } from '~/entities/point'
+import { NodeState } from '~/entities/point'
 import { useUpdate } from '~/utils/hooks'
 
 import { LinkStateDictionary } from '../../_links/state/state'
+import { EnterNode } from '../../_node-types/node-enter'
+import { SiftNode } from '../../_node-types/node-sift'
 import { NodeStateDictionary } from '../state/state'
 
 interface MapNodeProps {

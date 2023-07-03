@@ -1,6 +1,6 @@
-import './node.sift.css'
+import './node-sift.css'
 
-import clsx from 'clsx'
+import { clsx } from 'clsx'
 import { useState } from 'react'
 
 import { addToast } from '~/abstract/toast'
@@ -14,7 +14,7 @@ import { stopPropagation } from '~/utils/dom'
 import { fns } from '~/utils/function'
 import { useUpdate } from '~/utils/hooks'
 
-import { Joint, NewSource, RuleSet } from '../../node'
+import { Joint, NewSource, RuleSet } from '../../../../../point/ui/node'
 
 export interface SiftNodeProps {
   state: NodeState
