@@ -1,8 +1,12 @@
+import { ItemEvents } from '~/abstract/canvas/widgets/item'
 import { ItemState } from '~/abstract/canvas/widgets/item/state'
 import { Point } from '~/entities/point'
 import { Prop } from '~/utils/emitter'
 
-import { Events } from './events'
+export type Events = ItemEvents & {
+  computation: { value: Point['computation'] }
+  title: { value: string }
+}
 
 // import { RuleListProp } from './rule-list-prop'
 

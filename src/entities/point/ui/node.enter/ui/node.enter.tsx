@@ -1,7 +1,7 @@
 import { LinkStateDictionary } from '~/entities/decision/ui/editor/widgets/_links/state/state'
 import { Node, NodeState } from '~/entities/point'
 
-import { Joint } from '../../../widgets/joint'
+import { Joint } from '../../node/widgets/joint'
 
 export interface EnterNodeProps {
   state: NodeState

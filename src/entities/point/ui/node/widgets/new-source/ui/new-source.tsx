@@ -6,12 +6,12 @@ import UnstyledButton from '~/ui/unstyled-button'
 
 import { Joint, JointProps } from '../../joint'
 
-interface NewSourceProps {
+export interface NewSourceProps {
   jointProps: Omit<JointProps, 'variant'>
   buttonProps: React.HTMLAttributes<HTMLButtonElement>
 }
 
-export default function NewSource(props: NewSourceProps): JSX.Element {
+export function NewSource(props: NewSourceProps): JSX.Element {
   const { jointProps, buttonProps } = props
 
   return (
