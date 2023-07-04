@@ -1,6 +1,6 @@
 import { CSSVars } from '../types/css-vars'
 import { commonTheme } from './_common'
 
-export const darkTheme: CSSVars = {
+export const dark: CSSVars = {
   ...commonTheme,
 }

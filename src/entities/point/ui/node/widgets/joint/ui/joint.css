@@ -1,4 +1,4 @@
-.point-Joint {
+.point-NodeJoint {
   padding: 0;
   margin: 0;
   width: 0.6rem;
@@ -10,14 +10,14 @@
 
 /* Variants */
 
-.point-Joint.--unlinked {
+.point-NodeJoint.--unlinked {
   background-color: var(--pointJoint_bg__unlinked);
 }
 
-.point-Joint.--linked {
+.point-NodeJoint.--linked {
   background-color: var(--pointJoint_bg__linked);
 }
 
-.point-Joint.--new {
+.point-NodeJoint.--new {
   background-color: var(--pointJoint_bg__new);
 }

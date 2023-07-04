@@ -6,6 +6,8 @@ import UnstyledButton from '~/ui/unstyled-button'
 
 import { Joint, JointProps } from '../../joint'
 
+NewSource.displayName = 'point-NodeNewSource'
+
 export interface NewSourceProps {
   jointProps: Omit<JointProps, 'variant'>
   buttonProps: React.HTMLAttributes<HTMLButtonElement>
@@ -15,7 +17,7 @@ export function NewSource(props: NewSourceProps): JSX.Element {
   const { jointProps, buttonProps } = props
 
   return (
-    <div className='point-NewSource'>
+    <div className={NewSource.displayName}>
       <UnstyledButton className='newRuleButton' {...buttonProps}>
         +
       </UnstyledButton>
@@ -23,5 +25,3 @@ export function NewSource(props: NewSourceProps): JSX.Element {
     </div>
   )
 }
-
-NewSource.displayName = 'NewSource'

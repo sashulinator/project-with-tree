@@ -10,8 +10,7 @@ export { light as nodeLightTheme } from './themes/light'
 
 // WIDGETS
 
-export { Joint, darkTheme as jointDarkTheme, lightTheme as jointLightTheme } from './widgets/joint'
-export type { CSSVars as JointCSSVars } from './widgets/joint'
+export * from './widgets/joint'
 
 export { NewSource } from './widgets/new-source'
 export type { NewSourceProps } from './widgets/new-source'
