@@ -72,6 +72,7 @@ const mock: Decision = {
       value: '',
       sourceId: 'main',
       targetId: 'mockId2',
+      i: 0,
     },
   ],
 }

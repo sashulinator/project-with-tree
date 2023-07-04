@@ -31,6 +31,7 @@ export class State extends Emitter<Events> {
     return {
       id: uuid(),
       name: 'new_rule',
+      i: 0,
       ...rule,
     }
   }
