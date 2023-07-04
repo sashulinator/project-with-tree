@@ -23,7 +23,7 @@ const color = clr(defaultColor)
 const bg = clr(defaultBg)
 const bgSecondary = clr('white')
 
-export const light = {
+export const LIGHT = {
   primary,
   color,
   bg,
@@ -37,5 +37,5 @@ export const light = {
 }
 
 // TODO сделать нормальную проверку
-check<keyof Theme, keyof Theme, Pass>({} as keyof typeof light)
-check<keyof typeof light, keyof typeof light, Pass>({} as keyof Theme)
+check<keyof Theme, keyof Theme, Pass>({} as keyof typeof LIGHT)
+check<keyof typeof LIGHT, keyof typeof LIGHT, Pass>({} as keyof Theme)

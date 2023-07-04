@@ -1,9 +1,9 @@
-import { dark } from '~/shared/theme/dark'
+import { DARK } from '~/shared/theme/dark'
 
 import { PointNodeCSSVars } from '../types/css-vars'
 import { common } from './common'
 
 export const darkTheme: PointNodeCSSVars = {
   ...common,
-  pointNode_bg: dark.bg,
+  pointNode_bg: DARK.bg,
 }

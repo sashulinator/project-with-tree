@@ -8,7 +8,7 @@ const color = clr('#b2bac2')
 const bg = clr('#202124')
 const bgSecondary = clr('#303134')
 
-export const dark = {
+export const DARK = {
   primary,
   color,
   bg,
@@ -22,5 +22,5 @@ export const dark = {
 }
 
 // TODO сделать нормальную проверку
-check<keyof Theme, keyof Theme, Pass>({} as keyof typeof dark)
-check<keyof typeof dark, keyof typeof dark, Pass>({} as keyof Theme)
+check<keyof Theme, keyof Theme, Pass>({} as keyof typeof DARK)
+check<keyof typeof DARK, keyof typeof DARK, Pass>({} as keyof Theme)

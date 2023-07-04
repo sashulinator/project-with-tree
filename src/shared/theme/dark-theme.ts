@@ -5,11 +5,11 @@ import { darkTheme as textInput } from '~/ui/text-input'
 import { darkTheme as unstyledButton } from '~/ui/unstyled-button'
 
 import * as commonTheme from './common'
-import { dark } from './dark'
+import { DARK } from './dark'
 
 export const darkTheme = {
   ...commonTheme,
-  ...dark,
+  ...DARK,
 
   ...editable,
   ...pointNode,
