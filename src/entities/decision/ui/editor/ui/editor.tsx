@@ -1,6 +1,8 @@
 import './editor.css'
 
 import { useEffect, useMemo } from 'react'
+import { DndProvider } from 'react-dnd'
+import { HTML5Backend } from 'react-dnd-html5-backend'
 import uuid from 'uuid-random'
 
 import { PaintingPanel } from '~/abstract/canvas'
@@ -54,21 +56,23 @@ export function Editor(props: EditorProps): JSX.Element {
 
   return (
     <div className='decision-Editor'>
-      <DecisionPanel state={editorState} />
-      <ItemPanel centerNode={centerNode} nodeStateList={nodeStateList} addNode={addNode} />
-      <Board state={editorState}>
-        <PaintingPanel translate={editorState.translate.value} scale={editorState.scale.value}>
-          {isRenderLinks && (
-            <Links
-              canvasTranslate={editorState.translate.value}
-              scale={editorState.scale.value}
-              linkStates={linkStates}
-              nodeStates={nodeStates}
-            />
-          )}
-          <Nodes scale={editorState.scale.value} linkStates={linkStates} nodeStates={nodeStates} />
-        </PaintingPanel>
-      </Board>
+      <DndProvider backend={HTML5Backend}>
+        <DecisionPanel state={editorState} />
+        <ItemPanel centerNode={centerNode} nodeStateList={nodeStateList} addNode={addNode} />
+        <Board state={editorState}>
+          <PaintingPanel translate={editorState.translate.value} scale={editorState.scale.value}>
+            {isRenderLinks && (
+              <Links
+                canvasTranslate={editorState.translate.value}
+                scale={editorState.scale.value}
+                linkStates={linkStates}
+                nodeStates={nodeStates}
+              />
+            )}
+            <Nodes scale={editorState.scale.value} linkStates={linkStates} nodeStates={nodeStates} />
+          </PaintingPanel>
+        </Board>
+      </DndProvider>
     </div>
   )
 
