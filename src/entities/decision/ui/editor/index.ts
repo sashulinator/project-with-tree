@@ -1,3 +1,3 @@
 export * from './ui/editor'
 
-export * from './state'
+export * from './state/state'

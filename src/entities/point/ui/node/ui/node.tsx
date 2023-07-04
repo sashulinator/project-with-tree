@@ -2,7 +2,7 @@ import './node.css'
 
 import { clsx } from 'clsx'
 
-import { NodeState } from '~/entities/point/ui/node/state'
+import { NodeState } from '~/entities/point'
 import { Node as UINode } from '~/ui/canvas'
 import { Id } from '~/utils/core'
 import { useUpdate } from '~/utils/hooks'
