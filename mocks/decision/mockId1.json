@@ -69,7 +69,8 @@
       "name": "first",
       "value": "",
       "sourceId": "main",
-      "targetId": "mockId2"
+      "targetId": "mockId2",
+      "i": 0
     }
   ]
 }

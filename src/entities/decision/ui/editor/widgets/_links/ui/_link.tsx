@@ -20,8 +20,8 @@ interface MapLinkProp {
 export function Link(props: MapLinkProp): JSX.Element | null {
   useUpdate(subscribeOnUpdates)
 
-  const sourceState = props.nodeStates.find(props.linkState.rule.value.sourceId)
-  const targetState = props.nodeStates.find(props.linkState.rule.value.targetId)
+  const sourceState = props.nodeStates.find(props.linkState.sourceId.value)
+  const targetState = props.nodeStates.find(props.linkState.targetId.value)
 
   const isCurrentEditing = props.linkStates.editingId.value === props.linkState.id
 
@@ -44,6 +44,8 @@ export function Link(props: MapLinkProp): JSX.Element | null {
   function subscribeOnUpdates(update: () => void, uns: (() => void)[]): void {
     // Запускаем update с timeout для того чтобы обновить сначала Node
     uns.push(props.linkStates.on('editingId', () => setTimeout(update)))
-    uns.push(props.linkStates.on('rule', () => setTimeout(update)))
+    uns.push(props.linkStates.on('targetId', () => setTimeout(update)))
+    uns.push(props.linkStates.on('sourceId', () => setTimeout(update)))
+    uns.push(props.linkStates.on('index', () => setTimeout(update)))
   }
 }

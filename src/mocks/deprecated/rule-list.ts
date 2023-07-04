@@ -7,6 +7,7 @@ export const ruleList: Rule[] = [
     value: '',
     sourceId: 'id2',
     targetId: 'id4',
+    i: 0,
   },
   {
     id: 'id2',
@@ -14,6 +15,7 @@ export const ruleList: Rule[] = [
     value: '',
     sourceId: 'id3',
     targetId: 'id4',
+    i: 0,
   },
   {
     id: 'main',
@@ -21,5 +23,6 @@ export const ruleList: Rule[] = [
     value: '',
     sourceId: 'main',
     targetId: 'id2',
+    i: 0,
   },
 ]

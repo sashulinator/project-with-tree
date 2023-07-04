@@ -7,7 +7,9 @@ import { Prop } from '~/utils/emitter'
 import { Rule } from '../../../types/rule'
 
 export type Events = {
-  rule: { value: Rule }
+  targetId: { value: Id }
+  sourceId: { value: Id }
+  index: { value: number }
 }
 
 export interface StateProps {
@@ -18,19 +20,33 @@ export interface StateProps {
 export class State extends Emitter<Events> {
   id: Id
 
-  rule: Prop<'rule', Rule>
+  readonly rule: Rule
+
+  targetId: Prop<'targetId', Id | undefined>
+
+  sourceId: Prop<'sourceId', Id | undefined>
+
+  index: Prop<'index', number>
+
   constructor(props: StateProps) {
     super()
 
     this.id = props.id
 
-    this.rule = new Prop('rule', props.rule, this)
+    this.rule = props.rule
+
+    this.targetId = new Prop('targetId', props.rule.targetId, this)
+
+    this.sourceId = new Prop('sourceId', props.rule.sourceId, this)
+
+    this.index = new Prop('index', props.rule.i, this)
   }
 
   static createDefaultRule(rule: Partial<Rule>): Rule {
     return {
       id: uuid(),
       name: 'new_rule',
+      i: 0,
       ...rule,
     }
   }

@@ -32,6 +32,8 @@ export function Node(props: MapNodeProps): JSX.Element {
   function subscribeOnUpdates(update: () => void): void {
     // TODO сейчас обновляет все ноды, а надо только те что надо
     props.linkStates.on('editingId', update)
-    props.linkStates.on('rule', update)
+    props.linkStates.on('targetId', update)
+    props.linkStates.on('sourceId', update)
+    props.linkStates.on('index', update)
   }
 }

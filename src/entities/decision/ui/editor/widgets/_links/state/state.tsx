@@ -14,7 +14,10 @@ type Events = {
   update: { item: RuleLinkState }
   remove: { key: Id }
   editingId: { value: Id }
-  rule: { id: Id; value: Rule }
+
+  targetId: { value: Id }
+  sourceId: { value: Id }
+  index: { value: number }
 }
 
 export class LinkStateDictionary extends EmitterableDictionary<Events, RuleLinkState> {
@@ -35,10 +38,10 @@ export class LinkStateDictionary extends EmitterableDictionary<Events, RuleLinkS
   }
 
   getLinksBySourceId = (id: Id): RuleLinkState[] => {
-    return this.values().filter((state) => state.rule.value.sourceId === id)
+    return this.values().filter((state) => state.sourceId.value === id)
   }
 
   getLinksByTargetId = (id: Id): RuleLinkState[] => {
-    return this.values().filter((state) => state.rule.value.targetId === id)
+    return this.values().filter((state) => state.targetId.value === id)
   }
 }
