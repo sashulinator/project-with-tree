@@ -1,4 +1,5 @@
 import { NodeState } from '~/entities/point'
+import { Id } from '~/utils/core'
 import { useUpdate } from '~/utils/hooks'
 
 import { LinkStateDictionary } from '../../_links/state/state'
@@ -11,6 +12,7 @@ interface MapNodeProps {
   scale: number
   linkStates: LinkStateDictionary
   nodeStates: NodeStateDictionary
+  removeNode: (id: Id) => void
 }
 
 export function Node(props: MapNodeProps): JSX.Element {
@@ -21,7 +23,7 @@ export function Node(props: MapNodeProps): JSX.Element {
   }
   return (
     <SiftNode
-      removeNode={props.nodeStates.remove}
+      removeNode={props.removeNode}
       key={props.state.id}
       state={props.state}
       scale={props.scale}

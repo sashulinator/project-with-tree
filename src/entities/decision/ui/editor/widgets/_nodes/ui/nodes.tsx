@@ -1,5 +1,6 @@
 import { memo } from 'react'
 
+import { Id } from '~/utils/core'
 import { useUpdate } from '~/utils/hooks'
 
 import { LinkStateDictionary } from '../../_links/state/state'
@@ -10,6 +11,7 @@ interface NodesProps {
   scale: number
   linkStates: LinkStateDictionary
   nodeStates: NodeStateDictionary
+  removeNode: (id: Id) => void
 }
 
 export function NodesComponent(props: NodesProps): JSX.Element {
@@ -20,6 +22,7 @@ export function NodesComponent(props: NodesProps): JSX.Element {
       {props.nodeStates.values().map((nodeState) => {
         return (
           <Node
+            removeNode={props.removeNode}
             key={nodeState.id}
             state={nodeState}
             nodeStates={props.nodeStates}

@@ -69,7 +69,12 @@ export function Editor(props: EditorProps): JSX.Element {
                 nodeStates={nodeStates}
               />
             )}
-            <Nodes scale={editorState.scale.value} linkStates={linkStates} nodeStates={nodeStates} />
+            <Nodes
+              scale={editorState.scale.value}
+              linkStates={linkStates}
+              nodeStates={nodeStates}
+              removeNode={removeNode}
+            />
           </PaintingPanel>
         </Board>
       </DndProvider>
@@ -77,6 +82,15 @@ export function Editor(props: EditorProps): JSX.Element {
   )
 
   // Private
+
+  function removeNode(id: Id): void {
+    nodeStates.remove(id)
+
+    linkStateList.forEach((s) => {
+      if (s.sourceId.value !== id && s.targetId.value !== id) return
+      linkStates.remove(s.id)
+    })
+  }
 
   function addNode(): void {
     const rect = editorState.ref.value?.getBoundingClientRect()
