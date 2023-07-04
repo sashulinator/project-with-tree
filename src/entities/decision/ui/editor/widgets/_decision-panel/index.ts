@@ -1,1 +1,1 @@
-export { default } from './ui/_decision-panel'
+export { default } from './ui/decision-panel'

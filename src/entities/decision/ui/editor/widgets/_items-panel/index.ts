@@ -1,1 +1,1 @@
-export { default } from './ui/_items-panel'
+export { default } from './ui/items-panel'

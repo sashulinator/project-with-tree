@@ -57,8 +57,13 @@ export function Editor(props: EditorProps): JSX.Element {
   return (
     <div className='decision-Editor'>
       <DndProvider backend={HTML5Backend}>
-        <DecisionPanel state={editorState} />
-        <ItemPanel centerNode={centerNode} nodeStateList={nodeStateList} addNode={addNode} />
+        <DecisionPanel state={editorState} rootProps={{ className: 'decisionPanel panel' }} />
+        <ItemPanel
+          centerNode={centerNode}
+          nodeStateList={nodeStateList}
+          addNode={addNode}
+          rootProps={{ className: 'panel itemsPanel' }}
+        />
         <Board state={editorState}>
           <PaintingPanel translate={editorState.translate.value} scale={editorState.scale.value}>
             {isRenderLinks && (

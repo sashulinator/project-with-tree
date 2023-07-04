@@ -1,5 +1,6 @@
-import './_items-panel.css'
+import './items-panel.css'
 
+import { clsx } from 'clsx'
 import { useState } from 'react'
 
 import { NodeState } from '~/entities/point'
@@ -7,7 +8,10 @@ import TextInput from '~/ui/text-input'
 import UnstyledButton from '~/ui/unstyled-button'
 import { Id } from '~/utils/core'
 
+ItemPanel.displayName = 'decision-Editor-ItemPanel'
+
 interface ItemPanelProps {
+  rootProps?: React.HTMLAttributes<HTMLDivElement>
   nodeStateList: NodeState[]
   addNode: () => void
   centerNode: (id: Id) => void
@@ -21,7 +25,7 @@ export default function ItemPanel(props: ItemPanelProps): JSX.Element {
   )
 
   return (
-    <div className='ItemPanel'>
+    <div {...props.rootProps} className={clsx(ItemPanel.displayName, props.rootProps?.className)}>
       <button onClick={props.addNode}>+</button>
       <div className='search'>
         <TextInput value={value} onChange={(ev): void => setValue(ev.currentTarget.value)} placeholder='Поиск' />

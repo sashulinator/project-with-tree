@@ -1,3 +1,4 @@
+import { editorDarkTheme } from '~/entities/decision'
 import { jointDarkTheme, nodeDarkTheme } from '~/entities/point'
 import { darkTheme as editable } from '~/ui/editable'
 import { darkTheme as textInput } from '~/ui/text-input'
@@ -9,6 +10,8 @@ import { DARK } from './dark'
 export const darkTheme = {
   ...commonTheme,
   ...DARK,
+
+  ...editorDarkTheme,
 
   ...editable,
   ...nodeDarkTheme,

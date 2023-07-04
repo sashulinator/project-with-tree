@@ -1,10 +1,10 @@
-.decision-DecisionPanel {
+.decision-Editor-DecisionPanel {
   display: flex;
   align-items: center;
   padding: 0 2rem;
 }
 
-.decision-DecisionPanel .name {
+.decision-Editor-DecisionPanel .name {
   width: 15rem;
   margin-left: 2rem;
 }
