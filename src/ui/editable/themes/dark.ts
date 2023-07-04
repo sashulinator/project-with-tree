@@ -2,7 +2,7 @@ import clr from 'color'
 
 import { EditableCSSVars } from '../types/css-vars'
 
-export const darkTheme: EditableCSSVars = {
+export const dark: EditableCSSVars = {
   // --hovered
   editable_bg__hovered: clr('#ffffff11'),
 }

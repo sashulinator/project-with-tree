@@ -6,7 +6,7 @@ import { common } from './_common'
 const textInput_bg = DARK.bg
 const textInput_color = DARK.color
 
-export const darkTheme: TextInputCSSVars = {
+export const dark: TextInputCSSVars = {
   textInput_color,
   textInput_bg,
   textInput_borderColor: DARK.borderColor,

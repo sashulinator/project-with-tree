@@ -4,7 +4,7 @@ import Editable from '~/ui/editable/ui/editable'
 import TextInput from '~/ui/text-input'
 import { has } from '~/utils/core'
 
-// import { ThemeDropdown } from '~/widgets/theme'
+TextInputPage.displayName = 'TextInputPage'
 
 export default function TextInputPage(): JSX.Element {
   const [def, setDef] = useState('')

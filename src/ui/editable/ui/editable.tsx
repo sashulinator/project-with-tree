@@ -1,14 +1,20 @@
 import './editable.css'
 
-import clsx from 'clsx'
+import { clsx } from 'clsx'
 import { ForwardedRef, forwardRef, useEffect, useRef, useState } from 'react'
 
+import { emitter } from '~/shared/emitter'
 import TextInput, { TextInputProps } from '~/ui/text-input'
 import { Any } from '~/utils/core'
 import { keyListener } from '~/utils/dom/key-listener'
 import { fns } from '~/utils/function'
 import { useForceUpdate } from '~/utils/hooks'
 import { setRefs } from '~/utils/react'
+
+import { dark } from '../themes/dark'
+import { light } from '../themes/light'
+
+emitter.emit('addTheme', { dark, light })
 
 export type EditableProps = Omit<TextInputProps, 'onChange'> & {
   onChange?: (ev: React.FocusEvent<HTMLInputElement> | React.KeyboardEvent<HTMLInputElement>) => void

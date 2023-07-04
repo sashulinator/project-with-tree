@@ -1,6 +1,6 @@
 import { ToStringable } from '../../core'
 
-export type Theme = {
+export type RequiredVars = {
   /* main background */
   bg: ToStringable
 

@@ -1,12 +1,17 @@
-import './_decision-panel.css'
+import './decision-panel.css'
+
+import { clsx } from 'clsx'
 
 import Editable from '~/ui/editable'
 import ThemeDropdown from '~/ui/theme-dropdown'
 import { useUpdate } from '~/utils/hooks'
 
-import { EditorState } from '../../../../editor'
+import { EditorState } from '../../..'
+
+DecisionPanel.displayName = 'decision-Editor-DecisionPanel'
 
 interface DecisionPanelProps {
+  rootProps?: React.HTMLAttributes<HTMLDivElement>
   state: EditorState
 }
 
@@ -14,7 +19,7 @@ export default function DecisionPanel(props: DecisionPanelProps): JSX.Element {
   useUpdate(subscribeOnUpdates)
 
   return (
-    <div className='decision-DecisionPanel'>
+    <div {...props.rootProps} className={clsx(DecisionPanel.displayName, props.rootProps?.className)}>
       <div className='tools'>
         <ThemeDropdown />
       </div>

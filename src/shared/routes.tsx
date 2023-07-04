@@ -67,7 +67,7 @@ export const routes = {
     Header,
     Nav,
     getName: () => 'notFound',
-    path: '/project-with-tree*',
+    path: '/project-with-tree/*',
     element: <NotFoundPage />,
   },
 

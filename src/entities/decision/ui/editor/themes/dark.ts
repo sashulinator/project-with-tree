@@ -4,6 +4,6 @@ import { CSSVars } from '../types/css-vars'
 import { common } from './_common'
 
 export const dark: CSSVars = {
-  button_outlineColor: DARK.outlineColor,
   ...common,
+  decision_Editor_panel_bg: DARK.bg.alpha(0.8),
 }

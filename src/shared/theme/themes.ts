@@ -1,6 +1,6 @@
-import { darkTheme } from './dark-theme'
-import { lightTheme } from './light-theme'
+import { Themes } from '~/utils/theme/types/themes'
 
-const themes = { dark: darkTheme, light: lightTheme }
-
-export { themes }
+/**
+ * Наполняется темами и переменными в lib/theme/on-add-theme
+ */
+export const themes: Themes = {}

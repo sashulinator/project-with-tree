@@ -13,20 +13,19 @@ import { QueryClientProvider } from 'react-query'
 import { ReactQueryDevtools } from 'react-query/devtools'
 import { BrowserRouter } from 'react-router-dom'
 
-import { THEME as ThemelocalStarageName } from '~/constants/local-storage'
-import { DEFAULT_THEME } from '~/constants/theme'
-import { getCurrentThemeName } from '~/lib/theme'
+import '~/shared/dayjs'
+import { emitter } from '~/shared/emitter'
 import { queryClient } from '~/shared/react-query'
-import { themes } from '~/shared/theme/themes'
+import { COMMON } from '~/shared/theme/common'
+import { DARK } from '~/shared/theme/dark'
+import { LIGHT } from '~/shared/theme/light'
 import { Container } from '~/ui/toast'
-import { setTheme } from '~/utils/theme'
 
-import '../shared/dayjs'
 import Layout from './layout'
 
-export default function App(): JSX.Element {
-  setTheme(getCurrentThemeName(), DEFAULT_THEME, themes, ThemelocalStarageName)
+emitter.emit('addTheme', { dark: { ...DARK, ...COMMON }, light: { ...LIGHT, ...COMMON } })
 
+export default function App(): JSX.Element {
   // prettier-ignore
   return (
     <Suspense>
