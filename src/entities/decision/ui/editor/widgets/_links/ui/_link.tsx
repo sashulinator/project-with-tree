@@ -20,8 +20,8 @@ interface MapLinkProp {
 export function Link(props: MapLinkProp): JSX.Element | null {
   useUpdate(subscribeOnUpdates)
 
-  const sourceState = props.nodeStates.find(props.linkState.rule.value.sourceId)
-  const targetState = props.nodeStates.find(props.linkState.rule.value.targetId)
+  const sourceState = props.nodeStates.find(props.linkState.sourceId.value)
+  const targetState = props.nodeStates.find(props.linkState.targetId.value)
 
   const isCurrentEditing = props.linkStates.editingId.value === props.linkState.id
 

@@ -5,7 +5,6 @@ import { clsx } from 'clsx'
 import { NodeState } from '~/entities/point'
 import { Link } from '~/ui/canvas'
 import { Offset, Position } from '~/utils/core'
-import { remove } from '~/utils/dictionary'
 import { fns } from '~/utils/function'
 import { useForceUpdate, useOnMount, useUpdate } from '~/utils/hooks'
 
@@ -42,7 +41,7 @@ export function Component(props: Props): JSX.Element | null {
   // Private
 
   function removeLink(): void {
-    state.rule.value = remove(state.rule.value, 'targetId')
+    state.targetId.value = undefined
   }
 
   function subscribeOnUpdates(update: () => void): void {

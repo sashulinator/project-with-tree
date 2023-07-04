@@ -34,7 +34,7 @@ export function EnterNode(props: EnterNodeProps): JSX.Element {
           {sourceLinks.map((s) => {
             return (
               <div key={s.id} className='flex' style={{ justifyContent: 'space-between' }}>
-                <Joint linkId={s.id} variant={Boolean(s.rule.value.targetId) ? 'linked' : 'unlinked'} />
+                <Joint linkId={s.id} variant={Boolean(s.targetId.value) ? 'linked' : 'unlinked'} />
               </div>
             )
           })}

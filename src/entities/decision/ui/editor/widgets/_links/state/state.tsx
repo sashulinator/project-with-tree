@@ -35,10 +35,10 @@ export class LinkStateDictionary extends EmitterableDictionary<Events, RuleLinkS
   }
 
   getLinksBySourceId = (id: Id): RuleLinkState[] => {
-    return this.values().filter((state) => state.rule.value.sourceId === id)
+    return this.values().filter((state) => state.sourceId.value === id)
   }
 
   getLinksByTargetId = (id: Id): RuleLinkState[] => {
-    return this.values().filter((state) => state.rule.value.targetId === id)
+    return this.values().filter((state) => state.targetId.value === id)
   }
 }

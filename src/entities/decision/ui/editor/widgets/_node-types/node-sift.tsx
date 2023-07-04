@@ -5,10 +5,10 @@ import { useState } from 'react'
 
 import { addToast } from '~/abstract/toast'
 import { Joint, NewSource, Node, NodeState, RuleSet } from '~/entities/point'
-import { Rule, RuleLinkState } from '~/entities/rule'
+import { RuleLinkState } from '~/entities/rule'
 import Editable from '~/ui/editable'
 import UnstyledButton from '~/ui/unstyled-button'
-import { Id, add, remove } from '~/utils/dictionary'
+import { Id } from '~/utils/dictionary'
 import { stopPropagation } from '~/utils/dom'
 import { fns } from '~/utils/function'
 import { useUpdate } from '~/utils/hooks'
@@ -90,11 +90,11 @@ export function SiftNode(props: SiftNodeProps): JSX.Element {
             key={linkState.id}
             jointProps={{
               linkId: linkState.id,
-              variant: Boolean(linkState.rule.value.targetId) ? 'linked' : 'unlinked',
+              variant: Boolean(linkState.targetId.value) ? 'linked' : 'unlinked',
               onClick: fns(stopPropagation, () => emitRuleJoint(linkState)),
             }}
           >
-            {linkState.rule.value.name}
+            {linkState.rule.name}
           </RuleSet>
         )
       })}
@@ -131,14 +131,14 @@ export function SiftNode(props: SiftNodeProps): JSX.Element {
       return
     }
 
-    if (editingLinkState.rule.value.targetId) {
+    if (editingLinkState.targetId.value) {
       addToast({
         data: 'Линк от карточки можно прикреплять только к правилам. Вы же пытаетесь прикрепить от карточки к карточке',
         type: 'error',
       })
       return
     }
-    if (editingLinkState.rule.value.sourceId === props.state.id) {
+    if (editingLinkState.targetId.value === props.state.id) {
       addToast({
         data: 'Нельзя прикрепить линку к той же карточке',
         type: 'error',
@@ -146,7 +146,7 @@ export function SiftNode(props: SiftNodeProps): JSX.Element {
       return
     }
 
-    editingLinkState.rule.value = add(editingLinkState.rule.value, 'targetId', props.state.id)
+    editingLinkState.targetId.value = props.state.id
     props.linkStates.editingId.value = undefined
   }
 
@@ -154,12 +154,12 @@ export function SiftNode(props: SiftNodeProps): JSX.Element {
     const editingLinkState = props.linkStates.findEditingLinkState()
 
     if (!editingLinkState) {
-      linkState.rule.value = remove(linkState.rule.value, 'targetId')
+      linkState.targetId.value = undefined
       props.linkStates.editingId.value = linkState.id
       return
     }
 
-    if (editingLinkState.rule.value.targetId) {
+    if (editingLinkState.targetId.value) {
       addToast({
         data: 'Линк от карточки можно прикреплять только к правилам. Вы же пытаетесь прикрепить от карточки к карточке',
         type: 'error',
@@ -172,35 +172,35 @@ export function SiftNode(props: SiftNodeProps): JSX.Element {
     const editingLinkState = props.linkStates.findEditingLinkState()
 
     if (!editingLinkState) {
-      if (linkState.rule.value.targetId) {
-        const newLinkState = RuleLinkState.createDefaultInstance({ targetId: linkState.rule.value.targetId })
+      if (linkState.targetId.value) {
+        const newLinkState = RuleLinkState.createDefaultInstance({ targetId: linkState.targetId.value })
         props.linkStates.add(newLinkState)
-        linkState.rule.value = remove(linkState.rule.value, 'targetId')
+        linkState.targetId.value = undefined
         props.linkStates.editingId.value = newLinkState.id
         return
       }
       props.linkStates.editingId.value = linkState.id
       return
     }
-    if (editingLinkState.rule.value.sourceId === props.state.id) {
+    if (editingLinkState.sourceId.value === props.state.id) {
       addToast({ data: 'Ошибка', type: 'error' })
       return
     }
-    if (!editingLinkState.rule.value.targetId) {
+    if (!editingLinkState.targetId.value) {
       addToast({ data: 'Нельзя линковать правило с правилом', type: 'error' })
       return
     }
-    if (editingLinkState.rule.value.targetId === props.state.id) {
+    if (editingLinkState.targetId.value === props.state.id) {
       addToast({ data: 'Ошибка', type: 'error' })
       return
     }
-    if (linkState.rule.value.targetId) {
+    if (linkState.targetId.value) {
       addToast({ data: 'Связь уже существует', type: 'error' })
       return
     }
 
     props.linkStates.remove(editingLinkState.id)
-    linkState.rule.value = add(linkState.rule.value, 'targetId', editingLinkState.rule.value.targetId)
+    linkState.targetId.value = editingLinkState.targetId.value
 
     props.linkStates.editingId.value = undefined
   }
@@ -220,7 +220,7 @@ export function SiftNode(props: SiftNodeProps): JSX.Element {
       return
     }
 
-    if (editingLinkState.rule.value.sourceId) {
+    if (editingLinkState.sourceId.value) {
       addToast({
         data: 'Линк от правила можно прикрепить только к карточке, вы же пытаетесь правило слинковать с правилом',
         type: 'error',
@@ -228,8 +228,7 @@ export function SiftNode(props: SiftNodeProps): JSX.Element {
       return
     }
 
-    const rule: Rule = { ...editingLinkState.rule.value, sourceId: props.state.id }
-    editingLinkState.rule.value = rule
+    editingLinkState.sourceId.value = props.state.id
     props.linkStates.editingId.value = undefined
   }
 
@@ -251,19 +250,18 @@ export function SiftNode(props: SiftNodeProps): JSX.Element {
     uns.push(props.state.on('title', update))
     uns.push(
       props.linkStates.on('add', ({ item }) => {
-        if (item.rule.value.sourceId === props.state.id || item.rule.value.targetId === props.state.id) update()
+        if (item.sourceId.value === props.state.id || item.targetId.value === props.state.id) update()
       })
     )
     uns.push(
       props.linkStates.on('update', ({ item }) => {
-        if (item.rule.value.sourceId === props.state.id || item.rule.value.targetId === props.state.id) update()
+        if (item.sourceId.value === props.state.id || item.targetId.value === props.state.id) update()
       })
     )
     uns.push(
       props.linkStates.on('remove', ({ key }) => {
         const item = props.linkStates.get(key)
-        if (item.rule.value.sourceId === props.state.id || item.rule.value.targetId === props.state.id)
-          setTimeout(update)
+        if (item.sourceId.value === props.state.id || item.targetId.value === props.state.id) setTimeout(update)
       })
     )
   }

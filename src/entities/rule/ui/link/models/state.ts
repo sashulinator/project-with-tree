@@ -18,13 +18,22 @@ export interface StateProps {
 export class State extends Emitter<Events> {
   id: Id
 
-  rule: Prop<'rule', Rule>
+  readonly rule: Rule
+
+  targetId: Prop<'targetId', Id | undefined>
+
+  sourceId: Prop<'sourceId', Id | undefined>
+
   constructor(props: StateProps) {
     super()
 
     this.id = props.id
 
-    this.rule = new Prop('rule', props.rule, this)
+    this.rule = props.rule
+
+    this.targetId = new Prop('targetId', props.rule.targetId, this)
+
+    this.sourceId = new Prop('sourceId', props.rule.sourceId, this)
   }
 
   static createDefaultRule(rule: Partial<Rule>): Rule {
