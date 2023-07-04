@@ -8,22 +8,18 @@ export type Events = ItemEvents & {
   title: { value: string }
 }
 
-// import { RuleListProp } from './rule-list-prop'
-
 export interface NodeStateProps {
   point: Point
 }
 
 export class NodeState extends ItemState<Events> {
-  point: Point
-
-  computation: Prop<'computation', 'parallel' | 'successively' | undefined>
+  readonly point: Point
 
   title: Prop<'title', string>
 
   description: Prop<'description', string | undefined>
 
-  // ruleList: RuleListProp<'setRuleList'>
+  computation: Prop<'computation', 'parallel' | 'successively' | undefined>
 
   constructor(props: NodeStateProps) {
     super({ id: props.point.id, position: props.point })
