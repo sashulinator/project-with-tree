@@ -8,6 +8,7 @@ import { Joint, NewSource, Node, NodeState, RuleSet } from '~/entities/point'
 import { RuleLinkState } from '~/entities/rule'
 import Editable from '~/ui/editable'
 import UnstyledButton from '~/ui/unstyled-button'
+import { assertDefined } from '~/utils/assertions/defined'
 import { Id } from '~/utils/dictionary'
 import { stopPropagation } from '~/utils/dom'
 import { fns } from '~/utils/function'
@@ -37,7 +38,9 @@ export function SiftNode(props: SiftNodeProps): JSX.Element {
   useUpdate(subscribeOnNewJointRuleEdited, [newJointTargetLink, newJointSourceLink])
 
   const targetLinks = props.linkStates.getLinksByTargetId(props.state.id)
-  const sourceLinks = props.linkStates.getLinksBySourceId(props.state.id)
+  const sourceLinks = props.linkStates
+    .getLinksBySourceId(props.state.id)
+    .sort((a, b) => (a.index.value < b.index.value ? 1 : 0))
 
   return (
     <Node
@@ -87,6 +90,7 @@ export function SiftNode(props: SiftNodeProps): JSX.Element {
 
         return (
           <RuleSet
+            // moveRuleSet={moveRuleSet}
             key={linkState.id}
             jointProps={{
               linkId: linkState.id,
@@ -121,6 +125,15 @@ export function SiftNode(props: SiftNodeProps): JSX.Element {
   )
 
   // Private
+
+  function moveRuleSet(dragIndex: number, hoverIndex: number): void {
+    const dragState = sourceLinks.find((s) => s.index.value === dragIndex)
+    const hoverState = sourceLinks.find((s) => s.index.value === hoverIndex)
+    assertDefined(dragState)
+    assertDefined(hoverState)
+    hoverState.index.value = dragIndex
+    dragState.index.value = dragIndex + 1
+  }
 
   function emitNewJointTarget(): void {
     const editingLinkState = props.linkStates.findEditingLinkState()
@@ -206,7 +219,10 @@ export function SiftNode(props: SiftNodeProps): JSX.Element {
   }
 
   function emitCreateRuleButton(): RuleLinkState {
-    const linkState = RuleLinkState.createDefaultInstance({ sourceId: props.state.id })
+    const linkState = RuleLinkState.createDefaultInstance({
+      sourceId: props.state.id,
+      i: sourceLinks.length,
+    })
     props.linkStates.add(linkState)
     return linkState
   }
@@ -234,13 +250,13 @@ export function SiftNode(props: SiftNodeProps): JSX.Element {
 
   function subscribeOnNewJointRuleEdited(_, uns: (() => void)[]): void {
     uns.push(
-      newJointTargetLink.on('rule', ({ value }) => {
-        if (value.sourceId) setNewJointTargetLink(RuleLinkState.createDefaultInstance({ targetId: props.state.id }))
+      newJointTargetLink.on('targetId', ({ value }) => {
+        if (value) setNewJointTargetLink(RuleLinkState.createDefaultInstance({ targetId: props.state.id }))
       })
     )
     uns.push(
-      newJointSourceLink.on('rule', ({ value }) => {
-        if (value.targetId) setNewJointSourceLink(RuleLinkState.createDefaultInstance({ sourceId: props.state.id }))
+      newJointSourceLink.on('targetId', ({ value }) => {
+        if (value) setNewJointSourceLink(RuleLinkState.createDefaultInstance({ sourceId: props.state.id }))
       })
     )
   }

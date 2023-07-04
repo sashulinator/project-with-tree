@@ -14,7 +14,10 @@ type Events = {
   update: { item: RuleLinkState }
   remove: { key: Id }
   editingId: { value: Id }
-  rule: { id: Id; value: Rule }
+
+  targetId: { value: Id }
+  sourceId: { value: Id }
+  index: { value: number }
 }
 
 export class LinkStateDictionary extends EmitterableDictionary<Events, RuleLinkState> {
