@@ -4,8 +4,7 @@ import { clsx } from 'clsx'
 import { useState } from 'react'
 
 import { addToast } from '~/abstract/toast'
-import { LinkStateDictionary } from '~/entities/decision/ui/editor/widgets/_links/state/state'
-import { Node, NodeState } from '~/entities/point'
+import { Joint, NewSource, Node, NodeState, RuleSet } from '~/entities/point'
 import { Rule, RuleLinkState } from '~/entities/rule'
 import Editable from '~/ui/editable'
 import UnstyledButton from '~/ui/unstyled-button'
@@ -14,7 +13,7 @@ import { stopPropagation } from '~/utils/dom'
 import { fns } from '~/utils/function'
 import { useUpdate } from '~/utils/hooks'
 
-import { Joint, NewSource, RuleSet } from '../../../../../point/ui/node'
+import { LinkStateDictionary } from '../_links'
 
 export interface SiftNodeProps {
   state: NodeState
