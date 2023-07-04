@@ -3,10 +3,16 @@ import './node.css'
 import { clsx } from 'clsx'
 
 import { NodeState } from '~/entities/point'
+import { emitter } from '~/shared/emitter'
 import { Node as UINode } from '~/ui/canvas'
 import { Id } from '~/utils/core'
 import { useUpdate } from '~/utils/hooks'
 import { setRefs } from '~/utils/react'
+
+import { dark } from '../themes/dark'
+import { light } from '../themes/light'
+
+emitter.emit('addTheme', { dark, light })
 
 export interface NodeProps extends React.HTMLAttributes<HTMLDivElement> {
   dataId: Id

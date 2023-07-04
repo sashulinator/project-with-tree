@@ -1,6 +1,12 @@
 import { ForwardedRef, forwardRef } from 'react'
 
 import AbstractTextInput, { TextInputProps } from '~/abstract/text-input'
+import { emitter } from '~/shared/emitter'
+
+import { dark } from '../themes/dark'
+import { light } from '../themes/light'
+
+emitter.emit('addTheme', { dark, light })
 
 export type { TextInputProps }
 

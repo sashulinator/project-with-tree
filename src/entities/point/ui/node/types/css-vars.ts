@@ -1,5 +1,5 @@
 import { ToStringable } from '~/utils/core'
 
-export interface PointNodeCSSVars {
+export type PointNodeCSSVars = {
   pointNode_bg?: ToStringable
 }

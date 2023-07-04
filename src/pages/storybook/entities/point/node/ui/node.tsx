@@ -1,5 +1,4 @@
 // import Callout, { top } from '~/ui/callout'
-import { LinkStateDictionary } from '~/entities/decision/ui/editor/widgets/_links/state/state'
 import { Node } from '~/entities/point'
 
 import { boardState } from '../mocks/board-state'

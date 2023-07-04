@@ -1,7 +1,4 @@
 // import Callout, { top } from '~/ui/callout'
-import { Point } from 'dom-align-ts'
-import { useState } from 'react'
-
 import { Node } from '~/ui/canvas'
 import { emptyFn } from '~/utils/function/empty-fn'
 

@@ -1,5 +1,5 @@
 import { ToStringable } from '~/utils/core'
 
-export interface EditableCSSVars {
+export type EditableCSSVars = {
   editable_bg__hovered: ToStringable
 }

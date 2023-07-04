@@ -9,18 +9,23 @@ import { PaintingPanel } from '~/abstract/canvas'
 import { Decision, EditorState } from '~/entities/decision'
 import { NodeState, Point } from '~/entities/point'
 import { RuleLinkState } from '~/entities/rule'
+import { emitter } from '~/shared/emitter'
 import { Board } from '~/ui/canvas'
 import { ActionHistory } from '~/utils/action-history'
 import { Id, assertDefined } from '~/utils/core'
 import { useBoolean, useEventListener, useOnMount, useUpdate } from '~/utils/hooks'
 
 import { listenHistory } from '../lib/_listen-history'
+import { dark } from '../themes/dark'
+import { light } from '../themes/light'
 import DecisionPanel from '../widgets/_decision-panel'
 import ItemPanel from '../widgets/_items-panel'
 import { Links } from '../widgets/_links'
 import { LinkStateDictionary } from '../widgets/_links/state/state'
 import { Nodes } from '../widgets/_nodes'
 import { NodeStateDictionary } from '../widgets/_nodes/state/state'
+
+emitter.emit('addTheme', { dark, light })
 
 interface EditorProps {
   decision: Decision

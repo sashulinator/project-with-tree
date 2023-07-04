@@ -1,6 +1,6 @@
 import { ToStringable } from '~/utils/core'
 
-export interface CSSVars {
+export type CSSVars = {
   button_outlineWidth?: ToStringable
   button_outlineColor?: ToStringable
 }
