@@ -1,4 +1,4 @@
-import { lightTheme as pointNode } from '~/entities/point/ui/node/themes'
+import { nodeLightTheme } from '~/entities/point'
 import { lightTheme as pointJoint } from '~/entities/point/ui/node/widgets/joint'
 import { lightTheme as editable } from '~/ui/editable'
 import { lightTheme as textInput } from '~/ui/text-input'
@@ -12,7 +12,7 @@ export const lightTheme = {
   ...LIGHT,
 
   ...editable,
-  ...pointNode,
+  ...nodeLightTheme,
   ...pointJoint,
   ...textInput,
   ...unstyledButton,

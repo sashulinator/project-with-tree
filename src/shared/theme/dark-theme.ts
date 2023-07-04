@@ -1,4 +1,4 @@
-import { darkTheme as pointNode } from '~/entities/point/ui/node/themes/dark'
+import { nodeDarkTheme } from '~/entities/point'
 import { darkTheme as pointJoint } from '~/entities/point/ui/node/widgets/joint'
 import { darkTheme as editable } from '~/ui/editable'
 import { darkTheme as textInput } from '~/ui/text-input'
@@ -12,7 +12,7 @@ export const darkTheme = {
   ...DARK,
 
   ...editable,
-  ...pointNode,
+  ...nodeDarkTheme,
   ...pointJoint,
   ...textInput,
   ...unstyledButton,

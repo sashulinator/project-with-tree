@@ -1,8 +1,14 @@
+// NODE
+
 export * from './ui/node'
 
-export * from './models/state'
+export { State as NodeState } from './models/state'
+export type { StateProps as NodeStateProps, Events as NodeStateEvents } from './models/state'
 
-export * from './themes'
+export { dark as nodeDarkTheme } from './themes/dark'
+export { light as nodeLightTheme } from './themes/light'
+
+// WIDGETS
 
 export { Joint, darkTheme as jointDarkTheme, lightTheme as jointLightTheme } from './widgets/joint'
 export type { CSSVars as JointCSSVars } from './widgets/joint'
