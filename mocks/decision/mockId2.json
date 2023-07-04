@@ -1,6 +1,6 @@
 {
-  "name": "mockedDecision111111",
-  "id": "mockId1",
+  "name": "mockedDecision2222",
+  "id": "mockId2",
   "version": "2.0",
   "status": "DRAFT",
   "data": [
@@ -24,10 +24,26 @@
     },
     {
       "type": "SIFT",
+      "id": "mockId3",
+      "computation": "successively",
+      "name": "Продуктовые исключения",
+      "x": 800,
+      "y": 200
+    },
+    {
+      "type": "SIFT",
       "computation": "successively",
       "id": "mockId4",
       "name": "Политика контактов",
       "x": 1100,
+      "y": 200
+    },
+    {
+      "type": "SIFT",
+      "id": "mockId5",
+      "computation": "successively",
+      "name": "Конфликтующие тарифы",
+      "x": 1200,
       "y": 200
     },
     {
@@ -37,6 +53,14 @@
       "name": "Срок жизни тарифа",
       "x": 1850,
       "y": 200
+    },
+    {
+      "type": "SIFT",
+      "id": "mockId8",
+      "computation": "successively",
+      "name": "Какой тариф предложить",
+      "x": 200,
+      "y": 500
     },
     {
       "type": "SIFT",
@@ -65,7 +89,31 @@
   ],
   "rules": [
     {
+      "id": "linkMockId1",
+      "name": "name000",
+      "value": "",
+      "sourceId": "mockId3",
+      "targetId": "mockId4",
+      "i": 0
+    },
+    {
+      "id": "linkMockId2",
+      "name": "name111",
+      "value": "",
+      "sourceId": "mockId3",
+      "targetId": "mockId4",
+      "i": 1
+    },
+    {
       "id": "linkMockId3",
+      "name": "name111",
+      "value": "",
+      "sourceId": "mockId4",
+      "targetId": "mockId5",
+      "i": 0
+    },
+    {
+      "id": "linkMockId4",
       "name": "first",
       "value": "",
       "sourceId": "main",
