@@ -1,14 +1,9 @@
 import { setCSSVars } from '~/utils/dom'
 import { BaseError } from '~/utils/error'
 
-import { Theme } from './types/theme'
+import { Themes } from './types/themes'
 
-export function setTheme<T extends Record<string, Theme>>(
-  name: keyof T,
-  fallbackName: keyof T,
-  themes: T,
-  lsName: string
-): void {
+export function setTheme<T extends Themes>(name: keyof T, fallbackName: keyof T, themes: T, lsName: string): void {
   const theme = themes[name] ? themes[name] : themes[fallbackName]
 
   if (theme === undefined) {

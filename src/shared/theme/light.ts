@@ -1,6 +1,6 @@
 import clr from 'color'
 
-import { Theme } from '~/utils/theme/types/theme'
+import { RequiredVars } from '~/utils/theme/types/required-vars'
 import { Pass, check } from '~/utils/types/test'
 
 // 🟢 See index.html
@@ -37,5 +37,5 @@ export const LIGHT = {
 }
 
 // TODO сделать нормальную проверку
-check<keyof Theme, keyof Theme, Pass>({} as keyof typeof LIGHT)
-check<keyof typeof LIGHT, keyof typeof LIGHT, Pass>({} as keyof Theme)
+check<keyof RequiredVars, keyof RequiredVars, Pass>({} as keyof typeof LIGHT)
+check<keyof typeof LIGHT, keyof typeof LIGHT, Pass>({} as keyof RequiredVars)
