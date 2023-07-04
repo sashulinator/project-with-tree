@@ -1,6 +1,6 @@
 export * from './ui/joint'
 
-export * from './types/css-vars'
+export type { CSSVars as JointCSSVars } from './types/css-vars'
 
-export * from './themes/dark'
-export * from './themes/light'
+export { dark as jointDarkTheme } from './themes/dark'
+export { light as jointLightTheme } from './themes/light'

@@ -1,9 +1,9 @@
-import { light } from '~/shared/theme/light'
+import { LIGHT } from '~/shared/theme/light'
 
 import { PointNodeCSSVars } from '../types/css-vars'
 import { common } from './common'
 
-export const lightTheme: PointNodeCSSVars = {
+export const light: PointNodeCSSVars = {
   ...common,
-  pointNode_bg: light.bg,
+  pointNode_bg: LIGHT.bg,
 }

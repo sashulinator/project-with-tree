@@ -1,26 +1,26 @@
 import { TextInputCSSVars } from '~/abstract/text-input/types/css-vars'
-import { dark } from '~/shared/theme/dark'
+import { DARK } from '~/shared/theme/dark'
 
 import { common } from './_common'
 
-const textInput_bg = dark.bg
-const textInput_color = dark.color
+const textInput_bg = DARK.bg
+const textInput_color = DARK.color
 
 export const darkTheme: TextInputCSSVars = {
   textInput_color,
   textInput_bg,
-  textInput_borderColor: dark.borderColor,
+  textInput_borderColor: DARK.borderColor,
 
   // --hovered
   textInput_bg__hovered: textInput_bg.lighten(0.05),
 
   // --focused
-  textInput_outlineColor__focused: dark.outlineColor,
+  textInput_outlineColor__focused: DARK.outlineColor,
 
   // --error
-  textInput_bg__error: dark.errorColor.darken(0.9),
-  textInput_outlineColor__error: dark.errorColor.alpha(0.5),
-  textInput_borderColor__error: dark.errorColor,
+  textInput_bg__error: DARK.errorColor.darken(0.9),
+  textInput_outlineColor__error: DARK.errorColor.alpha(0.5),
+  textInput_borderColor__error: DARK.errorColor,
 
   // --disabled
   textInput_bg__disabled: textInput_bg.darken(0.5),

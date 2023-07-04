@@ -1,28 +1,28 @@
 import { TextInputCSSVars } from '~/abstract/text-input/types/css-vars'
-import { light } from '~/shared/theme/light'
+import { LIGHT } from '~/shared/theme/light'
 
 import { common } from './_common'
 
-const textInput_bg = light.bg
-const textInput_color = light.color
+const textInput_bg = LIGHT.bg
+const textInput_color = LIGHT.color
 
 export const lightTheme: TextInputCSSVars = {
   textInput_color,
   textInput_bg,
-  textInput_borderColor: light.borderColor,
+  textInput_borderColor: LIGHT.borderColor,
 
   // --hovered
   textInput_bg__hovered: textInput_bg.lighten(0.02),
-  textInput_borderColor__hovered: light.primary.lighten(0.5),
+  textInput_borderColor__hovered: LIGHT.primary.lighten(0.5),
 
   // --focused
-  textInput_outlineColor__focused: light.outlineColor,
-  textInput_borderColor__focused: light.primary,
+  textInput_outlineColor__focused: LIGHT.outlineColor,
+  textInput_borderColor__focused: LIGHT.primary,
 
   // --error
-  textInput_bg__error: light.errorColor.lighten(0.9),
-  textInput_outlineColor__error: light.errorColor.alpha(0.5),
-  textInput_borderColor__error: light.errorColor,
+  textInput_bg__error: LIGHT.errorColor.lighten(0.9),
+  textInput_outlineColor__error: LIGHT.errorColor.alpha(0.5),
+  textInput_borderColor__error: LIGHT.errorColor,
 
   // --disabled
   textInput_bg__disabled: textInput_bg.lighten(0.01),
