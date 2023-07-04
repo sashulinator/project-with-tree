@@ -11,13 +11,13 @@
 /* Variants */
 
 .point-NodeJoint.--unlinked {
-  background-color: var(--pointJoint_bg__unlinked);
+  background-color: var(--point_nodeJoint_bg__unlinked);
 }
 
 .point-NodeJoint.--linked {
-  background-color: var(--pointJoint_bg__linked);
+  background-color: var(--point_nodeJoint_bg__linked);
 }
 
 .point-NodeJoint.--new {
-  background-color: var(--pointJoint_bg__new);
+  background-color: var(--point_nodeJoint_bg__new);
 }
