@@ -40,7 +40,7 @@ export function SiftNode(props: SiftNodeProps): JSX.Element {
   const targetLinks = props.linkStates.getLinksByTargetId(props.state.id)
   const sourceLinks = props.linkStates
     .getLinksBySourceId(props.state.id)
-    .sort((a, b) => (a.index.value < b.index.value ? 1 : 0))
+    .sort((a, b) => (a.index.value < b.index.value ? -1 : 1))
 
   return (
     <Node
@@ -90,8 +90,10 @@ export function SiftNode(props: SiftNodeProps): JSX.Element {
 
         return (
           <RuleSet
-            // moveRuleSet={moveRuleSet}
+            nodeId={props.state.id}
+            moveRuleSet={moveRuleSet}
             key={linkState.id}
+            index={linkState.index.value}
             jointProps={{
               linkId: linkState.id,
               variant: Boolean(linkState.targetId.value) ? 'linked' : 'unlinked',
@@ -132,7 +134,7 @@ export function SiftNode(props: SiftNodeProps): JSX.Element {
     assertDefined(dragState)
     assertDefined(hoverState)
     hoverState.index.value = dragIndex
-    dragState.index.value = dragIndex + 1
+    dragState.index.value = hoverIndex
   }
 
   function emitNewJointTarget(): void {

@@ -44,6 +44,8 @@ export function Link(props: MapLinkProp): JSX.Element | null {
   function subscribeOnUpdates(update: () => void, uns: (() => void)[]): void {
     // Запускаем update с timeout для того чтобы обновить сначала Node
     uns.push(props.linkStates.on('editingId', () => setTimeout(update)))
-    uns.push(props.linkStates.on('rule', () => setTimeout(update)))
+    uns.push(props.linkStates.on('targetId', () => setTimeout(update)))
+    uns.push(props.linkStates.on('sourceId', () => setTimeout(update)))
+    uns.push(props.linkStates.on('index', () => setTimeout(update)))
   }
 }
