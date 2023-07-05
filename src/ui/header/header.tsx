@@ -1,9 +1,10 @@
-import Button from '../button'
 import { Link, useNavigate } from 'react-router-dom'
 
 import getRootElement from '~/lib/dom/get-root-element'
 import { routes } from '~/shared/routes'
 import { setCSSVar } from '~/utils/dom'
+
+import Button from '../button'
 
 export default function Header(): JSX.Element {
   const navigate = useNavigate()
@@ -15,7 +16,7 @@ export default function Header(): JSX.Element {
       <div>
         <Link to={routes.settings.path}>Settings</Link>
       </div>
-      <Button onClick={() => navigate('/login')}>Logout</Button>
+      <Button onClick={(): void => navigate(routes.login.path)}>Logout</Button>
     </header>
   )
 }

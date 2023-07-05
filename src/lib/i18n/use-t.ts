@@ -26,5 +26,5 @@ export function useT<T extends Dictionary<Any>>(dictionary: T, ns: string): Repl
     )
   }, [currentTranslations])
 
-  return useMemo(() => generateSchema(dictionary, ns), [i18n.language])
+  return useMemo(() => generateSchema(dictionary, ns), [i18n.language, currentTranslations])
 }
