@@ -1,6 +1,6 @@
-export { CSSVars } from '../types/css-vars'
-export { common } from './common'
+import { CSSVars } from '../types/_css-vars'
+import { common } from './common'
 
-const dark: CSSVars = {
+export const dark: CSSVars = {
   ...common,
 }

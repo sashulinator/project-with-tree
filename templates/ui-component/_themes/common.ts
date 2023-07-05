@@ -1,3 +1,3 @@
-export { CSSVars } from '../types/_css-vars'
+import { CSSVars } from '../types/_css-vars'
 
-const common: CSSVars = {}
+export const common: CSSVars = {}
