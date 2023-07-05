@@ -1,7 +1,7 @@
 import { ToStringable } from '~/utils/core'
 
 // eslint-disable-next-line import/no-unused-modules
-export interface ButtonCSSVars {
+export type CSSVars = {
   button_height?: ToStringable
 
   button_height__s?: ToStringable
@@ -18,4 +18,7 @@ export interface ButtonCSSVars {
 
   button_color__outlined?: ToStringable
   button_border__outlined?: ToStringable
+
+  button_color__ghost?: ToStringable
+  button_bg__ghost__hover?: ToStringable
 }
