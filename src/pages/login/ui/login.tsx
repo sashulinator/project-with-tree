@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router'
 
 import { addToast } from '~/abstract/toast'
 import { useT } from '~/lib/i18n/use-t'
+import { routes } from '~/shared/routes'
 import Button from '~/ui/button'
 import CloseIcon from '~/ui/icons/close'
 import EyeOffIcon from '~/ui/icons/eye-off'
@@ -70,7 +71,7 @@ export default function LoginPage(): JSX.Element {
 
   function onSubmit(e: FormEvent): void {
     e.preventDefault()
-    navigate('/main')
+    navigate(routes.main.path)
     addToast({ data: t.success.loggedIn(), type: 'success' })
   }
 }

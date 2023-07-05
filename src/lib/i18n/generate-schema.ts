@@ -17,5 +17,6 @@ export function generateSchema<T extends Dictionary<Any>>(structure: T, ns: stri
       schema = setPath(schema, path, (params) => i18n.t(key, params))
     }
   })
+
   return schema as unknown as T
 }

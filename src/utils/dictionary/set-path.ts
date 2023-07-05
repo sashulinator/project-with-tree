@@ -11,9 +11,11 @@ import { Dictionary } from './types/dictionary'
  * @returns {Dictionary<unknown>} - The original dictionary object with the new value set at the specified path.
  */
 export function setPath<D extends Dictionary<unknown>>(dictionary: D, path: Key[], value: unknown): D {
-  return path.reduce((acc: any, key, i) => {
+  path.reduce((acc: any, key, i) => {
     if (acc[key] === undefined) acc[key] = {}
     if (i === path.length - 1) acc[key] = value
     return acc[key]
   }, dictionary)
+
+  return dictionary
 }
