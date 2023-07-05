@@ -4,12 +4,14 @@ import { ForwardedRef, forwardRef } from 'react'
 IconComponent.displayName = 'a-Icon'
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
-export interface IconWrapperProps extends React.HTMLAttributes<SVGSVGElement> {}
+export interface IconProps extends React.HTMLAttributes<SVGSVGElement> {}
 
-function IconComponent(props: IconWrapperProps, ref: ForwardedRef<SVGSVGElement>): JSX.Element {
+function IconComponent(props: IconProps, ref: ForwardedRef<SVGSVGElement>): JSX.Element {
   return (
     <svg
       viewBox='0 0 200 200'
+      height='1rem'
+      width='1rem'
       fill='none'
       xmlns='http://www.w3.org/2000/svg'
       ref={ref}

@@ -1,11 +1,14 @@
 import { DARK } from '~/shared/theme/dark'
 
-import { ButtonCSSVars } from '../types/css-vars'
+import { CSSVars } from '../types/css-vars'
 import { common } from './_common'
 
 const button_outlineColor = DARK.outlineColor
 
-export const darkTheme: ButtonCSSVars = {
+export const dark: CSSVars = {
   button_outlineColor,
+
+  button_color__ghost: DARK.color,
+  button_bg__ghost__hover: DARK.bg.lighten(0.5),
   ...common,
 }
