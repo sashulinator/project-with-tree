@@ -17,17 +17,25 @@ export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElemen
   className?: undefined | string
   height?: 's' | 'm' | 'l'
   square?: boolean
+  round?: boolean
   variant?: 'outlined' | 'primary' | 'ghost'
 }
 
 function ButtonComponent(props: ButtonProps, ref: ForwardedRef<HTMLButtonElement>): JSX.Element {
-  const { height = 'm', variant = 'primary', square } = props
+  const { height = 'm', variant = 'primary', square, round } = props
 
   return (
     <UnstyledButton
       {...props}
       ref={ref}
-      className={clsx('ui-Button', `--${height}`, `--${variant}`, square && '--square', props.className)}
+      className={clsx(
+        'ui-Button',
+        `--${height}`,
+        `--${variant}`,
+        square && '--square',
+        round && `--square --round`,
+        props.className
+      )}
     >
       {props.children}
     </UnstyledButton>

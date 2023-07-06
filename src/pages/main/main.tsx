@@ -1,6 +1,5 @@
-import { Link } from 'react-router-dom'
-
 import { routes } from '~/shared/routes'
+import Link from '~/ui/link'
 
 // import Dropdown from '~/ui/dropdown'
 // import Popover from '~/ui/popover'

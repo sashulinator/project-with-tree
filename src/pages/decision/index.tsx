@@ -1,11 +1,10 @@
 import './index.css'
 
-import { Link } from 'react-router-dom'
-
 import { useFetchDecisionMock } from '~/api/decision/fetch-mock'
 import mock1 from '~/mocks/decision/mockId1'
 import mock2 from '~/mocks/decision/mockId2'
 import { routes } from '~/shared/routes'
+import Link from '~/ui/link'
 
 export default function DecisionPage(): JSX.Element {
   const decision1 = useFetchDecisionMock({}, { id: mock1.id })
