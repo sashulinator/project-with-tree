@@ -29,75 +29,73 @@ export default function ListPage(): JSX.Element {
   )
 
   return (
-    <main className='pt-5rem'>
-      <div
-        // ref={setContainerEl}
-        className='bg-secondary p-2.5em mt-2.5rem mr-2rem'
-        style={{ borderRadius: '20px', border: '1px solid var(--input_borderColor)', position: 'relative' }}
-      >
-        <h2 className='mb-2rem'>List</h2>
+    <div
+      // ref={setContainerEl}
+      className='bg-secondary p-2.5em mt-2.5rem mr-2rem'
+      style={{ borderRadius: '20px', border: '1px solid var(--input_borderColor)', position: 'relative' }}
+    >
+      <h2 className='mb-2rem'>List</h2>
 
-        <input onChange={(e) => setSearchQuery(e.target.value)} value={searchQuery} />
+      <input onChange={(e) => setSearchQuery(e.target.value)} value={searchQuery} />
 
-        <div className='mt-1rem flex flex-col'>
-          <label htmlFor='readonly' className='label mb-0.25rem'>
-            Single check/select list
-          </label>
-          <div>
-            <ControlledList
-              data={filteredUserList}
-              selected={singleSelected}
-              checked={singleChecked}
-              onCheckOne={(key) => setSingleChecked([key])}
-              onUncheckOne={() => setSingleChecked([])}
-              onSelectOne={(key) => setSingleSelected([key])}
-              onUnselectOne={() => setSingleSelected([])}
-              getItemKey={(item) => item.username}
-              renderItem={SingleSelectItem}
-            />
-          </div>
+      <div className='mt-1rem flex flex-col'>
+        <label htmlFor='readonly' className='label mb-0.25rem'>
+          Single check/select list
+        </label>
+        <div>
+          <ControlledList
+            data={filteredUserList}
+            selected={singleSelected}
+            checked={singleChecked}
+            onCheckOne={(key) => setSingleChecked([key])}
+            onUncheckOne={() => setSingleChecked([])}
+            onSelectOne={(key) => setSingleSelected([key])}
+            onUnselectOne={() => setSingleSelected([])}
+            getItemKey={(item) => item.username}
+            renderItem={SingleSelectItem}
+          />
         </div>
-
-        <div className='mt-1rem flex flex-col'>
-          <label htmlFor='readonly' className='label mb-0.25rem'>
-            Multi check/select list
-          </label>
-          <div>
-            <ControlledList
-              data={filteredUserList}
-              selected={multiSelected}
-              checked={multiChecked}
-              onCheck={setMultiChecked}
-              onSelect={setMultiSelected}
-              getItemKey={(item) => item.username}
-              renderItem={MultiSelectItem}
-            />
-          </div>
-        </div>
-
-        <div className='mt-1rem flex flex-col'>
-          <label htmlFor='readonly' className='label mb-0.25rem'>
-            Grouped list
-          </label>
-          <div>
-            <ControlledList
-              data={filteredGroupedUserList as User[]}
-              selected={groupedSelected}
-              checked={groupedChecked}
-              isSelectable={(item) => Boolean(item.id)}
-              onUncheckOne={() => setGroupedChecked([])}
-              onCheckOne={(key) => setGroupedChecked([key])}
-              onSelectOne={(key) => setGroupedSelected([key])}
-              onUnselectOne={() => setGroupedSelected([])}
-              // eslint-disable-next-line @typescript-eslint/no-explicit-any
-              getItemKey={(item) => item.username || (item as any).group}
-              renderItem={GroupedItem}
-            />
-          </div>
-        </div>
-        {/** */}
       </div>
-    </main>
+
+      <div className='mt-1rem flex flex-col'>
+        <label htmlFor='readonly' className='label mb-0.25rem'>
+          Multi check/select list
+        </label>
+        <div>
+          <ControlledList
+            data={filteredUserList}
+            selected={multiSelected}
+            checked={multiChecked}
+            onCheck={setMultiChecked}
+            onSelect={setMultiSelected}
+            getItemKey={(item) => item.username}
+            renderItem={MultiSelectItem}
+          />
+        </div>
+      </div>
+
+      <div className='mt-1rem flex flex-col'>
+        <label htmlFor='readonly' className='label mb-0.25rem'>
+          Grouped list
+        </label>
+        <div>
+          <ControlledList
+            data={filteredGroupedUserList as User[]}
+            selected={groupedSelected}
+            checked={groupedChecked}
+            isSelectable={(item) => Boolean(item.id)}
+            onUncheckOne={() => setGroupedChecked([])}
+            onCheckOne={(key) => setGroupedChecked([key])}
+            onSelectOne={(key) => setGroupedSelected([key])}
+            onUnselectOne={() => setGroupedSelected([])}
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            getItemKey={(item) => item.username || (item as any).group}
+            renderItem={GroupedItem}
+          />
+        </div>
+      </div>
+      {/** */}
+    </div>
   )
 }
 

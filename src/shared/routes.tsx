@@ -11,63 +11,87 @@ import Header from '~/ui/header'
 import Nav from '~/ui/nav'
 
 const StorybookPage = lazy(() => import('~/pages/storybook'))
+const StorybookNav = lazy(() => import('~/pages/storybook/nav'))
 
 export type Route = Omit<RouteProps, 'path'> & {
   Header?: FC
   Nav?: FC
-  getName: () => string
   path: string
+  getName: () => string
+  getURL: () => string
 }
 
 export const routes = {
   main: {
     Header,
     Nav,
-    getName: () => 'Main',
     path: '/project-with-tree/main',
     element: <MainPage />,
+    getName: () => 'Main',
+    getURL(): string {
+      return this.path
+    },
   },
   decisionList: {
     Header,
     Nav,
-    getName: () => 'Decision List',
     path: '/project-with-tree/decision',
     element: <DecisionListPage />,
+    getName: () => 'Decision List',
+    getURL(): string {
+      return this.path
+    },
   },
   decisionId: {
-    getName: () => 'Decision',
     path: '/project-with-tree/decision/:id',
     element: <DecisionIdPage />,
+    getName: () => 'Decision',
+    getURL(): string {
+      return this.path
+    },
   },
   // Other
   settings: {
     Header,
     Nav,
-    getName: () => 'Settings',
     path: '/project-with-tree/settings',
     element: <SettingsPage />,
+    getName: () => 'Settings',
+    getURL(): string {
+      return this.path
+    },
   },
   login: {
     // Header,
     // Nav,
-    getName: () => 'Login',
     path: '/project-with-tree/login',
     element: <LoginPage />,
-  },
-  notFound: {
-    Header,
-    Nav,
-    getName: () => 'notFound',
-    path: '/project-with-tree/*',
-    element: <NotFoundPage />,
+    getName: () => 'Login',
+    getURL(): string {
+      return this.path
+    },
   },
 
   storybook: {
     Header,
-    Nav,
-    getName: () => 'storybook',
+    Nav: StorybookNav,
     path: '/project-with-tree/storybook/*',
     element: <StorybookPage />,
+    getName: () => 'storybook',
+    getURL(): string {
+      return '/project-with-tree/storybook'
+    },
+  },
+
+  notFound: {
+    Header,
+    Nav,
+    path: '/project-with-tree/*',
+    element: <NotFoundPage />,
+    getName: () => 'notFound',
+    getURL(): string {
+      return '/project-with-tree'
+    },
   },
 } as const
 

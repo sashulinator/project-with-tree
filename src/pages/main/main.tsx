@@ -10,7 +10,10 @@ import Link from '~/ui/link'
 export default function MainPage(): JSX.Element {
   return (
     <main className='pt-5rem flex flex-col'>
-      <Link to={routes.decisionList.path.replace('/:id', '')}>Layout</Link>
+      <h1>Main Page</h1>
+      <br />
+      Hi! <br />
+      How are you?
     </main>
   )
 }

@@ -15,7 +15,7 @@ export default function Header(): JSX.Element {
   setCSSVar('header-height', 42, getRootElement())
 
   return (
-    <header className='flex items-center justify-between mr-2rem ml-2rem'>
+    <header className='flex items-center justify-between bg-secondary' style={{ padding: '0 2rem' }}>
       <Link to={routes.main.path}>
         <Logo height={20} />
       </Link>
