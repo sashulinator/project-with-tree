@@ -16,12 +16,12 @@
   align-items: center;
   justify-content: flex-start;
   padding: var(--l);
-  background-color: rgba(0, 0, 0, 0.236);
+  background-color: rgba(0, 0, 0, 0.035);
   word-break: keep-all;
 }
 
 .decision-Editor-ItemPanel li button:hover {
-  background-color: rgba(0, 0, 0, 0.114);
+  background-color: rgba(0, 0, 0, 0.101);
   cursor: pointer;
 }
 

@@ -1,7 +1,6 @@
-import { Link } from 'react-router-dom'
-
 import getRootElement from '~/lib/dom/get-root-element'
 import { routes } from '~/shared/routes'
+import Link from '~/ui/link'
 import { setCSSVar } from '~/utils/dom'
 
 export default function Nav(): JSX.Element {
