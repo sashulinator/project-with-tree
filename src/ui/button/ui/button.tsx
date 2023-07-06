@@ -22,11 +22,11 @@ export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElemen
 }
 
 function ButtonComponent(props: ButtonProps, ref: ForwardedRef<HTMLButtonElement>): JSX.Element {
-  const { height = 'm', variant = 'primary', square, round } = props
+  const { height = 'm', variant = 'primary', square, round, restProps } = props
 
   return (
     <UnstyledButton
-      {...props}
+      {...restProps}
       ref={ref}
       className={clsx(
         'ui-Button',
