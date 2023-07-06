@@ -6,7 +6,3 @@
 .ui-Link:hover {
   text-decoration: underline;
 }
-
-.ui-Link:focus {
-  border: 1px solid red;
-}
