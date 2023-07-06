@@ -3,14 +3,6 @@
   margin: 0;
   padding: 0;
   outline: none;
-  color: var(--color);
   background-color: transparent;
-}
-
-.a-Button:focus {
-  box-shadow: var(--box-shadow, 0px 0px), 0px 0px 0px var(--button_outlineWidth) var(--button_outlineColor);
-}
-
-.a-Button:active {
-  box-shadow: var(--box-shadow, 0px 0px), 0px 0px 0px var(--button_outlineWidth) var(--button_outlineColor);
+  color: inherit;
 }

@@ -1,3 +1,6 @@
-import { CSSVars as AbstractButtonCSSVars } from '~/abstract/button'
+import { ToStringable } from '~/utils/core'
 
-export type CSSVars = AbstractButtonCSSVars
+export type CSSVars = {
+  button_outlineWidth?: ToStringable
+  button_outlineColor?: ToStringable
+}

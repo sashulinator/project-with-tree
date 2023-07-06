@@ -1,5 +1,5 @@
 // import Callout, { top } from '~/ui/callout'
-import Button from '~/ui/unstyled-button'
+import Button from '~/abstract/button'
 
 export default function ButtonPage(): JSX.Element {
   return (
@@ -20,9 +20,6 @@ export default function ButtonPage(): JSX.Element {
           </label>
           <div>
             <div className='pb-2rem'>
-              <label htmlFor='placement' className='label mb-0.3rem mr-0.5rem'>
-                Placement
-              </label>
               <Button>Button</Button>
             </div>
           </div>
