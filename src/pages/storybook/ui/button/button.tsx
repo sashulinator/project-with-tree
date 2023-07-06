@@ -4,6 +4,7 @@ import { useState } from 'react'
 import AbstractButton from '~/abstract/button'
 import Flex from '~/abstract/flex/ui/flex'
 import Button from '~/ui/button'
+import { PrimaryButton } from '~/ui/button/variants/primary'
 import { H1, H2 } from '~/ui/heading'
 import { User } from '~/ui/icon'
 import PageSection from '~/ui/page-section'
@@ -19,9 +20,15 @@ export default function ButtonPage(): JSX.Element {
         <H1>BUTTON</H1>
         Компонент кнопки
         <Section>
-          <Button height='s' square={true}>
+          <Button square={true}>
             <User />
           </Button>
+          <PrimaryButton round={true}>
+            <User />
+          </PrimaryButton>
+          <PrimaryButton>
+            <Flex padding='0 1rem'>Hello</Flex>
+          </PrimaryButton>
         </Section>
       </PageSection>
       <PageSection>
@@ -44,6 +51,9 @@ export default function ButtonPage(): JSX.Element {
       <PageSection>
         <ButtonSection />
       </PageSection>
+      <PageSection>
+        <PrimaryButtonSection />
+      </PageSection>
     </Flex>
   )
 }
@@ -58,13 +68,14 @@ function UnstyledButtonSection(): JSX.Element {
       header={
         <>
           <H2>UnstyledButton</H2>
-          Расширяет Abstract.
+          <p>Расширяет Abstract.</p>
           <br />
-          <br />
-          Фичи: <br /> 1. высота s m l <br />
-          2. возможность делать кнопку квадратом <br />
-          3. возможность делать кнопку кругом <br />
-          4. Outline при фокусе
+          <ol>
+            <li>высота s m l</li>
+            <li>возможность делать кнопку квадратом</li>
+            <li>возможность делать кнопку кругом</li>
+            <li>Outline при фокусе</li>
+          </ol>
           <Flex width='1rem' margin='1rem 0 0 0'>
             <HeightDropdown value={height} onChange={setHeight} />
             <Flex>
@@ -96,7 +107,13 @@ function ButtonSection(): JSX.Element {
       header={
         <>
           <H2>Button</H2>
-          Фичи: <br /> 1. Стили для hover и active
+          <p>Расширяет UnstyledButton.</p>
+          <br />
+          <ol>
+            <li>Сдвиг при active</li>
+            <li>Скругление</li>
+          </ol>
+
           <Flex width='1rem' margin='1rem 0 0 0'>
             <HeightDropdown value={height} onChange={setHeight} />
             <Flex>
@@ -114,6 +131,43 @@ function ButtonSection(): JSX.Element {
       <Button height={height || 'm'} square={square} round={round}>
         Button
       </Button>
+    </Section>
+  )
+}
+
+function PrimaryButtonSection(): JSX.Element {
+  const [height, setHeight] = useState<UnstyledButtonProps['height']>('m')
+  const [round, , , toggleRound] = useBoolean(false)
+  const [square, , , toggleSquare] = useBoolean(false)
+
+  return (
+    <Section
+      header={
+        <>
+          <H2>PrimaryButton</H2>
+          <p>Расширяет Button.</p>
+          <br />
+          <ol>
+            <li>Primary стили для hover и active</li>
+            <li>Скругление</li>
+          </ol>
+          <Flex width='1rem' margin='1rem 0 0 0'>
+            <HeightDropdown value={height} onChange={setHeight} />
+            <Flex>
+              <input type='checkbox' id='square' checked={square} onChange={toggleSquare} />
+              Square
+            </Flex>
+            <Flex>
+              <input type='checkbox' id='round' checked={round} onChange={toggleRound} />
+              Round
+            </Flex>
+          </Flex>
+        </>
+      }
+    >
+      <PrimaryButton height={height || 'm'} square={square} round={round}>
+        Button
+      </PrimaryButton>
     </Section>
   )
 }

@@ -5,6 +5,7 @@ import { useState } from 'react'
 
 import { NodeState } from '~/entities/point'
 import Button from '~/ui/button'
+import { PrimaryButton } from '~/ui/button/variants/primary'
 import { Plus } from '~/ui/icon'
 import TextInput from '~/ui/text-input'
 import UnstyledButton from '~/ui/unstyled-button'
@@ -32,9 +33,9 @@ export default function ItemPanel(props: ItemPanelProps): JSX.Element {
         <div className='search'>
           <TextInput value={value} onChange={(ev): void => setValue(ev.currentTarget.value)} placeholder='Поиск' />
         </div>
-        <Button onClick={props.addNode} round={true} height='l' style={{ marginLeft: 'var(--l)' }}>
+        <PrimaryButton onClick={props.addNode} round={true} height='l' style={{ marginLeft: 'var(--l)' }}>
           <Plus />
-        </Button>
+        </PrimaryButton>
       </div>
       <ul>
         {filtered.map((state) => {

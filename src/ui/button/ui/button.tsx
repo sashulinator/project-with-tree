@@ -17,7 +17,14 @@ ButtonComponent.displayName = 'ui-Button'
 export interface ButtonProps extends UnstyledButtonProps {}
 
 function ButtonComponent(props: ButtonProps, ref: ForwardedRef<HTMLButtonElement>): JSX.Element {
-  return <UnstyledButton {...props} ref={ref} className={clsx(props.className, ButtonComponent.displayName)} />
+  return (
+    <UnstyledButton
+      {...props}
+      ref={ref}
+      className={clsx(props.className, ButtonComponent.displayName)}
+      height={props.height ?? 'm'}
+    />
+  )
 }
 
 const Button = forwardRef(ButtonComponent)

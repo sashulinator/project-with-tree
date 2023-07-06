@@ -2,11 +2,6 @@
   border-radius: var(--m);
 }
 
-.ui-Button:hover {
-  background: var(--button_bg__hovered);
-}
-
 .ui-Button:active {
-  background: var(--button_bg__active);
   transform: translateY(1px);
 }

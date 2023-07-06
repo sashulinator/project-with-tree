@@ -6,10 +6,10 @@ import { useState } from 'react'
 import { addToast } from '~/abstract/toast'
 import { Joint, NewSource, Node, NodeState, RuleSet } from '~/entities/point'
 import { RuleLinkState } from '~/entities/rule'
-import UnstyledButton from '~/ui/button'
+import Button from '~/ui/button'
 import Editable from '~/ui/editable'
 import { Trash } from '~/ui/icon'
-import Button from '~/ui/unstyled-button'
+import UnstyledButton from '~/ui/unstyled-button'
 import { assertDefined } from '~/utils/assertions/defined'
 import { Id } from '~/utils/dictionary'
 import { stopPropagation } from '~/utils/dom'
@@ -57,13 +57,13 @@ export function SiftNode(props: SiftNodeProps): JSX.Element {
             cannotBeEmpty={true}
             onChange={(ev): void => props.state.title.set(ev.currentTarget.value)}
           />
-          <UnstyledButton
+          <Button
             square={true}
             style={{ margin: '0 0 0 var(--l)' }}
             onClick={(): void => props.removeNode(props.state.id)}
           >
             <Trash />
-          </UnstyledButton>
+          </Button>
         </div>
       }
       nodeDescription={

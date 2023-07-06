@@ -20,7 +20,7 @@ export type UnstyledButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> 
 }
 
 function UnstyledButtonComponent(props: UnstyledButtonProps, ref: ForwardedRef<HTMLButtonElement>): JSX.Element {
-  const { height = 'm', square, round, ...restProps } = props
+  const { height, square, round, ...restProps } = props
 
   return (
     <Button
@@ -28,7 +28,7 @@ function UnstyledButtonComponent(props: UnstyledButtonProps, ref: ForwardedRef<H
       ref={ref}
       className={clsx(
         UnstyledButtonComponent.displayName,
-        `--${height}`,
+        height && `--${height}`,
         square && '--square',
         round && `--square --round`,
         props.className
