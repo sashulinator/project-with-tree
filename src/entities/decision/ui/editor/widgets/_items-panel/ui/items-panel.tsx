@@ -4,6 +4,8 @@ import { clsx } from 'clsx'
 import { useState } from 'react'
 
 import { NodeState } from '~/entities/point'
+import Button from '~/ui/button'
+import { Plus } from '~/ui/icon'
 import TextInput from '~/ui/text-input'
 import UnstyledButton from '~/ui/unstyled-button'
 import { Id } from '~/utils/core'
@@ -26,9 +28,13 @@ export default function ItemPanel(props: ItemPanelProps): JSX.Element {
 
   return (
     <div {...props.rootProps} className={clsx(ItemPanel.displayName, props.rootProps?.className)}>
-      <button onClick={props.addNode}>+</button>
-      <div className='search'>
-        <TextInput value={value} onChange={(ev): void => setValue(ev.currentTarget.value)} placeholder='Поиск' />
+      <div style={{ display: 'flex', alignItems: 'center', padding: 'var(--xl)' }}>
+        <div className='search'>
+          <TextInput value={value} onChange={(ev): void => setValue(ev.currentTarget.value)} placeholder='Поиск' />
+        </div>
+        <Button onClick={props.addNode} round={true} height='l' style={{ marginLeft: 'var(--l)' }}>
+          <Plus />
+        </Button>
       </div>
       <ul>
         {filtered.map((state) => {

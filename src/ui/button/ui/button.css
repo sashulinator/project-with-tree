@@ -7,6 +7,9 @@
   transition: var(--button_transition);
   border-radius: 0.4rem;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .ui-Button:focus {
@@ -33,6 +36,10 @@
 .ui-Button.--square.--m {
   min-width: var(--button_height);
   max-width: var(--button_height);
+}
+
+.ui-Button.--round {
+  border-radius: 50%;
 }
 
 .ui-Button.--primary {
