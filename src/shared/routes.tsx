@@ -7,21 +7,12 @@ import LoginPage from '~/pages/login'
 import MainPage from '~/pages/main'
 import NotFoundPage from '~/pages/not-found'
 import SettingsPage from '~/pages/settings'
-import Balloon from '~/pages/storybook/ui/balloon'
-import CalloutPage from '~/pages/storybook/ui/callout'
-import DropdownPage from '~/pages/storybook/ui/dropdown'
-import ListPage from '~/pages/storybook/ui/list'
-import UINodePage from '~/pages/storybook/ui/node'
-import PopoverPage from '~/pages/storybook/ui/popover'
-import TextInputPage from '~/pages/storybook/ui/text-input'
 import Header from '~/ui/header'
 import Nav from '~/ui/nav'
 
-const AbstractButtonPage = lazy(() => import('~/pages/storybook/abstract/button'))
-const PointNodePage = lazy(() => import('~/pages/storybook/entities/point/node'))
-const UIEditablePage = lazy(() => import('~/pages/storybook/ui/editable'))
+const StorybookPage = lazy(() => import('~/pages/storybook'))
 
-type Route = Omit<RouteProps, 'path'> & {
+export type Route = Omit<RouteProps, 'path'> & {
   Header?: FC
   Nav?: FC
   getName: () => string
@@ -71,87 +62,14 @@ export const routes = {
     element: <NotFoundPage />,
   },
 
-  /* ABSTRACT */
-
-  abstractButton: {
+  storybook: {
     Header,
     Nav,
-    getName: () => 'AbstractButton',
-    path: '/project-with-tree/storybook/abstract/button',
-    element: <AbstractButtonPage />,
-  },
-
-  /* ENTITIES */
-
-  pointNode: {
-    Header,
-    Nav,
-    getName: () => 'PointNode',
-    path: '/project-with-tree/storybook/entities/point/node',
-    element: <PointNodePage />,
-  },
-
-  /* UI */
-
-  callout: {
-    Header,
-    Nav,
-    getName: () => 'Callout',
-    path: '/project-with-tree/ui/callout',
-    element: <CalloutPage />,
-  },
-  dropdown: {
-    Header,
-    Nav,
-    getName: () => 'Dropdown',
-    path: '/project-with-tree/ui/dropdown',
-    element: <DropdownPage />,
-  },
-  list: {
-    Header,
-    Nav,
-    getName: () => 'List',
-    path: '/project-with-tree/ui/list',
-    element: <ListPage />,
-  },
-  popover: {
-    Header,
-    Nav,
-    getName: () => 'Popover',
-    path: '/project-with-tree/ui/popover',
-    element: <PopoverPage />,
-  },
-  speechBubble: {
-    Header,
-    Nav,
-    getName: () => 'speechBubble',
-    path: '/project-with-tree/ui/speech-bubble',
-    element: <Balloon />,
-  },
-  textInput: {
-    Header,
-    Nav,
-    getName: () => 'TextInput',
-    path: '/project-with-tree/ui/text-input',
-    element: <TextInputPage />,
-  },
-  uiNode: {
-    Header,
-    Nav,
-    getName: () => 'Node',
-    path: '/project-with-tree/ui/node',
-    element: <UINodePage />,
-  },
-  editable: {
-    Header,
-    Nav,
-    getName: () => 'Editable',
-    path: '/project-with-tree/ui/editable',
-    element: <UIEditablePage />,
+    getName: () => 'storybook',
+    path: '/project-with-tree/storybook/*',
+    element: <StorybookPage />,
   },
 } as const
 
 // eslint-disable-next-line import/no-unused-modules
 export default routes as Record<string, Route>
-
-export const routeList: Route[] = Object.values(routes)

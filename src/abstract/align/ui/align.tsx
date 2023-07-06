@@ -21,8 +21,6 @@ export default function Align(props: AlignProps): JSX.Element {
 
   assertValidElement(children)
 
-  console.log(props.children)
-
   const align = useCallback(_align, [targetElement, sourceElement, containerElement, ...config.points, ...deps])
 
   useLayoutEffect(align, [align])
