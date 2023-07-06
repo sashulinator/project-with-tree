@@ -6,6 +6,7 @@ import DecisionIdPage from '~/pages/decision/id'
 import LoginPage from '~/pages/login'
 import MainPage from '~/pages/main'
 import NotFoundPage from '~/pages/not-found'
+import RulesPage from '~/pages/rules/rules'
 import SettingsPage from '~/pages/settings'
 import Header from '~/ui/header'
 import Nav from '~/ui/nav'
@@ -33,6 +34,12 @@ export const routes = {
     getName: () => 'Decision List',
     path: '/project-with-tree/decision',
     element: <DecisionListPage />,
+  },
+  rules: {
+    Header,
+    getName: () => 'Rules',
+    path: '/project-with-tree/rules',
+    element: <RulesPage />,
   },
   decisionId: {
     getName: () => 'Decision',
