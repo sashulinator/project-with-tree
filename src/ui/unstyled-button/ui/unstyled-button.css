@@ -1,0 +1,24 @@
+.ui-UnstyledButton.--s {
+  height: var(--button_height__s);
+}
+
+.ui-UnstyledButton.--l {
+  height: var(--button_height__l);
+}
+
+.ui-UnstyledButton.--square.--s {
+  min-width: var(--button_height__s);
+  max-width: var(--button_height__s);
+}
+.ui-UnstyledButton.--square.--l {
+  min-width: var(--button_height__l);
+  max-width: var(--button_height__l);
+}
+.ui-UnstyledButton.--square.--m {
+  min-width: var(--button_height);
+  max-width: var(--button_height);
+}
+
+.ui-UnstyledButton.--round {
+  border-radius: 50%;
+}

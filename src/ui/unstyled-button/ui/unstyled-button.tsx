@@ -1,5 +1,7 @@
+import './unstyled-button.css'
+
 import { clsx } from 'clsx'
-import React, { ForwardedRef, forwardRef } from 'react'
+import { ForwardedRef, forwardRef } from 'react'
 
 import Button from '~/abstract/button'
 import { emitter } from '~/shared/emitter'
@@ -7,14 +9,34 @@ import { emitter } from '~/shared/emitter'
 import { dark } from '../themes/dark'
 import { light } from '../themes/light'
 
-emitter.emit('addTheme', { dark, light })
-
 UnstyledButtonComponent.displayName = 'ui-UnstyledButton'
 
-export type UnstyledButtonProps = React.HTMLAttributes<HTMLButtonElement>
+emitter.emit('addTheme', { dark, light })
+
+export type UnstyledButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
+  height?: 's' | 'm' | 'l'
+  square?: boolean
+  round?: boolean
+}
 
 function UnstyledButtonComponent(props: UnstyledButtonProps, ref: ForwardedRef<HTMLButtonElement>): JSX.Element {
-  return <Button {...props} className={clsx(props.className, UnstyledButtonComponent.displayName)} ref={ref} />
+  const { height = 'm', square, round, ...restProps } = props
+
+  return (
+    <Button
+      {...restProps}
+      ref={ref}
+      className={clsx(
+        UnstyledButtonComponent.displayName,
+        `--${height}`,
+        square && '--square',
+        round && `--square --round`,
+        props.className
+      )}
+    >
+      {props.children}
+    </Button>
+  )
 }
 
 const UnstyledButton = forwardRef(UnstyledButtonComponent)

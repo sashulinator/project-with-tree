@@ -2,7 +2,7 @@ import './new-source.css'
 
 import React from 'react'
 
-import UnstyledButton from '~/ui/unstyled-button'
+import Button from '~/ui/unstyled-button'
 
 import { Joint, JointProps } from '../../joint'
 
@@ -18,9 +18,9 @@ export function NewSource(props: NewSourceProps): JSX.Element {
 
   return (
     <div className={NewSource.displayName}>
-      <UnstyledButton className='newRuleButton' {...buttonProps}>
+      <Button className='newRuleButton' {...buttonProps}>
         +
-      </UnstyledButton>
+      </Button>
       <Joint {...jointProps} variant='new' />
     </div>
   )

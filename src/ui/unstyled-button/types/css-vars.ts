@@ -1,6 +1,7 @@
 import { ToStringable } from '~/utils/core'
 
 export type CSSVars = {
-  button_outlineWidth?: ToStringable
-  button_outlineColor?: ToStringable
+  button_height?: ToStringable
+  button_height__s?: ToStringable
+  button_height__l?: ToStringable
 }

@@ -4,38 +4,27 @@ import { clsx } from 'clsx'
 import { ForwardedRef, forwardRef } from 'react'
 
 import { emitter } from '~/shared/emitter'
-import UnstyledButton from '~/ui/unstyled-button'
-import { Any } from '~/utils/core'
-import { Dictionary } from '~/utils/dictionary'
+import UnstyledButton, { UnstyledButtonProps } from '~/ui/unstyled-button'
 
 import { dark } from '../themes/dark'
 import { light } from '../themes/light'
 
 emitter.emit('addTheme', { dark, light })
 
-export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement>, Dictionary<Any> {
-  className?: undefined | string
-  height?: 's' | 'm' | 'l'
-  square?: boolean
-  round?: boolean
+ButtonComponent.displayName = 'ui-Button'
+
+export interface ButtonProps extends UnstyledButtonProps {
   variant?: 'outlined' | 'primary' | 'ghost'
 }
 
 function ButtonComponent(props: ButtonProps, ref: ForwardedRef<HTMLButtonElement>): JSX.Element {
-  const { height = 'm', variant = 'primary', square, round, ...restProps } = props
+  const { variant = 'primary', ...restProps } = props
 
   return (
     <UnstyledButton
       {...restProps}
       ref={ref}
-      className={clsx(
-        'ui-Button',
-        `--${height}`,
-        `--${variant}`,
-        square && '--square',
-        round && `--square --round`,
-        props.className
-      )}
+      className={clsx(`--${variant}`, props.className, ButtonComponent.displayName)}
     >
       {props.children}
     </UnstyledButton>
@@ -44,4 +33,3 @@ function ButtonComponent(props: ButtonProps, ref: ForwardedRef<HTMLButtonElement
 
 const Button = forwardRef(ButtonComponent)
 export default Button
-Button.displayName = 'UIButton'
