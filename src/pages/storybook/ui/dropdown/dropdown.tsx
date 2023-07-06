@@ -87,48 +87,46 @@ export default function DropdownPage(): JSX.Element {
   const item = listStateRef.current?.map.get(value)?.item
 
   return (
-    <main className='pt-5rem'>
-      <div
-        className='w-20rem bg-secondary p-2.5em mt-2.5rem'
-        style={{ borderRadius: '20px', border: '1px solid var(--input_borderColor)' }}
-      >
-        <h2 className='mb-2rem'>Dropdown</h2>
-        <div className='mt-1rem'>
-          <label htmlFor='readonly' className='label ml-0.25rem'>
-            Dropdown
-          </label>
-          <Dropdown<TextInputProps, DropdownListProps<User, DropdownItemProps<User, unknown>>>
-            value={item?.username || ''}
-            renderInput={TextInput}
-            renderList={DropdownList}
-            clearValue={(): void => setChecked([])}
-            listProps={{
-              rootProps: {
-                style: {
-                  backgroundColor: 'var(--bgSecondary)',
-                  border: '1px solid #ccc',
-                  boxShadow: '0px 1.2px 18px rgba(0, 0, 0, 0.15), 0px 6.4px 29px rgba(0, 0, 0, 0.15)',
-                  maxHeight: '150px',
-                  overflow: 'auto',
-                  borderRadius: '8px',
-                  padding: '12px 0',
-                },
+    <div
+      className='w-20rem bg-secondary p-2.5em mt-2.5rem'
+      style={{ borderRadius: '20px', border: '1px solid var(--input_borderColor)' }}
+    >
+      <h2 className='mb-2rem'>Dropdown</h2>
+      <div className='mt-1rem'>
+        <label htmlFor='readonly' className='label ml-0.25rem'>
+          Dropdown
+        </label>
+        <Dropdown<TextInputProps, DropdownListProps<User, DropdownItemProps<User, unknown>>>
+          value={item?.username || ''}
+          renderInput={TextInput}
+          renderList={DropdownList}
+          clearValue={(): void => setChecked([])}
+          listProps={{
+            rootProps: {
+              style: {
+                backgroundColor: 'var(--bgSecondary)',
+                border: '1px solid #ccc',
+                boxShadow: '0px 1.2px 18px rgba(0, 0, 0, 0.15), 0px 6.4px 29px rgba(0, 0, 0, 0.15)',
+                maxHeight: '150px',
+                overflow: 'auto',
+                borderRadius: '8px',
+                padding: '12px 0',
               },
-              offset: [0, 5],
-              data,
-              selected,
-              checked,
-              listStateRef: listStateRef,
-              getItemKey: (item) => item.username,
-              filter: (item, sq) => (sq ? new RegExp(sq, 'gi').test(item.username) : true),
-              renderItem: DropdownItem,
-              onSelectOne: (k) => setSelected([k]),
-              onUnselectOne: () => setSelected([]),
-              onCheckOne: (key) => setChecked(() => [key]),
-            }}
-          />
-        </div>
+            },
+            offset: [0, 5],
+            data,
+            selected,
+            checked,
+            listStateRef: listStateRef,
+            getItemKey: (item) => item.username,
+            filter: (item, sq) => (sq ? new RegExp(sq, 'gi').test(item.username) : true),
+            renderItem: DropdownItem,
+            onSelectOne: (k) => setSelected([k]),
+            onUnselectOne: () => setSelected([]),
+            onCheckOne: (key) => setChecked(() => [key]),
+          }}
+        />
       </div>
-    </main>
+    </div>
   )
 }

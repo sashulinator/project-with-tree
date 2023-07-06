@@ -19,146 +19,144 @@ export default function PopoverPage(): JSX.Element {
   const [alwaysByViewport, , , toggleIsAlwaysByViewport] = useBoolean(false)
 
   return (
-    <main className='pt-5rem'>
-      <div
-        ref={setContainerEl}
-        className='bg-secondary p-2.5em mt-2.5rem'
-        style={{
-          width: '100%',
-          borderRadius: '20px',
-          border: '1px solid',
-          borderColor: isMainContainerRelative ? 'red' : 'var(--input_borderColor)',
-          position: 'relative',
-        }}
-      >
-        <h2 className='mb-2rem'>Popover</h2>
-        By default the content portals to the body <br />
-        You can portal content to the main container, but don&apos;t forget to set a content position to
-        &apos;absolute&apos;
-        <div className='mt-1rem flex flex-col'>
-          <div className='mb-1rem'>
-            <div>
-              <input
-                type='checkbox'
-                id='isMainContainerRelative'
-                checked={isMainContainerRelative}
-                onChange={toggleIsMainContainerRelative}
-              />
-              <label htmlFor='isMainContainerRelative' className='label'>
-                Main container position &apos;relative&apos;
-              </label>
-            </div>
-            <div>
-              <input
-                type='checkbox'
-                id='isPortalToMainContainer'
-                checked={isPortalToMainContainer}
-                onChange={toggleIsPortalToMainContainer}
-              />
-              <label htmlFor='isPortalToMainContainer' className='label'>
-                Portal to main Container
-              </label>
-            </div>
-            <div>
-              <input type='checkbox' id='isAdjustX' checked={adjustX} onChange={toggleIsAdjustX} />
-              <label htmlFor='isAdjustX' className='label'>
-                adjustX
-              </label>
-            </div>
-            <div>
-              <input type='checkbox' id='isAdjustY' checked={adjustY} onChange={toggleIsAdjustY} />
-              <label htmlFor='isAdjustY' className='label'>
-                adjustY
-              </label>
-            </div>
-            <div>
-              <input
-                type='checkbox'
-                id='alwaysByViewport'
-                checked={alwaysByViewport}
-                onChange={toggleIsAlwaysByViewport}
-              />
-              <label htmlFor='alwaysByViewport' className='label'>
-                always By Viewport
-              </label>
-            </div>
-            <div>
-              <label htmlFor='placement' className='label mb-0.3rem mr-0.5rem'>
-                Placement
-              </label>
-              <PointDropdown
-                id='placement'
-                onChange={(v) => {
-                  setPlacement(v)
-                  setPointTarget('')
-                  setPointSource('')
-                }}
-                value={placement}
-              />
-            </div>
-            <div>
-              <label htmlFor='pointTarget' className='label mb-0.3rem mr-0.1rem'>
-                Points target
-              </label>
-              <PointDropdown
-                id='pointTarget'
-                onChange={(v) => {
-                  setPointTarget(v)
-                  setPlacement('')
-                }}
-                value={pointTarget}
-              />
-              <label htmlFor='pointSource' className='label mb-0.3rem mr-0.1rem ml-0.1rem'>
-                source
-              </label>
-              <PointDropdown
-                id='pointSource'
-                onChange={(v) => {
-                  setPointSource(v)
-                  setPlacement('')
-                }}
-                value={pointSource}
-              />
-            </div>
-            <div>
-              <label htmlFor='position' className='label mb-0.3rem mr-0.5rem'>
-                Content position
-              </label>
-              <PositionDropdown id='position' onChange={setContentPosition} value={contentPosition} />
-            </div>
+    <div
+      ref={setContainerEl}
+      className='bg-secondary p-2.5em mt-2.5rem'
+      style={{
+        width: '100%',
+        borderRadius: '20px',
+        border: '1px solid',
+        borderColor: isMainContainerRelative ? 'red' : 'var(--input_borderColor)',
+        position: 'relative',
+      }}
+    >
+      <h2 className='mb-2rem'>Popover</h2>
+      By default the content portals to the body <br />
+      You can portal content to the main container, but don&apos;t forget to set a content position to
+      &apos;absolute&apos;
+      <div className='mt-1rem flex flex-col'>
+        <div className='mb-1rem'>
+          <div>
+            <input
+              type='checkbox'
+              id='isMainContainerRelative'
+              checked={isMainContainerRelative}
+              onChange={toggleIsMainContainerRelative}
+            />
+            <label htmlFor='isMainContainerRelative' className='label'>
+              Main container position &apos;relative&apos;
+            </label>
           </div>
           <div>
-            <Popover
-              overflow={{ adjustX, adjustY, alwaysByViewport }}
-              containerElement={isPortalToMainContainer ? containerEl : undefined}
-              isOpen={isOpen}
-              deps={[adjustX, adjustY, contentPosition]}
-              placement={placement ? placement : undefined}
-              points={pointTarget && pointSource ? [pointSource, pointTarget] : undefined}
-              content={
-                <span
-                  style={{
-                    position: contentPosition as any,
-                    background: 'yellow',
-                    border: '1px solid black',
-                    top: '4px',
-                    left: '300px',
-                  }}
-                >
-                  Content Content Content Content
-                  <br />
-                  Content Content Content Content Content Content Content
-                  <br />
-                  Content Content Content
-                </span>
-              }
-            >
-              <button onClick={toggle}>Target</button>
-            </Popover>
+            <input
+              type='checkbox'
+              id='isPortalToMainContainer'
+              checked={isPortalToMainContainer}
+              onChange={toggleIsPortalToMainContainer}
+            />
+            <label htmlFor='isPortalToMainContainer' className='label'>
+              Portal to main Container
+            </label>
+          </div>
+          <div>
+            <input type='checkbox' id='isAdjustX' checked={adjustX} onChange={toggleIsAdjustX} />
+            <label htmlFor='isAdjustX' className='label'>
+              adjustX
+            </label>
+          </div>
+          <div>
+            <input type='checkbox' id='isAdjustY' checked={adjustY} onChange={toggleIsAdjustY} />
+            <label htmlFor='isAdjustY' className='label'>
+              adjustY
+            </label>
+          </div>
+          <div>
+            <input
+              type='checkbox'
+              id='alwaysByViewport'
+              checked={alwaysByViewport}
+              onChange={toggleIsAlwaysByViewport}
+            />
+            <label htmlFor='alwaysByViewport' className='label'>
+              always By Viewport
+            </label>
+          </div>
+          <div>
+            <label htmlFor='placement' className='label mb-0.3rem mr-0.5rem'>
+              Placement
+            </label>
+            <PointDropdown
+              id='placement'
+              onChange={(v) => {
+                setPlacement(v)
+                setPointTarget('')
+                setPointSource('')
+              }}
+              value={placement}
+            />
+          </div>
+          <div>
+            <label htmlFor='pointTarget' className='label mb-0.3rem mr-0.1rem'>
+              Points target
+            </label>
+            <PointDropdown
+              id='pointTarget'
+              onChange={(v) => {
+                setPointTarget(v)
+                setPlacement('')
+              }}
+              value={pointTarget}
+            />
+            <label htmlFor='pointSource' className='label mb-0.3rem mr-0.1rem ml-0.1rem'>
+              source
+            </label>
+            <PointDropdown
+              id='pointSource'
+              onChange={(v) => {
+                setPointSource(v)
+                setPlacement('')
+              }}
+              value={pointSource}
+            />
+          </div>
+          <div>
+            <label htmlFor='position' className='label mb-0.3rem mr-0.5rem'>
+              Content position
+            </label>
+            <PositionDropdown id='position' onChange={setContentPosition} value={contentPosition} />
           </div>
         </div>
+        <div>
+          <Popover
+            overflow={{ adjustX, adjustY, alwaysByViewport }}
+            containerElement={isPortalToMainContainer ? containerEl : undefined}
+            isOpen={isOpen}
+            deps={[adjustX, adjustY, contentPosition]}
+            placement={placement ? placement : undefined}
+            points={pointTarget && pointSource ? [pointSource, pointTarget] : undefined}
+            content={
+              <span
+                style={{
+                  position: contentPosition as any,
+                  background: 'yellow',
+                  border: '1px solid black',
+                  top: '4px',
+                  left: '300px',
+                }}
+              >
+                Content Content Content Content
+                <br />
+                Content Content Content Content Content Content Content
+                <br />
+                Content Content Content
+              </span>
+            }
+          >
+            <button onClick={toggle}>Target</button>
+          </Popover>
+        </div>
       </div>
-    </main>
+    </div>
   )
 }
 

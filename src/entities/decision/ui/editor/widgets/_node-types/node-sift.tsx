@@ -59,7 +59,6 @@ export function SiftNode(props: SiftNodeProps): JSX.Element {
           />
           <Button
             square={true}
-            variant='ghost'
             style={{ margin: '0 0 0 var(--l)' }}
             onClick={(): void => props.removeNode(props.state.id)}
           >

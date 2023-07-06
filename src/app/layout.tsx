@@ -1,6 +1,6 @@
 import './layout.css'
 
-import { useLayoutEffect } from 'react'
+import { useEffect } from 'react'
 import { Route as RRRoute, Routes, matchPath, useLocation } from 'react-router'
 
 import getRootElement from '~/lib/dom/get-root-element'
@@ -17,7 +17,7 @@ export default function Layout(): null | JSX.Element {
 
   getRootElement().className = createLayoutClass(currentRoute)
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     emitter.on('addRoutes', (newRoutes) => {
       Object.assign(routes, newRoutes)
       update()
