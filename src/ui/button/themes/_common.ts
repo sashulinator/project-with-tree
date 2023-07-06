@@ -1,6 +1,3 @@
-import { COMMON } from '~/shared/theme/common'
+import { CSSVars } from '../types/css-vars'
 
-export const common = {
-  button_outlineWidth: COMMON.outlineWidth,
-  button_transition: 'box-shadow 0.3s',
-}
+export const common: CSSVars = {}

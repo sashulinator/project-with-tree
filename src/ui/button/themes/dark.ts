@@ -1,9 +1,10 @@
-import { DARK } from '~/shared/theme/dark'
+import clr from 'color'
 
 import { CSSVars } from '../types/css-vars'
 import { common } from './_common'
 
 export const dark: CSSVars = {
-  button_outlineColor: DARK.outlineColor,
   ...common,
+  button_bg__hovered: clr('white').alpha(0.07),
+  button_bg__active: clr('white').alpha(0.11),
 }

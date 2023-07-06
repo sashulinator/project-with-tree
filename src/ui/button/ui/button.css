@@ -1,36 +1,12 @@
 .ui-Button {
-  outline: 0;
-  border-width: 2px;
-  border-style: solid;
-  color: var(--button_color, white);
-  transition: var(--button_transition);
-  border-radius: 0.4rem;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  border-radius: var(--m);
 }
 
-.ui-Button:focus {
-  box-shadow: 0px 0px 0px var(--button_outlineWidth) var(--button_outlineColor);
-  transition: var(--button_transition__focused, var(--button_transition));
+.ui-Button:hover {
+  background: var(--button_bg__hovered);
 }
 
-.ui-Button.--primary {
-  background-color: var(--button_bg);
-  border-color: var(--button_border);
-}
-
-.ui-Button.--outlined {
-  color: var(--button_color__outlined);
-  border-color: var(--button_border__outlined);
-  background: transparent;
-}
-
-.ui-Button.--ghost {
-  border: transparent;
-  color: var(--button_color__ghost);
-}
-.ui-Button.--ghost:hover {
-  background: var(--button_bg__ghost__hover);
+.ui-Button:active {
+  background: var(--button_bg__active);
+  transform: translateY(1px);
 }

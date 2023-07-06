@@ -20,10 +20,10 @@ export default function Header(): JSX.Element {
         <Logo height={20} />
       </Link>
       <div style={{ display: 'flex' }}>
-        <UnstyledButton onClick={(): void => navigate(routes.settings.path)} variant='ghost' square={true}>
+        <UnstyledButton onClick={(): void => navigate(routes.settings.path)} square={true}>
           <User />
         </UnstyledButton>
-        <UnstyledButton onClick={(): void => navigate(routes.login.path)} variant='ghost' square={true}>
+        <UnstyledButton onClick={(): void => navigate(routes.login.path)} square={true}>
           <Logout />
         </UnstyledButton>
       </div>

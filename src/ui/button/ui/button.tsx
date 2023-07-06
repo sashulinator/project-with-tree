@@ -13,22 +13,11 @@ emitter.emit('addTheme', { dark, light })
 
 ButtonComponent.displayName = 'ui-Button'
 
-export interface ButtonProps extends UnstyledButtonProps {
-  variant?: 'outlined' | 'primary' | 'ghost'
-}
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
+export interface ButtonProps extends UnstyledButtonProps {}
 
 function ButtonComponent(props: ButtonProps, ref: ForwardedRef<HTMLButtonElement>): JSX.Element {
-  const { variant = 'primary', ...restProps } = props
-
-  return (
-    <UnstyledButton
-      {...restProps}
-      ref={ref}
-      className={clsx(`--${variant}`, props.className, ButtonComponent.displayName)}
-    >
-      {props.children}
-    </UnstyledButton>
-  )
+  return <UnstyledButton {...props} ref={ref} className={clsx(props.className, ButtonComponent.displayName)} />
 }
 
 const Button = forwardRef(ButtonComponent)
