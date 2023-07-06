@@ -5,8 +5,8 @@ IconComponent.displayName = 'a-Icon'
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 export interface IconProps extends React.HTMLAttributes<SVGSVGElement> {
-  height?: string
-  width?: string
+  height?: string | number
+  width?: string | number
 }
 
 function IconComponent(props: IconProps, ref: ForwardedRef<SVGSVGElement>): JSX.Element {
