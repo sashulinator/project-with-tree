@@ -2,8 +2,8 @@ import './joint.css'
 
 import { clsx } from 'clsx'
 
+import Button from '~/ui/button'
 import { emitter } from '~/shared/emitter'
-import Button from '~/ui/unstyled-button'
 import { Id } from '~/utils/core'
 
 import { dark } from '../themes/dark'
@@ -24,6 +24,7 @@ export function Joint(props: JointProps): JSX.Element {
   return (
     <Button
       {...divProps}
+      height='none'
       data-link-id={linkId}
       className={clsx(Joint.displayName, `--${props.variant}`, props.className)}
     />

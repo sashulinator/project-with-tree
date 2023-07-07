@@ -3,12 +3,11 @@ import './items-panel.css'
 import { clsx } from 'clsx'
 import { useState } from 'react'
 
+import UnstyledButton from '~/abstract/button'
 import { NodeState } from '~/entities/point'
-import Button from '~/ui/button'
 import { PrimaryButton } from '~/ui/button/variants/primary'
 import { Plus } from '~/ui/icon'
 import TextInput from '~/ui/text-input'
-import UnstyledButton from '~/ui/unstyled-button'
 import { Id } from '~/utils/core'
 
 ItemPanel.displayName = 'decision-Editor-ItemPanel'

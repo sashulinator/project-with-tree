@@ -1,14 +1,36 @@
 import './button.css'
 
 import { clsx } from 'clsx'
-import React, { ForwardedRef, forwardRef } from 'react'
+import { ForwardedRef, forwardRef } from 'react'
 
-export type ButtonProps = React.HTMLAttributes<HTMLButtonElement>
+import { UnstyledButton } from '../widgets/unstyled-button'
 
 ButtonComponent.displayName = 'a-Button'
 
+export type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
+  height?: 's' | 'm' | 'l' | undefined
+  square?: boolean | undefined
+  round?: boolean | undefined
+}
+
 function ButtonComponent(props: ButtonProps, ref: ForwardedRef<HTMLButtonElement>): JSX.Element {
-  return <button {...props} className={clsx(props.className, ButtonComponent.displayName)} ref={ref} />
+  const { height, square, round, ...restProps } = props
+
+  return (
+    <UnstyledButton
+      {...restProps}
+      ref={ref}
+      className={clsx(
+        ButtonComponent.displayName,
+        height && `--${height}`,
+        square && '--square',
+        round && `--square --round`,
+        props.className
+      )}
+    >
+      {props.children}
+    </UnstyledButton>
+  )
 }
 
 const Button = forwardRef(ButtonComponent)
