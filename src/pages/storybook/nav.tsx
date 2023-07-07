@@ -14,7 +14,10 @@ export default function Nav(): JSX.Element {
       <ul>
         ui
         <ol>
-          <Link to={routes.abstractButton.getURL()}>Button</Link>
+          <Link to={routes.button.getURL()}>Button</Link>
+        </ol>
+        <ol>
+          <Link to={routes.textInput.getURL()}>TextInput</Link>
         </ol>
         <ol>
           <Link to={routes.callout.getURL()}>Callout</Link>
@@ -29,7 +32,7 @@ export default function Nav(): JSX.Element {
           <Link to={routes.list.getURL()}>List</Link>
         </ol>
         <ol>
-          <Link to={routes.textInput.getURL()}>TextInput</Link>
+          <Link to={routes.oldTextInput.getURL()}>OldTextInput</Link>
         </ol>
         <ol>
           <Link to={routes.popover.getURL()}>Popover</Link>
