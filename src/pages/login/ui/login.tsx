@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router'
 import { addToast } from '~/abstract/toast'
 import { useT } from '~/lib/i18n/use-t'
 import { routes } from '~/shared/routes'
-import UnstyledButton from '~/ui/button'
+import UnstyledButton, { PrimaryButton } from '~/ui/button'
 import CloseIcon from '~/ui/icons/close'
 import EyeOffIcon from '~/ui/icons/eye-off'
 import EyeOnIcon from '~/ui/icons/eye-on'
@@ -62,7 +62,7 @@ export default function LoginPage(): JSX.Element {
             />
           </div>
           <div className='w-20rem flex flex-col m-4 pt-0.1rem'>
-            <UnstyledButton height='l'>{t.Login()}</UnstyledButton>
+            <PrimaryButton height='l'>{t.Login()}</PrimaryButton>
           </div>
         </form>
       </div>

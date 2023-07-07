@@ -1,12 +1,12 @@
-.ui-PrimaryButton {
+.ui-PrimaryButton.ui-Button {
   background: var(--primaryButton_bg);
   color: var(--primaryButton_color);
 }
 
-.ui-PrimaryButton:hover {
+.ui-PrimaryButton.ui-Button:hover {
   background: var(--primaryButton_bg__hovered);
 }
 
-.ui-PrimaryButton:active {
+.ui-PrimaryButton.ui-Button:active {
   background: var(--primaryButton_bg__active);
 }

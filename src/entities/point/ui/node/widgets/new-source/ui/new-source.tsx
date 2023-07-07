@@ -2,7 +2,7 @@ import './new-source.css'
 
 import React from 'react'
 
-import Button from '~/ui/unstyled-button'
+import Button from '~/ui/button'
 
 import { Joint, JointProps } from '../../joint'
 
