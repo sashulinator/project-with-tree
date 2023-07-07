@@ -16,14 +16,13 @@ import { BrowserRouter } from 'react-router-dom'
 import '~/shared/dayjs'
 import { emitter } from '~/shared/emitter'
 import { queryClient } from '~/shared/react-query'
-import { COMMON } from '~/shared/theme/common'
-import { DARK } from '~/shared/theme/dark'
-import { LIGHT } from '~/shared/theme/light'
+import { DARK as dark } from '~/shared/theme/dark'
+import { LIGHT as light } from '~/shared/theme/light'
 import { Container } from '~/ui/toast'
 
 import Layout from './layout'
 
-emitter.emit('addTheme', { dark: { ...DARK, ...COMMON }, light: { ...LIGHT, ...COMMON } })
+emitter.emit('addTheme', { dark, light })
 
 export default function App(): JSX.Element {
   // prettier-ignore
