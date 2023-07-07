@@ -11,7 +11,7 @@ import UIEditablePage from './ui/editable/index'
 import ListPage from './ui/list'
 import UINodePage from './ui/node'
 import PopoverPage from './ui/popover'
-import TextInputPage from './ui/text-input'
+import TextInputPage from './ui/old-text-input'
 
 export const routes = {
   callout: {
