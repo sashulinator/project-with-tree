@@ -1,0 +1,7 @@
+.ui-GhostButton:hover {
+  background: var(--ghostButton_bg__hovered);
+}
+
+.ui-GhostButton:active {
+  background: var(--ghostButton_bg__active);
+}

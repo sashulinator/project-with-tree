@@ -2,7 +2,7 @@ import { useNavigate } from 'react-router-dom'
 
 import getRootElement from '~/lib/dom/get-root-element'
 import { routes } from '~/shared/routes'
-import UnstyledButton from '~/ui/button'
+import { GhostButton } from '~/ui/button'
 import Link from '~/ui/link'
 import { setCSSVar } from '~/utils/dom'
 
@@ -20,12 +20,12 @@ export default function Header(): JSX.Element {
         <Logo height={20} />
       </Link>
       <div style={{ display: 'flex' }}>
-        <UnstyledButton onClick={(): void => navigate(routes.settings.path)} square={true}>
+        <GhostButton onClick={(): void => navigate(routes.settings.path)} square={true}>
           <User />
-        </UnstyledButton>
-        <UnstyledButton onClick={(): void => navigate(routes.login.path)} square={true}>
+        </GhostButton>
+        <GhostButton onClick={(): void => navigate(routes.login.path)} square={true}>
           <Logout />
-        </UnstyledButton>
+        </GhostButton>
       </div>
     </header>
   )

@@ -23,7 +23,9 @@ function ButtonComponent(props: ButtonProps, ref: ForwardedRef<HTMLButtonElement
       ref={ref}
       className={clsx(props.className, ButtonComponent.displayName)}
       height={props.height ?? 'm'}
-    />
+    >
+      <span>{props.children}</span>
+    </UnstyledButton>
   )
 }
 

@@ -3,7 +3,7 @@ import { useState } from 'react'
 
 import AbstractButton from '~/abstract/button'
 import Flex from '~/abstract/flex/ui/flex'
-import Button from '~/ui/button'
+import Button, { GhostButton } from '~/ui/button'
 import { PrimaryButton } from '~/ui/button/variants/primary'
 import { H1, H2 } from '~/ui/heading'
 import { User } from '~/ui/icon'
@@ -20,9 +20,9 @@ export default function ButtonPage(): JSX.Element {
         <H1>BUTTON</H1>
         Компонент кнопки
         <Section>
-          <Button square={true}>
+          <GhostButton square={true}>
             <User />
-          </Button>
+          </GhostButton>
           <PrimaryButton round={true}>
             <User />
           </PrimaryButton>
@@ -144,12 +144,11 @@ function PrimaryButtonSection(): JSX.Element {
     <Section
       header={
         <>
-          <H2>PrimaryButton</H2>
-          <p>Расширяет Button.</p>
+          <H2>Варианты</H2>
+          <p>Расширяют Button.</p>
           <br />
           <ol>
-            <li>Primary стили для hover и active</li>
-            <li>Скругление</li>
+            <li>Cтили состояний hover и active</li>
           </ol>
           <Flex width='1rem' margin='1rem 0 0 0'>
             <HeightDropdown value={height} onChange={setHeight} />
@@ -165,9 +164,14 @@ function PrimaryButtonSection(): JSX.Element {
         </>
       }
     >
-      <PrimaryButton height={height || 'm'} square={square} round={round}>
-        Button
-      </PrimaryButton>
+      <Flex dir='column'>
+        <PrimaryButton height={height || 'm'} square={square} round={round} style={{ marginBottom: '1rem' }}>
+          Primary
+        </PrimaryButton>
+        <GhostButton height={height || 'm'} square={square} round={round}>
+          Ghost
+        </GhostButton>
+      </Flex>
     </Section>
   )
 }
