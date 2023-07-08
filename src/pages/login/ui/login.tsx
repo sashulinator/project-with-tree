@@ -4,14 +4,11 @@ import { useNavigate } from 'react-router'
 import { addToast } from '~/abstract/toast'
 import { useT } from '~/lib/i18n/use-t'
 import { routes } from '~/shared/routes'
-import UnstyledButton, { PrimaryButton } from '~/ui/button'
-import CloseIcon from '~/ui/icons/close'
-import EyeOffIcon from '~/ui/icons/eye-off'
-import EyeOnIcon from '~/ui/icons/eye-on'
+import { PrimaryButton } from '~/ui/button'
+
+import Input, { PasswordInput } from '~/ui/input'
 import I18nDropdown from '~/ui/language-dropdown'
-import TextInput from '~/ui/text-input'
 import ThemeDropdown from '~/ui/theme-dropdown'
-import { useBoolean } from '~/utils/hooks/boolean'
 
 import { translations } from '../model/translations'
 
@@ -22,9 +19,6 @@ export default function LoginPage(): JSX.Element {
   const navigate = useNavigate()
   const t = useT(translations, 'login')
   const [value, setValue] = useState<string>('')
-  const [isPasswordVisible, setPasswordVisible, unsetPasswordVisible] = useBoolean(false)
-  const EyeIcon = isPasswordVisible ? EyeOffIcon : EyeOnIcon
-  const onEyeClick = isPasswordVisible ? unsetPasswordVisible : setPasswordVisible
 
   return (
     <main className='flex justify-center'>
@@ -36,13 +30,13 @@ export default function LoginPage(): JSX.Element {
             <label className='label mb-0.5rem' htmlFor={USERNAME}>
               {t.Username()}
             </label>
-            <TextInput height='l' id={USERNAME} name={USERNAME} autoComplete='off' />
+            <Input height='l' id={USERNAME} name={USERNAME} autoComplete='off' />
           </div>
           <div className='w-20rem flex flex-col m-4'>
             <label className='label mb-0.5rem' htmlFor={PASSWORD}>
               {t.Password()}
             </label>
-            <TextInput
+            <PasswordInput
               height='l'
               autoComplete='off'
               value={value}
@@ -50,15 +44,6 @@ export default function LoginPage(): JSX.Element {
               onChange={({ target }): void => setValue(target.value)}
               id={PASSWORD}
               name={PASSWORD}
-              type={isPasswordVisible ? 'text' : 'password'}
-              right={
-                <label htmlFor={PASSWORD} className='flex direction-row'>
-                  {[
-                    value && <CloseIcon key='1' className='mr-0.7rem' onClick={(): void => setValue('')} />,
-                    <EyeIcon key='2' className='mr-0.7rem' onClick={onEyeClick} />,
-                  ]}
-                </label>
-              }
             />
           </div>
           <div className='w-20rem flex flex-col m-4 pt-0.1rem'>
