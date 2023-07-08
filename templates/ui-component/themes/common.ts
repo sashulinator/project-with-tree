@@ -1,3 +1,3 @@
-import { CSSVars } from '../types/_css-vars'
+import { CSSVars } from '../types/css-vars'
 
 export const common: CSSVars = {} satisfies Partial<CSSVars>
