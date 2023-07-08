@@ -32,9 +32,6 @@ export default function Nav(): JSX.Element {
           <Link to={routes.list.getURL()}>List</Link>
         </ol>
         <ol>
-          <Link to={routes.oldTextInput.getURL()}>OldTextInput</Link>
-        </ol>
-        <ol>
           <Link to={routes.popover.getURL()}>Popover</Link>
         </ol>
         <ol>

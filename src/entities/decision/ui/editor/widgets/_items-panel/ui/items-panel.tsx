@@ -7,8 +7,8 @@ import UnstyledButton from '~/abstract/button'
 import { NodeState } from '~/entities/point'
 import { PrimaryButton } from '~/ui/button/variants/primary'
 import { Plus } from '~/ui/icon'
-import TextInput from '~/ui/text-input'
 import { Id } from '~/utils/core'
+import Input from '~/ui/input'
 
 ItemPanel.displayName = 'decision-Editor-ItemPanel'
 
@@ -30,7 +30,7 @@ export default function ItemPanel(props: ItemPanelProps): JSX.Element {
     <div {...props.rootProps} className={clsx(ItemPanel.displayName, props.rootProps?.className)}>
       <div style={{ display: 'flex', alignItems: 'center', padding: 'var(--xl)' }}>
         <div className='search'>
-          <TextInput value={value} onChange={(ev): void => setValue(ev.currentTarget.value)} placeholder='Поиск' />
+          <Input value={value} onChange={(ev): void => setValue(ev.currentTarget.value)} placeholder='Поиск' />
         </div>
         <PrimaryButton onClick={props.addNode} round={true} height='l' style={{ marginLeft: 'var(--l)' }}>
           <Plus />

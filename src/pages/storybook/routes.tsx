@@ -11,7 +11,7 @@ import DropdownPage from './ui/dropdown'
 import ListPage from './ui/list'
 import UINodePage from './ui/node'
 import PopoverPage from './ui/popover'
-import OldTextInputPage from './ui/old-text-input'
+
 import FieldInputPage from './ui/field'
 import InputPage from './ui/input'
 
@@ -83,15 +83,6 @@ export const routes = {
       return `${sharedRoutes.storybook.getURL()}${this.path}`
     },
   },
-  oldTextInput: {
-    path: '/ui/text-input',
-    element: <OldTextInputPage />,
-    getName: (): string => 'TextInput',
-    getURL: function (): string {
-      return `${sharedRoutes.storybook.getURL()}${this.path}`
-    },
-  },
-
   uiNode: {
     path: '/ui/node',
     element: <UINodePage />,

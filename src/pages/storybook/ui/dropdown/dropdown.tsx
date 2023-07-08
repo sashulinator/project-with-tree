@@ -5,8 +5,8 @@ import { useRef, useState } from 'react'
 import Dropdown from '~/ui/dropdown'
 import { DropdownItem, DropdownItemProps } from '~/ui/dropdown-list'
 import DropdownList, { DropdownListProps } from '~/ui/dropdown-list/ui/dropdown-list'
+import Input, { InputProps } from '~/ui/input'
 import { Key, ListState } from '~/ui/list'
-import TextInput, { TextInputProps } from '~/ui/text-input/ui/text-input'
 
 // import TextInput from '~/ui/text-input/ui/text-input'
 
@@ -96,9 +96,9 @@ export default function DropdownPage(): JSX.Element {
         <label htmlFor='readonly' className='label ml-0.25rem'>
           Dropdown
         </label>
-        <Dropdown<TextInputProps, DropdownListProps<User, DropdownItemProps<User, unknown>>>
+        <Dropdown<InputProps, DropdownListProps<User, DropdownItemProps<User, unknown>>>
           value={item?.username || ''}
-          renderInput={TextInput}
+          renderInput={Input}
           renderList={DropdownList}
           clearValue={(): void => setChecked([])}
           listProps={{
