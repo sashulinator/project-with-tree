@@ -1,4 +1,4 @@
-import { TextInputCSSVars } from '~/abstract/text-input/types/css-vars'
+import { TextInputCSSVars } from '~/abstract/old-text-input/types/css-vars'
 import { LIGHT } from '~/shared/theme/light'
 
 import { common } from './_common'

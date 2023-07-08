@@ -1,6 +1,6 @@
 import { ForwardedRef, forwardRef } from 'react'
 
-import AbstractTextInput, { TextInputProps } from '~/abstract/text-input'
+import AbstractTextInput, { TextInputProps } from '~/abstract/old-text-input'
 import { emitter } from '~/shared/emitter'
 
 import { dark } from '../themes/dark'

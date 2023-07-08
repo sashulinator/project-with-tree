@@ -1,0 +1,38 @@
+.a-Field {
+  width: 100%;
+  background: var(--field_bg);
+  border-radius: var(--field_borderRadius);
+}
+
+.a-Field.--s {
+  height: var(--field_height__s);
+}
+.a-Field.--m {
+  height: var(--field_height__m);
+}
+.a-Field.--l {
+  height: var(--field_height__l);
+}
+
+.a-Field.--focused {
+  background: var(--field_bg__focus);
+  box-shadow: 0px 0px 0px var(--button_outlineWidth) var(--button_outlineColor);
+}
+
+.a-Field:hover {
+  background: var(--field_bg__hover);
+}
+
+.a-Field.--disabled {
+  background: var(--field_bg__disabled);
+}
+
+.a-Field.--error {
+  background: var(--field_bg__error);
+}
+.a-Field.--error.--focused {
+  background: var(--field_bg__error__focus);
+}
+.a-Field.--error:hover {
+  background: var(--field_bg__error__hover);
+}

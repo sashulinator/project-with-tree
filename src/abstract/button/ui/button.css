@@ -4,6 +4,7 @@
   justify-content: center;
   outline: 0;
   cursor: pointer;
+  font: inherit;
 }
 
 .a-Button:focus {

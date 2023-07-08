@@ -1,6 +1,6 @@
 import './flex.css'
 
-import { clsx } from 'clsx'
+import { c } from '~/utils/core'
 
 Flex.displayName = 'a-Flex'
 
@@ -15,11 +15,13 @@ export interface FlexProps {
   height?: string
   children?: React.ReactNode
   style?: React.CSSProperties | undefined
+  gap?: 'xs' | 's' | 'm' | 'l' | 'xl' | 'xxl' | 'xxxl' | undefined
 }
 
 export default function Flex(props: FlexProps): JSX.Element {
   const {
     dir = 'row',
+    gap,
     mainAxis = 'start',
     crossAxis = 'start',
     margin,
@@ -32,10 +34,11 @@ export default function Flex(props: FlexProps): JSX.Element {
 
   return (
     <div
-      className={clsx(
+      className={c(
         props.className,
         Flex.displayName,
         `--${dir}`,
+        gap && `--${gap}`,
         `--mainAxis-${mainAxis}`,
         `--mainAxis-${crossAxis}`
       )}

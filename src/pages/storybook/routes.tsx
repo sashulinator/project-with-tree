@@ -4,16 +4,45 @@ import Nav from '~/ui/nav'
 
 import PointNodePage from './entities/point/node'
 import Balloon from './ui/balloon'
-import AbstractButtonPage from './ui/button'
+import ButtonPage from './ui/button'
 import CalloutPage from './ui/callout'
 import DropdownPage from './ui/dropdown'
 import UIEditablePage from './ui/editable/index'
 import ListPage from './ui/list'
 import UINodePage from './ui/node'
 import PopoverPage from './ui/popover'
-import TextInputPage from './ui/text-input'
+import OldTextInputPage from './ui/old-text-input'
+import FieldInputPage from './ui/field'
+import InputPage from './ui/input'
 
 export const routes = {
+  button: {
+    path: '/button',
+    element: <ButtonPage />,
+    getName: (): string => 'Button',
+    getURL: function (): string {
+      return `${sharedRoutes.storybook.getURL()}${this.path}`
+    },
+  },
+
+  field: {
+    path: '/field',
+    element: <FieldInputPage />,
+    getName: (): string => 'Field',
+    getURL: function (): string {
+      return `${sharedRoutes.storybook.getURL()}${this.path}`
+    },
+  },
+
+  input: {
+    path: '/input',
+    element: <InputPage />,
+    getName: (): string => 'Input',
+    getURL: function (): string {
+      return `${sharedRoutes.storybook.getURL()}${this.path}`
+    },
+  },
+
   callout: {
     path: '/ui/callout',
     element: <CalloutPage />,
@@ -54,9 +83,9 @@ export const routes = {
       return `${sharedRoutes.storybook.getURL()}${this.path}`
     },
   },
-  textInput: {
+  oldTextInput: {
     path: '/ui/text-input',
-    element: <TextInputPage />,
+    element: <OldTextInputPage />,
     getName: (): string => 'TextInput',
     getURL: function (): string {
       return `${sharedRoutes.storybook.getURL()}${this.path}`
@@ -75,15 +104,6 @@ export const routes = {
     path: '/ui/editable',
     element: <UIEditablePage />,
     getName: (): string => 'Editable',
-    getURL: function (): string {
-      return `${sharedRoutes.storybook.getURL()}${this.path}`
-    },
-  },
-
-  abstractButton: {
-    path: '/abstract/button',
-    element: <AbstractButtonPage />,
-    getName: (): string => 'AbstractButton',
     getURL: function (): string {
       return `${sharedRoutes.storybook.getURL()}${this.path}`
     },

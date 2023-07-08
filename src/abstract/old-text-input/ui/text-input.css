@@ -80,7 +80,9 @@
   border-width: var(--textInput_borderWidth__focused, var(--textInput_borderWidth));
   border-color: var(--textInput_borderColor__focused, var(--textInput_borderColor));
   transition: var(--textInput_transition__focused, var(--textInput_transition));
-  box-shadow: var(--box-shadow, 0px 0px), 0px 0px 0px var(--outlineWidth) var(--outlineColor);
+  box-shadow:
+    var(--box-shadow, 0px 0px),
+    0px 0px 0px var(--outlineWidth) var(--outlineColor);
 }
 .TextInput.--focused input {
   color: var(--textInput_color__focused, var(--textInput_color));
