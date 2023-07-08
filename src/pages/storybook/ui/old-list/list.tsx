@@ -2,8 +2,8 @@
 import { useMemo, useState } from 'react'
 
 import { User, groupedUserList, userList } from '~/mocks/deprecated/user-list'
-import { EventNames, ItemProps } from '~/ui/list'
-import ControlledList, { ControllableItemProps } from '~/ui/list/ui/controlled-list'
+import { EventNames, ItemProps } from '~/ui/old-list'
+import ControlledList, { ControllableItemProps } from '~/ui/old-list/ui/controlled-list'
 
 export default function ListPage(): JSX.Element {
   const [singleChecked, setSingleChecked] = useState<(string | number)[]>([])

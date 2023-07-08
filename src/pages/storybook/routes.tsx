@@ -8,7 +8,7 @@ import ButtonPage from './ui/button'
 import CalloutPage from './ui/callout'
 import DropdownPage from './ui/dropdown'
 
-import ListPage from './ui/list'
+import OldListPage from './ui/old-list'
 import UINodePage from './ui/node'
 import PopoverPage from './ui/popover'
 
@@ -59,9 +59,9 @@ export const routes = {
       return `${sharedRoutes.storybook.getURL()}${this.path}`
     },
   },
-  list: {
-    path: '/ui/list',
-    element: <ListPage />,
+  oldList: {
+    path: '/ui/old-list',
+    element: <OldListPage />,
     getName: (): string => 'List',
     getURL: function (): string {
       return `${sharedRoutes.storybook.getURL()}${this.path}`

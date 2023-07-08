@@ -1,7 +1,7 @@
 import './item.css'
 
-import { ItemProps } from '~/ui/list'
-import { ControllableItemProps } from '~/ui/list/ui/controlled-list'
+import { ItemProps } from '~/ui/old-list'
+import { ControllableItemProps } from '~/ui/old-list/ui/controlled-list'
 
 export type DropdownItemProps<T, P> = ItemProps<T, P & ControllableItemProps>
 

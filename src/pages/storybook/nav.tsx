@@ -29,7 +29,7 @@ export default function Nav(): JSX.Element {
           <Link to={routes.dropdown.getURL()}>Dropdown</Link>
         </ol>
         <ol>
-          <Link to={routes.list.getURL()}>List</Link>
+          <Link to={routes.oldList.getURL()}>List</Link>
         </ol>
         <ol>
           <Link to={routes.popover.getURL()}>Popover</Link>
