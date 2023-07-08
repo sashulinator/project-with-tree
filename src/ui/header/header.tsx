@@ -7,8 +7,8 @@ import Link from '~/ui/link'
 import { setCSSVar } from '~/utils/dom'
 
 import { Logo } from '../icon'
-import { Logout } from '../icon/widgets/logout'
-import { User } from '../icon/widgets/user'
+import { Logout } from '../icon/variants/logout'
+import { User } from '../icon/variants/user'
 
 export default function Header(): JSX.Element {
   const navigate = useNavigate()
