@@ -43,6 +43,7 @@ function FieldSection(): JSX.Element {
   const [isFocused, , , toggleFocused] = useBoolean(false)
   const [isError, , , toggleError] = useBoolean(false)
   const [isDisabled, , , toggleDisabled] = useBoolean(false)
+  const [transparent, , , toggleTransparent] = useBoolean(false)
 
   return (
     <Section
@@ -68,6 +69,10 @@ function FieldSection(): JSX.Element {
               <input type='checkbox' id='error' checked={isError} onChange={toggleError} />
               isError
             </Flex>
+            <Flex>
+              <input type='checkbox' id='error' checked={transparent} onChange={toggleTransparent} />
+              transparent
+            </Flex>
           </Flex>
         </>
       }
@@ -78,6 +83,7 @@ function FieldSection(): JSX.Element {
         isFocused={isFocused}
         isError={isError}
         disabled={isDisabled}
+        transparent={transparent}
       />
     </Section>
   )
