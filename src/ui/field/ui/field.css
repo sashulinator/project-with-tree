@@ -1,2 +1,5 @@
 .ui-Field {
+  transition:
+    background 0.4s,
+    box-shadow 0.4s;
 }

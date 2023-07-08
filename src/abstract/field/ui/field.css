@@ -19,13 +19,13 @@
   height: var(--field_height__l);
 }
 
+.a-Field:hover {
+  background: var(--field_bg__hover);
+}
+
 .a-Field.--focused {
   background: var(--field_bg__focus);
   box-shadow: 0px 0px 0px var(--button_outlineWidth) var(--button_outlineColor);
-}
-
-.a-Field:hover {
-  background: var(--field_bg__hover);
 }
 
 .a-Field.--disabled {
