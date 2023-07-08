@@ -12,7 +12,8 @@ import ListPage from './ui/list'
 import UINodePage from './ui/node'
 import PopoverPage from './ui/popover'
 import OldTextInputPage from './ui/old-text-input'
-import TextInputPage from './ui/field'
+import FieldInputPage from './ui/field'
+import InputPage from './ui/input'
 
 export const routes = {
   button: {
@@ -24,10 +25,19 @@ export const routes = {
     },
   },
 
-  textInput: {
+  field: {
     path: '/field',
-    element: <TextInputPage />,
+    element: <FieldInputPage />,
     getName: (): string => 'Field',
+    getURL: function (): string {
+      return `${sharedRoutes.storybook.getURL()}${this.path}`
+    },
+  },
+
+  input: {
+    path: '/input',
+    element: <InputPage />,
+    getName: (): string => 'Input',
     getURL: function (): string {
       return `${sharedRoutes.storybook.getURL()}${this.path}`
     },

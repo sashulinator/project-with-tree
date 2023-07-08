@@ -17,7 +17,10 @@ export default function Nav(): JSX.Element {
           <Link to={routes.button.getURL()}>Button</Link>
         </ol>
         <ol>
-          <Link to={routes.textInput.getURL()}>TextInput</Link>
+          <Link to={routes.field.getURL()}>Field</Link>
+        </ol>
+        <ol>
+          <Link to={routes.input.getURL()}>Input</Link>
         </ol>
         <ol>
           <Link to={routes.callout.getURL()}>Callout</Link>

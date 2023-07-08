@@ -23,18 +23,20 @@ function InputComponent<TFieldProps extends object>(
 
   const [isFocused, setFocused, unsetFocused] = useBoolean(false)
 
-  const children = [
-    left,
-    <input
-      key='0'
-      {...inputProps}
-      ref={ref}
-      className={clsx(className, InputComponent.displayName)}
-      onFocus={fns(props.onFocus, setFocused)}
-      onBlur={fns(props.onBlur, unsetFocused)}
-    />,
-    right,
-  ]
+  const children = (
+    <>
+      {left}
+      <input
+        key='0'
+        {...inputProps}
+        ref={ref}
+        className={clsx(className, InputComponent.displayName)}
+        onFocus={fns(props.onFocus, setFocused)}
+        onBlur={fns(props.onBlur, unsetFocused)}
+      />
+      {right}
+    </>
+  )
 
   return <>{createElement(renderField, { ...fieldProps, isFocused, children })}</>
 }

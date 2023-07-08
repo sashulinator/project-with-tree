@@ -18,10 +18,11 @@ export type InputProps = React.InputHTMLAttributes<HTMLInputElement> & {
   right?: React.ReactNode
   fieldProps?: FieldProps
   height?: 'm' | 's' | 'l'
+  isError?: boolean
 }
 
 function InputComponent(props: InputProps, ref: ForwardedRef<HTMLInputElement>): JSX.Element {
-  const { left, right, className, fieldProps, height = 'm', ...inputProps } = props
+  const { left, right, className, fieldProps, height = 'm', isError, ...inputProps } = props
 
   return (
     <AbstractInput
@@ -31,12 +32,10 @@ function InputComponent(props: InputProps, ref: ForwardedRef<HTMLInputElement>):
       left={left}
       right={right}
       renderField={Field}
-      fieldProps={{ height, ...fieldProps, className: c(fieldProps?.className, 'ui-Input__field') }}
+      fieldProps={{ height, isError, ...fieldProps, className: c(fieldProps?.className, 'ui-Input__field') }}
     />
   )
 }
 
-// Генерик схлопывается при использовании forwardRef
-// https://stackoverflow.com/questions/58469229/react-with-typescript-generics-while-using-react-forwardref
 const Input = forwardRef(InputComponent)
 export default Input
