@@ -27,6 +27,7 @@ export default function DecisionPanel(props: DecisionPanelProps): JSX.Element {
       <div className='name'>
         <Input
           {...useChangeOnBlurStrategy({
+            transparent: true,
             cannotBeEmpty: true,
             value: props.state.name.value,
             placeholder: 'Имя',
