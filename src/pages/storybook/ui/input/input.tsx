@@ -39,6 +39,7 @@ export default function InputPage(): JSX.Element {
 function InputSection(): JSX.Element {
   const [height, setHeight] = useState<InputProps['height']>('m')
   const [isError, , , toggleError] = useBoolean(false)
+  const [transparent, , , toggleTransparent] = useBoolean(false)
 
   return (
     <Section
@@ -63,11 +64,15 @@ function InputSection(): JSX.Element {
               <input type='checkbox' id='error' checked={isError} onChange={toggleError} />
               isError
             </Flex>
+            <Flex>
+              <input type='checkbox' id='error' checked={transparent} onChange={toggleTransparent} />
+              transparent
+            </Flex>
           </Flex>
         </>
       }
     >
-      <Input height={height || 'm'} isError={isError} />
+      <Input height={height || 'm'} isError={isError} transparent={transparent} />
     </Section>
   )
 }
