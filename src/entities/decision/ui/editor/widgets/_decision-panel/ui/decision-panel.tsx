@@ -2,11 +2,11 @@ import './decision-panel.css'
 
 import { clsx } from 'clsx'
 
-import Editable from '~/ui/editable'
 import ThemeDropdown from '~/ui/theme-dropdown'
 import { useUpdate } from '~/utils/hooks'
 
 import { EditorState } from '../../..'
+import Input, { useChangeOnBlurStrategy } from '~/ui/input'
 
 DecisionPanel.displayName = 'decision-Editor-DecisionPanel'
 
@@ -25,11 +25,13 @@ export default function DecisionPanel(props: DecisionPanelProps): JSX.Element {
       </div>
 
       <div className='name'>
-        <Editable
-          cannotBeEmpty={true}
-          value={props.state.name.value}
-          placeholder='Имя'
-          onChange={(ev): void => props.state.name.set(ev.currentTarget.value)}
+        <Input
+          {...useChangeOnBlurStrategy({
+            cannotBeEmpty: true,
+            value: props.state.name.value,
+            placeholder: 'Имя',
+            onChange: (ev): void => props.state.name.set(ev.currentTarget.value),
+          })}
         />
       </div>
     </div>

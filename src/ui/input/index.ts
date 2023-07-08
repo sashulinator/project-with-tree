@@ -1,3 +1,5 @@
+export * from './lib/use-change-on-blur-strategy'
+
 export { default } from './ui/input'
 export * from './ui/input'
 

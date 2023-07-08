@@ -29,9 +29,6 @@ export default function Nav(): JSX.Element {
           <Link to={routes.dropdown.getURL()}>Dropdown</Link>
         </ol>
         <ol>
-          <Link to={routes.editable.getURL()}>Editable</Link>
-        </ol>
-        <ol>
           <Link to={routes.list.getURL()}>List</Link>
         </ol>
         <ol>

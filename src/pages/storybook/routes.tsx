@@ -7,7 +7,7 @@ import Balloon from './ui/balloon'
 import ButtonPage from './ui/button'
 import CalloutPage from './ui/callout'
 import DropdownPage from './ui/dropdown'
-import UIEditablePage from './ui/editable/index'
+
 import ListPage from './ui/list'
 import UINodePage from './ui/node'
 import PopoverPage from './ui/popover'
@@ -96,14 +96,6 @@ export const routes = {
     path: '/ui/node',
     element: <UINodePage />,
     getName: (): string => 'Node',
-    getURL: function (): string {
-      return `${sharedRoutes.storybook.getURL()}${this.path}`
-    },
-  },
-  editable: {
-    path: '/ui/editable',
-    element: <UIEditablePage />,
-    getName: (): string => 'Editable',
     getURL: function (): string {
       return `${sharedRoutes.storybook.getURL()}${this.path}`
     },
