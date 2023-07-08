@@ -19,10 +19,11 @@ export type InputProps = React.InputHTMLAttributes<HTMLInputElement> & {
   fieldProps?: FieldProps
   height?: 'm' | 's' | 'l'
   isError?: boolean
+  transparent?: boolean
 }
 
 function InputComponent(props: InputProps, ref: ForwardedRef<HTMLInputElement>): JSX.Element {
-  const { left, right, className, fieldProps, height = 'm', isError, ...inputProps } = props
+  const { left, right, className, fieldProps, height = 'm', transparent, isError, ...inputProps } = props
 
   return (
     <AbstractInput
@@ -32,7 +33,13 @@ function InputComponent(props: InputProps, ref: ForwardedRef<HTMLInputElement>):
       left={left}
       right={right}
       renderField={Field}
-      fieldProps={{ height, isError, ...fieldProps, className: c(fieldProps?.className, 'ui-Input__field') }}
+      fieldProps={{
+        height,
+        isError,
+        transparent,
+        ...fieldProps,
+        className: c(fieldProps?.className, 'ui-Input__field'),
+      }}
     />
   )
 }

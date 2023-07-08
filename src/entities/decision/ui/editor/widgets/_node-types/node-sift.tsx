@@ -3,12 +3,10 @@ import './node-sift.css'
 import { clsx } from 'clsx'
 import { useState } from 'react'
 
-import UnstyledButton from '~/abstract/button'
 import { addToast } from '~/abstract/toast'
 import { Joint, NewSource, Node, NodeState, RuleSet } from '~/entities/point'
 import { RuleLinkState } from '~/entities/rule'
-import { GhostButton } from '~/ui/button'
-import Editable from '~/ui/editable'
+import Button, { GhostButton } from '~/ui/button'
 import { Trash } from '~/ui/icon'
 import { assertDefined } from '~/utils/assertions/defined'
 import { Id } from '~/utils/dictionary'
@@ -17,6 +15,7 @@ import { fns } from '~/utils/function'
 import { useUpdate } from '~/utils/hooks'
 
 import { LinkStateDictionary } from '../_links'
+import Input, { useChangeOnBlurStrategy } from '~/ui/input'
 
 export interface SiftNodeProps {
   state: NodeState
@@ -44,6 +43,13 @@ export function SiftNode(props: SiftNodeProps): JSX.Element {
     .getLinksBySourceId(props.state.id)
     .sort((a, b) => (a.index.value < b.index.value ? -1 : 1))
 
+  const descriptionInputProps = useChangeOnBlurStrategy({
+    value: props.state.description.value,
+    cannotBeEmpty: true,
+    placeholder: 'Описание',
+    onChange: (ev): void => props.state.description.set(ev.currentTarget.value),
+  })
+
   return (
     <Node
       className='--sift'
@@ -52,10 +58,12 @@ export function SiftNode(props: SiftNodeProps): JSX.Element {
       dataId={props.state.id}
       nodeTitle={
         <div style={{ display: 'flex' }}>
-          <Editable
-            value={props.state.title.value}
-            cannotBeEmpty={true}
-            onChange={(ev): void => props.state.title.set(ev.currentTarget.value)}
+          <Input
+            {...useChangeOnBlurStrategy({
+              value: props.state.title.value,
+              cannotBeEmpty: true,
+              onChange: (ev): void => props.state.title.set(ev.currentTarget.value),
+            })}
           />
           <GhostButton
             square={true}
@@ -66,15 +74,7 @@ export function SiftNode(props: SiftNodeProps): JSX.Element {
           </GhostButton>
         </div>
       }
-      nodeDescription={
-        props.state.description.value ? (
-          <Editable
-            value={props.state.description.value}
-            placeholder='Описание'
-            onChange={(ev): void => props.state.description.set(ev.currentTarget.value)}
-          />
-        ) : null
-      }
+      nodeDescription={props.state.description.value ? <Input {...descriptionInputProps} /> : null}
       left={
         <div className='targetLinks'>
           {targetLinks.map((linkState) => {
@@ -123,14 +123,15 @@ export function SiftNode(props: SiftNodeProps): JSX.Element {
           }}
         />
       </div>
-      <UnstyledButton
+      <Button
+        height='none'
         onClick={(): void => {
           props.state.computation.value = props.state.computation.value === 'parallel' ? 'successively' : 'parallel'
         }}
         className={clsx('computation', `--${props.state.computation.value || ''}`)}
       >
         {props.state.computation.value === 'parallel' ? 'Параллельно' : 'Последовательно'}
-      </UnstyledButton>
+      </Button>
     </Node>
   )
 
