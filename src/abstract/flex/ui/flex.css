@@ -9,6 +9,28 @@
   flex-direction: row;
 }
 
+.a-Flex.--xs {
+  gap: var(--xs);
+}
+.a-Flex.--s {
+  gap: var(--s);
+}
+.a-Flex.--m {
+  gap: var(--m);
+}
+.a-Flex.--l {
+  gap: var(--l);
+}
+.a-Flex.--xl {
+  gap: var(--xl);
+}
+.a-Flex.--xxl {
+  gap: var(--xxl);
+}
+.a-Flex.--xxxl {
+  gap: var(--xxxl);
+}
+
 .a-Flex.--mainAxis-center {
   justify-content: center;
 }

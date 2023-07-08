@@ -8,11 +8,10 @@ import { H1, H2 } from '~/ui/heading'
 import PageSection from '~/ui/page-section'
 
 import Section from '../../section'
-import Input, { InputProps } from '~/ui/input'
+import Input, { ClearableInput, InputProps, PasswordInput } from '~/ui/input'
 import { useBoolean } from '~/utils/hooks'
 import { routes } from '../../routes'
 import Link from '~/ui/link'
-import { GhostButton } from '~/ui/button/variants/ghost'
 import { User } from '~/ui/icon'
 
 export default function InputPage(): JSX.Element {
@@ -23,8 +22,10 @@ export default function InputPage(): JSX.Element {
         <p>Компонент Input</p>
         <p>Представляет собой input элемент</p>
         <Section>
-          <Flex dir='column'>
+          <Flex dir='column' gap='m'>
             <Input left={<User style={{ margin: '0 0 0 var(--m)' }} />} />
+            <PasswordInput />
+            <ClearableInput />
           </Flex>
         </Section>
       </PageSection>
@@ -66,7 +67,7 @@ function InputSection(): JSX.Element {
         </>
       }
     >
-      <Input height={height} isError={isError} />
+      <Input height={height || 'm'} isError={isError} />
     </Section>
   )
 }

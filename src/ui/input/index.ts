@@ -8,3 +8,4 @@ export { light as lightTheme } from './themes/light'
 export type { CSSVars as ComponentCSSVars } from './types/css-vars'
 
 export * from './variants/password'
+export * from './variants/clearable'
