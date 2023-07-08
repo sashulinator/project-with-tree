@@ -10,6 +10,9 @@ import PageSection from '~/ui/page-section'
 import Section from '../../section'
 import Field, { FieldProps } from '~/ui/field'
 import { useBoolean } from '~/utils/hooks'
+import Input from '~/ui/input'
+import { GhostButton } from '~/ui/button'
+import { User } from '~/ui/icon'
 
 export default function TextInputPage(): JSX.Element {
   return (
@@ -23,9 +26,14 @@ export default function TextInputPage(): JSX.Element {
             <Field height={null}>
               <textarea />
             </Field>
-            <Field>
-              <input />
-            </Field>
+            <Input
+              height={'l'}
+              left={
+                <GhostButton round={true} height='s'>
+                  <User />
+                </GhostButton>
+              }
+            />
           </Flex>
         </Section>
       </PageSection>
@@ -61,6 +69,10 @@ function FieldSection(): JSX.Element {
             <Flex>
               <input type='checkbox' id='error' checked={isDisabled} onChange={toggleDisabled} />
               isDisabled
+            </Flex>
+            <Flex>
+              <input type='checkbox' id='error' checked={isError} onChange={toggleError} />
+              isError
             </Flex>
           </Flex>
         </>

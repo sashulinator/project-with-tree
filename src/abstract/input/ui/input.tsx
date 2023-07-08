@@ -42,7 +42,6 @@ function InputComponent<TFieldProps extends object>(
 // Генерик схлопывается при использовании forwardRef
 // https://stackoverflow.com/questions/58469229/react-with-typescript-generics-while-using-react-forwardref
 const Input = forwardRef(InputComponent) as <TFieldProps extends object>(
-  props: InputProps<TFieldProps>,
-  ref: ForwardedRef<HTMLInputElement>
+  props: InputProps<TFieldProps> & { ref?: ForwardedRef<HTMLInputElement> }
 ) => JSX.Element
 export default Input
