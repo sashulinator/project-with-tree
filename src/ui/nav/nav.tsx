@@ -11,7 +11,10 @@ export default function Nav(): JSX.Element {
     <nav className='pt-5rem pl-2rem '>
       <ul>
         <ol>
-          <Link to={routes.decisionList.path}>Decisions</Link>
+          <Link to={routes.decisionList.getURL()}>Decisions</Link>
+        </ol>
+        <ol>
+          <Link to={routes.rules.getURL()}>Rules</Link>
         </ol>
         {isDev() && (
           <ol>

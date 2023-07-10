@@ -60,6 +60,7 @@ export function SiftNode(props: SiftNodeProps): JSX.Element {
         <div style={{ display: 'flex' }}>
           <Input
             {...useChangeOnBlurStrategy({
+              transparent: true,
               value: props.state.title.value,
               cannotBeEmpty: true,
               onChange: (ev): void => props.state.title.set(ev.currentTarget.value),
