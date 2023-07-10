@@ -48,6 +48,9 @@ export const routes = {
     getName: () => 'Rules',
     path: '/project-with-tree/rules',
     element: <RulesPage />,
+    getURL(): string {
+      return this.path
+    },
   },
   decisionId: {
     path: '/project-with-tree/decision/:id',
