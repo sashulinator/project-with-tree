@@ -14,6 +14,19 @@ export type EditableProps = Omit<InputProps, 'onChange'> & {
   ref?: ForwardedRef<HTMLInputElement>
 }
 
+/**
+ * Хук позволяющий вызывает функцию onChange при событии onBlur и при нажатии Enter
+ * @example
+ *  <Input
+ *    {...useChangeOnBlurStrategy({
+ *      transparent: true,
+ *      cannotBeEmpty: true,
+ *      value,
+ *      onChange,
+ *    })}
+ *  />
+ */
+
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 export function useChangeOnBlurStrategy(props: EditableProps) {
   const { onChange, blurOnSubmit, cannotBeEmpty, ...inputProps } = props
