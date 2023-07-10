@@ -4,6 +4,7 @@ import { AnyEvent, Prop } from '~/utils/emitter'
 
 export type Events = {
   selected: { value: Id[] }
+  preselected: { value: Id[] }
 }
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
@@ -11,10 +12,10 @@ export interface ItemStateProps<Item> {
   getItemId: (item: Item) => Id
 }
 
-export class State<Item, E extends AnyEvent = AnyEvent> extends Emitter<E & Events> {
+export class State<Item, E extends object = object> extends Emitter<E & Events> {
   selected: Prop<'selected', Id[]>
 
-  preselected: Prop<'preselected', Id | undefined>
+  preselected: Prop<'preselected', Id[]>
 
   getItemId: (item: Item) => Id
 
@@ -23,7 +24,7 @@ export class State<Item, E extends AnyEvent = AnyEvent> extends Emitter<E & Even
 
     this.selected = new Prop<'selected', Id[]>('selected', [], this)
 
-    this.preselected = new Prop<'preselected', Id | undefined>('preselected', undefined, this)
+    this.preselected = new Prop<'preselected', Id[]>('preselected', [], this)
 
     this.getItemId = props.getItemId
   }

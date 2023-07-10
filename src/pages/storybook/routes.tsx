@@ -14,6 +14,7 @@ import PopoverPage from './ui/popover'
 
 import FieldInputPage from './ui/field'
 import InputPage from './ui/input'
+import ListPage from './ui/list'
 
 export const routes = {
   button: {
@@ -43,6 +44,15 @@ export const routes = {
     },
   },
 
+  list: {
+    path: '/ui/list',
+    element: <ListPage />,
+    getName: (): string => 'List',
+    getURL: function (): string {
+      return `${sharedRoutes.storybook.getURL()}${this.path}`
+    },
+  },
+
   callout: {
     path: '/ui/callout',
     element: <CalloutPage />,
@@ -67,6 +77,7 @@ export const routes = {
       return `${sharedRoutes.storybook.getURL()}${this.path}`
     },
   },
+
   popover: {
     path: '/ui/popover',
     element: <PopoverPage />,

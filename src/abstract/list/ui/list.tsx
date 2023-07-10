@@ -4,11 +4,17 @@ import { createElement, useMemo } from 'react'
 
 List.displayName = 'a-List'
 
+export interface ItemProps<TItem> {
+  item: TItem
+  state: State<TItem>
+  id: Id
+}
+
 export interface ListProps<TItem> extends React.HTMLAttributes<HTMLUListElement> {
   items: TItem[]
   state?: State<TItem>
   getItemId: (item: TItem) => Id
-  renderItem: (props: { item: TItem; state: State<TItem>; id: Id }) => JSX.Element | null
+  renderItem: (props: ItemProps<TItem>) => JSX.Element | null
 }
 
 export default function List<TItem>(props: ListProps<TItem>): JSX.Element {
@@ -19,7 +25,7 @@ export default function List<TItem>(props: ListProps<TItem>): JSX.Element {
   const children = useMemo(() => {
     return items.map((item) => {
       const id = getItemId(item)
-      return createElement(renderItem, { state, item, id })
+      return createElement(renderItem, { state, item, id, key: id })
     })
   }, [props.state, items])
 
