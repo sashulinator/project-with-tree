@@ -6,7 +6,7 @@ import Dropdown from '~/ui/dropdown'
 import { DropdownItem, DropdownItemProps } from '~/ui/dropdown-list'
 import DropdownList, { DropdownListProps } from '~/ui/dropdown-list/ui/dropdown-list'
 import Input, { InputProps } from '~/ui/input'
-import { Key, ListState } from '~/ui/list'
+import { Key, ListState } from '~/ui/old-list'
 
 // import TextInput from '~/ui/text-input/ui/text-input'
 

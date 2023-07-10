@@ -6,6 +6,7 @@ import { emitter } from '~/shared/emitter'
 
 import { dark } from '../_themes/dark'
 import { light } from '../_themes/light'
+import Paper from '~/ui/paper'
 
 emitter.emit('addTheme', { dark, light })
 
@@ -15,5 +16,5 @@ PageSection.displayName = 'ui-PageSection'
 export interface PageSectionProps extends React.HTMLAttributes<HTMLDivElement> {}
 
 export default function PageSection(props: PageSectionProps): JSX.Element {
-  return <div {...props} className={clsx(props.className, PageSection.displayName)} />
+  return <Paper {...props} className={clsx(props.className, PageSection.displayName)} />
 }

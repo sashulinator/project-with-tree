@@ -8,12 +8,13 @@ import ButtonPage from './ui/button'
 import CalloutPage from './ui/callout'
 import DropdownPage from './ui/dropdown'
 
-import ListPage from './ui/list'
+import OldListPage from './ui/old-list'
 import UINodePage from './ui/node'
 import PopoverPage from './ui/popover'
 
 import FieldInputPage from './ui/field'
 import InputPage from './ui/input'
+import ListPage from './ui/list'
 
 export const routes = {
   button: {
@@ -43,6 +44,15 @@ export const routes = {
     },
   },
 
+  list: {
+    path: '/ui/list',
+    element: <ListPage />,
+    getName: (): string => 'List',
+    getURL: function (): string {
+      return `${sharedRoutes.storybook.getURL()}${this.path}`
+    },
+  },
+
   callout: {
     path: '/ui/callout',
     element: <CalloutPage />,
@@ -59,14 +69,15 @@ export const routes = {
       return `${sharedRoutes.storybook.getURL()}${this.path}`
     },
   },
-  list: {
-    path: '/ui/list',
-    element: <ListPage />,
+  oldList: {
+    path: '/ui/old-list',
+    element: <OldListPage />,
     getName: (): string => 'List',
     getURL: function (): string {
       return `${sharedRoutes.storybook.getURL()}${this.path}`
     },
   },
+
   popover: {
     path: '/ui/popover',
     element: <PopoverPage />,
