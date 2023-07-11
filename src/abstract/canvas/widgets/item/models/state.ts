@@ -4,7 +4,11 @@ import { Prop } from '~/utils/emitter'
 
 import { PositionProp } from '../../../state/position-prop'
 import { Position } from '../../../types/position'
-import { ItemEvents } from './events'
+
+export type ItemEvents = {
+  position: { value: Position }
+  ref: { value: HTMLElement }
+}
 
 export interface ItemStateProps {
   id: Id
