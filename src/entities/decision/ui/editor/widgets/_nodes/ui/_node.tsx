@@ -1,5 +1,5 @@
-import { NodeState } from '~/entities/decision/ui/editor/widgets/_node'
-import { RuleLinkState } from '~/entities/rule'
+import { NodeState } from '../../_node'
+import { RuleLinkState } from '../../_link'
 import { Id } from '~/utils/core'
 import { useUpdate } from '~/utils/hooks'
 

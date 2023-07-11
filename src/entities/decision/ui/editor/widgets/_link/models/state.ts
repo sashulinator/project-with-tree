@@ -4,7 +4,7 @@ import { Emitter } from '~/lib/emitter'
 import { Id } from '~/utils/core'
 import { Prop } from '~/utils/emitter'
 
-import { Rule } from '../../../types/rule'
+import { Rule } from '../../../../../../rule/types/rule'
 
 export type Events = {
   targetId: { value: Id }
