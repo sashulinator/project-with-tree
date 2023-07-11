@@ -1,5 +1,3 @@
-export * from './lib/get-transform'
-
 export * from './state/position-prop'
 
 export * from '~/utils/core/types/position'
