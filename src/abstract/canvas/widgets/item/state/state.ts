@@ -16,7 +16,7 @@ export class ItemState<E extends ItemEvents> extends Emitter<E> {
 
   ref: Prop<'ref', null | Element>
 
-  position: PositionProp<'setPosition'>
+  position: PositionProp<'position'>
 
   constructor(props: ItemStateProps) {
     super()
@@ -25,6 +25,6 @@ export class ItemState<E extends ItemEvents> extends Emitter<E> {
 
     this.ref = new Prop<'ref', null | Element>('ref', null, this)
 
-    this.position = new PositionProp('setPosition', props.position, this)
+    this.position = new PositionProp('position', props.position, this)
   }
 }

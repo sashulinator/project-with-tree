@@ -54,8 +54,6 @@ export function Node(props: NodeProps): JSX.Element {
   // Private
 
   function subscribeOnUpdates(update: () => void, uns: (() => void)[]): void {
-    uns.push(props.state.on('setPosition', update))
-    uns.push(props.state.on('setWidth', update))
-    uns.push(props.state.on('setHeight', update))
+    uns.push(props.state.on('position', update))
   }
 }
