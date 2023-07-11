@@ -17,6 +17,9 @@ export default function Nav(): JSX.Element {
           <Link to={routes.button.getURL()}>Button</Link>
         </ol>
         <ol>
+          <Link to={routes.collapse.getURL()}>Collapse</Link>
+        </ol>
+        <ol>
           <Link to={routes.field.getURL()}>Field</Link>
         </ol>
         <ol>
