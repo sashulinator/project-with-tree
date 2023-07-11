@@ -1,4 +1,4 @@
-import './node-sift.css'
+import './sift.css'
 
 import { clsx } from 'clsx'
 import { useState } from 'react'
@@ -14,7 +14,7 @@ import { stopPropagation } from '~/utils/dom'
 import { fns } from '~/utils/function'
 import { useUpdate } from '~/utils/hooks'
 
-import { LinkStateDictionary } from '../_links'
+import { LinkStateDictionary } from '../../../_links'
 import Input, { useChangeOnBlurStrategy } from '~/ui/input'
 
 export interface SiftNodeProps {

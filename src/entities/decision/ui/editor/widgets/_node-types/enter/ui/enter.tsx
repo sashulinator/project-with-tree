@@ -1,4 +1,4 @@
-import './node-enter.css'
+import './enter.css'
 
 import { LinkStateDictionary } from '~/entities/decision/ui/editor/widgets/_links/state/state'
 import { Joint, Node, NodeState } from '~/entities/point'
