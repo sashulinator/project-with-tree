@@ -8,6 +8,8 @@ export type IsDragEvent = Omit<FullGestureState<'drag'>, 'event'> & {
   event: PointerEvent | MouseEvent | TouchEvent | KeyboardEvent
 }
 
+const GAP = 500
+
 export interface CanvasItemDraggableProps {
   scale: number
   lastPosition: Position
@@ -37,8 +39,13 @@ export function ItemDraggable(props: CanvasItemDraggableProps): JSX.Element {
 
     const moveX = event.movement[0] / props.scale
     const moveY = event.movement[1] / props.scale
-    const x = props.lastPosition.x + moveX
+    let x = props.lastPosition.x + moveX
     const y = props.lastPosition.y + moveY
+
+    if (event.last) {
+      const rx = x % GAP
+      x = rx < GAP / 2 ? x - rx : x + GAP - rx
+    }
 
     props.onMove(x, y, event.last)
   })
