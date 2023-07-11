@@ -1,10 +1,9 @@
 import { clsx } from 'clsx'
-import { ForwardedRef, forwardRef, useEffect, useState } from 'react'
+import { ForwardedRef, forwardRef } from 'react'
 
 import { Id } from '~/utils/core'
-import { observeResize } from '~/utils/dom'
-import { getStyle } from '~/utils/dom/get-style'
-import { useForceUpdate } from '~/utils/hooks'
+
+import { useMeasure } from '~/utils/hooks'
 import { setRefs } from '~/utils/react'
 
 export interface ItemProps extends React.HTMLAttributes<HTMLDivElement> {
@@ -19,15 +18,10 @@ export interface ItemProps extends React.HTMLAttributes<HTMLDivElement> {
  */
 function ItemComponent(props: ItemProps, ref: ForwardedRef<HTMLDivElement>): JSX.Element {
   const { x, y, dataId, ...divProps } = props
-
-  const [measureRef, setMeasureRef] = useState<HTMLElement | null>(null)
-  const styles = getStyle(measureRef)
-  const update = useForceUpdate()
-
-  useEffect(() => observeResize(measureRef, update), [measureRef])
+  const [setMeasureRef, { height, width }] = useMeasure()
 
   return (
-    <foreignObject data-id={dataId} x={x} y={y} height={styles?.height} width={styles?.width}>
+    <foreignObject data-id={dataId} x={x} y={y} height={height} width={width}>
       <div
         {...divProps}
         className={clsx(props.className, 'a-CanvasItem')}

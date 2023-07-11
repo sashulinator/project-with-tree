@@ -15,12 +15,22 @@ import PopoverPage from './ui/popover'
 import FieldInputPage from './ui/field'
 import InputPage from './ui/input'
 import ListPage from './ui/list'
+import CollapsePage from './ui/collapse'
 
 export const routes = {
   button: {
     path: '/button',
     element: <ButtonPage />,
     getName: (): string => 'Button',
+    getURL: function (): string {
+      return `${sharedRoutes.storybook.getURL()}${this.path}`
+    },
+  },
+
+  collapse: {
+    path: '/ui/collapse',
+    element: <CollapsePage />,
+    getName: (): string => 'Collapse',
     getURL: function (): string {
       return `${sharedRoutes.storybook.getURL()}${this.path}`
     },
