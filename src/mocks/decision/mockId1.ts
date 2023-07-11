@@ -10,7 +10,7 @@ const mock: Decision = {
       type: 'MAIN',
       id: 'main',
       name: 'ВХОД',
-      x: 200,
+      x: 500,
       y: 200,
       props: {
         condition: 'age > 10',
@@ -21,7 +21,7 @@ const mock: Decision = {
       id: 'mockId2',
       computation: 'parallel',
       name: 'Базовые условия',
-      x: 550,
+      x: 1000,
       y: 200,
     },
     {
@@ -29,7 +29,7 @@ const mock: Decision = {
       computation: 'successively',
       id: 'mockId4',
       name: 'Политика контактов',
-      x: 1100,
+      x: 1500,
       y: 200,
     },
     {
@@ -37,7 +37,7 @@ const mock: Decision = {
       id: 'mockId6',
       computation: 'successively',
       name: 'Срок жизни тарифа',
-      x: 1850,
+      x: 2000,
       y: 200,
     },
     {
@@ -45,7 +45,7 @@ const mock: Decision = {
       id: 'mockId9',
       computation: 'successively',
       name: 'Предложить тариф супер',
-      x: 450,
+      x: 500,
       y: 500,
     },
     {
@@ -53,7 +53,7 @@ const mock: Decision = {
       id: 'mockId10',
       computation: 'successively',
       name: 'Предложить тариф мега',
-      x: 450,
+      x: 500,
       y: 700,
     },
     {
@@ -61,7 +61,7 @@ const mock: Decision = {
       id: 'mockId11',
       computation: 'successively',
       name: 'Предложить тариф максимальный',
-      x: 450,
+      x: 500,
       y: 900,
     },
   ],
