@@ -1,5 +1,4 @@
-import { PositionProp } from '~/abstract/canvas'
-import { Emitter } from '~/lib/emitter'
+import { Emitter, PositionProp } from '~/lib/emitter'
 import { Position } from '~/utils/core'
 import { AnyEvent, Prop } from '~/utils/emitter'
 

@@ -1,6 +1,6 @@
 import { Selection, select } from 'd3-selection'
+import { PositionProp } from '~/lib/emitter'
 
-import { PositionProp } from '~/abstract/canvas'
 import { AnyEvent, Emitter, Prop } from '~/utils/emitter'
 
 interface IEmitter<E extends AnyEvent> extends Emitter<E> {

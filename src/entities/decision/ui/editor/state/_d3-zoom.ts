@@ -1,6 +1,6 @@
 import { ZoomBehavior, ZoomTransform, zoom, zoomIdentity } from 'd3-zoom'
+import { PositionProp } from '~/lib/emitter'
 
-import { PositionProp } from '~/abstract/canvas'
 import { Position } from '~/utils/core'
 import { AnyEvent, Emitter, Prop } from '~/utils/emitter'
 
