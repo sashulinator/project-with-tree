@@ -1,6 +1,7 @@
 import { memo } from 'react'
 
-import { NodeState } from '~/entities/point'
+import { NodeState } from '~/entities/decision/ui/editor/widgets/_node'
+
 import { EmitterableDictionary } from '~/lib/emitter/dictionary'
 import { Any, Position } from '~/utils/core'
 import { useUpdate } from '~/utils/hooks'

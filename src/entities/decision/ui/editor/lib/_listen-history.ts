@@ -21,8 +21,8 @@ export function listenHistory(history: ActionHistory, state: EditorState, eventN
   //   history.add(redo, undo)
   // }
 
-  // if (eventName === 'setPosition') {
-  //   const e = event as Events['setPosition']
+  // if (eventName === 'position') {
+  //   const e = event as Events['position']
 
   //   if (!e.isLast) return
 
@@ -30,12 +30,12 @@ export function listenHistory(history: ActionHistory, state: EditorState, eventN
   //   const previousValue = pointState.position.previous
 
   //   const redo = (): void => {
-  //     const redoEvent: Events['setPosition'] & { isHistory: true } = { ...e, isHistory: true }
+  //     const redoEvent: Events['position'] & { isHistory: true } = { ...e, isHistory: true }
   //     state.itemStates.emit(e.itemId, eventName, redoEvent)
   //   }
 
   //   const undo = (): void => {
-  //     const undoEvent: Events['setPosition'] & { isHistory: true } = {
+  //     const undoEvent: Events['position'] & { isHistory: true } = {
   //       itemId: e.itemId,
   //       value: previousValue,
   //       isLast: true,

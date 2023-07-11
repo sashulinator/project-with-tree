@@ -4,7 +4,7 @@ import { clsx } from 'clsx'
 import { useState } from 'react'
 
 import UnstyledButton from '~/abstract/button'
-import { NodeState } from '~/entities/point'
+import { NodeState } from '~/entities/decision/ui/editor/widgets/_node'
 import { PrimaryButton } from '~/ui/button/variants/primary'
 import { Plus } from '~/ui/icon'
 import { Id } from '~/utils/core'

@@ -1,4 +1,4 @@
-import { Position } from '~/abstract/canvas'
+import { Position } from '~/utils/core'
 
 export type BoardEvents = {
   scale: { value: number }

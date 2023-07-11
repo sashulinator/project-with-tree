@@ -2,7 +2,7 @@ import './link.css'
 
 import { clsx } from 'clsx'
 
-import { NodeState } from '~/entities/point'
+import { NodeState } from '~/entities/decision/ui/editor/widgets/_node'
 import { Link } from '~/ui/canvas'
 import { Offset, Position } from '~/utils/core'
 import { fns } from '~/utils/function'
@@ -45,12 +45,8 @@ export function Component(props: Props): JSX.Element | null {
   }
 
   function subscribeOnUpdates(update: () => void): void {
-    targetState?.on('setPosition', update)
-    sourceState?.on('setPosition', update)
-    targetState?.on('setHeight', update)
-    sourceState?.on('setHeight', update)
-    targetState?.on('setWidth', update)
-    sourceState?.on('setWidth', update)
+    targetState?.on('position', update)
+    sourceState?.on('position', update)
     sourceState?.on('ref', update)
   }
 }

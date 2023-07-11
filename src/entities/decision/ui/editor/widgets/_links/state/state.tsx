@@ -1,4 +1,4 @@
-import { RuleLinkState } from '~/entities/rule'
+import { RuleLinkState } from '../../_link'
 import { Rule } from '~/entities/rule/types/rule'
 import { EmitterableDictionary } from '~/lib/emitter/dictionary'
 import { Id } from '~/utils/core'

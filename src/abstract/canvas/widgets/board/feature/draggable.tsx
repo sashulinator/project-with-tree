@@ -3,8 +3,7 @@ import { useDrag } from '@use-gesture/react'
 import { ReactDOMAttributes } from '@use-gesture/react/dist/declarations/src/types'
 
 import React from 'react'
-
-import { Position } from '~/abstract/canvas'
+import { Position } from '~/utils/core'
 
 export interface BoardDraggableProps {
   lastTranslate: Position

@@ -1,4 +1,5 @@
-import { NodeState, Point } from '~/entities/point'
+import { Point } from '~/entities/point'
+import { NodeState } from '~/entities/decision/ui/editor/widgets/_node'
 
 export const point: Point = {
   type: 'MAIN',

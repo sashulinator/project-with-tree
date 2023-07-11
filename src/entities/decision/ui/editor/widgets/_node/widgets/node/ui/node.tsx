@@ -2,15 +2,15 @@ import './node.css'
 
 import { clsx } from 'clsx'
 
-import { NodeState } from '~/entities/point'
+import { NodeState } from '~/entities/decision/ui/editor/widgets/_node'
 import { emitter } from '~/shared/emitter'
 import { Node as UINode } from '~/ui/canvas'
 import { Id } from '~/utils/core'
 import { useUpdate } from '~/utils/hooks'
 import { setRefs } from '~/utils/react'
 
-import { dark } from '../themes/dark'
-import { light } from '../themes/light'
+import { dark } from '../../../themes/dark'
+import { light } from '../../../themes/light'
 import { fns } from '~/utils/function'
 
 emitter.emit('addTheme', { dark, light })
@@ -54,8 +54,6 @@ export function Node(props: NodeProps): JSX.Element {
   // Private
 
   function subscribeOnUpdates(update: () => void, uns: (() => void)[]): void {
-    uns.push(props.state.on('setPosition', update))
-    uns.push(props.state.on('setWidth', update))
-    uns.push(props.state.on('setHeight', update))
+    uns.push(props.state.on('position', update))
   }
 }

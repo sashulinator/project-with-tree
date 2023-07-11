@@ -1,11 +1,11 @@
-import './node-sift.css'
+import './sift.css'
 
 import { clsx } from 'clsx'
 import { useState } from 'react'
 
 import { addToast } from '~/abstract/toast'
-import { Joint, NewSource, Node, NodeState, RuleSet } from '~/entities/point'
-import { RuleLinkState } from '~/entities/rule'
+import { Joint, NewSource, Node, NodeState, RuleSet } from '../../../../_node'
+import { RuleLinkState } from '../../../../_link'
 import Button, { GhostButton } from '~/ui/button'
 import { Trash } from '~/ui/icon'
 import { assertDefined } from '~/utils/assertions/defined'
@@ -14,7 +14,7 @@ import { stopPropagation } from '~/utils/dom'
 import { fns } from '~/utils/function'
 import { useUpdate } from '~/utils/hooks'
 
-import { LinkStateDictionary } from '../_links'
+import { LinkStateDictionary } from '../../../../_links'
 import Input, { useChangeOnBlurStrategy } from '~/ui/input'
 
 export interface SiftNodeProps {

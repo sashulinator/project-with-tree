@@ -1,5 +1,5 @@
 import { ItemEvents } from '~/abstract/canvas/widgets/item'
-import { ItemState } from '~/abstract/canvas/widgets/item/state'
+import { ItemState } from '~/abstract/canvas'
 import { Point } from '~/entities/point'
 import { Prop } from '~/utils/emitter'
 

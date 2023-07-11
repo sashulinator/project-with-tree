@@ -1,10 +1,12 @@
+import { PositionProp } from '~/lib/emitter'
 import { Emitter } from '~/lib/emitter/emitter'
-import { Id } from '~/utils/core'
+import { Id, Position } from '~/utils/core'
 import { Prop } from '~/utils/emitter'
 
-import { PositionProp } from '../../../state/position-prop'
-import { Position } from '../../../types/position'
-import { ItemEvents } from './events'
+export type ItemEvents = {
+  position: { value: Position }
+  ref: { value: HTMLElement }
+}
 
 export interface ItemStateProps {
   id: Id
@@ -16,7 +18,7 @@ export class ItemState<E extends ItemEvents> extends Emitter<E> {
 
   ref: Prop<'ref', null | Element>
 
-  position: PositionProp<'setPosition'>
+  position: PositionProp<'position'>
 
   constructor(props: ItemStateProps) {
     super()
@@ -25,6 +27,6 @@ export class ItemState<E extends ItemEvents> extends Emitter<E> {
 
     this.ref = new Prop<'ref', null | Element>('ref', null, this)
 
-    this.position = new PositionProp('setPosition', props.position, this)
+    this.position = new PositionProp('position', props.position, this)
   }
 }

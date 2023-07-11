@@ -1,4 +1,4 @@
-import { NodeState } from '~/entities/point'
+import { NodeState } from '~/entities/decision/ui/editor/widgets/_node'
 import { Rule } from '~/entities/rule/types/rule'
 import { EmitterableDictionary } from '~/lib/emitter/dictionary'
 import { assertNotNull, Id, Position } from '~/utils/core'

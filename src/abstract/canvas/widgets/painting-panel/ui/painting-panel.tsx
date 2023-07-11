@@ -1,8 +1,7 @@
-import clsx from 'clsx'
 import React, { ForwardedRef, forwardRef } from 'react'
+import { c, Position } from '~/utils/core'
 
-import { getTransform } from '../../../lib/get-transform'
-import { Position } from '../../../types/position'
+import { getTransform } from '../lib/_get-transform'
 
 export interface PaintingPanelProps extends React.SVGAttributes<SVGGElement> {
   translate: Position
@@ -16,7 +15,7 @@ function PaintingPanelComponent(props: PaintingPanelProps, ref: ForwardedRef<SVG
     <g
       {...gProps}
       ref={ref}
-      className={clsx(props?.className, 'a-PaintingPanel')}
+      className={c(props?.className, 'a-PaintingPanel')}
       style={{ transform: getTransform(translate, scale), ...props.style }}
     />
   )

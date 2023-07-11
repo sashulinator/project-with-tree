@@ -1,11 +1,12 @@
-import { NodeState } from '~/entities/point'
-import { RuleLinkState } from '~/entities/rule'
+import { NodeState } from '../../_node'
+import { RuleLinkState } from '../../_link'
 import { Id } from '~/utils/core'
 import { useUpdate } from '~/utils/hooks'
 
 import { LinkStateDictionary } from '../../_links/state/state'
-import { EnterNode } from '../../_node-types/node-enter'
-import { SiftNode } from '../../_node-types/node-sift'
+import { EnterNode } from '../../_node/variants/enter'
+import { SiftNode } from '../../_node/variants/sift'
+
 import { NodeStateDictionary } from '../state/state'
 
 interface MapNodeProps {
