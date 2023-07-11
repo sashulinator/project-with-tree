@@ -9,8 +9,8 @@ import { Id } from '~/utils/core'
 import { useUpdate } from '~/utils/hooks'
 import { setRefs } from '~/utils/react'
 
-import { dark } from '../themes/dark'
-import { light } from '../themes/light'
+import { dark } from '../../../themes/dark'
+import { light } from '../../../themes/light'
 import { fns } from '~/utils/function'
 
 emitter.emit('addTheme', { dark, light })

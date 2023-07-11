@@ -1,6 +1,6 @@
 // NODE
 
-export * from './ui/node'
+export * from './widgets/node/ui/node'
 
 export { State as NodeState } from './models/state'
 export type { StateProps as NodeStateProps, Events as NodeStateEvents } from './models/state'

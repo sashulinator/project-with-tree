@@ -14,7 +14,7 @@ import { stopPropagation } from '~/utils/dom'
 import { fns } from '~/utils/function'
 import { useUpdate } from '~/utils/hooks'
 
-import { LinkStateDictionary } from '../../../_links'
+import { LinkStateDictionary } from '../../../../_links'
 import Input, { useChangeOnBlurStrategy } from '~/ui/input'
 
 export interface SiftNodeProps {
