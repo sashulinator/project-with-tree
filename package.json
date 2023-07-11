@@ -7,7 +7,7 @@
   "author": "Savchenko Alexander",
   "license": "UNLICENSED",
   "scripts": {
-    "generate:mocks": "yarn ts-node -O \"{\"\"\"module\"\"\":\"\"\"commonjs\"\"\"}\" -T scripts/generate-static-mocks",
+    "generate:mocks": "yarn ts-node -O {\\\"module\\\":\\\"commonjs\\\"} -T scripts/generate-static-mocks",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d dist",
     "dev": "vite",

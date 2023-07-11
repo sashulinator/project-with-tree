@@ -54,7 +54,7 @@ function DefaultCollapseSection(): JSX.Element {
     >
       <Collapse
         isExpanded={expanded}
-        from={animation ? { opacity: 0, y: 0 } : undefined}
+        from={animation ? { opacity: expanded ? 0 : 1, y: 0 } : undefined}
         to={animation ? { opacity: expanded ? 1 : 0, y: expanded ? 0 : 20 } : undefined}
       >
         <p>Hello</p>
