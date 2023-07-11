@@ -1,8 +1,7 @@
 import React, { ForwardedRef, forwardRef } from 'react'
-import { c } from '~/utils/core'
+import { c, Position } from '~/utils/core'
 
 import { getTransform } from '../lib/_get-transform'
-import { Position } from '../../../types/position'
 
 export interface PaintingPanelProps extends React.SVGAttributes<SVGGElement> {
   translate: Position

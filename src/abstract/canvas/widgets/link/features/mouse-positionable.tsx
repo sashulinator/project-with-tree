@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
-
-import { Position } from '../../../types/position'
+import { Position } from '~/utils/core'
 
 export interface CanvasItemSelectableProps {
   enabled: boolean

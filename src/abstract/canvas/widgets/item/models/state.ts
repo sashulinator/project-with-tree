@@ -1,9 +1,8 @@
 import { Emitter } from '~/lib/emitter/emitter'
-import { Id } from '~/utils/core'
+import { Id, Position } from '~/utils/core'
 import { Prop } from '~/utils/emitter'
 
 import { PositionProp } from '../../../state/position-prop'
-import { Position } from '../../../types/position'
 
 export type ItemEvents = {
   position: { value: Position }

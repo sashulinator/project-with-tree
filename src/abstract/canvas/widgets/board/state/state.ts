@@ -1,5 +1,6 @@
-import { Position, PositionProp } from '~/abstract/canvas'
+import { PositionProp } from '~/abstract/canvas'
 import { Emitter } from '~/lib/emitter'
+import { Position } from '~/utils/core'
 import { AnyEvent, Prop } from '~/utils/emitter'
 
 import { BoardEvents } from './events'

@@ -1,6 +1,6 @@
-import { BoardEvents, BoardState, Position } from '~/abstract/canvas'
+import { BoardEvents, BoardState } from '~/abstract/canvas'
 import { Decision } from '~/entities/decision/types/decision'
-import { Id } from '~/utils/core'
+import { Id, Position } from '~/utils/core'
 import { Prop } from '~/utils/emitter'
 
 import { D3Selection } from './_d3-selection'
