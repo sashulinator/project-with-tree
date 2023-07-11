@@ -4,7 +4,7 @@ import { clsx } from 'clsx'
 import { useState } from 'react'
 
 import { addToast } from '~/abstract/toast'
-import { Joint, NewSource, Node, NodeState, RuleSet } from '~/entities/point'
+import { Joint, NewSource, Node, NodeState, RuleSet } from '~/entities/decision/ui/editor/widgets/_node'
 import { RuleLinkState } from '~/entities/rule'
 import Button, { GhostButton } from '~/ui/button'
 import { Trash } from '~/ui/icon'

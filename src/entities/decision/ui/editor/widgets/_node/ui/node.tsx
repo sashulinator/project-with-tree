@@ -2,7 +2,7 @@ import './node.css'
 
 import { clsx } from 'clsx'
 
-import { NodeState } from '~/entities/point'
+import { NodeState } from '~/entities/decision/ui/editor/widgets/_node'
 import { emitter } from '~/shared/emitter'
 import { Node as UINode } from '~/ui/canvas'
 import { Id } from '~/utils/core'

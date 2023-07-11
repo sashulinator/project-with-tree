@@ -1,8 +1,7 @@
 // import Callout, { top } from '~/ui/callout'
-import { Node } from '~/entities/point'
-
 import { boardState } from '../mocks/board-state'
 import { state } from '../mocks/node-state'
+import { Node } from '~/entities/decision/ui/editor/widgets/_node'
 
 export default function NodePage(): JSX.Element {
   return (

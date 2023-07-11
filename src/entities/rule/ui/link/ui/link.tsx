@@ -2,7 +2,7 @@ import './link.css'
 
 import { clsx } from 'clsx'
 
-import { NodeState } from '~/entities/point'
+import { NodeState } from '~/entities/decision/ui/editor/widgets/_node'
 import { Link } from '~/ui/canvas'
 import { Offset, Position } from '~/utils/core'
 import { fns } from '~/utils/function'
