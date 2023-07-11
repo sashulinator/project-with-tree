@@ -22,6 +22,7 @@ export interface SiftNodeProps {
   scale: number
   linkStates: LinkStateDictionary
   removeNode: (id: Id) => void
+  onMove?: ((x: number, y: number, isLast: boolean) => void) | undefined
 }
 
 /**
@@ -55,6 +56,7 @@ export function SiftNode(props: SiftNodeProps): JSX.Element {
       className='--sift'
       state={props.state}
       scale={props.scale}
+      onMove={props.onMove}
       dataId={props.state.id}
       nodeTitle={
         <div style={{ display: 'flex' }}>

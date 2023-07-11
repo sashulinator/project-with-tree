@@ -11,6 +11,7 @@ import { setRefs } from '~/utils/react'
 
 import { dark } from '../themes/dark'
 import { light } from '../themes/light'
+import { fns } from '~/utils/function'
 
 emitter.emit('addTheme', { dark, light })
 
@@ -22,6 +23,7 @@ export interface NodeProps extends React.HTMLAttributes<HTMLDivElement> {
   right?: React.ReactNode
   nodeTitle?: React.ReactNode | undefined
   nodeDescription?: React.ReactNode | undefined
+  onMove?: ((x: number, y: number, isLast: boolean) => void) | undefined
 }
 
 export function Node(props: NodeProps): JSX.Element {
@@ -40,7 +42,7 @@ export function Node(props: NodeProps): JSX.Element {
       position={state.position.value}
       lastPosition={state.position.last}
       scale={scale}
-      onMove={state.position.move}
+      onMove={fns(state.position.move, props.onMove)}
       left={left}
       right={right}
       data-id={state.id}

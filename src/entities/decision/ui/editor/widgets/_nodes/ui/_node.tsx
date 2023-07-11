@@ -1,4 +1,5 @@
 import { NodeState } from '~/entities/point'
+import { RuleLinkState } from '~/entities/rule'
 import { Id } from '~/utils/core'
 import { useUpdate } from '~/utils/hooks'
 
@@ -13,6 +14,7 @@ interface MapNodeProps {
   linkStates: LinkStateDictionary
   nodeStates: NodeStateDictionary
   removeNode: (id: Id) => void
+  onMove?: ((x: number, y: number, isLast: boolean) => void) | undefined
 }
 
 export function Node(props: MapNodeProps): JSX.Element {
@@ -23,6 +25,7 @@ export function Node(props: MapNodeProps): JSX.Element {
   }
   return (
     <SiftNode
+      onMove={props.onMove}
       removeNode={props.removeNode}
       key={props.state.id}
       state={props.state}
@@ -32,10 +35,18 @@ export function Node(props: MapNodeProps): JSX.Element {
   )
 
   function subscribeOnUpdates(update: () => void): void {
+    const updateNodes = (linkState: RuleLinkState): void => {
+      const sourceState = props.nodeStates.find(linkState.sourceId.value)
+      const targetState = props.nodeStates.find(linkState.targetId.value)
+      if (targetState) props.nodeStates.gridDepth(targetState.position.value.x)
+      if (sourceState) props.nodeStates.gridDepth(sourceState.position.value.x)
+    }
     // TODO сейчас обновляет все ноды, а надо только те что надо
     props.linkStates.on('editingId', update)
     props.linkStates.on('targetId', update)
     props.linkStates.on('sourceId', update)
     props.linkStates.on('index', update)
+    props.linkStates.on('add', ({ item }) => setTimeout(() => updateNodes(item)))
+    props.linkStates.on('update', ({ item }) => setTimeout(() => updateNodes(item)))
   }
 }
