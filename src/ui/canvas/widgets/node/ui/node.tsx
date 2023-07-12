@@ -34,7 +34,7 @@ export interface NodeProps extends React.HTMLAttributes<HTMLDivElement> {
 export function NodeComponent(props: NodeProps, ref: ForwardedRef<HTMLDivElement>): JSX.Element {
   const { nodeTitle, titleProps, nodeDescription, left, right, dataId, ...foreignObjectProps } = props
 
-  const titleRef = useRef(null)
+  const rulesRef = useRef(null)
 
   return (
     <Item
@@ -47,19 +47,19 @@ export function NodeComponent(props: NodeProps, ref: ForwardedRef<HTMLDivElement
       <div className={clsx('container')}>
         {left}
         <div className='content'>
-          <div ref={titleRef} {...titleProps} className={clsx('title', titleProps?.className)}>
+          <div {...titleProps} className={clsx('title', titleProps?.className)}>
             {nodeTitle}
           </div>
           <div className={clsx('description')}>{nodeDescription}</div>
           {props.children}
         </div>
-        {right}
+        <div ref={rulesRef}>{right}</div>
       </div>
     </Item>
   )
 
   function isDrag(event: IsDragEvent): boolean {
-    const isDraggable = event.event.target === titleRef.current
+    const isDraggable = event.event.target !== rulesRef.current
     if (isDraggable) props.isDrag?.(event)
     return isDraggable
   }
