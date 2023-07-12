@@ -10,8 +10,8 @@ export interface RulesItem {
   id: number
   domainName: string
   domainNodeType: string
-  parentDomain: null | RulesItem
-  childDomain: null | RulesItem
+  parentId: null | number
+  childDomain: null | RulesItem[]
   attributes: Attribute[]
 }
 
