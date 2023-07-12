@@ -22,7 +22,7 @@ export default function Collapse(props: CollapseProps): JSX.Element {
 
   const springProps = useSpring({
     config: { duration: props.duration ?? 200 },
-    from: { height: 0, ...props.from },
+    from: { height: viewHeight, ...props.from },
     to: {
       height: props.isExpanded ? viewHeight : 0,
       ...props.to,

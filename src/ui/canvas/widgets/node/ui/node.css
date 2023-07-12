@@ -6,7 +6,3 @@
 .ui-Node > .container > .content {
   width: 100%;
 }
-
-.ui-Node > .container > .content > .title {
-  cursor: grab;
-}
