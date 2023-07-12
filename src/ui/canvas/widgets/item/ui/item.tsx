@@ -1,11 +1,13 @@
 import { clsx } from 'clsx'
 import React, { ForwardedRef, forwardRef } from 'react'
 
-import { Item as AbstractItem, IsDragEvent, ItemDraggable } from '~/abstract/canvas'
+import { Item, ItemPreventDrag, ItemDraggable } from '~/abstract/canvas'
 import { Id, Position } from '~/utils/core'
 import { fns } from '~/utils/function'
 
-export interface CanvasItemProps extends React.HTMLAttributes<HTMLDivElement> {
+Component.displayName = 'ui-Canvas-w-Item'
+
+export interface Props extends React.HTMLAttributes<HTMLDivElement> {
   dataId: Id
   width?: number | undefined
   height?: number | undefined
@@ -14,28 +16,28 @@ export interface CanvasItemProps extends React.HTMLAttributes<HTMLDivElement> {
   scale: number
   children: React.ReactNode
   onMove: (x: number, y: number, isLast: boolean) => void
-  preventDrag: (event: IsDragEvent) => boolean
+  preventDrag: ItemPreventDrag
 }
 
 /**
  * Элемент Canvas с фичами
  * 1. Перетаскивание
  */
-export function ItemComponent(props: CanvasItemProps, ref: ForwardedRef<HTMLDivElement>): JSX.Element {
-  const { scale, position, lastPosition, preventDrag: isDrag, onMove: move, ...chartItemProps } = props
+export function Component(props: Props, ref: ForwardedRef<HTMLDivElement>): JSX.Element {
+  const { scale, position, lastPosition, preventDrag, onMove: move, ...chartItemProps } = props
 
   return (
-    <ItemDraggable lastPosition={lastPosition} onMove={move} preventDrag={isDrag} scale={scale}>
+    <ItemDraggable lastPosition={lastPosition} onMove={move} preventDrag={preventDrag} scale={scale}>
       {(draggableProps): JSX.Element => {
         return (
-          <AbstractItem
+          <Item
             {...chartItemProps}
             dataId={props.dataId}
             ref={ref}
             className={clsx(props.className, 'ui-CanvasItem')}
             y={position.y}
             x={position.x}
-            style={{ touchAction: 'none' }}
+            style={{ touchAction: 'none', ...chartItemProps.style }}
             onKeyDown={fns(draggableProps.onKeyDown, chartItemProps.onKeyDown)}
             onKeyUp={fns(draggableProps.onKeyUp, chartItemProps.onKeyUp)}
             onLostPointerCapture={fns(draggableProps.onLostPointerCapture, chartItemProps.onLostPointerCapture)}
@@ -50,6 +52,4 @@ export function ItemComponent(props: CanvasItemProps, ref: ForwardedRef<HTMLDivE
   )
 }
 
-const Item = forwardRef(ItemComponent)
-Item.displayName = 'UICanvasItem'
-export { Item }
+export default forwardRef(Component)
