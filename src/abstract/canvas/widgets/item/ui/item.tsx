@@ -6,8 +6,9 @@ import { Id } from '~/utils/core'
 import { useMeasure } from '~/utils/hooks'
 import { setRefs } from '~/utils/react'
 
-export interface ItemProps extends React.HTMLAttributes<HTMLDivElement> {
-  children: React.ReactNode
+Component.displayName = 'a-Canvas-w-Item'
+
+export interface Props extends React.HTMLAttributes<HTMLDivElement> {
   x: number
   y: number
   dataId: Id
@@ -16,7 +17,7 @@ export interface ItemProps extends React.HTMLAttributes<HTMLDivElement> {
 /**
  * Отрисовывает HTMLElement'ы в заданных координатах
  */
-function ItemComponent(props: ItemProps, ref: ForwardedRef<HTMLDivElement>): JSX.Element {
+function Component(props: Props, ref: ForwardedRef<HTMLDivElement>): JSX.Element {
   const { x, y, dataId, ...divProps } = props
   const [setMeasureRef, { height, width }] = useMeasure()
 
@@ -24,7 +25,7 @@ function ItemComponent(props: ItemProps, ref: ForwardedRef<HTMLDivElement>): JSX
     <foreignObject data-id={dataId} x={x} y={y} height={height} width={width}>
       <div
         {...divProps}
-        className={clsx(props.className, 'a-CanvasItem')}
+        className={clsx(props.className, Component.displayName)}
         style={{ height: 'fit-content', width: 'fit-content', ...props.style }}
         ref={setRefs(setMeasureRef, ref)}
       >
@@ -34,6 +35,4 @@ function ItemComponent(props: ItemProps, ref: ForwardedRef<HTMLDivElement>): JSX
   )
 }
 
-const Item = forwardRef(ItemComponent)
-Item.displayName = 'AbstractCanvasItem'
-export { Item }
+export default forwardRef(Component)
