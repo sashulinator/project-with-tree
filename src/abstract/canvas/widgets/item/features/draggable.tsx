@@ -3,16 +3,23 @@ import { FullGestureState, useDrag } from '@use-gesture/react'
 import React from 'react'
 import { Position } from '~/utils/core'
 
-export type IsDragEvent = Omit<FullGestureState<'drag'>, 'event'> & {
+Draggable.displayName = 'a-Canvas-f-Draggable'
+
+/**
+ *  Cобытие функции `preventDrag`
+ */
+export type PreventDragEvent = Omit<FullGestureState<'drag'>, 'event'> & {
   event: PointerEvent | MouseEvent | TouchEvent | KeyboardEvent
 }
 
+export type PreventDrag = (event: PreventDragEvent) => boolean
+
 const GAP = 500
 
-export interface CanvasItemDraggableProps {
+export interface DraggableProps {
   scale: number
   lastPosition: Position
-  isDrag: (event: IsDragEvent) => boolean
+  preventDrag: PreventDrag
   onMove: (x: number, y: number, isLast: boolean) => void
   children: (
     props: Pick<
@@ -28,10 +35,10 @@ export interface CanvasItemDraggableProps {
   ) => React.ReactNode
 }
 
-export function ItemDraggable(props: CanvasItemDraggableProps): JSX.Element {
+export function Draggable(props: DraggableProps): JSX.Element {
   const dragBind = useDrag((event): void => {
     event.event.stopPropagation()
-    if (!props.isDrag(event)) return
+    if (!props.preventDrag(event)) return
 
     const isIdle = event.movement[0] === 0 && event.movement[1] === 0
     if (isIdle) return
@@ -51,5 +58,3 @@ export function ItemDraggable(props: CanvasItemDraggableProps): JSX.Element {
 
   return <>{props.children(dragBind())}</>
 }
-
-ItemDraggable.displayName = 'CanvasItemDraggable'

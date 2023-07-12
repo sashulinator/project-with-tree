@@ -3,7 +3,7 @@ import './node.css'
 import { clsx } from 'clsx'
 import React, { ForwardedRef, forwardRef, useRef } from 'react'
 
-import { IsDragEvent } from '~/abstract/canvas'
+import { ItemPreventDragEvent, ItemPreventDrag } from '~/abstract/canvas'
 import { Id, Position } from '~/utils/core'
 
 import { Item } from '../../item'
@@ -22,7 +22,7 @@ export interface NodeProps extends React.HTMLAttributes<HTMLDivElement> {
   scale: number
   children: React.ReactNode
   onMove: (x: number, y: number, isLast: boolean) => void
-  isDrag?: (event: IsDragEvent) => boolean
+  preventDrag?: ItemPreventDrag
 }
 
 /**
@@ -32,17 +32,17 @@ export interface NodeProps extends React.HTMLAttributes<HTMLDivElement> {
  * 3. Стили позиционирования
  */
 export function NodeComponent(props: NodeProps, ref: ForwardedRef<HTMLDivElement>): JSX.Element {
-  const { nodeTitle, titleProps, nodeDescription, left, right, dataId, ...foreignObjectProps } = props
+  const { nodeTitle, titleProps, nodeDescription, left, right, dataId, ...itemProps } = props
 
   const rulesRef = useRef(null)
 
   return (
     <Item
-      {...foreignObjectProps}
+      {...itemProps}
       dataId={dataId}
       ref={ref}
       className={clsx(props.className, 'ui-Node')}
-      isDrag={isDrag}
+      preventDrag={preventDrag}
     >
       <div className={clsx('container')}>
         {left}
@@ -58,10 +58,9 @@ export function NodeComponent(props: NodeProps, ref: ForwardedRef<HTMLDivElement
     </Item>
   )
 
-  function isDrag(event: IsDragEvent): boolean {
+  function preventDrag(event: ItemPreventDragEvent): boolean {
     const isDraggable = event.event.target !== rulesRef.current
-    if (isDraggable) props.isDrag?.(event)
-    return isDraggable
+    return isDraggable && (props.preventDrag?.(event) || false)
   }
 }
 

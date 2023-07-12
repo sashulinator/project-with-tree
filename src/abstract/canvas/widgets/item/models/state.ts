@@ -3,24 +3,24 @@ import { Emitter } from '~/lib/emitter/emitter'
 import { Id, Position } from '~/utils/core'
 import { Prop } from '~/utils/emitter'
 
-export type ItemEvents = {
+export type Events = {
   position: { value: Position }
   ref: { value: HTMLElement }
 }
 
-export interface ItemStateProps {
+export interface StateProps {
   id: Id
   position: Position
 }
 
-export class ItemState<E extends ItemEvents> extends Emitter<E> {
+export class State<E extends Events> extends Emitter<E> {
   id: Id
 
   ref: Prop<'ref', null | Element>
 
   position: PositionProp<'position'>
 
-  constructor(props: ItemStateProps) {
+  constructor(props: StateProps) {
     super()
 
     this.id = props.id

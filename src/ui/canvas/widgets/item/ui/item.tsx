@@ -1,7 +1,7 @@
 import { clsx } from 'clsx'
 import React, { ForwardedRef, forwardRef } from 'react'
 
-import { Item as AbstractItem, IsDragEvent, ItemDraggable } from '~/abstract/canvas/widgets/item'
+import { Item as AbstractItem, IsDragEvent, ItemDraggable } from '~/abstract/canvas'
 import { Id, Position } from '~/utils/core'
 import { fns } from '~/utils/function'
 
@@ -14,7 +14,7 @@ export interface CanvasItemProps extends React.HTMLAttributes<HTMLDivElement> {
   scale: number
   children: React.ReactNode
   onMove: (x: number, y: number, isLast: boolean) => void
-  isDrag: (event: IsDragEvent) => boolean
+  preventDrag: (event: IsDragEvent) => boolean
 }
 
 /**
@@ -22,10 +22,10 @@ export interface CanvasItemProps extends React.HTMLAttributes<HTMLDivElement> {
  * 1. Перетаскивание
  */
 export function ItemComponent(props: CanvasItemProps, ref: ForwardedRef<HTMLDivElement>): JSX.Element {
-  const { scale, position, lastPosition, isDrag, onMove: move, ...chartItemProps } = props
+  const { scale, position, lastPosition, preventDrag: isDrag, onMove: move, ...chartItemProps } = props
 
   return (
-    <ItemDraggable lastPosition={lastPosition} onMove={move} isDrag={isDrag} scale={scale}>
+    <ItemDraggable lastPosition={lastPosition} onMove={move} preventDrag={isDrag} scale={scale}>
       {(draggableProps): JSX.Element => {
         return (
           <AbstractItem
