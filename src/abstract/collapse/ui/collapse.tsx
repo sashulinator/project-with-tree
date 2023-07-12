@@ -2,7 +2,8 @@ import { a, useSpring } from '@react-spring/web'
 
 import React, { CSSProperties } from 'react'
 import useMeasure from 'react-use-measure'
-import { c, Position } from '~/utils/core'
+
+import { Position, c } from '~/utils/core'
 
 Collapse.displayName = 'a-Collapse'
 
