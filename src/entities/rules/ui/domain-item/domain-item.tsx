@@ -1,4 +1,5 @@
-import { RulesItem } from '../../types/rules-type'
+import { Attribute, RulesItem } from '../../types/rules-type'
+import AttributeItem from '../attribute/attribute-item'
 import CollapseRules from '../collapse-rules/collapse-rules'
 
 interface domain {
@@ -16,7 +17,7 @@ export default function DomainItem({ domain, isExpanded, ml = 0 }: domain): JSX.
         {domain.attributes.length > 0 ? (
           <ul>
             {domain.attributes.map((attribute) => (
-              <li key={attribute.id}>{attribute.name}</li>
+              <AttributeItem key={attribute.id} attribute={attribute} />
             ))}
           </ul>
         ) : (
