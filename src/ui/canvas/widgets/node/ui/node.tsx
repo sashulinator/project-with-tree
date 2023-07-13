@@ -22,7 +22,7 @@ export interface NodeProps extends React.HTMLAttributes<HTMLDivElement> {
   scale: number
   children: React.ReactNode
   onMove: (x: number, y: number, isLast: boolean) => void
-  preventDrag?: ItemPreventDrag
+  isDrag?: ItemPreventDrag
 }
 
 /**
@@ -37,13 +37,7 @@ export function NodeComponent(props: NodeProps, ref: ForwardedRef<HTMLDivElement
   const rulesRef = useRef(null)
 
   return (
-    <Item
-      {...itemProps}
-      dataId={dataId}
-      ref={ref}
-      className={clsx(props.className, 'ui-Node')}
-      preventDrag={preventDrag}
-    >
+    <Item {...itemProps} dataId={dataId} ref={ref} className={clsx(props.className, 'ui-Node')} isDrag={isDrag}>
       <div className={clsx('container')}>
         {left}
         <div className='content'>
@@ -58,9 +52,10 @@ export function NodeComponent(props: NodeProps, ref: ForwardedRef<HTMLDivElement
     </Item>
   )
 
-  function preventDrag(event: ItemPreventDragEvent): boolean {
-    const isDraggable = event.event.target !== rulesRef.current
-    return isDraggable && (props.preventDrag?.(event) || false)
+  function isDrag(event: ItemPreventDragEvent): boolean {
+    const isCurrentDrag = event.event.target !== rulesRef.current
+    const isParentDrag = props.isDrag === undefined || props.isDrag(event)
+    return isCurrentDrag && isParentDrag
   }
 }
 
