@@ -19,7 +19,7 @@ const GAP = 500
 export interface DraggableProps {
   scale: number
   lastPosition: Position
-  preventDrag: PreventDrag
+  isDrag: PreventDrag
   onMove: (x: number, y: number, isLast: boolean) => void
   children: (
     props: Pick<
@@ -38,7 +38,7 @@ export interface DraggableProps {
 export function Draggable(props: DraggableProps): JSX.Element {
   const dragBind = useDrag((event): void => {
     event.event.stopPropagation()
-    if (!props.preventDrag(event)) return
+    if (!props.isDrag(event)) return
 
     const isIdle = event.movement[0] === 0 && event.movement[1] === 0
     if (isIdle) return

@@ -30,7 +30,7 @@ export default function NodePage(): JSX.Element {
               lastPosition={{ x: 0, y: 0 }}
               scale={1}
               onMove={(): void => console.log('move!')}
-              preventDrag={emptyFn}
+              isDrag={emptyFn}
               left={<div>left</div>}
             >
               Children

@@ -16,7 +16,7 @@ export interface Props extends React.HTMLAttributes<HTMLDivElement> {
   scale: number
   children: React.ReactNode
   onMove: (x: number, y: number, isLast: boolean) => void
-  preventDrag: ItemPreventDrag
+  isDrag: ItemPreventDrag
 }
 
 /**
@@ -24,10 +24,10 @@ export interface Props extends React.HTMLAttributes<HTMLDivElement> {
  * 1. Перетаскивание
  */
 export function Component(props: Props, ref: ForwardedRef<HTMLDivElement>): JSX.Element {
-  const { scale, position, lastPosition, preventDrag, onMove: move, ...chartItemProps } = props
+  const { scale, position, lastPosition, isDrag, onMove: move, ...chartItemProps } = props
 
   return (
-    <ItemDraggable lastPosition={lastPosition} onMove={move} preventDrag={preventDrag} scale={scale}>
+    <ItemDraggable lastPosition={lastPosition} onMove={move} isDrag={isDrag} scale={scale}>
       {(draggableProps): JSX.Element => {
         return (
           <Item
