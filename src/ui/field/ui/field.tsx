@@ -1,8 +1,8 @@
 import './field.css'
 
 import { clsx } from 'clsx'
-import AbstractField, { FieldProps as AbstractFieldProps } from '~/abstract/field'
 
+import AbstractField, { FieldProps as AbstractFieldProps } from '~/abstract/field'
 import { emitter } from '~/shared/emitter'
 
 import { dark } from '../themes/dark'
