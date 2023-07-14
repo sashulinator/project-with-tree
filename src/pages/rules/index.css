@@ -7,5 +7,5 @@
 .RulesPage > nav {
   width: 30%;
   margin-right: 10px;
-  background: rgba(209, 209, 209, 0.759);
+  background: var(--bg);
 }
