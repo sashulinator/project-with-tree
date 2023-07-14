@@ -23,17 +23,17 @@ describe(EventEmitter.name, () => {
   it('off', () => {
     const emitter = new EventEmitter<Events>()
 
-    expect(emitter.emitters.second?.listeners.length).toBe(undefined)
+    expect(emitter.emitterMap.second?.listeners.length).toBe(undefined)
 
     const listener = () => {}
 
     emitter.on('second', listener)
 
-    expect(emitter.emitters.second?.listeners.length).toBe(1)
+    expect(emitter.emitterMap.second?.listeners.length).toBe(1)
 
     emitter.off('second', listener)
 
-    expect(emitter.emitters.second?.listeners.length).toBe(0)
+    expect(emitter.emitterMap.second?.listeners.length).toBe(0)
   })
 
   it('off', () => {
