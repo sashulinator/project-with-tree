@@ -1,32 +1,32 @@
+import CollapseUI from '~/ui/collapse/ui/collapse'
 import { RulesItem } from '../../types/rules-type'
-import CollapseRules from '../collapse-rules/collapse-rules'
-
+import './domain-item.css'
 interface domain {
   domain: RulesItem
   isExpanded: boolean
-  ml?: number
+  pl?: number
 }
 
-export default function DomainItem({ domain, isExpanded, ml = 0 }: domain): JSX.Element {
-  const mlTest = ml
+export default function DomainItem({ domain, isExpanded, pl = 0 }: domain): JSX.Element {
+  const pLeft = pl
 
   return (
     <>
-      <CollapseRules key={domain.id} title={domain.domainName} isExpanded={isExpanded} ml={mlTest}>
+      <CollapseUI isExpanded={isExpanded} title={domain.domainName} rootProps={{ className: 'DomainItem' }} pl={pl}>
         {domain.attributes.length > 0 ? (
-          <ul>
+          <ul style={{ padding: '10px' }}>
             {domain.attributes.map((attribute) => (
-              <li key={attribute.id}>{attribute.name}</li>
+              <p style={{ marginBottom: '10px' }} key={attribute.id}>
+                {attribute.name}
+              </p>
             ))}
           </ul>
         ) : (
           <div>Нет атрибутов...</div>
         )}
-      </CollapseRules>
+      </CollapseUI>
       {domain.childDomain !== null &&
-        domain.childDomain.map((item) => (
-          <DomainItem key={item.id} domain={item} isExpanded={false} ml={mlTest + 20} />
-        ))}
+        domain.childDomain.map((item) => <DomainItem key={item.id} domain={item} isExpanded={false} pl={pLeft + 10} />)}
     </>
   )
 }
