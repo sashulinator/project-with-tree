@@ -1,33 +1,20 @@
-import { Listener } from './types/listener'
+import { Dictionary } from '../dictionary'
+import { Emitter } from './emitter'
 
-export class Prop<const TName, TValue, Args extends unknown[] = never> {
+export class Prop<TValue, Event extends Dictionary<unknown> | void = void> extends Emitter<{ value: TValue }> {
   private _value: TValue
 
-  name: TName
-
-  onChange: ((prop: this, ...args: Args) => void) | undefined
-
-  listeners: Listener<this>[]
-
-  constructor(name: TName, value: TValue) {
+  constructor(value: TValue) {
+    super()
     this._value = value
-
-    this.name = name
-
-    this.listeners = []
   }
 
   get value(): TValue {
     return this._value
   }
 
-  set = (value: TValue, ...args: Args) => {
+  set = (value: TValue, event: Event) => {
     this._value = value
-    this.onChange?.(this, ...args)
-  }
-
-  on = (listener: Listener<this>): this => {
-    this.listeners?.push(listener)
-    return this
+    this.emit({ value, ...event })
   }
 }

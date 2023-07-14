@@ -1,20 +1,20 @@
+import { Emitter } from './emitter'
 import { Events } from './types/events'
 import { Listener } from './types/listener'
-import { ListenerDictionary } from './types/listener-dictionary'
 
 /**
- * @class Emitter
+ * @class EventEmitter
  * @property {ListenerDictionary<TEvents> | undefined} listeners
  */
 export class EventEmitter<TEvents extends Events> {
-  listeners: ListenerDictionary<TEvents>
+  emitters: Partial<{ [K in keyof TEvents]: Emitter<TEvents[K]> }>
 
   /**
    * @constructor
-   * @param {ListenerDictionary<TEvents>} [listeners]
+   * @param {ListenerDictionary<TEvents>} [emitters]
    */
-  constructor(listeners?: ListenerDictionary<TEvents> | undefined) {
-    this.listeners = listeners || {}
+  constructor(emitters?: Partial<{ [K in keyof TEvents]: Emitter<TEvents[K]> }> | undefined) {
+    this.emitters = emitters || {}
   }
 
   /**
@@ -24,12 +24,12 @@ export class EventEmitter<TEvents extends Events> {
    * @param {Listener<TEvents[T]>} listener listener
    */
   on = <T extends keyof TEvents>(eventName: T, listener: Listener<TEvents[T]>): (() => void) => {
-    const eventListenerList = this.listeners[eventName]
+    const emitter = this.emitters[eventName]
 
-    if (!eventListenerList) {
-      this.listeners[eventName] = [listener]
+    if (!emitter) {
+      this.emitters[eventName] = new Emitter<TEvents[T]>([listener])
     } else {
-      eventListenerList?.push(listener)
+      emitter.add(listener)
     }
 
     return () => this.off(eventName, listener)
@@ -42,13 +42,8 @@ export class EventEmitter<TEvents extends Events> {
    * @param {TEvents[T]} event Event
    */
   emit = <T extends keyof TEvents>(eventName: T, event: TEvents[T]): void => {
-    const eventListenerList = this.listeners[eventName]
-    const length = eventListenerList?.length || 0
-
-    for (let index = 0; index < length; index++) {
-      const listener = eventListenerList?.[index]
-      listener?.(event)
-    }
+    const emitter = this.emitters[eventName]
+    emitter?.emit(event)
   }
 
   /**
@@ -58,7 +53,7 @@ export class EventEmitter<TEvents extends Events> {
    * @param {Listener<TEvents[T]>} listener listener
    */
   off = <T extends keyof TEvents>(eventName: T, listener: Listener<TEvents[T]>) => {
-    const eventListenerList = this.listeners[eventName]
-    eventListenerList?.splice(eventListenerList.indexOf(listener) >>> 0, 1)
+    const emitter = this.emitters[eventName]
+    emitter?.remove(listener)
   }
 }
