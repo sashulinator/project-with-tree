@@ -7,7 +7,7 @@ import { Position, c } from '~/utils/core'
 
 Collapse.displayName = 'a-Collapse'
 
-type CollapseProps = {
+export interface CollapseProps {
   children: React.ReactNode
   isExpanded: boolean
   from?: (CSSProperties & Partial<Position>) | undefined
