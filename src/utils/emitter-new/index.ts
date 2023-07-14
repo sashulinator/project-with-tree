@@ -1,3 +1,1 @@
-export * from './prop'
-
-export * from './types/emitter'
+export * from './emitter'
