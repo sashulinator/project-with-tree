@@ -16,6 +16,11 @@ export class Prop<TValue, Event extends Dictionary<unknown> | void = void> exten
     return this._value
   }
 
+  /**
+   * Sets value with event
+   * @param {TValue} value
+   * @param {TEvent} event
+   */
   set = (value: TValue, event: Event) => {
     this._value = value
     this.emit({ value, ...event })
