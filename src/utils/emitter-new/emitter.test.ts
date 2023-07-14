@@ -1,16 +1,16 @@
-import { Emitter } from './event-emitter'
+import { EventEmitter } from './event-emitter'
 import { Prop } from './prop'
 
 type Events = {
   first: { objectType: boolean }
   second: string
   third: number
-  name: { value: number }
+  testNumber: { value: number }
 }
 
-describe(Emitter.name, () => {
+describe(EventEmitter.name, () => {
   it('on', () => {
-    const emitter = new Emitter<Events>()
+    const emitter = new EventEmitter<Events>()
 
     emitter.on('first', (event) => {
       event.objectType
@@ -21,24 +21,25 @@ describe(Emitter.name, () => {
   })
 
   it('off', () => {
-    const emitter = new Emitter<Events>()
+    const emitter = new EventEmitter<Events>()
 
-    expect(emitter.listeners.second?.length).toBe(undefined)
+    expect(emitter.emitters.second?.listeners.length).toBe(undefined)
 
     const listener = () => {}
 
     emitter.on('second', listener)
 
-    expect(emitter.listeners.second?.length).toBe(1)
+    expect(emitter.emitters.second?.listeners.length).toBe(1)
 
     emitter.off('second', listener)
 
-    expect(emitter.listeners.second?.length).toBe(0)
+    expect(emitter.emitters.second?.listeners.length).toBe(0)
   })
 
   it('off', () => {
-    const emitter = new Emitter<Events>()
-
-    const prop = new Prop('name', 1111).on((p) => emitter.emit(p.name, p))
+    const testNumber = new Prop(1111)
+    const emitter = new EventEmitter<Events>({ testNumber })
+    emitter.on('testNumber', (ev) => expect(ev.value).toBe(333))
+    testNumber.set(333)
   })
 })
