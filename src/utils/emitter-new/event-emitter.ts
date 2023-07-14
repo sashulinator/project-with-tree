@@ -1,20 +1,21 @@
 import { Emitter } from './emitter'
+import { EmitterMap } from './types/emitter-map'
 import { Events } from './types/events'
 import { Listener } from './types/listener'
 
 /**
  * @class EventEmitter
- * @property {ListenerDictionary<TEvents> | undefined} listeners
+ * @property {Partial<{ [K in keyof TEvents]: Emitter<TEvents[K]> }> | undefined} listeners
  */
 export class EventEmitter<TEvents extends Events> {
-  emitters: Partial<{ [K in keyof TEvents]: Emitter<TEvents[K]> }>
+  emitterMap: EmitterMap<TEvents>
 
   /**
    * @constructor
-   * @param {ListenerDictionary<TEvents>} [emitters]
+   * @param {Partial<{ [K in keyof TEvents]: Emitter<TEvents[K]> }>} [emitters]
    */
-  constructor(emitters?: Partial<{ [K in keyof TEvents]: Emitter<TEvents[K]> }> | undefined) {
-    this.emitters = emitters || {}
+  constructor(emitters?: EmitterMap<TEvents> | undefined) {
+    this.emitterMap = emitters || {}
   }
 
   /**
@@ -24,10 +25,10 @@ export class EventEmitter<TEvents extends Events> {
    * @param {Listener<TEvents[T]>} listener listener
    */
   on = <T extends keyof TEvents>(eventName: T, listener: Listener<TEvents[T]>): (() => void) => {
-    const emitter = this.emitters[eventName]
+    const emitter = this.emitterMap[eventName]
 
     if (!emitter) {
-      this.emitters[eventName] = new Emitter<TEvents[T]>([listener])
+      this.emitterMap[eventName] = new Emitter<TEvents[T]>([listener])
     } else {
       emitter.add(listener)
     }
@@ -42,7 +43,7 @@ export class EventEmitter<TEvents extends Events> {
    * @param {TEvents[T]} event Event
    */
   emit = <T extends keyof TEvents>(eventName: T, event: TEvents[T]): void => {
-    const emitter = this.emitters[eventName]
+    const emitter = this.emitterMap[eventName]
     emitter?.emit(event)
   }
 
@@ -53,7 +54,7 @@ export class EventEmitter<TEvents extends Events> {
    * @param {Listener<TEvents[T]>} listener listener
    */
   off = <T extends keyof TEvents>(eventName: T, listener: Listener<TEvents[T]>) => {
-    const emitter = this.emitters[eventName]
+    const emitter = this.emitterMap[eventName]
     emitter?.remove(listener)
   }
 }
