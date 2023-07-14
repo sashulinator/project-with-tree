@@ -9,3 +9,7 @@
   margin-right: 10px;
   background: var(--bg);
 }
+
+.RulesPage > div {
+  width: 65%;
+}
