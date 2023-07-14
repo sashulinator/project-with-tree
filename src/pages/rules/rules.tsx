@@ -4,6 +4,7 @@ import { useQuery } from 'react-query'
 
 import { makeRequest, url } from '~/api/rules/mock/fetch'
 import DomainItem from '~/entities/rules/ui/domain-item/domain-item'
+import Editor from '~/entities/rules/ui/editor/editor'
 import mockRules from '~/mocks/rules/mock-rules'
 
 export default function RulesPage(): JSX.Element {
@@ -21,7 +22,9 @@ export default function RulesPage(): JSX.Element {
             return <DomainItem key={item.id} domain={item} isExpanded={true} />
           })}
         </nav>
-        <div></div>
+        <div>
+          <Editor />
+        </div>
       </main>
     )
   }

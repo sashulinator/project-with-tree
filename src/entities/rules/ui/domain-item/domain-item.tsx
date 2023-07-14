@@ -1,6 +1,7 @@
 import CollapseUI from '~/ui/collapse/ui/collapse'
 import { RulesItem } from '../../types/rules-type'
 import './domain-item.css'
+import Attribute from '../attribute/attribute'
 interface domain {
   domain: RulesItem
   isExpanded: boolean
@@ -16,9 +17,7 @@ export default function DomainItem({ domain, isExpanded, pl = 0 }: domain): JSX.
         {domain.attributes.length > 0 ? (
           <ul style={{ padding: '10px' }}>
             {domain.attributes.map((attribute) => (
-              <p style={{ marginBottom: '10px' }} key={attribute.id}>
-                {attribute.name}
-              </p>
+              <Attribute key={attribute.id} attribute={attribute} />
             ))}
           </ul>
         ) : (
