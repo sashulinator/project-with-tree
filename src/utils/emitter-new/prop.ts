@@ -1,16 +1,20 @@
-export class Prop<TValue, Args extends unknown[] = never> {
+import { Listener } from './types/listener'
+
+export class Prop<const TName, TValue, Args extends unknown[] = never> {
   private _value: TValue
 
-  name: string
+  name: TName
 
-  onChange: (value: TValue, ...args: Args) => void
+  onChange: ((prop: this, ...args: Args) => void) | undefined
 
-  constructor(value: TValue, name: string, onChange: (value: TValue, ...args: Args) => void) {
+  listeners: Listener<this>[]
+
+  constructor(name: TName, value: TValue) {
     this._value = value
 
     this.name = name
 
-    this.onChange = onChange
+    this.listeners = []
   }
 
   get value(): TValue {
@@ -19,6 +23,11 @@ export class Prop<TValue, Args extends unknown[] = never> {
 
   set = (value: TValue, ...args: Args) => {
     this._value = value
-    this.onChange(value, ...args)
+    this.onChange?.(this, ...args)
+  }
+
+  on = (listener: Listener<this>): this => {
+    this.listeners?.push(listener)
+    return this
   }
 }
