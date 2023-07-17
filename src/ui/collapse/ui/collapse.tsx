@@ -25,7 +25,7 @@ export default function CollapseUI(props: Props): JSX.Element {
   )
 
   return (
-    <div className={c(CollapseUI.displayName, props.rootProps?.className)}>
+    <div style={props.rootProps?.style} className={c(CollapseUI.displayName, props.rootProps?.className)}>
       <Button className='header-collapse' onClick={toggleExpanded}>
         <div>{title}</div>
         <ChevronRight className={isExpanded ? 'arrow-icon rotate' : 'arrow-icon'} />
