@@ -1,0 +1,18 @@
+.ui-Mentions__input:focus {
+  border: transparent;
+  outline: transparent;
+}
+
+.ui-Mentions__input {
+  border: transparent;
+  outline: transparent;
+  min-height: '400px';
+}
+
+.ui-Mentions {
+  background: transparent;
+  font-size: transparent;
+  border: transparent;
+  outline: transparent;
+  min-height: '400px';
+}
