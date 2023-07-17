@@ -1,5 +1,5 @@
 import { RulesItem } from '~/entities/rules/types/rules-type'
-import { IMentionsItem } from '~/entities/rules/ui/mentions/types/types'
+import { IMentionsItem } from '~/ui/mentions/types/types'
 
 const addDataMentions = (arr: RulesItem[]): IMentionsItem[] => {
   let result: IMentionsItem[] = []
