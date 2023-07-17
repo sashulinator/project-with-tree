@@ -4,17 +4,17 @@ import './domain-item.css'
 import Attribute from '../attribute/attribute'
 interface domain {
   domain: RulesItem
-  isExpanded: boolean
+  defaultExpanded?: boolean
   pl?: number
 }
 
-export default function DomainItem({ domain, isExpanded, pl = 0 }: domain): JSX.Element {
+export default function DomainItem({ domain, pl = 0, ...props }: domain): JSX.Element {
   const pLeft = pl
 
   return (
     <>
       <CollapseUI
-        isExpanded={isExpanded}
+        defaultExpanded={props.defaultExpanded}
         title={domain.domainName}
         rootProps={{ className: 'DomainItem', style: { paddingLeft: pl } }}
       >
@@ -29,7 +29,9 @@ export default function DomainItem({ domain, isExpanded, pl = 0 }: domain): JSX.
         )}
       </CollapseUI>
       {domain.childDomain !== null &&
-        domain.childDomain.map((item) => <DomainItem key={item.id} domain={item} isExpanded={false} pl={pLeft + 10} />)}
+        domain.childDomain.map((item) => (
+          <DomainItem key={item.id} domain={item} defaultExpanded={false} pl={pLeft + 10} />
+        ))}
     </>
   )
 }
