@@ -13,7 +13,11 @@ export default function DomainItem({ domain, isExpanded, pl = 0 }: domain): JSX.
 
   return (
     <>
-      <CollapseUI isExpanded={isExpanded} title={domain.domainName} rootProps={{ className: 'DomainItem' }} pl={pl}>
+      <CollapseUI
+        isExpanded={isExpanded}
+        title={domain.domainName}
+        rootProps={{ className: 'DomainItem', style: { paddingLeft: pl } }}
+      >
         {domain.attributes.length > 0 ? (
           <ul style={{ padding: '10px' }}>
             {domain.attributes.map((attribute) => (

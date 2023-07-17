@@ -5,7 +5,7 @@ import { isDev } from '../core/is/dev'
 export function useControlledState<T>(
   defaulValue: T,
   incomingValue: T | undefined,
-  setIncomingValue: ((v: T) => void) | undefined
+  setIncomingValue?: ((v: T) => void) | undefined
 ): [T, Dispatch<SetStateAction<T>>] {
   const defaultRef = useRef(defaulValue)
   const incomingValueRef = useRef(incomingValue)
@@ -18,13 +18,13 @@ export function useControlledState<T>(
       if (incomingValue !== undefined && incomingValueRef.current === undefined) {
         setIncomingValue?.(incomingValue)
         if (isDev()) {
-          throw new Error('Dont change state from uncontrolled to controlled')
+          console.error('Dont change state from uncontrolled to controlled')
         }
       }
       if (incomingValue === undefined && incomingValueRef.current !== undefined) {
         setValue(defaultRef.current)
         if (incomingValueRef.current !== undefined && isDev()) {
-          throw new Error('Dont change state from controlled to uncontrolled')
+          console.error('Dont change state from controlled to uncontrolled')
         }
       }
     }

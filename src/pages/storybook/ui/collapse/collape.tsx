@@ -77,6 +77,7 @@ function DefaultCollapseSection(): JSX.Element {
 
 function CollapseUISection(): JSX.Element {
   const [expanded, , , toggleExpanded] = useBoolean(true)
+  const [controlled, , , toggleControlled] = useBoolean(true)
   const [content, , , toggleContent] = useBoolean(false)
   const [animation, , , toggleAnimation] = useBoolean(false)
 
@@ -92,6 +93,10 @@ function CollapseUISection(): JSX.Element {
               expanded
             </Flex>
             <Flex>
+              <input type='checkbox' id='square' checked={controlled} onChange={toggleControlled} />
+              controlled
+            </Flex>
+            <Flex>
               <input type='checkbox' id='square' checked={content} onChange={toggleContent} />
               add_content
             </Flex>
@@ -104,8 +109,9 @@ function CollapseUISection(): JSX.Element {
       }
     >
       <CollapseUI
+        onExpandedChange={controlled ? toggleExpanded : undefined}
         title={'нажми меня'}
-        isExpanded={expanded}
+        isExpanded={controlled ? expanded : undefined}
         from={animation ? { opacity: expanded ? 0 : 1, y: 0 } : undefined}
         to={animation ? { opacity: expanded ? 1 : 0, y: expanded ? 0 : 20 } : undefined}
       >
