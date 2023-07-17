@@ -16,6 +16,7 @@ import FieldInputPage from './ui/field'
 import InputPage from './ui/input'
 import ListPage from './ui/list'
 import CollapsePage from './ui/collapse'
+import MentionPage from './ui/mentions/mentions'
 
 export const routes = {
   button: {
@@ -49,6 +50,15 @@ export const routes = {
     path: '/input',
     element: <InputPage />,
     getName: (): string => 'Input',
+    getURL: function (): string {
+      return `${sharedRoutes.storybook.getURL()}${this.path}`
+    },
+  },
+
+  mentions: {
+    path: '/mentions',
+    element: <MentionPage />,
+    getName: (): string => 'Mentions',
     getURL: function (): string {
       return `${sharedRoutes.storybook.getURL()}${this.path}`
     },
