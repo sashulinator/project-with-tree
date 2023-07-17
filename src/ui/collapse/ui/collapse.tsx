@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react'
 import Button from '~/abstract/button/ui/button'
 import Collapse, { CollapseProps } from '~/abstract/collapse/ui/collapse'
-import { Arrow } from '~/ui/icon/variants/arrow'
+
 import './collapse.css'
 import { c } from '~/utils/core'
+import { ChevronRight } from '~/ui/icon'
 
 CollapseUI.displayName = 'ui-Collapse'
 
@@ -26,7 +27,7 @@ export default function CollapseUI({ isExpanded, pl = 0, ...props }: Props): JSX
       <Button className='header-collapse' onClick={handleClick}>
         <h2>{props.title}</h2>
         <div>
-          <Arrow className={expanded ? 'arrow-icon rotate' : 'arrow-icon'} />
+          <ChevronRight className={expanded ? 'arrow-icon rotate' : 'arrow-icon'} />
         </div>
       </Button>
 

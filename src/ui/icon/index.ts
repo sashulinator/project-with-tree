@@ -2,6 +2,7 @@ export { default } from './ui/icon'
 export * from './ui/icon'
 
 export * from './variants/close'
+export * from './variants/chevron-right'
 export * from './variants/dots'
 export * from './variants/eye-off'
 export * from './variants/eye'
