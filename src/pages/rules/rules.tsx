@@ -19,7 +19,7 @@ export default function RulesPage(): JSX.Element {
       <main className='RulesPage'>
         <nav>
           {rulesArray.map((item) => {
-            return <DomainItem key={item.id} domain={item} isExpanded={true} />
+            return <DomainItem key={item.id} domain={item} defaultExpanded={true} />
           })}
         </nav>
         <div>

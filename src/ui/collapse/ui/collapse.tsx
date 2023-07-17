@@ -8,15 +8,21 @@ import { useControlledState } from '~/utils/hooks/controlled-state'
 
 CollapseUI.displayName = 'ui-Collapse'
 
-interface Props extends CollapseProps {
+interface Props extends Omit<CollapseProps, 'isExpanded'> {
   title: string
+  isExpanded?: boolean | undefined
   onExpandedChange?: ((value: boolean) => void) | undefined
+  defaultExpanded?: boolean | undefined
 }
 
 export default function CollapseUI(props: Props): JSX.Element {
   const { title, ...collapseProps } = props
 
-  const [isExpanded, setExpanded] = useControlledState<boolean>(false, props.isExpanded, props.onExpandedChange)
+  const [isExpanded, setExpanded] = useControlledState<boolean>(
+    props.defaultExpanded || false,
+    props.isExpanded,
+    props.onExpandedChange
+  )
 
   return (
     <div className={c(CollapseUI.displayName, props.rootProps?.className)}>

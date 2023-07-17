@@ -9,7 +9,7 @@ Collapse.displayName = 'a-Collapse'
 
 export interface CollapseProps {
   children: React.ReactNode
-  isExpanded: boolean | undefined
+  isExpanded: boolean
   from?: (CSSProperties & Partial<Position>) | undefined
   to?: (CSSProperties & Partial<Position>) | undefined
   duration?: number | undefined
