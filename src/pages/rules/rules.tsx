@@ -9,11 +9,15 @@ import DomainItem from '~/entities/rules/ui/domain-item/domain-item'
 import mockRules from '~/mocks/rules/mock-rules'
 import addDataMentions from './lib/add-data-mentions'
 import Mentions from '~/ui/mentions'
+import { Attribute } from '~/entities/rules/types/rules-type'
+import { useBoolean } from '~/utils/hooks'
 
 export default function RulesPage(): JSX.Element {
   const { data, isLoading, isSuccess } = useQuery([url, mockRules.name, { id: mockRules.id }], () =>
     makeRequest({ id: mockRules.id })
   )
+  const [isFocused, , , toggleFocused] = useBoolean(false)
+  const [activeAttribute, setActiveAttribute] = useState<Attribute | null>(null)
 
   if (isSuccess) {
     const rulesArray = data.data.data
@@ -28,8 +32,17 @@ export default function RulesPage(): JSX.Element {
           })}
         </nav>
         <div>
-          <div>
-            <Mentions data={mentionsData} />
+          <div
+            onDragOver={(e: React.DragEvent<HTMLDivElement>): void => {
+              e.stopPropagation()
+              e.preventDefault()
+            }}
+            onDrop={(e: React.DragEvent<HTMLDivElement>): void => {
+              e.preventDefault()
+              console.log('drop')
+            }}
+          >
+            <Mentions data={mentionsData} onExpandedChange={toggleFocused} isFocused={isFocused} />
           </div>
           {/* <Editor /> не удалять!!!*/}
         </div>

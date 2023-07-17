@@ -1,22 +1,7 @@
 export default {
-  control: {
-    backgroundColor: 'transparent',
-    fontSize: 'transparent',
-    fontWeight: 'transparent',
-  },
-
   '&multiLine': {
     control: {
-      fontFamily: 'monospace',
       minHeight: 400,
-    },
-    highlighter: {
-      padding: 9,
-      border: '1px solid transparent',
-    },
-    input: {
-      padding: 9,
-      border: '1px solid silver',
     },
   },
 
