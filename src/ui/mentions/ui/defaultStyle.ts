@@ -1,8 +1,8 @@
 export default {
   control: {
-    backgroundColor: '#fff',
-    fontSize: 14,
-    fontWeight: 'normal',
+    backgroundColor: 'transparent',
+    fontSize: 'transparent',
+    fontWeight: 'transparent',
   },
 
   '&multiLine': {
@@ -17,20 +17,6 @@ export default {
     input: {
       padding: 9,
       border: '1px solid silver',
-    },
-  },
-
-  '&singleLine': {
-    display: 'inline-block',
-    width: 180,
-
-    highlighter: {
-      padding: 1,
-      border: '2px inset transparent',
-    },
-    input: {
-      padding: 1,
-      border: '2px inset',
     },
   },
 

@@ -26,6 +26,9 @@ export default function Nav(): JSX.Element {
           <Link to={routes.input.getURL()}>Input</Link>
         </ol>
         <ol>
+          <Link to={routes.mentions.getURL()}>Mentions</Link>
+        </ol>
+        <ol>
           <Link to={routes.list.getURL()}>List</Link>
         </ol>
         <br />

@@ -6,9 +6,9 @@ import { useQuery } from 'react-query'
 import { makeRequest, url } from '~/api/rules/mock/fetch'
 import DomainItem from '~/entities/rules/ui/domain-item/domain-item'
 // import Editor from '~/entities/rules/ui/editor/editor'
-import Mentions from '~/entities/rules/ui/mentions/mentions'
 import mockRules from '~/mocks/rules/mock-rules'
 import addDataMentions from './lib/add-data-mentions'
+import Mentions from '~/ui/mentions'
 
 export default function RulesPage(): JSX.Element {
   const { data, isLoading, isSuccess } = useQuery([url, mockRules.name, { id: mockRules.id }], () =>
