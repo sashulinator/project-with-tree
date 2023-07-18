@@ -1,28 +1,50 @@
-import { emptyFn } from '../function/empty-fn'
 import { Emitter } from './emitter'
+import { Notifier, Prop } from '../notifier'
+
+type Events = {
+  first: { objectType: boolean }
+  second: string
+  testNumber: { value: number }
+}
+
+const notifiers = {
+  first: new Notifier<{ objectType: boolean }>(),
+  second: new Notifier<string>(),
+  testNumber: new Notifier<{ value: number }>(),
+}
 
 describe(Emitter.name, () => {
-  it('on, emit', () => {
-    const emitter = new Emitter<string>()
+  it('on', () => {
+    const emitter = new Emitter<Events>(notifiers)
 
-    emitter.add((value) => expect(value).toBe('hello'))
+    emitter.on('first', (event) => {
+      event.objectType
+      expect(event).toEqual({ objectType: true })
+    })
 
-    emitter.emit('hello')
-
-    expect(emitter.listeners.length).toBe(1)
+    emitter.emit('first', { objectType: true })
   })
 
-  it('off ', () => {
-    const emitter = new Emitter()
+  it('off', () => {
+    const emitter = new Emitter<Events>(notifiers)
 
-    emitter.add(emptyFn)
+    expect(emitter.eventNotifiers.second?.listeners.length).toBe(undefined)
 
-    //not existing function
-    emitter.remove(() => {})
-    expect(emitter.listeners.length).toBe(1)
+    const listener = () => {}
 
-    //existing function
-    emitter.remove(emptyFn)
-    expect(emitter.listeners.length).toBe(0)
+    emitter.on('second', listener)
+
+    expect(emitter.eventNotifiers.second?.listeners.length).toBe(1)
+
+    emitter.off('second', listener)
+
+    expect(emitter.eventNotifiers.second?.listeners.length).toBe(0)
+  })
+
+  it('off', () => {
+    const testNumber = new Prop(1111)
+    const emitter = new Emitter<Events>({ ...notifiers, testNumber })
+    emitter.on('testNumber', (ev) => expect(ev.value).toBe(333))
+    testNumber.set(333)
   })
 })
