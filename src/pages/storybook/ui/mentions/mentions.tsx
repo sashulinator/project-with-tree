@@ -59,7 +59,7 @@ export default function MentionPage(): JSX.Element {
             isError={isError}
             disabled={isDisabled}
             transparent={transparent}
-            onExpandedChange={toggleFocused}
+            focusedChange={toggleFocused}
           />
         </Section>
       </PageSection>
