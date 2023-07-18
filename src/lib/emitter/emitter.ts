@@ -1,7 +1,7 @@
 import mitt, { Emitter as Mitt } from 'mitt'
 
 import { Any } from '~/utils/core'
-import { AnyEvent, EventHandlerMap, Handler, Emitter as IEmitter, WildcardHandler } from '~/utils/emitter'
+import { AnyEvent, EventHandlerMap, Handler, Emitter as IEmitter, WildcardHandler } from '~/utils/depricated-emitter'
 
 export class Emitter<E extends AnyEvent> implements IEmitter<E> {
   private _emitter: Mitt<Any>

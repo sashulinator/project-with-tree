@@ -1,5 +1,5 @@
 import { Id } from '~/utils/core'
-import { Prop } from '~/utils/emitter'
+import { Prop } from '~/utils/depricated-emitter'
 
 export class SelectedProp<N extends string> extends Prop<N, Id[]> {
   // Select

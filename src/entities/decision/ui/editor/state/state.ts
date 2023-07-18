@@ -1,7 +1,7 @@
 import { BoardEvents, BoardState } from '~/abstract/canvas'
 import { Decision } from '~/entities/decision/types/decision'
 import { Id, Position } from '~/utils/core'
-import { Prop } from '~/utils/emitter'
+import { Prop } from '~/utils/depricated-emitter'
 
 import { D3Selection } from './_d3-selection'
 import { D3Zoom } from './_d3-zoom'

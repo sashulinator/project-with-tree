@@ -1,6 +1,6 @@
 import { Emitter, PositionProp } from '~/lib/emitter'
 import { Position } from '~/utils/core'
-import { AnyEvent, Prop } from '~/utils/emitter'
+import { AnyEvent, Prop } from '~/utils/depricated-emitter'
 
 import { BoardEvents } from './events'
 

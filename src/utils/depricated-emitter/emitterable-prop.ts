@@ -14,7 +14,7 @@ import { Emitterable } from './types/emitterable'
 export class EmitterableProp<
   TEventName extends string,
   TValue,
-  TEmitterable extends Emitterable<Emitter<Any>> = Emitterable<Emitter<Any>>
+  TEmitterable extends Emitterable<Emitter<Any>> = Emitterable<Emitter<Any>>,
 > {
   /**
    * Emitterable у которого мы будем дергать Emitter

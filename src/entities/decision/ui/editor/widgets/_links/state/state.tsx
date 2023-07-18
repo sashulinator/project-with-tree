@@ -2,7 +2,7 @@ import { RuleLinkState } from '../../_link'
 import { Rule } from '~/entities/rule/types/rule'
 import { EmitterableDictionary } from '~/lib/emitter/dictionary'
 import { Id } from '~/utils/core'
-import { Prop } from '~/utils/emitter'
+import { Prop } from '~/utils/depricated-emitter'
 
 export interface LinkStateProps {
   id: Id
