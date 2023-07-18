@@ -6,10 +6,12 @@ import PageSection from '~/ui/page-section'
 
 import Section from '../../section'
 
-import Mentions from '~/ui/mentions/ui/mentions'
+import MentionInput from '~/ui/mentions/ui/mentions'
 import { data } from './data'
 
 import { useBoolean } from '~/utils/hooks'
+import { Mention } from 'react-mentions'
+import defaultMentionStyle from '~/ui/mentions/ui/defaultMentionStyle'
 
 export default function MentionPage(): JSX.Element {
   const [isFocused, , , toggleFocused] = useBoolean(false)
@@ -53,14 +55,9 @@ export default function MentionPage(): JSX.Element {
             </>
           }
         >
-          <Mentions
-            data={data}
-            isFocused={isFocused}
-            isError={isError}
-            disabled={isDisabled}
-            transparent={transparent}
-            focusedChange={toggleFocused}
-          />
+          <MentionInput isError={isError} disabled={isDisabled} transparent={transparent}>
+            <Mention trigger='@' data={data} style={defaultMentionStyle} />
+          </MentionInput>
         </Section>
       </PageSection>
     </Flex>

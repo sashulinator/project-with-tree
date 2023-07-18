@@ -10,7 +10,11 @@ import mockRules from '~/mocks/rules/mock-rules'
 import addDataMentions from './lib/add-data-mentions'
 import { IAttribute } from '~/entities/rules/types/rules-type'
 import { useBoolean } from '~/utils/hooks'
-import Mentions from '~/ui/mentions/ui/mentions'
+import MentionInput from '~/ui/mentions/ui/mentions'
+import { fns } from '~/utils/function'
+import { preventDefault, stopPropagation } from '~/utils/dom'
+import { Mention } from 'react-mentions'
+import defaultMentionStyle from '~/ui/mentions/ui/defaultMentionStyle'
 
 export default function RulesPage(): JSX.Element {
   const { data, isLoading, isSuccess } = useQuery([url, mockRules.name, { id: mockRules.id }], () =>
@@ -43,10 +47,7 @@ export default function RulesPage(): JSX.Element {
           })}
         </nav>
         <div
-          onDragOver={(e: React.DragEvent<HTMLDivElement>): void => {
-            e.stopPropagation()
-            e.preventDefault()
-          }}
+          onDragOver={fns<[e: React.DragEvent<HTMLDivElement>]>(preventDefault, stopPropagation)}
           onDrop={(e: React.DragEvent<HTMLDivElement>): void => {
             e.preventDefault()
             console.log(activeAttribute)
@@ -55,16 +56,15 @@ export default function RulesPage(): JSX.Element {
             }
           }}
         >
-          <Mentions
-            data={mentionsData}
-            focusedChange={toggleFocused}
-            isFocused={isFocused}
+          <MentionInput
             value={value}
-            onChangeValue={(_, v): void => {
+            onChange={(_, v): void => {
               console.log(v)
               setValue(v)
             }}
-          />
+          >
+            <Mention trigger='@' data={mentionsData} style={defaultMentionStyle} />
+          </MentionInput>
         </div>
       </main>
     )
