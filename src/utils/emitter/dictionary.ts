@@ -1,9 +1,9 @@
 import { toDictionary } from '~/utils/list'
 
-import { Id as Key } from '../../utils/core'
-import { Dictionary as IDictionary, find, get } from '../../utils/dictionary'
+import { Id as Key } from '../core'
+import { Dictionary as IDictionary, find, get } from '../dictionary'
 import { Emitter } from './emitter'
-import { Notifier } from '../notifier'
+
 import { EventNotifiers } from './types/event-notifiers'
 
 export type DictionaryEvents<Item> = {

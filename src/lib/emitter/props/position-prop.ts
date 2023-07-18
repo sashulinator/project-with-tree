@@ -1,6 +1,6 @@
 import { Emitter } from '~/lib/emitter'
 import { Any, Position } from '~/utils/core'
-import { Prop } from '~/utils/emitter'
+import { Prop } from '~/utils/depricated-emitter'
 
 export interface PositionPropEvent {
   isLast: boolean

@@ -1,5 +1,7 @@
-export * from './emitterable-prop'
-export * from './prop'
+export * from './types/event-notifiers'
+export * from './types/event-name'
+export * from './types/events'
 
-export * from './types/emitterable'
-export * from './types/emitter'
+export * from './emitter'
+export * from './dictionary'
+export * from './emitter-dictionary'

@@ -2,7 +2,7 @@ import uuid from 'uuid-random'
 
 import { Emitter } from '~/lib/emitter'
 import { Id } from '~/utils/core'
-import { Prop } from '~/utils/emitter'
+import { Prop } from '~/utils/depricated-emitter'
 
 import { Rule } from '../../../../../../rule/types/rule'
 

@@ -1,6 +1,6 @@
 import { ItemState, ItemEvents } from '~/abstract/canvas'
 import { Point } from '~/entities/point'
-import { Prop } from '~/utils/emitter'
+import { Prop } from '~/utils/depricated-emitter'
 
 export type Events = ItemEvents & {
   computation: { value: Point['computation'] }

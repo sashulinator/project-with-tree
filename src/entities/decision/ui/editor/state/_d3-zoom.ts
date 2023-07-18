@@ -2,7 +2,7 @@ import { ZoomBehavior, ZoomTransform, zoom, zoomIdentity } from 'd3-zoom'
 import { PositionProp } from '~/lib/emitter'
 
 import { Position } from '~/utils/core'
-import { AnyEvent, Emitter, Prop } from '~/utils/emitter'
+import { AnyEvent, Emitter, Prop } from '~/utils/depricated-emitter'
 
 import { D3Selection } from './_d3-selection'
 

@@ -1,7 +1,7 @@
 import { PositionProp } from '~/lib/emitter'
 import { Emitter } from '~/lib/emitter/emitter'
 import { Id, Position } from '~/utils/core'
-import { Prop } from '~/utils/emitter'
+import { Prop } from '~/utils/depricated-emitter'
 
 export type Events = {
   position: { value: Position }
