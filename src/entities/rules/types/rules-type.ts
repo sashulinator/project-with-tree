@@ -12,10 +12,10 @@ export interface RulesItem {
   domainNodeType: string
   parentId: null | number
   childDomain: null | RulesItem[]
-  attributes: Attribute[]
+  attributes: IAttribute[]
 }
 
-export interface Attribute {
+export interface IAttribute {
   id: number
   name: string
   nodeType: string
