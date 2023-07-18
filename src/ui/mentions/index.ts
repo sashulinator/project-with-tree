@@ -1,1 +1,1 @@
-export { default } from './ui/mentions'
+export * from './widgets/mention-input'

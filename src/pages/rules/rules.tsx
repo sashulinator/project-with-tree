@@ -9,12 +9,10 @@ import DomainItem from '~/entities/rules/ui/domain-item/domain-item'
 import mockRules from '~/mocks/rules/mock-rules'
 import addDataMentions from './lib/add-data-mentions'
 import { IAttribute } from '~/entities/rules/types/rules-type'
-import { useBoolean } from '~/utils/hooks'
-import MentionInput from '~/ui/mentions/ui/mentions'
 import { fns } from '~/utils/function'
 import { preventDefault, stopPropagation } from '~/utils/dom'
+import { MentionInput } from '~/ui/mentions'
 import { Mention } from 'react-mentions'
-import defaultMentionStyle from '~/ui/mentions/ui/defaultMentionStyle'
 
 export default function RulesPage(): JSX.Element {
   const { data, isLoading, isSuccess } = useQuery([url, mockRules.name, { id: mockRules.id }], () =>
@@ -23,10 +21,8 @@ export default function RulesPage(): JSX.Element {
 
   const [value, setValue] = useState<string>('')
 
-  const [isFocused, , , toggleFocused] = useBoolean(false)
   const [activeAttribute, setActiveAttribute] = useState<IAttribute | null>(null)
-  const [attributeValue, setAttributeValue] = useState<string>('')
-  // @[атрибут 4](attribute-4)
+
   if (isSuccess) {
     const rulesArray = data.data.data
     const mentionsData = addDataMentions(rulesArray)
@@ -59,11 +55,16 @@ export default function RulesPage(): JSX.Element {
           <MentionInput
             value={value}
             onChange={(_, v): void => {
-              console.log(v)
               setValue(v)
             }}
           >
-            <Mention trigger='@' data={mentionsData} style={defaultMentionStyle} />
+            <Mention
+              trigger='@'
+              data={mentionsData}
+              style={{
+                backgroundColor: '#cee4e5',
+              }}
+            />
           </MentionInput>
         </div>
       </main>
