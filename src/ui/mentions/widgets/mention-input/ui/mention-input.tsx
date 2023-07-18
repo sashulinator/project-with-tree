@@ -2,7 +2,7 @@ import { MentionsInput as RMMentionsInput, MentionsInputProps } from 'react-ment
 import defaultStyle from './defaultStyle'
 
 import Field from '~/abstract/field/ui/field'
-import './mentions.css'
+import './mention-input.css'
 
 import { FieldProps } from '~/ui/field'
 import { fns } from '~/utils/function'
@@ -18,7 +18,7 @@ export interface MentionsProps extends MentionsInputProps {
   transparent?: boolean | undefined
 }
 
-export default function MentionInput(props: MentionsProps): JSX.Element {
+export function MentionInput(props: MentionsProps): JSX.Element {
   const { fieldProps, isError, ...mentionInputProps } = props
 
   const [isFocused, focus, blur] = useBoolean(false)
