@@ -4,6 +4,7 @@
 }
 
 .ui-Mentions__input {
+  color: inherit;
   border: transparent;
   outline: transparent;
   min-height: '400px';
