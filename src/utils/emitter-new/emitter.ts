@@ -1,45 +1,59 @@
-import { Listener } from './types/listener'
+import { Notifier, Listener } from '../notifier'
+import { EventNotifiers } from './types/event-notifiers'
+import { Events } from './types/events'
 
 /**
- * @class Emitter
- * @property { Listener<TEvents>[]} listeners
+ * @class EventEmitter
+ * @property {{ [K in keyof TEvents]: Emitter<TEvents[K]> } | undefined} listeners
  */
-export class Emitter<TValue extends unknown> {
-  listeners: Listener<TValue>[]
+export class Emitter<TEvents extends Events> {
+  eventNotifiers: EventNotifiers<TEvents>
 
   /**
    * @constructor
-   * @param {ListenerDictionary<TValue>} [listeners]
+   * @param {{ [K in keyof TEvents]: Notifier<TEvents[K]> }} [eventNotifiers]
    */
-  constructor(listeners?: Listener<TValue>[] | undefined) {
-    this.listeners = listeners ?? []
+  constructor(eventNotifiers: EventNotifiers<TEvents>) {
+    this.eventNotifiers = eventNotifiers
   }
 
   /**
-   * Subscribes listener.
-   * @param {Listener<TValue[T]>} listener listener
+   * Subscribes on event specified function
+   * @template {keyof TEvents} T names
+   * @param {T} eventName Event name
+   * @param {Listener<TEvents[T]>} listener listener
    */
-  add = (listener: Listener<TValue>): (() => void) => {
-    this.listeners.push(listener)
-    return () => this.remove(listener)
-  }
+  on = <T extends keyof TEvents>(eventName: T, listener: Listener<TEvents[T]>): (() => void) => {
+    const notifier = this.eventNotifiers[eventName]
 
-  /**
-   * Removes listener.
-   * @param {Listener<TValue[T]>} listener listener
-   */
-  remove = (listener: Listener<TValue>) => {
-    this.listeners?.splice(this.listeners.indexOf(listener) >>> 0, 1)
-  }
-
-  /**
-   * Emits all listeners.
-   * @param {TValue[T]} value Event
-   */
-  emit = (value: TValue): void => {
-    for (let index = 0; index < this.listeners.length; index++) {
-      const listener = this.listeners?.[index]
-      listener?.(value)
+    if (!notifier) {
+      this.eventNotifiers[eventName] = new Notifier<TEvents[T]>([listener])
+    } else {
+      notifier.add(listener)
     }
+
+    return () => this.off(eventName, listener)
+  }
+
+  /**
+   * Invokes all handlers for the given event name.
+   * @template {keyof TEvents} T names
+   * @param {T} eventName Event name
+   * @param {TEvents[T]} event Event
+   */
+  emit = <T extends keyof TEvents>(eventName: T, event: TEvents[T]): void => {
+    const notifier = this.eventNotifiers[eventName]
+    notifier?.notify(event)
+  }
+
+  /**
+   * Removes an event handler for the given type.
+   * @template {keyof TEvents} T names
+   * @param {T} eventName Event name
+   * @param {Listener<TEvents[T]>} listener listener
+   */
+  off = <T extends keyof TEvents>(eventName: T, listener: Listener<TEvents[T]>) => {
+    const notifier = this.eventNotifiers[eventName]
+    notifier?.remove(listener)
   }
 }
