@@ -7,8 +7,9 @@ export function useMeasure(): [(ref: Element) => void, Size] {
   const [measureRef, setMeasureRef] = useState<Element | null>(null)
   const update = useForceUpdate()
   const styles = getStyle(measureRef)
-  const height = parseInt(styles?.height || '', 10) || 0
-  const width = parseInt(styles?.width || '', 10) || 0
+
+  const height = parseFloat(styles?.height || '') || 0
+  const width = parseFloat(styles?.width || '') || 0
 
   useEffect(() => observeResize(measureRef, update), [measureRef])
 

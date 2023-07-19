@@ -9,8 +9,8 @@ import { setRefs } from '~/utils/react'
 Component.displayName = 'a-Canvas-w-Item'
 
 export interface Props extends React.HTMLAttributes<HTMLDivElement> {
-  x: number
-  y: number
+  x: number | string
+  y: number | string
   dataId: Id
 }
 
