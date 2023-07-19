@@ -15,6 +15,7 @@ import PopoverPage from './ui/popover'
 import FieldInputPage from './ui/field'
 import InputPage from './ui/input'
 import ListPage from './ui/list'
+import CanvasPage from './ui/canvas'
 import CollapsePage from './ui/collapse'
 import MentionPage from './ui/mentions/mentions'
 
@@ -50,6 +51,15 @@ export const routes = {
     path: '/input',
     element: <InputPage />,
     getName: (): string => 'Input',
+    getURL: function (): string {
+      return `${sharedRoutes.storybook.getURL()}${this.path}`
+    },
+  },
+
+  canvas: {
+    path: '/canvas',
+    element: <CanvasPage />,
+    getName: (): string => 'canvas',
     getURL: function (): string {
       return `${sharedRoutes.storybook.getURL()}${this.path}`
     },
