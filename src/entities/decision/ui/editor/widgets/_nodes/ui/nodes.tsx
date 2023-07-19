@@ -1,17 +1,19 @@
 import { memo } from 'react'
 
 import { Id } from '~/utils/core'
-import { emptyFn } from '~/utils/function/empty-fn'
+
 import { useUpdate } from '~/utils/hooks'
 
 import { LinkStateDictionary } from '../../_links/state/state'
-import { NodeStateDictionary } from '../state/state'
+
 import { Node } from './_node'
+import { Dictionary } from '~/utils/emitter'
+import { NodeState } from '../../_node'
 
 interface NodesProps {
   scale: number
   linkStates: LinkStateDictionary
-  nodeStates: NodeStateDictionary
+  nodeStates: Dictionary<NodeState>
   removeNode: (id: Id) => void
 }
 
@@ -29,13 +31,13 @@ export function NodesComponent(props: NodesProps): JSX.Element {
             nodeStates={props.nodeStates}
             scale={props.scale}
             linkStates={props.linkStates}
-            onMove={(x, y, last): void => {
-              if (last) {
-                setTimeout(() => props.nodeStates.gridDepth(nodeState.position.value.x))
-              } else {
-                emptyFn()
-              }
-            }}
+            // onMove={(x, y, last): void => {
+            //   if (last) {
+            //     setTimeout(() => props.nodeStates.gridDepth(nodeState.position.value.x))
+            //   } else {
+            //     emptyFn()
+            //   }
+            // }}
           />
         )
       })}

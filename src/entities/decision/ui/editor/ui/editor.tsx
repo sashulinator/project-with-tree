@@ -24,7 +24,7 @@ import ItemPanel from '../widgets/_items-panel'
 import { Links } from '../widgets/_links'
 import { LinkStateDictionary } from '../widgets/_links/state/state'
 import { Nodes } from '../widgets/_nodes'
-import { NodeStateDictionary } from '../widgets/_nodes/state/state'
+import { Dictionary } from '~/utils/emitter'
 
 emitter.emit('addTheme', { dark, light })
 
@@ -50,7 +50,7 @@ export function Editor(props: EditorProps): JSX.Element {
 
   const linkStates = useMemo(() => new LinkStateDictionary(linkStateList), [linkStateList])
 
-  const nodeStates = useMemo(() => new NodeStateDictionary(nodeStateList), [])
+  const nodeStates = useMemo(() => new Dictionary(nodeStateList, (item) => item.id.toString()), [])
 
   useUpdate(updateOnEvents, [linkStates])
 

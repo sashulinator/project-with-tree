@@ -1,19 +1,20 @@
 import { NodeState } from '~/entities/decision/ui/editor/widgets/_node'
 
 import { RuleLink, RuleLinkState } from '../../_link'
-import { EmitterableDictionary } from '~/lib/emitter/dictionary'
-import { Any, Position } from '~/utils/core'
+
+import { Position } from '~/utils/core'
 import { useUpdate } from '~/utils/hooks'
 
 import { getOffset } from '../lib/_get-offset'
 import { LinkStateDictionary } from '../state/state'
+import { Dictionary } from '~/utils/emitter'
 
 interface MapLinkProp {
   scale: number
   canvasTranslate: Position
   targetState?: NodeState | undefined
   sourceState?: NodeState | undefined
-  nodeStates: EmitterableDictionary<Any, NodeState>
+  nodeStates: Dictionary<NodeState>
   linkState: RuleLinkState
   linkStates: LinkStateDictionary
 }

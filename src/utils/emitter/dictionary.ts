@@ -5,23 +5,28 @@ import { Dictionary as IDictionary, find, get } from '../dictionary'
 import { Emitter } from './emitter'
 
 import { EventNotifiers } from './types/event-notifiers'
+import { Notifier } from '../notifier'
 
-export type DictionaryEvents<Item> = {
-  add: { item: Item }
-  update: { item: Item }
-  remove: { item: Item }
+export type DictionaryEvents<TItem> = {
+  add: { item: TItem }
+  update: { item: TItem }
+  remove: { item: TItem }
 }
 
 /**
  * Позволяет подписаться на события добвления/обновления/удаления
  */
-export class Dictionary<TItem, E extends DictionaryEvents<TItem> = DictionaryEvents<TItem>> extends Emitter<E> {
+export class Dictionary<TItem> extends Emitter<DictionaryEvents<TItem>> {
   items: IDictionary<TItem>
 
   getKey: (s: TItem) => string
 
-  constructor(eventNotifiers: EventNotifiers<E>, itemList: TItem[], getKey: (s: TItem) => string) {
-    super(eventNotifiers)
+  constructor(itemList: TItem[], getKey: (s: TItem) => string) {
+    super({
+      add: new Notifier(),
+      update: new Notifier(),
+      remove: new Notifier(),
+    })
 
     this.getKey = getKey
 
