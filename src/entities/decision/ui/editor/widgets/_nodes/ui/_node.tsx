@@ -7,6 +7,9 @@ import { LinkStateDictionary } from '../../_links/state/state'
 import { EnterNode } from '../../_node/variants/enter'
 import { SiftNode } from '../../_node/variants/sift'
 import { Dictionary } from '~/utils/emitter'
+import { GestureDragEvent } from '~/ui/canvas/widgets/item/ui/item'
+
+const GAP = 500
 
 interface MapNodeProps {
   state: NodeState
@@ -14,25 +17,58 @@ interface MapNodeProps {
   linkStates: LinkStateDictionary
   nodeStates: Dictionary<NodeState>
   removeNode: (id: Id) => void
-  onMove?: ((x: number, y: number, isLast: boolean) => void) | undefined
 }
 
 export function Node(props: MapNodeProps): JSX.Element {
   useUpdate(subscribeOnUpdates)
 
+  console.log('hgg', props.state.position.value.x)
+
   if (props.state.point.type === 'MAIN') {
-    return <EnterNode state={props.state} scale={props.scale} linkStates={props.linkStates} />
+    return (
+      <EnterNode
+        x={props.state.position.value.x}
+        y={props.state.position.value.y}
+        state={props.state}
+        linkStates={props.linkStates}
+        onGestureDrug={onGestureDrug}
+      />
+    )
   }
   return (
     <SiftNode
-      onMove={props.onMove}
+      x={props.state.position.value.x}
+      y={props.state.position.value.y}
+      onGestureDrug={onGestureDrug}
       removeNode={props.removeNode}
       key={props.state.id}
       state={props.state}
-      scale={props.scale}
       linkStates={props.linkStates}
     />
   )
+
+  // Private
+
+  function onGestureDrug(event: GestureDragEvent): void {
+    console.log('alloo')
+
+    event.event.stopPropagation()
+
+    const isIdle = event.movement[0] === 0 && event.movement[1] === 0
+    if (isIdle) return
+
+    const moveX = event.movement[0] / props.scale
+    const moveY = event.movement[1] / props.scale
+    let x = props.state.position.last.x + moveX
+    const y = props.state.position.last.y + moveY
+
+    if (event.last) {
+      const rx = x % GAP
+      x = rx < GAP / 2 ? x - rx : x + GAP - rx
+    }
+
+    props.state.position.move(x, y, event.last)
+  }
 
   function subscribeOnUpdates(update: () => void): void {
     // const updateNodes = (linkState: RuleLinkState): void => {
@@ -46,6 +82,7 @@ export function Node(props: MapNodeProps): JSX.Element {
     props.linkStates.on('targetId', update)
     props.linkStates.on('sourceId', update)
     props.linkStates.on('index', update)
+    props.state.on('position', update)
     // props.linkStates.on('add', ({ item }) => setTimeout(() => updateNodes(item)))
     // props.linkStates.on('update', ({ item }) => setTimeout(() => updateNodes(item)))
   }

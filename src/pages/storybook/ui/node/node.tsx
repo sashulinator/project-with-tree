@@ -24,13 +24,11 @@ export default function NodePage(): JSX.Element {
             <Node
               dataId='test'
               nodeTitle='Hello World'
-              width={200}
-              height={200}
-              position={{ x: 0, y: 0 }}
-              lastPosition={{ x: 0, y: 0 }}
-              scale={1}
-              onMove={(): void => console.log('move!')}
-              isDrag={emptyFn}
+              x={0}
+              y={0}
+              onGestureDrug={(): void => {
+                console.log('move')
+              }}
               left={<div>left</div>}
             >
               Children

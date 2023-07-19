@@ -2,24 +2,27 @@ import './enter.css'
 
 import { LinkStateDictionary } from '~/entities/decision/ui/editor/widgets/_links/state/state'
 import { Joint, Node, NodeState } from '~/entities/decision/ui/editor/widgets/_node'
+import { GestureDragEvent } from '~/ui/canvas/widgets/item/ui/item'
 
 export interface EnterNodeProps {
   state: NodeState
-  scale: number
+  x: number | string
+  y: number | string
   linkStates: LinkStateDictionary
+  onGestureDrug: (event: GestureDragEvent) => void
 }
 
 /**
  * Node типа enter
  */
 export function EnterNode(props: EnterNodeProps): JSX.Element {
-  const targetLinks = props.linkStates.getLinksByTargetId(props.state.id)
-  const sourceLinks = props.linkStates.getLinksBySourceId(props.state.id)
+  const { linkStates, ...nodeProps } = props
+  const targetLinks = linkStates.getLinksByTargetId(props.state.id)
+  const sourceLinks = linkStates.getLinksBySourceId(props.state.id)
 
   return (
     <Node
-      state={props.state}
-      scale={props.scale}
+      {...nodeProps}
       className='--enter'
       dataId={props.state.id}
       left={
