@@ -3,18 +3,19 @@ import './items-panel.css'
 import { clsx } from 'clsx'
 import { useState } from 'react'
 
-import UnstyledButton from '~/abstract/button'
+import { UnstyledButton } from '~/abstract/button'
 import { NodeState } from '~/entities/decision/ui/editor/widgets/_node'
 import { PrimaryButton } from '~/ui/button/variants/primary'
 import { Plus } from '~/ui/icon'
 import { Id } from '~/utils/core'
 import Input from '~/ui/input'
+import { Dictionary } from '~/utils/emitter'
 
 ItemPanel.displayName = 'decision-Editor-ItemPanel'
 
 interface ItemPanelProps {
   rootProps?: React.HTMLAttributes<HTMLDivElement>
-  nodeStateList: NodeState[]
+  nodeStates: Dictionary<NodeState>
   addNode: () => void
   centerNode: (id: Id) => void
 }
@@ -22,7 +23,7 @@ interface ItemPanelProps {
 export default function ItemPanel(props: ItemPanelProps): JSX.Element {
   const [value, setValue] = useState<string>('')
 
-  const filtered = props.nodeStateList.filter(
+  const filtered = Object.values(props.nodeStates.items).filter(
     (node) => node.point.name.toUpperCase().indexOf(value.toUpperCase()) !== -1
   )
 
