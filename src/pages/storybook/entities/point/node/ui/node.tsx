@@ -21,7 +21,16 @@ export default function NodePage(): JSX.Element {
 
         <div>
           <svg height='500px' width='100%' style={{ border: '1px solid red' }}>
-            <Node dataId='id' state={state} scale={boardState.scale.value} left={<div>left</div>} />
+            <Node
+              onGestureDrug={(): void => {
+                console.log('move')
+              }}
+              x={0}
+              y={0}
+              dataId='id'
+              state={state}
+              left={<div>left</div>}
+            />
           </svg>
         </div>
       </div>

@@ -11,23 +11,24 @@ import { setRefs } from '~/utils/react'
 
 import { dark } from '../../../themes/dark'
 import { light } from '../../../themes/light'
-import { fns } from '~/utils/function'
+import { GestureDragEvent } from '~/ui/canvas/widgets/item/ui/item'
 
 emitter.emit('addTheme', { dark, light })
 
 export interface NodeProps extends React.HTMLAttributes<HTMLDivElement> {
   dataId: Id
   state: NodeState
-  scale: number
+  x: number | string
+  y: number | string
   left?: React.ReactNode
   right?: React.ReactNode
   nodeTitle?: React.ReactNode | undefined
   nodeDescription?: React.ReactNode | undefined
-  onMove?: ((x: number, y: number, isLast: boolean) => void) | undefined
+  onGestureDrug: (event: GestureDragEvent) => void
 }
 
 export function Node(props: NodeProps): JSX.Element {
-  const { state, scale, left, right, dataId, nodeTitle, nodeDescription, ...foreignObjectProps } = props
+  const { state, left, right, dataId, nodeTitle, nodeDescription, ...foreignObjectProps } = props
 
   useUpdate(subscribeOnUpdates)
 
@@ -39,10 +40,6 @@ export function Node(props: NodeProps): JSX.Element {
       className={clsx('point-Node', props.className)}
       nodeTitle={nodeTitle || state.point.name}
       nodeDescription={nodeDescription || state.point.description}
-      position={state.position.value}
-      lastPosition={state.position.last}
-      scale={scale}
-      onMove={fns(state.position.move, props.onMove)}
       left={left}
       right={right}
       data-id={state.id}

@@ -1,0 +1,8 @@
+.ui-Node > .container {
+  display: flex;
+  width: 300px;
+}
+
+.ui-Node > .container > .content {
+  width: 100%;
+}

@@ -1,54 +1,49 @@
+import { FullGestureState, useDrag } from '@use-gesture/react'
 import { clsx } from 'clsx'
 import React, { ForwardedRef, forwardRef } from 'react'
 
-import { Item, ItemPreventDrag, ItemDraggable } from '~/abstract/canvas'
-import { Id, Position } from '~/utils/core'
+import { Item } from '~/abstract/canvas'
+import { Id } from '~/utils/core'
 import { fns } from '~/utils/function'
 
 Component.displayName = 'ui-Canvas-w-Item'
 
+export type GestureDragEvent = Omit<FullGestureState<'drag'>, 'event'> & {
+  event: PointerEvent | MouseEvent | TouchEvent | KeyboardEvent
+}
+
 export interface Props extends React.HTMLAttributes<HTMLDivElement> {
   dataId: Id
-  width?: number | undefined
-  height?: number | undefined
-  position: Position
-  lastPosition: Position
-  scale: number
+  x: number | string
+  y: number | string
   children: React.ReactNode
-  onMove: (x: number, y: number, isLast: boolean) => void
-  isDrag: ItemPreventDrag
+  onGestureDrug: (event: GestureDragEvent) => void
 }
 
 /**
  * Элемент Canvas с фичами
- * 1. Перетаскивание
+ * 1. onGestureDrug
  */
 export function Component(props: Props, ref: ForwardedRef<HTMLDivElement>): JSX.Element {
-  const { scale, position, lastPosition, isDrag, onMove: move, ...chartItemProps } = props
+  const { onGestureDrug, ...canvasItemProps } = props
+
+  const draggableProps = useDrag(onGestureDrug)()
 
   return (
-    <ItemDraggable lastPosition={lastPosition} onMove={move} isDrag={isDrag} scale={scale}>
-      {(draggableProps): JSX.Element => {
-        return (
-          <Item
-            {...chartItemProps}
-            dataId={props.dataId}
-            ref={ref}
-            className={clsx(props.className, 'ui-CanvasItem')}
-            y={position.y}
-            x={position.x}
-            style={{ touchAction: 'none', ...chartItemProps.style }}
-            onKeyDown={fns(draggableProps.onKeyDown, chartItemProps.onKeyDown)}
-            onKeyUp={fns(draggableProps.onKeyUp, chartItemProps.onKeyUp)}
-            onLostPointerCapture={fns(draggableProps.onLostPointerCapture, chartItemProps.onLostPointerCapture)}
-            onPointerCancel={fns(draggableProps.onPointerCancel, chartItemProps.onPointerCancel)}
-            onPointerDown={fns(draggableProps.onPointerDown, chartItemProps.onPointerDown)}
-            onPointerMove={fns(draggableProps.onPointerMove, chartItemProps.onPointerMove)}
-            onPointerUp={fns(draggableProps.onPointerUp, chartItemProps.onPointerUp)}
-          />
-        )
-      }}
-    </ItemDraggable>
+    <Item
+      {...canvasItemProps}
+      dataId={props.dataId}
+      ref={ref}
+      className={clsx(props.className, Component.displayName)}
+      style={{ touchAction: 'none', ...canvasItemProps.style }}
+      onKeyDown={fns(draggableProps.onKeyDown, canvasItemProps.onKeyDown)}
+      onKeyUp={fns(draggableProps.onKeyUp, canvasItemProps.onKeyUp)}
+      onLostPointerCapture={fns(draggableProps.onLostPointerCapture, canvasItemProps.onLostPointerCapture)}
+      onPointerCancel={fns(draggableProps.onPointerCancel, canvasItemProps.onPointerCancel)}
+      onPointerDown={fns(draggableProps.onPointerDown, canvasItemProps.onPointerDown)}
+      onPointerMove={fns(draggableProps.onPointerMove, canvasItemProps.onPointerMove)}
+      onPointerUp={fns(draggableProps.onPointerUp, canvasItemProps.onPointerUp)}
+    />
   )
 }
 

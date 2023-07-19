@@ -16,13 +16,15 @@ import { useUpdate } from '~/utils/hooks'
 
 import { LinkStateDictionary } from '../../../../_links'
 import Input, { useChangeOnBlurStrategy } from '~/ui/input'
+import { GestureDragEvent } from '~/ui/canvas/widgets/item/ui/item'
 
 export interface SiftNodeProps {
   state: NodeState
-  scale: number
+  x: number | string
+  y: number | string
   linkStates: LinkStateDictionary
   removeNode: (id: Id) => void
-  onMove?: ((x: number, y: number, isLast: boolean) => void) | undefined
+  onGestureDrug: (event: GestureDragEvent) => void
 }
 
 /**
@@ -55,9 +57,10 @@ export function SiftNode(props: SiftNodeProps): JSX.Element {
     <Node
       className='--sift'
       state={props.state}
-      scale={props.scale}
-      onMove={props.onMove}
+      onGestureDrug={props.onGestureDrug}
       dataId={props.state.id}
+      x={props.x}
+      y={props.y}
       nodeTitle={
         <div style={{ display: 'flex' }}>
           <Input
