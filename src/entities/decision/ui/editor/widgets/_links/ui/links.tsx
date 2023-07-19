@@ -1,19 +1,18 @@
 import { memo } from 'react'
 
-import { NodeState } from '~/entities/decision/ui/editor/widgets/_node'
-
-import { EmitterableDictionary } from '~/lib/emitter/dictionary'
-import { Any, Position } from '~/utils/core'
+import { Position } from '~/utils/core'
 import { useUpdate } from '~/utils/hooks'
 
 import { LinkStateDictionary } from '../state/state'
 import { Link } from './_link'
+import { Dictionary } from '~/utils/emitter'
+import { NodeState } from '../../_node'
 
 interface LinksProps {
   scale: number
   canvasTranslate: Position
   linkStates: LinkStateDictionary
-  nodeStates: EmitterableDictionary<Any, NodeState>
+  nodeStates: Dictionary<NodeState>
 }
 
 function LinksComponent(props: LinksProps): JSX.Element {

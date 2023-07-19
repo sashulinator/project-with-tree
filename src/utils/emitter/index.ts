@@ -4,4 +4,3 @@ export * from './types/events'
 
 export * from './emitter'
 export * from './dictionary'
-export * from './emitter-dictionary'
