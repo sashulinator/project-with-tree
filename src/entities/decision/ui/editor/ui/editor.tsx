@@ -46,11 +46,9 @@ export function Editor(props: EditorProps): JSX.Element {
 
   const linkStateList = useMemo(() => rules?.map((rule) => new RuleLinkState({ id: rule.id, rule })), [])
 
-  const nodeStateList = useMemo(() => props.decision.data.map((point) => new NodeState({ point })), [])
+  const nodeStates = useMemo(buildNodeStates, [props.decision.data])
 
   const linkStates = useMemo(() => new LinkStateDictionary(linkStateList), [linkStateList])
-
-  const nodeStates = useMemo(() => new Dictionary(nodeStateList, (item) => item.id.toString()), [])
 
   useUpdate(updateOnEvents, [linkStates])
 
@@ -66,7 +64,7 @@ export function Editor(props: EditorProps): JSX.Element {
         <DecisionPanel state={editorState} rootProps={{ className: 'decisionPanel panel' }} />
         <ItemPanel
           centerNode={centerNode}
-          nodeStateList={nodeStateList}
+          nodeStates={nodeStates}
           addNode={addNode}
           rootProps={{ className: 'panel itemsPanel' }}
         />
@@ -93,6 +91,11 @@ export function Editor(props: EditorProps): JSX.Element {
   )
 
   // Private
+
+  function buildNodeStates(): Dictionary<NodeState> {
+    const nodeStateList = props.decision.data.map((point) => new NodeState({ point }))
+    return new Dictionary(nodeStateList, (item) => item.id.toString())
+  }
 
   function removeNode(id: Id): void {
     nodeStates.remove(id)
@@ -145,6 +148,32 @@ export function Editor(props: EditorProps): JSX.Element {
     //   document.body.style.width = `100.0${Math.random()}%`
     // })
   }
+
+  // gridDepth = (x: number): void => {
+  //   const depthNodes = this.values()
+  //     .filter((state) => state.position.value.x === x)
+  //     .sort((a, b) => a.position.value.y - b.position.value.y)
+
+  //   const nodesHeight = depthNodes.reduce((acc, state) => {
+  //     const style = getStyle(state.ref.value)
+  //     assertNotNull(style)
+  //     acc += parseInt(style.height, 10)
+  //     return acc
+  //   }, 0)
+
+  //   const depthHeight = nodesHeight + depthNodes.length * YGAP
+  //   const depthTop = depthHeight / -2
+
+  //   let nextY = depthTop
+
+  //   depthNodes.forEach((state) => {
+  //     state.position.value = { ...state.position.value, y: nextY }
+  //     const style = getStyle(state.ref.value)
+  //     assertNotNull(style)
+  //     const height = parseInt(style.height, 10)
+  //     nextY += height + YGAP
+  //   })
+  // }
 }
 
 Editor.displayName = 'DecisionEditor'
