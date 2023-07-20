@@ -1,6 +1,4 @@
 import { routes as sharedRoutes } from '~/shared/routes'
-import Header from '~/ui/header'
-import Nav from '~/ui/nav'
 
 import Balloon from './ui/balloon'
 import ButtonPage from './ui/button'
