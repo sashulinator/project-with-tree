@@ -12,7 +12,6 @@ interface domain {
 
 function DomainItemComponent({ domain, pl = 0, defaultChildExpanded, ...props }: domain): JSX.Element {
   const pLeft = pl
-  console.log(domain.domainName)
   return (
     <>
       <CollapseUI
