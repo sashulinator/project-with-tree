@@ -15,7 +15,7 @@ MentionInput.displayName = 'ui-Mentions'
 export interface MentionsProps extends MentionsInputProps {
   fieldProps?: FieldProps
   isError?: boolean | undefined
-  transparent?: boolean | undefined
+  transparent?: string | undefined
 }
 
 export function MentionInput(props: MentionsProps): JSX.Element {
