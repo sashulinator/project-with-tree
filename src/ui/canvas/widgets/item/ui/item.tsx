@@ -2,7 +2,7 @@ import { FullGestureState, useDrag } from '@use-gesture/react'
 import { clsx } from 'clsx'
 import React, { ForwardedRef, forwardRef } from 'react'
 
-import { Item } from '~/abstract/canvas'
+import { Item as AbstractItem } from '~/abstract/canvas'
 import { Id } from '~/utils/core'
 import { fns } from '~/utils/function'
 
@@ -30,7 +30,7 @@ export function Component(props: Props, ref: ForwardedRef<HTMLDivElement>): JSX.
   const draggableProps = useDrag(onGestureDrug)()
 
   return (
-    <Item
+    <AbstractItem
       {...canvasItemProps}
       dataId={props.dataId}
       ref={ref}
@@ -47,4 +47,6 @@ export function Component(props: Props, ref: ForwardedRef<HTMLDivElement>): JSX.
   )
 }
 
-export default forwardRef(Component)
+const Item = forwardRef(Component)
+Item.displayName = Component.displayName
+export default Item

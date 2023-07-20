@@ -35,4 +35,6 @@ function Component(props: Props, ref: ForwardedRef<HTMLDivElement>): JSX.Element
   )
 }
 
-export default forwardRef(Component)
+const Item = forwardRef(Component)
+Item.displayName = Component.displayName
+export default Item
