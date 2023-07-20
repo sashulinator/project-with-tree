@@ -14,7 +14,6 @@ import { MentionInput } from '~/ui/mentions'
 import { Mention } from 'react-mentions'
 
 export default function MentionPage(): JSX.Element {
-  const [isFocused, , , toggleFocused] = useBoolean(false)
   const [isError, , , toggleError] = useBoolean(false)
   const [isDisabled, , , toggleDisabled] = useBoolean(false)
   const [transparent, , , toggleTransparent] = useBoolean(false)
@@ -32,10 +31,6 @@ export default function MentionPage(): JSX.Element {
               <H2>Все состояния</H2>
 
               <Flex width='1rem' margin='1rem 0 0 0'>
-                <Flex>
-                  <input type='checkbox' id='focus' checked={isFocused} onChange={toggleFocused} />
-                  isFocused
-                </Flex>
                 <Flex>
                   <input type='checkbox' id='error' checked={isDisabled} onChange={toggleDisabled} />
                   isDisabled
@@ -59,7 +54,7 @@ export default function MentionPage(): JSX.Element {
             }}
             isError={isError}
             disabled={isDisabled}
-            transparent={transparent}
+            transparent={transparent.toString()}
           >
             <Mention
               trigger='@'

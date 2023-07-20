@@ -12,7 +12,7 @@ import { createPortal } from 'react-dom'
 import { QueryClientProvider } from 'react-query'
 import { ReactQueryDevtools } from 'react-query/devtools'
 import { BrowserRouter } from 'react-router-dom'
-
+import { RecoilRoot } from 'recoil'
 import '~/shared/dayjs'
 import { emitter } from '~/shared/emitter'
 import { queryClient } from '~/shared/react-query'
@@ -29,6 +29,7 @@ export default function App(): JSX.Element {
   return (
     <Suspense>
       <QueryClientProvider client={queryClient}>
+      <RecoilRoot>
         <BrowserRouter>
           <Layout />
         </BrowserRouter>
@@ -36,6 +37,8 @@ export default function App(): JSX.Element {
           <ReactQueryDevtools key='0' />,
           <Container key='1' />,
         ], document.body)}
+      </RecoilRoot>
+        
       </QueryClientProvider>
     </Suspense>
   )
