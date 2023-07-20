@@ -1,31 +1,23 @@
 import './node.css'
 
 import { clsx } from 'clsx'
-import React, { ForwardedRef, forwardRef, useRef } from 'react'
+import { ForwardedRef, forwardRef } from 'react'
 
-import { Id, Position } from '~/utils/core'
+import { Item, ItemProps } from '../../item'
+import Flex from '~/abstract/flex'
+import Input, { useChangeOnBlurStrategy } from '~/ui/input'
 
-import { Item } from '../../item'
-import { GestureDragEvent } from '../../item/ui/item'
+import { dark } from '../themes/dark'
+import { light } from '../themes/light'
+import { emitter } from '~/shared/emitter'
+
+emitter.emit('addTheme', { dark, light })
 
 NodeComponent.displayName = 'ui-Canvas-w-Node'
 
-export interface NodeProps extends React.HTMLAttributes<HTMLDivElement> {
-  dataId: Id
-  x: number | string
-  y: number | string
-  nodeTitle: React.ReactNode
-  titleProps?: React.HTMLAttributes<HTMLDivElement>
-  nodeDescription?: React.ReactNode | undefined
-  width?: number | undefined
-  height?: number | undefined
-  left?: React.ReactNode
-  right?: React.ReactNode
-  position: Position
-  lastPosition: Position
-  scale: number
-  children: React.ReactNode
-  onGestureDrug: (event: GestureDragEvent) => void
+export interface NewNodeProps extends ItemProps {
+  title: string
+  onTitleChange: (title: string) => void
 }
 
 /**
@@ -34,27 +26,30 @@ export interface NodeProps extends React.HTMLAttributes<HTMLDivElement> {
  * 2. Перетаскивание по тайтлу
  * 3. Стили позиционирования
  */
-export function NodeComponent(props: NodeProps, ref: ForwardedRef<HTMLDivElement>): JSX.Element {
-  const { nodeTitle, titleProps, nodeDescription, left, right, dataId, ...itemProps } = props
-
-  const rulesRef = useRef(null)
+function NodeComponent(props: NewNodeProps, ref: ForwardedRef<HTMLDivElement>): JSX.Element {
+  const { dataId, title, ...itemProps } = props
 
   return (
-    <Item {...itemProps} dataId={dataId} ref={ref} className={clsx(props.className, 'ui-Node')}>
-      <div className={clsx('container')}>
-        {left}
-        <div className='content'>
-          <div {...titleProps} className={clsx('title', titleProps?.className)}>
-            {nodeTitle}
-          </div>
-          <div className={clsx('description')}>{nodeDescription}</div>
-          {props.children}
-        </div>
-        <div ref={rulesRef}>{right}</div>
-      </div>
+    <Item {...itemProps} dataId={dataId} ref={ref} className={clsx(props.className, NodeComponent.displayName)}>
+      <Flex className='container'>
+        <Flex className='titleSection' width='100%'>
+          <Flex className='title' width='100%' margin='var(--l)'>
+            <Input
+              {...useChangeOnBlurStrategy({
+                transparent: true,
+                value: title,
+                cannotBeEmpty: true,
+                onChange: (ev): void => props.onTitleChange(ev.currentTarget.value),
+              })}
+            />
+          </Flex>
+        </Flex>
+        <Flex className='rulesSection'></Flex>
+      </Flex>
     </Item>
   )
 }
 
-const Node = forwardRef(NodeComponent)
-export { Node }
+const NewNode = forwardRef(NodeComponent)
+NewNode.displayName = NodeComponent.displayName
+export { NewNode }

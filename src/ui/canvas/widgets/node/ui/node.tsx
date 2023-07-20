@@ -29,7 +29,7 @@ export interface NodeProps extends React.HTMLAttributes<HTMLDivElement> {
  * 2. Перетаскивание по тайтлу
  * 3. Стили позиционирования
  */
-export function NodeComponent(props: NodeProps, ref: ForwardedRef<HTMLDivElement>): JSX.Element {
+function NodeComponent(props: NodeProps, ref: ForwardedRef<HTMLDivElement>): JSX.Element {
   const { nodeTitle, titleProps, nodeDescription, left, right, dataId, ...itemProps } = props
 
   const rulesRef = useRef(null)
@@ -52,4 +52,5 @@ export function NodeComponent(props: NodeProps, ref: ForwardedRef<HTMLDivElement
 }
 
 const Node = forwardRef(NodeComponent)
+Node.displayName = NodeComponent.displayName
 export { Node }

@@ -8,7 +8,8 @@ import { setRefs } from '~/utils/react'
 
 Component.displayName = 'a-Canvas-w-Item'
 
-export interface Props extends React.HTMLAttributes<HTMLDivElement> {
+export interface Props extends Omit<React.HTMLAttributes<HTMLDivElement>, 'children'> {
+  children: React.ReactNode
   x: number | string
   y: number | string
   dataId: Id
