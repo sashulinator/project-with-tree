@@ -1,8 +1,8 @@
-import { RulesItem } from '~/entities/rules/types/rules-type'
-import { IMentionsItem } from '~/ui/mentions/types/types'
+import { DomainItemProps } from '~/entities/rules/types/rules-type'
+import { MentionsItem } from '~/ui/mentions/types/types'
 
-const addDataMentions = (arr: RulesItem[]): IMentionsItem[] => {
-  let result: IMentionsItem[] = []
+const addDataMentions = (arr: DomainItemProps[]): MentionsItem[] => {
+  let result: MentionsItem[] = []
   arr.forEach(({ domainNodeType, domainName, attributes, childDomain }) => {
     result.push({ id: domainNodeType, display: domainName })
     attributes.forEach(({ nodeType, name }) => {

@@ -1,13 +1,13 @@
 import { OnChangeHandlerFunc } from 'react-mentions'
 import { FieldProps } from '~/abstract/field'
 
-export interface IMentionsItem {
+export interface MentionsItem {
   display: string
   id: string
 }
 
 export interface IMentionsProps extends FieldProps {
-  data: IMentionsItem[]
+  data: MentionsItem[]
   defaultFocus?: boolean | undefined
   focusedChange: () => void
   attributeValue?: string
