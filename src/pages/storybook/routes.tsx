@@ -2,7 +2,6 @@ import { routes as sharedRoutes } from '~/shared/routes'
 import Header from '~/ui/header'
 import Nav from '~/ui/nav'
 
-import PointNodePage from './entities/point/node'
 import Balloon from './ui/balloon'
 import ButtonPage from './ui/button'
 import CalloutPage from './ui/callout'
@@ -128,19 +127,6 @@ export const routes = {
     path: '/ui/node',
     element: <UINodePage />,
     getName: (): string => 'Node',
-    getURL: function (): string {
-      return `${sharedRoutes.storybook.getURL()}${this.path}`
-    },
-  },
-
-  /* ENTITIES */
-
-  pointNode: {
-    Header,
-    Nav,
-    path: '/entities/point/node',
-    element: <PointNodePage />,
-    getName: (): string => 'PointNode',
     getURL: function (): string {
       return `${sharedRoutes.storybook.getURL()}${this.path}`
     },
