@@ -1,18 +1,18 @@
 import { c } from '~/utils/core'
-import { IAttribute } from '../../types/rules-type'
+import { AttributeProps } from '../../types/rules-type'
 import './attribute.css'
-import { useRecoilState } from 'recoil'
-import { activeAttributeAtom } from '~/pages/rules/state'
+import { useSetRecoilState } from 'recoil'
+import { activeAttributeAtom } from '~/entities/rules/state/state'
 
 interface Props {
-  attribute: IAttribute
+  attribute: AttributeProps
   rootProps?: React.HTMLAttributes<HTMLDivElement> | undefined
 }
 
 Attribute.displayName = 'Attribute'
 
-export default function Attribute({ attribute, rootProps }: Props): JSX.Element {
-  const [, setActiveAttribute] = useRecoilState(activeAttributeAtom)
+function Attribute({ attribute, rootProps }: Props): JSX.Element {
+  const setActiveAttribute = useSetRecoilState(activeAttributeAtom)
 
   const dragStart = (): void => setActiveAttribute(attribute)
 
@@ -27,3 +27,5 @@ export default function Attribute({ attribute, rootProps }: Props): JSX.Element 
     </p>
   )
 }
+
+export default Attribute

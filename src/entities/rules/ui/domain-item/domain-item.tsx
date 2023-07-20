@@ -1,16 +1,18 @@
 import CollapseUI from '~/ui/collapse/ui/collapse'
-import { RulesItem } from '../../types/rules-type'
+import { DomainItemProps } from '../../types/rules-type'
 import './domain-item.css'
+import { memo } from 'react'
 import Attribute from '../attribute/attribute'
 interface domain {
-  domain: RulesItem
+  domain: DomainItemProps
   defaultExpanded?: boolean
+  defaultChildExpanded?: boolean
   pl?: number
 }
 
-export default function DomainItem({ domain, pl = 0, ...props }: domain): JSX.Element {
+function DomainItemComponent({ domain, pl = 0, defaultChildExpanded, ...props }: domain): JSX.Element {
   const pLeft = pl
-
+  console.log(domain.domainName)
   return (
     <>
       <CollapseUI
@@ -30,8 +32,10 @@ export default function DomainItem({ domain, pl = 0, ...props }: domain): JSX.El
       </CollapseUI>
       {domain.childDomain !== null &&
         domain.childDomain.map((item) => (
-          <DomainItem key={item.id} domain={item} defaultExpanded={false} pl={pLeft + 10} />
+          <DomainItem key={item.id} domain={item} defaultExpanded={!!defaultChildExpanded} pl={pLeft + 10} />
         ))}
     </>
   )
 }
+
+export const DomainItem = memo(DomainItemComponent)
