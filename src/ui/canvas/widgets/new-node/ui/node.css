@@ -1,8 +1,12 @@
-.ui-Node > .container {
-  display: flex;
+.ui-Canvas-w-Node {
+  background-color: var(--node_bg);
+  border-radius: var(--l);
+}
+
+.ui-Canvas-w-Node > .container {
   width: 300px;
 }
 
-.ui-Node > .container > .content {
-  width: 100%;
+.ui-Canvas-w-Node .title {
+  margin: var(--xl);
 }

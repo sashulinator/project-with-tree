@@ -1,9 +1,8 @@
 import { FullGestureState, useDrag } from '@use-gesture/react'
 import { clsx } from 'clsx'
-import React, { ForwardedRef, forwardRef } from 'react'
+import { ForwardedRef, forwardRef } from 'react'
 
-import { Item as AbstractItem } from '~/abstract/canvas'
-import { Id } from '~/utils/core'
+import { Item as AbstractItem, ItemProps as AbstractItemProps } from '~/abstract/canvas'
 import { fns } from '~/utils/function'
 
 Component.displayName = 'ui-Canvas-w-Item'
@@ -12,11 +11,7 @@ export type GestureDragEvent = Omit<FullGestureState<'drag'>, 'event'> & {
   event: PointerEvent | MouseEvent | TouchEvent | KeyboardEvent
 }
 
-export interface Props extends React.HTMLAttributes<HTMLDivElement> {
-  dataId: Id
-  x: number | string
-  y: number | string
-  children: React.ReactNode
+export interface Props extends AbstractItemProps {
   onGestureDrug: (event: GestureDragEvent) => void
 }
 
@@ -32,7 +27,6 @@ export function Component(props: Props, ref: ForwardedRef<HTMLDivElement>): JSX.
   return (
     <AbstractItem
       {...canvasItemProps}
-      dataId={props.dataId}
       ref={ref}
       className={clsx(props.className, Component.displayName)}
       style={{ touchAction: 'none', ...canvasItemProps.style }}
