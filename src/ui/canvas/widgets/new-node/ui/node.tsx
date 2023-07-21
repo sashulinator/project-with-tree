@@ -10,6 +10,8 @@ import Input, { useChangeOnBlurStrategy } from '~/ui/input'
 import { dark } from '../themes/dark'
 import { light } from '../themes/light'
 import { emitter } from '~/shared/emitter'
+import { Joint } from '../widgets/joint'
+import { Id } from '~/utils/core'
 
 emitter.emit('addTheme', { dark, light })
 
@@ -17,6 +19,8 @@ NodeComponent.displayName = 'ui-Canvas-w-Node'
 
 export interface NewNodeProps extends ItemProps {
   title: string
+  isOneTarget?: boolean
+  targetLinks: { id: Id }[]
   onTitleChange: (title: string) => void
 }
 
@@ -27,10 +31,16 @@ export interface NewNodeProps extends ItemProps {
  * 3. Стили позиционирования
  */
 function NodeComponent(props: NewNodeProps, ref: ForwardedRef<HTMLDivElement>): JSX.Element {
-  const { dataId, title, ...itemProps } = props
+  const { dataId, title, isOneTarget, targetLinks, ...itemProps } = props
 
   return (
-    <Item {...itemProps} dataId={dataId} ref={ref} className={clsx(props.className, NodeComponent.displayName)}>
+    <Item
+      {...itemProps}
+      dataId={dataId}
+      ref={ref}
+      className={clsx(props.className, NodeComponent.displayName)}
+      rootProps={{ style: { overflow: 'visible' } }}
+    >
       <Flex className='container'>
         <Flex className='titleSection' width='100%'>
           <Flex className='title' width='100%' margin='var(--l)'>
@@ -44,7 +54,15 @@ function NodeComponent(props: NewNodeProps, ref: ForwardedRef<HTMLDivElement>): 
             />
           </Flex>
         </Flex>
-        <Flex className='rulesSection'></Flex>
+        <Flex className='rulesSection'>
+          {isOneTarget && (
+            <Flex className='oneTargetLinks'>
+              {targetLinks.map(({ id }) => {
+                return <Joint key={id} linkId={id} variant='new' />
+              })}
+            </Flex>
+          )}
+        </Flex>
       </Flex>
     </Item>
   )
