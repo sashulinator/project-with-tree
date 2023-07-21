@@ -1,32 +1,40 @@
-import { RulesItem } from '../../types/rules-type'
-import CollapseRules from '../collapse-rules/collapse-rules'
-
+import CollapseUI from '~/ui/collapse/ui/collapse'
+import { DomainItemProps } from '../../types/rules-type'
+import './domain-item.css'
+import { memo } from 'react'
+import Attribute from '../attribute/attribute'
 interface domain {
-  domain: RulesItem
-  isExpanded: boolean
-  ml?: number
+  domain: DomainItemProps
+  defaultExpanded?: boolean
+  defaultChildExpanded?: boolean
+  pl?: number
 }
 
-export default function DomainItem({ domain, isExpanded, ml = 0 }: domain): JSX.Element {
-  const mlTest = ml
-
+function DomainItemComponent({ domain, pl = 0, defaultChildExpanded, ...props }: domain): JSX.Element {
+  const pLeft = pl
   return (
     <>
-      <CollapseRules key={domain.id} title={domain.domainName} isExpanded={isExpanded} ml={mlTest}>
+      <CollapseUI
+        defaultExpanded={props.defaultExpanded}
+        title={domain.domainName}
+        rootProps={{ className: 'DomainItem', style: { paddingLeft: pl } }}
+      >
         {domain.attributes.length > 0 ? (
-          <ul>
+          <ul style={{ padding: '10px' }}>
             {domain.attributes.map((attribute) => (
-              <li key={attribute.id}>{attribute.name}</li>
+              <Attribute key={attribute.id} attribute={attribute} />
             ))}
           </ul>
         ) : (
           <div>Нет атрибутов...</div>
         )}
-      </CollapseRules>
+      </CollapseUI>
       {domain.childDomain !== null &&
         domain.childDomain.map((item) => (
-          <DomainItem key={item.id} domain={item} isExpanded={false} ml={mlTest + 20} />
+          <DomainItem key={item.id} domain={item} defaultExpanded={!!defaultChildExpanded} pl={pLeft + 10} />
         ))}
     </>
   )
 }
+
+export const DomainItem = memo(DomainItemComponent)

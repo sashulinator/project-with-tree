@@ -1,21 +1,21 @@
-export interface RulesResponse {
+export interface DomainsResponse {
   id: string
   name: string
   version: string
   status: string
-  data: RulesItem[]
+  data: DomainItemProps[]
 }
 
-export interface RulesItem {
+export interface DomainItemProps {
   id: number
   domainName: string
   domainNodeType: string
   parentId: null | number
-  childDomain: null | RulesItem[]
-  attributes: Attribute[]
+  childDomain: null | DomainItemProps[]
+  attributes: AttributeProps[]
 }
 
-export interface Attribute {
+export interface AttributeProps {
   id: number
   name: string
   nodeType: string

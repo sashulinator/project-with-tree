@@ -1,27 +1,40 @@
+import { useMemo, useState } from 'react'
 import './index.css'
-
 import { useQuery } from 'react-query'
-
 import { makeRequest, url } from '~/api/rules/mock/fetch'
-import DomainItem from '~/entities/rules/ui/domain-item/domain-item'
 import mockRules from '~/mocks/rules/mock-rules'
+import addDataMentions from './lib/add-data-mentions'
+import EditorRules from '~/entities/rules/ui/editor-rules/editor-rules'
+import { DomainItemProps } from '~/entities/rules/types/rules-type'
+import { MentionsItem } from '~/ui/mentions/types/types'
+import DomainList from '~/entities/rules/ui/domain-list/domain-list'
 
 export default function RulesPage(): JSX.Element {
   const { data, isLoading, isSuccess } = useQuery([url, mockRules.name, { id: mockRules.id }], () =>
     makeRequest({ id: mockRules.id })
   )
 
+  const dataList: [DomainItemProps[], MentionsItem[]] = useMemo(() => {
+    if (isSuccess) {
+      const domainsData = data.data.data
+      const mentionsData = addDataMentions(domainsData)
+      return [domainsData, mentionsData]
+    } else {
+      return [[], []]
+    }
+  }, [isSuccess])
+
+  const [value, setValue] = useState<string>('')
+
   if (isSuccess) {
-    const rulesArray = data.data.data
-    console.log(rulesArray)
+    const [domainsData, mentionsData] = dataList
+
     return (
       <main className='RulesPage'>
         <nav>
-          {rulesArray.map((item) => {
-            return <DomainItem key={item.id} domain={item} isExpanded={true} />
-          })}
+          <DomainList rules={domainsData} defaultExpanded={true} />
         </nav>
-        <div></div>
+        <EditorRules mentionsData={mentionsData} value={value} setValue={setValue} />
       </main>
     )
   }

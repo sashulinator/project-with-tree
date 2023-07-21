@@ -1,6 +1,6 @@
-import { RulesResponse } from '~/entities/rules/types/rules-type'
+import { DomainsResponse } from '~/entities/rules/types/rules-type'
 
-const mock: RulesResponse = {
+const mock: DomainsResponse = {
   name: 'mockedRules',
   id: 'mock-rules',
   version: '2.0',
@@ -54,13 +54,13 @@ const mock: RulesResponse = {
         {
           id: 20,
           domainName: 'Информация о ФЛ(Ребенок)',
-          domainNodeType: 'person-child',
+          domainNodeType: 'person-child-3',
           parentId: 0,
           childDomain: [
             {
               id: 21,
               domainName: 'Информация о ФЛ(Ребенок-2)',
-              domainNodeType: 'person-child-2',
+              domainNodeType: 'person-child-4',
               parentId: 10,
               childDomain: null,
               attributes: [
