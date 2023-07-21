@@ -1,9 +1,14 @@
-import { MentionInput } from '~/ui/mentions'
-import { MentionsItem } from '~/ui/mentions/types/types'
+import MentionsInput from '~/ui/mention-input'
+
 import { Mention } from 'react-mentions'
 import { useRecoilValue } from 'recoil'
 import { activeAttributeAtom } from '~/entities/rules/state/state'
 import DropBoard from '~/abstract/drop-board/ui/drop-board'
+
+export interface MentionsItem {
+  display: string
+  id: string
+}
 
 interface EditorRulesProps {
   mentionsData: MentionsItem[]
@@ -23,9 +28,10 @@ export default function EditorRules(props: EditorRulesProps): JSX.Element {
     }
   }
 
+  // TODO ??? Создать e-Domain-ui-Mentions ???
   return (
     <DropBoard drop={drop}>
-      <MentionInput
+      <MentionsInput
         value={value}
         onChange={(_, v): void => {
           setValue(v)
@@ -38,7 +44,7 @@ export default function EditorRules(props: EditorRulesProps): JSX.Element {
             backgroundColor: '#cee4e5',
           }}
         />
-      </MentionInput>
+      </MentionsInput>
     </DropBoard>
   )
 }
