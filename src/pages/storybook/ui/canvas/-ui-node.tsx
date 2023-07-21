@@ -58,6 +58,8 @@ export function UINode(): JSX.Element {
       >
         <svg width='100%' height='100px' style={{ background: '#bb6868' }}>
           <NewNode
+            targetLinks={[{ id: 'hello' }]}
+            isOneTarget={true}
             title={title}
             onTitleChange={setTitle}
             y={y}

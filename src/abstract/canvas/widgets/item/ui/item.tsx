@@ -13,17 +13,18 @@ export interface Props extends Omit<React.HTMLAttributes<HTMLDivElement>, 'child
   x: number | string
   y: number | string
   dataId: Id
+  rootProps?: React.HTMLAttributes<SVGForeignObjectElement>
 }
 
 /**
  * Отрисовывает HTMLElement'ы в заданных координатах
  */
 function Component(props: Props, ref: ForwardedRef<HTMLDivElement>): JSX.Element {
-  const { x, y, dataId, ...divProps } = props
+  const { x, y, dataId, rootProps, ...divProps } = props
   const [setMeasureRef, { height, width }] = useMeasure()
 
   return (
-    <foreignObject data-id={dataId} x={x} y={y} height={height} width={width}>
+    <foreignObject data-id={dataId} x={x} y={y} height={height} width={width} {...rootProps}>
       <div
         {...divProps}
         className={clsx(props.className, Component.displayName)}
