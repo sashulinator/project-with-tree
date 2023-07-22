@@ -1,1 +1,2 @@
-export { default as BaseCollapse } from './ui/collapse'
+export { default } from './ui/collapse'
+export * from './ui/collapse'

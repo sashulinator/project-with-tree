@@ -15,8 +15,18 @@ import ListPage from './ui/list'
 import CanvasPage from './ui/canvas'
 import CollapsePage from './ui/collapse'
 import MentionPage from './ui/mentions/mentions'
+import AccordionPage from './ui/accordion/accordion'
 
 export const routes = {
+  accordion: {
+    path: '/accordion',
+    element: <AccordionPage />,
+    getName: (): string => 'Accordion',
+    getURL: function (): string {
+      return `${sharedRoutes.storybook.getURL()}${this.path}`
+    },
+  },
+
   button: {
     path: '/button',
     element: <ButtonPage />,
