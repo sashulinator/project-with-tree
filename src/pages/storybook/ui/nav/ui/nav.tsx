@@ -3,7 +3,7 @@ import Link from '~/ui/link'
 import ThemeDropdown from '~/ui/theme-dropdown'
 import { setCSSVar } from '~/utils/dom'
 
-import { routes } from './shared/routes'
+import { routes } from '../../../shared/routes'
 import { ChevronAccordion } from '~/ui/accordion'
 import Flex from '~/abstract/flex'
 

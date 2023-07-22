@@ -12,7 +12,7 @@ import Header from '~/ui/header'
 import Nav from '~/ui/nav'
 
 const StorybookPage = lazy(() => import('~/pages/storybook'))
-const StorybookNav = lazy(() => import('~/pages/storybook/nav'))
+const StorybookNav = lazy(() => import('~/pages/storybook/ui/nav/ui/nav'))
 
 export type Route = Omit<RouteProps, 'path'> & {
   Header?: FC
