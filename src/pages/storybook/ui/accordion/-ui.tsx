@@ -9,9 +9,12 @@ import { useBoolean } from '~/utils/hooks'
 
 import Paragraph from '~/ui/paragraph'
 import { Ol } from '~/ui/list/variants/ol'
-import Accordion from '~/abstract/accordion'
+import Accordion from '~/ui/accordion'
+import { useState } from 'react'
 
-export function AbstractSection(): JSX.Element {
+export function UISection(): JSX.Element {
+  const [height, setHeight] = useState<'s' | 'm' | 'l'>('m')
+  const [variant, setVariant] = useState<'bg'>('bg')
   const [expanded, , , toggleExpanded] = useBoolean(true)
   const [controlled, , , toggleControlled] = useBoolean(true)
   const [content, , , toggleContent] = useBoolean(false)
@@ -27,11 +30,18 @@ export function AbstractSection(): JSX.Element {
             Фичи:
             <Ol>
               <li>Controlled/uncontrolled isExpanded</li>
+              <li>Height</li>
             </Ol>
           </>
         }
         toolbar={
           <Flex mainAxis='center' gap='l'>
+            <Flex>
+              <HeightDropdown value={height} onChange={setHeight} />
+            </Flex>
+            <Flex>
+              <VariantsDropdown value={variant} onChange={setVariant} />
+            </Flex>
             <Flex>
               <input type='checkbox' id='square' checked={expanded} onChange={toggleExpanded} />
               expanded
@@ -55,6 +65,8 @@ export function AbstractSection(): JSX.Element {
           onExpandedChange={controlled ? toggleExpanded : undefined}
           isExpanded={controlled ? expanded : undefined}
           renderHeader={Header}
+          height={height}
+          variants={[variant]}
           headerProps={{ title: 'title' }}
           collapseProps={{
             from: animation ? { opacity: expanded ? 0 : 1, y: 0 } : undefined,
@@ -90,5 +102,33 @@ export default function Header(props: HeaderProps): JSX.Element {
       {props.title}
       <button onClick={(): void => props.setExpanded(!props.isExpanded)}>{props.isExpanded ? 'X' : 'O'}</button>
     </div>
+  )
+}
+
+export function HeightDropdown(props: { value: 's' | 'm' | 'l'; onChange: (v: 's' | 'm' | 'l') => void }): JSX.Element {
+  const options = ['s', 'm', 'l'] as const
+  return (
+    // eslint-disable-next-line jsx-a11y/no-onchange
+    <select onChange={(e): void => props.onChange(e.target.value as 's' | 'm' | 'l')} value={props.value || undefined}>
+      {options.map((option) => (
+        <option key={option} value={option}>
+          {option}
+        </option>
+      ))}
+    </select>
+  )
+}
+
+export function VariantsDropdown(props: { value: 'bg'; onChange: (v: 'bg') => void }): JSX.Element {
+  const options = ['bg', 'bgSecondary', 'borderless', 'transparent'] as const
+  return (
+    // eslint-disable-next-line jsx-a11y/no-onchange
+    <select onChange={(e): void => props.onChange(e.target.value as 'bg')} value={props.value || undefined}>
+      {options.map((option) => (
+        <option key={option} value={option}>
+          {option}
+        </option>
+      ))}
+    </select>
   )
 }

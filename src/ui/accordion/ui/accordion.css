@@ -1,28 +1,22 @@
-.header-collapse {
-  display: flex;
-  align-items: center;
-  width: 100%;
-  justify-content: space-between;
-  padding: 5px 10px;
-  align-items: center;
+.ui-Accordion {
+  border-radius: var(--m);
 }
 
-.ui-Collapse {
-  width: 100%;
+/* HEIGHT */
+.ui-Accordion.--s > *:first-child {
+  height: var(--accordion_height__s);
+}
+.ui-Accordion.--m > *:first-child {
+  height: var(--accordion_height__m);
+}
+.ui-Accordion.--l > *:first-child {
+  height: var(--accordion_height__l);
+}
+
+/* VARIANTS */
+.ui-Accordion.--bg {
   background-color: var(--bg);
-  border-radius: var(--l);
 }
-
-.body-Collapse {
-  padding: 2px 10px;
-}
-
-.arrow-icon {
-  /* margin-top: 12px; */
-  margin-left: 12px;
-  transition-duration: 0.3s;
-}
-
-.arrow-icon.rotate {
-  transform: rotate(90deg);
+.ui-Accordion.--bgSecondary {
+  background-color: var(--bgSecondary);
 }

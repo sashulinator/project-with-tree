@@ -20,6 +20,7 @@ export interface AccordionProps<THeaderProps> {
   onExpandedChange?: ((value: boolean) => void) | undefined
   defaultExpanded?: boolean | undefined
   children: React.ReactNode
+  className?: string
   renderHeader: (props: THeaderProps & HeaderProps) => JSX.Element | null
 }
 
@@ -33,7 +34,7 @@ export default function Accordion<THeaderProps>(props: AccordionProps<THeaderPro
   const header = createElement(props.renderHeader, { ...props.headerProps, setExpanded, isExpanded })
 
   return (
-    <div {...props.rootProps} className={c(Accordion.displayName, props.rootProps?.className)}>
+    <div {...props.rootProps} className={c(Accordion.displayName, props.className, props.rootProps?.className)}>
       {header}
       <Collapse
         {...props.collapseProps}
