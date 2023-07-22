@@ -1,10 +1,30 @@
-import AbstractAccordion, { AccordionProps } from '~/abstract/accordion'
+import './accordion.css'
+
+import AbstractAccordion, { AccordionProps as AbstractAccordionProps } from '~/abstract/accordion'
 import { c } from '~/utils/core'
+import { dark } from '../themes/dark'
+import { light } from '../themes/light'
+import { emitter } from '~/shared/emitter'
+
+emitter.emit('addTheme', { dark, light })
 
 Accordion.displayName = 'ui-Accordion'
 
-export type { AccordionProps }
+export interface AccordionProps<HeaderProps> extends AbstractAccordionProps<HeaderProps> {
+  variants?: ('bg' | 'bgSecondary' | 'transparent' | 'borderless')[]
+  height?: 's' | 'm' | 'l' | null
+}
 
 export default function Accordion<HeaderProps>(props: AccordionProps<HeaderProps>): JSX.Element {
-  return <AbstractAccordion {...props} className={c(Accordion.displayName, props.className)} />
+  const { variants = ['transparent'], height = 'm', ...accordionProps } = props
+
+  const variantClasses = variants.map((v) => `--${v}`)
+  const heightClass = height === null ? null : `--${height}`
+
+  return (
+    <AbstractAccordion
+      {...accordionProps}
+      className={c(props.className, Accordion.displayName, heightClass, ...variantClasses)}
+    />
+  )
 }
