@@ -5,6 +5,7 @@ import { H1 } from '~/ui/heading'
 import PageSection from '~/ui/page-section'
 import { AbstractSection } from './-abstract'
 import { UISection } from './-ui'
+import { ChevronAccordion } from '~/ui/accordion'
 
 export default function AccordionPage(): JSX.Element {
   return (
@@ -12,6 +13,9 @@ export default function AccordionPage(): JSX.Element {
       <PageSection>
         <H1>Accordion</H1>
         <p>Описание</p>
+        <Flex width='9rem'>
+          <ChevronAccordion header='header'>Body content</ChevronAccordion>
+        </Flex>
       </PageSection>
       <AbstractSection />
       <UISection />
