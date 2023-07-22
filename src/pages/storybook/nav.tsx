@@ -13,46 +13,49 @@ export default function Nav(): JSX.Element {
       <ThemeDropdown />
       <ul>
         ui
-        <ol>
+        <li>
+          <Link to={routes.accordion.getURL()}>Accordion</Link>
+        </li>
+        <li>
           <Link to={routes.button.getURL()}>Button</Link>
-        </ol>
-        <ol>
+        </li>
+        <li>
           <Link to={routes.canvas.getURL()}>Canvas</Link>
-        </ol>
-        <ol>
+        </li>
+        <li>
           <Link to={routes.collapse.getURL()}>Collapse</Link>
-        </ol>
-        <ol>
+        </li>
+        <li>
           <Link to={routes.field.getURL()}>Field</Link>
-        </ol>
-        <ol>
+        </li>
+        <li>
           <Link to={routes.input.getURL()}>Input</Link>
-        </ol>
-        <ol>
+        </li>
+        <li>
           <Link to={routes.mentions.getURL()}>Mentions</Link>
-        </ol>
-        <ol>
+        </li>
+        <li>
           <Link to={routes.list.getURL()}>List</Link>
-        </ol>
+        </li>
         <br />
-        <ol>
+        <li>
           <Link to={routes.callout.getURL()}>Callout</Link>
-        </ol>
-        <ol>
+        </li>
+        <li>
           <Link to={routes.dropdown.getURL()}>Dropdown</Link>
-        </ol>
-        <ol>
+        </li>
+        <li>
           <Link to={routes.oldList.getURL()}>List</Link>
-        </ol>
-        <ol>
+        </li>
+        <li>
           <Link to={routes.popover.getURL()}>Popover</Link>
-        </ol>
-        <ol>
+        </li>
+        <li>
           <Link to={routes.speechBubble.getURL()}>Balloon</Link>
-        </ol>
-        <ol>
+        </li>
+        <li>
           <Link to={routes.uiNode.getURL()}>Node</Link>
-        </ol>
+        </li>
       </ul>
     </nav>
   )

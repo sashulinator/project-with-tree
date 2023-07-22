@@ -7,23 +7,23 @@ import { createElement } from 'react'
 
 Accordion.displayName = 'a-Accordion'
 
-interface HeaderProps {
+export interface HeaderProps {
   isExpanded: boolean
   setExpanded: (isExpanded: boolean) => void
 }
 
-interface Props<THeaderProps extends HeaderProps> {
+export interface AccordionProps<THeaderProps> {
   rootProps?: React.HTMLAttributes<HTMLDivElement>
-  collapseProps?: CollapseProps
+  collapseProps?: Omit<CollapseProps, 'children' | 'isExpanded'>
   headerProps: THeaderProps
   isExpanded?: boolean | undefined
   onExpandedChange?: ((value: boolean) => void) | undefined
   defaultExpanded?: boolean | undefined
   children: React.ReactNode
-  renderHeader: (props: THeaderProps) => JSX.Element | null
+  renderHeader: (props: THeaderProps & HeaderProps) => JSX.Element | null
 }
 
-export default function Accordion<THeaderProps extends HeaderProps>(props: Props<THeaderProps>): JSX.Element {
+export default function Accordion<THeaderProps>(props: AccordionProps<THeaderProps>): JSX.Element {
   const [isExpanded, setExpanded] = useControlledState(
     props.defaultExpanded || false,
     props.isExpanded,
