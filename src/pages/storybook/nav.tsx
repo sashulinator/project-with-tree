@@ -19,9 +19,15 @@ export default function Nav(): JSX.Element {
             <li>
               <Link to={routes.accordion.getURL()}>Accordion</Link>
             </li>
-            <li>
-              <Link to={routes.button.getURL()}>Button</Link>
-            </li>
+            <ChevronAccordion height={null} header={<Link to={routes.button.getURL()}>Button</Link>}>
+              <ul>
+                <Flex gap='m' dir='column' padding='0.5rem 0 0.5rem 1rem'>
+                  <li>
+                    <Link to={routes.button.getURL()}>Button</Link>
+                  </li>
+                </Flex>
+              </ul>
+            </ChevronAccordion>
             <li>
               <Link to={routes.collapse.getURL()}>Collapse</Link>
             </li>
