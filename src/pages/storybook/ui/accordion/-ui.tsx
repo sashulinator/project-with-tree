@@ -9,9 +9,9 @@ import { useBoolean } from '~/utils/hooks'
 
 import Paragraph from '~/ui/paragraph'
 import { Ol } from '~/ui/list/variants/ol'
-import Accordion from '~/abstract/accordion'
+import Accordion from '~/ui/accordion'
 
-export function AbstractSection(): JSX.Element {
+export function UISection(): JSX.Element {
   const [expanded, , , toggleExpanded] = useBoolean(true)
   const [controlled, , , toggleControlled] = useBoolean(true)
   const [content, , , toggleContent] = useBoolean(false)

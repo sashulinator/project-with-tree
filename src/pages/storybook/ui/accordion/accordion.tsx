@@ -4,6 +4,7 @@ import { H1 } from '~/ui/heading'
 
 import PageSection from '~/ui/page-section'
 import { AbstractSection } from './-abstract'
+import { UISection } from './-ui'
 
 export default function AccordionPage(): JSX.Element {
   return (
@@ -13,6 +14,7 @@ export default function AccordionPage(): JSX.Element {
         <p>Описание</p>
       </PageSection>
       <AbstractSection />
+      <UISection />
     </Flex>
   )
 }
