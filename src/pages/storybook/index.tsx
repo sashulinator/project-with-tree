@@ -1,6 +1,6 @@
 import { Route, Routes } from 'react-router-dom'
 
-import { routes } from './routes'
+import { routes } from './shared/routes'
 
 export default function StorybookPage(): JSX.Element {
   const routeList = Object.values(routes)

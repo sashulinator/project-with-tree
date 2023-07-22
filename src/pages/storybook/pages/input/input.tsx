@@ -10,7 +10,7 @@ import PageSection from '~/ui/page-section'
 import Section from '../../section'
 import Input, { ClearableInput, InputProps, PasswordInput } from '~/ui/input'
 import { useBoolean } from '~/utils/hooks'
-import { routes } from '../../routes'
+import { routes } from '../../shared/routes'
 import Link from '~/ui/link'
 import { User } from '~/ui/icon'
 

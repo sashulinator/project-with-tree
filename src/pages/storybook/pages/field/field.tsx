@@ -12,7 +12,7 @@ import Field, { FieldProps } from '~/ui/field'
 import { useBoolean } from '~/utils/hooks'
 import Input from '~/ui/input'
 import Link from '~/ui/link'
-import { routes } from '../../routes'
+import { routes } from '../../shared/routes'
 
 export default function FieldPage(): JSX.Element {
   return (

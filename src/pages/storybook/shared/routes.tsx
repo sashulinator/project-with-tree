@@ -1,21 +1,21 @@
 import { routes as sharedRoutes } from '~/shared/routes'
 
-import Balloon from './pages/balloon'
-import ButtonPage from './pages/button'
-import CalloutPage from './pages/callout'
-import DropdownPage from './pages/dropdown'
+import Balloon from '../pages/balloon'
+import ButtonPage from '../pages/button'
+import CalloutPage from '../pages/callout'
+import DropdownPage from '../pages/dropdown'
 
-import OldListPage from './pages/old-list'
-import UINodePage from './pages/node'
-import PopoverPage from './pages/popover'
+import OldListPage from '../pages/old-list'
+import UINodePage from '../pages/node'
+import PopoverPage from '../pages/popover'
 
-import FieldInputPage from './pages/field'
-import InputPage from './pages/input'
-import ListPage from './pages/list'
-import CanvasPage from './pages/canvas'
-import CollapsePage from './pages/collapse'
-import MentionPage from './pages/mentions/mentions'
-import AccordionPage from './pages/accordion/accordion'
+import FieldInputPage from '../pages/field'
+import InputPage from '../pages/input'
+import ListPage from '../pages/list'
+import CanvasPage from '../pages/canvas'
+import CollapsePage from '../pages/collapse'
+import MentionPage from '../pages/mentions/mentions'
+import AccordionPage from '../pages/accordion/accordion'
 
 export const routes = {
   accordion: {
