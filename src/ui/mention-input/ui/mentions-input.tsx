@@ -1,8 +1,7 @@
-import { MentionsInput as RMMentionsInput, MentionsInputProps } from 'react-mentions'
-import defaultStyle from './defaultStyle'
-
 import Field from '~/abstract/field/ui/field'
-import './mention-input.css'
+import { MentionsInput as RMMentionsInput, MentionsInputProps as IMentionsInputProps } from 'react-mentions'
+import style from './style'
+import './mentions-input.css'
 
 import { FieldProps } from '~/ui/field'
 import { fns } from '~/utils/function'
@@ -10,15 +9,15 @@ import { fns } from '~/utils/function'
 import { useBoolean } from '~/utils/hooks'
 import { c } from '~/utils/core'
 
-MentionInput.displayName = 'ui-Mentions'
+MentionsInput.displayName = 'ui-MentionInput'
 
-export interface MentionsProps extends MentionsInputProps {
+export interface MentionsInputProps extends IMentionsInputProps {
   fieldProps?: FieldProps
   isError?: boolean | undefined
   transparent?: string | undefined
 }
 
-export function MentionInput(props: MentionsProps): JSX.Element {
+export default function MentionsInput(props: MentionsInputProps): JSX.Element {
   const { fieldProps, isError, ...mentionInputProps } = props
 
   const [isFocused, focus, blur] = useBoolean(false)
@@ -29,8 +28,8 @@ export function MentionInput(props: MentionsProps): JSX.Element {
         {...mentionInputProps}
         onFocus={fns(props.onFocus, focus)}
         onBlur={fns(props.onBlur, blur)}
-        style={{ ...defaultStyle }}
-        className={c(props.className, MentionInput.displayName)}
+        className={c(props.className, MentionsInput.displayName)}
+        style={style}
       />
     </Field>
   )

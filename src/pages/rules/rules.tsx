@@ -4,9 +4,9 @@ import { useQuery } from 'react-query'
 import { makeRequest, url } from '~/api/rules/mock/fetch'
 import mockRules from '~/mocks/rules/mock-rules'
 import addDataMentions from './lib/add-data-mentions'
-import EditorRules from '~/entities/rules/ui/editor-rules/editor-rules'
+import EditorRules, { MentionsItem } from '~/entities/rules/ui/editor-rules/editor-rules'
 import { DomainItemProps } from '~/entities/rules/types/rules-type'
-import { MentionsItem } from '~/ui/mentions/types/types'
+
 import DomainList from '~/entities/rules/ui/domain-list/domain-list'
 
 export default function RulesPage(): JSX.Element {
