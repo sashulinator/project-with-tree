@@ -16,6 +16,16 @@ import CanvasPage from '../pages/canvas'
 import CollapsePage from '../pages/collapse'
 import MentionPage from '../pages/mentions/mentions'
 import AccordionPage from '../pages/accordion/accordion'
+import { ButtoUIPage } from '../pages/button/ui'
+import ButtonVariantsPage from '../pages/button/variants'
+
+export type Route = {
+  path: string
+  element: React.ReactNode
+  getName: () => string
+  getURL: () => string
+  children?: Record<string, Route>
+}
 
 export const routes = {
   accordion: {
@@ -33,6 +43,24 @@ export const routes = {
     getName: (): string => 'Button',
     getURL: function (): string {
       return `${sharedRoutes.storybook.getURL()}${this.path}`
+    },
+    children: {
+      abstract: {
+        path: '/button/ui',
+        element: <ButtoUIPage />,
+        getName: (): string => 'UI',
+        getURL: function (): string {
+          return `${sharedRoutes.storybook.getURL()}${this.path}`
+        },
+      },
+      ui: {
+        path: '/button/variants',
+        element: <ButtonVariantsPage />,
+        getName: (): string => 'Variants',
+        getURL: function (): string {
+          return `${sharedRoutes.storybook.getURL()}${this.path}`
+        },
+      },
     },
   },
 
@@ -139,4 +167,4 @@ export const routes = {
       return `${sharedRoutes.storybook.getURL()}${this.path}`
     },
   },
-}
+} satisfies Record<string, Route>
