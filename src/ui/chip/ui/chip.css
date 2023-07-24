@@ -1,0 +1,20 @@
+.ui-Chip {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-transform: inherit;
+  text-decoration: none;
+}
+
+.ui-Chip.--s {
+  border-radius: calc(var(--chip_height__s) / 2);
+  height: var(--chip_height__s);
+}
+.ui-Chip.--m {
+  border-radius: calc(var(--chip_height__m) / 2);
+  height: var(--chip_height__m);
+}
+.ui-Chip.--l {
+  border-radius: calc(var(--chip_height__l) / 2);
+  height: var(--chip_height__l);
+}
