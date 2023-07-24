@@ -3,7 +3,7 @@ import Flex from '~/abstract/flex'
 import { Route } from '~/pages/storybook/shared/routes'
 import { ChevronAccordion } from '~/ui/accordion'
 import Link from '~/ui/link'
-import ListItem from '../../list-item/ui/list-item'
+import { ListItem } from '../../list-item/ui/list-item'
 
 interface ListProps {
   routes: Record<string, Route>

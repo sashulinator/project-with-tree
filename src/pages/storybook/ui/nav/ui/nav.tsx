@@ -6,7 +6,7 @@ import { setCSSVar } from '~/utils/dom'
 import { routes } from '../../../shared/routes'
 
 import Flex from '~/abstract/flex'
-import List from '../widgets/list/ui/list'
+import { List } from '../widgets/list/ui/list'
 
 export default function Nav(): JSX.Element {
   setCSSVar('nav-width', 200, getRootElement())
