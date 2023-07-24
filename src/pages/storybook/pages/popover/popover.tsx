@@ -87,7 +87,7 @@ export default function PopoverPage(): JSX.Element {
             </label>
             <PointDropdown
               id='placement'
-              onChange={(v) => {
+              onChange={(v): void => {
                 setPlacement(v)
                 setPointTarget('')
                 setPointSource('')

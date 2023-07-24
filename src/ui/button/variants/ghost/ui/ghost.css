@@ -1,7 +1,7 @@
-.ui-GhostButton.ui-Button:hover {
+.ui-Button-v-Ghost.ui-Button:hover {
   background: var(--ghostButton_bg__hovered);
 }
 
-.ui-GhostButton.ui-Button:active {
+.ui-Button-v-Ghost.ui-Button:active {
   background: var(--ghostButton_bg__active);
 }

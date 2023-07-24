@@ -33,4 +33,5 @@ function ButtonComponent(props: ButtonProps, ref: ForwardedRef<HTMLButtonElement
 }
 
 const Button = forwardRef(ButtonComponent)
+Button.displayName = ButtonComponent.displayName
 export default Button

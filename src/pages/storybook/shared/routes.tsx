@@ -1,21 +1,31 @@
 import { routes as sharedRoutes } from '~/shared/routes'
 
-import Balloon from './ui/balloon'
-import ButtonPage from './ui/button'
-import CalloutPage from './ui/callout'
-import DropdownPage from './ui/dropdown'
+import Balloon from '../pages/balloon'
+import ButtonPage from '../pages/button'
+import CalloutPage from '../pages/callout'
+import DropdownPage from '../pages/dropdown'
 
-import OldListPage from './ui/old-list'
-import UINodePage from './ui/node'
-import PopoverPage from './ui/popover'
+import OldListPage from '../pages/old-list'
+import UINodePage from '../pages/node'
+import PopoverPage from '../pages/popover'
 
-import FieldInputPage from './ui/field'
-import InputPage from './ui/input'
-import ListPage from './ui/list'
-import CanvasPage from './ui/canvas'
-import CollapsePage from './ui/collapse'
-import MentionPage from './ui/mentions/mentions'
-import AccordionPage from './ui/accordion/accordion'
+import FieldInputPage from '../pages/field'
+import InputPage from '../pages/input'
+import ListPage from '../pages/list'
+import CanvasPage from '../pages/canvas'
+import CollapsePage from '../pages/collapse'
+import MentionPage from '../pages/mentions/mentions'
+import AccordionPage from '../pages/accordion/accordion'
+import { ButtoUIPage } from '../pages/button/ui'
+import ButtonVariantsPage from '../pages/button/variants'
+
+export type Route = {
+  path: string
+  element: React.ReactNode
+  getName: () => string
+  getURL: () => string
+  children?: Record<string, Route>
+}
 
 export const routes = {
   accordion: {
@@ -33,6 +43,24 @@ export const routes = {
     getName: (): string => 'Button',
     getURL: function (): string {
       return `${sharedRoutes.storybook.getURL()}${this.path}`
+    },
+    children: {
+      abstract: {
+        path: '/button/ui',
+        element: <ButtoUIPage />,
+        getName: (): string => 'UI',
+        getURL: function (): string {
+          return `${sharedRoutes.storybook.getURL()}${this.path}`
+        },
+      },
+      ui: {
+        path: '/button/variants',
+        element: <ButtonVariantsPage />,
+        getName: (): string => 'Variants',
+        getURL: function (): string {
+          return `${sharedRoutes.storybook.getURL()}${this.path}`
+        },
+      },
     },
   },
 
@@ -139,4 +167,4 @@ export const routes = {
       return `${sharedRoutes.storybook.getURL()}${this.path}`
     },
   },
-}
+} satisfies Record<string, Route>

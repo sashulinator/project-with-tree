@@ -11,7 +11,7 @@ import { light } from '../_themes/light'
 
 emitter.emit('addTheme', { dark, light })
 
-GhostButtonComponent.displayName = 'ui-GhostButton'
+GhostButtonComponent.displayName = 'ui-Button-v-Ghost'
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 export interface GhostButtonProps extends ButtonProps {}
@@ -21,4 +21,5 @@ function GhostButtonComponent(props: GhostButtonProps, ref: ForwardedRef<HTMLBut
 }
 
 const GhostButton = forwardRef(GhostButtonComponent)
+GhostButton.displayName = GhostButtonComponent.displayName
 export { GhostButton }

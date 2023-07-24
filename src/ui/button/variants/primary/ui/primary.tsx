@@ -11,7 +11,7 @@ import { light } from '../_themes/light'
 
 emitter.emit('addTheme', { dark, light })
 
-PrimaryButtonComponent.displayName = 'ui-PrimaryButton'
+PrimaryButtonComponent.displayName = 'ui-Button-v-Primary'
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 export interface PrimaryButtonProps extends ButtonProps {}
@@ -21,4 +21,5 @@ function PrimaryButtonComponent(props: PrimaryButtonProps, ref: ForwardedRef<HTM
 }
 
 const PrimaryButton = forwardRef(PrimaryButtonComponent)
+PrimaryButton.displayName = PrimaryButtonComponent.displayName
 export { PrimaryButton }
