@@ -1,7 +1,7 @@
 import { GhostButton } from '~/ui/button'
 import Flex from '~/abstract/flex/ui/flex'
 import { PrimaryButton } from '~/ui/button/variants/primary'
-import { H1 } from '~/ui/heading'
+
 import { User } from '~/ui/icon'
 
 import Section from '../../ui/section/ui/section'

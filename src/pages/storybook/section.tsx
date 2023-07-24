@@ -10,11 +10,11 @@ interface SectionProps {
 
 export default function Section(props: SectionProps): JSX.Element {
   return (
-    <Flex dir='column'>
+    <Flex dir='column' width='100%'>
       {props.header}
       <hr style={{ width: '100%', opacity: '.2' }} />
       {props.toolbar}
-      <Flex>
+      <Flex width='100%'>
         <Flex width='50%' padding='2rem 2rem 2rem 0'>
           {props.children}
         </Flex>

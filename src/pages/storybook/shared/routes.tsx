@@ -17,9 +17,10 @@ import CollapsePage from '../pages/collapse'
 import MentionPage from '../pages/mentions/mentions'
 import AccordionPage from '../pages/accordion/accordion'
 import { ButtoUIPage } from '../pages/button/ui'
-import ButtonVariantsPage from '../pages/button/variants'
-import { ButtoAbstractPage } from '../pages/button/abstract'
+import UIButtonVGhostPage from '../pages/button/ui-v-ghost'
+import { AButtonWUnstyledPage } from '../pages/button/a-w-unstyled'
 import ChipPage from '../pages/chip'
+import UIButtonVPrimaryPage from '../pages/button/ui-v-primary'
 
 export type Route = {
   path: string
@@ -27,6 +28,7 @@ export type Route = {
   getName: () => string
   getURL: () => string
   children?: Record<string, Route>
+  type?: ('abstract' | 'private' | 'widget' | 'variant' | 'ui')[]
 }
 
 export const routes = {
@@ -58,29 +60,48 @@ export const routes = {
     children: {
       abstract: {
         path: '/button/abstract',
-        element: <ButtoAbstractPage />,
-        getName: (): string => 'Abstract',
+        element: <ButtoUIPage />,
+        getName: (): string => 'a-Button',
         getURL: function (): string {
           return `${sharedRoutes.storybook.getURL()}${this.path}`
         },
+        type: ['abstract'],
+      },
+      aUstyled: {
+        path: '/button/a-w-unstyled',
+        element: <AButtonWUnstyledPage />,
+        getName: (): string => 'a-w-Unstyled',
+        getURL: function (): string {
+          return `${sharedRoutes.storybook.getURL()}${this.path}`
+        },
+        type: ['abstract', 'widget'],
       },
       ui: {
         path: '/button/ui',
         element: <ButtoUIPage />,
-        getName: (): string => 'UI',
+        getName: (): string => 'ui-Button',
         getURL: function (): string {
           return `${sharedRoutes.storybook.getURL()}${this.path}`
         },
-        children: {
-          variants: {
-            path: '/button/ui/variants',
-            element: <ButtonVariantsPage />,
-            getName: (): string => 'Variants',
-            getURL: function (): string {
-              return `${sharedRoutes.storybook.getURL()}${this.path}`
-            },
-          },
+        type: ['ui'],
+      },
+      uiGhost: {
+        path: '/button/ui-v-ghost',
+        element: <UIButtonVGhostPage />,
+        getName: (): string => 'ui-v-Ghost',
+        getURL: function (): string {
+          return `${sharedRoutes.storybook.getURL()}${this.path}`
         },
+        type: ['ui', 'variant'],
+      },
+      uiPrimary: {
+        path: '/button/ui-v-primary',
+        element: <UIButtonVPrimaryPage />,
+        getName: (): string => 'ui-v-Primary',
+        getURL: function (): string {
+          return `${sharedRoutes.storybook.getURL()}${this.path}`
+        },
+        type: ['ui', 'variant'],
       },
     },
   },

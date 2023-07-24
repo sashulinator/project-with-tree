@@ -39,14 +39,6 @@ export function ButtoAbstractPage(): JSX.Element {
           Hello
         </Button>
       </Section>
-
-      <Section
-        features={['Сброс стилей']}
-        h2={UnstyledButton.displayName}
-        description='Кнопка без стилей. В том числе без outline'
-      >
-        <UnstyledButton style={{ border: '1px solid red' }}>Hello</UnstyledButton>
-      </Section>
     </Flex>
   )
 }

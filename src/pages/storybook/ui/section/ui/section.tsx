@@ -36,7 +36,7 @@ export default function Section(props: SectionProps): JSX.Element {
         </Flex>
         <hr style={{ width: '100%', opacity: '.2' }} />
         {props.toolbar}
-        <Flex>
+        <Flex width='100%'>
           <Flex width='50%' padding='2rem 2rem 2rem 0'>
             {props.children}
           </Flex>
