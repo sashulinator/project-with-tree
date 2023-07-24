@@ -40,6 +40,7 @@ export default function RulesPage(): JSX.Element {
           {editorValues.map((item, i) => (
             <li key={item.id}>
               <EditorItem
+                oneElement={editorValues.length === 1}
                 id={item.id}
                 mentionsData={mentionsData}
                 value={item.value}

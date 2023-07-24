@@ -16,20 +16,17 @@ interface Props {
   mentionsData: MentionsItem[]
   value: string
   lastElement: boolean
+  oneElement: boolean
 }
 
 export default function EditorItem(props: Props): JSX.Element {
-  const { id, setEditorValues, mentionsData, value, lastElement } = props
+  const { id, setEditorValues, mentionsData, value, lastElement, oneElement } = props
   return (
     <>
       <EditorRules id={id} mentionsData={mentionsData} value={value} setValue={setEditorValues} />
       {lastElement && <AddButton setEditorValues={setEditorValues} />}
-      {!lastElement && (
-        <>
-          <DeleteButton setEditorValues={setEditorValues} id={id} />
-          <Radio id={id} />
-        </>
-      )}
+      {!oneElement && <DeleteButton setEditorValues={setEditorValues} id={id} />}
+      {!lastElement && <Radio id={id} />}
     </>
   )
 }
