@@ -19,6 +19,7 @@ import AccordionPage from '../pages/accordion/accordion'
 import { ButtoUIPage } from '../pages/button/ui'
 import ButtonVariantsPage from '../pages/button/variants'
 import { ButtoAbstractPage } from '../pages/button/abstract'
+import ChipPage from '../pages/chip'
 
 export type Route = {
   path: string
@@ -33,6 +34,15 @@ export const routes = {
     path: '/accordion',
     element: <AccordionPage />,
     getName: (): string => 'Accordion',
+    getURL: function (): string {
+      return `${sharedRoutes.storybook.getURL()}${this.path}`
+    },
+  },
+
+  chip: {
+    path: '/chip',
+    element: <ChipPage />,
+    getName: (): string => 'Chip',
     getURL: function (): string {
       return `${sharedRoutes.storybook.getURL()}${this.path}`
     },
