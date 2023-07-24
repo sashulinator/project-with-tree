@@ -8,13 +8,13 @@ import { UnstyledButton } from '../widgets/unstyled-button'
 ButtonComponent.displayName = 'a-Button'
 
 export type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
-  height?: 's' | 'm' | 'l' | undefined
+  height?: 's' | 'm' | 'l' | null | undefined
   square?: boolean | undefined
   round?: boolean | undefined
 }
 
 function ButtonComponent(props: ButtonProps, ref: ForwardedRef<HTMLButtonElement>): JSX.Element {
-  const { height, square, round, ...restProps } = props
+  const { height = 'm', square, round, ...restProps } = props
 
   return (
     <UnstyledButton
@@ -34,4 +34,5 @@ function ButtonComponent(props: ButtonProps, ref: ForwardedRef<HTMLButtonElement
 }
 
 const Button = forwardRef(ButtonComponent)
+Button.displayName = ButtonComponent.displayName
 export default Button

@@ -18,6 +18,7 @@ import MentionPage from '../pages/mentions/mentions'
 import AccordionPage from '../pages/accordion/accordion'
 import { ButtoUIPage } from '../pages/button/ui'
 import ButtonVariantsPage from '../pages/button/variants'
+import { ButtoAbstractPage } from '../pages/button/abstract'
 
 export type Route = {
   path: string
@@ -46,6 +47,14 @@ export const routes = {
     },
     children: {
       abstract: {
+        path: '/button/abstract',
+        element: <ButtoAbstractPage />,
+        getName: (): string => 'Abstract',
+        getURL: function (): string {
+          return `${sharedRoutes.storybook.getURL()}${this.path}`
+        },
+      },
+      ui: {
         path: '/button/ui',
         element: <ButtoUIPage />,
         getName: (): string => 'UI',
@@ -53,7 +62,7 @@ export const routes = {
           return `${sharedRoutes.storybook.getURL()}${this.path}`
         },
       },
-      ui: {
+      variants: {
         path: '/button/variants',
         element: <ButtonVariantsPage />,
         getName: (): string => 'Variants',
