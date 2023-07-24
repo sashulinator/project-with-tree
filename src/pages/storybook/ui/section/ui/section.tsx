@@ -12,7 +12,7 @@ interface SectionProps {
   description: string
   features?: string[]
   extends?: string[]
-  extendsName?: string
+  extendsName?: string | undefined
   toolbar?: React.ReactNode
   children: React.ReactNode
 }

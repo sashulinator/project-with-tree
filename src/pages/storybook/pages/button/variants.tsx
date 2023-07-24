@@ -1,7 +1,7 @@
 // import Callout, { top } from '~/ui/callout'
 import { useState } from 'react'
 
-import { GhostButton } from '~/ui/button'
+import Button, { GhostButton } from '~/ui/button'
 import Flex from '~/abstract/flex/ui/flex'
 import { PrimaryButton } from '~/ui/button/variants/primary'
 
@@ -9,6 +9,8 @@ import { useBoolean } from '~/utils/hooks'
 
 import { HeightDropdown } from '../../ui/height-dropdown'
 import Section from '../../ui/section/ui/section'
+import { features as uiButtonFeatures } from './ui'
+import { features as abstractButtonFeatures } from './abstract'
 
 export default function ButtonVariantsPage(): JSX.Element {
   return (
@@ -28,6 +30,8 @@ function PrimaryButtonSection(): JSX.Element {
     <Section
       h2={PrimaryButton.displayName}
       description='Кнопка внимания'
+      extends={[...abstractButtonFeatures, ...uiButtonFeatures]}
+      extendsName={Button.displayName}
       features={['Cтили состояний hover и active']}
       toolbar={
         <Flex width='1rem' margin='1rem 0 0 0'>
@@ -62,6 +66,8 @@ function GhostButtonSection(): JSX.Element {
       h2={GhostButton.displayName}
       description='Светлеет при наведении, в остальное время прозрачна'
       features={['Cтили состояний hover и active']}
+      extends={[...abstractButtonFeatures, ...uiButtonFeatures]}
+      extendsName={Button.displayName}
       toolbar={
         <Flex width='1rem' margin='1rem 0 0 0'>
           <HeightDropdown value={height} onChange={setHeight} />

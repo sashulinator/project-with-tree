@@ -130,7 +130,7 @@ export function SiftNode(props: SiftNodeProps): JSX.Element {
         />
       </div>
       <Button
-        height='none'
+        height={null}
         onClick={(): void => {
           props.state.computation.value = props.state.computation.value === 'parallel' ? 'successively' : 'parallel'
         }}
