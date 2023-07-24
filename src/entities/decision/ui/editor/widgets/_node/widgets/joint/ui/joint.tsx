@@ -24,7 +24,7 @@ export function Joint(props: JointProps): JSX.Element {
   return (
     <Button
       {...divProps}
-      height='none'
+      height={null}
       data-link-id={linkId}
       className={clsx(Joint.displayName, `--${props.variant}`, props.className)}
     />

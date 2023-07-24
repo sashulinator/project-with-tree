@@ -14,19 +14,14 @@ emitter.emit('addTheme', { dark, light })
 ButtonComponent.displayName = 'ui-Button'
 
 export interface ButtonProps extends Omit<AbstractButtonProps, 'height'> {
-  height?: 's' | 'm' | 'l' | 'none'
+  height?: 's' | 'm' | 'l' | null | undefined
 }
 
 function ButtonComponent(props: ButtonProps, ref: ForwardedRef<HTMLButtonElement>): JSX.Element {
   const { height = 'm' } = props
 
   return (
-    <AbstractButton
-      {...props}
-      ref={ref}
-      className={clsx(props.className, ButtonComponent.displayName)}
-      height={height === 'none' ? undefined : height}
-    >
+    <AbstractButton {...props} ref={ref} className={clsx(props.className, ButtonComponent.displayName)} height={height}>
       <span>{props.children}</span>
     </AbstractButton>
   )

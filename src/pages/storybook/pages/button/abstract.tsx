@@ -1,17 +1,16 @@
 import { useState } from 'react'
 
-import Button from '~/ui/button'
+import Button, { UnstyledButton } from '~/abstract/button'
 import Flex from '~/abstract/flex/ui/flex'
 
 import { useBoolean } from '~/utils/hooks'
 
 import { HeightDropdown } from '../../ui/height-dropdown'
 import Section from '../../ui/section/ui/section'
-import AbstractButton from '~/abstract/button'
-import { features as abstractButtonFeatures } from './abstract'
-export const features = ['Сдвиг на 1px при нажатии', 'Border raduis', 'text-transform: uppercase']
 
-export function ButtoUIPage(): JSX.Element {
+export const features = ['Outline', 'Высота s m l', 'Форма круга', 'Форма квадрата']
+
+export function ButtoAbstractPage(): JSX.Element {
   const [height, setHeight] = useState<'m'>('m')
   const [round, , , toggleRound] = useBoolean(false)
   const [square, , , toggleSquare] = useBoolean(false)
@@ -20,9 +19,7 @@ export function ButtoUIPage(): JSX.Element {
     <Flex padding='0 1rem 30vh 1rem' dir='column'>
       <Section
         h1={Button.displayName}
-        description='Кнопка'
-        extends={abstractButtonFeatures}
-        extendsName={AbstractButton.displayName}
+        description={`Абстрактная кнопка с базовым функционалом. Использует виджет ${UnstyledButton.displayName || ''}`}
         features={features}
         toolbar={
           <Flex width='1rem' margin='1rem 0 0 0'>
@@ -41,6 +38,14 @@ export function ButtoUIPage(): JSX.Element {
         <Button height={height} square={square} round={round}>
           Hello
         </Button>
+      </Section>
+
+      <Section
+        features={['Сброс стилей']}
+        h2={UnstyledButton.displayName}
+        description='Кнопка без стилей. В том числе без outline'
+      >
+        <UnstyledButton style={{ border: '1px solid red' }}>Hello</UnstyledButton>
       </Section>
     </Flex>
   )
