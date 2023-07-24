@@ -1,8 +1,8 @@
 import MentionsInput from '~/ui/mention-input'
 
 import { Mention } from 'react-mentions'
-import { useRecoilValue } from 'recoil'
-import { activeAttributeAtom } from '~/entities/rules/state/state'
+import { useRecoilState, useRecoilValue } from 'recoil'
+import { draggableCardAtom } from '~/entities/rules/state/state'
 import DropBoard from '~/abstract/drop-board/ui/drop-board'
 
 export interface MentionsItem {
@@ -20,19 +20,20 @@ interface EditorRulesProps {
 export default function EditorRules(props: EditorRulesProps): JSX.Element {
   const { mentionsData, value, setValue, id } = props
 
-  const activeAttribute = useRecoilValue(activeAttributeAtom)
+  const [draggableCard, setDraggableCard] = useRecoilState(draggableCardAtom)
 
   const drop = (e: React.DragEvent<HTMLDivElement>): void => {
     e.preventDefault()
-    if (activeAttribute) {
+    if (draggableCard) {
       setValue((arr) =>
         arr.map((item) => {
           if (item.id === id) {
-            return { value: `${item.value}@[${activeAttribute.name}](${activeAttribute.nodeType})`, id: id }
+            return { value: `${item.value}@[${draggableCard.name}](${draggableCard.id})`, id: id }
           }
           return item
         })
       )
+      setDraggableCard(null)
     }
   }
 

@@ -1,7 +1,11 @@
 import { atom } from 'recoil'
-import { AttributeProps } from '~/entities/rules/types/rules-type'
 
-export const activeAttributeAtom = atom<AttributeProps | null>({
-  key: 'activeAttributeAtom',
+type AtomType = {
+  id: string
+  name: string
+}
+
+export const draggableCardAtom = atom<AtomType | null>({
+  key: 'draggableCardAtom',
   default: null,
 })
