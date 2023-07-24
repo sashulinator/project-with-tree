@@ -13,18 +13,26 @@ export interface MentionsItem {
 interface EditorRulesProps {
   mentionsData: MentionsItem[]
   value: string
-  setValue: React.Dispatch<React.SetStateAction<string>>
+  setValue: React.Dispatch<React.SetStateAction<{ id: number; value: string }[]>>
+  id: number
 }
 
 export default function EditorRules(props: EditorRulesProps): JSX.Element {
-  const { mentionsData, value, setValue } = props
+  const { mentionsData, value, setValue, id } = props
 
   const activeAttribute = useRecoilValue(activeAttributeAtom)
 
   const drop = (e: React.DragEvent<HTMLDivElement>): void => {
     e.preventDefault()
     if (activeAttribute) {
-      setValue((v) => `${v}@[${activeAttribute.name}](${activeAttribute.nodeType})`)
+      setValue((arr) =>
+        arr.map((item) => {
+          if (item.id === id) {
+            return { value: `${item.value}@[${activeAttribute.name}](${activeAttribute.nodeType})`, id: id }
+          }
+          return item
+        })
+      )
     }
   }
 
@@ -34,7 +42,14 @@ export default function EditorRules(props: EditorRulesProps): JSX.Element {
       <MentionsInput
         value={value}
         onChange={(_, v): void => {
-          setValue(v)
+          setValue((arr) =>
+            arr.map((item) => {
+              if (item.id === id) {
+                return { value: v, id: id }
+              }
+              return item
+            })
+          )
         }}
       >
         <Mention

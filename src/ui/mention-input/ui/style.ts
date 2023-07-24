@@ -1,5 +1,6 @@
 export default {
   '&multiLine': {
+    minHeight: 100,
     control: {},
   },
 
