@@ -61,13 +61,15 @@ export const routes = {
         getURL: function (): string {
           return `${sharedRoutes.storybook.getURL()}${this.path}`
         },
-      },
-      variants: {
-        path: '/button/variants',
-        element: <ButtonVariantsPage />,
-        getName: (): string => 'Variants',
-        getURL: function (): string {
-          return `${sharedRoutes.storybook.getURL()}${this.path}`
+        children: {
+          variants: {
+            path: '/button/ui/variants',
+            element: <ButtonVariantsPage />,
+            getName: (): string => 'Variants',
+            getURL: function (): string {
+              return `${sharedRoutes.storybook.getURL()}${this.path}`
+            },
+          },
         },
       },
     },
