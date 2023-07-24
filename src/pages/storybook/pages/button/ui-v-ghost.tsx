@@ -1,17 +1,16 @@
 import { useState } from 'react'
 
-import Button from '~/ui/button'
+import Button, { GhostButton } from '~/ui/button'
 import Flex from '~/abstract/flex/ui/flex'
 
 import { useBoolean } from '~/utils/hooks'
 
 import { HeightDropdown } from '../../ui/height-dropdown'
 import Section from '../../ui/section/ui/section'
-import AbstractButton from '~/abstract/button'
+import { features as uiButtonFeatures } from './ui'
 import { features as abstractButtonFeatures } from './a-w-unstyled'
-export const features = ['Сдвиг на 1px при нажатии', 'Border raduis', 'text-transform: uppercase']
 
-export function ButtoUIPage(): JSX.Element {
+export default function UIButtonVGhostPage(): JSX.Element {
   const [height, setHeight] = useState<'m'>('m')
   const [round, , , toggleRound] = useBoolean(false)
   const [square, , , toggleSquare] = useBoolean(false)
@@ -19,11 +18,11 @@ export function ButtoUIPage(): JSX.Element {
   return (
     <Flex padding='0 1rem 30vh 1rem' dir='column'>
       <Section
-        h1={Button.displayName}
-        description='Кнопка'
-        extends={abstractButtonFeatures}
-        extendsName={AbstractButton.displayName}
-        features={features}
+        h2={GhostButton.displayName}
+        description='Светлеет при наведении, в остальное время прозрачна'
+        features={['Cтили состояний hover и active']}
+        extends={[...abstractButtonFeatures, ...uiButtonFeatures]}
+        extendsName={Button.displayName}
         toolbar={
           <Flex width='1rem' margin='1rem 0 0 0'>
             <HeightDropdown value={height} onChange={setHeight} />
@@ -38,9 +37,11 @@ export function ButtoUIPage(): JSX.Element {
           </Flex>
         }
       >
-        <Button height={height} square={square} round={round}>
-          Hello
-        </Button>
+        <Flex dir='column'>
+          <GhostButton height={height} square={square} round={round}>
+            Ghost
+          </GhostButton>
+        </Flex>
       </Section>
     </Flex>
   )

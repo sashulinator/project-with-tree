@@ -40,7 +40,7 @@ export default function Flex(props: FlexProps): JSX.Element {
         `--${dir}`,
         gap && `--${gap}`,
         `--mainAxis-${mainAxis}`,
-        `--mainAxis-${crossAxis}`
+        `--crossAxis-${crossAxis}`
       )}
       style={{
         margin,

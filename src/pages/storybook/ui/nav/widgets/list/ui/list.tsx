@@ -4,6 +4,7 @@ import { Route } from '~/pages/storybook/shared/routes'
 import { ChevronAccordion } from '~/ui/accordion'
 import Link from '~/ui/link'
 import { ListItem } from '../../list-item/ui/list-item'
+import Chips from '../../chips/ui/chips'
 
 interface ListProps {
   routes: Record<string, Route>
@@ -12,7 +13,7 @@ interface ListProps {
 
 export function List(props: ListProps): JSX.Element {
   return (
-    <Flex gap='m' dir='column'>
+    <Flex gap='m' dir='column' width='100%'>
       {Object.entries(props.routes).map(([key, route]: [string, Route]) => {
         if (route.children) {
           return (
@@ -20,7 +21,12 @@ export function List(props: ListProps): JSX.Element {
               key={key}
               defaultExpanded={props.defaultExpanded}
               height={'s'}
-              header={<Link to={route.getURL()}>{route.getName()}</Link>}
+              header={
+                <Flex width='100%'>
+                  <Link to={route.getURL()}>{route.getName()}</Link>
+                  <Chips route={route} />
+                </Flex>
+              }
             >
               <Flex padding='0.5rem 0.1rem 0.5rem 1rem ' dir='column' gap='m'>
                 {Object.entries(route.children).map(([key, route]) => {

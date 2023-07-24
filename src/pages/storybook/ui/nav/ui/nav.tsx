@@ -15,7 +15,7 @@ export default function Nav(): JSX.Element {
     <nav>
       <Flex gap='xxxl' dir='column' padding='var(--xxxl)'>
         <ThemeDropdown />
-        <ul>
+        <ul style={{ width: '100%' }}>
           <Flex gap='m' dir='column'>
             <List routes={routes} />
           </Flex>

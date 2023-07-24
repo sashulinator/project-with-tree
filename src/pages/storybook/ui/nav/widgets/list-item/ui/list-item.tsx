@@ -1,5 +1,7 @@
 import { Route } from '~/pages/storybook/shared/routes'
 import Link from '~/ui/link'
+import Chips from '../../chips/ui/chips'
+import Flex from '~/abstract/flex/ui/flex'
 
 interface ListItemProps {
   route: Route
@@ -8,7 +10,10 @@ interface ListItemProps {
 export function ListItem(props: ListItemProps): JSX.Element {
   return (
     <li>
-      <Link to={props.route.getURL()}>{props.route.getName()}</Link>
+      <Flex mainAxis='start' crossAxis='center' gap='s'>
+        <Link to={props.route.getURL()}>{props.route.getName()}</Link>
+        <Chips route={props.route} />
+      </Flex>
     </li>
   )
 }
