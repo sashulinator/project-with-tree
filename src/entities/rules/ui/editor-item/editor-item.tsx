@@ -1,7 +1,7 @@
-import AddButton from '../add-button/add-button'
-import DeleteButton from '../delete-button/delete-button'
+import AddButton from '../add-button'
+import DeleteButton from '../delete-button'
 import EditorRules, { MentionsItem } from '../editor-rules/editor-rules'
-import Radio from '../radio/radio'
+import Radio from '../radio'
 
 interface Props {
   id: number

@@ -1,5 +1,5 @@
 import { DomainItemProps } from '../../types/rules-type'
-import { DomainItem } from '../domain-item/domain-item'
+import { DomainItem } from '../domain-item'
 
 interface DomainListProps {
   rules: DomainItemProps[]

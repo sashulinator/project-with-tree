@@ -5,11 +5,10 @@ import { makeRequest, url } from '~/api/rules/mock/fetch'
 import mockRules from '~/mocks/rules/mock-rules'
 import addDataMentions from './lib/add-data-mentions'
 import { DomainItemProps } from '~/entities/rules/types/rules-type'
-
-import DomainList from '~/entities/rules/ui/domain-list/domain-list'
-import EditorItem from '~/entities/rules/ui/editor-item/editor-item'
 import { MentionsItem } from '~/entities/rules/ui/editor-rules/editor-rules'
 import Button from '~/ui/button/ui/button'
+import DomainList from '~/entities/rules/ui/domain-list'
+import EditorItem from '~/entities/rules/ui/editor-item'
 
 export default function RulesPage(): JSX.Element {
   const { data, isLoading, isSuccess } = useQuery([url, mockRules.name, { id: mockRules.id }], () =>
