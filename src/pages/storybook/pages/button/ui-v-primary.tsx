@@ -15,6 +15,7 @@ export default function UIButtonVPrimaryPage(): JSX.Element {
   const [height, setHeight] = useState<'m'>('m')
   const [round, , , toggleRound] = useBoolean(false)
   const [square, , , toggleSquare] = useBoolean(false)
+  const [padding, setPadding] = useState<'m'>('m')
 
   return (
     <Flex padding='0 1rem 30vh 1rem' dir='column'>
@@ -26,7 +27,10 @@ export default function UIButtonVPrimaryPage(): JSX.Element {
         features={['Cтили состояний hover и active']}
         toolbar={
           <Flex width='1rem' margin='1rem 0 0 0'>
+            height
             <HeightDropdown value={height} onChange={setHeight} />
+            padding
+            <HeightDropdown value={padding} onChange={setPadding} />
             <Flex>
               <input type='checkbox' id='square' checked={square} onChange={toggleSquare} />
               Square
@@ -39,7 +43,7 @@ export default function UIButtonVPrimaryPage(): JSX.Element {
         }
       >
         <Flex dir='column'>
-          <PrimaryButton height={height} square={square} round={round}>
+          <PrimaryButton height={height} square={square} round={round} padding={padding}>
             Primary
           </PrimaryButton>
         </Flex>

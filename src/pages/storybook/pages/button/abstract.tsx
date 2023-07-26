@@ -8,10 +8,11 @@ import { useBoolean } from '~/utils/hooks'
 import { HeightDropdown } from '../../ui/height-dropdown'
 import Section from '../../ui/section/ui/section'
 
-export const features = ['Outline', 'Высота s m l', 'Форма круга', 'Форма квадрата']
+export const features = ['Outline', 'Высота s m l', 'Padding s m l', 'Форма круга', 'Форма квадрата']
 
 export function ButtoAbstractPage(): JSX.Element {
   const [height, setHeight] = useState<'m'>('m')
+  const [padding, setPadding] = useState<'m'>('m')
   const [round, , , toggleRound] = useBoolean(false)
   const [square, , , toggleSquare] = useBoolean(false)
 
@@ -24,6 +25,7 @@ export function ButtoAbstractPage(): JSX.Element {
         toolbar={
           <Flex width='1rem' margin='1rem 0 0 0'>
             <HeightDropdown value={height} onChange={setHeight} />
+            <HeightDropdown value={padding} onChange={setPadding} />
             <Flex>
               <input type='checkbox' id='square' checked={square} onChange={toggleSquare} />
               Square
@@ -35,7 +37,7 @@ export function ButtoAbstractPage(): JSX.Element {
           </Flex>
         }
       >
-        <Button height={height} square={square} round={round}>
+        <Button height={height} square={square} round={round} padding={padding}>
           Hello
         </Button>
       </Section>
