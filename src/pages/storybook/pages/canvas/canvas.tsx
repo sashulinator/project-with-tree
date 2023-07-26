@@ -7,7 +7,6 @@ import { H1 } from '~/ui/heading'
 import PageSection from '~/ui/page-section'
 import { AbstractItem } from './-abstract-item'
 import { UIItem } from './-ui-item'
-import { UINode } from './-ui-node'
 
 export default function FieldPage(): JSX.Element {
   return (
@@ -17,7 +16,6 @@ export default function FieldPage(): JSX.Element {
         <p>Состоит из виджетов</p>
         <br />
       </PageSection>
-      <UINode />
       <UIItem />
       <AbstractItem />
     </Flex>

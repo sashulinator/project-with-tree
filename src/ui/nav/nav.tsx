@@ -17,9 +17,14 @@ export default function Nav(): JSX.Element {
           <Link to={routes.rules.getURL()}>Rules</Link>
         </ol>
         {isDev() && (
-          <ol>
-            <Link to={routes.storybook.path}>Storybook</Link>
-          </ol>
+          <>
+            <ol>
+              <Link to={routes.storybook.getURL()}>Storybook</Link>
+            </ol>
+            <ol>
+              <Link to={routes.storybookNew.getURL()}>New Storybook</Link>
+            </ol>
+          </>
         )}
       </ul>
     </nav>

@@ -1,12 +1,9 @@
 .ui-Canvas-w-Node {
-  background-color: var(--node_bg);
-  border-radius: var(--l);
+  display: flex;
+  flex-direction: column;
 }
 
-.ui-Canvas-w-Node > .container {
-  width: 300px;
-}
-
-.ui-Canvas-w-Node .title {
-  margin: var(--xl);
+.ui-Canvas-w-Node > .links {
+  width: 100%;
+  display: flex;
 }
