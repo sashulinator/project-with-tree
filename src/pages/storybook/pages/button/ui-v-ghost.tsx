@@ -14,6 +14,7 @@ export default function UIButtonVGhostPage(): JSX.Element {
   const [height, setHeight] = useState<'m'>('m')
   const [round, , , toggleRound] = useBoolean(false)
   const [square, , , toggleSquare] = useBoolean(false)
+  const [padding, setPadding] = useState<'m'>('m')
 
   return (
     <Flex padding='0 1rem 30vh 1rem' dir='column'>
@@ -25,7 +26,10 @@ export default function UIButtonVGhostPage(): JSX.Element {
         extendsName={Button.displayName}
         toolbar={
           <Flex width='1rem' margin='1rem 0 0 0'>
+            height
             <HeightDropdown value={height} onChange={setHeight} />
+            padding
+            <HeightDropdown value={padding} onChange={setPadding} />
             <Flex>
               <input type='checkbox' id='square' checked={square} onChange={toggleSquare} />
               Square
@@ -38,7 +42,7 @@ export default function UIButtonVGhostPage(): JSX.Element {
         }
       >
         <Flex dir='column'>
-          <GhostButton height={height} square={square} round={round}>
+          <GhostButton height={height} square={square} round={round} padding={padding}>
             Ghost
           </GhostButton>
         </Flex>
