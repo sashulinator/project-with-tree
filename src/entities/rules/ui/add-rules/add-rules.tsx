@@ -6,7 +6,7 @@ import { useSetRecoilState } from 'recoil'
 import { mentionsDataAtom } from '~/entities/rules/state/state'
 import { addDataMentions } from '../../lib'
 import { DomainList } from '../domain-list/domain-list'
-import { EditorRules } from '../editor-rules-test/editor-rules'
+import { EditorRules } from '../editor-rules/editor-rules'
 import mockRules from '~/mocks/rules/mock-rules'
 import './add-rules.css'
 

@@ -1,5 +1,5 @@
 import { atom } from 'recoil'
-import { MentionsItem } from '../ui/editor-rules/editor-input'
+import { MentionsItem } from '../ui/editor-input/editor-input'
 
 type draggableCardType = {
   id: string
