@@ -1,9 +1,9 @@
 import { c } from '~/utils/core'
 import { AttributeProps } from '../../types/rules-type'
-import './attribute.css'
 import { useSetRecoilState } from 'recoil'
-import { activeAttributeAtom } from '~/entities/rules/state/state'
+import { draggableCardAtom } from '~/entities/rules/state/state'
 
+import './attribute.css'
 interface Props {
   attribute: AttributeProps
   rootProps?: React.HTMLAttributes<HTMLDivElement> | undefined
@@ -11,10 +11,13 @@ interface Props {
 
 Attribute.displayName = 'Attribute'
 
-function Attribute({ attribute, rootProps }: Props): JSX.Element {
-  const setActiveAttribute = useSetRecoilState(activeAttributeAtom)
+export function Attribute({ attribute, rootProps }: Props): JSX.Element {
+  const setDraggableCard = useSetRecoilState(draggableCardAtom)
 
-  const dragStart = (): void => setActiveAttribute(attribute)
+  const dragStart = (e: React.DragEvent<HTMLParagraphElement>): void => {
+    e.stopPropagation()
+    setDraggableCard({ id: attribute.nodeType, name: attribute.name })
+  }
 
   return (
     <p
@@ -27,5 +30,3 @@ function Attribute({ attribute, rootProps }: Props): JSX.Element {
     </p>
   )
 }
-
-export default Attribute

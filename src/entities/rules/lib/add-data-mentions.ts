@@ -1,7 +1,7 @@
 import { DomainItemProps } from '~/entities/rules/types/rules-type'
-import { MentionsItem } from '~/entities/rules/ui/editor-rules/editor-rules'
+import { MentionsItem } from '~/entities/rules/ui/editor-rules/editor-input'
 
-const addDataMentions = (arr: DomainItemProps[]): MentionsItem[] => {
+export const addDataMentions = (arr: DomainItemProps[]): MentionsItem[] => {
   let result: MentionsItem[] = []
   arr.forEach(({ domainNodeType, domainName, attributes, childDomain }) => {
     result.push({ id: domainNodeType, display: domainName })
@@ -14,5 +14,3 @@ const addDataMentions = (arr: DomainItemProps[]): MentionsItem[] => {
   })
   return result
 }
-
-export default addDataMentions
