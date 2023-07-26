@@ -4,7 +4,7 @@ import { editorRulesValuesAtom } from '../../state/state'
 import { PrimaryButton } from '~/ui/button/variants/primary'
 import './editor-item.css'
 import Flex from '~/abstract/flex/ui/flex'
-import { EditorInput } from '../editor-rules/editor-input'
+import { EditorInput } from '../editor-input/editor-input'
 import { Radio } from '../radio/radio'
 interface Props {
   id: number
