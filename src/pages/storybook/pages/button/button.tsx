@@ -16,9 +16,11 @@ export default function ButtonPage(): JSX.Element {
         <PrimaryButton round={true}>
           <User />
         </PrimaryButton>
-        <PrimaryButton>
-          <Flex padding='0 1rem'>Hello</Flex>
-        </PrimaryButton>
+        <Flex dir='column' gap='s'>
+          <PrimaryButton padding={'s'}>Hello</PrimaryButton>
+          <PrimaryButton padding={'m'}>Hello</PrimaryButton>
+          <PrimaryButton padding={'l'}>Hello</PrimaryButton>
+        </Flex>
       </Section>
     </Flex>
   )

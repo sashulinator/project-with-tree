@@ -9,12 +9,13 @@ ButtonComponent.displayName = 'a-Button'
 
 export type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
   height?: 's' | 'm' | 'l' | null | undefined
+  padding?: 's' | 'm' | 'l' | null | undefined
   square?: boolean | undefined
   round?: boolean | undefined
 }
 
 function ButtonComponent(props: ButtonProps, ref: ForwardedRef<HTMLButtonElement>): JSX.Element {
-  const { height = 'm', square, round, ...restProps } = props
+  const { height = 'm', square, round, padding = 'm', ...restProps } = props
 
   return (
     <UnstyledButton
@@ -24,6 +25,7 @@ function ButtonComponent(props: ButtonProps, ref: ForwardedRef<HTMLButtonElement
         ButtonComponent.displayName,
         height && `--${height}`,
         square && '--square',
+        padding && !round && !square && `--padding_${padding}`,
         round && `--square --round`,
         props.className
       )}
