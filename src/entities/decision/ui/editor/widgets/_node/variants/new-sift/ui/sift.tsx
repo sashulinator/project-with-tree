@@ -2,59 +2,57 @@ import './sift.css'
 
 import { Id } from '~/utils/dictionary'
 
-import Input, { useChangeOnBlurStrategy } from '~/ui/input'
 import { GestureDragEvent } from '~/ui/canvas/widgets/item/ui/item'
 import { Joint, NewNode } from '~/ui/canvas'
 import { GhostButton } from '~/ui/button'
-import { Trash } from '~/ui/icon'
+
+import { LinkStateDictionary } from '../../../../_links'
+import { NodeState } from '../../..'
+
+import Toolbar from '../widgets/toolbar'
+import Title from '../widgets/title'
 
 NewSiftNode.displayName = 'decisionCanvas-w-Node-v-Sift'
 
 export interface NewSiftNodeProps {
+  state: NodeState
   x: number | string
   y: number | string
   dataId: Id
-  title: string
-  remove: (id: Id) => void
+  linkStates: LinkStateDictionary
+  remove: () => void
   onGestureDrug: (event: GestureDragEvent) => void
-  onTitleChange: (value: string) => void
 }
 
 /**
  * Node типа sift
  */
 export function NewSiftNode(props: NewSiftNodeProps): JSX.Element {
-  const { onTitleChange, remove, ...nodeProps } = props
+  const { remove, linkStates, ...nodeProps } = props
 
-  const descriptionInputProps = useChangeOnBlurStrategy({
-    value: props.title,
-    cannotBeEmpty: true,
-    transparent: true,
-    height: 'l',
-    placeholder: 'Описание',
-    fieldProps: { className: 'titleInputField' },
-    onChange: (e) => onTitleChange(e.currentTarget.value),
-  })
+  const targetLinks = linkStates.getLinksByTargetId(props.state.id)
 
   return (
     <NewNode
       {...nodeProps}
       className={NewSiftNode.displayName}
-      title={<Input {...descriptionInputProps} />}
-      toolbar={
-        <>
-          <GhostButton style={{ padding: '0 1rem', fontSize: '0.6em' }}>Параллельно</GhostButton>
-          <GhostButton round={true}>
-            <Trash />
-          </GhostButton>
-        </>
-      }
+      title={<Title state={props.state} />}
+      toolbar={<Toolbar state={props.state} remove={remove} />}
       sourceLinks={
-        <div>
+        <>
           <GhostButton round={true} height='s'>
-            <Joint variant='new' linkId={'id'} />
+            <Joint variant='new' linkId={'new-id'} />
           </GhostButton>
-        </div>
+          {targetLinks.map((linkState) => {
+            return (
+              <div key={linkState.id}>
+                <GhostButton round={true} height='s'>
+                  <Joint variant={linkState.sourceId ? 'linked' : 'unlinked'} linkId={'id'} />
+                </GhostButton>
+              </div>
+            )
+          })}
+        </>
       }
       targetLinks={
         <div style={{ display: 'flex', width: '100%', alignItems: 'end', flexDirection: 'column' }}>

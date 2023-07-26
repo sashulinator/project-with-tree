@@ -1,6 +1,6 @@
 import Flex from '~/abstract/flex/ui/flex'
 
-import { useRef, useState } from 'react'
+import { useMemo, useRef, useState } from 'react'
 import Input from '~/ui/input'
 
 import { useBoolean } from '~/utils/hooks'
@@ -8,7 +8,11 @@ import Checkbox from '~/storybook-new/checkbox'
 
 import { Position } from '~/utils/core'
 
-import { NewSiftNode } from '~/entities/decision/ui/editor/widgets/_node/variants/sift copy'
+import { NewSiftNode } from '~/entities/decision/ui/editor/widgets/_node/variants/new-sift'
+import { LinkStateDictionary } from '~/entities/decision/ui/editor/widgets/_links'
+import { RuleLinkState } from '~/entities/decision/ui/editor/widgets/_link'
+import { NodeState } from '~/entities/decision/ui/editor/widgets/_node'
+import { Point } from '~/entities/point'
 
 export const decisionCanvasNodeVSift = {
   name: NewSiftNode.displayName,
@@ -27,7 +31,29 @@ export function Page(): JSX.Element {
   const [x, setX] = useState('20')
   const [y, setY] = useState('20')
   const [content, , , toggleContent] = useBoolean(false)
-  const [title, setTitle] = useState('test')
+
+  const linkStates = new LinkStateDictionary([
+    new RuleLinkState({
+      id: 'test',
+      rule: {
+        id: 'id',
+        name: 'name',
+        targetId: 'id',
+        i: 1,
+      },
+    }),
+  ])
+
+  const point: Point = {
+    id: 'id',
+    name: 'name',
+    type: 'SIFT',
+    computation: 'parallel',
+    x: 10,
+    y: 10,
+  }
+
+  const state = useMemo(() => new NodeState({ point }), [])
 
   return (
     <Flex dir='column' gap='xl' width='100%'>
@@ -44,10 +70,10 @@ export function Page(): JSX.Element {
       </Flex>
       <svg width='100%' height='333px' style={{ border: '1px solid red' }}>
         <NewSiftNode
+          state={state}
+          linkStates={linkStates}
           dataId='tets'
           remove={(): void => console.log('remove!')}
-          title={title}
-          onTitleChange={setTitle}
           onGestureDrug={(event): void => {
             if (initialDrugPosition.current === null)
               initialDrugPosition.current = { x: parseInt(x, 10), y: parseInt(y, 10) }
