@@ -1,18 +1,19 @@
 import CollapseUI from '~/ui/collapse/ui/collapse'
 import { DomainItemProps } from '../../types/rules-type'
-import './domain-item.css'
 import { memo } from 'react'
-import Attribute from '../attribute'
 import { useSetRecoilState } from 'recoil'
 import { draggableCardAtom } from '../../state/state'
-interface domain {
+import { Attribute } from '../attribute/attribute'
+
+import './domain-item.css'
+interface DomainProps {
   domain: DomainItemProps
   defaultExpanded?: boolean
   defaultChildExpanded?: boolean
   pl?: number
 }
 
-function DomainItemComponent({ domain, pl = 0, defaultChildExpanded, ...props }: domain): JSX.Element {
+function DomainItemComponent({ domain, pl = 0, defaultChildExpanded, ...props }: DomainProps): JSX.Element {
   const pLeft = pl
 
   const setDraggableCard = useSetRecoilState(draggableCardAtom)

@@ -4,7 +4,7 @@ interface RadioProps {
   id: number
 }
 
-export default function Radio(props: RadioProps): JSX.Element {
+export function Radio(props: RadioProps): JSX.Element {
   const { id } = props
   const [radioName, setRadioName] = useState(`and_${id}`)
 

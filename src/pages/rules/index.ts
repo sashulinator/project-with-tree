@@ -1,1 +1,1 @@
-export { default } from './rules'
+export { default } from './add-rules-page'
