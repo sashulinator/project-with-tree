@@ -2,7 +2,6 @@ import './joint.css'
 
 import { clsx } from 'clsx'
 
-import Button from '~/ui/button'
 import { emitter } from '~/shared/emitter'
 import { Id } from '~/utils/core'
 
