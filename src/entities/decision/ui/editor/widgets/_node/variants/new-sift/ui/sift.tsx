@@ -11,15 +11,16 @@ import { NodeState } from '../../..'
 
 import Toolbar from '../widgets/toolbar'
 import Title from '../widgets/title'
+import SourceLink from '../widgets/source-links'
 
 NewSiftNode.displayName = 'decisionCanvas-w-Node-v-Sift'
 
 export interface NewSiftNodeProps {
   state: NodeState
+  linkStates: LinkStateDictionary
   x: number | string
   y: number | string
   dataId: Id
-  linkStates: LinkStateDictionary
   remove: () => void
   onGestureDrug: (event: GestureDragEvent) => void
 }
@@ -28,9 +29,7 @@ export interface NewSiftNodeProps {
  * Node типа sift
  */
 export function NewSiftNode(props: NewSiftNodeProps): JSX.Element {
-  const { remove, linkStates, ...nodeProps } = props
-
-  const targetLinks = linkStates.getLinksByTargetId(props.state.id)
+  const { remove, linkStates, state, ...nodeProps } = props
 
   return (
     <NewNode
@@ -38,31 +37,11 @@ export function NewSiftNode(props: NewSiftNodeProps): JSX.Element {
       className={NewSiftNode.displayName}
       title={<Title state={props.state} />}
       toolbar={<Toolbar state={props.state} remove={remove} />}
-      sourceLinks={
-        <>
-          <GhostButton round={true} height='s'>
-            <Joint variant='new' linkId={'new-id'} />
-          </GhostButton>
-          {targetLinks.map((linkState) => {
-            return (
-              <div key={linkState.id}>
-                <GhostButton round={true} height='s'>
-                  <Joint variant={linkState.sourceId ? 'linked' : 'unlinked'} linkId={'id'} />
-                </GhostButton>
-              </div>
-            )
-          })}
-        </>
-      }
+      sourceLinks={<SourceLink linkStates={linkStates} state={state} />}
       targetLinks={
         <div style={{ display: 'flex', width: '100%', alignItems: 'end', flexDirection: 'column' }}>
-          <div style={{ display: 'flex' }}>
-            <GhostButton round={true} height='s'>
-              <Joint variant='new' linkId={'id'} />
-            </GhostButton>
-          </div>
           <GhostButton round={true} height='s'>
-            <Joint variant='linked' linkId={'id'} />
+            <Joint variant='new' linkId={'id'} />
           </GhostButton>
         </div>
       }

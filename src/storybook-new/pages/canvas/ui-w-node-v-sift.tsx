@@ -38,7 +38,7 @@ export function Page(): JSX.Element {
       rule: {
         id: 'id',
         name: 'name',
-        targetId: 'id',
+        sourceId: 'id',
         i: 1,
       },
     }),
