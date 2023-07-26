@@ -5,14 +5,16 @@ import Input from '~/ui/input'
 
 import { useBoolean } from '~/utils/hooks'
 import Checkbox from '~/storybook-new/checkbox'
-import { NewNode } from '~/ui/canvas'
+
 import { Position } from '~/utils/core'
 
-export const eDecisionWNode = {
-  name: NewNode.displayName,
+import { NewSiftNode } from '~/entities/decision/ui/editor/widgets/_node/variants/sift copy'
+
+export const decisionCanvasNodeVSift = {
+  name: NewSiftNode.displayName,
   element: Page,
-  description: 'Компонент Node для Decision',
-  features: ['Собранный конструктор'],
+  description: 'Компонент Node наследующий ui-Item',
+  features: ['Разбивка на зоны toolbar, title, links'],
   // extends: {
   //   name: NewNode.displayName,
   //   list: [''],
@@ -25,6 +27,7 @@ export function Page(): JSX.Element {
   const [x, setX] = useState('20')
   const [y, setY] = useState('20')
   const [content, , , toggleContent] = useBoolean(false)
+  const [title, setTitle] = useState('test')
 
   return (
     <Flex dir='column' gap='xl' width='100%'>
@@ -40,24 +43,20 @@ export function Page(): JSX.Element {
         <Checkbox placeholder='add_content' id='square' checked={content} onChange={toggleContent} />
       </Flex>
       <svg width='100%' height='333px' style={{ border: '1px solid red' }}>
-        <NewNode
+        <NewSiftNode
+          dataId='tets'
+          remove={(): void => console.log('remove!')}
+          title={title}
+          onTitleChange={setTitle}
           onGestureDrug={(event): void => {
             if (initialDrugPosition.current === null)
               initialDrugPosition.current = { x: parseInt(x, 10), y: parseInt(y, 10) }
-
             setX(Math.round(initialDrugPosition.current.x + event.movement[0]).toString())
             setY(Math.round(initialDrugPosition.current.y + event.movement[1]).toString())
-
             if (event.last) initialDrugPosition.current = null
           }}
-          style={{ border: '1px solid red', width: '300px' }}
-          toolbar={<div style={{ border: '1px solid blue' }}>toolbar</div>}
-          title={<div style={{ border: '1px solid blue' }}>title</div>}
-          sourceLinks={<div style={{ border: '1px solid blue' }}>sorceLinks</div>}
-          targetLinks={<div style={{ border: '1px solid blue' }}>targetLinks</div>}
           y={y}
           x={x}
-          dataId={'test'}
         />
       </svg>
     </Flex>

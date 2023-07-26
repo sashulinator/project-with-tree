@@ -1,3 +1,3 @@
 export * from './ui/node'
 
-export type * from './widgets/joint'
+export * from './widgets/joint'

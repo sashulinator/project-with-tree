@@ -7,3 +7,8 @@
   width: 100%;
   display: flex;
 }
+
+.ui-Canvas-w-Node > .links > .targetLinks {
+  width: 100%;
+  display: flex;
+}

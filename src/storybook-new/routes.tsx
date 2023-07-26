@@ -1,6 +1,7 @@
 import { aCanvasWItem } from './pages/canvas/a-w-item'
 import { aCanvasWNodeWJoint } from './pages/canvas/ui-w-node-w-joint'
 import { uiCanvasNode } from './pages/canvas/ui-w-node'
+import { decisionCanvasNodeVSift } from './pages/canvas/ui-w-node-v-sift'
 
 export type RouteConfig = {
   name: string | undefined
@@ -51,6 +52,7 @@ export const routes = {
       aCanvasWItem: configToRoute(aCanvasWItem),
       aCanvasWNodeWJoint: configToRoute(aCanvasWNodeWJoint),
       uiNode: configToRoute(uiCanvasNode),
+      decisionCanvasNodeVSift: configToRoute(decisionCanvasNodeVSift),
     },
   },
 }

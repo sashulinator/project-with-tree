@@ -5,8 +5,10 @@ import Input from '~/ui/input'
 
 import { useBoolean } from '~/utils/hooks'
 import Checkbox from '~/storybook-new/checkbox'
-import { NewNode } from '~/ui/canvas'
+import { Joint, NewNode } from '~/ui/canvas'
 import { Position } from '~/utils/core'
+import { GhostButton } from '~/ui/button'
+import { Trash } from '~/ui/icon'
 
 export const uiCanvasNode = {
   name: NewNode.displayName,
@@ -41,6 +43,40 @@ export function Page(): JSX.Element {
       </Flex>
       <svg width='100%' height='333px' style={{ border: '1px solid red' }}>
         <NewNode
+          toolbar={
+            <div style={{ display: 'flex', justifyContent: 'end', padding: 'var(--s)' }}>
+              <GhostButton height='s' style={{ padding: 'var(--l)' }}>
+                Toolbar
+              </GhostButton>
+              <GhostButton height='s' square={true}>
+                <Trash />
+              </GhostButton>
+            </div>
+          }
+          title={<Input height='l' value='title' />}
+          sourceLinks={
+            <Flex style={{ border: '1px solid blue' }} gap='xxl' dir='column' padding='var(--xxl) .2rem'>
+              <Joint variant='linked' linkId='test1' />
+              <Joint variant='new' linkId='test' />
+            </Flex>
+          }
+          targetLinks={
+            <Flex gap='xxl' width='100%' dir='column' padding='var(--l) .2rem'>
+              <div
+                style={{
+                  display: 'flex',
+                  width: '100%',
+                  height: '40px',
+                  padding: '0 0.2rem 0 1rem',
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                  background: 'grey',
+                }}
+              >
+                <span>Rule</span> <Joint variant='unlinked' linkId='test' />
+              </div>
+            </Flex>
+          }
           onGestureDrug={(event): void => {
             if (initialDrugPosition.current === null)
               initialDrugPosition.current = { x: parseInt(x, 10), y: parseInt(y, 10) }
@@ -51,10 +87,6 @@ export function Page(): JSX.Element {
             if (event.last) initialDrugPosition.current = null
           }}
           style={{ border: '1px solid red', width: '300px' }}
-          toolbar={<div style={{ border: '1px solid blue' }}>toolbar</div>}
-          title={<div style={{ border: '1px solid blue' }}>title</div>}
-          sourceLinks={<div style={{ border: '1px solid blue' }}>sorceLinks</div>}
-          targetLinks={<div style={{ border: '1px solid blue' }}>targetLinks</div>}
           y={y}
           x={x}
           dataId={'test'}
