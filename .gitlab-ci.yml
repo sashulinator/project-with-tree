@@ -4,7 +4,8 @@ variables:
   DOCKER_TLS_CERTDIR: "/certs"
   DOCKER_TLS_VERIFY: 1
   DOCKER_CERT_PATH: "$DOCKER_TLS_CERTDIR/client"
-  PROJECT_NAME: "colibri-develop/project-with-tree"
+  PROJECT_SHORT_NAME: "project-with-tree"
+  PROJECT_NAME: "colibri-develop/$PROJECT_SHORT_NAME"
 build-job:
   stage: build
   image: docker:20.10.7
@@ -17,8 +18,8 @@ build-job:
     - echo "$DOCKER_REGISTRY_PASS" | docker login $CI_REGISTRY --username $DOCKER_REGISTRY_USER --password-stdin
   script:
     #- sleep 1
-    - docker build . -t $CI_REGISTRY/${PROJECT_NAME}/project-with-tree:$VERSION
-    - docker push $CI_REGISTRY/${PROJECT_NAME}/project-with-tree:$VERSION
+    - docker build . -t $CI_REGISTRY/${PROJECT_NAME}/${PROJECT_SHORT_NAME}:$VERSION
+    - docker push $CI_REGISTRY/${PROJECT_NAME}/${PROJECT_SHORT_NAME}:$VERSION
 
 test-job1:
   stage: test
@@ -43,5 +44,13 @@ deploy-prod:
     - kubectl config use-context colibri-develop/project-with-tree:main-agent
     ### Insecure after changing context TBD
     #- kubectl --insecure-skip-tls-verify=true get deployment -A
-    - kubectl --insecure-skip-tls-verify=true rollout restart deployment/front --namespace rtm
+    - kubectl --insecure-skip-tls-verify=true rollout restart deployment/rtm-front --namespace rtm
+
+backup:
+  stage: .post
+  image: alpine/git
+  script:
+    - git remote add backup https://${PERS_NAME}:${PERS_TOKEN}@gitlab.inno.tech/colibri/${PROJECT_SHORT_NAME}.git
+    - git checkout -b backup_branch
+    - git push -f backup backup_branch
 
