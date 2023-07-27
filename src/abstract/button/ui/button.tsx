@@ -25,6 +25,7 @@ function ButtonComponent(props: ButtonProps, ref: ForwardedRef<HTMLButtonElement
         ButtonComponent.displayName,
         height && `--${height}`,
         square && '--square',
+        restProps.disabled && '--disabled',
         padding && !round && !square && `--padding_${padding}`,
         round && `--square --round`,
         props.className

@@ -1,5 +1,2 @@
-import { ToStringable } from '~/utils/core'
-
-export type CSSVars = {
-  node_bg: ToStringable
-}
+// eslint-disable-next-line @typescript-eslint/ban-types
+export type CSSVars = {}

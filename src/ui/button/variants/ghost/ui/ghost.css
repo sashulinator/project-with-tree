@@ -1,6 +1,9 @@
 .ui-Button-v-Ghost.ui-Button:hover {
   background: var(--ghostButton_bg__hovered);
 }
+.ui-Button-v-Ghost.ui-Button.--disabled:hover {
+  background: transparent;
+}
 
 .ui-Button-v-Ghost.ui-Button:active {
   background: var(--ghostButton_bg__active);

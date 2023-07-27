@@ -14,6 +14,9 @@ import Nav from '~/ui/nav'
 const StorybookPage = lazy(() => import('~/pages/storybook'))
 const StorybookNav = lazy(() => import('~/pages/storybook/ui/nav/ui/nav'))
 
+const NewStorybookPage = lazy(() => import('~/storybook-new'))
+const NewStorybookNav = lazy(() => import('~/storybook-new/ui/nav'))
+
 export type Route = Omit<RouteProps, 'path'> & {
   Header?: FC
   Nav?: FC
@@ -90,6 +93,17 @@ export const routes = {
     getName: () => 'storybook',
     getURL(): string {
       return '/project-with-tree/storybook'
+    },
+  },
+
+  storybookNew: {
+    Header,
+    Nav: NewStorybookNav,
+    path: '/project-with-tree/storybook-new/*',
+    element: <NewStorybookPage />,
+    getName: () => 'storybook',
+    getURL(): string {
+      return '/project-with-tree/storybook-new'
     },
   },
 
