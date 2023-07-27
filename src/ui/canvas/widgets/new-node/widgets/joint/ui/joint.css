@@ -1,8 +1,18 @@
 .ui-Canvas-w-Node-w-Joint {
-  padding: 0;
+  border: 0;
+  padding: 0.2rem;
   margin: 0;
-  width: 1rem;
-  height: 1rem;
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 50%;
+  background-color: blue;
+  cursor: pointer;
+  background: transparent;
+}
+
+.ui-Canvas-w-Node-w-Joint div {
+  width: 100%;
+  height: 100%;
   border-radius: 50%;
   background-color: red;
   cursor: pointer;
@@ -11,14 +21,26 @@
 /* Variants */
 
 .ui-Canvas-w-Node-w-Joint.--unlinked {
+  background-color: var(--point_nodeJoint_outline__unlinked);
+}
+
+.ui-Canvas-w-Node-w-Joint.--linked:hover {
+  background-color: var(--point_nodeJoint_outline__linked);
+}
+
+.ui-Canvas-w-Node-w-Joint.--new:hover {
+  background-color: var(--point_nodeJoint_outline__new);
+}
+
+.ui-Canvas-w-Node-w-Joint.--unlinked div {
   background-color: var(--point_nodeJoint_bg__unlinked);
 }
 
-.ui-Canvas-w-Node-w-Joint.--linked {
+.ui-Canvas-w-Node-w-Joint.--linked div {
   background-color: var(--point_nodeJoint_bg__linked);
 }
 
-.ui-Canvas-w-Node-w-Joint.--new {
+.ui-Canvas-w-Node-w-Joint.--new div {
   background-color: var(--point_nodeJoint_bg__new);
 }
 

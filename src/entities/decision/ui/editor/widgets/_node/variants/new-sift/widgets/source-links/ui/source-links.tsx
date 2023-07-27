@@ -34,31 +34,22 @@ export default function SourceLink(props: SourceLinkProps): JSX.Element {
 
   return (
     <>
-      <GhostButton
-        disabled={isEditingThisNode || isEditingHasSource}
-        round={true}
-        height='s'
+      <Joint
         onClick={(): void => props.onNewJointClick(newLink)}
-      >
-        <Joint disabled={isEditingThisNode || isEditingHasSource} variant='new' linkId={newLink.id} />
-      </GhostButton>
+        disabled={isEditingThisNode || isEditingHasSource}
+        variant='new'
+        linkId={newLink.id}
+      />
       {sourceLinkStates.map((linkState) => {
         if (linkState.id === newLink.id) return null
         const isLinked = Boolean(linkState.targetId)
-
         return (
-          <GhostButton
-            disabled={isEditingThisNode || isEditingHasSource || (isLinked && Boolean(editingLinkState))}
+          <Joint
             key={linkState.id}
-            round={true}
-            height='s'
-          >
-            <Joint
-              disabled={isEditingThisNode || isEditingHasSource || (isLinked && Boolean(editingLinkState))}
-              variant={isLinked ? 'linked' : 'unlinked'}
-              linkId={'id'}
-            />
-          </GhostButton>
+            disabled={isEditingThisNode || isEditingHasSource || (isLinked && Boolean(editingLinkState))}
+            variant={isLinked ? 'linked' : 'unlinked'}
+            linkId={'id'}
+          />
         )
       })}
     </>

@@ -27,31 +27,22 @@ export default function TargetLink(props: SourceLinkProps): JSX.Element {
 
   return (
     <>
-      <GhostButton
-        round={true}
-        disabled={isEditingThisNode || isEditingHasTarget}
-        height='s'
+      <Joint
         onClick={(): void => props.onNewJointClick(newLink)}
-      >
-        <Joint disabled={isEditingThisNode || isEditingHasTarget} variant='new' linkId={newLink.id} />
-      </GhostButton>
+        disabled={isEditingThisNode || isEditingHasTarget}
+        variant='new'
+        linkId={newLink.id}
+      />
       {sourceLinkStates.map((linkState) => {
         if (linkState.id === newLink.id) return null
         const isLinked = Boolean(linkState.sourceId)
-
         return (
-          <GhostButton
-            disabled={isEditingThisNode || isEditingHasTarget || (isLinked && Boolean(editingLinkState))}
+          <Joint
             key={linkState.id}
-            round={true}
-            height='s'
-          >
-            <Joint
-              disabled={isEditingThisNode || isEditingHasTarget || (isLinked && Boolean(editingLinkState))}
-              variant={isLinked ? 'linked' : 'unlinked'}
-              linkId={'id'}
-            />
-          </GhostButton>
+            disabled={isEditingThisNode || isEditingHasTarget || (isLinked && Boolean(editingLinkState))}
+            variant={isLinked ? 'linked' : 'unlinked'}
+            linkId={'id'}
+          />
         )
       })}
     </>

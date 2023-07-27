@@ -12,9 +12,8 @@ Joint.displayName = 'ui-Canvas-w-Node-w-Joint'
 
 emitter.emit('addTheme', { dark, light })
 
-export interface JointProps extends React.HTMLAttributes<HTMLDivElement> {
+export interface JointProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   linkId: Id
-  disabled?: boolean
   variant: 'unlinked' | 'new' | 'linked'
 }
 
@@ -22,10 +21,13 @@ export function Joint(props: JointProps): JSX.Element {
   const { linkId, disabled, ...divProps } = props
 
   return (
-    <div
+    <button
       {...divProps}
       data-link-id={linkId}
+      disabled={disabled}
       className={clsx(Joint.displayName, `--${props.variant}`, disabled && `--disabled`, props.className)}
-    />
+    >
+      <div></div>
+    </button>
   )
 }
