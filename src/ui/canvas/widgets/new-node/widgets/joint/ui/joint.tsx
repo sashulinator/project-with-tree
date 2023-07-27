@@ -14,17 +14,18 @@ emitter.emit('addTheme', { dark, light })
 
 export interface JointProps extends React.HTMLAttributes<HTMLDivElement> {
   linkId: Id
+  disabled?: boolean
   variant: 'unlinked' | 'new' | 'linked'
 }
 
 export function Joint(props: JointProps): JSX.Element {
-  const { linkId, ...divProps } = props
+  const { linkId, disabled, ...divProps } = props
 
   return (
     <div
       {...divProps}
       data-link-id={linkId}
-      className={clsx(Joint.displayName, `--${props.variant}`, props.className)}
+      className={clsx(Joint.displayName, `--${props.variant}`, disabled && `--disabled`, props.className)}
     />
   )
 }

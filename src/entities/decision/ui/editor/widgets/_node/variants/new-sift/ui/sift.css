@@ -18,6 +18,12 @@
   padding: var(--m);
 }
 
+.decisionCanvas-w-Node-v-Sift .sourceLinks,
+.decisionCanvas-w-Node-v-Sift .targetLinks {
+  display: flex;
+  flex-direction: column;
+}
+
 .decisionCanvas-w-Node-v-Sift .ui-Input {
   padding: 0 var(--xl);
 }

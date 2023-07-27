@@ -15,8 +15,6 @@ export default function Toolbar(props: ToolbarProps): JSX.Element {
 
   const computation = props.state.computation.value
 
-  console.log('computation', computation)
-
   return (
     <>
       <GhostButton onClick={toogleComputation} style={{ fontSize: '0.6em' }}>

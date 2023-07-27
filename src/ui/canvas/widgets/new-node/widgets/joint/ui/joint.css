@@ -21,3 +21,7 @@
 .ui-Canvas-w-Node-w-Joint.--new {
   background-color: var(--point_nodeJoint_bg__new);
 }
+
+.ui-Canvas-w-Node-w-Joint.--disabled {
+  opacity: 0.5;
+}
