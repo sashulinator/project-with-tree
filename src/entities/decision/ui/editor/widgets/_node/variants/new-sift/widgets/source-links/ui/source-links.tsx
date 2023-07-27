@@ -1,23 +1,22 @@
-import { GhostButton } from '~/ui/button'
-
 import { NodeState } from '../../../../..'
 import { LinkStateDictionary } from '~/entities/decision/ui/editor/widgets/_links'
 import { Joint } from '~/ui/canvas'
 import { useUpdate } from '~/utils/hooks'
 import { useState } from 'react'
-import { RuleLinkState } from '~/entities/decision/ui/editor/widgets/_link'
+import uuid from 'uuid-random'
+import { Id } from '~/utils/core'
 
 interface SourceLinkProps {
   state: NodeState
   linkStates: LinkStateDictionary
-  onNewJointClick: (linkState: RuleLinkState) => void
+  onNewJointClick: (newLinkId: Id) => void
+  onJointClick: (linkId: Id) => void
 }
 
 export default function SourceLink(props: SourceLinkProps): JSX.Element {
-  const [newLink, setLink] = useState(() => RuleLinkState.createDefaultInstance({ sourceId: props.state.id }))
+  const [newLinkId, setNewLinkId] = useState(uuid)
 
   useUpdate(subscribeOnUpdates)
-  useUpdate(subscribeOnNewLink, [newLink])
 
   const editingLinkState = props.linkStates.findEditingLinkState()
   const isEditingThisNode =
@@ -34,38 +33,35 @@ export default function SourceLink(props: SourceLinkProps): JSX.Element {
 
   return (
     <>
-      <Joint
-        onClick={(): void => props.onNewJointClick(newLink)}
-        disabled={isEditingThisNode || isEditingHasSource}
-        variant='new'
-        linkId={newLink.id}
-      />
       {sourceLinkStates.map((linkState) => {
-        if (linkState.id === newLink.id) return null
-        const isLinked = Boolean(linkState.targetId)
+        if (linkState.id === newLinkId) return null
+        const isLinked = Boolean(linkState.targetId.value)
+
         return (
           <Joint
             key={linkState.id}
             disabled={isEditingThisNode || isEditingHasSource || (isLinked && Boolean(editingLinkState))}
             variant={isLinked ? 'linked' : 'unlinked'}
             linkId={'id'}
+            onClick={(): void => props.onJointClick(linkState.id)}
           />
         )
       })}
+      <Joint
+        onClick={(): void => props.onNewJointClick(newLinkId)}
+        disabled={isEditingThisNode || isEditingHasSource}
+        variant='new'
+        linkId={newLinkId}
+      />
     </>
   )
 
   // Private
 
   function subscribeOnUpdates(update: () => void): void {
-    props.linkStates.onAll(update)
-  }
-
-  function subscribeOnNewLink(_: unknown, uns: (() => void)[]): void {
-    uns.push(
-      newLink.on('targetId', ({ value }) => {
-        if (value) setLink(RuleLinkState.createDefaultInstance({ sourceId: props.state.id }))
-      })
-    )
+    props.linkStates.onAll(() => setTimeout(update))
+    props.linkStates.on('targetId', ({ value }) => {
+      if (value) setNewLinkId(uuid())
+    })
   }
 }

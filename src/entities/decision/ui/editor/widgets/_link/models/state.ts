@@ -45,9 +45,9 @@ export class State extends Emitter<Events> {
   static createDefaultRule(rule: Partial<Rule>): Rule {
     return {
       id: uuid(),
+      ...rule,
       name: 'new_rule',
       i: 0,
-      ...rule,
     }
   }
 

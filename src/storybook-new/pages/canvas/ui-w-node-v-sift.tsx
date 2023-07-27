@@ -42,8 +42,8 @@ export function Page(): JSX.Element {
       rule: {
         id: 'id1',
         name: 'name',
-        sourceId: 'id2',
-        targetId: 'id1',
+        sourceId: 'id1',
+        targetId: 'id2',
         i: 1,
       },
     }),
