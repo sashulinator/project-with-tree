@@ -24,17 +24,23 @@ export function EditorInput(props: EditorInputProps): JSX.Element {
 
   // TODO ??? Создать e-Domain-ui-Mentions ???
   return (
-    <DropBoard drop={drop}>
-      <MentionsInput value={value} onChange={handleChangeMention}>
-        <Mention
-          trigger='@'
-          data={mentionsData}
-          style={{
-            backgroundColor: '#cee4e5',
-          }}
-        />
-      </MentionsInput>
-    </DropBoard>
+    <div style={{ alignItems: 'center', width: '100%', display: 'flex' }}>
+      <DropBoard drop={drop} rootProps={{ style: { width: '100%' } }}>
+        <MentionsInput
+          value={value}
+          onChange={handleChangeMention}
+          onFocus={(e: React.FocusEvent<HTMLTextAreaElement, Element>): void => e.stopPropagation()}
+        >
+          <Mention
+            trigger='@'
+            data={mentionsData}
+            style={{
+              backgroundColor: '#cee4e5',
+            }}
+          />
+        </MentionsInput>
+      </DropBoard>
+    </div>
   )
 
   // Private
@@ -43,11 +49,16 @@ export function EditorInput(props: EditorInputProps): JSX.Element {
     e.preventDefault()
     if (draggableCard) {
       setEditorRulesValues(
-        editorRulesValues.map((item) => {
-          if (item.id === id) {
-            return { value: `${item.value}@[${draggableCard.name}](${draggableCard.id})`, id: id }
+        editorRulesValues.map((arr) => {
+          return {
+            ...arr,
+            valueArr: arr.valueArr.map((item) => {
+              if (item.id === id) {
+                return { ...item, value: `${item.value}@[${draggableCard.name}](${draggableCard.id})` }
+              }
+              return item
+            }),
           }
-          return item
         })
       )
       setDraggableCard(null)
@@ -56,11 +67,16 @@ export function EditorInput(props: EditorInputProps): JSX.Element {
 
   function handleChangeMention(_: unknown, v: string): void {
     setEditorRulesValues(
-      editorRulesValues.map((item) => {
-        if (item.id === id) {
-          return { value: v, id: id }
+      editorRulesValues.map((arr) => {
+        return {
+          ...arr,
+          valueArr: arr.valueArr.map((item) => {
+            if (item.id === id) {
+              return { ...item, value: v }
+            }
+            return item
+          }),
         }
-        return item
       })
     )
   }
