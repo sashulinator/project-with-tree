@@ -10,10 +10,10 @@ interface SourceLinkProps {
   linkStates: LinkStateDictionary
 }
 
-export default function SourceLink(props: SourceLinkProps): JSX.Element {
+export default function TargetLink(props: SourceLinkProps): JSX.Element {
   useUpdate(subscribeOnUpdates)
 
-  const sourceLinkStates = props.linkStates.getLinksBySourceId(props.state.id)
+  const sourceLinkStates = props.linkStates.getLinksByTargetId(props.state.id)
 
   return (
     <>

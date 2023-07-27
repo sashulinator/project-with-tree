@@ -12,6 +12,7 @@ import { NodeState } from '../../..'
 import Toolbar from '../widgets/toolbar'
 import Title from '../widgets/title'
 import SourceLink from '../widgets/source-links'
+import TargetLink from '../widgets/target-links/ui/target-links'
 
 NewSiftNode.displayName = 'decisionCanvas-w-Node-v-Sift'
 
@@ -38,13 +39,7 @@ export function NewSiftNode(props: NewSiftNodeProps): JSX.Element {
       title={<Title state={props.state} />}
       toolbar={<Toolbar state={props.state} remove={remove} />}
       sourceLinks={<SourceLink linkStates={linkStates} state={state} />}
-      targetLinks={
-        <div style={{ display: 'flex', width: '100%', alignItems: 'end', flexDirection: 'column' }}>
-          <GhostButton round={true} height='s'>
-            <Joint variant='new' linkId={'id'} />
-          </GhostButton>
-        </div>
-      }
+      targetLinks={<TargetLink linkStates={linkStates} state={state} />}
     />
   )
 
