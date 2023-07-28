@@ -1,9 +1,11 @@
 import MentionsInput from '~/ui/mention-input'
 
 import { Mention } from 'react-mentions'
-import { useRecoilState, useRecoilValue } from 'recoil'
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
 import { draggableCardAtom, editorRulesValuesAtom, mentionsDataAtom } from '~/entities/rules/state/state'
 import DropBoard from '~/abstract/drop-board/ui/drop-board'
+import { onDropTextarea } from '../../lib'
+import { onChangeTextarea } from '../../lib/on-change-textarea'
 
 export interface MentionsItem {
   display: string
@@ -20,64 +22,33 @@ export function EditorInput(props: EditorInputProps): JSX.Element {
 
   const mentionsData = useRecoilValue(mentionsDataAtom)
   const [draggableCard, setDraggableCard] = useRecoilState(draggableCardAtom)
-  const [editorRulesValues, setEditorRulesValues] = useRecoilState(editorRulesValuesAtom)
+  const setEditorRulesValues = useSetRecoilState(editorRulesValuesAtom)
 
   // TODO ??? Создать e-Domain-ui-Mentions ???
   return (
-    <div style={{ alignItems: 'center', width: '100%', display: 'flex' }}>
-      <DropBoard drop={drop} rootProps={{ style: { width: '100%' } }}>
-        <MentionsInput
-          value={value}
-          onChange={handleChangeMention}
-          onFocus={(e: React.FocusEvent<HTMLTextAreaElement, Element>): void => e.stopPropagation()}
-        >
-          <Mention
-            trigger='@'
-            data={mentionsData}
-            style={{
-              backgroundColor: '#cee4e5',
-            }}
-          />
-        </MentionsInput>
-      </DropBoard>
-    </div>
+    <DropBoard drop={drop}>
+      <MentionsInput value={value} onChange={handleChangeMention}>
+        <Mention
+          trigger='@'
+          data={mentionsData}
+          style={{
+            backgroundColor: '#cee4e5',
+          }}
+        />
+      </MentionsInput>
+    </DropBoard>
   )
 
   // Private
-
   function drop(e: React.DragEvent<HTMLDivElement>): void {
     e.preventDefault()
     if (draggableCard) {
-      setEditorRulesValues(
-        editorRulesValues.map((arr) => {
-          return {
-            ...arr,
-            valueArr: arr.valueArr.map((item) => {
-              if (item.id === id) {
-                return { ...item, value: `${item.value}@[${draggableCard.name}](${draggableCard.id})` }
-              }
-              return item
-            }),
-          }
-        })
-      )
+      setEditorRulesValues((arr) => onDropTextarea(arr, draggableCard, id))
       setDraggableCard(null)
     }
   }
 
   function handleChangeMention(_: unknown, v: string): void {
-    setEditorRulesValues(
-      editorRulesValues.map((arr) => {
-        return {
-          ...arr,
-          valueArr: arr.valueArr.map((item) => {
-            if (item.id === id) {
-              return { ...item, value: v }
-            }
-            return item
-          }),
-        }
-      })
-    )
+    setEditorRulesValues((arr) => onChangeTextarea(arr, id, v))
   }
 }

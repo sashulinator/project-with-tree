@@ -1,42 +1,32 @@
+import './editor-item.css'
 import { EditorInput } from '../editor-input/editor-input'
 import { EditorButtons } from '../editor-buttons/editor-buttons'
 import { editorRulesItemType, editorRulesValuesAtom } from '../../state/state'
 import { useSetRecoilState } from 'recoil'
-
+import { getCheckedArr } from '../../lib'
 interface Props {
   values: editorRulesItemType[]
-  oneElement: boolean
-  lastElement: boolean
   id: string
   checked: boolean
 }
 
 export function EditorItem(props: Props): JSX.Element {
-  const { values, oneElement, lastElement, id, checked } = props
+  const { values, id, checked } = props
   const setEditorRulesVales = useSetRecoilState(editorRulesValuesAtom)
 
   return (
-    <div
-      style={{
-        display: 'flex',
-        borderRadius: '10px',
-        backgroundColor: 'var(--bg)',
-        marginBottom: '10px',
-        padding: '15px',
-        width: '100%',
-      }}
-    >
+    <div className='e-Rules-ui-EdItem'>
       <input
         type='checkbox'
-        style={{ marginRight: '20px', cursor: 'pointer' }}
+        style={{ marginRight: '20px', cursor: 'pointer' }} // надо делать кастомный чекбокс
         checked={checked}
         onChange={handleCheck}
       />
-      <ul style={{ width: '100%' }}>
-        {values.map((item) => (
+      <ul className='e-Rules-ui-EdItem__ul'>
+        {values.map((item, i) => (
           <li key={item.id}>
             <EditorInput id={item.id} value={item.value} />
-            <EditorButtons oneElement={oneElement} lastElement={lastElement} id={item.id} />
+            {i !== values.length - 1 && <EditorButtons id={item.id} />}
           </li>
         ))}
       </ul>
@@ -45,24 +35,10 @@ export function EditorItem(props: Props): JSX.Element {
 
   // Private
   function handleCheck(e: React.ChangeEvent<HTMLInputElement>): void {
+    let checked = false
     if (e.target.checked) {
-      setEditorRulesVales((arr) =>
-        arr.map((item) => {
-          if (item.id === id) {
-            return { ...item, checked: true }
-          }
-          return item
-        })
-      )
-    } else {
-      setEditorRulesVales((arr) =>
-        arr.map((item) => {
-          if (item.id === id) {
-            return { ...item, checked: false }
-          }
-          return item
-        })
-      )
+      checked = true
     }
+    setEditorRulesVales((arr) => getCheckedArr(arr, checked, id))
   }
 }
