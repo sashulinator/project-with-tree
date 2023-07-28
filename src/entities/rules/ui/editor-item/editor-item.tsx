@@ -1,20 +1,19 @@
 import { EditorInput } from '../editor-input/editor-input'
 import { EditorButtons } from '../editor-buttons/editor-buttons'
-import { checkedItemsAtom, editorRulesItemType, editorRulesValuesAtom, editorRulesValuesType } from '../../state/state'
-import { RecoilState, useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
-import Button from '~/abstract/button'
+import { editorRulesItemType, editorRulesValuesAtom } from '../../state/state'
+import { useSetRecoilState } from 'recoil'
 
 interface Props {
   values: editorRulesItemType[]
   oneElement: boolean
   lastElement: boolean
-  id: number
+  id: string
   checked: boolean
 }
 
 export function EditorItem(props: Props): JSX.Element {
   const { values, oneElement, lastElement, id, checked } = props
-  const [editorRulesValues, setEditorRulesVales] = useRecoilState(editorRulesValuesAtom)
+  const setEditorRulesVales = useSetRecoilState(editorRulesValuesAtom)
 
   return (
     <div

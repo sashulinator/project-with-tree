@@ -1,11 +1,10 @@
-import { useRecoilState, useRecoilValue } from 'recoil'
-import { checkedItemsAtom, editorRulesValuesAtom, editorRulesValuesType } from '../../state/state'
-import Button, { PrimaryButton } from '~/ui/button'
+import { useRecoilState } from 'recoil'
+import { editorRulesValuesAtom, editorRulesValuesType } from '../../state/state'
+import Button, { GhostButton, PrimaryButton } from '~/ui/button'
 import './editor-rules.css'
-
-import { EditorInput } from '../editor-input/editor-input'
-import { EditorButtons } from '../editor-buttons/editor-buttons'
 import { EditorItem } from '../editor-item/editor-item'
+import Flex from '~/abstract/flex'
+import uniqid from 'uniqid'
 
 export function EditorRules(): JSX.Element {
   const [editorRulesValues, setEditorRulesVales] = useRecoilState(editorRulesValuesAtom)
@@ -17,10 +16,9 @@ export function EditorRules(): JSX.Element {
           <li
             key={item.id}
             style={{
-              display: 'flex',
               borderRadius: '10px',
               backgroundColor: 'var(--bg)',
-              marginBottom: '10px',
+              marginBottom: '20px',
               padding: '15px',
             }}
           >
@@ -31,17 +29,28 @@ export function EditorRules(): JSX.Element {
               oneElement={editorRulesValues.length === 1}
               lastElement={i === editorRulesValues.length - 1}
             />
+            {item.valueArr.length > 1 && (
+              <Button
+                height={'m'}
+                onClick={(e: React.MouseEvent<HTMLButtonElement, MouseEvent>): void => splitCondition(e, i)}
+                style={{ border: '2px solid var(--borderColor)' }}
+              >
+                Разъединить
+              </Button>
+            )}
           </li>
         )
       })}
-      <Button onClick={mergeIf}>Объеденить</Button>
-      <PrimaryButton height={'l'} style={{ marginLeft: 'auto', marginTop: '20px', padding: '10px' }}>
-        Сохранить
-      </PrimaryButton>
+      <Flex gap='xl' style={{ width: '100%', justifyContent: 'right' }}>
+        <GhostButton height={'l'} onClick={mergeCondition} style={{ border: '2px solid var(--borderColor)' }}>
+          Объединить
+        </GhostButton>
+        <PrimaryButton height={'l'}>Сохранить</PrimaryButton>
+      </Flex>
     </ul>
   )
   // Private
-  function mergeIf(): void {
+  function mergeCondition(): void {
     const startArr: editorRulesValuesType[] = []
     const endArr: editorRulesValuesType[] = []
     let flag = false
@@ -67,5 +76,18 @@ export function EditorRules(): JSX.Element {
     })
 
     setEditorRulesVales([...startArr, ...endArr])
+  }
+
+  function splitCondition(_, index: number): void {
+    const result = editorRulesValues.map((item, i) => {
+      if (index === i) {
+        return item.valueArr.map((item) => {
+          return { id: uniqid(), valueArr: [{ id: item.id, value: item.value }] }
+        })
+      }
+      return item
+    })
+
+    setEditorRulesVales(result.flat(1))
   }
 }
