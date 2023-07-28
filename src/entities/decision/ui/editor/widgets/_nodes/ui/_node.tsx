@@ -5,9 +5,11 @@ import { useUpdate } from '~/utils/hooks'
 
 import { LinkStateDictionary } from '../../_links/state/state'
 import { EnterNode } from '../../_node/variants/enter'
-import { SiftNode } from '../../_node/variants/sift'
+
 import { Dictionary } from '~/utils/emitter'
 import { GestureDragEvent } from '~/ui/canvas/widgets/item/ui/item'
+
+import { NewSiftNode } from '../../_node/variants/new-sift'
 
 const GAP = 500
 
@@ -36,11 +38,9 @@ export function Node(props: MapNodeProps): JSX.Element {
     )
   }
   return (
-    <SiftNode
-      x={props.state.position.value.x}
-      y={props.state.position.value.y}
+    <NewSiftNode
       onGestureDrug={onGestureDrug}
-      removeNode={props.removeNode}
+      remove={(): void => props.removeNode(props.state.id)}
       key={props.state.id}
       state={props.state}
       linkStates={props.linkStates}

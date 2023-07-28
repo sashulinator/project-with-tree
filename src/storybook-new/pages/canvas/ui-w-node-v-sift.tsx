@@ -57,7 +57,6 @@ export function Page(): JSX.Element {
       <NewSiftNode
         state={state1}
         linkStates={linkStates}
-        dataId='tets'
         remove={(): void => console.log('remove!')}
         onGestureDrug={(event): void => {
           const x = state1.position.last.x + event.movement[0]
@@ -68,7 +67,6 @@ export function Page(): JSX.Element {
       <NewSiftNode
         state={state2}
         linkStates={linkStates}
-        dataId='tets1'
         remove={(): void => console.log('remove!')}
         onGestureDrug={(event): void => {
           const x = state2.position.last.x + event.movement[0]

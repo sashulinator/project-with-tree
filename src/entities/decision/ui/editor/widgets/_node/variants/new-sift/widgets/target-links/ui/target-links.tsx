@@ -34,7 +34,7 @@ export default function TargetLink(props: SourceLinkProps): JSX.Element {
             key={linkState.id}
             disabled={isEditingThisNode || isEditingHasTarget || (isLinked && Boolean(editingLinkState))}
             variant={isLinked ? 'linked' : 'unlinked'}
-            linkId={'id'}
+            linkId={linkState.id}
             onClick={(): void => props.onJointClick(linkState.id)}
           />
         )

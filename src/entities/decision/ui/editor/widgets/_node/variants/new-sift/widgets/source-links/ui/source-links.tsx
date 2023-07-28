@@ -42,7 +42,7 @@ export default function SourceLink(props: SourceLinkProps): JSX.Element {
             key={linkState.id}
             disabled={isEditingThisNode || isEditingHasSource || (isLinked && Boolean(editingLinkState))}
             variant={isLinked ? 'linked' : 'unlinked'}
-            linkId={'id'}
+            linkId={linkState.id}
             onClick={(): void => props.onJointClick(linkState.id)}
           />
         )

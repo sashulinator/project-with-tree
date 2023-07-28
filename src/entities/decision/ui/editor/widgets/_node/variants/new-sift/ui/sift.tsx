@@ -20,7 +20,6 @@ NewSiftNode.displayName = 'decisionCanvas-w-Node-v-Sift'
 export interface NewSiftNodeProps {
   state: NodeState
   linkStates: LinkStateDictionary
-  dataId: Id
   remove: () => void
   onGestureDrug: (event: GestureDragEvent) => void
 }
@@ -35,6 +34,8 @@ export function NewSiftNode(props: NewSiftNodeProps): JSX.Element {
   return (
     <NewNode
       {...nodeProps}
+      dataId={state.id}
+      ref={props.state.ref.set}
       x={state.position.value.x}
       y={state.position.value.y}
       className={NewSiftNode.displayName}
