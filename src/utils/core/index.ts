@@ -18,5 +18,6 @@ export * from './types/value-or-setter'
 export * from './types/setter-or-updater'
 
 export * from './c'
+export * from './invariant'
 
 export * from './type-test'

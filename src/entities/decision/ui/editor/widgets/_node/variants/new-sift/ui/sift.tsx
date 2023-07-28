@@ -3,8 +3,7 @@ import './sift.css'
 import { Id } from '~/utils/dictionary'
 
 import { GestureDragEvent } from '~/ui/canvas/widgets/item/ui/item'
-import { Joint, NewNode } from '~/ui/canvas'
-import { GhostButton } from '~/ui/button'
+import { NewNode } from '~/ui/canvas'
 
 import { LinkStateDictionary } from '../../../../_links'
 import { NodeState } from '../../..'
@@ -13,7 +12,7 @@ import Toolbar from '../widgets/toolbar'
 import Title from '../widgets/title'
 import SourceLink from '../widgets/source-links'
 import TargetLink from '../widgets/target-links/ui/target-links'
-import { RuleLinkState } from '../../../../_link'
+
 import { useUpdate } from '~/utils/hooks'
 
 NewSiftNode.displayName = 'decisionCanvas-w-Node-v-Sift'
@@ -41,8 +40,22 @@ export function NewSiftNode(props: NewSiftNodeProps): JSX.Element {
       className={NewSiftNode.displayName}
       title={<Title state={props.state} />}
       toolbar={<Toolbar state={props.state} remove={remove} />}
-      sourceLinks={<SourceLink linkStates={linkStates} state={state} onNewJointClick={onNewJointClick} />}
-      targetLinks={<TargetLink linkStates={linkStates} state={state} onNewJointClick={onNewJointClick} />}
+      sourceLinks={
+        <SourceLink
+          linkStates={linkStates}
+          state={state}
+          onNewJointClick={onNewJointClick('source')}
+          onJointClick={onJointClick}
+        />
+      }
+      targetLinks={
+        <TargetLink
+          linkStates={linkStates}
+          state={state}
+          onNewJointClick={onNewJointClick('target')}
+          onJointClick={onJointClick}
+        />
+      }
     />
   )
 
@@ -52,21 +65,21 @@ export function NewSiftNode(props: NewSiftNodeProps): JSX.Element {
     uns.push(props.state.on('position', update))
   }
 
-  function onNewJointClick(newLink: RuleLinkState): void {
-    const editingLinkState = props.linkStates.findEditingLinkState()
-
-    if (!editingLinkState) {
-      props.linkStates.add(newLink)
-      props.linkStates.editingId.value = newLink.id
-      return
-    }
-
-    if (editingLinkState.sourceId.value) {
-      editingLinkState.targetId.value = props.state.id
+  function onJointClick(linkId: Id): void {
+    if (props.linkStates.editingId.value) {
+      props.linkStates.finishEditing(linkId)
     } else {
-      editingLinkState.sourceId.value = props.state.id
+      props.linkStates.startEditing(linkId, props.state.id)
     }
+  }
 
-    props.linkStates.editingId.value = undefined
+  function onNewJointClick(startLinkType: 'target' | 'source'): (newLinkId: Id) => void {
+    return (newLinkId: Id) => {
+      if (props.linkStates.editingId.value) {
+        props.linkStates.finishNewLink(props.state.id)
+      } else {
+        props.linkStates.startNewLink(props.state.id, newLinkId, startLinkType)
+      }
+    }
   }
 }

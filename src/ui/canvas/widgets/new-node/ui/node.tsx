@@ -37,8 +37,8 @@ function NodeComponent(props: NewNodeProps, ref: ForwardedRef<HTMLDivElement>): 
       <div className={c('toolbar')}>{toolbar}</div>
       <div className={c('title')}>{title}</div>
       <div className='links'>
-        <div className='sourceLinks'>{sourceLinks}</div>
         <div className='targetLinks'>{targetLinks}</div>
+        <div className='sourceLinks'>{sourceLinks}</div>
       </div>
     </Item>
   )
