@@ -1,0 +1,7 @@
+.e-Rules-ui-EdItem {
+  display: flex;
+}
+
+.e-Rules-ui-EdItem__ul {
+  width: 100%;
+}
