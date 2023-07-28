@@ -12,7 +12,7 @@ export interface MentionsItem {
 
 interface EditorInputProps {
   value: string
-  id: number
+  id: string
 }
 
 export function EditorInput(props: EditorInputProps): JSX.Element {

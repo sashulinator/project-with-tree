@@ -1,29 +1,28 @@
 import Flex from '~/abstract/flex'
 import { PrimaryButton } from '~/ui/button'
 import { Radio } from '../radio/radio'
-import { editorRulesValuesAtom, idEIAtom } from '../../state/state'
+import { editorRulesValuesAtom } from '../../state/state'
 import { useRecoilState } from 'recoil'
-
+import uniqid from 'uniqid'
 interface ButtonsProps {
   oneElement: boolean
   lastElement: boolean
-  id: number
+  id: string
 }
 
 export function EditorButtons(props: ButtonsProps): JSX.Element {
   const { oneElement, lastElement, id } = props
   const [editorRulesValues, setEditorRulesValues] = useRecoilState(editorRulesValuesAtom)
-  const [idEI, setIdEI] = useRecoilState(idEIAtom)
 
   return (
     <Flex gap='xl' style={{ alignItems: 'center' }}>
       {!oneElement && (
-        <PrimaryButton round className='add-delete-btn' onClick={deleteIf}>
+        <PrimaryButton round className='add-delete-btn' onClick={deleteCondition}>
           -
         </PrimaryButton>
       )}
       {lastElement && (
-        <PrimaryButton round className='add-delete-btn' onClick={addIf}>
+        <PrimaryButton round className='add-delete-btn' onClick={addCondition}>
           +
         </PrimaryButton>
       )}
@@ -33,7 +32,7 @@ export function EditorButtons(props: ButtonsProps): JSX.Element {
   )
 
   // Private
-  function deleteIf(): void {
+  function deleteCondition(): void {
     const result = editorRulesValues
       .map((arr) => {
         return { ...arr, valueArr: arr.valueArr.filter((item) => item.id !== id) }
@@ -43,8 +42,7 @@ export function EditorButtons(props: ButtonsProps): JSX.Element {
     setEditorRulesValues(result)
   }
 
-  function addIf(): void {
-    setEditorRulesValues([...editorRulesValues, { id: idEI, valueArr: [{ id: idEI + 1, value: '' }] }])
-    setIdEI((id) => id + 2)
+  function addCondition(): void {
+    setEditorRulesValues([...editorRulesValues, { id: uniqid(), valueArr: [{ id: uniqid(), value: '' }] }])
   }
 }
