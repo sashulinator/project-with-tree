@@ -17,8 +17,8 @@ export interface NodeProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'c
   state: NodeState
   title: React.ReactNode
   toolbar: React.ReactNode
-  sourceLinks: React.ReactNode
-  targetLinks: React.ReactNode
+  sourceLinks?: React.ReactNode
+  targetLinks?: React.ReactNode
   rootProps?: React.HTMLAttributes<SVGForeignObjectElement>
   onGestureDrug: (event: GestureDragEvent) => void
 }

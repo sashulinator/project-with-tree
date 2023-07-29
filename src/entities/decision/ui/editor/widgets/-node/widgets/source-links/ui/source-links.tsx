@@ -11,6 +11,7 @@ interface SourceLinkProps {
   linkStates: LinkStateDictionary
   onNewJointClick: (newLinkId: Id) => void
   onJointClick: (linkId: Id) => void
+  hideNewLink?: boolean
 }
 
 export default function SourceLink(props: SourceLinkProps): JSX.Element {
@@ -47,12 +48,14 @@ export default function SourceLink(props: SourceLinkProps): JSX.Element {
           />
         )
       })}
-      <Joint
-        onClick={(): void => props.onNewJointClick(newLinkId)}
-        disabled={isEditingThisNode || isEditingHasSource}
-        variant='new'
-        linkId={newLinkId}
-      />
+      {!props.hideNewLink && (
+        <Joint
+          onClick={(): void => props.onNewJointClick(newLinkId)}
+          disabled={isEditingThisNode || isEditingHasSource}
+          variant='new'
+          linkId={newLinkId}
+        />
+      )}
     </>
   )
 

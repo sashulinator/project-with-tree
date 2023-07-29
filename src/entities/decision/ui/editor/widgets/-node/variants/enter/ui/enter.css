@@ -1,0 +1,23 @@
+.decisionCanvas-w-Node-v-Enter {
+  border-radius: var(--xxl);
+}
+
+.decisionCanvas-w-Node-v-Enter .toolbar {
+  display: flex;
+  justify-content: right;
+}
+.decisionCanvas-w-Node-v-Enter .toolbar,
+.decisionCanvas-w-Node-v-Enter .sourceLinks,
+.decisionCanvas-w-Node-v-Enter .targetLinks {
+  padding: var(--m);
+}
+
+.decisionCanvas-w-Node-v-Enter .sourceLinks,
+.decisionCanvas-w-Node-v-Enter .targetLinks {
+  display: flex;
+  flex-direction: column;
+}
+
+.decisionCanvas-w-Node-v-Enter .ui-Input {
+  padding: 0 var(--l);
+}

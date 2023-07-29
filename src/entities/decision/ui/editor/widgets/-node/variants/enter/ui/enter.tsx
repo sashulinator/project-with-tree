@@ -1,4 +1,4 @@
-import './filter.css'
+import './enter.css'
 
 import { Id } from '~/utils/dictionary'
 
@@ -11,13 +11,12 @@ import { NodeState } from '../../../../_node'
 import Toolbar from '../widgets/toolbar'
 import Title from '../../../widgets/title'
 import SourceLink from '../../../widgets/source-links'
-import TargetLink from '../../../widgets/target-links'
 
 import { useUpdate } from '~/utils/hooks'
 
-Filter.displayName = 'decisionCanvas-w-Node-v-Filter'
+Enter.displayName = 'decisionCanvas-w-Node-v-Enter'
 
-export interface FilterProps {
+export interface EnterProps {
   state: NodeState
   linkStates: LinkStateDictionary
   remove: () => void
@@ -27,30 +26,22 @@ export interface FilterProps {
 /**
  * Node вариант filter
  */
-export function Filter(props: FilterProps): JSX.Element {
-  const { remove, linkStates, state, ...nodeProps } = props
+export function Enter(props: EnterProps): JSX.Element {
+  const { remove, linkStates, ...nodeProps } = props
   useUpdate(subscribeOnUpdates)
 
   return (
     <Node
       {...nodeProps}
-      state={props.state}
-      className={Filter.displayName}
+      className={Enter.displayName}
       title={<Title state={props.state} />}
       toolbar={<Toolbar state={props.state} remove={remove} />}
       sourceLinks={
         <SourceLink
+          hideNewLink={true}
           linkStates={linkStates}
-          state={state}
+          state={props.state}
           onNewJointClick={onNewJointClick('source')}
-          onJointClick={onJointClick}
-        />
-      }
-      targetLinks={
-        <TargetLink
-          linkStates={linkStates}
-          state={state}
-          onNewJointClick={onNewJointClick('target')}
           onJointClick={onJointClick}
         />
       }

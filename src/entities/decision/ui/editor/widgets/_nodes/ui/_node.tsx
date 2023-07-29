@@ -4,12 +4,12 @@ import { Id } from '~/utils/core'
 import { useUpdate } from '~/utils/hooks'
 
 import { LinkStateDictionary } from '../../_links/state/state'
-import { EnterNode } from '../../_node/variants/enter'
 
 import { Dictionary } from '~/utils/emitter'
 import { GestureDragEvent } from '~/ui/canvas/widgets/item/ui/item'
 
-import { NewSiftNode } from '../../-node/variants/filter'
+import { Filter } from '../../-node/variants/filter'
+import { Enter } from '../../-node/variants/enter'
 
 const GAP = 500
 
@@ -24,25 +24,14 @@ interface MapNodeProps {
 export function Node(props: MapNodeProps): JSX.Element {
   useUpdate(subscribeOnUpdates)
 
-  console.log('hgg', props.state.position.value.x)
+  const Component = props.state.point.type === 'MAIN' ? Enter : Filter
 
-  if (props.state.point.type === 'MAIN') {
-    return (
-      <EnterNode
-        x={props.state.position.value.x}
-        y={props.state.position.value.y}
-        state={props.state}
-        linkStates={props.linkStates}
-        onGestureDrug={onGestureDrug}
-      />
-    )
-  }
   return (
-    <NewSiftNode
-      onGestureDrug={onGestureDrug}
-      remove={(): void => props.removeNode(props.state.id)}
+    <Component
       key={props.state.id}
+      onGestureDrug={onGestureDrug}
       state={props.state}
+      remove={(): void => props.removeNode(props.state.id)}
       linkStates={props.linkStates}
     />
   )
@@ -50,8 +39,6 @@ export function Node(props: MapNodeProps): JSX.Element {
   // Private
 
   function onGestureDrug(event: GestureDragEvent): void {
-    console.log('alloo')
-
     event.event.stopPropagation()
 
     const isIdle = event.movement[0] === 0 && event.movement[1] === 0

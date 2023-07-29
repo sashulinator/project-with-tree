@@ -1,13 +1,13 @@
 import { useMemo } from 'react'
 
-import { NewSiftNode } from '~/entities/decision/ui/editor/widgets/-node/variants/filter'
+import { Filter } from '~/entities/decision/ui/editor/widgets/-node/variants/filter'
 import { LinkStateDictionary } from '~/entities/decision/ui/editor/widgets/_links'
 import { RuleLinkState } from '~/entities/decision/ui/editor/widgets/_link'
 import { NodeState } from '~/entities/decision/ui/editor/widgets/_node'
 import { Point } from '~/entities/point'
 
 export const decisionCanvasNodeVSift = {
-  name: NewSiftNode.displayName,
+  name: Filter.displayName,
   element: Page,
   description: 'Компонент Node наследующий ui-Item',
   features: ['Разбивка на зоны toolbar, title, links'],
@@ -54,7 +54,7 @@ export function Page(): JSX.Element {
 
   return (
     <svg width='100%' height='333px' style={{ border: '1px solid red' }}>
-      <NewSiftNode
+      <Filter
         state={state1}
         linkStates={linkStates}
         remove={(): void => console.log('remove!')}
@@ -64,7 +64,7 @@ export function Page(): JSX.Element {
           state1.position.move(x, y, event.last)
         }}
       />
-      <NewSiftNode
+      <Filter
         state={state2}
         linkStates={linkStates}
         remove={(): void => console.log('remove!')}
