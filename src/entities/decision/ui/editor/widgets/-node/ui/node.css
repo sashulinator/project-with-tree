@@ -14,3 +14,9 @@
   width: 100%;
   display: flex;
 }
+
+.decisionEditor-ui-Canvas-w-Node .toolbar,
+.decisionEditor-ui-Canvas-w-Node .sourceLinks,
+.decisionEditor-ui-Canvas-w-Node .targetLinks {
+  padding: var(--m);
+}

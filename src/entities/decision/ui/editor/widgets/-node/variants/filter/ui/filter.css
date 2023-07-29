@@ -6,11 +6,6 @@
   display: flex;
   justify-content: right;
 }
-.decisionCanvas-w-Node-v-Filter .toolbar,
-.decisionCanvas-w-Node-v-Filter .sourceLinks,
-.decisionCanvas-w-Node-v-Filter .targetLinks {
-  padding: var(--m);
-}
 
 .decisionCanvas-w-Node-v-Filter .sourceLinks,
 .decisionCanvas-w-Node-v-Filter .targetLinks {
