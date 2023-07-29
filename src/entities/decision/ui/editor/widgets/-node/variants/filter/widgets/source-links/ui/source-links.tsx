@@ -1,38 +1,46 @@
-import uuid from 'uuid-random'
-import { NodeState } from '../../../../..'
+import { NodeState } from '../../../../../../_node'
 import { LinkStateDictionary } from '~/entities/decision/ui/editor/widgets/_links'
 import { Joint } from '~/entities/decision/ui/editor/widgets/-node'
 import { useUpdate } from '~/utils/hooks'
 import { useState } from 'react'
+import uuid from 'uuid-random'
 import { Id } from '~/utils/core'
 
 interface SourceLinkProps {
   state: NodeState
   linkStates: LinkStateDictionary
-  onNewJointClick: (linkState: Id) => void
-  onJointClick: (id: Id) => void
+  onNewJointClick: (newLinkId: Id) => void
+  onJointClick: (linkId: Id) => void
 }
 
-export default function TargetLink(props: SourceLinkProps): JSX.Element {
+export default function SourceLink(props: SourceLinkProps): JSX.Element {
   const [newLinkId, setNewLinkId] = useState(uuid)
 
   useUpdate(subscribeOnUpdates)
 
-  const sourceLinkStates = props.linkStates.getLinksByTargetId(props.state.id)
   const editingLinkState = props.linkStates.findEditingLinkState()
   const isEditingThisNode =
     editingLinkState?.sourceId.value === props.state.id || editingLinkState?.targetId.value === props.state.id
-  const isEditingHasTarget = Boolean(editingLinkState?.targetId.value)
+  const isEditingHasSource = Boolean(editingLinkState?.sourceId.value)
+
+  const sourceLinkStates = props.linkStates
+    .getLinksBySourceId(props.state.id)
+    .sort((a, b) => (a.index.value < b.index.value ? -1 : 1))
+
+  // if (props.state.id === 'id2') {
+  //   console.log('isEditingHasSource', isEditingHasSource, editingLinkState)
+  // }
 
   return (
     <>
       {sourceLinkStates.map((linkState) => {
         if (linkState.id === newLinkId) return null
-        const isLinked = Boolean(linkState.sourceId.value)
+        const isLinked = Boolean(linkState.targetId.value)
+
         return (
           <Joint
             key={linkState.id}
-            disabled={isEditingThisNode || isEditingHasTarget || (isLinked && Boolean(editingLinkState))}
+            disabled={isEditingThisNode || isEditingHasSource || (isLinked && Boolean(editingLinkState))}
             variant={isLinked ? 'linked' : 'unlinked'}
             linkId={linkState.id}
             onClick={(): void => props.onJointClick(linkState.id)}
@@ -41,7 +49,7 @@ export default function TargetLink(props: SourceLinkProps): JSX.Element {
       })}
       <Joint
         onClick={(): void => props.onNewJointClick(newLinkId)}
-        disabled={isEditingThisNode || isEditingHasTarget}
+        disabled={isEditingThisNode || isEditingHasSource}
         variant='new'
         linkId={newLinkId}
       />
@@ -52,6 +60,6 @@ export default function TargetLink(props: SourceLinkProps): JSX.Element {
 
   function subscribeOnUpdates(update: () => void): void {
     props.linkStates.onAll(() => setTimeout(update))
-    props.linkStates.on('sourceId', () => setNewLinkId(uuid()))
+    props.linkStates.on('targetId', () => setNewLinkId(uuid()))
   }
 }

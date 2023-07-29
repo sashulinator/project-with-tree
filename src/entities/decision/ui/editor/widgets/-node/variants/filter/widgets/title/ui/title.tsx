@@ -1,5 +1,5 @@
 import Input, { useChangeOnBlurStrategy } from '~/ui/input'
-import { NodeState } from '../../../../..'
+import { NodeState } from '../../../../../../_node'
 import { useUpdate } from '~/utils/hooks'
 
 interface TitleProps {

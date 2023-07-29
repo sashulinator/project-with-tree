@@ -1,6 +1,6 @@
 import { useMemo } from 'react'
 
-import { NewSiftNode } from '~/entities/decision/ui/editor/widgets/_node/variants/new-sift'
+import { NewSiftNode } from '~/entities/decision/ui/editor/widgets/-node/variants/filter'
 import { LinkStateDictionary } from '~/entities/decision/ui/editor/widgets/_links'
 import { RuleLinkState } from '~/entities/decision/ui/editor/widgets/_link'
 import { NodeState } from '~/entities/decision/ui/editor/widgets/_node'

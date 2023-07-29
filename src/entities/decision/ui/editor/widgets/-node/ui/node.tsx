@@ -1,38 +1,43 @@
 import './node.css'
 
-import { clsx } from 'clsx'
-import { ForwardedRef, forwardRef } from 'react'
-
-import { Item, ItemProps } from '~/ui/canvas'
+import { Item } from '~/ui/canvas'
 
 import { dark } from '../themes/dark'
 import { light } from '../themes/light'
 import { emitter } from '~/shared/emitter'
 import { c } from '~/utils/core'
+import { NodeState } from '../../_node'
+import { GestureDragEvent } from '~/ui/canvas/widgets/item/ui/item'
 
 emitter.emit('addTheme', { dark, light })
 
-NodeComponent.displayName = 'decisionEditor-ui-Canvas-w-Node'
+Node.displayName = 'decisionEditor-ui-Canvas-w-Node'
 
-export interface NewNodeProps extends Omit<ItemProps, 'children' | 'title'> {
+export interface NodeProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'children' | 'title'> {
+  state: NodeState
   title: React.ReactNode
   toolbar: React.ReactNode
   sourceLinks: React.ReactNode
   targetLinks: React.ReactNode
+  rootProps?: React.HTMLAttributes<SVGForeignObjectElement>
+  onGestureDrug: (event: GestureDragEvent) => void
 }
 
 /**
  * Элемент Canvas с фичами
  */
-function NodeComponent(props: NewNodeProps, ref: ForwardedRef<HTMLDivElement>): JSX.Element {
-  const { title, toolbar, sourceLinks, targetLinks, ...itemProps } = props
+function Node(props: NodeProps): JSX.Element {
+  const { title, toolbar, sourceLinks, targetLinks, state, rootProps, ...itemProps } = props
 
   return (
     <Item
       {...itemProps}
-      ref={ref}
-      className={clsx(props.className, NodeComponent.displayName)}
-      rootProps={{ style: { overflow: 'visible' } }}
+      dataId={state.id}
+      ref={props.state.ref.set}
+      x={state.position.value.x}
+      y={state.position.value.y}
+      className={c(props.className, Node.displayName)}
+      rootProps={{ ...rootProps, style: { overflow: 'visible', ...rootProps?.style } }}
     >
       <div className={c('toolbar')}>{toolbar}</div>
       <div className={c('title')}>{title}</div>
@@ -44,6 +49,4 @@ function NodeComponent(props: NewNodeProps, ref: ForwardedRef<HTMLDivElement>): 
   )
 }
 
-const Node = forwardRef(NodeComponent)
-Node.displayName = NodeComponent.displayName
 export { Node }

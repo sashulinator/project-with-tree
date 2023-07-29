@@ -1,0 +1,28 @@
+.decisionCanvas-w-Node-v-Filter {
+  border-radius: var(--xxl);
+}
+
+.decisionCanvas-w-Node-v-Filter .titleInputField {
+  border-radius: 0;
+  width: 300px;
+}
+
+.decisionCanvas-w-Node-v-Filter .toolbar {
+  display: flex;
+  justify-content: right;
+}
+.decisionCanvas-w-Node-v-Filter .toolbar,
+.decisionCanvas-w-Node-v-Filter .sourceLinks,
+.decisionCanvas-w-Node-v-Filter .targetLinks {
+  padding: var(--m);
+}
+
+.decisionCanvas-w-Node-v-Filter .sourceLinks,
+.decisionCanvas-w-Node-v-Filter .targetLinks {
+  display: flex;
+  flex-direction: column;
+}
+
+.decisionCanvas-w-Node-v-Filter .ui-Input {
+  padding: 0 var(--l);
+}

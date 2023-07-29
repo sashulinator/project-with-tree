@@ -9,7 +9,7 @@ import { EnterNode } from '../../_node/variants/enter'
 import { Dictionary } from '~/utils/emitter'
 import { GestureDragEvent } from '~/ui/canvas/widgets/item/ui/item'
 
-import { NewSiftNode } from '../../_node/variants/new-sift'
+import { NewSiftNode } from '../../-node/variants/filter'
 
 const GAP = 500
 

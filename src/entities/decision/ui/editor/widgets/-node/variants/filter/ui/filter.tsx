@@ -1,12 +1,12 @@
-import './sift.css'
+import './filter.css'
 
 import { Id } from '~/utils/dictionary'
 
 import { GestureDragEvent } from '~/ui/canvas/widgets/item/ui/item'
-import { Node } from '../../../../-node'
+import { Node } from '../../..'
 
 import { LinkStateDictionary } from '../../../../_links'
-import { NodeState } from '../../..'
+import { NodeState } from '../../../../_node'
 
 import Toolbar from '../widgets/toolbar'
 import Title from '../widgets/title'
@@ -15,7 +15,7 @@ import TargetLink from '../widgets/target-links/ui/target-links'
 
 import { useUpdate } from '~/utils/hooks'
 
-NewSiftNode.displayName = 'decisionCanvas-w-Node-v-Sift'
+Filter.displayName = 'decisionCanvas-w-Node-v-Filter'
 
 export interface NewSiftNodeProps {
   state: NodeState
@@ -27,18 +27,15 @@ export interface NewSiftNodeProps {
 /**
  * Node типа sift
  */
-export function NewSiftNode(props: NewSiftNodeProps): JSX.Element {
+export function Filter(props: NewSiftNodeProps): JSX.Element {
   const { remove, linkStates, state, ...nodeProps } = props
   useUpdate(subscribeOnUpdates)
 
   return (
     <Node
       {...nodeProps}
-      dataId={state.id}
-      ref={props.state.ref.set}
-      x={state.position.value.x}
-      y={state.position.value.y}
-      className={NewSiftNode.displayName}
+      state={props.state}
+      className={Filter.displayName}
       title={<Title state={props.state} />}
       toolbar={<Toolbar state={props.state} remove={remove} />}
       sourceLinks={
