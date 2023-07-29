@@ -1,6 +1,10 @@
+import './title.css'
+
 import Input, { useChangeOnBlurStrategy } from '~/ui/input'
-import { NodeState } from '../../../../../../_node'
+import { NodeState } from '../../../../_node'
 import { useUpdate } from '~/utils/hooks'
+
+Title.displayName = 'decisionEditor-ui-Canvas-w-Node-w-Title'
 
 interface TitleProps {
   state: NodeState
@@ -17,7 +21,7 @@ export default function Title(props: TitleProps): JSX.Element {
         transparent: true,
         height: 'm',
         placeholder: 'Описание',
-        fieldProps: { className: 'titleInputField' },
+        fieldProps: { className: Title.displayName },
         onChange: (e) => props.state.title.set(e.currentTarget.value),
       })}
     />

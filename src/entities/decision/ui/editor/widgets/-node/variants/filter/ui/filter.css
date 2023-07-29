@@ -2,11 +2,6 @@
   border-radius: var(--xxl);
 }
 
-.decisionCanvas-w-Node-v-Filter .titleInputField {
-  border-radius: 0;
-  width: 300px;
-}
-
 .decisionCanvas-w-Node-v-Filter .toolbar {
   display: flex;
   justify-content: right;

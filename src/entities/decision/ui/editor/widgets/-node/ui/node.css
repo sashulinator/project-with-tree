@@ -1,6 +1,7 @@
 .decisionEditor-ui-Canvas-w-Node {
   background-color: var(--canvasNode_bg);
   display: flex;
+  width: 300px;
   flex-direction: column;
 }
 

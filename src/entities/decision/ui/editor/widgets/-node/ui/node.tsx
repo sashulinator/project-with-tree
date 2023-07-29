@@ -37,6 +37,7 @@ function Node(props: NodeProps): JSX.Element {
       x={state.position.value.x}
       y={state.position.value.y}
       className={c(props.className, Node.displayName)}
+      style={{ width: '20rem' }}
       rootProps={{ ...rootProps, style: { overflow: 'visible', ...rootProps?.style } }}
     >
       <div className={c('toolbar')}>{toolbar}</div>

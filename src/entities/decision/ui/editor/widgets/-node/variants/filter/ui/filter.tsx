@@ -9,7 +9,7 @@ import { LinkStateDictionary } from '../../../../_links'
 import { NodeState } from '../../../../_node'
 
 import Toolbar from '../widgets/toolbar'
-import Title from '../widgets/title'
+import Title from '../../../widgets/title'
 import SourceLink from '../widgets/source-links'
 import TargetLink from '../widgets/target-links/ui/target-links'
 
@@ -25,7 +25,7 @@ export interface NewSiftNodeProps {
 }
 
 /**
- * Node типа sift
+ * Node вариант filter
  */
 export function Filter(props: NewSiftNodeProps): JSX.Element {
   const { remove, linkStates, state, ...nodeProps } = props
