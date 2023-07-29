@@ -3,7 +3,7 @@ import './sift.css'
 import { Id } from '~/utils/dictionary'
 
 import { GestureDragEvent } from '~/ui/canvas/widgets/item/ui/item'
-import { NewNode } from '../../../../-node'
+import { Node } from '../../../../-node'
 
 import { LinkStateDictionary } from '../../../../_links'
 import { NodeState } from '../../..'
@@ -32,7 +32,7 @@ export function NewSiftNode(props: NewSiftNodeProps): JSX.Element {
   useUpdate(subscribeOnUpdates)
 
   return (
-    <NewNode
+    <Node
       {...nodeProps}
       dataId={state.id}
       ref={props.state.ref.set}

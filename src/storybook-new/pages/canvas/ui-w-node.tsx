@@ -5,13 +5,13 @@ import Input from '~/ui/input'
 
 import { useBoolean } from '~/utils/hooks'
 import Checkbox from '~/storybook-new/checkbox'
-import { Joint, NewNode } from '~/entities/decision/ui/editor/widgets/-node'
+import { Joint, Node } from '~/entities/decision/ui/editor/widgets/-node'
 import { Position } from '~/utils/core'
 import { GhostButton } from '~/ui/button'
 import { Trash } from '~/ui/icon'
 
 export const uiCanvasNode = {
-  name: NewNode.displayName,
+  name: Node.displayName,
   element: Page,
   description: 'Компонент Node наследующий ui-Item',
   features: ['Разбивка на зоны toolbar, title, links'],
@@ -42,7 +42,7 @@ export function Page(): JSX.Element {
         <Checkbox placeholder='add_content' id='square' checked={content} onChange={toggleContent} />
       </Flex>
       <svg width='100%' height='333px' style={{ border: '1px solid red' }}>
-        <NewNode
+        <Node
           toolbar={
             <div style={{ display: 'flex', justifyContent: 'end', padding: 'var(--s)' }}>
               <GhostButton height='s' style={{ padding: 'var(--l)' }}>

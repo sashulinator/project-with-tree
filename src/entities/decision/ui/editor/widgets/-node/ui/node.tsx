@@ -44,6 +44,6 @@ function NodeComponent(props: NewNodeProps, ref: ForwardedRef<HTMLDivElement>): 
   )
 }
 
-const NewNode = forwardRef(NodeComponent)
-NewNode.displayName = NodeComponent.displayName
-export { NewNode }
+const Node = forwardRef(NodeComponent)
+Node.displayName = NodeComponent.displayName
+export { Node }
