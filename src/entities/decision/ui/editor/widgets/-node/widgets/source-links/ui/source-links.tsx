@@ -1,4 +1,4 @@
-import { NodeState } from '../../../../../../_node'
+import { NodeState } from '../../../../_node'
 import { LinkStateDictionary } from '~/entities/decision/ui/editor/widgets/_links'
 import { Joint } from '~/entities/decision/ui/editor/widgets/-node'
 import { useUpdate } from '~/utils/hooks'

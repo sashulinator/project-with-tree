@@ -1,5 +1,5 @@
 import uuid from 'uuid-random'
-import { NodeState } from '../../../../../../_node'
+import { State } from '../../../models/state'
 import { LinkStateDictionary } from '~/entities/decision/ui/editor/widgets/_links'
 import { Joint } from '~/entities/decision/ui/editor/widgets/-node'
 import { useUpdate } from '~/utils/hooks'
@@ -7,7 +7,7 @@ import { useState } from 'react'
 import { Id } from '~/utils/core'
 
 interface SourceLinkProps {
-  state: NodeState
+  state: State
   linkStates: LinkStateDictionary
   onNewJointClick: (linkState: Id) => void
   onJointClick: (id: Id) => void

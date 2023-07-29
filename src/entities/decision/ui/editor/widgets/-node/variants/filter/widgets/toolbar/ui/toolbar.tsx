@@ -1,12 +1,11 @@
-import React from 'react'
 import { GhostButton } from '~/ui/button'
 import { Trash } from '~/ui/icon'
 
-import { NodeState } from '../../../../../../_node'
+import { State } from '../../../../../models/state'
 import { useUpdate } from '~/utils/hooks'
 
 interface ToolbarProps {
-  state: NodeState
+  state: State
   remove: () => void
 }
 

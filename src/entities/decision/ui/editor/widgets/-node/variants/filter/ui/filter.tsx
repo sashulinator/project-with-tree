@@ -10,8 +10,8 @@ import { NodeState } from '../../../../_node'
 
 import Toolbar from '../widgets/toolbar'
 import Title from '../../../widgets/title'
-import SourceLink from '../widgets/source-links'
-import TargetLink from '../widgets/target-links/ui/target-links'
+import SourceLink from '../../../widgets/source-links'
+import TargetLink from '../../../widgets/target-links'
 
 import { useUpdate } from '~/utils/hooks'
 
