@@ -52,8 +52,6 @@ export default function TargetLink(props: SourceLinkProps): JSX.Element {
 
   function subscribeOnUpdates(update: () => void): void {
     props.linkStates.onAll(() => setTimeout(update))
-    props.linkStates.on('sourceId', ({ value }) => {
-      if (value) setNewLinkId(uuid())
-    })
+    props.linkStates.on('sourceId', () => setNewLinkId(uuid()))
   }
 }

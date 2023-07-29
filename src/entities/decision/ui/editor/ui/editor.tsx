@@ -68,7 +68,7 @@ export function Editor(props: EditorProps): JSX.Element {
           addNode={addNode}
           rootProps={{ className: 'panel itemsPanel' }}
         />
-        <Board state={editorState}>
+        <Board ref={editorState.ref.set}>
           <PaintingPanel translate={editorState.translate.value} scale={editorState.scale.value}>
             {isRenderLinks && (
               <Links

@@ -60,8 +60,6 @@ export default function SourceLink(props: SourceLinkProps): JSX.Element {
 
   function subscribeOnUpdates(update: () => void): void {
     props.linkStates.onAll(() => setTimeout(update))
-    props.linkStates.on('targetId', ({ value }) => {
-      if (value) setNewLinkId(uuid())
-    })
+    props.linkStates.on('targetId', () => setNewLinkId(uuid()))
   }
 }
