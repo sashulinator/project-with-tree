@@ -1,0 +1,21 @@
+.decisionEditor-ui-Canvas-w-Node-w-SourceLink {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  align-items: end;
+  padding: var(--m);
+  gap: var(--m);
+}
+
+.decisionEditor-ui-Canvas-w-Node-w-SourceLink > .rule {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding-left: var(--m);
+}
+
+.decisionEditor-ui-Canvas-w-Node-w-SourceLink > .rule:hover {
+  background-color: var(--field_bg__hover);
+  border-radius: 1rem;
+}

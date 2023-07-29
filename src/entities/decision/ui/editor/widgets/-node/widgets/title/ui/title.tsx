@@ -7,6 +7,7 @@ import { useUpdate } from '~/utils/hooks'
 Title.displayName = 'decisionEditor-ui-Canvas-w-Node-w-Title'
 
 interface TitleProps {
+  className?: string
   state: NodeState
 }
 

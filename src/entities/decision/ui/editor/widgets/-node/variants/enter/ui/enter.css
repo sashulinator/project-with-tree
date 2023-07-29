@@ -7,12 +7,6 @@
   justify-content: right;
 }
 
-.decisionCanvas-w-Node-v-Enter .sourceLinks,
-.decisionCanvas-w-Node-v-Enter .targetLinks {
-  display: flex;
-  flex-direction: column;
-}
-
 .decisionCanvas-w-Node-v-Enter .ui-Input {
   padding: 0 var(--l);
 }

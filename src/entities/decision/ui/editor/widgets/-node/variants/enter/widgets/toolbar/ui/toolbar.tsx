@@ -1,10 +1,12 @@
-import { GhostButton } from '~/ui/button'
-import { Trash } from '~/ui/icon'
-
+import './toolbar.css'
+import { c } from '~/utils/core'
 import { State } from '../../../../../models/state'
 import { useUpdate } from '~/utils/hooks'
 
+Toolbar.displayName = 'decisionEditor-ui-Canvas-w-Node-v-Enter-w-Toolbar'
+
 interface ToolbarProps {
+  className?: string
   state: State
   remove: () => void
 }
@@ -12,7 +14,8 @@ interface ToolbarProps {
 export default function Toolbar(props: ToolbarProps): JSX.Element {
   useUpdate(subscribeOnUpdates)
 
-  return <></>
+  // Пока что пусто
+  return <div className={c(props.className, Toolbar.displayName)}></div>
 
   // Private
 

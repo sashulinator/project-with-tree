@@ -8,6 +8,7 @@ import { emitter } from '~/shared/emitter'
 import { c } from '~/utils/core'
 import { NodeState } from '../../_node'
 import { GestureDragEvent } from '~/ui/canvas/widgets/item/ui/item'
+import { ReactElement, ReactFragment, ReactPortal, cloneElement } from 'react'
 
 emitter.emit('addTheme', { dark, light })
 
@@ -15,10 +16,10 @@ Node.displayName = 'decisionEditor-ui-Canvas-w-Node'
 
 export interface NodeProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'children' | 'title'> {
   state: NodeState
-  title: React.ReactNode
-  toolbar: React.ReactNode
-  sourceLinks?: React.ReactNode
-  targetLinks?: React.ReactNode
+  title: ReactElement | null
+  toolbar: ReactElement | null
+  sourceLinks?: ReactElement | null
+  targetLinks?: ReactElement | null
   rootProps?: React.HTMLAttributes<SVGForeignObjectElement>
   onGestureDrug: (event: GestureDragEvent) => void
 }
@@ -40,11 +41,12 @@ function Node(props: NodeProps): JSX.Element {
       style={{ width: '20rem' }}
       rootProps={{ ...rootProps, style: { overflow: 'visible', ...rootProps?.style } }}
     >
-      <div className={c('toolbar')}>{toolbar}</div>
-      <div className={c('title')}>{title}</div>
+      {toolbar && cloneElement(toolbar, { className: 'toolbar' })}
+      {title && cloneElement(title, { className: 'title' })}
       <div className='links'>
-        <div className='targetLinks'>{targetLinks}</div>
-        <div className='sourceLinks'>{sourceLinks}</div>
+        {targetLinks && cloneElement(targetLinks, { className: 'targetLinks' })}
+        <hr style={{ opacity: '0.1' }} />
+        {sourceLinks && cloneElement(sourceLinks, { className: 'targetLinks' })}
       </div>
     </Item>
   )

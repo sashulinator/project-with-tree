@@ -1,17 +1,22 @@
+import './source-links.css'
+
 import { NodeState } from '../../../../_node'
 import { LinkStateDictionary } from '~/entities/decision/ui/editor/widgets/_links'
 import { Joint } from '~/entities/decision/ui/editor/widgets/-node'
 import { useUpdate } from '~/utils/hooks'
 import { useState } from 'react'
 import uuid from 'uuid-random'
-import { Id } from '~/utils/core'
+import { Id, c } from '~/utils/core'
+
+SourceLink.displayName = 'decisionEditor-ui-Canvas-w-Node-w-SourceLink'
 
 interface SourceLinkProps {
+  className?: string
   state: NodeState
   linkStates: LinkStateDictionary
+  hideNewLink?: boolean
   onNewJointClick: (newLinkId: Id) => void
   onJointClick: (linkId: Id) => void
-  hideNewLink?: boolean
 }
 
 export default function SourceLink(props: SourceLinkProps): JSX.Element {
@@ -33,19 +38,21 @@ export default function SourceLink(props: SourceLinkProps): JSX.Element {
   // }
 
   return (
-    <>
+    <div className={c(props.className, SourceLink.displayName)}>
       {sourceLinkStates.map((linkState) => {
         if (linkState.id === newLinkId) return null
         const isLinked = Boolean(linkState.targetId.value)
 
         return (
-          <Joint
-            key={linkState.id}
-            disabled={isEditingThisNode || isEditingHasSource || (isLinked && Boolean(editingLinkState))}
-            variant={isLinked ? 'linked' : 'unlinked'}
-            linkId={linkState.id}
-            onClick={(): void => props.onJointClick(linkState.id)}
-          />
+          <div className='rule' key={linkState.id}>
+            <div>{linkState.rule.name}</div>
+            <Joint
+              disabled={isEditingThisNode || isEditingHasSource || (isLinked && Boolean(editingLinkState))}
+              variant={isLinked ? 'linked' : 'unlinked'}
+              linkId={linkState.id}
+              onClick={(): void => props.onJointClick(linkState.id)}
+            />
+          </div>
         )
       })}
       {!props.hideNewLink && (
@@ -56,7 +63,7 @@ export default function SourceLink(props: SourceLinkProps): JSX.Element {
           linkId={newLinkId}
         />
       )}
-    </>
+    </div>
   )
 
   // Private
