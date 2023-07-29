@@ -3,7 +3,7 @@ import './sift.css'
 import { Id } from '~/utils/dictionary'
 
 import { GestureDragEvent } from '~/ui/canvas/widgets/item/ui/item'
-import { NewNode } from '~/ui/canvas'
+import { NewNode } from '../../../../-node'
 
 import { LinkStateDictionary } from '../../../../_links'
 import { NodeState } from '../../..'

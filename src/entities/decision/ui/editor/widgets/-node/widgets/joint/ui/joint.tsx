@@ -8,7 +8,7 @@ import { Id } from '~/utils/core'
 import { dark } from '../themes/dark'
 import { light } from '../themes/light'
 
-Joint.displayName = 'ui-Canvas-w-Node-w-Joint'
+Joint.displayName = 'decisionEditor-ui-Canvas-w-Node-w-Joint'
 
 emitter.emit('addTheme', { dark, light })
 

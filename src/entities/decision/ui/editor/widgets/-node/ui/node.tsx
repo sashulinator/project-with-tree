@@ -3,7 +3,7 @@ import './node.css'
 import { clsx } from 'clsx'
 import { ForwardedRef, forwardRef } from 'react'
 
-import { Item, ItemProps } from '../../item'
+import { Item, ItemProps } from '~/ui/canvas'
 
 import { dark } from '../themes/dark'
 import { light } from '../themes/light'
@@ -12,7 +12,7 @@ import { c } from '~/utils/core'
 
 emitter.emit('addTheme', { dark, light })
 
-NodeComponent.displayName = 'ui-Canvas-w-Node'
+NodeComponent.displayName = 'decisionEditor-ui-Canvas-w-Node'
 
 export interface NewNodeProps extends Omit<ItemProps, 'children' | 'title'> {
   title: React.ReactNode

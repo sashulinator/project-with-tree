@@ -5,7 +5,7 @@ import Input from '~/ui/input'
 
 import { useBoolean } from '~/utils/hooks'
 import Checkbox from '~/storybook-new/checkbox'
-import { Joint, NewNode } from '~/ui/canvas'
+import { Joint, NewNode } from '~/entities/decision/ui/editor/widgets/-node'
 import { Position } from '~/utils/core'
 import { GhostButton } from '~/ui/button'
 import { Trash } from '~/ui/icon'

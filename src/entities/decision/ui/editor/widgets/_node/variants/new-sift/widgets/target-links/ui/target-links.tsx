@@ -1,7 +1,7 @@
 import uuid from 'uuid-random'
 import { NodeState } from '../../../../..'
 import { LinkStateDictionary } from '~/entities/decision/ui/editor/widgets/_links'
-import { Joint } from '~/ui/canvas'
+import { Joint } from '~/entities/decision/ui/editor/widgets/-node'
 import { useUpdate } from '~/utils/hooks'
 import { useState } from 'react'
 import { Id } from '~/utils/core'
