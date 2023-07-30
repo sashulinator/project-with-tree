@@ -21,6 +21,7 @@ import { LIGHT as light } from '~/shared/theme/light'
 import { Container } from '~/ui/toast'
 
 import Layout from './layout'
+import DocumentTitle from './document-title'
 
 emitter.emit('addTheme', { dark, light })
 
@@ -31,6 +32,7 @@ export default function App(): JSX.Element {
       <QueryClientProvider client={queryClient}>
       <RecoilRoot>
         <BrowserRouter>
+          <DocumentTitle/>
           <Layout />
         </BrowserRouter>
         {createPortal([
