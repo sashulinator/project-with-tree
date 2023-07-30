@@ -24,12 +24,15 @@
     <meta name="format-detection" content="telephone=no" />
     <meta name="msapplication-tap-highlight" content="no" />
     <link rel="icon" type="image/x-icon" href="/favicon.ico" />
-    <title>Template</title>
   </head>
   <body>
     <div id="root"></div>
     <script type="module" src="/src/app/index.tsx"></script>
     <script>
+      const projectName = 'Calibri'
+      document.title = projectName
+      window.projectName = projectName
+      
       // 🔴 CONSTANTS 🔴
       const defaultBg = '#f6f7f8'
       const defaultColor = '#313132'
