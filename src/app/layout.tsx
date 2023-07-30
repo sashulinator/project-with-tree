@@ -1,28 +1,22 @@
 import './layout.css'
 
-import { useEffect } from 'react'
 import { Route as RRRoute, Routes, matchPath, useLocation } from 'react-router'
 
 import getRootElement from '~/lib/dom/get-root-element'
 import { emitter } from '~/shared/emitter'
 import { Route, routes } from '~/shared/routes'
-import { useForceUpdate } from '~/utils/hooks'
+import { useUpdate } from '~/utils/hooks'
+
+Layout.displayName = 'app-Layout'
 
 export default function Layout(): null | JSX.Element {
-  const update = useForceUpdate()
+  useUpdate(subscribeOnUpdates)
 
   const location = useLocation()
   const routeList = Object.values(routes)
   const currentRoute: Route | undefined = routeList.find((route) => matchPath(route.path, location.pathname))
 
   getRootElement().className = createLayoutClass(currentRoute)
-
-  useEffect(() => {
-    emitter.on('addRoutes', (newRoutes) => {
-      Object.assign(routes, newRoutes)
-      update()
-    })
-  }, [])
 
   return (
     <>
@@ -35,6 +29,13 @@ export default function Layout(): null | JSX.Element {
       </Routes>
     </>
   )
+
+  function subscribeOnUpdates(update: () => void): void {
+    emitter.on('addRoutes', (newRoutes) => {
+      Object.assign(routes, newRoutes)
+      update()
+    })
+  }
 }
 
 // Private
