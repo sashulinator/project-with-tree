@@ -1,18 +1,25 @@
-import { Board as AbstractBoard, BoardState } from '~/abstract/canvas'
-import { Any } from '~/utils/core'
-import { setRefs } from '~/utils/react'
+import { Board as AbstractBoard, BoardProps as AbstractBoardProps } from '~/abstract/canvas'
 
-export interface BoardProps extends React.SVGAttributes<SVGSVGElement> {
-  state: BoardState<Any>
-  children: React.ReactNode
-}
+import { ForwardedRef, forwardRef } from 'react'
+import { c } from '~/utils/core'
 
-export function Board(props: BoardProps): JSX.Element {
-  const { state, ...svgProps } = props
+BoardComponent.displayName = 'a-CanvasBoard'
 
+export type BoardProps = AbstractBoardProps
+
+function BoardComponent(props: BoardProps, ref: ForwardedRef<SVGSVGElement>): JSX.Element {
   return (
-    <AbstractBoard ref={setRefs(state.ref.set)} {...svgProps} style={{ touchAction: 'none' }}>
+    <AbstractBoard
+      {...props}
+      ref={ref}
+      className={c(props.className, BoardComponent.displayName)}
+      style={{ touchAction: 'none' }}
+    >
       {props.children}
     </AbstractBoard>
   )
 }
+
+const Board = forwardRef<SVGSVGElement, BoardProps>(BoardComponent)
+Board.displayName = BoardComponent.displayName
+export { Board }

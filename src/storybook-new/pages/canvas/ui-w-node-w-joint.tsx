@@ -1,6 +1,6 @@
 import Flex from '~/abstract/flex/ui/flex'
 
-import { Joint } from '~/ui/canvas/widgets/new-node/widgets/joint'
+import { Joint } from '~/entities/decision/ui/editor/widgets/-node'
 
 export const aCanvasWNodeWJoint = {
   name: Joint.displayName,

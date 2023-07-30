@@ -1,28 +1,31 @@
 .decision-Editor {
-  --decision_Editor_panel_height: 64px;
+  background: var(--decisionEditor_bg);
   position: relative;
   width: 100%;
   height: 100%;
 }
 
-.decision-Editor svg {
-  -webkit-user-select: none; /* Safari */
-  -ms-user-select: none; /* IE 10 and IE 11 */
-  user-select: none; /* Standard syntax */
-}
-
 .decision-Editor .decisionPanel {
   width: 100%;
-  height: var(--decision_Editor_panel_height);
 }
 
 .decision-Editor .itemsPanel {
-  top: var(--decision_Editor_panel_height);
   width: 15rem;
 }
 
 .decision-Editor .panel {
   position: absolute;
   z-index: 10;
-  background-color: var(--decision_Editor_panel_bg);
+  background-color: var(--decisionEditor_panel_bg);
+}
+
+/* decisionEditor_panel_height */
+.decision-Editor {
+  --decisionEditor_panel_height: 64px;
+}
+.decision-Editor .itemsPanel {
+  top: var(--decisionEditor_panel_height);
+}
+.decision-Editor .decisionPanel {
+  height: var(--decisionEditor_panel_height);
 }

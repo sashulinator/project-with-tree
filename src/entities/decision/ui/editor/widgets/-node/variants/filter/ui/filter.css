@@ -1,0 +1,12 @@
+.decisionCanvas-w-Node-v-Filter {
+  border-radius: var(--xxl);
+}
+
+.decisionCanvas-w-Node-v-Filter .toolbar {
+  display: flex;
+  justify-content: right;
+}
+
+.decisionCanvas-w-Node-v-Filter .ui-Input {
+  padding: 0 var(--l);
+}

@@ -1,0 +1,13 @@
+.decisionEditor-ui-Canvas-w-Node-v-Filter-w-Toolbar {
+  display: flex;
+}
+
+.decisionEditor-ui-Canvas-w-Node-v-Filter-w-Toolbar .a-Button {
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+
+.decisionEditor-ui-Canvas-w-Node-v-Filter-w-Toolbar .a-Button:last-child {
+  border-top-left-radius: 0;
+  border-bottom-right-radius: 0;
+}

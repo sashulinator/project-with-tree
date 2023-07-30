@@ -1,0 +1,12 @@
+.decisionCanvas-w-Node-v-Enter {
+  border-radius: var(--xxl);
+}
+
+.decisionCanvas-w-Node-v-Enter .toolbar {
+  display: flex;
+  justify-content: right;
+}
+
+.decisionCanvas-w-Node-v-Enter .ui-Input {
+  padding: 0 var(--l);
+}

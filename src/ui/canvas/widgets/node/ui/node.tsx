@@ -8,7 +8,7 @@ import { Id } from '~/utils/core'
 import { Item } from '../../item'
 import { GestureDragEvent } from '../../item/ui/item'
 
-NodeComponent.displayName = 'ui-Canvas-w-Node'
+NodeComponent.displayName = 'decisionEditor-ui-Canvas-w-Node'
 
 export interface NodeProps extends React.HTMLAttributes<HTMLDivElement> {
   dataId: Id
