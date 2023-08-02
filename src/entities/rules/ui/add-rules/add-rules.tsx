@@ -38,8 +38,8 @@ export function AddRules(): JSX.Element {
 
   if (isSuccess) {
     return (
-      <main className='RulesPage'>
-        <nav>
+      <main className='e-ui-AddRules'>
+        <nav className='list'>
           <DomainList domains={dataList} defaultExpanded={true} />
         </nav>
         <EditorRules />

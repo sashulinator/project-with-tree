@@ -2,6 +2,6 @@
   display: flex;
 }
 
-.e-Rules-ui-EdItem__ul {
+.e-Rules-ui-EdItem > .list {
   width: 100%;
 }

@@ -8,7 +8,7 @@ export function MergeBtn(): JSX.Element {
   const setEditorRulesVales = useSetRecoilState(editorRulesValuesAtom)
 
   return (
-    <GhostButton height={'l'} onClick={mergeCondition} className='EdRules-w-merge-btn'>
+    <GhostButton height={'m'} onClick={mergeCondition} className='EdRules-w-merge-btn'>
       Объединить
     </GhostButton>
   )

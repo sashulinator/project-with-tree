@@ -1,4 +1,4 @@
-import Flex from '~/abstract/flex'
+import Flex, { FlexProps } from '~/abstract/flex'
 import { GhostButton } from '~/ui/button'
 import { Radio } from '../radio/radio'
 import { editorRulesValuesAtom } from '../../state/state'
@@ -6,20 +6,24 @@ import { useRecoilState } from 'recoil'
 import uniqid from 'uniqid'
 import { Close, Plus } from '~/ui/icon'
 import './editor-buttons.css'
+import { c } from '~/utils/core'
 interface ButtonsProps {
   id: string
+  rootProps?: FlexProps
 }
 
+EditorButtons.displayName = 'e-rules-ui-EditorButtons'
+
 export function EditorButtons(props: ButtonsProps): JSX.Element {
-  const { id } = props
+  const { id, rootProps } = props
   const [editorRulesValues, setEditorRulesValues] = useRecoilState(editorRulesValuesAtom)
 
   return (
-    <Flex gap='xl' style={{ alignItems: 'center' }}>
-      <GhostButton className='editor-ghBtn' height={'s'} square onClick={deleteCondition}>
+    <Flex className={c(EditorButtons.displayName, rootProps?.className)} gap='xl' {...rootProps}>
+      <GhostButton height={'s'} square onClick={deleteCondition}>
         <Close />
       </GhostButton>
-      <GhostButton className='editor-ghBtn' height={'s'} square onClick={addCondition}>
+      <GhostButton height={'s'} square onClick={addCondition}>
         <Plus />
       </GhostButton>
       <Radio id={id} />

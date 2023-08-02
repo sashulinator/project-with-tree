@@ -22,7 +22,7 @@ export function EditorItem(props: Props): JSX.Element {
         checked={checked}
         onChange={handleCheck}
       />
-      <ul className='e-Rules-ui-EdItem__ul'>
+      <ul className='list'>
         {values.map((item, i) => (
           <li key={item.id}>
             <EditorInput id={item.id} value={item.value} />
