@@ -2,6 +2,7 @@ import { aCanvasWItem } from './pages/canvas/a-w-item'
 import { aCanvasWNodeWJoint } from './pages/canvas/ui-w-node-w-joint'
 import { uiCanvasNode } from './pages/canvas/ui-w-node'
 import { decisionCanvasNodeVSift } from './pages/canvas/ui-w-node-v-filter'
+import { uiCheckbox } from './pages/checkbox/ui-checkbox'
 
 export type RouteConfig = {
   name: string | undefined
@@ -53,6 +54,21 @@ export const routes = {
       aCanvasWNodeWJoint: configToRoute(aCanvasWNodeWJoint),
       uiNode: configToRoute(uiCanvasNode),
       decisionCanvasNodeVSift: configToRoute(decisionCanvasNodeVSift),
+    },
+  },
+  checkbox: {
+    getName: (): string => 'Checkbox',
+    path: 'project-with-tree/storybook-new/checkbox',
+    element: <></>,
+    getURL: (): string => `project-with-tree/storybook-new/checkbox`,
+    config: {
+      name: 'Checkbox',
+      description: 'checkbox',
+      features: [],
+      extends: undefined,
+    },
+    children: {
+      uiCheckbox: configToRoute(uiCheckbox),
     },
   },
 }

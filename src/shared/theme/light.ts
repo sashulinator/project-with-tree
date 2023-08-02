@@ -34,6 +34,9 @@ export const LIGHT = {
   outlineColor: primary.alpha(0.5),
   borderColor: clr('#cdd2d6'),
   errorColor: clr('#d2302f'),
+
+  focus: primary,
+  focusAlt: clr('#7ed321'),
 }
 
 // TODO сделать нормальную проверку

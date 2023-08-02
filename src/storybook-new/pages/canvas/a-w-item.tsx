@@ -5,7 +5,7 @@ import { useState } from 'react'
 import Input from '~/ui/input'
 
 import { useBoolean } from '~/utils/hooks'
-import Checkbox from '~/storybook-new/checkbox'
+import Checkbox from '~/ui/checkbox'
 
 export const aCanvasWItem = {
   name: Item.displayName,
@@ -36,7 +36,7 @@ export function Page(): JSX.Element {
           y:
           <Input height='s' value={y} onChange={(e): void => setY(e.target.value)} />
         </Flex>
-        <Checkbox placeholder='add_content' id='square' checked={content} onChange={toggleContent} />
+        <Checkbox height='s' placeholder='add_content' id='square' checked={content} onChange={toggleContent} />
       </Flex>
       <svg width='100%' height='333px' style={{ border: '1px solid red' }}>
         <Item y={y} x={x} dataId={'test'}>
