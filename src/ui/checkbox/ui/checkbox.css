@@ -6,6 +6,10 @@
   padding-left: calc(var(--height) + var(--gap));
 }
 
+.ui-Checkbox.--round > .box {
+  border-radius: 50%;
+}
+
 .ui-Checkbox.--s {
   height: var(--checkbox_height__s);
   --height: calc(var(--checkbox_height__s) - var(--m) * 2);

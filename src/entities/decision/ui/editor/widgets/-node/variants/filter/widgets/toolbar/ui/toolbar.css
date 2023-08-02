@@ -1,7 +1,11 @@
 .decisionEditor-ui-Canvas-w-Node-v-Filter-w-Toolbar {
   display: flex;
+  justify-content: space-between;
 }
 
+.decisionEditor-ui-Canvas-w-Node-v-Filter-w-Toolbar .selection {
+  margin-left: var(--l);
+}
 .decisionEditor-ui-Canvas-w-Node-v-Filter-w-Toolbar .a-Button {
   border-top-left-radius: 0;
   border-top-right-radius: 0;
