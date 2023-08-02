@@ -30,4 +30,10 @@ export type RequiredVars = {
 
   /* error color */
   errorColor: ToStringable
+
+  /* focus color (usually the same as primary) */
+  focus: ToStringable
+
+  /* If entire component has the same color as `focus` */
+  focusAlt: ToStringable
 }

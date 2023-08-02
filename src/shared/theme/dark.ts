@@ -19,6 +19,9 @@ export const DARK = {
   outlineColor: primary.alpha(0.5),
   borderColor: clr('#265d97'),
   errorColor: clr('#d2302f'),
+
+  focus: primary,
+  focusAlt: clr('#7ed321'),
 }
 
 // TODO сделать нормальную проверку
