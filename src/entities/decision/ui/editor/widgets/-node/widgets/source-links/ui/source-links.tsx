@@ -1,12 +1,15 @@
 import './source-links.css'
 
+import type { Identifier, XYCoord } from 'dnd-core'
 import { NodeState } from '../../../../_node'
 import { LinkStateDictionary } from '~/entities/decision/ui/editor/widgets/_links'
 import { Joint } from '~/entities/decision/ui/editor/widgets/-node'
 import { useUpdate } from '~/utils/hooks'
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import uuid from 'uuid-random'
 import { Id, c } from '~/utils/core'
+import { useDrag, useDrop } from 'react-dnd'
+import { RuleLinkState } from '../../../../_link'
 
 SourceLink.displayName = 'decisionEditor-ui-Canvas-w-Node-w-SourceLink'
 
@@ -39,20 +42,23 @@ export default function SourceLink(props: SourceLinkProps): JSX.Element {
 
   return (
     <div className={c(props.className, SourceLink.displayName)}>
-      {sourceLinkStates.map((linkState) => {
+      {sourceLinkStates.map((linkState, i) => {
         if (linkState.id === newLinkId) return null
         const isLinked = Boolean(linkState.targetId.value)
 
         return (
-          <div className='rule' key={linkState.id}>
-            <div>{linkState.rule.name}</div>
-            <Joint
-              disabled={isEditingThisNode || isEditingHasSource || (isLinked && Boolean(editingLinkState))}
-              variant={isLinked ? 'linked' : 'unlinked'}
-              linkId={linkState.id}
-              onClick={(): void => props.onJointClick(linkState.id)}
-            />
-          </div>
+          <RuleSet
+            index={i}
+            linkStates={props.linkStates}
+            nodeId={props.state.id}
+            isEditingThisNode={isEditingThisNode}
+            isLinked={isLinked}
+            key={linkState.id}
+            linkState={linkState}
+            isEditingHasSource={isEditingHasSource}
+            editingLinkState={editingLinkState}
+            onJointClick={props.onJointClick}
+          />
         )
       })}
       {!props.hideNewLink && (
@@ -72,4 +78,114 @@ export default function SourceLink(props: SourceLinkProps): JSX.Element {
     props.linkStates.onAll(() => setTimeout(update))
     props.linkStates.on('targetId', () => setNewLinkId(uuid()))
   }
+}
+
+// Private
+
+export interface RuleSetProps {
+  nodeId: Id
+  linkState: RuleLinkState
+  index: number
+  isLinked: boolean
+  isEditingThisNode: boolean
+  linkStates: LinkStateDictionary
+  isEditingHasSource: boolean
+  editingLinkState: RuleLinkState | undefined
+  onJointClick: (linkId: Id) => void
+}
+
+interface DragItem {
+  index: number
+  id: string
+  type: string
+}
+
+export function RuleSet(props: RuleSetProps): JSX.Element {
+  const ref = useRef<HTMLDivElement>(null)
+
+  const [{ handlerId }, drop] = useDrop<DragItem, void, { handlerId: Identifier | null }>({
+    accept: `RuleSet-${props.nodeId}`,
+    collect(monitor) {
+      return {
+        handlerId: monitor.getHandlerId(),
+      }
+    },
+    hover(item: DragItem, monitor) {
+      if (!ref.current) {
+        return
+      }
+      const dragIndex = item.index
+      const hoverIndex = props.index
+
+      console.log(dragIndex, hoverIndex)
+
+      // Don't replace items with themselves
+      if (dragIndex === hoverIndex) {
+        return
+      }
+
+      // Determine rectangle on screen
+      const hoverBoundingRect = ref.current?.getBoundingClientRect()
+
+      // Get vertical middle
+      const hoverMiddleY = (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2
+
+      // Determine mouse position
+      const clientOffset = monitor.getClientOffset()
+
+      // Get pixels to the top
+      const hoverClientY = (clientOffset as XYCoord).y - hoverBoundingRect.top
+
+      // Only perform the move when the mouse has crossed half of the items height
+      // When dragging downwards, only move when the cursor is below 50%
+      // When dragging upwards, only move when the cursor is above 50%
+
+      // Dragging downwards
+      if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) {
+        return
+      }
+
+      // Dragging upwards
+      if (dragIndex > hoverIndex && hoverClientY > hoverMiddleY) {
+        return
+      }
+
+      // Time to actually perform the action
+      props.linkStates.swapSourceIndexes(props.nodeId, dragIndex, hoverIndex)
+
+      // Note: we're mutating the monitor item here!
+      // Generally it's better to avoid mutations,
+      // but it's good here for the sake of performance
+      // to avoid expensive index searches.
+      item.index = hoverIndex
+    },
+  })
+
+  const [{ isDragging }, drag] = useDrag({
+    type: `RuleSet-${props.nodeId}`,
+    item: () => {
+      return { id: props.linkState.id, index: props.index }
+    },
+    collect: (monitor) => ({
+      isDragging: monitor.isDragging(),
+    }),
+  })
+
+  const opacity = isDragging ? 0 : 1
+
+  drag(drop(ref))
+
+  return (
+    <div className='rule' key={props.linkState.id} ref={ref} style={{ opacity }} data-handler-id={handlerId}>
+      <div>{props.linkState.rule.name}</div>
+      <Joint
+        disabled={
+          props.isEditingThisNode || props.isEditingHasSource || (props.isLinked && Boolean(props.editingLinkState))
+        }
+        variant={props.isLinked ? 'linked' : 'unlinked'}
+        linkId={props.linkState.id}
+        onClick={(): void => props.onJointClick(props.linkState.id)}
+      />
+    </div>
+  )
 }

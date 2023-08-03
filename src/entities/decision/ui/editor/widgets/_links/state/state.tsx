@@ -66,7 +66,7 @@ export class LinkStateDictionary extends EmitterableDictionary<Events, RuleLinkS
     assertDefined(sourceId, 'SourceId does not exists')
 
     const sourceLinksStates = this.getLinksBySourceId(sourceId)
-    editingLinkState?.index.set(sourceLinksStates.length)
+    editingLinkState?.index.set(sourceLinksStates.length - 1)
 
     this.editingId.value = undefined
   }
@@ -112,5 +112,15 @@ export class LinkStateDictionary extends EmitterableDictionary<Events, RuleLinkS
     const linkState = this.get(linkId)
     linkState.targetId.value = editingLinkState.targetId.value
     this.remove(editingLinkState.id)
+  }
+
+  swapSourceIndexes(nodeId: Id, dragIndex: number, hoverIndex: number): void {
+    const linkStates = this.getLinksBySourceId(nodeId)
+    const dragState = linkStates.find((s) => s.index.value === dragIndex)
+    const hoverState = linkStates.find((s) => s.index.value === hoverIndex)
+    assertDefined(dragState)
+    assertDefined(hoverState)
+    hoverState.index.value = dragIndex
+    dragState.index.value = hoverIndex
   }
 }
