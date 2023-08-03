@@ -10,6 +10,7 @@ import { GestureDragEvent } from '~/ui/canvas/widgets/item/ui/item'
 
 import { Filter } from '../../-node/variants/filter'
 import { Enter } from '../../-node/variants/enter'
+import { Prop } from '~/utils/notifier'
 
 const GAP = 500
 
@@ -18,6 +19,7 @@ interface MapNodeProps {
   scale: number
   linkStates: LinkStateDictionary
   nodeStates: Dictionary<NodeState>
+  selection: Prop<Id[]>
   removeNode: (id: Id) => void
 }
 
@@ -30,6 +32,7 @@ export function Node(props: MapNodeProps): JSX.Element {
     <Component
       key={props.state.id}
       onGestureDrug={onGestureDrug}
+      selection={props.selection}
       state={props.state}
       remove={(): void => props.removeNode(props.state.id)}
       linkStates={props.linkStates}

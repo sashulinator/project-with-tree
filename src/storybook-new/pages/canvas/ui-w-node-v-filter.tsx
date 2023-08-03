@@ -5,6 +5,8 @@ import { LinkStateDictionary } from '~/entities/decision/ui/editor/widgets/_link
 import { RuleLinkState } from '~/entities/decision/ui/editor/widgets/_link'
 import { NodeState } from '~/entities/decision/ui/editor/widgets/_node'
 import { Point } from '~/entities/point'
+import { Prop } from '~/utils/notifier'
+import { Id } from '~/utils/core'
 
 export const decisionCanvasNodeVSift = {
   name: Filter.displayName,
@@ -51,10 +53,12 @@ export function Page(): JSX.Element {
 
   const state1 = useMemo(() => new NodeState({ point: point1 }), [])
   const state2 = useMemo(() => new NodeState({ point: point2 }), [])
+  const selection = useMemo(() => new Prop([] as Id[]), [])
 
   return (
     <svg width='100%' height='333px' style={{ border: '1px solid red' }}>
       <Filter
+        selection={selection}
         state={state1}
         linkStates={linkStates}
         remove={(): void => console.log('remove!')}
@@ -65,6 +69,7 @@ export function Page(): JSX.Element {
         }}
       />
       <Filter
+        selection={selection}
         state={state2}
         linkStates={linkStates}
         remove={(): void => console.log('remove!')}

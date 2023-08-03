@@ -19,8 +19,6 @@ export type Events = {
 }
 
 export class EditorState extends BoardState<Events> {
-  selected: SelectedProp<'selected'>
-
   decision: Decision
 
   name: Prop<'name', string>
@@ -35,8 +33,6 @@ export class EditorState extends BoardState<Events> {
     this.decision = props.decision
 
     this.name = new Prop('name', props.decision.name, this)
-
-    this.selected = new SelectedProp('selected', [], this)
 
     this.d3selection = new D3Selection(this)
 
