@@ -1,15 +1,18 @@
-.RulesPage {
+.e-ui-AddRules {
   background-color: var(--bgSecondary);
   display: flex;
   padding: 20px;
 }
 
-.RulesPage > nav {
-  width: 34%;
-  margin-right: 10px;
-  background: var(--bg);
+.e-ui-AddRules > .list {
+  width: 20%;
 }
 
-.RulesPage > ul {
-  width: 64%;
+.e-ui-AddRules .input {
+  margin-bottom: 25px;
+}
+
+.e-ui-AddRules > ul {
+  width: 78%;
+  margin-left: 20px;
 }

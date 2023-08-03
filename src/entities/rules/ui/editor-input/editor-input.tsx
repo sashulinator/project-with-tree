@@ -1,9 +1,11 @@
 import MentionsInput from '~/ui/mention-input'
 
 import { Mention } from 'react-mentions'
-import { useRecoilState, useRecoilValue } from 'recoil'
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
 import { draggableCardAtom, editorRulesValuesAtom, mentionsDataAtom } from '~/entities/rules/state/state'
 import DropBoard from '~/abstract/drop-board/ui/drop-board'
+import { onDropTextarea } from '../../lib'
+import { onChangeTextarea } from '../../lib/on-change-textarea'
 
 export interface MentionsItem {
   display: string
@@ -12,7 +14,7 @@ export interface MentionsItem {
 
 interface EditorInputProps {
   value: string
-  id: number
+  id: string
 }
 
 export function EditorInput(props: EditorInputProps): JSX.Element {
@@ -20,7 +22,7 @@ export function EditorInput(props: EditorInputProps): JSX.Element {
 
   const mentionsData = useRecoilValue(mentionsDataAtom)
   const [draggableCard, setDraggableCard] = useRecoilState(draggableCardAtom)
-  const [editorRulesValues, setEditorRulesValues] = useRecoilState(editorRulesValuesAtom)
+  const setEditorRulesValues = useSetRecoilState(editorRulesValuesAtom)
 
   // TODO ??? Создать e-Domain-ui-Mentions ???
   return (
@@ -38,30 +40,15 @@ export function EditorInput(props: EditorInputProps): JSX.Element {
   )
 
   // Private
-
   function drop(e: React.DragEvent<HTMLDivElement>): void {
     e.preventDefault()
     if (draggableCard) {
-      setEditorRulesValues(
-        editorRulesValues.map((item) => {
-          if (item.id === id) {
-            return { value: `${item.value}@[${draggableCard.name}](${draggableCard.id})`, id: id }
-          }
-          return item
-        })
-      )
+      setEditorRulesValues((arr) => onDropTextarea(arr, draggableCard, id))
       setDraggableCard(null)
     }
   }
 
   function handleChangeMention(_: unknown, v: string): void {
-    setEditorRulesValues(
-      editorRulesValues.map((item) => {
-        if (item.id === id) {
-          return { value: v, id: id }
-        }
-        return item
-      })
-    )
+    setEditorRulesValues((arr) => onChangeTextarea(arr, id, v))
   }
 }

@@ -1,0 +1,16 @@
+.e-Rules-ui-EditorRules {
+  border-radius: 10px;
+  background: #fff;
+  box-shadow: 0px 0px 8px 0px rgba(0, 0, 0, 0.1);
+  padding: 20px 40px;
+}
+
+.e-Rules-ui-EditorRules > .header {
+  margin-bottom: 25px;
+}
+
+.e-Rules-ui-EditorRules .item {
+  border-radius: 9px;
+  background: #f4f4f4;
+  padding: 20px;
+}

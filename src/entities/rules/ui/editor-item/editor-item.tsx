@@ -1,47 +1,45 @@
-import { useSetRecoilState } from 'recoil'
-
-import { editorRulesValuesAtom } from '../../state/state'
-import { PrimaryButton } from '~/ui/button/variants/primary'
 import './editor-item.css'
-import Flex from '~/abstract/flex/ui/flex'
 import { EditorInput } from '../editor-input/editor-input'
-import { Radio } from '../radio/radio'
+import { EditorButtons } from '../editor-buttons/editor-buttons'
+import { editorRulesItemType, editorRulesValuesAtom } from '../../state/state'
+import { useSetRecoilState } from 'recoil'
+import { getCheckedArr } from '../../lib'
+import Checkbox from '~/ui/checkbox/ui/checkbox'
+import Flex, { FlexProps } from '~/abstract/flex/ui/flex'
+import { c } from '~/utils/core'
 interface Props {
-  id: number
-  value: string
-  lastElement: boolean
-  oneElement: boolean
+  values: editorRulesItemType[]
+  id: string
+  checked: boolean
+  rootProps?: FlexProps
 }
 
+EditorItem.displayName = 'e-Rules-ui-EdItem'
+
 export function EditorItem(props: Props): JSX.Element {
-  const { id, value, lastElement, oneElement } = props
-  const setEditorRulesValues = useSetRecoilState(editorRulesValuesAtom)
+  const { values, id, checked, rootProps } = props
+  const setEditorRulesVales = useSetRecoilState(editorRulesValuesAtom)
 
   return (
-    <>
-      <EditorInput id={id} value={value} />
-      <Flex>
-        {!oneElement && (
-          <PrimaryButton className='add-delete-btn' onClick={deleteIf}>
-            -
-          </PrimaryButton>
-        )}
-        {lastElement && (
-          <PrimaryButton className='add-delete-btn' onClick={addIf}>
-            +
-          </PrimaryButton>
-        )}
-      </Flex>
-      {!lastElement && <Radio id={id} />}
-    </>
+    <Flex crossAxis='center' gap='xl' className={c(EditorItem.displayName, rootProps?.className)} {...rootProps}>
+      <Checkbox checked={checked} onChange={handleCheck} style={{ cursor: 'pointer' }} />
+      <ul className='list'>
+        {values.map((item, i) => (
+          <li key={item.id}>
+            <EditorInput id={item.id} value={item.value} />
+            {i !== values.length - 1 && <EditorButtons id={item.id} />}
+          </li>
+        ))}
+      </ul>
+    </Flex>
   )
 
   // Private
-  function deleteIf(): void {
-    setEditorRulesValues((arr) => arr.filter((item) => item.id !== id))
-  }
-
-  function addIf(): void {
-    setEditorRulesValues((arr) => [...arr, { id: arr[arr.length - 1].id + 1, value: '' }])
+  function handleCheck(e: React.ChangeEvent<HTMLInputElement>): void {
+    let checked = false
+    if (e.target.checked) {
+      checked = true
+    }
+    setEditorRulesVales((arr) => getCheckedArr(arr, checked, id))
   }
 }

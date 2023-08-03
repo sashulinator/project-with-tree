@@ -24,11 +24,11 @@ function DomainItemComponent({ domain, pl = 0, defaultChildExpanded, ...props }:
   }
 
   return (
-    <div draggable onDragStart={dragStart}>
+    <div className='e-ui-DomainItem' draggable onDragStart={dragStart}>
       <CollapseUI
         defaultExpanded={props.defaultExpanded}
         title={domain.domainName}
-        rootProps={{ className: 'DomainItem', style: { paddingLeft: pl } }}
+        rootProps={{ style: { paddingLeft: pl, marginBottom: '10px', backgroundColor: 'white' } }}
       >
         {domain.attributes.length > 0 ? (
           <ul style={{ padding: '10px' }}>

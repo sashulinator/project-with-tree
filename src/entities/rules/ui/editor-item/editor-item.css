@@ -1,4 +1,7 @@
-.add-delete-btn {
-  width: 30px;
-  height: 30px;
+.e-Rules-ui-EdItem {
+  display: flex;
+}
+
+.e-Rules-ui-EdItem > .list {
+  width: 100%;
 }

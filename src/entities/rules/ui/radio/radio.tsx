@@ -1,7 +1,7 @@
 import { useState } from 'react'
 
 interface RadioProps {
-  id: number
+  id: string
 }
 
 export function Radio(props: RadioProps): JSX.Element {

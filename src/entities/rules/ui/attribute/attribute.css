@@ -1,8 +1,7 @@
-.Attribute {
-  border: 1px solid rgb(3, 21, 38);
+.e-Rules-ui-Attribute {
   min-height: 20px;
   text-align: center;
-  padding: 6px;
+  padding: 5px;
   cursor: grab;
   margin-bottom: 5px;
 }
