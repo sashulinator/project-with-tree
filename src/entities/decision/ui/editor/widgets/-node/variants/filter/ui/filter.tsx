@@ -14,6 +14,7 @@ import SourceLink from '../../../widgets/source-links'
 import TargetLink from '../../../widgets/target-links'
 
 import { useUpdate } from '~/utils/hooks'
+import { Prop } from '~/utils/notifier'
 
 Filter.displayName = 'decisionCanvas-w-Node-v-Filter'
 
@@ -22,6 +23,7 @@ export interface FilterProps {
   linkStates: LinkStateDictionary
   remove: () => void
   onGestureDrug: (event: GestureDragEvent) => void
+  selection: Prop<Id[]>
 }
 
 /**
@@ -37,7 +39,7 @@ export function Filter(props: FilterProps): JSX.Element {
       state={props.state}
       className={Filter.displayName}
       title={<Title state={props.state} />}
-      toolbar={<Toolbar state={props.state} remove={remove} />}
+      toolbar={<Toolbar selection={props.selection} state={props.state} remove={remove} />}
       sourceLinks={
         <SourceLink
           linkStates={linkStates}

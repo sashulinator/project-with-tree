@@ -4,5 +4,5 @@ import { common } from './common'
 
 export const light: CSSVars = {
   ...common,
-  canvasNode_bg: LIGHT.primary.alpha(0.7),
+  canvasNode_bg: LIGHT.primary.alpha(0.1),
 }

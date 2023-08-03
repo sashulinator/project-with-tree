@@ -25,6 +25,7 @@ import { Links } from '../widgets/_links'
 import { LinkStateDictionary } from '../widgets/_links/state/state'
 import { Nodes } from '../widgets/_nodes'
 import { Dictionary } from '~/utils/emitter'
+import { Prop } from '~/utils/notifier'
 
 emitter.emit('addTheme', { dark, light })
 
@@ -47,6 +48,8 @@ export function Editor(props: EditorProps): JSX.Element {
   const linkStateList = useMemo(() => rules?.map((rule) => new RuleLinkState({ id: rule.id, rule })), [])
 
   const nodeStates = useMemo(buildNodeStates, [props.decision.data])
+
+  const selection = useMemo(() => new Prop([] as Id[]), [])
 
   const linkStates = useMemo(() => new LinkStateDictionary(linkStateList), [linkStateList])
 
@@ -79,6 +82,7 @@ export function Editor(props: EditorProps): JSX.Element {
               />
             )}
             <Nodes
+              selection={selection}
               scale={editorState.scale.value}
               linkStates={linkStates}
               nodeStates={nodeStates}

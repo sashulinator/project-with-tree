@@ -13,12 +13,14 @@ import Title from '../../../widgets/title'
 import SourceLink from '../../../widgets/source-links'
 
 import { useUpdate } from '~/utils/hooks'
+import { Prop } from '~/utils/notifier'
 
 Enter.displayName = 'decisionCanvas-w-Node-v-Enter'
 
 export interface EnterProps {
   state: NodeState
   linkStates: LinkStateDictionary
+  selection: Prop<Id[]>
   remove: () => void
   onGestureDrug: (event: GestureDragEvent) => void
 }
