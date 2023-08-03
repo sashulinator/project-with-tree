@@ -1,15 +1,12 @@
-import { FullGestureState, useDrag } from '@use-gesture/react'
+import { useDrag } from '@use-gesture/react'
 import { clsx } from 'clsx'
 import { ForwardedRef, forwardRef } from 'react'
 
 import { Item as AbstractItem, ItemProps as AbstractItemProps } from '~/abstract/canvas'
 import { fns } from '~/utils/function'
+import { GestureDragEvent } from '../types/gesture-drag-event'
 
 Component.displayName = 'ui-Canvas-w-Item'
-
-export type GestureDragEvent = Omit<FullGestureState<'drag'>, 'event'> & {
-  event: PointerEvent | MouseEvent | TouchEvent | KeyboardEvent
-}
 
 export interface Props extends AbstractItemProps {
   onGestureDrug: (event: GestureDragEvent) => void

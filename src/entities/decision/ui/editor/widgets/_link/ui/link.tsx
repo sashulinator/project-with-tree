@@ -2,12 +2,11 @@ import './link.css'
 
 import { clsx } from 'clsx'
 
-import { NodeState } from '~/entities/decision/ui/editor/widgets/_node'
 import { Link } from '~/ui/canvas'
 import { Offset, Position } from '~/utils/core'
 import { fns } from '~/utils/function'
 import { useForceUpdate, useOnMount, useUpdate } from '~/utils/hooks'
-
+import { State as NodeState } from '../../-node'
 import { State } from '../models/state'
 
 export interface Props extends React.HTMLAttributes<SVGPathElement> {

@@ -2,11 +2,7 @@ import './filter.css'
 
 import { Id } from '~/utils/dictionary'
 
-import { GestureDragEvent } from '~/ui/canvas/widgets/item/ui/item'
 import { Node, VariantPickerProps } from '../../..'
-
-import { LinkStateDictionary } from '../../../../_links'
-import { NodeState } from '../../../../_node'
 
 import Toolbar from '../widgets/toolbar'
 import Title from '../../../widgets/title'

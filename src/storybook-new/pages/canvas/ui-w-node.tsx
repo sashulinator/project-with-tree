@@ -1,15 +1,13 @@
 import Flex from '~/abstract/flex/ui/flex'
 
-import { useMemo, useRef, useState } from 'react'
+import { useMemo } from 'react'
 import Input from '~/ui/input'
 
-import { useBoolean } from '~/utils/hooks'
-import Checkbox from '~/storybook-new/checkbox'
-import { Joint, Node } from '~/entities/decision/ui/editor/widgets/-node'
-import { Position } from '~/utils/core'
+import { Joint, Node, State } from '~/entities/decision/ui/editor/widgets/-node'
+
 import { GhostButton } from '~/ui/button'
 import { Trash } from '~/ui/icon'
-import { NodeState } from '~/entities/decision/ui/editor/widgets/_node'
+
 import { Point } from '~/entities/point'
 
 export const uiCanvasNode = {
@@ -34,7 +32,7 @@ const point1: Point = {
 }
 
 export function Page(): JSX.Element {
-  const state = useMemo(() => new NodeState({ point: point1 }), [])
+  const state = useMemo(() => new State({ point: point1 }), [])
 
   return (
     <Flex dir='column' gap='xl' width='100%'>

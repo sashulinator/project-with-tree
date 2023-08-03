@@ -6,11 +6,10 @@ import { useUpdate } from '~/utils/hooks'
 
 import { LinkStateDictionary } from '../../_links/state/state'
 
-import { VariantPicker } from '../../-node'
+import { VariantPicker, State as NodeState } from '../../-node'
 import { Dictionary } from '~/utils/emitter'
-import { NodeState } from '../../_node'
 import { Prop } from '~/utils/notifier'
-import { GestureDragEvent } from '~/ui/canvas/widgets/item/ui/item'
+import { GestureDragEvent } from '~/ui/canvas'
 
 interface NodesProps {
   scale: number
@@ -21,7 +20,7 @@ interface NodesProps {
   onGestureDrug: (state: NodeState) => (event: GestureDragEvent) => void
 }
 
-export function NodesComponent(props: NodesProps): JSX.Element {
+export function NodeMapperComponent(props: NodesProps): JSX.Element {
   useUpdate(subscribeOnUpdates)
 
   return (
@@ -48,4 +47,4 @@ export function NodesComponent(props: NodesProps): JSX.Element {
   }
 }
 
-export const Nodes = memo(NodesComponent)
+export const NodeMapper = memo(NodeMapperComponent)

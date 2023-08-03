@@ -3,10 +3,11 @@ import { useMemo } from 'react'
 import { Filter } from '~/entities/decision/ui/editor/widgets/-node/variants/filter'
 import { LinkStateDictionary } from '~/entities/decision/ui/editor/widgets/_links'
 import { RuleLinkState } from '~/entities/decision/ui/editor/widgets/_link'
-import { NodeState } from '~/entities/decision/ui/editor/widgets/_node'
+
 import { Point } from '~/entities/point'
 import { Prop } from '~/utils/notifier'
 import { Id } from '~/utils/core'
+import { State } from '~/entities/decision/ui/editor/widgets/-node'
 
 export const decisionCanvasNodeVSift = {
   name: Filter.displayName,
@@ -51,8 +52,8 @@ export function Page(): JSX.Element {
     }),
   ])
 
-  const state1 = useMemo(() => new NodeState({ point: point1 }), [])
-  const state2 = useMemo(() => new NodeState({ point: point2 }), [])
+  const state1 = useMemo(() => new State({ point: point1 }), [])
+  const state2 = useMemo(() => new State({ point: point2 }), [])
   const selection = useMemo(() => new Prop([] as Id[]), [])
 
   return (

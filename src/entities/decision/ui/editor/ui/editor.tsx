@@ -8,10 +8,9 @@ import uuid from 'uuid-random'
 import { PaintingPanel } from '~/abstract/canvas'
 import { Decision, EditorState } from '~/entities/decision'
 import { Point } from '~/entities/point'
-import { NodeState } from '../widgets/_node'
 import { RuleLinkState } from '../widgets/_link'
 import { emitter } from '~/shared/emitter'
-import { Board } from '~/ui/canvas'
+import { Board, GestureDragEvent } from '~/ui/canvas'
 import { ActionHistory } from '~/utils/action-history'
 import { Id, assertDefined } from '~/utils/core'
 import { useBoolean, useEventListener, useOnMount, useUpdate } from '~/utils/hooks'
@@ -23,10 +22,11 @@ import DecisionPanel from '../widgets/_decision-panel'
 import PointPanel from '../widgets/-point-panel'
 import { Links } from '../widgets/_links'
 import { LinkStateDictionary } from '../widgets/_links/state/state'
-import { Nodes } from '../widgets/_nodes'
+import { NodeMapper } from '../widgets/-node-mapper'
 import { Dictionary } from '~/utils/emitter'
 import { Prop } from '~/utils/notifier'
-import { GestureDragEvent } from '~/ui/canvas/widgets/item/ui/item'
+
+import { State as NodeState, getNodeMovement } from '../widgets/-node'
 
 emitter.emit('addTheme', { dark, light })
 
@@ -82,7 +82,7 @@ export function Editor(props: EditorProps): JSX.Element {
                 nodeStates={nodeStates}
               />
             )}
-            <Nodes
+            <NodeMapper
               selection={selection}
               scale={editorState.scale.value}
               linkStates={linkStates}
@@ -102,13 +102,13 @@ export function Editor(props: EditorProps): JSX.Element {
     return (event: GestureDragEvent) => {
       event.event.stopPropagation()
       const GAP = 500
-      const isIdle = event.movement[0] === 0 && event.movement[1] === 0
-      if (isIdle) return
 
-      const moveX = event.movement[0] / editorState.scale.value
-      const moveY = event.movement[1] / editorState.scale.value
-      let x = state.position.last.x + moveX
-      const y = state.position.last.y + moveY
+      const movePosition = getNodeMovement(event, editorState.scale.value)
+
+      if (movePosition === null) return
+
+      let x = state.position.last.x + movePosition.x
+      const y = state.position.last.y + movePosition.y
 
       if (event.last) {
         const rx = x % GAP

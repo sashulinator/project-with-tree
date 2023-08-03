@@ -4,12 +4,13 @@ import { clsx } from 'clsx'
 import { useState } from 'react'
 
 import { UnstyledButton } from '~/abstract/button'
-import { NodeState } from '~/entities/decision/ui/editor/widgets/_node'
-import { PrimaryButton } from '~/ui/button/variants/primary'
+
+import { PrimaryButton } from '~/ui/button'
 import { Plus } from '~/ui/icon'
 import { Id } from '~/utils/core'
 import Input from '~/ui/input'
 import { Dictionary } from '~/utils/emitter'
+import { State as NodeState } from '../../-node'
 
 PointPanel.displayName = 'decision-Editor-w-PointPanel'
 

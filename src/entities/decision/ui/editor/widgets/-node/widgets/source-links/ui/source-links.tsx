@@ -1,9 +1,8 @@
 import './source-links.css'
 
 import type { Identifier, XYCoord } from 'dnd-core'
-import { NodeState } from '../../../../_node'
+import { State as NodeState, Joint } from '../../../../-node'
 import { LinkStateDictionary } from '~/entities/decision/ui/editor/widgets/_links'
-import { Joint } from '~/entities/decision/ui/editor/widgets/-node'
 import { useUpdate } from '~/utils/hooks'
 import { useRef, useState } from 'react'
 import uuid from 'uuid-random'

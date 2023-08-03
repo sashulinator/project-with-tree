@@ -6,7 +6,7 @@ import { useUpdate } from '~/utils/hooks'
 import { LinkStateDictionary } from '../state/state'
 import { Link } from './_link'
 import { Dictionary } from '~/utils/emitter'
-import { NodeState } from '../../_node'
+import { State as NodeState } from '../../-node'
 
 interface LinksProps {
   scale: number
