@@ -9,7 +9,7 @@ interface Props {
   rootProps?: React.HTMLAttributes<HTMLDivElement> | undefined
 }
 
-Attribute.displayName = 'Attribute'
+Attribute.displayName = 'e-Rules-ui-Attribute'
 
 export function Attribute({ attribute, rootProps }: Props): JSX.Element {
   const setDraggableCard = useSetRecoilState(draggableCardAtom)

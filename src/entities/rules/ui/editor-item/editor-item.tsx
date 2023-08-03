@@ -4,24 +4,25 @@ import { EditorButtons } from '../editor-buttons/editor-buttons'
 import { editorRulesItemType, editorRulesValuesAtom } from '../../state/state'
 import { useSetRecoilState } from 'recoil'
 import { getCheckedArr } from '../../lib'
+import Checkbox from '~/ui/checkbox/ui/checkbox'
+import Flex, { FlexProps } from '~/abstract/flex/ui/flex'
+import { c } from '~/utils/core'
 interface Props {
   values: editorRulesItemType[]
   id: string
   checked: boolean
+  rootProps?: FlexProps
 }
 
+EditorItem.displayName = 'e-Rules-ui-EdItem'
+
 export function EditorItem(props: Props): JSX.Element {
-  const { values, id, checked } = props
+  const { values, id, checked, rootProps } = props
   const setEditorRulesVales = useSetRecoilState(editorRulesValuesAtom)
 
   return (
-    <div className='e-Rules-ui-EdItem'>
-      <input
-        type='checkbox'
-        style={{ marginRight: '20px', cursor: 'pointer' }} // надо делать кастомный чекбокс
-        checked={checked}
-        onChange={handleCheck}
-      />
+    <Flex crossAxis='center' gap='xl' className={c(EditorItem.displayName, rootProps?.className)} {...rootProps}>
+      <Checkbox checked={checked} onChange={handleCheck} style={{ cursor: 'pointer' }} />
       <ul className='list'>
         {values.map((item, i) => (
           <li key={item.id}>
@@ -30,7 +31,7 @@ export function EditorItem(props: Props): JSX.Element {
           </li>
         ))}
       </ul>
-    </div>
+    </Flex>
   )
 
   // Private

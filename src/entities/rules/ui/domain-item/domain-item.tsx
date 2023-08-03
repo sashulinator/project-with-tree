@@ -6,9 +6,6 @@ import { draggableCardAtom } from '../../state/state'
 import { Attribute } from '../attribute/attribute'
 
 import './domain-item.css'
-import Accordion from '~/ui/accordion/ui/accordion'
-import { HeaderProps } from '~/abstract/accordion'
-import Header from '~/ui/header'
 interface DomainProps {
   domain: DomainItemProps
   defaultExpanded?: boolean

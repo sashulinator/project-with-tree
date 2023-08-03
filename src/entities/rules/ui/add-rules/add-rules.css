@@ -6,12 +6,13 @@
 
 .e-ui-AddRules > .list {
   width: 20%;
-  margin-right: 10px;
-  background: #fff;
-  box-shadow: 0px 0px 8px 0px rgba(0, 0, 0, 0.1);
-  border-radius: 10px;
+}
+
+.e-ui-AddRules .input {
+  margin-bottom: 25px;
 }
 
 .e-ui-AddRules > ul {
   width: 78%;
+  margin-left: 20px;
 }

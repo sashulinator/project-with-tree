@@ -9,6 +9,9 @@ import { DomainList } from '../domain-list/domain-list'
 import { EditorRules } from '../editor-rules/editor-rules'
 import mockRules from '~/mocks/rules/mock-rules'
 import './add-rules.css'
+import Input from '~/ui/input'
+import { User } from '~/ui/icon'
+import { InputSearch } from '../input-search/input-search'
 
 export function AddRules(): JSX.Element {
   const { data, isLoading, isSuccess } = useQuery([url, mockRules.name, { id: mockRules.id }], () =>
@@ -40,8 +43,10 @@ export function AddRules(): JSX.Element {
     return (
       <main className='e-ui-AddRules'>
         <nav className='list'>
+          <InputSearch rootProps={{ style: { marginBottom: '25px' } }} />
           <DomainList domains={dataList} defaultExpanded={true} />
         </nav>
+
         <EditorRules />
       </main>
     )
