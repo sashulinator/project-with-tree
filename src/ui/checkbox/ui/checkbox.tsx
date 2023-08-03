@@ -20,6 +20,7 @@ export interface CheckboxProps extends Omit<React.InputHTMLAttributes<HTMLInputE
 export default function Checkbox(props: CheckboxProps): JSX.Element {
   const { labelProps, height = 'm', className, checked = false, round, ...checkboxProps } = props
 
+
   return (
     <label
       {...labelProps}
