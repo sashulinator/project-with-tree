@@ -20,7 +20,7 @@ import { listenHistory } from '../lib/_listen-history'
 import { dark } from '../themes/dark'
 import { light } from '../themes/light'
 import DecisionPanel from '../widgets/_decision-panel'
-import ItemPanel from '../widgets/_items-panel'
+import PointPanel from '../widgets/-point-panel'
 import { Links } from '../widgets/_links'
 import { LinkStateDictionary } from '../widgets/_links/state/state'
 import { Nodes } from '../widgets/_nodes'
@@ -66,7 +66,7 @@ export function Editor(props: EditorProps): JSX.Element {
     <div className='decision-Editor'>
       <DndProvider backend={HTML5Backend}>
         <DecisionPanel state={editorState} rootProps={{ className: 'decisionPanel panel' }} />
-        <ItemPanel
+        <PointPanel
           centerNode={centerNode}
           nodeStates={nodeStates}
           addNode={addNode}

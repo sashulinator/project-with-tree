@@ -1,15 +1,15 @@
-.decision-Editor-ItemPanel {
+.decision-Editor-w-PointPanel {
   width: 100%;
   height: 100%;
   display: flex;
   flex-direction: column;
 }
 
-.decision-Editor-ItemPanel > .search {
+.decision-Editor-w-PointPanel > .search {
   padding: var(--xl);
 }
 
-.decision-Editor-ItemPanel li button {
+.decision-Editor-w-PointPanel li button {
   width: 100%;
   height: 2rem;
   display: flex;
@@ -20,12 +20,12 @@
   word-break: keep-all;
 }
 
-.decision-Editor-ItemPanel li button:hover {
+.decision-Editor-w-PointPanel li button:hover {
   background-color: rgba(0, 0, 0, 0.101);
   cursor: pointer;
 }
 
-.decision-Editor-ItemPanel li {
+.decision-Editor-w-PointPanel li {
   display: flex;
   align-items: center;
   padding: 0 var(--xl);

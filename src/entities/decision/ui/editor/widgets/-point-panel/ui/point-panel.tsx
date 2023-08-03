@@ -1,4 +1,4 @@
-import './items-panel.css'
+import './point-panel.css'
 
 import { clsx } from 'clsx'
 import { useState } from 'react'
@@ -11,16 +11,16 @@ import { Id } from '~/utils/core'
 import Input from '~/ui/input'
 import { Dictionary } from '~/utils/emitter'
 
-ItemPanel.displayName = 'decision-Editor-ItemPanel'
+PointPanel.displayName = 'decision-Editor-w-PointPanel'
 
-interface ItemPanelProps {
+interface PointPanelProps {
   rootProps?: React.HTMLAttributes<HTMLDivElement>
   nodeStates: Dictionary<NodeState>
   addNode: () => void
   centerNode: (id: Id) => void
 }
 
-export default function ItemPanel(props: ItemPanelProps): JSX.Element {
+export default function PointPanel(props: PointPanelProps): JSX.Element {
   const [value, setValue] = useState<string>('')
 
   const filtered = Object.values(props.nodeStates.items).filter(
@@ -28,7 +28,7 @@ export default function ItemPanel(props: ItemPanelProps): JSX.Element {
   )
 
   return (
-    <div {...props.rootProps} className={clsx(ItemPanel.displayName, props.rootProps?.className)}>
+    <div {...props.rootProps} className={clsx(PointPanel.displayName, props.rootProps?.className)}>
       <div style={{ display: 'flex', alignItems: 'center', padding: 'var(--xl)' }}>
         <div className='search'>
           <Input value={value} onChange={(ev): void => setValue(ev.currentTarget.value)} placeholder='Поиск' />
