@@ -2,33 +2,20 @@ import './enter.css'
 
 import { Id } from '~/utils/dictionary'
 
-import { GestureDragEvent } from '~/ui/canvas/widgets/item/ui/item'
-import { Node } from '../../..'
-
-import { LinkStateDictionary } from '../../../../_links'
-import { NodeState } from '../../../../_node'
+import { Node, VariantPickerProps } from '../../..'
 
 import Toolbar from '../widgets/toolbar'
 import Title from '../../../widgets/title'
 import SourceLink from '../../../widgets/source-links'
 
 import { useUpdate } from '~/utils/hooks'
-import { Prop } from '~/utils/notifier'
 
 Enter.displayName = 'decisionCanvas-w-Node-v-Enter'
-
-export interface EnterProps {
-  state: NodeState
-  linkStates: LinkStateDictionary
-  selection: Prop<Id[]>
-  remove: () => void
-  onGestureDrug: (event: GestureDragEvent) => void
-}
 
 /**
  * Node вариант filter
  */
-export function Enter(props: EnterProps): JSX.Element {
+export function Enter(props: VariantPickerProps): JSX.Element {
   const { remove, linkStates, ...nodeProps } = props
   useUpdate(subscribeOnUpdates)
 
@@ -37,7 +24,7 @@ export function Enter(props: EnterProps): JSX.Element {
       {...nodeProps}
       className={Enter.displayName}
       title={<Title state={props.state} />}
-      toolbar={<Toolbar state={props.state} remove={remove} />}
+      toolbar={<Toolbar state={props.state} remove={(): void => remove(props.state.id)} />}
       sourceLinks={
         <SourceLink
           hideNewLink={true}

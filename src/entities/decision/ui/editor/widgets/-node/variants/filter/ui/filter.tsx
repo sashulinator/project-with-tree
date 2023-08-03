@@ -3,7 +3,7 @@ import './filter.css'
 import { Id } from '~/utils/dictionary'
 
 import { GestureDragEvent } from '~/ui/canvas/widgets/item/ui/item'
-import { Node } from '../../..'
+import { Node, VariantPickerProps } from '../../..'
 
 import { LinkStateDictionary } from '../../../../_links'
 import { NodeState } from '../../../../_node'
@@ -14,22 +14,13 @@ import SourceLink from '../../../widgets/source-links'
 import TargetLink from '../../../widgets/target-links'
 
 import { useUpdate } from '~/utils/hooks'
-import { Prop } from '~/utils/notifier'
 
 Filter.displayName = 'decisionCanvas-w-Node-v-Filter'
-
-export interface FilterProps {
-  state: NodeState
-  linkStates: LinkStateDictionary
-  remove: () => void
-  onGestureDrug: (event: GestureDragEvent) => void
-  selection: Prop<Id[]>
-}
 
 /**
  * Node вариант filter
  */
-export function Filter(props: FilterProps): JSX.Element {
+export function Filter(props: VariantPickerProps): JSX.Element {
   const { remove, linkStates, state, ...nodeProps } = props
   useUpdate(subscribeOnUpdates)
 
@@ -39,7 +30,7 @@ export function Filter(props: FilterProps): JSX.Element {
       state={props.state}
       className={Filter.displayName}
       title={<Title state={props.state} />}
-      toolbar={<Toolbar selection={props.selection} state={props.state} remove={remove} />}
+      toolbar={<Toolbar selection={props.selection} state={props.state} remove={(): void => remove(props.state.id)} />}
       sourceLinks={
         <SourceLink
           linkStates={linkStates}

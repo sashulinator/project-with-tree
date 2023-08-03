@@ -6,17 +6,19 @@ import { useUpdate } from '~/utils/hooks'
 
 import { LinkStateDictionary } from '../../_links/state/state'
 
-import { Node } from './_node'
+import { VariantPicker } from '../../-node'
 import { Dictionary } from '~/utils/emitter'
 import { NodeState } from '../../_node'
 import { Prop } from '~/utils/notifier'
+import { GestureDragEvent } from '~/ui/canvas/widgets/item/ui/item'
 
 interface NodesProps {
   scale: number
   linkStates: LinkStateDictionary
   nodeStates: Dictionary<NodeState>
   selection: Prop<Id[]>
-  removeNode: (id: Id) => void
+  remove: (id: Id) => void
+  onGestureDrug: (state: NodeState) => (event: GestureDragEvent) => void
 }
 
 export function NodesComponent(props: NodesProps): JSX.Element {
@@ -26,14 +28,13 @@ export function NodesComponent(props: NodesProps): JSX.Element {
     <>
       {props.nodeStates.values().map((nodeState) => {
         return (
-          <Node
-            removeNode={props.removeNode}
+          <VariantPicker
+            remove={props.remove}
             key={nodeState.id}
             state={nodeState}
-            nodeStates={props.nodeStates}
-            scale={props.scale}
             linkStates={props.linkStates}
             selection={props.selection}
+            onGestureDrug={props.onGestureDrug(nodeState)}
           />
         )
       })}
