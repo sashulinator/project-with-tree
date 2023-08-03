@@ -12,7 +12,7 @@ import { RuleLinkState } from '../widgets/_link'
 import { emitter } from '~/shared/emitter'
 import { Board, GestureDragEvent } from '~/ui/canvas'
 import { ActionHistory } from '~/utils/action-history'
-import { Id, assertDefined } from '~/utils/core'
+import { Id, assertDefined, assertNotNull } from '~/utils/core'
 import { useBoolean, useEventListener, useOnMount, useUpdate } from '~/utils/hooks'
 
 import { listenHistory } from '../lib/_listen-history'
@@ -27,6 +27,7 @@ import { Dictionary } from '~/utils/emitter'
 import { Prop } from '~/utils/notifier'
 
 import { State as NodeState, getNodeMovement } from '../widgets/-node'
+import { getStyle } from '~/utils/dom'
 
 emitter.emit('addTheme', { dark, light })
 
@@ -102,7 +103,7 @@ export function Editor(props: EditorProps): JSX.Element {
     return (event: GestureDragEvent) => {
       event.event.stopPropagation()
       const GAP = 500
-
+      const last = { ...state.position.last }
       const movePosition = getNodeMovement(event, editorState.scale.value)
 
       if (movePosition === null) return
@@ -110,12 +111,23 @@ export function Editor(props: EditorProps): JSX.Element {
       let x = state.position.last.x + movePosition.x
       const y = state.position.last.y + movePosition.y
 
-      if (event.last) {
-        const rx = x % GAP
-        x = rx < GAP / 2 ? x - rx : x + GAP - rx
+      if (!event.last) {
+        state.position.move(x, y, false)
+        return
       }
 
-      state.position.move(x, y, event.last)
+      const xModulo = x % GAP
+      const toLeft = xModulo < GAP / 2
+      x = toLeft ? x - xModulo : x + GAP - xModulo
+
+      state.position.transitionedMove(x, y, () => {
+        setTimeout(() => {
+          gridDepth(x)
+          if (last.x !== x) {
+            gridDepth(last.x)
+          }
+        })
+      })
     }
   }
 
@@ -169,38 +181,39 @@ export function Editor(props: EditorProps): JSX.Element {
   function updateOnEvents(update: () => void): void {
     editorState.on('translate', update)
     editorState.on('scale', update)
-    // ЧТО ТУТ ПРОИСХОДИЛО??
-    // nodeStates.onAll(() => {
-    //   const svg = document.querySelector<SVGSVGElement>('svg')
-    //   document.body.style.width = `100.0${Math.random()}%`
-    // })
   }
 
-  // gridDepth = (x: number): void => {
-  //   const depthNodes = this.values()
-  //     .filter((state) => state.position.value.x === x)
-  //     .sort((a, b) => a.position.value.y - b.position.value.y)
+  function gridDepth(x: number): void {
+    const depthNodes = nodeStates
+      .values()
+      .filter((state) => state.position.value.x === x)
+      .sort((a, b) => a.position.value.y - b.position.value.y)
 
-  //   const nodesHeight = depthNodes.reduce((acc, state) => {
-  //     const style = getStyle(state.ref.value)
-  //     assertNotNull(style)
-  //     acc += parseInt(style.height, 10)
-  //     return acc
-  //   }, 0)
+    const YGAP = 50
 
-  //   const depthHeight = nodesHeight + depthNodes.length * YGAP
-  //   const depthTop = depthHeight / -2
+    const nodesHeight = depthNodes.reduce((acc, state) => {
+      const style = getStyle(state.ref.value)
+      assertNotNull(style)
+      const height = parseInt(style.height, 10)
+      console.log('height', height)
 
-  //   let nextY = depthTop
+      acc += height
+      return acc
+    }, 0)
 
-  //   depthNodes.forEach((state) => {
-  //     state.position.value = { ...state.position.value, y: nextY }
-  //     const style = getStyle(state.ref.value)
-  //     assertNotNull(style)
-  //     const height = parseInt(style.height, 10)
-  //     nextY += height + YGAP
-  //   })
-  // }
+    const depthHeight = nodesHeight + depthNodes.length * YGAP
+    const depthTop = depthHeight / -2
+
+    let nextY = depthTop
+
+    depthNodes.forEach((state) => {
+      state.position.transitionedMove(state.position.value.x, nextY)
+      const style = getStyle(state.ref.value)
+      assertNotNull(style)
+      const height = parseInt(style.height, 10)
+      nextY += height + YGAP
+    })
+  }
 }
 
 Editor.displayName = 'DecisionEditor'
