@@ -26,6 +26,7 @@ import { LinkStateDictionary } from '../widgets/_links/state/state'
 import { Nodes } from '../widgets/_nodes'
 import { Dictionary } from '~/utils/emitter'
 import { Prop } from '~/utils/notifier'
+import { GestureDragEvent } from '~/ui/canvas/widgets/item/ui/item'
 
 emitter.emit('addTheme', { dark, light })
 
@@ -86,7 +87,8 @@ export function Editor(props: EditorProps): JSX.Element {
               scale={editorState.scale.value}
               linkStates={linkStates}
               nodeStates={nodeStates}
-              removeNode={removeNode}
+              remove={removeNode}
+              onGestureDrug={onGestureDrug}
             />
           </PaintingPanel>
         </Board>
@@ -95,6 +97,27 @@ export function Editor(props: EditorProps): JSX.Element {
   )
 
   // Private
+
+  function onGestureDrug(state: NodeState) {
+    return (event: GestureDragEvent) => {
+      event.event.stopPropagation()
+      const GAP = 500
+      const isIdle = event.movement[0] === 0 && event.movement[1] === 0
+      if (isIdle) return
+
+      const moveX = event.movement[0] / editorState.scale.value
+      const moveY = event.movement[1] / editorState.scale.value
+      let x = state.position.last.x + moveX
+      const y = state.position.last.y + moveY
+
+      if (event.last) {
+        const rx = x % GAP
+        x = rx < GAP / 2 ? x - rx : x + GAP - rx
+      }
+
+      state.position.move(x, y, event.last)
+    }
+  }
 
   function buildNodeStates(): Dictionary<NodeState> {
     const nodeStateList = props.decision.data.map((point) => new NodeState({ point }))
