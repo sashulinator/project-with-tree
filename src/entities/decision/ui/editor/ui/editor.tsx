@@ -7,9 +7,8 @@ import uniqid from 'uniqid'
 
 import { PaintingPanel } from '~/abstract/canvas'
 import { Decision } from '~/entities/decision'
-import { State, themes, PointPanel, DecisionPanel } from '../'
+import { State, themes, PointPanel, DecisionPanel, LinkState, LinkMapperState, LinkMapper } from '../'
 import { Point } from '~/entities/point'
-import { State as LinkState, StateDictionary as LinkStateDictionary, Mapper as LinkMapper } from '../widgets/-link'
 import { emitter } from '~/shared/emitter'
 import { Board, GestureDragEvent } from '~/ui/canvas'
 import { ActionHistory } from '~/utils/action-history'
@@ -50,7 +49,7 @@ export default function Editor(props: EditorProps): JSX.Element {
 
   const selection = useMemo(() => new Prop([] as Id[]), [])
 
-  const linkStates = useMemo(() => new LinkStateDictionary(linkStateList), [linkStateList])
+  const linkStates = useMemo(() => new LinkMapperState(linkStateList), [linkStateList])
 
   useUpdate(updateOnEvents, [linkStates])
 

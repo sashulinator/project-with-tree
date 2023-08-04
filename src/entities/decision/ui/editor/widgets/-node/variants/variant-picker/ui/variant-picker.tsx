@@ -2,7 +2,7 @@ import { State as NodeState } from '../../../../-node'
 
 import { Id } from '~/utils/core'
 
-import { StateDictionary as LinkStateDictionary } from '../../../../-link'
+import { MapperState as LinkStateDictionary } from '../../../../link'
 
 import { GestureDragEvent } from '~/ui/canvas'
 

@@ -2,7 +2,7 @@ import './target-links.css'
 
 import uniqid from 'uniqid'
 import { State } from '../../../models/state'
-import { StateDictionary as LinkStateDictionary } from '../../../../-link'
+import { MapperState } from '../../../../link'
 import { Joint } from '../../../../-node'
 import { useUpdate } from '~/utils/hooks'
 import { useState } from 'react'
@@ -13,7 +13,7 @@ TargetLink.displayName = 'decisionEditor-ui-Canvas-w-Node-w-TargetLink'
 interface SourceLinkProps {
   className?: string
   state: State
-  linkStates: LinkStateDictionary
+  linkStates: MapperState
   onNewJointClick: (linkState: Id) => void
   onJointClick: (id: Id) => void
 }

@@ -3,14 +3,14 @@ import { memo } from 'react'
 import { Position } from '~/utils/core'
 import { useUpdate } from '~/utils/hooks'
 
-import { StateDictionary, Link } from '../../../'
+import Link, { MapperState } from '../../..'
 
 import { StateDictionary as NodeStateDictionary } from '../../../../-node'
 
-interface MapperProps {
+export interface MapperProps {
   scale: number
   canvasTranslate: Position
-  linkStates: StateDictionary
+  linkStates: MapperState
   nodeStates: NodeStateDictionary
 }
 
@@ -41,4 +41,5 @@ function MapperComponent(props: MapperProps): JSX.Element {
   }
 }
 
-export const Mapper = memo(MapperComponent)
+const Mapper = memo(MapperComponent)
+export default Mapper
