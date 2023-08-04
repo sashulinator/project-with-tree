@@ -7,3 +7,4 @@ export * from './models/state-dictionary'
 
 export * from './widgets/joint'
 export * from './variants/variant-picker'
+export * from './variants/mapper'

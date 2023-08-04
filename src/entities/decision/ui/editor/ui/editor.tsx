@@ -6,7 +6,8 @@ import { HTML5Backend } from 'react-dnd-html5-backend'
 import uniqid from 'uniqid'
 
 import { PaintingPanel } from '~/abstract/canvas'
-import { Decision, EditorState } from '~/entities/decision'
+import { Decision } from '~/entities/decision'
+import { State, themes } from '../'
 import { Point } from '~/entities/point'
 import { State as LinkState, StateDictionary as LinkStateDictionary, Mapper as LinkMapper } from '../widgets/-link'
 import { emitter } from '~/shared/emitter'
@@ -16,35 +17,34 @@ import { Id, assertDefined, assertNotNull } from '~/utils/core'
 import { useBoolean, useEventListener, useOnMount, useUpdate } from '~/utils/hooks'
 
 import { listenHistory } from '../lib/_listen-history'
-import { dark } from '../themes/dark'
-import { light } from '../themes/light'
 import DecisionPanel from '../widgets/_decision-panel'
 import PointPanel from '../widgets/-point-panel'
 
-import { NodeMapper } from '../widgets/-node-mapper'
-
 import { Prop } from '~/utils/notifier'
 
-import { State as NodeState, StateDictionary as NodeStateDictionary, getNodeMovement } from '../widgets/-node'
+import {
+  State as NodeState,
+  StateDictionary as NodeStateDictionary,
+  getNodeMovement,
+  Mapper as NodeMapper,
+} from '../widgets/-node'
+
 import { getStyle } from '~/utils/dom'
 
-emitter.emit('addTheme', { dark, light })
+emitter.emit('addTheme', themes)
 
-interface EditorProps {
+export interface EditorProps {
   decision: Decision
 }
 
-export function Editor(props: EditorProps): JSX.Element {
+export default function Editor(props: EditorProps): JSX.Element {
   const [isRenderLinks, setIsRenderLinks] = useBoolean(false)
   useOnMount(setIsRenderLinks)
   const rules = props.decision.rules || []
 
   const history = useMemo(() => new ActionHistory(), [])
 
-  const editorState = useMemo(
-    () => new EditorState({ translate: { x: 0, y: 0 }, scale: 1, decision: props.decision }),
-    []
-  )
+  const editorState = useMemo(() => new State({ translate: { x: 0, y: 0 }, scale: 1, decision: props.decision }), [])
 
   const linkStateList = useMemo(() => rules?.map((rule) => new LinkState({ id: rule.id, rule })), [])
 

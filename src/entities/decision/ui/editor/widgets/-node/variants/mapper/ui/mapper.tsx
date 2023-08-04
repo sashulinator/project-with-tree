@@ -4,14 +4,14 @@ import { Id } from '~/utils/core'
 
 import { useUpdate } from '~/utils/hooks'
 
-import { StateDictionary as LinkStateDictionary } from '../../-link'
+import { StateDictionary as LinkStateDictionary } from '../../../../-link'
 
-import { VariantPicker, State as NodeState, StateDictionary as NodeStateDictionary } from '../../-node'
+import { VariantPicker, State as NodeState, StateDictionary as NodeStateDictionary } from '../../..'
 
 import { Prop } from '~/utils/notifier'
 import { GestureDragEvent } from '~/ui/canvas'
 
-interface NodesProps {
+interface MapperProps {
   scale: number
   linkStates: LinkStateDictionary
   nodeStates: NodeStateDictionary
@@ -20,7 +20,7 @@ interface NodesProps {
   onGestureDrug: (state: NodeState) => (event: GestureDragEvent) => void
 }
 
-export function NodeMapperComponent(props: NodesProps): JSX.Element {
+export function MapperComponent(props: MapperProps): JSX.Element {
   useUpdate(subscribeOnUpdates)
 
   return (
@@ -47,4 +47,4 @@ export function NodeMapperComponent(props: NodesProps): JSX.Element {
   }
 }
 
-export const NodeMapper = memo(NodeMapperComponent)
+export const Mapper = memo(MapperComponent)

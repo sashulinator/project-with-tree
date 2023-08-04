@@ -1,6 +1,24 @@
-export * from './ui/editor'
+/**
+ * lib
+ */
 
-export * from './state/state'
+/**
+ * state
+ */
+export { State } from './state/state'
+export type { StateProps, Events } from './state/state'
 
-export { dark as editorDarkTheme } from './themes/dark'
-export { light as editorLightTheme } from './themes/light'
+/**
+ * themes
+ */
+export type { CSSVars } from './themes/css-vars'
+export { common as themeCommon } from './themes/common'
+import { dark } from './themes/dark'
+import { light } from './themes/light'
+export const themes = { dark, light }
+
+/**
+ * ui
+ */
+export { default } from './ui/editor'
+export type { EditorProps } from './ui/editor'

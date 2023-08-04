@@ -5,14 +5,14 @@ import { clsx } from 'clsx'
 import ThemeDropdown from '~/ui/theme-dropdown'
 import { useUpdate } from '~/utils/hooks'
 
-import { EditorState } from '../../..'
+import { State } from '../../..'
 import Input, { useChangeOnBlurStrategy } from '~/ui/input'
 
 DecisionPanel.displayName = 'decision-Editor-DecisionPanel'
 
 interface DecisionPanelProps {
   rootProps?: React.HTMLAttributes<HTMLDivElement>
-  state: EditorState
+  state: State
 }
 
 export default function DecisionPanel(props: DecisionPanelProps): JSX.Element {

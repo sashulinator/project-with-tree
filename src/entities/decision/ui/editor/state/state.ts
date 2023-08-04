@@ -5,9 +5,8 @@ import { Prop } from '~/utils/depricated-emitter'
 
 import { D3Selection } from './_d3-selection'
 import { D3Zoom } from './_d3-zoom'
-import { SelectedProp } from './_selected-prop'
 
-export interface EditorStateProps {
+export interface StateProps {
   translate: Position
   scale: number
   decision: Decision
@@ -18,7 +17,7 @@ export type Events = {
   name: { value: string }
 }
 
-export class EditorState extends BoardState<Events> {
+export class State extends BoardState<Events> {
   decision: Decision
 
   name: Prop<'name', string>
@@ -27,7 +26,7 @@ export class EditorState extends BoardState<Events> {
 
   d3zoom: D3Zoom<Events & BoardEvents>
 
-  constructor(props: EditorStateProps) {
+  constructor(props: StateProps) {
     super({ ...props })
 
     this.decision = props.decision
