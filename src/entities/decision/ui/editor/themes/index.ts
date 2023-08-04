@@ -1,3 +1,4 @@
+import './styles.css'
 import { emitter } from '~/shared/emitter'
 import { dark } from './dark'
 import { light } from './light'
