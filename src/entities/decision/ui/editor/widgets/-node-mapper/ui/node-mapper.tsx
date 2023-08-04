@@ -6,15 +6,15 @@ import { useUpdate } from '~/utils/hooks'
 
 import { LinkStateDictionary } from '../../_links/state/state'
 
-import { VariantPicker, State as NodeState } from '../../-node'
-import { Dictionary } from '~/utils/emitter'
+import { VariantPicker, State as NodeState, StateDictionary as NodeStateDictionary } from '../../-node'
+
 import { Prop } from '~/utils/notifier'
 import { GestureDragEvent } from '~/ui/canvas'
 
 interface NodesProps {
   scale: number
   linkStates: LinkStateDictionary
-  nodeStates: Dictionary<NodeState>
+  nodeStates: NodeStateDictionary
   selection: Prop<Id[]>
   remove: (id: Id) => void
   onGestureDrug: (state: NodeState) => (event: GestureDragEvent) => void

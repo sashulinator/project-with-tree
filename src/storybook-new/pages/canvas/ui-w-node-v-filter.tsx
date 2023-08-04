@@ -54,8 +54,8 @@ export function Page(): JSX.Element {
     }),
   ])
 
-  const state1 = useMemo(() => new State({ point: point1 }), [])
-  const state2 = useMemo(() => new State({ point: point2 }), [])
+  const state1 = useMemo(() => new State(point1), [])
+  const state2 = useMemo(() => new State(point2), [])
   const selection = useMemo(() => new Prop([] as Id[]), [])
 
   return (

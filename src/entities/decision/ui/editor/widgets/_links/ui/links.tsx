@@ -5,14 +5,14 @@ import { useUpdate } from '~/utils/hooks'
 
 import { LinkStateDictionary } from '../state/state'
 import { Link } from './_link'
-import { Dictionary } from '~/utils/emitter'
-import { State as NodeState } from '../../-node'
+
+import { StateDictionary as NodeStateDictionary } from '../../-node'
 
 interface LinksProps {
   scale: number
   canvasTranslate: Position
   linkStates: LinkStateDictionary
-  nodeStates: Dictionary<NodeState>
+  nodeStates: NodeStateDictionary
 }
 
 function LinksComponent(props: LinksProps): JSX.Element {

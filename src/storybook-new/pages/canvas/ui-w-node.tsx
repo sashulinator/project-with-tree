@@ -32,7 +32,7 @@ const point1: Point = {
 }
 
 export function Page(): JSX.Element {
-  const state = useMemo(() => new State({ point: point1 }), [])
+  const state = useMemo(() => new State(point1), [])
 
   return (
     <Flex dir='column' gap='xl' width='100%'>

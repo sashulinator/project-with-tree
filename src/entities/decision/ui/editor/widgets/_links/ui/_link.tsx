@@ -5,15 +5,15 @@ import { useUpdate } from '~/utils/hooks'
 
 import { getOffset } from '../lib/_get-offset'
 import { LinkStateDictionary } from '../state/state'
-import { Dictionary } from '~/utils/emitter'
-import { State as NodeState } from '../../-node'
+
+import { State as NodeState, StateDictionary as NodeStateDictionary } from '../../-node'
 
 interface MapLinkProp {
   scale: number
   canvasTranslate: Position
   targetState?: NodeState | undefined
   sourceState?: NodeState | undefined
-  nodeStates: Dictionary<NodeState>
+  nodeStates: NodeStateDictionary
   linkState: RuleLinkState
   linkStates: LinkStateDictionary
 }

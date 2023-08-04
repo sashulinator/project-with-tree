@@ -4,11 +4,6 @@ import { EmitterableDictionary } from '~/lib/emitter/dictionary'
 import { Id, assertDefined, invariant } from '~/utils/core'
 import { Prop } from '~/utils/depricated-emitter'
 
-export interface LinkStateProps {
-  id: Id
-  rule: Rule
-}
-
 type Events = {
   // Наследуемые события
   add: { state: RuleLinkState }

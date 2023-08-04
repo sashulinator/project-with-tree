@@ -7,10 +7,6 @@ export type Events = ItemEvents & {
   title: { value: string }
 }
 
-export interface StateProps {
-  point: Point
-}
-
 export class State extends ItemState<Events> {
   readonly point: Point
 
@@ -20,15 +16,15 @@ export class State extends ItemState<Events> {
 
   computation: Prop<'computation', 'parallel' | 'successively' | undefined>
 
-  constructor(props: StateProps) {
-    super({ id: props.point.id, position: props.point })
+  constructor(point: Point) {
+    super({ id: point.id, position: point })
 
-    this.point = props.point
+    this.point = point
 
-    this.title = new Prop('title', props.point.name, this)
+    this.title = new Prop('title', point.name, this)
 
-    this.description = new Prop('description', props.point.description, this)
+    this.description = new Prop('description', point.description, this)
 
-    this.computation = new Prop('computation', props.point.computation, this)
+    this.computation = new Prop('computation', point.computation, this)
   }
 }

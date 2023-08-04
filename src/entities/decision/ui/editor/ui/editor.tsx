@@ -23,10 +23,10 @@ import PointPanel from '../widgets/-point-panel'
 import { Links } from '../widgets/_links'
 import { LinkStateDictionary } from '../widgets/_links/state/state'
 import { NodeMapper } from '../widgets/-node-mapper'
-import { Dictionary } from '~/utils/emitter'
+
 import { Prop } from '~/utils/notifier'
 
-import { State as NodeState, getNodeMovement } from '../widgets/-node'
+import { State as NodeState, StateDictionary as NodeStateDictionary, getNodeMovement } from '../widgets/-node'
 import { getStyle } from '~/utils/dom'
 
 emitter.emit('addTheme', { dark, light })
@@ -49,7 +49,7 @@ export function Editor(props: EditorProps): JSX.Element {
 
   const linkStateList = useMemo(() => rules?.map((rule) => new RuleLinkState({ id: rule.id, rule })), [])
 
-  const nodeStates = useMemo(buildNodeStates, [props.decision.data])
+  const nodeStates = useMemo(() => new NodeStateDictionary(props.decision.data), [props.decision.data])
 
   const selection = useMemo(() => new Prop([] as Id[]), [])
 
@@ -131,11 +131,6 @@ export function Editor(props: EditorProps): JSX.Element {
     }
   }
 
-  function buildNodeStates(): Dictionary<NodeState> {
-    const nodeStateList = props.decision.data.map((point) => new NodeState({ point }))
-    return new Dictionary(nodeStateList, (item) => item.id.toString())
-  }
-
   function removeNode(id: Id): void {
     nodeStates.remove(id)
 
@@ -156,7 +151,7 @@ export function Editor(props: EditorProps): JSX.Element {
       x: -editorState.translate.value.x + rect?.width / 2 - 200,
       y: -editorState.translate.value.y + rect?.height / 2 - 150,
     }
-    nodeStates.add(new NodeState({ point }))
+    nodeStates.add(new NodeState(point))
   }
 
   function centerNode(id: Id): void {

@@ -9,14 +9,13 @@ import { PrimaryButton } from '~/ui/button'
 import { Plus } from '~/ui/icon'
 import { Id } from '~/utils/core'
 import Input from '~/ui/input'
-import { Dictionary } from '~/utils/emitter'
-import { State as NodeState } from '../../-node'
+import { StateDictionary as NodeStateDictionary } from '../../-node'
 
 PointPanel.displayName = 'decision-Editor-w-PointPanel'
 
 interface PointPanelProps {
   rootProps?: React.HTMLAttributes<HTMLDivElement>
-  nodeStates: Dictionary<NodeState>
+  nodeStates: NodeStateDictionary
   addNode: () => void
   centerNode: (id: Id) => void
 }
