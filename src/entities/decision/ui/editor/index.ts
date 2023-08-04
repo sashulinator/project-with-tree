@@ -22,3 +22,12 @@ export const themes = { dark, light }
  */
 export { default } from './ui/editor'
 export type { EditorProps } from './ui/editor'
+
+/**
+ * widgets
+ */
+export { default as DecisionPanel } from './widgets/decision-panel'
+export type { DecisionPanelProps } from './widgets/decision-panel'
+
+export { default as PointPanel } from './widgets/point-panel'
+export type { PointPanelProps } from './widgets/point-panel'

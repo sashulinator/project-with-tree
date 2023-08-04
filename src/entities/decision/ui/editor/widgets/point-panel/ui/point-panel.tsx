@@ -13,7 +13,7 @@ import { StateDictionary as NodeStateDictionary } from '../../-node'
 
 PointPanel.displayName = 'decision-Editor-w-PointPanel'
 
-interface PointPanelProps {
+export interface PointPanelProps {
   rootProps?: React.HTMLAttributes<HTMLDivElement>
   nodeStates: NodeStateDictionary
   addNode: () => void

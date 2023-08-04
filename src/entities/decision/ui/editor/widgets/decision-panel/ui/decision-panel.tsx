@@ -10,7 +10,7 @@ import Input, { useChangeOnBlurStrategy } from '~/ui/input'
 
 DecisionPanel.displayName = 'decision-Editor-DecisionPanel'
 
-interface DecisionPanelProps {
+export interface DecisionPanelProps {
   rootProps?: React.HTMLAttributes<HTMLDivElement>
   state: State
 }

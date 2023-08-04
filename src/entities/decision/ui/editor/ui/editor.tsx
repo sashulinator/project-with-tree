@@ -7,7 +7,7 @@ import uniqid from 'uniqid'
 
 import { PaintingPanel } from '~/abstract/canvas'
 import { Decision } from '~/entities/decision'
-import { State, themes } from '../'
+import { State, themes, PointPanel, DecisionPanel } from '../'
 import { Point } from '~/entities/point'
 import { State as LinkState, StateDictionary as LinkStateDictionary, Mapper as LinkMapper } from '../widgets/-link'
 import { emitter } from '~/shared/emitter'
@@ -17,8 +17,6 @@ import { Id, assertDefined, assertNotNull } from '~/utils/core'
 import { useBoolean, useEventListener, useOnMount, useUpdate } from '~/utils/hooks'
 
 import { listenHistory } from '../lib/_listen-history'
-import DecisionPanel from '../widgets/_decision-panel'
-import PointPanel from '../widgets/-point-panel'
 
 import { Prop } from '~/utils/notifier'
 
