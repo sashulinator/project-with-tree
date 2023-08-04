@@ -1,2 +1,2 @@
-export * from './ui/links'
+export * from './ui/mapper'
 export * from './state/state'

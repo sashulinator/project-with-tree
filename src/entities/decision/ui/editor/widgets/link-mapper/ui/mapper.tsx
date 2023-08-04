@@ -8,14 +8,14 @@ import { LinkStateDictionary } from '../state/state'
 import { StateDictionary as NodeStateDictionary } from '../../-node'
 import { Link } from '../../-link'
 
-interface LinksProps {
+interface MapperProps {
   scale: number
   canvasTranslate: Position
   linkStates: LinkStateDictionary
   nodeStates: NodeStateDictionary
 }
 
-function LinksComponent(props: LinksProps): JSX.Element {
+function MapperComponent(props: MapperProps): JSX.Element {
   useUpdate(subscribeOnUpdates)
 
   return (
@@ -42,4 +42,4 @@ function LinksComponent(props: LinksProps): JSX.Element {
   }
 }
 
-export const Links = memo(LinksComponent)
+export const Mapper = memo(MapperComponent)

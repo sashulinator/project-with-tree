@@ -8,7 +8,7 @@ import { fns } from '~/utils/function'
 import { useForceUpdate, useOnMount, useUpdate } from '~/utils/hooks'
 import { StateDictionary as NodeStateDictionary } from '../../-node'
 import { State } from '../models/state'
-import { LinkStateDictionary } from '../../_links'
+import { LinkStateDictionary } from '../../link-mapper'
 import { getOffset } from '../lib/-get-offset'
 
 export interface LinkProps extends React.HTMLAttributes<SVGPathElement> {

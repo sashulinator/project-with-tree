@@ -20,8 +20,8 @@ import { dark } from '../themes/dark'
 import { light } from '../themes/light'
 import DecisionPanel from '../widgets/_decision-panel'
 import PointPanel from '../widgets/-point-panel'
-import { Links } from '../widgets/_links'
-import { LinkStateDictionary } from '../widgets/_links/state/state'
+import { Mapper } from '../widgets/link-mapper'
+import { LinkStateDictionary } from '../widgets/link-mapper/state/state'
 import { NodeMapper } from '../widgets/-node-mapper'
 
 import { Prop } from '~/utils/notifier'
@@ -76,7 +76,7 @@ export function Editor(props: EditorProps): JSX.Element {
         <Board ref={editorState.ref.set}>
           <PaintingPanel translate={editorState.translate.value} scale={editorState.scale.value}>
             {isRenderLinks && (
-              <Links
+              <Mapper
                 canvasTranslate={editorState.translate.value}
                 scale={editorState.scale.value}
                 linkStates={linkStates}

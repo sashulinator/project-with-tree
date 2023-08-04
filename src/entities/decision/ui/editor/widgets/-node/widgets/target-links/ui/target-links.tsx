@@ -2,7 +2,7 @@ import './target-links.css'
 
 import uniqid from 'uniqid'
 import { State } from '../../../models/state'
-import { LinkStateDictionary } from '~/entities/decision/ui/editor/widgets/_links'
+import { LinkStateDictionary } from '~/entities/decision/ui/editor/widgets/link-mapper'
 import { Joint } from '~/entities/decision/ui/editor/widgets/-node'
 import { useUpdate } from '~/utils/hooks'
 import { useState } from 'react'
