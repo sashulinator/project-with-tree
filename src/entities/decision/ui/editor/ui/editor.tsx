@@ -7,9 +7,9 @@ import uniqid from 'uniqid'
 
 import { PaintingPanel } from '~/abstract/canvas'
 import { Decision } from '~/entities/decision'
-import { State, themes, PointPanel, DecisionPanel, LinkState, LinkMapperState, LinkMapper } from '../'
+import { State, PointPanel, DecisionPanel, LinkState, LinkMapperState, LinkMapper } from '../'
 import { Point } from '~/entities/point'
-import { emitter } from '~/shared/emitter'
+
 import { Board, GestureDragEvent } from '~/ui/canvas'
 import { ActionHistory } from '~/utils/action-history'
 import { Id, assertDefined, assertNotNull } from '~/utils/core'
@@ -27,8 +27,6 @@ import {
 } from '../widgets/-node'
 
 import { getStyle } from '~/utils/dom'
-
-emitter.emit('addTheme', themes)
 
 export interface EditorProps {
   decision: Decision

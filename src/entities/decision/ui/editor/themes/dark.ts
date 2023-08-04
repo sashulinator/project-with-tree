@@ -1,6 +1,6 @@
 import { DARK } from '~/shared/theme/dark'
 
-import { CSSVars } from './css-vars'
+import { CSSVars } from './types'
 import { common } from './common'
 
 export const dark: CSSVars = {

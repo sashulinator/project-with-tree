@@ -1,6 +1,6 @@
 import { LIGHT } from '~/shared/theme/light'
 
-import { CSSVars } from './css-vars'
+import { CSSVars } from './types'
 import { common } from './common'
 
 export const light: CSSVars = {
