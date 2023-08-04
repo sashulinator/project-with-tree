@@ -6,7 +6,7 @@ import { dark } from '../themes/dark'
 import { light } from '../themes/light'
 import { emitter } from '~/shared/emitter'
 import { c } from '~/utils/core'
-import { State as NodeState } from '../../-node'
+import { State as NodeState } from '..'
 
 import { ReactElement, cloneElement } from 'react'
 

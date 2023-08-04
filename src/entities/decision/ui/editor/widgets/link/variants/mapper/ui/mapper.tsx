@@ -5,7 +5,7 @@ import { useUpdate } from '~/utils/hooks'
 
 import Link, { MapperState } from '../../..'
 
-import { StateDictionary as NodeStateDictionary } from '../../../../-node'
+import { StateDictionary as NodeStateDictionary } from '../../../../node'
 
 export interface MapperProps {
   scale: number

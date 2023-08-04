@@ -9,7 +9,7 @@ import { PrimaryButton } from '~/ui/button'
 import { Plus } from '~/ui/icon'
 import { Id } from '~/utils/core'
 import Input from '~/ui/input'
-import { StateDictionary as NodeStateDictionary } from '../../-node'
+import { StateDictionary as NodeStateDictionary } from '../../node'
 
 PointPanel.displayName = 'decision-Editor-w-PointPanel'
 

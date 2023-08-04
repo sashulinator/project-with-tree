@@ -3,7 +3,7 @@ import Flex from '~/abstract/flex/ui/flex'
 import { useMemo } from 'react'
 import Input from '~/ui/input'
 
-import { Joint, Node, State } from '~/entities/decision/ui/editor/widgets/-node'
+import { Joint, Node, State } from '~/entities/decision/ui/editor/widgets/node'
 
 import { GhostButton } from '~/ui/button'
 import { Trash } from '~/ui/icon'

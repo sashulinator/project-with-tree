@@ -1,7 +1,7 @@
 import './title.css'
 
 import Input, { useChangeOnBlurStrategy } from '~/ui/input'
-import { State as NodeState } from '../../../../-node'
+import { State as NodeState } from '../../..'
 import { useUpdate } from '~/utils/hooks'
 
 Title.displayName = 'decisionEditor-ui-Canvas-w-Node-w-Title'

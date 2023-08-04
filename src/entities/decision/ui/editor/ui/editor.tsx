@@ -24,7 +24,7 @@ import {
   StateDictionary as NodeStateDictionary,
   getNodeMovement,
   Mapper as NodeMapper,
-} from '../widgets/-node'
+} from '../widgets/node'
 
 import { getStyle } from '~/utils/dom'
 

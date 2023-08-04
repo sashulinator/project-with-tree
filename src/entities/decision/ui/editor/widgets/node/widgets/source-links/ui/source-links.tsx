@@ -1,7 +1,7 @@
 import './source-links.css'
 
 import type { Identifier, XYCoord } from 'dnd-core'
-import { State as NodeState, Joint } from '../../../../-node'
+import { State as NodeState, Joint } from '../../..'
 
 import { useUpdate } from '~/utils/hooks'
 import { useRef, useState } from 'react'

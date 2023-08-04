@@ -6,10 +6,8 @@ import { Link as UILink } from '~/ui/canvas'
 import { Position } from '~/utils/core'
 import { fns } from '~/utils/function'
 import { useForceUpdate, useOnMount, useUpdate } from '~/utils/hooks'
-import { StateDictionary as NodeStateDictionary } from '../../-node'
-import { State } from '../state/state'
-import { MapperState } from '..'
-import { getOffset } from '../lib/get-offset'
+import { StateDictionary as NodeStateDictionary } from '../../node'
+import { State, MapperState, getOffset } from '..'
 
 export interface LinkProps extends React.HTMLAttributes<SVGPathElement> {
   scale: number

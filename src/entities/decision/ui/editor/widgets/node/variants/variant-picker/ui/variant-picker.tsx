@@ -1,4 +1,4 @@
-import { State as NodeState } from '../../../../-node'
+import { State as NodeState } from '../../..'
 
 import { Id } from '~/utils/core'
 
