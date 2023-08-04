@@ -5,7 +5,7 @@ import { State as NodeState, Joint } from '../../../../-node'
 import { LinkStateDictionary } from '~/entities/decision/ui/editor/widgets/_links'
 import { useUpdate } from '~/utils/hooks'
 import { useRef, useState } from 'react'
-import uuid from 'uuid-random'
+import uniqid from 'uniqid'
 import { Id, c } from '~/utils/core'
 import { useDrag, useDrop } from 'react-dnd'
 import { RuleLinkState } from '../../../../_link'
@@ -22,7 +22,7 @@ interface SourceLinkProps {
 }
 
 export default function SourceLink(props: SourceLinkProps): JSX.Element {
-  const [newLinkId, setNewLinkId] = useState(uuid)
+  const [newLinkId, setNewLinkId] = useState(uniqid)
 
   useUpdate(subscribeOnUpdates)
 
@@ -75,7 +75,7 @@ export default function SourceLink(props: SourceLinkProps): JSX.Element {
 
   function subscribeOnUpdates(update: () => void): void {
     props.linkStates.onAll(() => setTimeout(update))
-    props.linkStates.on('targetId', () => setNewLinkId(uuid()))
+    props.linkStates.on('targetId', () => setNewLinkId(uniqid()))
   }
 }
 

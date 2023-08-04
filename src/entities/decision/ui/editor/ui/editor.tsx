@@ -3,7 +3,7 @@ import './editor.css'
 import { useEffect, useMemo } from 'react'
 import { DndProvider } from 'react-dnd'
 import { HTML5Backend } from 'react-dnd-html5-backend'
-import uuid from 'uuid-random'
+import uniqid from 'uniqid'
 
 import { PaintingPanel } from '~/abstract/canvas'
 import { Decision, EditorState } from '~/entities/decision'
@@ -150,7 +150,7 @@ export function Editor(props: EditorProps): JSX.Element {
     assertDefined(rect)
     const point: Point = {
       type: 'SIFT',
-      id: uuid(),
+      id: uniqid(),
       computation: 'successively',
       name: 'new',
       x: -editorState.translate.value.x + rect?.width / 2 - 200,

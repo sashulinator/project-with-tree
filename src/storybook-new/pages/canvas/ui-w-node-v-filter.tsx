@@ -8,6 +8,8 @@ import { Point } from '~/entities/point'
 import { Prop } from '~/utils/notifier'
 import { Id } from '~/utils/core'
 import { State } from '~/entities/decision/ui/editor/widgets/-node'
+import { DndProvider } from 'react-dnd'
+import { HTML5Backend } from 'react-dnd-html5-backend'
 
 export const decisionCanvasNodeVSift = {
   name: Filter.displayName,
@@ -58,28 +60,30 @@ export function Page(): JSX.Element {
 
   return (
     <svg width='100%' height='333px' style={{ border: '1px solid red' }}>
-      <Filter
-        selection={selection}
-        state={state1}
-        linkStates={linkStates}
-        remove={(): void => console.log('remove!')}
-        onGestureDrug={(event): void => {
-          const x = state1.position.last.x + event.movement[0]
-          const y = state1.position.last.y + event.movement[1]
-          state1.position.move(x, y, event.last)
-        }}
-      />
-      <Filter
-        selection={selection}
-        state={state2}
-        linkStates={linkStates}
-        remove={(): void => console.log('remove!')}
-        onGestureDrug={(event): void => {
-          const x = state2.position.last.x + event.movement[0]
-          const y = state2.position.last.y + event.movement[1]
-          state2.position.move(x, y, event.last)
-        }}
-      />
+      <DndProvider backend={HTML5Backend}>
+        <Filter
+          selection={selection}
+          state={state1}
+          linkStates={linkStates}
+          remove={(): void => console.log('remove!')}
+          onGestureDrug={(event): void => {
+            const x = state1.position.last.x + event.movement[0]
+            const y = state1.position.last.y + event.movement[1]
+            state1.position.move(x, y, event.last)
+          }}
+        />
+        <Filter
+          selection={selection}
+          state={state2}
+          linkStates={linkStates}
+          remove={(): void => console.log('remove!')}
+          onGestureDrug={(event): void => {
+            const x = state2.position.last.x + event.movement[0]
+            const y = state2.position.last.y + event.movement[1]
+            state2.position.move(x, y, event.last)
+          }}
+        />
+      </DndProvider>
     </svg>
   )
 }
