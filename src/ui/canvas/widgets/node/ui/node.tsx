@@ -5,8 +5,7 @@ import React, { ForwardedRef, forwardRef, useRef } from 'react'
 
 import { Id } from '~/utils/core'
 
-import { Item } from '../../item'
-import { GestureDragEvent } from '../../item/ui/item'
+import { GestureDragEvent, Item } from '../../item'
 
 NodeComponent.displayName = 'decisionEditor-ui-Canvas-w-Node'
 

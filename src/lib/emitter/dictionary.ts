@@ -4,75 +4,78 @@ import { toDictionary } from '~/utils/list'
 import { Any, Id } from '../../utils/core'
 import { Dictionary as IDictionary, find, get } from '../../utils/dictionary'
 
-type Events<I> = {
-  add: { item: I }
-  update: { item: I }
-  remove: { key: Id }
+type Events<TState> = {
+  add: { state: TState }
+  update: { state: TState }
+  remove: { state: TState }
 }
 
 /**
  * Позволяет производить CRUD операции и подписывает `emitter` на все события `emitter`a элемента
  */
-export class EmitterableDictionary<E extends Events<S>, S extends Emitter<Any>> extends Emitter<E> {
-  items: IDictionary<S>
+export class EmitterableDictionary<
+  TEvents extends Events<TState>,
+  TState extends Emitter<Any>,
+> extends Emitter<TEvents> {
+  items: IDictionary<TState>
 
-  getKey: (s: S) => string
+  getId: (s: TState) => string
 
-  constructor(emitterables: S[], getKey: (s: S) => string) {
+  constructor(emitterables: TState[], getId: (s: TState) => string) {
     super()
 
-    this.getKey = getKey
+    this.getId = getId
 
-    this.items = toDictionary(getKey, emitterables) || {}
+    this.items = toDictionary(getId, emitterables) || {}
 
     this.subscribeToCRUDEvents()
 
     this.subscribeToItemEvents(emitterables)
   }
 
-  private subscribeToItemEvents(emitterables: S[]): void {
+  private subscribeToItemEvents(emitterables: TState[]): void {
     for (let index = 0; index < emitterables.length; index++) {
       const item = emitterables[index]
       item.onAll((eventName, ev) => {
         // eslint-disable-next-line @typescript-eslint/no-unsafe-argument, @typescript-eslint/no-explicit-any
-        this.emit(eventName as any, { itemId: this.getKey(item), ...ev })
+        this.emit(eventName as any, { itemId: this.getId(item), ...ev })
       })
     }
   }
 
   private subscribeToCRUDEvents(): void {
-    this.on('add', (event) => (this.items[this.getKey(event.item)] = event.item))
-    this.on('update', (event) => (this.items[this.getKey(event.item)] = event.item))
+    this.on('add', (event) => (this.items[this.getId(event.state)] = event.state))
+    this.on('update', (event) => (this.items[this.getId(event.state)] = event.state))
     this.on('remove', (event) => {
-      const item = this.get(event.key)
-      item.offAll()
-      setTimeout(() => delete this.items[event.key])
+      event.state.offAll()
+      setTimeout(() => delete this.items[this.getId(event.state)])
     })
   }
 
-  values(): S[] {
+  values(): TState[] {
     return Object.values(this.items)
   }
 
-  get = (id: Id | undefined): S => {
+  get = (id: Id | undefined): TState => {
     return get(this.items, id)
   }
 
-  find = (id: Id | undefined): S | undefined => {
+  find = (id: Id | undefined): TState | undefined => {
     return find(this.items, id)
   }
 
-  add = (item: S): void => {
-    this.emit('add', { item })
+  add = (item: TState): void => {
+    this.emit('add', { state: item })
     this.subscribeToItemEvents([item])
   }
 
-  update = (item: S): void => {
-    this.emit('update', { item })
+  update = (item: TState): void => {
+    this.emit('update', { state: item })
     this.subscribeToItemEvents([item])
   }
 
-  remove = (key: Id): void => {
-    this.emit('remove', { key })
+  remove = (id: Id): void => {
+    const state = this.get(id)
+    this.emit('remove', { state })
   }
 }

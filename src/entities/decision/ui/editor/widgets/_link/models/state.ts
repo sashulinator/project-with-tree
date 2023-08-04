@@ -1,4 +1,4 @@
-import uuid from 'uuid-random'
+import uniqid from 'uniqid'
 
 import { Emitter } from '~/lib/emitter'
 import { Id } from '~/utils/core'
@@ -44,7 +44,7 @@ export class State extends Emitter<Events> {
 
   static createDefaultRule(rule: Partial<Rule>): Rule {
     return {
-      id: uuid(),
+      id: uniqid(),
       ...rule,
       name: 'new_rule',
       i: 0,

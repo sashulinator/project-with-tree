@@ -1,14 +1,14 @@
 import './node.css'
 
-import { Item } from '~/ui/canvas'
+import { Item, GestureDragEvent } from '~/ui/canvas'
 
 import { dark } from '../themes/dark'
 import { light } from '../themes/light'
 import { emitter } from '~/shared/emitter'
 import { c } from '~/utils/core'
-import { NodeState } from '../../_node'
-import { GestureDragEvent } from '~/ui/canvas/widgets/item/ui/item'
-import { ReactElement, ReactFragment, ReactPortal, cloneElement } from 'react'
+import { State as NodeState } from '../../-node'
+
+import { ReactElement, cloneElement } from 'react'
 
 emitter.emit('addTheme', { dark, light })
 

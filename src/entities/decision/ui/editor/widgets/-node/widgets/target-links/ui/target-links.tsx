@@ -1,6 +1,6 @@
 import './target-links.css'
 
-import uuid from 'uuid-random'
+import uniqid from 'uniqid'
 import { State } from '../../../models/state'
 import { LinkStateDictionary } from '~/entities/decision/ui/editor/widgets/_links'
 import { Joint } from '~/entities/decision/ui/editor/widgets/-node'
@@ -19,7 +19,7 @@ interface SourceLinkProps {
 }
 
 export default function TargetLink(props: SourceLinkProps): JSX.Element {
-  const [newLinkId, setNewLinkId] = useState(uuid)
+  const [newLinkId, setNewLinkId] = useState(uniqid)
 
   useUpdate(subscribeOnUpdates)
 
@@ -56,7 +56,11 @@ export default function TargetLink(props: SourceLinkProps): JSX.Element {
   // Private
 
   function subscribeOnUpdates(update: () => void): void {
-    props.linkStates.onAll(() => setTimeout(update))
-    props.linkStates.on('sourceId', () => setNewLinkId(uuid()))
+    props.linkStates.on('add', update)
+    props.linkStates.on('remove', update)
+    props.linkStates.on('index', update)
+    props.linkStates.on('update', update)
+    props.linkStates.on('targetId', update)
+    props.linkStates.on('sourceId', () => setNewLinkId(uniqid()))
   }
 }

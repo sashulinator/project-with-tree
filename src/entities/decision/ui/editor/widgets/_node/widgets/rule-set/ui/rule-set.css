@@ -1,9 +1,0 @@
-.RuleSet {
-  display: flex;
-  justify-content: space-between;
-  background-color: rgba(144, 66, 216, 0.379);
-  border-radius: 4px;
-  align-items: center;
-  height: 32px;
-  padding: 0 var(--m);
-}

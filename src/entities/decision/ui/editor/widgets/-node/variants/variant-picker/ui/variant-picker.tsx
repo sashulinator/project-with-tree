@@ -1,10 +1,10 @@
-import { NodeState } from '../../../../_node'
+import { State as NodeState } from '../../../../-node'
 
 import { Id } from '~/utils/core'
 
 import { LinkStateDictionary } from '../../../../_links/state/state'
 
-import { GestureDragEvent } from '~/ui/canvas/widgets/item/ui/item'
+import { GestureDragEvent } from '~/ui/canvas'
 
 import { Filter } from '../../filter'
 import { Enter } from '../../enter'
