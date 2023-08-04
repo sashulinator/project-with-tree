@@ -8,7 +8,7 @@ import uniqid from 'uniqid'
 import { PaintingPanel } from '~/abstract/canvas'
 import { Decision, EditorState } from '~/entities/decision'
 import { Point } from '~/entities/point'
-import { State } from '../widgets/-link'
+import { State as LinkState, StateDictionary as LinkStateDictionary, Mapper as LinkMapper } from '../widgets/-link'
 import { emitter } from '~/shared/emitter'
 import { Board, GestureDragEvent } from '~/ui/canvas'
 import { ActionHistory } from '~/utils/action-history'
@@ -20,8 +20,7 @@ import { dark } from '../themes/dark'
 import { light } from '../themes/light'
 import DecisionPanel from '../widgets/_decision-panel'
 import PointPanel from '../widgets/-point-panel'
-import { Mapper } from '../widgets/link-mapper'
-import { LinkStateDictionary } from '../widgets/link-mapper/state/state'
+
 import { NodeMapper } from '../widgets/-node-mapper'
 
 import { Prop } from '~/utils/notifier'
@@ -47,7 +46,7 @@ export function Editor(props: EditorProps): JSX.Element {
     []
   )
 
-  const linkStateList = useMemo(() => rules?.map((rule) => new State({ id: rule.id, rule })), [])
+  const linkStateList = useMemo(() => rules?.map((rule) => new LinkState({ id: rule.id, rule })), [])
 
   const nodeStates = useMemo(() => new NodeStateDictionary(props.decision.data), [props.decision.data])
 
@@ -76,7 +75,7 @@ export function Editor(props: EditorProps): JSX.Element {
         <Board ref={editorState.ref.set}>
           <PaintingPanel translate={editorState.translate.value} scale={editorState.scale.value}>
             {isRenderLinks && (
-              <Mapper
+              <LinkMapper
                 canvasTranslate={editorState.translate.value}
                 scale={editorState.scale.value}
                 linkStates={linkStates}
@@ -190,8 +189,6 @@ export function Editor(props: EditorProps): JSX.Element {
       const style = getStyle(state.ref.value)
       assertNotNull(style)
       const height = parseInt(style.height, 10)
-      console.log('height', height)
-
       acc += height
       return acc
     }, 0)

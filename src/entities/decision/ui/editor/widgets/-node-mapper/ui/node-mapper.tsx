@@ -4,7 +4,7 @@ import { Id } from '~/utils/core'
 
 import { useUpdate } from '~/utils/hooks'
 
-import { LinkStateDictionary } from '../../link-mapper/state/state'
+import { StateDictionary as LinkStateDictionary } from '../../-link'
 
 import { VariantPicker, State as NodeState, StateDictionary as NodeStateDictionary } from '../../-node'
 

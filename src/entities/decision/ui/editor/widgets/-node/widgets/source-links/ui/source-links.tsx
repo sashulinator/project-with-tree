@@ -2,20 +2,20 @@ import './source-links.css'
 
 import type { Identifier, XYCoord } from 'dnd-core'
 import { State as NodeState, Joint } from '../../../../-node'
-import { LinkStateDictionary } from '~/entities/decision/ui/editor/widgets/link-mapper'
+
 import { useUpdate } from '~/utils/hooks'
 import { useRef, useState } from 'react'
 import uniqid from 'uniqid'
 import { Id, c } from '~/utils/core'
 import { useDrag, useDrop } from 'react-dnd'
-import { State } from '../../../../-link'
+import { State, StateDictionary } from '../../../../-link'
 
 SourceLink.displayName = 'decisionEditor-ui-Canvas-w-Node-w-SourceLink'
 
 interface SourceLinkProps {
   className?: string
   state: NodeState
-  linkStates: LinkStateDictionary
+  linkStates: StateDictionary
   hideNewLink?: boolean
   onNewJointClick: (newLinkId: Id) => void
   onJointClick: (linkId: Id) => void
@@ -90,7 +90,7 @@ export interface RuleSetProps {
   index: number
   isLinked: boolean
   isEditingThisNode: boolean
-  linkStates: LinkStateDictionary
+  linkStates: StateDictionary
   isEditingHasSource: boolean
   editingLinkState: State | undefined
   onJointClick: (linkId: Id) => void

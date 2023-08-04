@@ -3,15 +3,14 @@ import { memo } from 'react'
 import { Position } from '~/utils/core'
 import { useUpdate } from '~/utils/hooks'
 
-import { LinkStateDictionary } from '../state/state'
+import { StateDictionary, Link } from '../../../'
 
-import { StateDictionary as NodeStateDictionary } from '../../-node'
-import { Link } from '../../-link'
+import { StateDictionary as NodeStateDictionary } from '../../../../-node'
 
 interface MapperProps {
   scale: number
   canvasTranslate: Position
-  linkStates: LinkStateDictionary
+  linkStates: StateDictionary
   nodeStates: NodeStateDictionary
 }
 

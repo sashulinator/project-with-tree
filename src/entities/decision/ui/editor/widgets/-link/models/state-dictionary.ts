@@ -1,4 +1,4 @@
-import { State } from '../../-link'
+import { State } from '..'
 import { Rule } from '~/entities/rule/types/rule'
 import { EmitterableDictionary } from '~/lib/emitter/dictionary'
 import { Id, assertDefined, invariant } from '~/utils/core'
@@ -17,7 +17,7 @@ type Events = {
   sourceId: { value: Id; state: State }
 }
 
-export class LinkStateDictionary extends EmitterableDictionary<Events, State> {
+export class StateDictionary extends EmitterableDictionary<Events, State> {
   editingId: Prop<'editingId', Id | undefined>
 
   constructor(linkStateList: State[]) {
