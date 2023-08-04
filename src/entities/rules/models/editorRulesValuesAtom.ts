@@ -13,14 +13,5 @@ export type EditorValues = {
 
 export const editorRulesValuesAtom = atom<EditorValues[]>({
   key: 'editorRulesValues',
-  default: [
-    {
-      id: '4',
-      valueArr: [
-        { id: '1', value: '' },
-        { id: '2', value: '' },
-      ],
-    },
-    { id: '5', valueArr: [{ id: '3', value: '' }] },
-  ],
+  default: [{ id: '5', valueArr: [{ id: '3', value: '' }] }],
 })

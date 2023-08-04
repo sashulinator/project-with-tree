@@ -48,7 +48,6 @@ export default function Input(props: EditorInputProps): JSX.Element {
   }
 
   function handleChangeMention(_: unknown, v: string): void {
-    console.log(v)
     setEditorValues((arr) => onChangeTextarea(arr, id, v))
   }
 }
