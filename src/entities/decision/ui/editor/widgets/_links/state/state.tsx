@@ -10,14 +10,16 @@ export interface LinkStateProps {
 }
 
 type Events = {
-  add: { item: RuleLinkState }
-  update: { item: RuleLinkState }
-  remove: { key: Id }
+  // Наследуемые события
+  add: { state: RuleLinkState }
+  update: { state: RuleLinkState }
+  remove: { state: RuleLinkState }
+  // Уникальные события
   editingId: { value: Id }
-
-  targetId: { value: Id }
-  sourceId: { value: Id }
-  index: { value: number }
+  // События стейтов
+  index: { value: number; state: RuleLinkState }
+  targetId: { value: Id; state: RuleLinkState }
+  sourceId: { value: Id; state: RuleLinkState }
 }
 
 export class LinkStateDictionary extends EmitterableDictionary<Events, RuleLinkState> {
