@@ -1,8 +1,8 @@
-import { editorRulesValuesType as T } from '../state/state'
+import { EditorValues } from '../models/editorRulesValuesAtom'
 
-export const getMergeArr = (arr: T[]): T[] => {
-  const startArr: T[] = []
-  const endArr: T[] = []
+export const getMergeArr = (arr: EditorValues[]): EditorValues[] => {
+  const startArr: EditorValues[] = []
+  const endArr: EditorValues[] = []
   let flag = false
 
   arr.forEach((item) => {

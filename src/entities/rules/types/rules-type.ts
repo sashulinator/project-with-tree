@@ -21,4 +21,5 @@ export interface AttributeProps {
   nodeType: string
   value: string | number | boolean
   type: 'boolean' | 'string' | 'number' | 'date'
+  rootProps?: React.HTMLAttributes<HTMLDivElement> | undefined
 }

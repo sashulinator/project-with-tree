@@ -1,7 +1,7 @@
 import uniqid from 'uniqid'
-import { editorRulesValuesType } from '../state/state'
+import { EditorValues } from '../models/editorRulesValuesAtom'
 
-export const getSplitArr = (arr: editorRulesValuesType[], index: number): editorRulesValuesType[] => {
+export const getSplitArr = (arr: EditorValues[], index: number): EditorValues[] => {
   const result = arr.map((item, i) => {
     if (index === i) {
       return item.valueArr.map((item) => {

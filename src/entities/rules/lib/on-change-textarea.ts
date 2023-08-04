@@ -1,6 +1,6 @@
-import { editorRulesValuesType } from '../state/state'
+import { EditorValues } from '../models/editorRulesValuesAtom'
 
-export function onChangeTextarea(array: editorRulesValuesType[], id: string, v: string): editorRulesValuesType[] {
+export function onChangeTextarea(array: EditorValues[], id: string, v: string): EditorValues[] {
   return array.map((arr) => {
     return {
       ...arr,
