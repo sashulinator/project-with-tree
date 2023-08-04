@@ -4,9 +4,9 @@ import { Position } from '~/utils/core'
 import { useUpdate } from '~/utils/hooks'
 
 import { LinkStateDictionary } from '../state/state'
-import { Link } from './_link'
 
 import { StateDictionary as NodeStateDictionary } from '../../-node'
+import { Link } from '../../-link'
 
 interface LinksProps {
   scale: number
@@ -27,7 +27,7 @@ function LinksComponent(props: LinksProps): JSX.Element {
             scale={props.scale}
             canvasTranslate={props.canvasTranslate}
             nodeStates={props.nodeStates}
-            linkState={linkState}
+            state={linkState}
             linkStates={props.linkStates}
           />
         )

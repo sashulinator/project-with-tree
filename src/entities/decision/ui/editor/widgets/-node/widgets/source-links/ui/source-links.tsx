@@ -8,7 +8,7 @@ import { useRef, useState } from 'react'
 import uniqid from 'uniqid'
 import { Id, c } from '~/utils/core'
 import { useDrag, useDrop } from 'react-dnd'
-import { RuleLinkState } from '../../../../_link'
+import { State } from '../../../../-link'
 
 SourceLink.displayName = 'decisionEditor-ui-Canvas-w-Node-w-SourceLink'
 
@@ -86,13 +86,13 @@ export default function SourceLink(props: SourceLinkProps): JSX.Element {
 
 export interface RuleSetProps {
   nodeId: Id
-  linkState: RuleLinkState
+  linkState: State
   index: number
   isLinked: boolean
   isEditingThisNode: boolean
   linkStates: LinkStateDictionary
   isEditingHasSource: boolean
-  editingLinkState: RuleLinkState | undefined
+  editingLinkState: State | undefined
   onJointClick: (linkId: Id) => void
 }
 

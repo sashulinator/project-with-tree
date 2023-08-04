@@ -8,7 +8,7 @@ import uniqid from 'uniqid'
 import { PaintingPanel } from '~/abstract/canvas'
 import { Decision, EditorState } from '~/entities/decision'
 import { Point } from '~/entities/point'
-import { RuleLinkState } from '../widgets/_link'
+import { State } from '../widgets/-link'
 import { emitter } from '~/shared/emitter'
 import { Board, GestureDragEvent } from '~/ui/canvas'
 import { ActionHistory } from '~/utils/action-history'
@@ -47,7 +47,7 @@ export function Editor(props: EditorProps): JSX.Element {
     []
   )
 
-  const linkStateList = useMemo(() => rules?.map((rule) => new RuleLinkState({ id: rule.id, rule })), [])
+  const linkStateList = useMemo(() => rules?.map((rule) => new State({ id: rule.id, rule })), [])
 
   const nodeStates = useMemo(() => new NodeStateDictionary(props.decision.data), [props.decision.data])
 

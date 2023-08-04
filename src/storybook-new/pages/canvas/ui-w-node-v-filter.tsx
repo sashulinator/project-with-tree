@@ -2,7 +2,7 @@ import { useMemo } from 'react'
 
 import { Filter } from '~/entities/decision/ui/editor/widgets/-node/variants/filter'
 import { LinkStateDictionary } from '~/entities/decision/ui/editor/widgets/_links'
-import { RuleLinkState } from '~/entities/decision/ui/editor/widgets/_link'
+import { State as LinkState } from '~/entities/decision/ui/editor/widgets/-link'
 
 import { Point } from '~/entities/point'
 import { Prop } from '~/utils/notifier'
@@ -42,7 +42,7 @@ const point2: Point = {
 
 export function Page(): JSX.Element {
   const linkStates = new LinkStateDictionary([
-    new RuleLinkState({
+    new LinkState({
       id: 'test',
       rule: {
         id: 'id1',

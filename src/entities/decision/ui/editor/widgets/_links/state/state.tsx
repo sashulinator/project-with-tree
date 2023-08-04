@@ -1,4 +1,4 @@
-import { RuleLinkState } from '../../_link'
+import { State } from '../../-link'
 import { Rule } from '~/entities/rule/types/rule'
 import { EmitterableDictionary } from '~/lib/emitter/dictionary'
 import { Id, assertDefined, invariant } from '~/utils/core'
@@ -6,39 +6,39 @@ import { Prop } from '~/utils/depricated-emitter'
 
 type Events = {
   // Наследуемые события
-  add: { state: RuleLinkState }
-  update: { state: RuleLinkState }
-  remove: { state: RuleLinkState }
+  add: { state: State }
+  update: { state: State }
+  remove: { state: State }
   // Уникальные события
   editingId: { value: Id }
   // События стейтов
-  index: { value: number; state: RuleLinkState }
-  targetId: { value: Id; state: RuleLinkState }
-  sourceId: { value: Id; state: RuleLinkState }
+  index: { value: number; state: State }
+  targetId: { value: Id; state: State }
+  sourceId: { value: Id; state: State }
 }
 
-export class LinkStateDictionary extends EmitterableDictionary<Events, RuleLinkState> {
+export class LinkStateDictionary extends EmitterableDictionary<Events, State> {
   editingId: Prop<'editingId', Id | undefined>
 
-  constructor(linkStateList: RuleLinkState[]) {
+  constructor(linkStateList: State[]) {
     super(linkStateList, (l) => l.id.toString())
 
     this.editingId = new Prop<'editingId', Id | undefined>('editingId', undefined, this)
   }
 
-  getEditingLinkState = (): RuleLinkState => {
+  getEditingLinkState = (): State => {
     return this.get(this.editingId.value)
   }
 
-  findEditingLinkState = (): RuleLinkState | undefined => {
+  findEditingLinkState = (): State | undefined => {
     return this.find(this.editingId.value)
   }
 
-  getLinksBySourceId = (id: Id): RuleLinkState[] => {
+  getLinksBySourceId = (id: Id): State[] => {
     return this.values().filter((state) => state.sourceId.value === id)
   }
 
-  getLinksByTargetId = (id: Id): RuleLinkState[] => {
+  getLinksByTargetId = (id: Id): State[] => {
     return this.values().filter((state) => state.targetId.value === id)
   }
 
@@ -47,7 +47,7 @@ export class LinkStateDictionary extends EmitterableDictionary<Events, RuleLinkS
     invariant(!editingLinkState, 'You cannot start new Link while editing')
     const rule = { id: newLinkId }
     rule[startLinkType === 'target' ? 'targetId' : 'sourceId'] = nodeId
-    this.add(RuleLinkState.createDefaultInstance(rule))
+    this.add(State.createDefaultInstance(rule))
     this.editingId.value = newLinkId
   }
 
@@ -82,7 +82,7 @@ export class LinkStateDictionary extends EmitterableDictionary<Events, RuleLinkS
     const isSourceEditing = linkState.sourceId.value === nodeId
 
     if (isSourceEditing) {
-      const newState = RuleLinkState.createDefaultInstance({
+      const newState = State.createDefaultInstance({
         i: linkState.rule.i,
         targetId: linkState.rule.targetId,
       } as Partial<Rule>)
