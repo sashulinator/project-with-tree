@@ -1,4 +1,4 @@
-import { State } from '../'
+import { State } from '..'
 import { ActionHistory } from '~/utils/action-history'
 import { Any } from '~/utils/core'
 

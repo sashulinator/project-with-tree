@@ -2,7 +2,7 @@ import './filter.css'
 
 import { Id } from '~/utils/dictionary'
 
-import { Node, VariantPickerProps } from '../../..'
+import { Node, NodeVariantPickerProps } from '../../../../../'
 
 import Toolbar from '../widgets/toolbar'
 import Title from '../../../widgets/title'
@@ -16,7 +16,7 @@ Filter.displayName = 'decisionCanvas-w-Node-v-Filter'
 /**
  * Node вариант filter
  */
-export function Filter(props: VariantPickerProps): JSX.Element {
+export function Filter(props: NodeVariantPickerProps): JSX.Element {
   const { remove, linkStates, state, ...nodeProps } = props
   useUpdate(subscribeOnUpdates)
 

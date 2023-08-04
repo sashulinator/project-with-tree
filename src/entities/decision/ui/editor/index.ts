@@ -1,6 +1,7 @@
 /**
  * lib
  */
+export * from './lib/listen-history'
 
 /**
  * state
@@ -40,3 +41,21 @@ export type {
   StateProps as LinkStateProps,
   Events as LinkEvents,
 } from './widgets/link'
+
+export {
+  default as Node,
+  Mapper as NodeMapper,
+  State as NodeState,
+  MapperState as NodeMapperState,
+  Joint as NodeJoint,
+  VariantPicker as NodeVariantPicker,
+  getMovement as getNodeMovement,
+} from './widgets/node'
+export type {
+  MapperProps as NodeMapperProps,
+  NodeProps,
+  StateProps as NodeStateProps,
+  MapperEvents as NodeEvents,
+  JointProps as NodeJointProps,
+  VariantPickerProps as NodeVariantPickerProps,
+} from './widgets/node'

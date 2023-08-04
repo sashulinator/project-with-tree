@@ -2,7 +2,7 @@ import './enter.css'
 
 import { Id } from '~/utils/dictionary'
 
-import { Node, VariantPickerProps } from '../../..'
+import { Node, NodeVariantPickerProps } from '../../../../../'
 
 import Toolbar from '../widgets/toolbar'
 import Title from '../../../widgets/title'
@@ -15,7 +15,7 @@ Enter.displayName = 'decisionCanvas-w-Node-v-Enter'
 /**
  * Node вариант filter
  */
-export function Enter(props: VariantPickerProps): JSX.Element {
+export function Enter(props: NodeVariantPickerProps): JSX.Element {
   const { remove, linkStates, ...nodeProps } = props
   useUpdate(subscribeOnUpdates)
 

@@ -21,7 +21,7 @@ export interface VariantPickerProps {
   onGestureDrug: (event: GestureDragEvent) => void
 }
 
-export function VariantPicker(props: VariantPickerProps): JSX.Element {
+export default function VariantPicker(props: VariantPickerProps): JSX.Element {
   const Component = props.state.point.type === 'MAIN' ? Enter : Filter
 
   return createElement(Component, props)

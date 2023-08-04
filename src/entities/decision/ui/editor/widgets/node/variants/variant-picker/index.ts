@@ -1,1 +1,5 @@
-export * from './ui/variant-picker'
+/**
+ * ui
+ */
+export { default } from './ui/variant-picker'
+export type { VariantPickerProps } from './ui/variant-picker'

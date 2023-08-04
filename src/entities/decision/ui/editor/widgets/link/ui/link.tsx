@@ -6,19 +6,19 @@ import { Link as UILink } from '~/ui/canvas'
 import { Position } from '~/utils/core'
 import { fns } from '~/utils/function'
 import { useForceUpdate, useOnMount, useUpdate } from '~/utils/hooks'
-import { StateDictionary as NodeStateDictionary } from '../../node'
+import { NodeMapperState } from '../../..'
 import { State, MapperState, getOffset } from '..'
 
 export interface LinkProps extends React.HTMLAttributes<SVGPathElement> {
   scale: number
   canvasTranslate: Position
   state: State
-  nodeStates: NodeStateDictionary
-  linkStates: MapperState
+  nodeMapperState: NodeMapperState
+  mapperState: MapperState
 }
 
 export default function Link(props: LinkProps): JSX.Element | null {
-  const { scale, state, canvasTranslate, linkStates, nodeStates, ...pathProps } = props
+  const { scale, state, canvasTranslate, mapperState: linkStates, nodeMapperState: nodeStates, ...pathProps } = props
 
   const sourceState = nodeStates.find(props.state.sourceId.value)
   const targetState = nodeStates.find(props.state.targetId.value)

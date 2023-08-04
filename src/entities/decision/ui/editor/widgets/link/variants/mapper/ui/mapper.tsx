@@ -3,15 +3,15 @@ import { memo } from 'react'
 import { Position } from '~/utils/core'
 import { useUpdate } from '~/utils/hooks'
 
-import Link, { MapperState } from '../../..'
-
-import { StateDictionary as NodeStateDictionary } from '../../../../node'
+import { NodeMapperState } from '../../../../../'
+import Link from '../../../'
+import { State } from '../'
 
 export interface MapperProps {
   scale: number
   canvasTranslate: Position
-  linkStates: MapperState
-  nodeStates: NodeStateDictionary
+  state: State
+  nodeMapperState: NodeMapperState
 }
 
 function MapperComponent(props: MapperProps): JSX.Element {
@@ -19,15 +19,15 @@ function MapperComponent(props: MapperProps): JSX.Element {
 
   return (
     <>
-      {props.linkStates.values().map((linkState) => {
+      {props.state.values().map((linkState) => {
         return (
           <Link
             key={linkState.id}
             scale={props.scale}
             canvasTranslate={props.canvasTranslate}
-            nodeStates={props.nodeStates}
+            nodeMapperState={props.nodeMapperState}
             state={linkState}
-            linkStates={props.linkStates}
+            mapperState={props.state}
           />
         )
       })}
@@ -35,9 +35,9 @@ function MapperComponent(props: MapperProps): JSX.Element {
   )
 
   function subscribeOnUpdates(update: () => void, uns: (() => void)[]): void {
-    uns.push(props.linkStates.on('add', () => setTimeout(update)))
-    uns.push(props.linkStates.on('remove', () => setTimeout(update)))
-    uns.push(props.linkStates.on('update', () => setTimeout(update)))
+    uns.push(props.state.on('add', () => setTimeout(update)))
+    uns.push(props.state.on('remove', () => setTimeout(update)))
+    uns.push(props.state.on('update', () => setTimeout(update)))
   }
 }
 

@@ -17,7 +17,7 @@ export interface JointProps extends React.ButtonHTMLAttributes<HTMLButtonElement
   variant: 'unlinked' | 'new' | 'linked'
 }
 
-export function Joint(props: JointProps): JSX.Element {
+export default function Joint(props: JointProps): JSX.Element {
   const { linkId, disabled, ...divProps } = props
 
   return (
@@ -27,7 +27,7 @@ export function Joint(props: JointProps): JSX.Element {
       disabled={disabled}
       className={clsx(Joint.displayName, `--${props.variant}`, disabled && `--disabled`, props.className)}
     >
-      <div></div>
+      <div />
     </button>
   )
 }

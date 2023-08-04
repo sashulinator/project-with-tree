@@ -7,6 +7,8 @@ export type Events = ItemEvents & {
   title: { value: string }
 }
 
+export type StateProps = Point
+
 export class State extends ItemState<Events> {
   readonly point: Point
 
@@ -16,7 +18,7 @@ export class State extends ItemState<Events> {
 
   computation: Prop<'computation', 'parallel' | 'successively' | undefined>
 
-  constructor(point: Point) {
+  constructor(point: StateProps) {
     super({ id: point.id, position: point })
 
     this.point = point

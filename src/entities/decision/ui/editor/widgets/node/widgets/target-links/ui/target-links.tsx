@@ -1,7 +1,7 @@
 import './target-links.css'
 
 import uniqid from 'uniqid'
-import { State } from '../../../models/state'
+import { State } from '../../../state/state'
 import { MapperState } from '../../../../link'
 import { Joint } from '../../..'
 import { useUpdate } from '~/utils/hooks'

@@ -4,18 +4,18 @@ import { Id } from '~/utils/core'
 
 import { useUpdate } from '~/utils/hooks'
 
-import { MapperState as LinkStateDictionary } from '../../../../link'
-
-import { VariantPicker, State as NodeState, StateDictionary as NodeStateDictionary } from '../../..'
+import { LinkMapperState } from '../../../../..'
+import { State } from '..'
+import { VariantPicker, State as NodeState } from '../../../'
 
 import { Prop } from '~/utils/notifier'
 import { GestureDragEvent } from '~/ui/canvas'
 
-interface MapperProps {
+export interface MapperProps {
   scale: number
-  linkStates: LinkStateDictionary
-  nodeStates: NodeStateDictionary
+  state: State
   selection: Prop<Id[]>
+  linkMapperState: LinkMapperState
   remove: (id: Id) => void
   onGestureDrug: (state: NodeState) => (event: GestureDragEvent) => void
 }
@@ -25,13 +25,13 @@ export function MapperComponent(props: MapperProps): JSX.Element {
 
   return (
     <>
-      {props.nodeStates.values().map((nodeState) => {
+      {props.state.values().map((nodeState) => {
         return (
           <VariantPicker
             remove={props.remove}
             key={nodeState.id}
             state={nodeState}
-            linkStates={props.linkStates}
+            linkStates={props.linkMapperState}
             selection={props.selection}
             onGestureDrug={props.onGestureDrug(nodeState)}
           />
@@ -41,10 +41,11 @@ export function MapperComponent(props: MapperProps): JSX.Element {
   )
 
   function subscribeOnUpdates(update: () => void, uns: (() => void)[]): void {
-    uns.push(props.nodeStates.on('update', update))
-    uns.push(props.nodeStates.on('add', update))
-    uns.push(props.nodeStates.on('remove', () => setTimeout(update)))
+    uns.push(props.state.on('update', update))
+    uns.push(props.state.on('add', update))
+    uns.push(props.state.on('remove', () => setTimeout(update)))
   }
 }
 
-export const Mapper = memo(MapperComponent)
+const Mapper = memo(MapperComponent)
+export default Mapper

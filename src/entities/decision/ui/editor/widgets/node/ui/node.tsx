@@ -27,7 +27,7 @@ export interface NodeProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'c
 /**
  * Элемент Canvas с фичами
  */
-function Node(props: NodeProps): JSX.Element {
+export default function Node(props: NodeProps): JSX.Element {
   const { title, toolbar, sourceLinks, targetLinks, state, rootProps, ...itemProps } = props
 
   return (
@@ -51,5 +51,3 @@ function Node(props: NodeProps): JSX.Element {
     </Item>
   )
 }
-
-export { Node }

@@ -7,7 +7,19 @@ import uniqid from 'uniqid'
 
 import { PaintingPanel } from '~/abstract/canvas'
 import { Decision } from '~/entities/decision'
-import { State, PointPanel, DecisionPanel, LinkState, LinkMapperState, LinkMapper } from '../'
+import {
+  State,
+  PointPanel,
+  DecisionPanel,
+  LinkState,
+  LinkMapperState,
+  LinkMapper,
+  NodeMapperState,
+  NodeMapper,
+  NodeState,
+  getNodeMovement,
+  listenHistory,
+} from '../'
 import { Point } from '~/entities/point'
 
 import { Board, GestureDragEvent } from '~/ui/canvas'
@@ -15,16 +27,7 @@ import { ActionHistory } from '~/utils/action-history'
 import { Id, assertDefined, assertNotNull } from '~/utils/core'
 import { useBoolean, useEventListener, useOnMount, useUpdate } from '~/utils/hooks'
 
-import { listenHistory } from '../lib/_listen-history'
-
 import { Prop } from '~/utils/notifier'
-
-import {
-  State as NodeState,
-  StateDictionary as NodeStateDictionary,
-  getNodeMovement,
-  Mapper as NodeMapper,
-} from '../widgets/node'
 
 import { getStyle } from '~/utils/dom'
 
@@ -43,7 +46,7 @@ export default function Editor(props: EditorProps): JSX.Element {
 
   const linkStateList = useMemo(() => rules?.map((rule) => new LinkState({ id: rule.id, rule })), [])
 
-  const nodeStates = useMemo(() => new NodeStateDictionary(props.decision.data), [props.decision.data])
+  const nodeStates = useMemo(() => new NodeMapperState(props.decision.data), [props.decision.data])
 
   const selection = useMemo(() => new Prop([] as Id[]), [])
 
@@ -73,15 +76,15 @@ export default function Editor(props: EditorProps): JSX.Element {
               <LinkMapper
                 canvasTranslate={editorState.translate.value}
                 scale={editorState.scale.value}
-                linkStates={linkStates}
-                nodeStates={nodeStates}
+                state={linkStates}
+                nodeMapperState={nodeStates}
               />
             )}
             <NodeMapper
               selection={selection}
               scale={editorState.scale.value}
-              linkStates={linkStates}
-              nodeStates={nodeStates}
+              linkMapperState={linkStates}
+              state={nodeStates}
               remove={removeNode}
               onGestureDrug={onGestureDrug}
             />

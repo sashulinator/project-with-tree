@@ -2,7 +2,7 @@ import './toolbar.css'
 
 import { GhostButton } from '~/ui/button'
 import { Trash } from '~/ui/icon'
-import { State } from '../../../../../models/state'
+import { State } from '../../../../../state/state'
 import { useUpdate } from '~/utils/hooks'
 import { Id, c } from '~/utils/core'
 import Checkbox from '~/ui/checkbox'
