@@ -1,13 +1,13 @@
 import { useMemo } from 'react'
 
-import { Filter } from '~/entities/decision/ui/editor/widgets/-node/variants/filter'
-import { LinkStateDictionary } from '~/entities/decision/ui/editor/widgets/_links'
-import { RuleLinkState } from '~/entities/decision/ui/editor/widgets/_link'
+import { Filter } from '~/entities/decision/ui/editor/widgets/node/variants/filter'
+
+import { State as LinkState, MapperState as LinkStateDictionary } from '~/entities/decision/ui/editor/widgets/link'
 
 import { Point } from '~/entities/point'
 import { Prop } from '~/utils/notifier'
 import { Id } from '~/utils/core'
-import { State } from '~/entities/decision/ui/editor/widgets/-node'
+import { State } from '~/entities/decision/ui/editor/widgets/node'
 import { DndProvider } from 'react-dnd'
 import { HTML5Backend } from 'react-dnd-html5-backend'
 
@@ -42,7 +42,7 @@ const point2: Point = {
 
 export function Page(): JSX.Element {
   const linkStates = new LinkStateDictionary([
-    new RuleLinkState({
+    new LinkState({
       id: 'test',
       rule: {
         id: 'id1',

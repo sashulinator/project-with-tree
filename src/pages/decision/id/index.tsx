@@ -8,9 +8,9 @@ import { Editor } from '~/entities/decision'
 export default function DecisionPage(): JSX.Element {
   const { id } = useParams<{ id: string }>()
 
-  const decision = useFetchDecisionMock({}, { id })
+  const fetcher = useFetchDecisionMock({}, { id })
 
-  return <main className='DecisionIdPage'>{decision.data && <Editor decision={decision.data} />}</main>
+  return <main className='DecisionIdPage'>{fetcher.data && <Editor decision={fetcher.data} />}</main>
 
   // Private
 }

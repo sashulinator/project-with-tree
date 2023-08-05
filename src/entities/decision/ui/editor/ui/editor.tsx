@@ -6,54 +6,51 @@ import { HTML5Backend } from 'react-dnd-html5-backend'
 import uniqid from 'uniqid'
 
 import { PaintingPanel } from '~/abstract/canvas'
-import { Decision, EditorState } from '~/entities/decision'
+import { Decision } from '~/entities/decision'
+import {
+  State,
+  PointPanel,
+  DecisionPanel,
+  LinkState,
+  LinkMapperState,
+  LinkMapper,
+  NodeMapperState,
+  NodeMapper,
+  NodeState,
+  getNodeMovement,
+  listenHistory,
+} from '../'
 import { Point } from '~/entities/point'
-import { RuleLinkState } from '../widgets/_link'
-import { emitter } from '~/shared/emitter'
+
 import { Board, GestureDragEvent } from '~/ui/canvas'
 import { ActionHistory } from '~/utils/action-history'
 import { Id, assertDefined, assertNotNull } from '~/utils/core'
 import { useBoolean, useEventListener, useOnMount, useUpdate } from '~/utils/hooks'
 
-import { listenHistory } from '../lib/_listen-history'
-import { dark } from '../themes/dark'
-import { light } from '../themes/light'
-import DecisionPanel from '../widgets/_decision-panel'
-import PointPanel from '../widgets/-point-panel'
-import { Links } from '../widgets/_links'
-import { LinkStateDictionary } from '../widgets/_links/state/state'
-import { NodeMapper } from '../widgets/-node-mapper'
-
 import { Prop } from '~/utils/notifier'
 
-import { State as NodeState, StateDictionary as NodeStateDictionary, getNodeMovement } from '../widgets/-node'
 import { getStyle } from '~/utils/dom'
 
-emitter.emit('addTheme', { dark, light })
-
-interface EditorProps {
+export interface EditorProps {
   decision: Decision
 }
 
-export function Editor(props: EditorProps): JSX.Element {
+export default function Editor(props: EditorProps): JSX.Element {
   const [isRenderLinks, setIsRenderLinks] = useBoolean(false)
   useOnMount(setIsRenderLinks)
   const rules = props.decision.rules || []
 
   const history = useMemo(() => new ActionHistory(), [])
 
-  const editorState = useMemo(
-    () => new EditorState({ translate: { x: 0, y: 0 }, scale: 1, decision: props.decision }),
-    []
-  )
+  const editorState = useMemo(() => new State({ translate: { x: 0, y: 0 }, scale: 1, decision: props.decision }), [])
 
-  const linkStateList = useMemo(() => rules?.map((rule) => new RuleLinkState({ id: rule.id, rule })), [])
+  const linkStateList = useMemo(() => rules?.map((rule) => new LinkState({ id: rule.id, rule })), [])
 
-  const nodeStates = useMemo(() => new NodeStateDictionary(props.decision.data), [props.decision.data])
+  const nodeStates = useMemo(() => new NodeMapperState(props.decision.data), [props.decision.data])
 
   const selection = useMemo(() => new Prop([] as Id[]), [])
 
-  const linkStates = useMemo(() => new LinkStateDictionary(linkStateList), [linkStateList])
+  const linkStates = useMemo(() => new LinkMapperState(linkStateList), [linkStateList])
 
   useUpdate(updateOnEvents, [linkStates])
 
@@ -76,18 +73,18 @@ export function Editor(props: EditorProps): JSX.Element {
         <Board ref={editorState.ref.set}>
           <PaintingPanel translate={editorState.translate.value} scale={editorState.scale.value}>
             {isRenderLinks && (
-              <Links
+              <LinkMapper
                 canvasTranslate={editorState.translate.value}
                 scale={editorState.scale.value}
-                linkStates={linkStates}
-                nodeStates={nodeStates}
+                state={linkStates}
+                nodeMapperState={nodeStates}
               />
             )}
             <NodeMapper
               selection={selection}
               scale={editorState.scale.value}
-              linkStates={linkStates}
-              nodeStates={nodeStates}
+              linkMapperState={linkStates}
+              state={nodeStates}
               remove={removeNode}
               onGestureDrug={onGestureDrug}
             />
@@ -190,8 +187,6 @@ export function Editor(props: EditorProps): JSX.Element {
       const style = getStyle(state.ref.value)
       assertNotNull(style)
       const height = parseInt(style.height, 10)
-      console.log('height', height)
-
       acc += height
       return acc
     }, 0)

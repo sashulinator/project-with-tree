@@ -3,7 +3,7 @@ import Flex from '~/abstract/flex/ui/flex'
 import { useMemo } from 'react'
 import Input from '~/ui/input'
 
-import { Joint, Node, State } from '~/entities/decision/ui/editor/widgets/-node'
+import { NodeJoint, Node, NodeState } from '~/entities/decision/ui/editor'
 
 import { GhostButton } from '~/ui/button'
 import { Trash } from '~/ui/icon'
@@ -32,7 +32,7 @@ const point1: Point = {
 }
 
 export function Page(): JSX.Element {
-  const state = useMemo(() => new State(point1), [])
+  const state = useMemo(() => new NodeState(point1), [])
 
   return (
     <Flex dir='column' gap='xl' width='100%'>
@@ -52,8 +52,8 @@ export function Page(): JSX.Element {
           title={<Input height='l' value='title' />}
           targetLinks={
             <Flex style={{ border: '1px solid blue' }} gap='xxl' dir='column' padding='var(--xxl) .2rem'>
-              <Joint variant='linked' linkId='test1' />
-              <Joint variant='new' linkId='test' />
+              <NodeJoint variant='linked' linkId='test1' />
+              <NodeJoint variant='new' linkId='test' />
             </Flex>
           }
           sourceLinks={
@@ -69,7 +69,7 @@ export function Page(): JSX.Element {
                   background: 'grey',
                 }}
               >
-                <span>Rule</span> <Joint variant='unlinked' linkId='test' />
+                <span>Rule</span> <NodeJoint variant='unlinked' linkId='test' />
               </div>
             </Flex>
           }
