@@ -1,7 +1,7 @@
-import { DomainItemProps } from '~/entities/rules/types/rules-type'
+import { ChildDomain } from '~/entities/rules/types/rules-type'
 import { MentionsItem } from '~/entities/rules/ui/editor/widgets/item/widgets/input/ui/input'
 
-export const addDataMentions = (arr: DomainItemProps[]): MentionsItem[] => {
+export const addDataMentions = (arr: ChildDomain[]): MentionsItem[] => {
   let result: MentionsItem[] = []
   arr.forEach(({ domainNodeType, domainName, attributes, childDomain }) => {
     result.push({ id: domainNodeType, display: domainName })

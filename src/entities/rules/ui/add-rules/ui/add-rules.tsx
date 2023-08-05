@@ -1,12 +1,12 @@
 import './add-rules.css'
 
-import { DomainItemProps } from '~/entities/rules/types/rules-type'
+import { ChildDomain } from '~/entities/rules/types/rules-type'
 import { DomainList } from '../../domain-list'
 import InputSearch from '../../domain-list/widgets/input-search'
 import { Editor } from '../../editor'
 
 interface AddRulesProps {
-  dataList: DomainItemProps[]
+  dataList: ChildDomain[]
 }
 
 export function AddRules(props: AddRulesProps): JSX.Element {

@@ -4,7 +4,7 @@ import { useSetRecoilState } from 'recoil'
 import { url, makeRequest } from '~/api/rules/mock/fetch'
 import { addDataMentions } from '~/entities/rules/lib'
 import { mentionsDataAtom } from '~/entities/rules/models'
-import { DomainItemProps } from '~/entities/rules/types/rules-type'
+import { ChildDomain } from '~/entities/rules/types/rules-type'
 import { AddRules } from '~/entities/rules/ui/add-rules'
 import mockRules from '~/mocks/rules/mock-rules'
 
@@ -15,7 +15,7 @@ export default function RulesPage(): JSX.Element {
 
   const setMentionsData = useSetRecoilState(mentionsDataAtom)
 
-  const dataList: DomainItemProps[] = useMemo(() => {
+  const dataList: ChildDomain[] = useMemo(() => {
     return isSuccess ? data.data.data : []
   }, [isSuccess])
 

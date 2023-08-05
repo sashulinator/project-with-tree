@@ -1,21 +1,21 @@
-export interface DomainsResponse {
+export interface Domain {
   id: string
   name: string
   version: string
   status: string
-  data: DomainItemProps[]
+  data: ChildDomain[]
 }
 
-export interface DomainItemProps {
+export interface ChildDomain {
   id: number
   domainName: string
   domainNodeType: string
   parentId: null | number
-  childDomain: null | DomainItemProps[]
-  attributes: AttributeProps[]
+  childDomain: null | ChildDomain[]
+  attributes: Attribute[]
 }
 
-export interface AttributeProps {
+export interface Attribute {
   id: number
   name: string
   nodeType: string

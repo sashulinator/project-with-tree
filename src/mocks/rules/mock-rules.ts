@@ -1,6 +1,6 @@
-import { DomainsResponse } from '~/entities/rules/types/rules-type'
+import { Domain } from '~/entities/rules/types/rules-type'
 
-const mock: DomainsResponse = {
+const mock: Domain = {
   name: 'mockedRules',
   id: 'mock-rules',
   version: '2.0',

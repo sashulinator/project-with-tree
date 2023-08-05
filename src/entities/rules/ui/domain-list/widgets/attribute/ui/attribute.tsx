@@ -3,10 +3,10 @@ import './attribute.css'
 import { c } from '~/utils/core'
 import { useSetRecoilState } from 'recoil'
 import { draggableCardAtom } from '~/entities/rules/models'
-import { AttributeProps } from '~/entities/rules/types/rules-type'
+import { Attribute } from '~/entities/rules/types/rules-type'
 
 interface Props {
-  attribute: AttributeProps
+  attribute: Attribute
   rootProps?: React.HTMLAttributes<HTMLDivElement> | undefined
 }
 

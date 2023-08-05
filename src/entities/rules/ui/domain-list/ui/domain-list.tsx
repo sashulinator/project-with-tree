@@ -1,11 +1,11 @@
 import './domain-list.css'
 
 import { c } from '~/utils/core'
-import { DomainItemProps } from '~/entities/rules/types/rules-type'
+import { ChildDomain } from '~/entities/rules/types/rules-type'
 import { Domain } from '../widgets/domain'
 
 interface DomainListProps {
-  domains: DomainItemProps[]
+  domains: ChildDomain[]
   defaultExpanded?: boolean | undefined
   rootProps?: React.HTMLAttributes<HTMLDListElement>
 }

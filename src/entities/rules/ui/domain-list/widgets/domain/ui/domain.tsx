@@ -2,12 +2,12 @@ import './domain.css'
 import CollapseUI from '~/ui/collapse/ui/collapse'
 import { memo } from 'react'
 import { useSetRecoilState } from 'recoil'
-import { DomainItemProps } from '~/entities/rules/types/rules-type'
+import { ChildDomain } from '~/entities/rules/types/rules-type'
 import Attribute from '../../attribute'
 import { draggableCardAtom } from '~/entities/rules/models'
 
 interface DomainProps {
-  domain: DomainItemProps
+  domain: ChildDomain
   defaultExpanded?: boolean
   defaultChildExpanded?: boolean
   pl?: number
