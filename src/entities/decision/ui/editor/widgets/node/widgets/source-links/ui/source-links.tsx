@@ -1,37 +1,37 @@
 import './source-links.css'
 
 import type { Identifier, XYCoord } from 'dnd-core'
-import { State as NodeState, Joint } from '../../..'
+import { State, Joint } from '../../..'
 
 import { useUpdate } from '~/utils/hooks'
 import { useRef, useState } from 'react'
 import uniqid from 'uniqid'
 import { Id, c } from '~/utils/core'
 import { useDrag, useDrop } from 'react-dnd'
-import { State, MapperState } from '../../../../link'
+import { LinkState, LinkMapperState } from '../../../../../'
 
-SourceLink.displayName = 'decisionEditor-ui-Canvas-w-Node-w-SourceLink'
+SourceLinks.displayName = 'decisionEditor-ui-Canvas-w-Node-w-SourceLinks'
 
-interface SourceLinkProps {
+export interface Props {
   className?: string
-  state: NodeState
-  linkStates: MapperState
+  state: State
+  linkMapperState: LinkMapperState
   hideNewLink?: boolean
   onNewJointClick: (newLinkId: Id) => void
   onJointClick: (linkId: Id) => void
 }
 
-export default function SourceLink(props: SourceLinkProps): JSX.Element {
+export default function SourceLinks(props: Props): JSX.Element {
   const [newLinkId, setNewLinkId] = useState(uniqid)
 
   useUpdate(subscribeOnUpdates)
 
-  const editingLinkState = props.linkStates.findEditingLinkState()
+  const editingLinkState = props.linkMapperState.findEditingLinkState()
   const isEditingThisNode =
     editingLinkState?.sourceId.value === props.state.id || editingLinkState?.targetId.value === props.state.id
   const isEditingHasSource = Boolean(editingLinkState?.sourceId.value)
 
-  const sourceLinkStates = props.linkStates
+  const sourceLinkStates = props.linkMapperState
     .getLinksBySourceId(props.state.id)
     .sort((a, b) => (a.index.value < b.index.value ? -1 : 1))
 
@@ -40,7 +40,7 @@ export default function SourceLink(props: SourceLinkProps): JSX.Element {
   // }
 
   return (
-    <div className={c(props.className, SourceLink.displayName)}>
+    <div className={c(props.className, SourceLinks.displayName)}>
       {sourceLinkStates.map((linkState, i) => {
         if (linkState.id === newLinkId) return null
         const isLinked = Boolean(linkState.targetId.value)
@@ -48,7 +48,7 @@ export default function SourceLink(props: SourceLinkProps): JSX.Element {
         return (
           <RuleSet
             index={i}
-            linkStates={props.linkStates}
+            linkMapperState={props.linkMapperState}
             nodeId={props.state.id}
             isEditingThisNode={isEditingThisNode}
             isLinked={isLinked}
@@ -74,11 +74,11 @@ export default function SourceLink(props: SourceLinkProps): JSX.Element {
   // Private
 
   function subscribeOnUpdates(update: () => void): void {
-    props.linkStates.on('add', update)
-    props.linkStates.on('remove', update)
-    props.linkStates.on('index', update)
-    props.linkStates.on('update', update)
-    props.linkStates.on('targetId', () => setNewLinkId(uniqid()))
+    props.linkMapperState.on('add', update)
+    props.linkMapperState.on('remove', update)
+    props.linkMapperState.on('index', update)
+    props.linkMapperState.on('update', update)
+    props.linkMapperState.on('targetId', () => setNewLinkId(uniqid()))
   }
 }
 
@@ -86,13 +86,13 @@ export default function SourceLink(props: SourceLinkProps): JSX.Element {
 
 export interface RuleSetProps {
   nodeId: Id
-  linkState: State
+  linkState: LinkState
   index: number
   isLinked: boolean
   isEditingThisNode: boolean
-  linkStates: MapperState
+  linkMapperState: LinkMapperState
   isEditingHasSource: boolean
-  editingLinkState: State | undefined
+  editingLinkState: LinkState | undefined
   onJointClick: (linkId: Id) => void
 }
 
@@ -153,7 +153,7 @@ export function RuleSet(props: RuleSetProps): JSX.Element {
       }
 
       // Time to actually perform the action
-      props.linkStates.swapSourceIndexes(props.nodeId, dragIndex, hoverIndex)
+      props.linkMapperState.swapSourceIndexes(props.nodeId, dragIndex, hoverIndex)
 
       // Note: we're mutating the monitor item here!
       // Generally it's better to avoid mutations,

@@ -29,3 +29,12 @@ export type { VariantPickerProps } from './variants/variant-picker'
  */
 export { default as Joint } from './widgets/joint'
 export type { JointProps } from './widgets/joint'
+
+export { default as SourceLinks } from './widgets/source-links'
+export type { SourceLinksProps } from './widgets/source-links'
+
+export { default as TargetLinks } from './widgets/target-links'
+export type { TargetLinksProps } from './widgets/target-links'
+
+export { default as Title } from './widgets/title'
+export type { TitleProps } from './widgets/title'

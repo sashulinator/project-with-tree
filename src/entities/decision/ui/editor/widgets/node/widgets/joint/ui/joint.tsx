@@ -12,12 +12,12 @@ Joint.displayName = 'decisionEditor-ui-Canvas-w-Node-w-Joint'
 
 emitter.emit('addTheme', { dark, light })
 
-export interface JointProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+export interface Props extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   linkId: Id
   variant: 'unlinked' | 'new' | 'linked'
 }
 
-export default function Joint(props: JointProps): JSX.Element {
+export default function Joint(props: Props): JSX.Element {
   const { linkId, disabled, ...divProps } = props
 
   return (

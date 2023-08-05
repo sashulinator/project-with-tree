@@ -2,11 +2,8 @@ import './enter.css'
 
 import { Id } from '~/utils/dictionary'
 
-import { Node, NodeVariantPickerProps } from '../../../../../'
-
-import Toolbar from '../widgets/toolbar'
-import Title from '../../../widgets/title'
-import SourceLink from '../../../widgets/source-links'
+import Node, { VariantPickerProps, Title, SourceLinks } from '../../..'
+import { Toolbar } from '..'
 
 import { useUpdate } from '~/utils/hooks'
 
@@ -15,7 +12,7 @@ Enter.displayName = 'decisionCanvas-w-Node-v-Enter'
 /**
  * Node вариант filter
  */
-export function Enter(props: NodeVariantPickerProps): JSX.Element {
+export function Enter(props: VariantPickerProps): JSX.Element {
   const { remove, linkStates, ...nodeProps } = props
   useUpdate(subscribeOnUpdates)
 
@@ -26,9 +23,9 @@ export function Enter(props: NodeVariantPickerProps): JSX.Element {
       title={<Title state={props.state} />}
       toolbar={<Toolbar state={props.state} remove={(): void => remove(props.state.id)} />}
       sourceLinks={
-        <SourceLink
+        <SourceLinks
           hideNewLink={true}
-          linkStates={linkStates}
+          linkMapperState={linkStates}
           state={props.state}
           onNewJointClick={onNewJointClick('source')}
           onJointClick={onJointClick}

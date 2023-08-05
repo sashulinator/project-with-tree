@@ -1,17 +1,17 @@
 import './title.css'
 
 import Input, { useChangeOnBlurStrategy } from '~/ui/input'
-import { State as NodeState } from '../../..'
+import { State } from '../../..'
 import { useUpdate } from '~/utils/hooks'
 
 Title.displayName = 'decisionEditor-ui-Canvas-w-Node-w-Title'
 
-interface TitleProps {
+export interface Props {
   className?: string
-  state: NodeState
+  state: State
 }
 
-export default function Title(props: TitleProps): JSX.Element {
+export default function Title(props: Props): JSX.Element {
   useUpdate(subscribeOnUpdates)
 
   return (

@@ -2,12 +2,8 @@ import './filter.css'
 
 import { Id } from '~/utils/dictionary'
 
-import { Node, NodeVariantPickerProps } from '../../../../../'
-
-import Toolbar from '../widgets/toolbar'
-import Title from '../../../widgets/title'
-import SourceLink from '../../../widgets/source-links'
-import TargetLink from '../../../widgets/target-links'
+import Node, { VariantPickerProps, Title, SourceLinks, TargetLinks } from '../../..'
+import { Toolbar } from '..'
 
 import { useUpdate } from '~/utils/hooks'
 
@@ -16,7 +12,7 @@ Filter.displayName = 'decisionCanvas-w-Node-v-Filter'
 /**
  * Node вариант filter
  */
-export function Filter(props: NodeVariantPickerProps): JSX.Element {
+export function Filter(props: VariantPickerProps): JSX.Element {
   const { remove, linkStates, state, ...nodeProps } = props
   useUpdate(subscribeOnUpdates)
 
@@ -28,15 +24,15 @@ export function Filter(props: NodeVariantPickerProps): JSX.Element {
       title={<Title state={props.state} />}
       toolbar={<Toolbar selection={props.selection} state={props.state} remove={(): void => remove(props.state.id)} />}
       sourceLinks={
-        <SourceLink
-          linkStates={linkStates}
+        <SourceLinks
+          linkMapperState={linkStates}
           state={state}
           onNewJointClick={onNewJointClick('source')}
           onJointClick={onJointClick}
         />
       }
       targetLinks={
-        <TargetLink
+        <TargetLinks
           linkStates={linkStates}
           state={state}
           onNewJointClick={onNewJointClick('target')}

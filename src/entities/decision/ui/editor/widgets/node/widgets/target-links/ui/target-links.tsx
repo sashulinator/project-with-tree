@@ -1,24 +1,24 @@
 import './target-links.css'
 
 import uniqid from 'uniqid'
-import { State } from '../../../state/state'
-import { MapperState } from '../../../../link'
-import { Joint } from '../../..'
+
+import { LinkMapperState } from '../../../../../'
+import { Joint, State } from '../../..'
 import { useUpdate } from '~/utils/hooks'
 import { useState } from 'react'
 import { Id, c } from '~/utils/core'
 
 TargetLink.displayName = 'decisionEditor-ui-Canvas-w-Node-w-TargetLink'
 
-interface SourceLinkProps {
+export interface Props {
   className?: string
   state: State
-  linkStates: MapperState
+  linkStates: LinkMapperState
   onNewJointClick: (linkState: Id) => void
   onJointClick: (id: Id) => void
 }
 
-export default function TargetLink(props: SourceLinkProps): JSX.Element {
+export default function TargetLink(props: Props): JSX.Element {
   const [newLinkId, setNewLinkId] = useState(uniqid)
 
   useUpdate(subscribeOnUpdates)

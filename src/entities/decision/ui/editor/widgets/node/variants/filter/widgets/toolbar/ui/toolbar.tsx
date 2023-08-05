@@ -12,14 +12,14 @@ import { toggle } from '~/utils/key'
 
 Toolbar.displayName = 'decisionEditor-ui-Canvas-w-Node-v-Filter-w-Toolbar'
 
-interface ToolbarProps {
+export interface Props {
   className?: string
   selection: Prop<Id[]>
   state: State
   remove: () => void
 }
 
-export default function Toolbar(props: ToolbarProps): JSX.Element {
+export default function Toolbar(props: Props): JSX.Element {
   useUpdate(subscribeOnUpdates)
 
   const computation = props.state.computation.value
