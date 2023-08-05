@@ -1,6 +1,6 @@
-import { editorRulesValuesType } from '../state/state'
+import { EditorValues } from '../models/editorRulesValuesAtom'
 
-export function getCheckedArr(arr: editorRulesValuesType[], check: boolean, id: string): editorRulesValuesType[] {
+export function getCheckedArr(arr: EditorValues[], check: boolean, id: string): EditorValues[] {
   return arr.map((item) => {
     if (item.id === id) {
       return { ...item, checked: check }
