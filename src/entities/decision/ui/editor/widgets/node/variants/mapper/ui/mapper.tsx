@@ -4,7 +4,7 @@ import { Id } from '~/utils/core'
 
 import { useUpdate } from '~/utils/hooks'
 
-import { LinkMapperState } from '../../../../..'
+import { LinkListState } from '../../../../..'
 import { State } from '..'
 import { VariantPicker, State as NodeState } from '../../../'
 
@@ -15,7 +15,7 @@ export interface MapperProps {
   scale: number
   state: State
   selection: Prop<Id[]>
-  linkMapperState: LinkMapperState
+  linkMapperState: LinkListState
   remove: (id: Id) => void
   onGestureDrug: (state: NodeState) => (event: GestureDragEvent) => void
 }

@@ -2,7 +2,7 @@ import { useMemo } from 'react'
 
 import { Filter } from '~/entities/decision/ui/editor/widgets/node/variants/filter'
 
-import { State as LinkState, MapperState as LinkStateDictionary } from '~/entities/decision/ui/editor/widgets/link'
+import { State as LinkState, ListState as LinkStateDictionary } from '~/entities/decision/ui/editor/widgets/link'
 
 import { Point } from '~/entities/point'
 import { Prop } from '~/utils/notifier'
