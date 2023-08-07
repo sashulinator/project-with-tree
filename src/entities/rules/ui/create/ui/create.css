@@ -1,18 +1,18 @@
-.e-ui-Rules-AddRules {
+.e-ui-Rules-Create {
   background-color: var(--bgSecondary);
   display: flex;
   padding: 20px;
 }
 
-.e-ui-Rules-AddRules > .list {
+.e-ui-Rules-Create > .list {
   width: 20%;
 }
 
-.e-ui-Rules-AddRules .input {
+.e-ui-Rules-Create .input {
   margin-bottom: 25px;
 }
 
-.e-ui-Rules-AddRules > ul {
+.e-ui-Rules-Create > ul {
   width: 78%;
   margin-left: 20px;
 }

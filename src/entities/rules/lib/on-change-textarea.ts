@@ -1,4 +1,4 @@
-import { EditorValues } from '../models/editorRulesValuesAtom'
+import { EditorValues } from '../models/editorRulesValues'
 
 export function onChangeTextarea(array: EditorValues[], id: string, v: string): EditorValues[] {
   return array.map((arr) => {

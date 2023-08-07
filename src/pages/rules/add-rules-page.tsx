@@ -2,10 +2,10 @@ import { useMemo, useEffect } from 'react'
 import { useQuery } from 'react-query'
 import { useSetRecoilState } from 'recoil'
 import { url, makeRequest } from '~/api/rules/mock/fetch'
-import { addDataMentions } from '~/entities/rules/lib'
-import { mentionsDataAtom } from '~/entities/rules/models'
+import { addDataMentions } from '~/entities/rules/lib/add-data-mentions'
+import { mentionsDataAtom } from '~/entities/rules/models/mentionsData'
 import { DomainItemProps } from '~/entities/rules/types/rules-type'
-import { AddRules } from '~/entities/rules/ui/add-rules'
+import { Create } from '~/entities/rules/ui/create'
 import mockRules from '~/mocks/rules/mock-rules'
 
 export default function RulesPage(): JSX.Element {
@@ -24,7 +24,7 @@ export default function RulesPage(): JSX.Element {
   }, [isSuccess])
 
   if (isSuccess) {
-    return <AddRules dataList={dataList} />
+    return <Create dataList={dataList} />
   }
 
   if (isLoading) {

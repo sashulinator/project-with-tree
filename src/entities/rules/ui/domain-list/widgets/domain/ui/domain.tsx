@@ -4,7 +4,7 @@ import { memo } from 'react'
 import { useSetRecoilState } from 'recoil'
 import { DomainItemProps } from '~/entities/rules/types/rules-type'
 import Attribute from '../../attribute'
-import { draggableCardAtom } from '~/entities/rules/models'
+import { draggableCardAtom } from '~/entities/rules/models/draggableCard'
 
 interface DomainProps {
   domain: DomainItemProps

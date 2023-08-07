@@ -7,7 +7,7 @@ import uniqid from 'uniqid'
 import { Close, Plus } from '~/ui/icon'
 import { c } from '~/utils/core'
 import Radio from '../../radio'
-import { editorRulesValuesAtom } from '~/entities/rules/models'
+import { EditorValues, editorRulesValuesAtom } from '~/entities/rules/models/editorRulesValues'
 
 interface ButtonsProps {
   id: string
@@ -34,6 +34,9 @@ export default function AddDeleteButtons(props: ButtonsProps): JSX.Element {
 
   // Private
   function deleteCondition(): void {
+    if (editorRulesValues.length === 1) {
+      return
+    }
     const result = editorRulesValues
       .map((arr) => {
         if (arr.valueArr.length !== 1) {
@@ -42,11 +45,22 @@ export default function AddDeleteButtons(props: ButtonsProps): JSX.Element {
         return { ...arr, valueArr: arr.valueArr.filter(() => arr.id !== id) }
       })
       .filter((arr) => arr.valueArr.length > 0)
-    console.log(result)
     setEditorValues(result)
   }
 
   function addCondition(): void {
-    setEditorValues([...editorRulesValues, { id: uniqid(), valueArr: [{ id: uniqid(), value: '' }] }])
+    const index = editorRulesValues.findIndex((item) => item.id === id)
+    const result: EditorValues[] = []
+    editorRulesValues.forEach((item, i) => {
+      result.push(item)
+      if (i === index) {
+        result.push({
+          id: uniqid(),
+          valueArr: [{ id: uniqid(), value: '' }],
+        })
+      }
+    })
+
+    setEditorValues(result)
   }
 }
