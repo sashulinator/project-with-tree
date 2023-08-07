@@ -1,7 +1,9 @@
 import './toolbar.css'
+
 import { c } from '~/utils/core'
-import { State } from '../../../../../state/state'
 import { useUpdate } from '~/utils/hooks'
+
+import { State } from '../../../../..'
 
 Toolbar.displayName = 'decisionEditor-ui-Canvas-w-Node-v-Enter-w-Toolbar'
 

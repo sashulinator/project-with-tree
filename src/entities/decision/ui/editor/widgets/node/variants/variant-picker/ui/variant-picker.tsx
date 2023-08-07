@@ -2,17 +2,16 @@ import { createElement } from 'react'
 
 import { GestureDragEvent } from '~/ui/canvas'
 import { Id } from '~/utils/core'
-import { Prop } from '~/utils/notifier'
 
-import { LinkListState } from '../../../../..'
+import { LinkListState, NodeListState } from '../../../../..'
 import { State as NodeState, FilterNode, EnterNode } from '../../..'
 
 VariantPicker.displayName = 'VariantPicker'
 
 export interface VariantPickerProps {
   state: NodeState
-  linkListStates: LinkListState
-  selection: Prop<Id[]>
+  linkListState: LinkListState
+  nodeListState: NodeListState
   remove: (nodeId: Id) => void
   onGestureDrug: (event: GestureDragEvent) => void
 }

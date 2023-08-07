@@ -1,7 +1,8 @@
-import { EmitterableDictionary } from '~/lib/emitter/dictionary'
+import { Point } from '~/entities/point'
+import { Selection, EmitterableDictionary } from '~/lib/emitter'
+import { Id } from '~/utils/core'
 
 import { NodeState } from '../../../../..'
-import { Point } from '~/entities/point'
 
 export type Events = {
   // Наследуемые события
@@ -10,6 +11,7 @@ export type Events = {
   remove: { state: NodeState }
   // Уникальные события
   // ...
+  selection: { value: Set<Id> }
 
   // События стейтов
   computation: { value: Point['computation']; state: NodeState }
@@ -17,8 +19,12 @@ export type Events = {
 }
 
 export class State extends EmitterableDictionary<Events, NodeState> {
+  selection: Selection<'selection'>
+
   constructor(pointList: Point[]) {
     const stateList = pointList.map((point) => new NodeState(point))
     super(stateList, (s) => s.id.toString())
+
+    this.selection = new Selection('selection', new Set<Id>(), this)
   }
 }

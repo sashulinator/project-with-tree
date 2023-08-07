@@ -1,20 +1,18 @@
 import { memo } from 'react'
 
-import { Id } from '~/utils/core'
+import { GestureDragEvent } from '~/ui/canvas'
 
+import { Id } from '~/utils/core'
 import { useUpdate } from '~/utils/hooks'
 
-import { LinkListState } from '../../../../..'
-import { State } from '..'
+import { LinkListState, NodeListState } from '../../../../..'
 import { VariantPicker, State as NodeState } from '../../..'
-
-import { Prop } from '~/utils/notifier'
-import { GestureDragEvent } from '~/ui/canvas'
+import { State } from '..'
 
 export interface ListProps {
   scale: number
   state: State
-  selection: Prop<Id[]>
+  nodeListState: NodeListState
   linkListState: LinkListState
   remove: (id: Id) => void
   onGestureDrug: (state: NodeState) => (event: GestureDragEvent) => void
@@ -31,8 +29,8 @@ export function ListComponent(props: ListProps): JSX.Element {
             remove={props.remove}
             key={nodeState.id}
             state={nodeState}
-            linkListStates={props.linkListState}
-            selection={props.selection}
+            nodeListState={props.nodeListState}
+            linkListState={props.linkListState}
             onGestureDrug={props.onGestureDrug(nodeState)}
           />
         )
