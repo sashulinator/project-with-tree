@@ -37,7 +37,7 @@ export default function Input(props: EditorInputProps): JSX.Element {
           trigger='@'
           data={mentionsData}
           style={{
-            backgroundColor: '#cee4e5',
+            backgroundColor: 'var(--mentionItem_bg)',
           }}
         />
       </MentionsInput>

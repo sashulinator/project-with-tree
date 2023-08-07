@@ -28,7 +28,7 @@ function DomainComponent({ domain, pl = 0, defaultChildExpanded, ...props }: Dom
       <CollapseUI
         defaultExpanded={props.defaultExpanded}
         title={domain.domainName}
-        rootProps={{ style: { paddingLeft: pl, marginBottom: '10px', backgroundColor: 'white' } }}
+        rootProps={{ style: { paddingLeft: pl, marginBottom: '10px' } }}
       >
         {domain.attributes.length > 0 ? (
           <ul style={{ padding: '10px' }}>
