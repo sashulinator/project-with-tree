@@ -49,7 +49,7 @@ export default function SourceLinks(props: Props): JSX.Element {
         return (
           <RuleSet
             index={i}
-            linkMapperState={props.linkListState}
+            linkListState={props.linkListState}
             nodeId={props.state.id}
             isEditingThisNode={isEditingThisNode}
             isLinked={isLinked}
@@ -91,7 +91,7 @@ export interface RuleSetProps {
   index: number
   isLinked: boolean
   isEditingThisNode: boolean
-  linkMapperState: LinkListState
+  linkListState: LinkListState
   isEditingHasSource: boolean
   editingLinkState: LinkState | undefined
   onJointClick: (linkId: Id) => void
@@ -154,7 +154,7 @@ export function RuleSet(props: RuleSetProps): JSX.Element {
       }
 
       // Time to actually perform the action
-      props.linkMapperState.swapSourceIndexes(props.nodeId, dragIndex, hoverIndex)
+      props.linkListState.swapSourceIndexes(props.nodeId, dragIndex, hoverIndex)
 
       // Note: we're mutating the monitor item here!
       // Generally it's better to avoid mutations,
