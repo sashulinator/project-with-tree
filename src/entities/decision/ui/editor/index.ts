@@ -7,7 +7,7 @@ export * from './lib/listen-history'
  * state
  */
 export { State } from './state/state'
-export type { StateProps, Events } from './state/state'
+export type { Events } from './state/state'
 
 /**
  * themes
@@ -28,6 +28,9 @@ export type { DecisionPanelProps } from './widgets/decision-panel'
 
 export { default as PointPanel } from './widgets/point-panel'
 export type { PointPanelProps } from './widgets/point-panel'
+
+export { default as Canvas, State as CanvasState } from './widgets/canvas'
+export type { CanvasProps } from './widgets/canvas'
 
 export { default as Link, List as LinkList, State as LinkState, ListState as LinkListState } from './widgets/link'
 export type {

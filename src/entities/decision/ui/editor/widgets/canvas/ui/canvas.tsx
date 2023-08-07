@@ -3,34 +3,27 @@ import { Id, assertNotNull } from '~/utils/core'
 import { getStyle } from '~/utils/dom'
 import { useUpdate } from '~/utils/hooks'
 
-import {
-  State as EditorState,
-  LinkListState,
-  LinkList,
-  NodeListState,
-  NodeList,
-  NodeState,
-  getNodeMovement,
-} from '../../..'
+import { LinkListState, LinkList, NodeListState, NodeList, NodeState, getNodeMovement } from '../../..'
+import { State } from '../'
 
-interface CanvasProps {
-  editorState: EditorState
+export interface Props {
+  state: State
   linkListState: LinkListState
   nodeListState: NodeListState
   removeNode: (id: Id) => void
 }
 
-export default function Canvas(props: CanvasProps): JSX.Element {
-  useUpdate(updateOnEvents, [props.editorState])
+export default function Canvas(props: Props): JSX.Element {
+  useUpdate(updateOnEvents, [props.state])
 
   return (
-    <Board ref={props.editorState.ref.set}>
-      <PaintingPanel translate={props.editorState.translate.value} scale={props.editorState.scale.value}>
+    <Board ref={props.state.ref.set}>
+      <PaintingPanel translate={props.state.translate.value} scale={props.state.scale.value}>
         <LinkList
           state={props.linkListState}
           nodeListState={props.nodeListState}
-          canvasTranslate={props.editorState.translate.value}
-          scale={props.editorState.scale.value}
+          canvasTranslate={props.state.translate.value}
+          scale={props.state.scale.value}
         />
         <NodeList
           state={props.nodeListState}
@@ -45,8 +38,8 @@ export default function Canvas(props: CanvasProps): JSX.Element {
   // Private
 
   function updateOnEvents(update: () => void): void {
-    props.editorState.on('translate', update)
-    props.editorState.on('scale', update)
+    props.state.on('translate', update)
+    props.state.on('scale', update)
   }
 
   function onGestureDrug(state: NodeState) {
@@ -54,7 +47,7 @@ export default function Canvas(props: CanvasProps): JSX.Element {
       event.event.stopPropagation()
       const GAP = 500
       const last = { ...state.position.last }
-      const movePosition = getNodeMovement(event, props.editorState.scale.value)
+      const movePosition = getNodeMovement(event, props.state.scale.value)
 
       if (movePosition === null) return
 

@@ -4,7 +4,7 @@ import { PositionProp } from '~/lib/emitter'
 import { Position } from '~/utils/core'
 import { AnyEvent, Emitter, Prop } from '~/utils/depricated-emitter'
 
-import { D3Selection } from './_d3-selection'
+import { D3Selection } from './d3-selection'
 
 interface IEmitter<E extends AnyEvent> extends Emitter<E> {
   ref: Prop<string, SVGSVGElement | null>
