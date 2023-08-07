@@ -6,8 +6,8 @@ import { useRecoilState } from 'recoil'
 import uniqid from 'uniqid'
 import { Close, Plus } from '~/ui/icon'
 import { c } from '~/utils/core'
-import Radio from '../../radio'
 import { EditorValues, editorRulesValuesAtom } from '~/entities/rules/models/editorRulesValues'
+import Select from '../../select/ui/select'
 
 interface ButtonsProps {
   id: string
@@ -21,14 +21,14 @@ export default function AddDeleteButtons(props: ButtonsProps): JSX.Element {
   const [editorRulesValues, setEditorValues] = useRecoilState(editorRulesValuesAtom)
 
   return (
-    <Flex className={c(AddDeleteButtons.displayName, rootProps?.className)} gap='xl' {...rootProps}>
+    <Flex className={c(AddDeleteButtons.displayName, rootProps?.className)} gap='xl' crossAxis='center' {...rootProps}>
       <GhostButton height={'s'} square onClick={deleteCondition}>
         <Close />
       </GhostButton>
       <GhostButton height={'s'} square onClick={addCondition}>
         <Plus />
       </GhostButton>
-      <Radio id={id} />
+      <Select id={id} />
     </Flex>
   )
 
