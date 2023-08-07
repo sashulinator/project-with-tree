@@ -12,8 +12,8 @@ Enter.displayName = 'decisionCanvas-w-Node-v-Enter'
 /**
  * Node вариант filter
  */
-export function Enter(props: VariantPickerProps): JSX.Element {
-  const { remove, linkStates, ...nodeProps } = props
+export default function Enter(props: VariantPickerProps): JSX.Element {
+  const { remove, linkListStates: linkStates, ...nodeProps } = props
   useUpdate(subscribeOnUpdates)
 
   return (
@@ -25,7 +25,7 @@ export function Enter(props: VariantPickerProps): JSX.Element {
       sourceLinks={
         <SourceLinks
           hideNewLink={true}
-          linkMapperState={linkStates}
+          linkListState={linkStates}
           state={props.state}
           onNewJointClick={onNewJointClick('source')}
           onJointClick={onJointClick}
@@ -41,19 +41,19 @@ export function Enter(props: VariantPickerProps): JSX.Element {
   }
 
   function onJointClick(linkId: Id): void {
-    if (props.linkStates.editingId.value) {
-      props.linkStates.finishEditing(linkId)
+    if (props.linkListStates.editingId.value) {
+      props.linkListStates.finishEditing(linkId)
     } else {
-      props.linkStates.startEditing(linkId, props.state.id)
+      props.linkListStates.startEditing(linkId, props.state.id)
     }
   }
 
   function onNewJointClick(startLinkType: 'target' | 'source'): (newLinkId: Id) => void {
     return (newLinkId: Id) => {
-      if (props.linkStates.editingId.value) {
-        props.linkStates.finishNewLink(props.state.id)
+      if (props.linkListStates.editingId.value) {
+        props.linkListStates.finishNewLink(props.state.id)
       } else {
-        props.linkStates.startNewLink(props.state.id, newLinkId, startLinkType)
+        props.linkListStates.startNewLink(props.state.id, newLinkId, startLinkType)
       }
     }
   }

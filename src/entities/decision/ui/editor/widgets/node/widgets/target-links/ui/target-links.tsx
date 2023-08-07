@@ -2,7 +2,7 @@ import './target-links.css'
 
 import uniqid from 'uniqid'
 
-import { LinkMapperState } from '../../../../../'
+import { LinkListState } from '../../../../../'
 import { Joint, State } from '../../..'
 import { useUpdate } from '~/utils/hooks'
 import { useState } from 'react'
@@ -13,7 +13,7 @@ TargetLink.displayName = 'decisionEditor-ui-Canvas-w-Node-w-TargetLink'
 export interface Props {
   className?: string
   state: State
-  linkStates: LinkMapperState
+  linkStates: LinkListState
   onNewJointClick: (linkState: Id) => void
   onJointClick: (id: Id) => void
 }

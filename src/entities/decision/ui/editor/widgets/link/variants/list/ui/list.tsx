@@ -3,18 +3,18 @@ import { memo } from 'react'
 import { Position } from '~/utils/core'
 import { useUpdate } from '~/utils/hooks'
 
-import { NodeMapperState } from '../../../../../'
-import Link from '../../../'
-import { State } from '../'
+import { NodeListState } from '../../../../..'
+import Link from '../../..'
+import { State } from '..'
 
-export interface MapperProps {
-  scale: number
-  canvasTranslate: Position
+export interface Props {
   state: State
-  nodeMapperState: NodeMapperState
+  nodeListState: NodeListState
+  canvasTranslate: Position
+  scale: number
 }
 
-function MapperComponent(props: MapperProps): JSX.Element {
+function ListComponent(props: Props): JSX.Element {
   useUpdate(subscribeOnUpdates)
 
   return (
@@ -25,9 +25,9 @@ function MapperComponent(props: MapperProps): JSX.Element {
             key={linkState.id}
             scale={props.scale}
             canvasTranslate={props.canvasTranslate}
-            nodeMapperState={props.nodeMapperState}
+            nodeListState={props.nodeListState}
             state={linkState}
-            mapperState={props.state}
+            listState={props.state}
           />
         )
       })}
@@ -41,5 +41,5 @@ function MapperComponent(props: MapperProps): JSX.Element {
   }
 }
 
-const Mapper = memo(MapperComponent)
-export default Mapper
+const List = memo(ListComponent)
+export default List

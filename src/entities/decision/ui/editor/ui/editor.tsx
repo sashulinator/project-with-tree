@@ -12,10 +12,10 @@ import {
   PointPanel,
   DecisionPanel,
   LinkState,
-  LinkMapperState,
-  LinkMapper,
-  NodeMapperState,
-  NodeMapper,
+  LinkListState,
+  LinkList,
+  NodeListState,
+  NodeList,
   NodeState,
   getNodeMovement,
   listenHistory,
@@ -44,15 +44,16 @@ export default function Editor(props: EditorProps): JSX.Element {
 
   const editorState = useMemo(() => new State({ translate: { x: 0, y: 0 }, scale: 1, decision: props.decision }), [])
 
+  // TODO убрать это в LinkListState
   const linkStateList = useMemo(() => rules?.map((rule) => new LinkState({ id: rule.id, rule })), [])
 
-  const nodeStates = useMemo(() => new NodeMapperState(props.decision.data), [props.decision.data])
+  const nodeStates = useMemo(() => new NodeListState(props.decision.data), [props.decision.data])
 
   const selection = useMemo(() => new Prop([] as Id[]), [])
 
-  const linkStates = useMemo(() => new LinkMapperState(linkStateList), [linkStateList])
+  const linkListState = useMemo(() => new LinkListState(linkStateList), [linkStateList])
 
-  useUpdate(updateOnEvents, [linkStates])
+  useUpdate(updateOnEvents, [linkListState])
 
   useEventListener('keydown', onKeyDown)
 
@@ -73,17 +74,17 @@ export default function Editor(props: EditorProps): JSX.Element {
         <Board ref={editorState.ref.set}>
           <PaintingPanel translate={editorState.translate.value} scale={editorState.scale.value}>
             {isRenderLinks && (
-              <LinkMapper
+              <LinkList
                 canvasTranslate={editorState.translate.value}
                 scale={editorState.scale.value}
-                state={linkStates}
-                nodeMapperState={nodeStates}
+                state={linkListState}
+                nodeListState={nodeStates}
               />
             )}
-            <NodeMapper
+            <NodeList
               selection={selection}
               scale={editorState.scale.value}
-              linkMapperState={linkStates}
+              linkListState={linkListState}
               state={nodeStates}
               remove={removeNode}
               onGestureDrug={onGestureDrug}
@@ -133,7 +134,7 @@ export default function Editor(props: EditorProps): JSX.Element {
 
     linkStateList.forEach((s) => {
       if (s.sourceId.value !== id && s.targetId.value !== id) return
-      linkStates.remove(s.id)
+      linkListState.remove(s.id)
     })
   }
 

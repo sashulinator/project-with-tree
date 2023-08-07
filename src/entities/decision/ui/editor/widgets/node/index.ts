@@ -18,11 +18,14 @@ export type { NodeProps } from './ui/node'
 /**
  * variants
  */
-export { State as MapperState, default as Mapper } from './variants/mapper'
-export type { MapperProps, Events as MapperEvents } from './variants/mapper'
+export { State as ListState, default as List } from './variants/list'
+export type { ListProps as ListProps, Events as ListEvents } from './variants/list'
 
 export { default as VariantPicker } from './variants/variant-picker'
 export type { VariantPickerProps } from './variants/variant-picker'
+
+export { default as EnterNode } from './variants/enter'
+export { default as FilterNode } from './variants/filter'
 
 /**
  * widgets

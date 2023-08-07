@@ -7,5 +7,5 @@ export type { Events } from './state/state'
 /**
  * ui
  */
-export { default } from './ui/mapper'
-export type { MapperProps } from './ui/mapper'
+export { default } from './ui/list'
+export type { ListProps } from './ui/list'

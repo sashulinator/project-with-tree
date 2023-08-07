@@ -18,5 +18,5 @@ export type { LinkProps } from './ui/link'
 /**
  * variants
  */
-export { State as MapperState, default as Mapper } from './variants/mapper'
-export type { MapperProps } from './variants/mapper'
+export { State as ListState, default as List } from './variants/list'
+export type { ListProps } from './variants/list'

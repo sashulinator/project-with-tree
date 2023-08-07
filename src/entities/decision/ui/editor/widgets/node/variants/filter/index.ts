@@ -1,7 +1,7 @@
 /**
  * ui
  */
-export { Filter } from './ui/filter'
+export { default } from './ui/filter'
 
 /**
  * widgets

@@ -1,28 +1,24 @@
-import { State as NodeState } from '../../..'
-
-import { Id } from '~/utils/core'
-
-import { MapperState as LinkStateDictionary } from '../../../../link'
+import { createElement } from 'react'
 
 import { GestureDragEvent } from '~/ui/canvas'
-
-import { Filter } from '../../filter'
-import { Enter } from '../../enter'
+import { Id } from '~/utils/core'
 import { Prop } from '~/utils/notifier'
-import { createElement } from 'react'
+
+import { LinkListState } from '../../../../..'
+import { State as NodeState, FilterNode, EnterNode } from '../../..'
 
 VariantPicker.displayName = 'VariantPicker'
 
 export interface VariantPickerProps {
   state: NodeState
-  linkStates: LinkStateDictionary
+  linkListStates: LinkListState
   selection: Prop<Id[]>
   remove: (nodeId: Id) => void
   onGestureDrug: (event: GestureDragEvent) => void
 }
 
 export default function VariantPicker(props: VariantPickerProps): JSX.Element {
-  const Component = props.state.point.type === 'MAIN' ? Enter : Filter
+  const Component = props.state.point.type === 'MAIN' ? EnterNode : FilterNode
 
   return createElement(Component, props)
 }

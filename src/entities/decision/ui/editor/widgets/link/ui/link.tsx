@@ -3,30 +3,33 @@ import './link.css'
 import { clsx } from 'clsx'
 
 import { Link as UILink } from '~/ui/canvas'
+
 import { Position } from '~/utils/core'
 import { fns } from '~/utils/function'
 import { useForceUpdate, useOnMount, useUpdate } from '~/utils/hooks'
-import { NodeMapperState } from '../../..'
-import { State, MapperState, getOffset } from '..'
+
+import { NodeListState } from '../../..'
+import { State, ListState, getOffset } from '..'
 
 export interface LinkProps extends React.HTMLAttributes<SVGPathElement> {
   scale: number
   canvasTranslate: Position
   state: State
-  nodeMapperState: NodeMapperState
-  mapperState: MapperState
+  nodeListState: NodeListState
+  // TODO не ничего не должен знать о Листе
+  listState: ListState
 }
 
 export default function Link(props: LinkProps): JSX.Element | null {
-  const { scale, state, canvasTranslate, mapperState: linkStates, nodeMapperState: nodeStates, ...pathProps } = props
+  const { scale, state, canvasTranslate, listState, nodeListState, ...pathProps } = props
 
-  const sourceState = nodeStates.find(props.state.sourceId.value)
-  const targetState = nodeStates.find(props.state.targetId.value)
+  const sourceState = nodeListState.find(props.state.sourceId.value)
+  const targetState = nodeListState.find(props.state.targetId.value)
 
   useUpdate(subscribeOnUpdates, [sourceState, targetState])
   useOnMount(useForceUpdate())
 
-  const isCurrentEditing = linkStates.editingId.value === props.state.id
+  const isCurrentEditing = listState.editingId.value === props.state.id
 
   if ((!sourceState || !targetState) && !isCurrentEditing) return null
 
@@ -52,10 +55,10 @@ export default function Link(props: LinkProps): JSX.Element | null {
 
   function subscribeOnUpdates(update: () => void, uns: (() => void)[]): void {
     // Запускаем update с timeout для того чтобы обновить сначала Node
-    uns.push(linkStates.on('editingId', () => setTimeout(update)))
-    uns.push(linkStates.on('targetId', () => setTimeout(update)))
-    uns.push(linkStates.on('sourceId', () => setTimeout(update)))
-    uns.push(linkStates.on('index', () => setTimeout(update)))
+    uns.push(listState.on('editingId', () => setTimeout(update)))
+    uns.push(listState.on('targetId', () => setTimeout(update)))
+    uns.push(listState.on('sourceId', () => setTimeout(update)))
+    uns.push(listState.on('index', () => setTimeout(update)))
     if (targetState) {
       uns.push(targetState?.on('position', update))
     }
