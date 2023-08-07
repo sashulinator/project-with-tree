@@ -1,42 +1,27 @@
 import './editor.css'
 
-import { useEffect, useMemo } from 'react'
-import { DndProvider } from 'react-dnd'
-import { HTML5Backend } from 'react-dnd-html5-backend'
+import { useMemo } from 'react'
+
 import uniqid from 'uniqid'
 
-import { PaintingPanel } from '~/abstract/canvas'
 import { Decision } from '~/entities/decision'
-import {
-  State,
-  PointPanel,
-  DecisionPanel,
-  LinkListState,
-  LinkList,
-  NodeListState,
-  NodeList,
-  NodeState,
-  getNodeMovement,
-  listenHistory,
-} from '../'
+import { State, PointPanel, DecisionPanel, LinkListState, NodeListState, NodeState } from '../'
 import { Point } from '~/entities/point'
 
-import { Board, GestureDragEvent } from '~/ui/canvas'
 import { ActionHistory } from '~/utils/action-history'
-import { Id, assertDefined, assertNotNull } from '~/utils/core'
-import { useBoolean, useEventListener, useOnMount, useUpdate } from '~/utils/hooks'
+import { Id, assertDefined, c } from '~/utils/core'
+import { useEventListener } from '~/utils/hooks'
 
-import { Prop } from '~/utils/notifier'
+import Canvas from '../widgets/canvas/ui/canvas'
 
-import { getStyle } from '~/utils/dom'
+Editor.displayName = 'decision-Editor'
 
-export interface EditorProps {
+export interface Props {
   decision: Decision
+  className?: string
 }
 
-export default function Editor(props: EditorProps): JSX.Element {
-  const [isRenderLinks, setIsRenderLinks] = useBoolean(false)
-  useOnMount(setIsRenderLinks)
+export default function Editor(props: Props): JSX.Element {
   const rules = props.decision.rules || []
 
   const history = useMemo(() => new ActionHistory(), [])
@@ -45,81 +30,27 @@ export default function Editor(props: EditorProps): JSX.Element {
   const nodeListState = useMemo(() => new NodeListState(props.decision.data), [props.decision.data])
   const linkListState = useMemo(() => new LinkListState(rules), [rules])
 
-  useUpdate(updateOnEvents, [linkListState])
-
   useEventListener('keydown', onKeyDown)
 
-  useEffect(() => {
-    editorState.onAll((eventName, events) => listenHistory(history, editorState, eventName, events))
-  }, [])
-
   return (
-    <div className='decision-Editor'>
-      <DndProvider backend={HTML5Backend}>
-        <DecisionPanel state={editorState} rootProps={{ className: 'decisionPanel panel' }} />
-        <PointPanel
-          centerNode={centerNode}
-          nodeStates={nodeListState}
-          addNode={addNode}
-          rootProps={{ className: 'panel itemsPanel' }}
-        />
-        <Board ref={editorState.ref.set}>
-          <PaintingPanel translate={editorState.translate.value} scale={editorState.scale.value}>
-            {isRenderLinks && (
-              <LinkList
-                canvasTranslate={editorState.translate.value}
-                scale={editorState.scale.value}
-                state={linkListState}
-                nodeListState={nodeListState}
-              />
-            )}
-            <NodeList
-              nodeListState={nodeListState}
-              scale={editorState.scale.value}
-              linkListState={linkListState}
-              state={nodeListState}
-              remove={removeNode}
-              onGestureDrug={onGestureDrug}
-            />
-          </PaintingPanel>
-        </Board>
-      </DndProvider>
+    <div className={c(props.className, Editor.displayName)}>
+      <DecisionPanel state={editorState} rootProps={{ className: 'decisionPanel panel' }} />
+      <PointPanel
+        centerNode={centerNode}
+        nodeStates={nodeListState}
+        addNode={addNode}
+        rootProps={{ className: 'panel itemsPanel' }}
+      />
+      <Canvas
+        removeNode={removeNode}
+        editorState={editorState}
+        nodeListState={nodeListState}
+        linkListState={linkListState}
+      />
     </div>
   )
 
   // Private
-
-  function onGestureDrug(state: NodeState) {
-    return (event: GestureDragEvent) => {
-      event.event.stopPropagation()
-      const GAP = 500
-      const last = { ...state.position.last }
-      const movePosition = getNodeMovement(event, editorState.scale.value)
-
-      if (movePosition === null) return
-
-      let x = state.position.last.x + movePosition.x
-      const y = state.position.last.y + movePosition.y
-
-      if (!event.last) {
-        state.position.move(x, y, false)
-        return
-      }
-
-      const xModulo = x % GAP
-      const toLeft = xModulo < GAP / 2
-      x = toLeft ? x - xModulo : x + GAP - xModulo
-
-      state.position.transitionedMove(x, y, () => {
-        setTimeout(() => {
-          gridDepth(x)
-          if (last.x !== x) {
-            gridDepth(last.x)
-          }
-        })
-      })
-    }
-  }
 
   function removeNode(id: Id): void {
     nodeListState.remove(id)
@@ -162,41 +93,4 @@ export default function Editor(props: EditorProps): JSX.Element {
       history.previous()
     }
   }
-
-  function updateOnEvents(update: () => void): void {
-    editorState.on('translate', update)
-    editorState.on('scale', update)
-  }
-
-  function gridDepth(x: number): void {
-    const depthNodes = nodeListState
-      .values()
-      .filter((state) => state.position.value.x === x)
-      .sort((a, b) => a.position.value.y - b.position.value.y)
-
-    const YGAP = 50
-
-    const nodesHeight = depthNodes.reduce((acc, state) => {
-      const style = getStyle(state.ref.value)
-      assertNotNull(style)
-      const height = parseInt(style.height, 10)
-      acc += height
-      return acc
-    }, 0)
-
-    const depthHeight = nodesHeight + depthNodes.length * YGAP
-    const depthTop = depthHeight / -2
-
-    let nextY = depthTop
-
-    depthNodes.forEach((state) => {
-      state.position.transitionedMove(state.position.value.x, nextY)
-      const style = getStyle(state.ref.value)
-      assertNotNull(style)
-      const height = parseInt(style.height, 10)
-      nextY += height + YGAP
-    })
-  }
 }
-
-Editor.displayName = 'DecisionEditor'
