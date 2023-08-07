@@ -61,6 +61,7 @@ export default function Link(props: LinkProps): JSX.Element | null {
     uns.push(listState.on('index', () => setTimeout(update)))
     if (targetState) {
       uns.push(targetState?.on('position', update))
+      uns.push(targetState?.on('ref', update))
     }
     if (sourceState) {
       uns.push(sourceState?.on('position', update))

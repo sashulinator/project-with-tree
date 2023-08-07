@@ -18,7 +18,7 @@ export * from './themes'
  * ui
  */
 export { default } from './ui/editor'
-export type { EditorProps } from './ui/editor'
+export type { Props as EditorProps } from './ui/editor'
 
 /**
  * widgets
