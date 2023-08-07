@@ -47,7 +47,7 @@ export {
   getMovement as getNodeMovement,
 } from './widgets/node'
 export type {
-  ListProps as NodeMapperProps,
+  ListProps as NodeListProps,
   NodeProps,
   StateProps as NodeStateProps,
   ListEvents as NodeEvents,
