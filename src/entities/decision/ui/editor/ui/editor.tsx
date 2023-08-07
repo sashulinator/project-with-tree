@@ -45,8 +45,6 @@ export default function Editor(props: EditorProps): JSX.Element {
   const nodeListState = useMemo(() => new NodeListState(props.decision.data), [props.decision.data])
   const linkListState = useMemo(() => new LinkListState(rules), [rules])
 
-  const selection = useMemo(() => new Prop([] as Id[]), [])
-
   useUpdate(updateOnEvents, [linkListState])
 
   useEventListener('keydown', onKeyDown)
@@ -76,7 +74,7 @@ export default function Editor(props: EditorProps): JSX.Element {
               />
             )}
             <NodeList
-              selection={selection}
+              nodeListState={nodeListState}
               scale={editorState.scale.value}
               linkListState={linkListState}
               state={nodeListState}

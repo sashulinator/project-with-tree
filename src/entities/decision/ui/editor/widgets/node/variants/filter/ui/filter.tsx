@@ -13,7 +13,7 @@ Filter.displayName = 'decisionCanvas-w-Node-v-Filter'
  * Node вариант filter
  */
 export default function Filter(props: VariantPickerProps): JSX.Element {
-  const { remove, linkListStates: linkStates, state, ...nodeProps } = props
+  const { remove, linkListState, state, ...nodeProps } = props
   useUpdate(subscribeOnUpdates)
 
   return (
@@ -22,10 +22,12 @@ export default function Filter(props: VariantPickerProps): JSX.Element {
       state={props.state}
       className={Filter.displayName}
       title={<Title state={props.state} />}
-      toolbar={<Toolbar selection={props.selection} state={props.state} remove={(): void => remove(props.state.id)} />}
+      toolbar={
+        <Toolbar listState={props.nodeListState} state={props.state} remove={(): void => remove(props.state.id)} />
+      }
       sourceLinks={
         <SourceLinks
-          linkListState={linkStates}
+          linkListState={linkListState}
           state={state}
           onNewJointClick={onNewJointClick('source')}
           onJointClick={onJointClick}
@@ -33,7 +35,7 @@ export default function Filter(props: VariantPickerProps): JSX.Element {
       }
       targetLinks={
         <TargetLinks
-          linkStates={linkStates}
+          linkStates={linkListState}
           state={state}
           onNewJointClick={onNewJointClick('target')}
           onJointClick={onJointClick}
@@ -49,19 +51,19 @@ export default function Filter(props: VariantPickerProps): JSX.Element {
   }
 
   function onJointClick(linkId: Id): void {
-    if (props.linkListStates.editingId.value) {
-      props.linkListStates.finishEditing(linkId)
+    if (props.linkListState.editingId.value) {
+      props.linkListState.finishEditing(linkId)
     } else {
-      props.linkListStates.startEditing(linkId, props.state.id)
+      props.linkListState.startEditing(linkId, props.state.id)
     }
   }
 
   function onNewJointClick(startLinkType: 'target' | 'source'): (newLinkId: Id) => void {
     return (newLinkId: Id) => {
-      if (props.linkListStates.editingId.value) {
-        props.linkListStates.finishNewLink(props.state.id)
+      if (props.linkListState.editingId.value) {
+        props.linkListState.finishNewLink(props.state.id)
       } else {
-        props.linkListStates.startNewLink(props.state.id, newLinkId, startLinkType)
+        props.linkListState.startNewLink(props.state.id, newLinkId, startLinkType)
       }
     }
   }
