@@ -48,6 +48,8 @@ export {
   Joint as NodeJoint,
   VariantPicker as NodeVariantPicker,
   getMovement as getNodeMovement,
+  NODE_GAP,
+  COLUMN_GAP,
 } from './widgets/node'
 export type {
   ListProps as NodeListProps,

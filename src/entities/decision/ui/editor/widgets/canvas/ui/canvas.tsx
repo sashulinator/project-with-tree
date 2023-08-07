@@ -1,9 +1,8 @@
 import { Board, GestureDragEvent, PaintingPanel } from '~/ui/canvas'
-import { Id, assertNotNull } from '~/utils/core'
-import { getStyle } from '~/utils/dom'
+import { Id } from '~/utils/core'
 import { useUpdate } from '~/utils/hooks'
 
-import { LinkListState, LinkList, NodeListState, NodeList, NodeState, getNodeMovement } from '../../..'
+import { LinkListState, LinkList, NodeListState, NodeList, NodeState, getNodeMovement, COLUMN_GAP } from '../../..'
 import { State } from '../'
 
 export interface Props {
@@ -45,8 +44,6 @@ export default function Canvas(props: Props): JSX.Element {
   function onGestureDrug(state: NodeState) {
     return (event: GestureDragEvent) => {
       event.event.stopPropagation()
-      const GAP = 500
-      const last = { ...state.position.last }
       const movePosition = getNodeMovement(event, props.state.scale.value)
 
       if (movePosition === null) return
@@ -59,48 +56,17 @@ export default function Canvas(props: Props): JSX.Element {
         return
       }
 
-      const xModulo = x % GAP
-      const toLeft = xModulo < GAP / 2
-      x = toLeft ? x - xModulo : x + GAP - xModulo
+      const xModulo = x % COLUMN_GAP
+      const toLeft = xModulo < COLUMN_GAP / 2
+      x = toLeft ? x - xModulo : x + COLUMN_GAP - xModulo
 
-      state.position.transitionedMove(x, y, () => {
-        setTimeout(() => {
-          gridDepth(x)
-          if (last.x !== x) {
-            gridDepth(last.x)
-          }
-        })
+      const last = { ...state.position.last }
+
+      state.position.transitionedMove(x, y, function onEnd() {
+        props.nodeListState.positionColumn(x)
+        if (last.x === x) return
+        props.nodeListState.positionColumn(last.x)
       })
     }
-  }
-
-  function gridDepth(x: number): void {
-    const depthNodes = props.nodeListState
-      .values()
-      .filter((state) => state.position.value.x === x)
-      .sort((a, b) => a.position.value.y - b.position.value.y)
-
-    const YGAP = 50
-
-    const nodesHeight = depthNodes.reduce((acc, state) => {
-      const style = getStyle(state.ref.value)
-      assertNotNull(style)
-      const height = parseInt(style.height, 10)
-      acc += height
-      return acc
-    }, 0)
-
-    const depthHeight = nodesHeight + depthNodes.length * YGAP
-    const depthTop = depthHeight / -2
-
-    let nextY = depthTop
-
-    depthNodes.forEach((state) => {
-      state.position.transitionedMove(state.position.value.x, nextY)
-      const style = getStyle(state.ref.value)
-      assertNotNull(style)
-      const height = parseInt(style.height, 10)
-      nextY += height + YGAP
-    })
   }
 }

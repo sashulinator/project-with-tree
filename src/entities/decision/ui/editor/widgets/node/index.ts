@@ -1,4 +1,9 @@
 /**
+ * constants
+ */
+export * from './constants/gap'
+
+/**
  * lib
  */
 export * from './lib/get-movement'
