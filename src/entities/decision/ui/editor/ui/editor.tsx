@@ -1,18 +1,15 @@
 import './editor.css'
 
 import { useMemo } from 'react'
-
 import uniqid from 'uniqid'
 
 import { Decision } from '~/entities/decision'
-import { State, PointPanel, DecisionPanel, LinkListState, NodeListState, NodeState } from '../'
 import { Point } from '~/entities/point'
-
 import { ActionHistory } from '~/utils/action-history'
 import { Id, assertDefined, c } from '~/utils/core'
 import { useEventListener } from '~/utils/hooks'
 
-import Canvas from '../widgets/canvas/ui/canvas'
+import { State, PointPanel, DecisionPanel, LinkListState, NodeListState, NodeState, Canvas, CanvasState } from '../'
 
 Editor.displayName = 'decision-Editor'
 
@@ -26,7 +23,8 @@ export default function Editor(props: Props): JSX.Element {
 
   const history = useMemo(() => new ActionHistory(), [])
 
-  const editorState = useMemo(() => new State({ translate: { x: 0, y: 0 }, scale: 1, decision: props.decision }), [])
+  const state = useMemo(() => new State(props.decision), [])
+  const canvasState = useMemo(() => new CanvasState(1, { x: 0, y: 0 }), [])
   const nodeListState = useMemo(() => new NodeListState(props.decision.data), [props.decision.data])
   const linkListState = useMemo(() => new LinkListState(rules), [rules])
 
@@ -34,19 +32,14 @@ export default function Editor(props: Props): JSX.Element {
 
   return (
     <div className={c(props.className, Editor.displayName)}>
-      <DecisionPanel state={editorState} rootProps={{ className: 'decisionPanel panel' }} />
+      <DecisionPanel state={state} rootProps={{ className: 'decisionPanel panel' }} />
       <PointPanel
         centerNode={centerNode}
         nodeStates={nodeListState}
         addNode={addNode}
         rootProps={{ className: 'panel itemsPanel' }}
       />
-      <Canvas
-        removeNode={removeNode}
-        editorState={editorState}
-        nodeListState={nodeListState}
-        linkListState={linkListState}
-      />
+      <Canvas removeNode={removeNode} state={canvasState} nodeListState={nodeListState} linkListState={linkListState} />
     </div>
   )
 
@@ -62,15 +55,15 @@ export default function Editor(props: Props): JSX.Element {
   }
 
   function addNode(): void {
-    const rect = editorState.ref.value?.getBoundingClientRect()
+    const rect = canvasState.ref.value?.getBoundingClientRect()
     assertDefined(rect)
     const point: Point = {
       type: 'SIFT',
       id: uniqid(),
       computation: 'successively',
       name: 'new',
-      x: -editorState.translate.value.x + rect?.width / 2 - 200,
-      y: -editorState.translate.value.y + rect?.height / 2 - 150,
+      x: -canvasState.translate.value.x + rect?.width / 2 - 200,
+      y: -canvasState.translate.value.y + rect?.height / 2 - 150,
     }
     nodeListState.add(new NodeState(point))
   }
@@ -81,7 +74,7 @@ export default function Editor(props: Props): JSX.Element {
     assertDefined(rect)
     const mx = -nodeState.position.value.x + window.innerWidth / 2 - rect.width / 2
     const my = -nodeState.position.value.y + window.innerHeight / 2 - rect.height / 2
-    editorState.d3zoom.setTranslate({ x: mx, y: my })
+    canvasState.d3zoom.setTranslate({ x: mx, y: my })
   }
 
   function onKeyDown(ev: KeyboardEvent): void {
