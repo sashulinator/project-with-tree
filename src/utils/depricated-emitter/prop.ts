@@ -34,7 +34,9 @@ export class Prop<TEventName extends string, TValue, TEmitter extends Emitter<An
 
     this._value = value
 
-    this.emitter.on(this.eventName, (ev) => (this._value = ev.value))
+    this.emitter.on(this.eventName, (ev) => {
+      this._value = ev.value
+    })
   }
 
   get value(): TValue {
@@ -42,11 +44,11 @@ export class Prop<TEventName extends string, TValue, TEmitter extends Emitter<An
   }
 
   set value(value: TValue) {
-    this.emitter.emit(this.eventName, { value })
+    this.emitter.emit(this.eventName, { value, prev: this._value })
   }
 
   set = (value: TValue, ev?: Record<string, unknown> | undefined): void => {
-    this.emitter.emit(this.eventName, { value, ...ev })
+    this.emitter.emit(this.eventName, { value, prev: this._value, ...ev })
   }
 
   setSilently_DANGEROUS = (value: TValue) => {

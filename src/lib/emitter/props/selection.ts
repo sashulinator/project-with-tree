@@ -4,13 +4,13 @@ import { Prop } from '~/utils/depricated-emitter'
 export class Selection<N extends string> extends Prop<N, Set<Id>> {
   // Select
   select = (value: Id): void => {
-    this.value.add(value)
-    this.value = this.value
+    this.value = new Set(this.value).add(value)
   }
 
   remove = (id: Id): void => {
-    this.value.delete(id)
-    this.value = this.value
+    const set = new Set(this.value)
+    set.delete(id)
+    this.value = set
   }
 
   toggle = (id: Id): void => {

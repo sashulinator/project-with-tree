@@ -13,30 +13,33 @@ Filter.displayName = 'decisionCanvas-w-Node-v-Filter'
  * Node вариант filter
  */
 export default function Filter(props: VariantPickerProps): JSX.Element {
-  const { remove, linkListState, state, ...nodeProps } = props
   useUpdate(subscribeOnUpdates)
 
   return (
     <Node
-      {...nodeProps}
       state={props.state}
+      onGestureDrug={props.onGestureDrug}
       className={Filter.displayName}
       title={<Title state={props.state} />}
       toolbar={
-        <Toolbar listState={props.nodeListState} state={props.state} remove={(): void => remove(props.state.id)} />
+        <Toolbar
+          listState={props.nodeListState}
+          state={props.state}
+          remove={(): void => props.remove(props.state.id)}
+        />
       }
       sourceLinks={
         <SourceLinks
-          linkListState={linkListState}
-          state={state}
+          linkListState={props.linkListState}
+          state={props.state}
           onNewJointClick={onNewJointClick('source')}
           onJointClick={onJointClick}
         />
       }
       targetLinks={
         <TargetLinks
-          linkStates={linkListState}
-          state={state}
+          linkStates={props.linkListState}
+          state={props.state}
           onNewJointClick={onNewJointClick('target')}
           onJointClick={onJointClick}
         />

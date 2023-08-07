@@ -1,6 +1,6 @@
 import './editor.css'
 
-import { useMemo } from 'react'
+import { useEffect, useMemo } from 'react'
 import uniqid from 'uniqid'
 
 import { Decision } from '~/entities/decision'
@@ -9,7 +9,17 @@ import { ActionHistory } from '~/utils/action-history'
 import { Id, assertDefined, c } from '~/utils/core'
 import { useEventListener } from '~/utils/hooks'
 
-import { State, PointPanel, DecisionPanel, LinkListState, NodeListState, NodeState, Canvas, CanvasState } from '../'
+import {
+  State,
+  PointPanel,
+  DecisionPanel,
+  LinkListState,
+  NodeListState,
+  NodeState,
+  Canvas,
+  CanvasState,
+  historyListener,
+} from '../'
 
 Editor.displayName = 'decision-Editor'
 
@@ -29,6 +39,7 @@ export default function Editor(props: Props): JSX.Element {
   const linkListState = useMemo(() => new LinkListState(rules), [rules])
 
   useEventListener('keydown', onKeyDown)
+  useEffect(subscribeHistory, [history, state, nodeListState, linkListState])
 
   return (
     <div className={c(props.className, Editor.displayName)}>
@@ -44,6 +55,10 @@ export default function Editor(props: Props): JSX.Element {
   )
 
   // Private
+
+  function subscribeHistory(): void {
+    historyListener({ history, state, nodeListState, linkListState })
+  }
 
   function removeNode(id: Id): void {
     nodeListState.remove(id)

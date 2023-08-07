@@ -13,7 +13,7 @@ export type Events = {
   remove: { state: NodeState }
   // Уникальные события
   // ...
-  selection: { value: Set<Id> }
+  selection: { value: Set<Id>; prev: Set<Id> }
 
   // События стейтов
   computation: { value: Point['computation']; state: NodeState }

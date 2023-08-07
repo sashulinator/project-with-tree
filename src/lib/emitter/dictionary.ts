@@ -38,7 +38,7 @@ export class EmitterableDictionary<
       const item = emitterables[index]
       item.onAll((eventName, ev) => {
         // eslint-disable-next-line @typescript-eslint/no-unsafe-argument, @typescript-eslint/no-explicit-any
-        this.emit(eventName as any, { itemId: this.getId(item), ...ev })
+        this.emit(eventName as any, { state: item, ...ev })
       })
     }
   }
@@ -64,14 +64,14 @@ export class EmitterableDictionary<
     return find(this.items, id)
   }
 
-  add = (item: TState): void => {
-    this.emit('add', { state: item })
-    this.subscribeToItemEvents([item])
+  add = (state: TState): void => {
+    this.emit('add', { state })
+    this.subscribeToItemEvents([state])
   }
 
-  update = (item: TState): void => {
-    this.emit('update', { state: item })
-    this.subscribeToItemEvents([item])
+  update = (state: TState): void => {
+    this.emit('update', { state })
+    this.subscribeToItemEvents([state])
   }
 
   remove = (id: Id): void => {
