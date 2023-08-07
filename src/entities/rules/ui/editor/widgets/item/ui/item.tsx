@@ -6,9 +6,8 @@ import Flex, { FlexProps } from '~/abstract/flex/ui/flex'
 import { c } from '~/utils/core'
 import Input from '../widgets/input'
 import AddDeleteButtons from '../widgets/add-delete-buttons/ui/add-delete-buttons'
-import { getCheckedArr } from '~/entities/rules/lib'
-import { editorRulesValuesAtom } from '~/entities/rules/models'
-import { EditorItem } from '~/entities/rules/models/editorRulesValuesAtom'
+import { EditorItem, editorRulesValuesAtom } from '~/entities/rules/models/editorRulesValues'
+import { getCheckedArr } from '~/entities/rules/lib/get-checked-arr'
 
 interface Props {
   values: EditorItem[]

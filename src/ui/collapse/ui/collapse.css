@@ -8,8 +8,8 @@
 }
 
 .ui-Collapse {
+  background: transparent;
   width: 100%;
-  background-color: var(--bg);
   border-radius: var(--l);
 }
 

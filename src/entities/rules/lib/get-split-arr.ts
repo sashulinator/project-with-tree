@@ -1,5 +1,5 @@
 import uniqid from 'uniqid'
-import { EditorValues } from '../models/editorRulesValuesAtom'
+import { EditorValues } from '../models/editorRulesValues'
 
 export const getSplitArr = (arr: EditorValues[], index: number): EditorValues[] => {
   const result = arr.map((item, i) => {

@@ -3,8 +3,12 @@ import MentionsInput from '~/ui/mention-input'
 import { Mention } from 'react-mentions'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
 import DropBoard from '~/abstract/drop-board/ui/drop-board'
-import { draggableCardAtom, editorRulesValuesAtom, mentionsDataAtom } from '~/entities/rules/models'
-import { onChangeTextarea, onDropTextarea } from '~/entities/rules/lib'
+import { useRef } from 'react'
+import { mentionsDataAtom } from '~/entities/rules/models/mentionsData'
+import { draggableCardAtom } from '~/entities/rules/models/draggableCard'
+import { editorRulesValuesAtom } from '~/entities/rules/models/editorRulesValues'
+import { onDropTextarea } from '~/entities/rules/lib/on-drop-textarea'
+import { onChangeTextarea } from '~/entities/rules/lib/on-change-textarea'
 
 export interface MentionsItem {
   display: string
@@ -23,15 +27,17 @@ export default function Input(props: EditorInputProps): JSX.Element {
   const [draggableCard, setDraggableCard] = useRecoilState(draggableCardAtom)
   const setEditorValues = useSetRecoilState(editorRulesValuesAtom)
 
+  const inputRef = useRef<HTMLInputElement | null>(null)
+
   // TODO ??? Создать e-Domain-ui-Mentions ???
   return (
     <DropBoard drop={drop}>
-      <MentionsInput value={value} onChange={handleChangeMention}>
+      <MentionsInput value={value} onChange={handleChangeMention} inputRef={inputRef}>
         <Mention
           trigger='@'
           data={mentionsData}
           style={{
-            backgroundColor: '#cee4e5',
+            backgroundColor: 'var(--mentionItem_bg)',
           }}
         />
       </MentionsInput>
@@ -44,6 +50,7 @@ export default function Input(props: EditorInputProps): JSX.Element {
     if (draggableCard) {
       setEditorValues((arr) => onDropTextarea(arr, draggableCard, id))
       setDraggableCard(null)
+      inputRef.current?.focus()
     }
   }
 

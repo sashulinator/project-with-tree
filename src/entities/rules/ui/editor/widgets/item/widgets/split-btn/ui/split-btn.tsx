@@ -1,6 +1,6 @@
 import { useSetRecoilState } from 'recoil'
-import { getSplitArr } from '~/entities/rules/lib'
-import { editorRulesValuesAtom } from '~/entities/rules/models'
+import { getSplitArr } from '~/entities/rules/lib/get-split-arr'
+import { editorRulesValuesAtom } from '~/entities/rules/models/editorRulesValues'
 import { GhostButton, GhostButtonProps } from '~/ui/button'
 import { Split } from '~/ui/icon/variants/split'
 

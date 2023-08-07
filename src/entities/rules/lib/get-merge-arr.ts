@@ -1,4 +1,4 @@
-import { EditorValues } from '../models/editorRulesValuesAtom'
+import { EditorValues } from '../models/editorRulesValues'
 
 export const getMergeArr = (arr: EditorValues[]): EditorValues[] => {
   const startArr: EditorValues[] = []

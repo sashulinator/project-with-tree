@@ -1,4 +1,5 @@
 import './editor.css'
+
 import { useRecoilState } from 'recoil'
 import Flex from '~/abstract/flex'
 import { H1 } from '~/ui/heading'
@@ -8,10 +9,14 @@ import { Save } from '~/ui/icon/variants/save'
 import SplitBtn from '../widgets/item/widgets/split-btn'
 import { Item } from '../widgets/item'
 import AddDeleteButtons from '../widgets/item/widgets/add-delete-buttons/ui/add-delete-buttons'
-import { getMergeArr } from '~/entities/rules/lib'
-import { editorRulesValuesAtom } from '~/entities/rules/models'
 import { ArrowLeft, ArrowRight } from '~/ui/icon'
 import { useEffect, useRef } from 'react'
+import { editorRulesValuesAtom } from '~/entities/rules/models/editorRulesValues'
+import { getMergeArr } from '~/entities/rules/lib/get-merge-arr'
+import { emitter } from '~/shared/emitter'
+import { themes } from '../themes'
+
+emitter.emit('addTheme', themes)
 
 export function Editor(): JSX.Element {
   const [editorRulesValues, setEditorVales] = useRecoilState(editorRulesValuesAtom)
