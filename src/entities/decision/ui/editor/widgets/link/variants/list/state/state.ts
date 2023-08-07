@@ -20,8 +20,10 @@ type Events = {
 export class State extends EmitterableDictionary<Events, LinkState> {
   editingId: Prop<'editingId', Id | undefined>
 
-  constructor(linkStateList: LinkState[]) {
-    super(linkStateList, (l) => l.id.toString())
+  constructor(ruleList: Rule[]) {
+    const linkStates = ruleList?.map((rule) => new LinkState({ id: rule.id, rule }))
+
+    super(linkStates, (l) => l.id.toString())
 
     this.editingId = new Prop<'editingId', Id | undefined>('editingId', undefined, this)
   }

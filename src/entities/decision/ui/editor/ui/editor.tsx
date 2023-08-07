@@ -11,7 +11,6 @@ import {
   State,
   PointPanel,
   DecisionPanel,
-  LinkState,
   LinkListState,
   LinkList,
   NodeListState,
@@ -43,15 +42,10 @@ export default function Editor(props: EditorProps): JSX.Element {
   const history = useMemo(() => new ActionHistory(), [])
 
   const editorState = useMemo(() => new State({ translate: { x: 0, y: 0 }, scale: 1, decision: props.decision }), [])
-
-  // TODO убрать это в LinkListState
-  const linkStateList = useMemo(() => rules?.map((rule) => new LinkState({ id: rule.id, rule })), [])
-
-  const nodeStates = useMemo(() => new NodeListState(props.decision.data), [props.decision.data])
+  const nodeListState = useMemo(() => new NodeListState(props.decision.data), [props.decision.data])
+  const linkListState = useMemo(() => new LinkListState(rules), [rules])
 
   const selection = useMemo(() => new Prop([] as Id[]), [])
-
-  const linkListState = useMemo(() => new LinkListState(linkStateList), [linkStateList])
 
   useUpdate(updateOnEvents, [linkListState])
 
@@ -67,7 +61,7 @@ export default function Editor(props: EditorProps): JSX.Element {
         <DecisionPanel state={editorState} rootProps={{ className: 'decisionPanel panel' }} />
         <PointPanel
           centerNode={centerNode}
-          nodeStates={nodeStates}
+          nodeStates={nodeListState}
           addNode={addNode}
           rootProps={{ className: 'panel itemsPanel' }}
         />
@@ -78,14 +72,14 @@ export default function Editor(props: EditorProps): JSX.Element {
                 canvasTranslate={editorState.translate.value}
                 scale={editorState.scale.value}
                 state={linkListState}
-                nodeListState={nodeStates}
+                nodeListState={nodeListState}
               />
             )}
             <NodeList
               selection={selection}
               scale={editorState.scale.value}
               linkListState={linkListState}
-              state={nodeStates}
+              state={nodeListState}
               remove={removeNode}
               onGestureDrug={onGestureDrug}
             />
@@ -130,9 +124,9 @@ export default function Editor(props: EditorProps): JSX.Element {
   }
 
   function removeNode(id: Id): void {
-    nodeStates.remove(id)
+    nodeListState.remove(id)
 
-    linkStateList.forEach((s) => {
+    linkListState.values().forEach((s) => {
       if (s.sourceId.value !== id && s.targetId.value !== id) return
       linkListState.remove(s.id)
     })
@@ -149,11 +143,11 @@ export default function Editor(props: EditorProps): JSX.Element {
       x: -editorState.translate.value.x + rect?.width / 2 - 200,
       y: -editorState.translate.value.y + rect?.height / 2 - 150,
     }
-    nodeStates.add(new NodeState(point))
+    nodeListState.add(new NodeState(point))
   }
 
   function centerNode(id: Id): void {
-    const nodeState = nodeStates.get(id)
+    const nodeState = nodeListState.get(id)
     const rect = nodeState.ref.value?.getBoundingClientRect()
     assertDefined(rect)
     const mx = -nodeState.position.value.x + window.innerWidth / 2 - rect.width / 2
@@ -177,7 +171,7 @@ export default function Editor(props: EditorProps): JSX.Element {
   }
 
   function gridDepth(x: number): void {
-    const depthNodes = nodeStates
+    const depthNodes = nodeListState
       .values()
       .filter((state) => state.position.value.x === x)
       .sort((a, b) => a.position.value.y - b.position.value.y)
