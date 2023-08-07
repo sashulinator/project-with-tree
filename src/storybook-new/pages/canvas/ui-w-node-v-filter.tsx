@@ -1,6 +1,6 @@
 import { useMemo } from 'react'
 
-import { State as LinkState, ListState as LinkStateDictionary } from '~/entities/decision/ui/editor/widgets/link'
+import { ListState as LinkStateDictionary } from '~/entities/decision/ui/editor/widgets/link'
 
 import { Point } from '~/entities/point'
 import { Prop } from '~/utils/notifier'
@@ -40,16 +40,13 @@ const point2: Point = {
 
 export function Page(): JSX.Element {
   const linkStates = new LinkStateDictionary([
-    new LinkState({
-      id: 'test',
-      rule: {
-        id: 'id1',
-        name: 'name',
-        sourceId: 'id1',
-        targetId: 'id2',
-        i: 1,
-      },
-    }),
+    {
+      id: 'id1',
+      name: 'name',
+      sourceId: 'id1',
+      targetId: 'id2',
+      i: 1,
+    },
   ])
 
   const state1 = useMemo(() => new State(point1), [])
