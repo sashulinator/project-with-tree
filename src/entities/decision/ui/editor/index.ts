@@ -39,18 +39,18 @@ export type {
 
 export {
   default as Node,
-  Mapper as NodeMapper,
+  List as NodeList,
   State as NodeState,
-  MapperState as NodeMapperState,
+  ListState as NodeListState,
   Joint as NodeJoint,
   VariantPicker as NodeVariantPicker,
   getMovement as getNodeMovement,
 } from './widgets/node'
 export type {
-  MapperProps as NodeMapperProps,
+  ListProps as NodeMapperProps,
   NodeProps,
   StateProps as NodeStateProps,
-  MapperEvents as NodeEvents,
+  ListEvents as NodeEvents,
   JointProps as NodeJointProps,
   VariantPickerProps as NodeVariantPickerProps,
 } from './widgets/node'

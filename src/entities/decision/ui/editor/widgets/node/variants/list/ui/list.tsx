@@ -6,21 +6,21 @@ import { useUpdate } from '~/utils/hooks'
 
 import { LinkListState } from '../../../../..'
 import { State } from '..'
-import { VariantPicker, State as NodeState } from '../../../'
+import { VariantPicker, State as NodeState } from '../../..'
 
 import { Prop } from '~/utils/notifier'
 import { GestureDragEvent } from '~/ui/canvas'
 
-export interface MapperProps {
+export interface ListProps {
   scale: number
   state: State
   selection: Prop<Id[]>
-  linkMapperState: LinkListState
+  linkListState: LinkListState
   remove: (id: Id) => void
   onGestureDrug: (state: NodeState) => (event: GestureDragEvent) => void
 }
 
-export function MapperComponent(props: MapperProps): JSX.Element {
+export function ListComponent(props: ListProps): JSX.Element {
   useUpdate(subscribeOnUpdates)
 
   return (
@@ -31,7 +31,7 @@ export function MapperComponent(props: MapperProps): JSX.Element {
             remove={props.remove}
             key={nodeState.id}
             state={nodeState}
-            linkStates={props.linkMapperState}
+            linkListStates={props.linkListState}
             selection={props.selection}
             onGestureDrug={props.onGestureDrug(nodeState)}
           />
@@ -47,5 +47,5 @@ export function MapperComponent(props: MapperProps): JSX.Element {
   }
 }
 
-const Mapper = memo(MapperComponent)
-export default Mapper
+const List = memo(ListComponent)
+export default List

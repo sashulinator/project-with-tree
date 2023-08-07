@@ -3,13 +3,13 @@ import { memo } from 'react'
 import { Position } from '~/utils/core'
 import { useUpdate } from '~/utils/hooks'
 
-import { NodeMapperState } from '../../../../..'
+import { NodeListState } from '../../../../..'
 import Link from '../../..'
 import { State } from '..'
 
 export interface Props {
   state: State
-  nodeListState: NodeMapperState
+  nodeListState: NodeListState
   canvasTranslate: Position
   scale: number
 }

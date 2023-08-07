@@ -1,18 +1,16 @@
 import { useMemo } from 'react'
 
-import { Filter } from '~/entities/decision/ui/editor/widgets/node/variants/filter'
-
 import { State as LinkState, ListState as LinkStateDictionary } from '~/entities/decision/ui/editor/widgets/link'
 
 import { Point } from '~/entities/point'
 import { Prop } from '~/utils/notifier'
 import { Id } from '~/utils/core'
-import { State } from '~/entities/decision/ui/editor/widgets/node'
+import { FilterNode, State } from '~/entities/decision/ui/editor/widgets/node'
 import { DndProvider } from 'react-dnd'
 import { HTML5Backend } from 'react-dnd-html5-backend'
 
 export const decisionCanvasNodeVSift = {
-  name: Filter.displayName,
+  name: FilterNode.displayName,
   element: Page,
   description: 'Компонент Node наследующий ui-Item',
   features: ['Разбивка на зоны toolbar, title, links'],
@@ -61,10 +59,10 @@ export function Page(): JSX.Element {
   return (
     <svg width='100%' height='333px' style={{ border: '1px solid red' }}>
       <DndProvider backend={HTML5Backend}>
-        <Filter
+        <FilterNode
           selection={selection}
           state={state1}
-          linkStates={linkStates}
+          linkListStates={linkStates}
           remove={(): void => console.log('remove!')}
           onGestureDrug={(event): void => {
             const x = state1.position.last.x + event.movement[0]
@@ -72,10 +70,10 @@ export function Page(): JSX.Element {
             state1.position.move(x, y, event.last)
           }}
         />
-        <Filter
+        <FilterNode
           selection={selection}
           state={state2}
-          linkStates={linkStates}
+          linkListStates={linkStates}
           remove={(): void => console.log('remove!')}
           onGestureDrug={(event): void => {
             const x = state2.position.last.x + event.movement[0]

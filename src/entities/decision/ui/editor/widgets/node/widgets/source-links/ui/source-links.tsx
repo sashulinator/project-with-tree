@@ -1,21 +1,22 @@
 import './source-links.css'
 
-import type { Identifier, XYCoord } from 'dnd-core'
-import { State, Joint } from '../../..'
-
-import { useUpdate } from '~/utils/hooks'
 import { useRef, useState } from 'react'
-import uniqid from 'uniqid'
-import { Id, c } from '~/utils/core'
 import { useDrag, useDrop } from 'react-dnd'
+import type { Identifier, XYCoord } from 'dnd-core'
+import uniqid from 'uniqid'
+
+import { Id, c } from '~/utils/core'
+import { useUpdate } from '~/utils/hooks'
+
 import { LinkState, LinkListState } from '../../../../../'
+import { State, Joint } from '../../..'
 
 SourceLinks.displayName = 'decisionEditor-ui-Canvas-w-Node-w-SourceLinks'
 
 export interface Props {
   className?: string
   state: State
-  linkMapperState: LinkListState
+  linkListState: LinkListState
   hideNewLink?: boolean
   onNewJointClick: (newLinkId: Id) => void
   onJointClick: (linkId: Id) => void
@@ -26,12 +27,12 @@ export default function SourceLinks(props: Props): JSX.Element {
 
   useUpdate(subscribeOnUpdates)
 
-  const editingLinkState = props.linkMapperState.findEditingLinkState()
+  const editingLinkState = props.linkListState.findEditingLinkState()
   const isEditingThisNode =
     editingLinkState?.sourceId.value === props.state.id || editingLinkState?.targetId.value === props.state.id
   const isEditingHasSource = Boolean(editingLinkState?.sourceId.value)
 
-  const sourceLinkStates = props.linkMapperState
+  const sourceLinkStates = props.linkListState
     .getLinksBySourceId(props.state.id)
     .sort((a, b) => (a.index.value < b.index.value ? -1 : 1))
 
@@ -48,7 +49,7 @@ export default function SourceLinks(props: Props): JSX.Element {
         return (
           <RuleSet
             index={i}
-            linkMapperState={props.linkMapperState}
+            linkMapperState={props.linkListState}
             nodeId={props.state.id}
             isEditingThisNode={isEditingThisNode}
             isLinked={isLinked}
@@ -74,11 +75,11 @@ export default function SourceLinks(props: Props): JSX.Element {
   // Private
 
   function subscribeOnUpdates(update: () => void): void {
-    props.linkMapperState.on('add', update)
-    props.linkMapperState.on('remove', update)
-    props.linkMapperState.on('index', update)
-    props.linkMapperState.on('update', update)
-    props.linkMapperState.on('targetId', () => setNewLinkId(uniqid()))
+    props.linkListState.on('add', update)
+    props.linkListState.on('remove', update)
+    props.linkListState.on('index', update)
+    props.linkListState.on('update', update)
+    props.linkListState.on('targetId', () => setNewLinkId(uniqid()))
   }
 }
 

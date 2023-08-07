@@ -14,8 +14,8 @@ import {
   LinkState,
   LinkListState,
   LinkList,
-  NodeMapperState,
-  NodeMapper,
+  NodeListState,
+  NodeList,
   NodeState,
   getNodeMovement,
   listenHistory,
@@ -47,7 +47,7 @@ export default function Editor(props: EditorProps): JSX.Element {
   // TODO убрать это в LinkListState
   const linkStateList = useMemo(() => rules?.map((rule) => new LinkState({ id: rule.id, rule })), [])
 
-  const nodeStates = useMemo(() => new NodeMapperState(props.decision.data), [props.decision.data])
+  const nodeStates = useMemo(() => new NodeListState(props.decision.data), [props.decision.data])
 
   const selection = useMemo(() => new Prop([] as Id[]), [])
 
@@ -81,10 +81,10 @@ export default function Editor(props: EditorProps): JSX.Element {
                 nodeListState={nodeStates}
               />
             )}
-            <NodeMapper
+            <NodeList
               selection={selection}
               scale={editorState.scale.value}
-              linkMapperState={linkListState}
+              linkListState={linkListState}
               state={nodeStates}
               remove={removeNode}
               onGestureDrug={onGestureDrug}

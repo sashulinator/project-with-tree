@@ -1,6 +1,6 @@
 import { EmitterableDictionary } from '~/lib/emitter/dictionary'
 
-import { NodeState } from '../../../../../'
+import { NodeState } from '../../../../..'
 import { Point } from '~/entities/point'
 
 export type Events = {

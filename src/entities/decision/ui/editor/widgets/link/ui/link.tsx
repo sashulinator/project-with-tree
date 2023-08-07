@@ -8,14 +8,14 @@ import { Position } from '~/utils/core'
 import { fns } from '~/utils/function'
 import { useForceUpdate, useOnMount, useUpdate } from '~/utils/hooks'
 
-import { NodeMapperState } from '../../..'
+import { NodeListState } from '../../..'
 import { State, ListState, getOffset } from '..'
 
 export interface LinkProps extends React.HTMLAttributes<SVGPathElement> {
   scale: number
   canvasTranslate: Position
   state: State
-  nodeListState: NodeMapperState
+  nodeListState: NodeListState
   // TODO не ничего не должен знать о Листе
   listState: ListState
 }
