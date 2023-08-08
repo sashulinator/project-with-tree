@@ -3,7 +3,6 @@
   --gap: var(--m);
   display: flex;
   align-items: center;
-  padding-left: calc(var(--height) + var(--gap));
 }
 
 .ui-Checkbox.--round > .box {
@@ -11,15 +10,15 @@
 }
 
 .ui-Checkbox.--s {
-  height: var(--checkbox_height__s);
+  min-height: var(--checkbox_height__s);
   --height: calc(var(--checkbox_height__s) - var(--m) * 2);
 }
 .ui-Checkbox.--m {
-  height: var(--checkbox_height__m);
+  min-height: var(--checkbox_height__m);
   --height: calc(var(--checkbox_height__m) - var(--m) * 2);
 }
 .ui-Checkbox.--l {
-  height: var(--checkbox_height__l);
+  min-height: var(--checkbox_height__l);
   --height: calc(var(--checkbox_height__l) - var(--m) * 2);
 }
 
@@ -32,11 +31,9 @@
 }
 
 .ui-Checkbox > .box {
-  position: absolute;
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-left: calc((var(--height) + var(--gap)) * -1);
   width: var(--height);
   height: var(--height);
   overflow: hidden;
@@ -46,6 +43,10 @@
   background-position: 50% 50%;
   box-shadow: 0 0 0 0.1rem var(--checkbox_bg__checked);
   color: white;
+}
+
+.ui-Checkbox:has(span) {
+  gap: 0.5rem;
 }
 
 /* Checked */

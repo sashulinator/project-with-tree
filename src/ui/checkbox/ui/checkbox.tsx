@@ -20,7 +20,6 @@ export interface CheckboxProps extends Omit<React.InputHTMLAttributes<HTMLInputE
 export default function Checkbox(props: CheckboxProps): JSX.Element {
   const { labelProps, height = 'm', className, checked = false, round, ...checkboxProps } = props
 
-
   return (
     <label
       {...labelProps}
@@ -34,8 +33,8 @@ export default function Checkbox(props: CheckboxProps): JSX.Element {
       )}
     >
       <input {...checkboxProps} checked={checked} type='checkbox' className={c(props.className, 'input')} />
-      <span className='box'>{checked && <Check />}</span>
-      {props.placeholder}
+      <div className='box'>{checked && <Check />}</div>
+      {props.placeholder && <span>{props.placeholder}</span>}
     </label>
   )
 }
