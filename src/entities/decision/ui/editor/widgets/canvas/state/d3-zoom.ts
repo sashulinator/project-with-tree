@@ -22,6 +22,8 @@ export class D3Zoom<E extends AnyEvent> {
 
   constructor(emitter: IEmitter<E>) {
     const _zoom = ({ transform }: { transform: ZoomTransform }): void => {
+      console.log('transform', transform)
+
       this._emitter.translate.value = { x: transform.x, y: transform.y }
       this._emitter.scale.value = transform.k
     }
@@ -42,6 +44,12 @@ export class D3Zoom<E extends AnyEvent> {
       })
 
     emitter.d3selection.emitters.push((selection) => {
+      if (!selection) return
+      selection?.call(
+        // eslint-disable-next-line @typescript-eslint/unbound-method
+        this.zoomBehavior.transform,
+        this.zoomIdentity
+      )
       selection?.call(this.zoomBehavior, this.zoomIdentity)
     })
   }
