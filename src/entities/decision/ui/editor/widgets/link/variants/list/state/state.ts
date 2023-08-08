@@ -86,7 +86,7 @@ export class State extends EmitterableDictionary<Events, LinkState> {
     if (isSourceEditing) {
       const newState = LinkState.createDefaultInstance({
         i: linkState.rule.i,
-        targetId: linkState.rule.targetId,
+        targetId: linkState.targetId.value,
       } as Partial<Rule>)
       this.add(newState)
       this.editingId.value = newState.id

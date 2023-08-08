@@ -61,6 +61,7 @@ export default function TargetLink(props: Props): JSX.Element {
     props.linkStates.on('index', update)
     props.linkStates.on('update', update)
     props.linkStates.on('targetId', update)
+    props.linkStates.on('editingId', update)
     props.linkStates.on('sourceId', () => setNewLinkId(uniqid()))
   }
 }
