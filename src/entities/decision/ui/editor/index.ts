@@ -1,7 +1,7 @@
 /**
  * lib
  */
-export * from './lib/listen-history'
+export * from './lib/history-listener'
 
 /**
  * state

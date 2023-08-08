@@ -17,17 +17,20 @@ export function historyListener(props: Props): void {
 
   nodeListState.on('selection', (event) => {
     if ((event as any).isHistory) return
-    const action = (d: 'prev' | 'value') => (): void => nodeListState.selection.set(event[d], { isHistory: true })
-    history.add(action('value'), action('prev'))
+    const action = (d: 'previous' | 'value') => (): void => nodeListState.selection.set(event[d], { isHistory: true })
+    history.add(action('value'), action('previous'))
   })
 
-  // nodeListState.on('position', (event) => {
-  //   if ((event as any).isHistory || !event.isLast || event.auto) return
+  nodeListState.on('position', (event) => {
+    if ((event as any).isHistory || !event.last || event.isPositionColumn) return
 
-  //   const last = { ...event.state.position.last }
-
-  //   const undo = (): void => event.state.position.transitionedMove(last, { ...event, isHistory: true })
-  //   const redo = (): void => event.state.position.transitionedMove(event.value, { ...event, isHistory: true })
-  //   history.add(redo, undo)
-  // })
+    const value = { ...event.value }
+    const undo = (): void => {
+      event.state.position.transitionMove(event.previousStart, { isHistory: true })
+    }
+    const redo = (): void => {
+      event.state.position.transitionMove(value, { isHistory: true })
+    }
+    history.add(redo, undo)
+  })
 }

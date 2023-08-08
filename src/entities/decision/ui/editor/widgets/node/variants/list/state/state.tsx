@@ -1,7 +1,7 @@
 import { getStyle } from '~/utils/dom'
 import { Point } from '~/entities/point'
 import { Selection, EmitterableDictionary } from '~/lib/emitter'
-import { Id, assertNotNull } from '~/utils/core'
+import { Id, Position, assertNotNull } from '~/utils/core'
 
 import { NodeState } from '../../../../..'
 import { NODE_GAP } from '../../..'
@@ -13,11 +13,22 @@ export type Events = {
   remove: { state: NodeState }
   // Уникальные события
   // ...
-  selection: { value: Set<Id>; prev: Set<Id> }
+  selection: { value: Set<Id>; previous: Set<Id> }
 
   // События стейтов
   computation: { value: Point['computation']; state: NodeState }
   title: { value: string; state: NodeState }
+  position: {
+    value: Position
+    previous: Position
+    start: Position
+    previousStart: Position
+    last: boolean
+    state: NodeState
+    // true если метод set вызван из функции positionColumn
+    // TODO назвать как-то по другому
+    isPositionColumn: boolean
+  }
 }
 
 export class State extends EmitterableDictionary<Events, NodeState> {
@@ -49,7 +60,7 @@ export class State extends EmitterableDictionary<Events, NodeState> {
     let nextY = depthTop
 
     columnNodes.forEach((state) => {
-      state.position.transitionedMove(state.position.value.x, nextY)
+      state.position.transitionMove({ x: state.position.value.x, y: nextY }, { isPositionColumn: true })
       const style = getStyle(state.ref.value)
       assertNotNull(style)
       const height = parseInt(style.height, 10)
