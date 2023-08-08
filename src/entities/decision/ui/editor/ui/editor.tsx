@@ -39,6 +39,7 @@ export default function Editor(props: Props): JSX.Element {
   const linkListState = useMemo(() => new LinkListState(rules), [rules])
 
   useEventListener('keydown', onKeyDown)
+  useEventListener('click', onClick)
   useEffect(subscribeHistory, [history, state, nodeListState, linkListState])
 
   return (
@@ -92,13 +93,24 @@ export default function Editor(props: Props): JSX.Element {
     canvasState.d3zoom.setTranslate({ x: mx, y: my })
   }
 
-  function onKeyDown(ev: KeyboardEvent): void {
-    if (!ev.metaKey || ev.key !== 'z') return
+  function onClick(e: MouseEvent): void {
+    const el = e.target as HTMLElement
+    if (el.tagName === 'path' || el.tagName === 'svg') {
+      linkListState.editingId.set(undefined)
+    }
+  }
 
-    if (ev.shiftKey) {
-      history.next()
-    } else {
-      history.previous()
+  function onKeyDown(ev: KeyboardEvent): void {
+    if (ev.key === 'Escape') {
+      linkListState.editingId.set(undefined)
+    }
+
+    if (ev.metaKey && ev.key === 'z') {
+      if (ev.shiftKey) {
+        history.next()
+      } else {
+        history.previous()
+      }
     }
   }
 }
