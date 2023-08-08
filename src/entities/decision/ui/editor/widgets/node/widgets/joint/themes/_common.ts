@@ -4,7 +4,7 @@ import { CSSVars } from '../types/css-vars'
 
 const linked = clr('rgb(83, 160, 255)')
 const new_ = clr('rgb(84, 222, 104)')
-const unlinked = clr('rgb(255, 255, 255)')
+const unlinked = clr('rgb(255, 155, 255)')
 
 export const commonTheme: CSSVars = {
   point_nodeJoint_bg__linked: linked,
