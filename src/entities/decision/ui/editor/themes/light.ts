@@ -5,6 +5,6 @@ import { common } from './common'
 
 export const light: CSSVars = {
   ...common,
-  decisionEditor_bg: LIGHT.bg.alpha(0.8),
+  decisionEditor_bg: LIGHT.bg.darken(0.01),
   decisionEditor_panel_bg: LIGHT.bgSecondary.alpha(0.8),
 }

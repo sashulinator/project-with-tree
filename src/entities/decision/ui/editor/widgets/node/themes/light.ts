@@ -1,8 +1,8 @@
-import { LIGHT } from '~/shared/theme/light'
 import { CSSVars } from '../types/css-vars'
 import { common } from './common'
+import clr from 'color'
 
 export const light: CSSVars = {
   ...common,
-  canvasNode_bg: LIGHT.primary.alpha(0.1),
+  canvasNode_bg: clr('white'),
 }
