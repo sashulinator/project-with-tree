@@ -74,9 +74,9 @@ export function Page(): JSX.Element {
             </Flex>
           }
           onGestureDrug={(event): void => {
-            const x = state.position.last.x + event.movement[0]
-            const y = state.position.last.y + event.movement[1]
-            state.position.move(x, y, event.last)
+            const x = state.position.previous.x + event.movement[0]
+            const y = state.position.previous.y + event.movement[1]
+            state.position.move({ x, y }, event)
           }}
           style={{ border: '1px solid red', width: '300px' }}
         />

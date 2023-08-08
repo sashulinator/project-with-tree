@@ -2,9 +2,10 @@ import { Emitter } from '~/lib/emitter'
 import { animate } from '~/utils/animate'
 import { Any, Position } from '~/utils/core'
 import { Prop } from '~/utils/depricated-emitter'
+import { Events } from '~/utils/emitter'
 
 export interface PositionPropEvent {
-  isLast: boolean
+  last: boolean
   value: Position
 }
 
@@ -12,34 +13,35 @@ export interface PositionPropEvent {
  * @final
  */
 export class PositionProp<N extends string> extends Prop<N, Position> {
-  last: Position
+  previous: Position
 
   constructor(eventName: N, value: Position, emitter: Emitter<Any>) {
     super(eventName, value, emitter)
 
-    this.last = value
+    this.previous = value
 
     this.emitter.on(this.eventName, (event: PositionPropEvent) => {
-      if (!event.isLast) return
-      this.last = event.value
+      if (!event.last) return
+      this.previous = event.value
     })
   }
 
-  move = (x: number, y: number, isLast: boolean): void => {
-    const position = { x: Math.round(x), y: Math.round(y) }
-    this.set(position, { isLast })
+  move = (position: Position, event: { last: boolean } & Events): void => {
+    const x = Math.round(position.x)
+    const y = Math.round(position.y)
+    this.set({ x, y }, event)
   }
 
-  transitionedMove = (x: number, y: number, onEnd?: () => void): void => {
-    const delta: Position = { x: this.value.x - x, y: this.value.y - y }
+  transitionMove = (position: Position, event?: Events, onEnd?: () => void): void => {
+    const delta: Position = { x: this.value.x - position.x, y: this.value.y - position.y }
     const startPosition: Position = { ...this.value }
 
     animate(250, (progress) => {
-      const ax = startPosition.x - delta.x * progress
-      const ay = startPosition.y - delta.y * progress
-      const isLast = progress === 1
-      this.set({ x: Math.round(ax), y: Math.round(ay) }, { isLast })
-      if (isLast) onEnd?.()
+      const x = Math.round(startPosition.x - delta.x * progress)
+      const y = Math.round(startPosition.y - delta.y * progress)
+      const last = progress === 1
+      this.move({ x, y }, { last, ...event })
+      if (last) onEnd?.()
     })
   }
 }

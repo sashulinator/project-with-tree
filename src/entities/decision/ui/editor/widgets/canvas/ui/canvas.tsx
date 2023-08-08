@@ -48,11 +48,11 @@ export default function Canvas(props: Props): JSX.Element {
 
       if (movePosition === null) return
 
-      let x = state.position.last.x + movePosition.x
-      const y = state.position.last.y + movePosition.y
+      let x = state.position.previous.x + movePosition.x
+      const y = state.position.previous.y + movePosition.y
 
       if (!event.last) {
-        state.position.move(x, y, false)
+        state.position.move({ x, y }, { last: false })
         return
       }
 
@@ -60,9 +60,9 @@ export default function Canvas(props: Props): JSX.Element {
       const toLeft = xModulo < COLUMN_GAP / 2
       x = toLeft ? x - xModulo : x + COLUMN_GAP - xModulo
 
-      const last = { ...state.position.last }
+      const last = { ...state.position.previous }
 
-      state.position.transitionedMove(x, y, function onEnd() {
+      state.position.transitionMove({ x, y }, {}, function onEnd() {
         props.nodeListState.positionColumn(x)
         if (last.x === x) return
         props.nodeListState.positionColumn(last.x)

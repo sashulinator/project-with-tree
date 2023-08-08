@@ -49,7 +49,7 @@ export class State extends EmitterableDictionary<Events, NodeState> {
     let nextY = depthTop
 
     columnNodes.forEach((state) => {
-      state.position.transitionedMove(state.position.value.x, nextY)
+      state.position.transitionMove({ x: state.position.value.x, y: nextY })
       const style = getStyle(state.ref.value)
       assertNotNull(style)
       const height = parseInt(style.height, 10)
