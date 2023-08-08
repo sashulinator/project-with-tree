@@ -39,6 +39,13 @@ export default function Canvas(props: Props): JSX.Element {
   function updateOnEvents(update: () => void): void {
     props.state.on('translate', update)
     props.state.on('scale', update)
+
+    props.nodeListState.on('position', (event) => {
+      if (!event.last || event.isPositionColumn) return
+      props.nodeListState.positionColumn(event.value.x)
+      if (event.value.x === event.previousStart.x) return
+      props.nodeListState.positionColumn(event.previousStart.x)
+    })
   }
 
   function onGestureDrug(state: NodeState) {
@@ -48,8 +55,8 @@ export default function Canvas(props: Props): JSX.Element {
 
       if (movePosition === null) return
 
-      let x = state.position.previous.x + movePosition.x
-      const y = state.position.previous.y + movePosition.y
+      let x = state.position.start.x + movePosition.x
+      const y = state.position.start.y + movePosition.y
 
       if (!event.last) {
         state.position.move({ x, y }, { last: false })
@@ -60,13 +67,7 @@ export default function Canvas(props: Props): JSX.Element {
       const toLeft = xModulo < COLUMN_GAP / 2
       x = toLeft ? x - xModulo : x + COLUMN_GAP - xModulo
 
-      const last = { ...state.position.previous }
-
-      state.position.transitionMove({ x, y }, {}, function onEnd() {
-        props.nodeListState.positionColumn(x)
-        if (last.x === x) return
-        props.nodeListState.positionColumn(last.x)
-      })
+      state.position.transitionMove({ x, y })
     }
   }
 }

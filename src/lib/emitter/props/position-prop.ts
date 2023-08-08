@@ -13,32 +13,33 @@ export interface PositionPropEvent {
  * @final
  */
 export class PositionProp<N extends string> extends Prop<N, Position> {
-  previous: Position
+  start: Position
 
   constructor(eventName: N, value: Position, emitter: Emitter<Any>) {
     super(eventName, value, emitter)
 
-    this.previous = value
+    this.start = value
 
     this.emitter.on(this.eventName, (event: PositionPropEvent) => {
       if (!event.last) return
-      this.previous = event.value
+      this.start = event.value
     })
   }
 
   move = (position: Position, event: { last: boolean } & Events): void => {
     const x = Math.round(position.x)
     const y = Math.round(position.y)
-    this.set({ x, y }, event)
+    const previousStart = { ...this.start }
+    this.set({ x, y }, { ...event, previousStart })
   }
 
   transitionMove = (position: Position, event?: Events, onEnd?: () => void): void => {
     const delta: Position = { x: this.value.x - position.x, y: this.value.y - position.y }
-    const startPosition: Position = { ...this.value }
+    const fromPosition: Position = { ...this.value }
 
     animate(250, (progress) => {
-      const x = Math.round(startPosition.x - delta.x * progress)
-      const y = Math.round(startPosition.y - delta.y * progress)
+      const x = Math.round(fromPosition.x - delta.x * progress)
+      const y = Math.round(fromPosition.y - delta.y * progress)
       const last = progress === 1
       this.move({ x, y }, { last, ...event })
       if (last) onEnd?.()

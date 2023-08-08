@@ -63,8 +63,8 @@ export function Page(): JSX.Element {
               linkListState={linkStates}
               remove={(): void => console.log('remove!')}
               onGestureDrug={(event): void => {
-                const x = state.position.previous.x + event.movement[0]
-                const y = state.position.previous.y + event.movement[1]
+                const x = state.position.start.x + event.movement[0]
+                const y = state.position.start.y + event.movement[1]
                 state.position.move({ x, y }, event)
               }}
             />
