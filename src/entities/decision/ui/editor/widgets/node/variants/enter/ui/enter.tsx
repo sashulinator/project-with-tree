@@ -44,7 +44,12 @@ export default function Enter(props: VariantPickerProps): JSX.Element {
     if (props.linkListState.editingId.value) {
       props.linkListState.finishEditing(linkId)
     } else {
-      props.linkListState.startEditing(linkId, props.state.id)
+      const linkState = props.linkListState.get(linkId)
+      if (!linkState.targetId.value) {
+        props.linkListState.editingId.set(linkState.id)
+      } else {
+        props.linkListState.startEditing(linkId, props.state.id)
+      }
     }
   }
 

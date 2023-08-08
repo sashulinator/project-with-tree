@@ -22,8 +22,6 @@ export class D3Zoom<E extends AnyEvent> {
 
   constructor(emitter: IEmitter<E>) {
     const _zoom = ({ transform }: { transform: ZoomTransform }): void => {
-      console.log('transform', transform)
-
       this._emitter.translate.value = { x: transform.x, y: transform.y }
       this._emitter.scale.value = transform.k
     }
