@@ -1,50 +1,33 @@
-import { State } from '..'
+// eslint-disable-next-line eslint-comments/disable-enable-pair
+/* eslint-disable @typescript-eslint/no-explicit-any */
+// eslint-disable-next-line eslint-comments/disable-enable-pair
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+import { LinkListState, NodeListState, State } from '..'
 import { ActionHistory } from '~/utils/action-history'
-import { Any } from '~/utils/core'
 
-// import { AnyEvent } from '~/utils/emitter'
+type Props = {
+  history: ActionHistory
+  state: State
+  nodeListState: NodeListState
+  linkListState: LinkListState
+}
 
-export function listenHistory(history: ActionHistory, state: State, eventName: string, event: Any): void {
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-  if (event.isHistory) return
+export function historyListener(props: Props): void {
+  const { history, nodeListState } = props
 
-  // if (eventName === 'selected') {
-  //   const prev = state.selected.previousValue
-  //   const redo = (): void => {
-  //     // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-  //     state.emit(eventName as any, { ...event, isHistory: true })
-  //   }
-  //   const undo = (): void => {
-  //     // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-  //     state.emit(eventName as any, { value: prev, isHistory: true } as Any)
-  //   }
+  nodeListState.on('selection', (event) => {
+    if ((event as any).isHistory) return
+    const action = (d: 'prev' | 'value') => (): void => nodeListState.selection.set(event[d], { isHistory: true })
+    history.add(action('value'), action('prev'))
+  })
+
+  // nodeListState.on('position', (event) => {
+  //   if ((event as any).isHistory || !event.isLast || event.auto) return
+
+  //   const last = { ...event.state.position.last }
+
+  //   const undo = (): void => event.state.position.transitionedMove(last, { ...event, isHistory: true })
+  //   const redo = (): void => event.state.position.transitionedMove(event.value, { ...event, isHistory: true })
   //   history.add(redo, undo)
-  // }
-
-  // if (eventName === 'position') {
-  //   const e = event as Events['position']
-
-  //   if (!e.isLast) return
-
-  //   const pointState = state.itemStates.get(e.itemId)
-  //   const previousValue = pointState.position.previous
-
-  //   const redo = (): void => {
-  //     const redoEvent: Events['position'] & { isHistory: true } = { ...e, isHistory: true }
-  //     state.itemStates.emit(e.itemId, eventName, redoEvent)
-  //   }
-
-  //   const undo = (): void => {
-  //     const undoEvent: Events['position'] & { isHistory: true } = {
-  //       itemId: e.itemId,
-  //       value: previousValue,
-  //       isLast: true,
-  //       isHistory: true,
-  //     }
-  //     // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-  //     state.itemStates.emit(e.itemId, eventName, undoEvent as Any)
-  //   }
-
-  //   history.add(redo, undo)
-  // }
+  // })
 }

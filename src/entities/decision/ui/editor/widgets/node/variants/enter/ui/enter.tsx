@@ -13,19 +13,19 @@ Enter.displayName = 'decisionCanvas-w-Node-v-Enter'
  * Node вариант filter
  */
 export default function Enter(props: VariantPickerProps): JSX.Element {
-  const { remove, linkListState, ...nodeProps } = props
   useUpdate(subscribeOnUpdates)
 
   return (
     <Node
-      {...nodeProps}
+      onGestureDrug={props.onGestureDrug}
+      state={props.state}
       className={Enter.displayName}
       title={<Title state={props.state} />}
-      toolbar={<Toolbar state={props.state} remove={(): void => remove(props.state.id)} />}
+      toolbar={<Toolbar state={props.state} remove={(): void => props.remove(props.state.id)} />}
       sourceLinks={
         <SourceLinks
           hideNewLink={true}
-          linkListState={linkListState}
+          linkListState={props.linkListState}
           state={props.state}
           onNewJointClick={onNewJointClick('source')}
           onJointClick={onJointClick}
