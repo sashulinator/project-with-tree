@@ -47,7 +47,7 @@ export default function Editor(props: Props): JSX.Element {
       <DecisionPanel state={state} rootProps={{ className: 'decisionPanel panel' }} />
       <PointPanel
         centerNode={centerNode}
-        nodeStates={nodeListState}
+        nodeListState={nodeListState}
         addNode={addNode}
         rootProps={{ className: 'panel itemsPanel' }}
       />

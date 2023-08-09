@@ -5,29 +5,16 @@
   flex-direction: column;
 }
 
-.decision-Editor-w-PointPanel > .search {
+.decision-Editor-w-PointPanel > .toolbar {
+  display: flex;
+  align-items: center;
   padding: var(--xl);
 }
 
-.decision-Editor-w-PointPanel li button {
-  width: 100%;
-  height: 2rem;
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  padding: var(--l);
-  background-color: rgba(0, 0, 0, 0.035);
-  word-break: keep-all;
+.decision-Editor-w-PointPanel > .nodeList {
+  /* padding: var(--xxl) 0; */
 }
 
-.decision-Editor-w-PointPanel li button:hover {
-  background-color: rgba(0, 0, 0, 0.101);
-  cursor: pointer;
-}
-
-.decision-Editor-w-PointPanel li {
-  display: flex;
-  align-items: center;
-  padding: 0 var(--xl);
-  margin-bottom: var(--l);
+.decision-Editor-w-PointPanel > .search {
+  padding: var(--xl);
 }

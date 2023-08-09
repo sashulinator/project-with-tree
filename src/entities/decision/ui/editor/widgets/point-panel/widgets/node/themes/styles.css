@@ -1,0 +1,8 @@
+.decisionEditor-w-PointPanel-w-Node {
+  background: var(--decisionEditorPointPanel_node_bg);
+  color: var(--decisionEditorPointPanel_node_color);
+}
+
+.decisionEditor-w-PointPanel-w-Node:hover {
+  background: var(--decisionEditorPointPanel_node_bg__hover);
+}
