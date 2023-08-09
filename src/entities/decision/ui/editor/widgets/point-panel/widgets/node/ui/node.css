@@ -6,3 +6,8 @@
   padding: var(--l);
   border-radius: var(--m);
 }
+
+.decisionEditor-w-PointPanel-w-Node.--selected {
+  background-color: var(--primary);
+  color: white;
+}
