@@ -1,17 +1,9 @@
 .decisionEditor-w-PointPanel-w-Node-v-List {
   display: flex;
   flex-direction: column;
-  gap: var(--l);
 }
 
 .decisionEditor-w-PointPanel-w-Node-v-List > li {
   width: 100%;
-  padding: 0 var(--l);
-}
-
-.decisionEditor-w-PointPanel-w-Node-v-List > li > button {
-  width: 100%;
-  text-align: left;
-  padding: var(--m);
-  border-radius: var(--s);
+  padding: 0 var(--xl);
 }

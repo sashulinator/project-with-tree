@@ -9,6 +9,8 @@ import { Id } from '~/utils/core'
 import Input from '~/ui/input'
 import { NodeListState } from '../../..'
 import { NodeList } from '..'
+import { AppearFrom } from '~/ui/animation'
+import Resizable from '~/ui/resizable/ui/resizable'
 
 PointPanel.displayName = 'decision-Editor-w-PointPanel'
 
@@ -23,7 +25,8 @@ export default function PointPanel(props: PointPanelProps): JSX.Element {
   const [value, setValue] = useState<string>('')
 
   return (
-    <div {...props.rootProps} className={clsx(PointPanel.displayName, props.rootProps?.className)}>
+    <AppearFrom {...props.rootProps} className={clsx(PointPanel.displayName, props.rootProps?.className)} offset={-33}>
+      <Resizable name='pointPanel' direction='left' defaultSize={400} />
       <div className='toolbar'>
         <div className='search'>
           <Input
@@ -43,6 +46,6 @@ export default function PointPanel(props: PointPanelProps): JSX.Element {
         searchQuery={value}
         nodeListState={props.nodeListState}
       />
-    </div>
+    </AppearFrom>
   )
 }

@@ -27,12 +27,12 @@ export class State extends Emitter<Events> {
 
     this.ref = new Prop('ref', null as null | SVGSVGElement, this)
 
-    this.translate = new PositionProp('translate', translate, this)
+    this.translate = new PositionProp('translate', { x: 0, y: 0 }, this)
 
-    this.scale = new Prop('scale', scale, this)
+    this.scale = new Prop('scale', 1, this)
 
     this.d3selection = new D3Selection(this)
 
-    this.d3zoom = new D3Zoom(this)
+    this.d3zoom = new D3Zoom(scale, translate, this)
   }
 }

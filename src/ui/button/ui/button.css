@@ -1,6 +1,7 @@
 .ui-Button {
   border-radius: var(--m);
   text-transform: uppercase;
+  font-size: 0.8em !important;
 }
 
 .ui-Button > span {

@@ -6,7 +6,7 @@ import uniqid from 'uniqid'
 import { Decision } from '~/entities/decision'
 import { Point } from '~/entities/point'
 import { ActionHistory } from '~/utils/action-history'
-import { Id, assertDefined, c } from '~/utils/core'
+import { Id, assertDefined, assertNotNull, c } from '~/utils/core'
 import { useEventListener } from '~/utils/hooks'
 
 import {
@@ -21,6 +21,8 @@ import {
   historyListener,
   getColumnX,
 } from '../'
+import { getStyle } from '~/utils/dom'
+import { getElementSize } from '~/utils/dom/get-element-size'
 
 Editor.displayName = 'decision-Editor'
 
@@ -93,10 +95,12 @@ export default function Editor(props: Props): JSX.Element {
 
   function centerNode(id: Id): void {
     const nodeState = nodeListState.get(id)
-    const rect = nodeState.ref.value?.getBoundingClientRect()
-    assertDefined(rect)
-    const mx = -nodeState.position.value.x + window.innerWidth / 2 - rect.width / 2
-    const my = -nodeState.position.value.y + window.innerHeight / 2 - rect.height / 2
+    assertNotNull(nodeState.ref.value)
+    assertNotNull(canvasState.ref.value)
+    const nodeSize = getElementSize(nodeState.ref.value)
+    const canvasSize = getElementSize(canvasState.ref.value)
+    const mx = -nodeState.position.value.x + canvasSize.width / 2 - nodeSize.width / 2
+    const my = -nodeState.position.value.y + canvasSize.height / 2 - nodeSize.height / 2
     canvasState.d3zoom.setTranslate({ x: mx, y: my })
   }
 

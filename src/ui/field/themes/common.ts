@@ -2,7 +2,7 @@ import { CSSVars } from '../types/css-vars'
 
 export const common = {
   // default
-  field_borderRadius: '.4rem',
+  field_borderRadius: '.5rem',
   // height
   field_height__m: '2.125rem',
   field_height__s: '1.75rem',

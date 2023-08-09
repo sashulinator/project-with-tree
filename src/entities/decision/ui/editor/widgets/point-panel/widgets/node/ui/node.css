@@ -1,4 +1,8 @@
 .decisionEditor-w-PointPanel-w-Node {
   border: 0;
   font-size: 1rem;
+  width: 100%;
+  text-align: left;
+  padding: var(--l);
+  border-radius: var(--m);
 }
