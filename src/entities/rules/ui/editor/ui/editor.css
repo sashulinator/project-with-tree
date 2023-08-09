@@ -1,18 +1,18 @@
-.e-ui-Rules-Create {
+.ruleEditor {
   background-color: var(--bg);
   display: flex;
   padding: 20px;
 }
 
-.e-ui-Rules-Create > .list {
+.ruleEditor > .list {
   width: 20%;
 }
 
-.e-ui-Rules-Create .input {
+.ruleEditor .input {
   margin-bottom: 25px;
 }
 
-.e-ui-Rules-Create > ul {
+.ruleEditor > ul {
   width: 78%;
   margin-left: 20px;
 }
