@@ -50,6 +50,7 @@ export {
   getMovement as getNodeMovement,
   NODE_GAP,
   COLUMN_GAP,
+  getColumnX,
 } from './widgets/node'
 export type {
   ListProps as NodeListProps,

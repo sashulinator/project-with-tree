@@ -2,8 +2,10 @@ import { Board, GestureDragEvent, PaintingPanel } from '~/ui/canvas'
 import { Id } from '~/utils/core'
 import { useUpdate } from '~/utils/hooks'
 
-import { LinkListState, LinkList, NodeListState, NodeList, NodeState, getNodeMovement, COLUMN_GAP } from '../../..'
+import { LinkListState, LinkList, NodeListState, NodeList, NodeState, getNodeMovement, getColumnX } from '../../..'
 import { State } from '../'
+import { useCallback } from 'react'
+import { onGestureDrag } from '../lib/on-gesture-drag'
 
 export interface Props {
   state: State
@@ -28,7 +30,7 @@ export default function Canvas(props: Props): JSX.Element {
           state={props.nodeListState}
           linkListState={props.linkListState}
           remove={props.removeNode}
-          onGestureDrug={onGestureDrug}
+          onGestureDrug={onGestureDrag(props.state)}
         />
       </PaintingPanel>
     </Board>
@@ -64,28 +66,5 @@ export default function Canvas(props: Props): JSX.Element {
         sNodeState && props.nodeListState.positionColumn(sNodeState?.position.value.x)
       })
     })
-  }
-
-  function onGestureDrug(state: NodeState) {
-    return (event: GestureDragEvent) => {
-      event.event.stopPropagation()
-      const movePosition = getNodeMovement(event, props.state.scale.value)
-
-      if (movePosition === null) return
-
-      let x = state.position.start.x + movePosition.x
-      const y = state.position.start.y + movePosition.y
-
-      if (!event.last) {
-        state.position.move({ x, y }, { last: false })
-        return
-      }
-
-      const xModulo = x % COLUMN_GAP
-      const toLeft = xModulo < COLUMN_GAP / 2
-      x = toLeft ? x - xModulo : x + COLUMN_GAP - xModulo
-
-      state.position.transitionMove({ x, y })
-    }
   }
 }

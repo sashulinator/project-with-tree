@@ -19,6 +19,7 @@ import {
   Canvas,
   CanvasState,
   historyListener,
+  getColumnX,
 } from '../'
 
 Editor.displayName = 'decision-Editor'
@@ -62,8 +63,9 @@ export default function Editor(props: Props): JSX.Element {
   }
 
   function removeNode(id: Id): void {
+    const x = nodeListState.get(id).position.value.x
     nodeListState.remove(id)
-
+    setTimeout(() => nodeListState.positionColumn(x))
     linkListState.values().forEach((s) => {
       if (s.sourceId.value !== id && s.targetId.value !== id) return
       linkListState.remove(s.id)
@@ -81,7 +83,12 @@ export default function Editor(props: Props): JSX.Element {
       x: -canvasState.translate.value.x + rect?.width / 2 - 200,
       y: -canvasState.translate.value.y + rect?.height / 2 - 150,
     }
-    nodeListState.add(new NodeState(point))
+    const nodeState = new NodeState(point)
+    nodeListState.add(nodeState)
+
+    setTimeout(() => {
+      nodeState.position.transitionMove({ x: getColumnX(nodeState.position.value.x), y: nodeState.position.value.y })
+    })
   }
 
   function centerNode(id: Id): void {
