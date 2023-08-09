@@ -16,7 +16,7 @@ interface Props {
   rootProps?: FlexProps
 }
 
-Item.displayName = 'e-Rules-ui-Editor-w-Item'
+Item.displayName = 'ruleEditor-w-Rules-w-Item'
 
 export function Item(props: Props): JSX.Element {
   const { values, id, checked, rootProps } = props

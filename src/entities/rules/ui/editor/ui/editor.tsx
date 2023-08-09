@@ -15,6 +15,9 @@ import { editorRulesValuesAtom } from '~/entities/rules/models/editorRulesValues
 import { getMergeArr } from '~/entities/rules/lib/get-merge-arr'
 import { emitter } from '~/shared/emitter'
 import { themes } from '../themes'
+import { c } from '~/utils/core'
+
+Editor.displayName = 'ruleEditor-w-Rules'
 
 emitter.emit('addTheme', themes)
 
@@ -44,7 +47,7 @@ export function Editor(): JSX.Element {
   }, [editorRulesValues])
 
   return (
-    <ul className='e-Rules-ui-Editor'>
+    <ul className={c(Editor.displayName)}>
       <Flex className='header' gap='xl' mainAxis='space-between' crossAxis='center'>
         <Flex gap='xl'>
           <GhostButton height={'l'} padding={'s'} onClick={back}>

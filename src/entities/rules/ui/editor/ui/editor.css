@@ -1,15 +1,15 @@
-.e-Rules-ui-Editor {
+.ruleEditor-w-Rules {
   border-radius: 10px;
   background: var(--editor_bg);
   box-shadow: var(--editor_boxShadow);
   padding: 20px 40px;
 }
 
-.e-Rules-ui-Editor > .header {
+.ruleEditor-w-Rules > .header {
   margin-bottom: 25px;
 }
 
-.e-Rules-ui-Editor .item {
+.ruleEditor-w-Rules .item {
   border-radius: 9px;
   background: var(--editorItem_bg);
   padding: 20px;

@@ -4,7 +4,7 @@ interface SelectProps {
   id: string
 }
 
-Select.displayName = 'e-Rules-ui-Editor-w-Select'
+Select.displayName = 'ruleEditor-w-Rules-w-Select'
 
 export default function Select(props: SelectProps): JSX.Element {
   const options = ['И', 'ИЛИ', 'НЕ', 'ИСКЛ ИЛИ']
