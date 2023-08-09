@@ -6,6 +6,7 @@ export * from './constants/gap'
 /**
  * lib
  */
+export * from './lib/get-column-x'
 export * from './lib/get-movement'
 
 /**
