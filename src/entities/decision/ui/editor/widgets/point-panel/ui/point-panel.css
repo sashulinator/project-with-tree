@@ -1,13 +1,26 @@
 .decision-Editor-w-PointPanel {
-  width: 100%;
+  position: relative;
+  width: calc(var(--pointPanel_width) * 1px);
+  max-width: 35rem;
+  min-width: 15rem;
   height: 100%;
   display: flex;
   flex-direction: column;
 }
 
+.decision-Editor-w-PointPanel .Resizable {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background: transparent;
+  width: 5px;
+  height: 100%;
+}
+
 .decision-Editor-w-PointPanel > .toolbar {
   display: flex;
   align-items: center;
+  width: 100%;
   padding: var(--xl);
 }
 
@@ -15,6 +28,6 @@
   /* padding: var(--xxl) 0; */
 }
 
-.decision-Editor-w-PointPanel > .search {
-  padding: var(--xl);
+.decision-Editor-w-PointPanel > .toolbar > .search {
+  width: 100%;
 }

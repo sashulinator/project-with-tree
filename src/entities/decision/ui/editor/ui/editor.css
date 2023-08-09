@@ -8,10 +8,6 @@
   width: 100%;
 }
 
-.decision-Editor .itemsPanel {
-  width: 15rem;
-}
-
 .decision-Editor .panel {
   position: absolute;
   z-index: 10;
