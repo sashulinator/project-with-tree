@@ -10,6 +10,7 @@ interface AddRulesProps {
 
 export function Create(props: AddRulesProps): JSX.Element {
   const { dataList } = props
+
   return (
     <main className='e-ui-Rules-Create'>
       <nav className='list'>
