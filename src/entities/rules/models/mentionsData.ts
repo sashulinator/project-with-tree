@@ -1,5 +1,5 @@
 import { atom } from 'recoil'
-import { MentionsItem } from '../ui/editor/widgets/item/widgets/input/ui/input'
+import { MentionsItem } from '../ui/rules/widgets/item/widgets/input/ui/input'
 
 export const mentionsDataAtom = atom<MentionsItem[]>({
   key: 'mentionsDataAtom',

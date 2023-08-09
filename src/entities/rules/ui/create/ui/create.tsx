@@ -1,8 +1,8 @@
 import './create.css'
 
 import { DomainItemProps } from '~/entities/rules/types/rules-type'
-import { DomainList } from '../../editor/widgets/domain-list'
-import { Editor } from '../../editor'
+import { DomainList } from '../../rules/widgets/domain-list'
+import { Rules } from '../../rules'
 
 interface AddRulesProps {
   dataList: DomainItemProps[]
@@ -17,7 +17,7 @@ export function Create(props: AddRulesProps): JSX.Element {
         <DomainList domains={dataList} defaultExpanded={true} />
       </nav>
 
-      <Editor />
+      <Rules />
     </main>
   )
 }

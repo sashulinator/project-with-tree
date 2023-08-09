@@ -1,4 +1,4 @@
-import './editor.css'
+import './rules.css'
 
 import { useRecoilState } from 'recoil'
 import Flex from '~/abstract/flex'
@@ -17,11 +17,11 @@ import { emitter } from '~/shared/emitter'
 import { themes } from '../themes'
 import { c } from '~/utils/core'
 
-Editor.displayName = 'ruleEditor-w-Rules'
+Rules.displayName = 'ruleEditor-w-Rules'
 
 emitter.emit('addTheme', themes)
 
-export function Editor(): JSX.Element {
+export function Rules(): JSX.Element {
   const [editorRulesValues, setEditorVales] = useRecoilState(editorRulesValuesAtom)
   const versionNum = useRef(0)
   const memoryRulesValues = useRef([editorRulesValues])
@@ -47,7 +47,7 @@ export function Editor(): JSX.Element {
   }, [editorRulesValues])
 
   return (
-    <ul className={c(Editor.displayName)}>
+    <ul className={c(Rules.displayName)}>
       <Flex className='header' gap='xl' mainAxis='space-between' crossAxis='center'>
         <Flex gap='xl'>
           <GhostButton height={'l'} padding={'s'} onClick={back}>

@@ -3,7 +3,7 @@ import { MentionsInput, Mention } from 'react-mentions'
 import defaultStyle from './defaultStyle'
 import defaultMentionStyle from './defaultMentionStyle'
 import Field, { FieldProps } from '~/abstract/field/ui/field'
-import { MentionsItem } from '~/entities/rules/ui/editor/widgets/item/widgets/input/ui/input'
+import { MentionsItem } from '~/entities/rules/ui/rules/widgets/item/widgets/input/ui/input'
 
 interface Props extends FieldProps {
   data: MentionsItem[]
