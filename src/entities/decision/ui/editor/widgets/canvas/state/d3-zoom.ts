@@ -20,7 +20,7 @@ export class D3Zoom<E extends AnyEvent> {
 
   zoomIdentity: ZoomTransform
 
-  constructor(emitter: IEmitter<E>) {
+  constructor(scale: number, translate: Position, emitter: IEmitter<E>) {
     const _zoom = ({ transform }: { transform: ZoomTransform }): void => {
       this._emitter.translate.value = { x: transform.x, y: transform.y }
       this._emitter.scale.value = transform.k
@@ -29,8 +29,6 @@ export class D3Zoom<E extends AnyEvent> {
     this._emitter = emitter
 
     this.zoomIdentity = zoomIdentity
-      .translate(emitter.translate.value.x, emitter.translate.value.y)
-      .scale(emitter.scale.value)
 
     this.zoomBehavior = zoom<SVGSVGElement, unknown>()
       .on('zoom', _zoom)
@@ -61,6 +59,8 @@ export class D3Zoom<E extends AnyEvent> {
   }
 
   setTranslate = (translate: Position): void => {
+    console.log('translate', translate)
+
     this._emitter.d3selection.value?.transition().duration(500).call(
       // eslint-disable-next-line @typescript-eslint/unbound-method
       this.zoomBehavior.transform,
