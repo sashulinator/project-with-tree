@@ -1,8 +1,8 @@
-import './create.css'
+import './editor.css'
 
 import { DomainItemProps } from '~/entities/rules/types/rules-type'
-import { DomainList } from '../../rules/widgets/domain-list'
-import { Rules } from '../../rules'
+import { DomainList } from '../widgets/domain-list'
+import { Rules } from '../widgets/rules'
 
 interface AddRulesProps {
   dataList: DomainItemProps[]

@@ -5,7 +5,7 @@ import { url, makeRequest } from '~/api/rules/mock/fetch'
 import { addDataMentions } from '~/entities/rules/lib/add-data-mentions'
 import { mentionsDataAtom } from '~/entities/rules/models/mentionsData'
 import { DomainItemProps } from '~/entities/rules/types/rules-type'
-import { Create } from '~/entities/rules/ui/create'
+import { Create } from '~/entities/rules/ui/editor'
 import mockRules from '~/mocks/rules/mock-rules'
 
 export default function RulesPage(): JSX.Element {
