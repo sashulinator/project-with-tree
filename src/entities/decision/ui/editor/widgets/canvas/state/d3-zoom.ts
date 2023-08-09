@@ -32,6 +32,7 @@ export class D3Zoom<E extends AnyEvent> {
 
     this.zoomBehavior = zoom<SVGSVGElement, unknown>()
       .on('zoom', _zoom)
+      .scaleExtent([0.2, 1])
       .filter((ev: WheelEvent | MouseEvent) => {
         if (ev.type === 'wheel') {
           return true
