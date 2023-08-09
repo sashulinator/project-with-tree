@@ -7,6 +7,9 @@ import { useUpdate } from '~/utils/hooks'
 
 import { State } from '../../..'
 import Input, { useChangeOnBlurStrategy } from '~/ui/input'
+import { GhostButton, PrimaryButton } from '~/ui/button'
+import Link from '~/ui/link/ui/link'
+import { routes } from '~/shared/routes'
 
 DecisionPanel.displayName = 'decision-Editor-DecisionPanel'
 
@@ -20,20 +23,29 @@ export default function DecisionPanel(props: DecisionPanelProps): JSX.Element {
 
   return (
     <div {...props.rootProps} className={clsx(DecisionPanel.displayName, props.rootProps?.className)}>
-      <div className='tools'>
-        <ThemeDropdown />
+      <div className='left'>
+        <Link to={routes.decisionList.getURL()}>Назад</Link>
       </div>
-
-      <div className='name'>
-        <Input
-          {...useChangeOnBlurStrategy({
-            transparent: true,
-            cannotBeEmpty: true,
-            value: props.state.name.value,
-            placeholder: 'Имя',
-            onChange: (ev): void => props.state.name.set(ev.currentTarget.value),
-          })}
-        />
+      <div className='center'>
+        <div className='name'>
+          <Input
+            {...useChangeOnBlurStrategy({
+              transparent: true,
+              cannotBeEmpty: true,
+              value: props.state.name.value,
+              placeholder: 'Имя',
+              onChange: (ev): void => props.state.name.set(ev.currentTarget.value),
+            })}
+          />
+        </div>
+      </div>
+      <div className='right'>
+        <div className='controls'>
+          <div className='tools'>
+            <ThemeDropdown />
+          </div>
+          <PrimaryButton>Сохранить</PrimaryButton>
+        </div>
       </div>
     </div>
   )

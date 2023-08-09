@@ -1,10 +1,17 @@
 .decision-Editor-DecisionPanel {
   display: flex;
   align-items: center;
-  padding: 0 2rem;
+  justify-content: space-between;
+  padding: 0 var(--xxl);
 }
 
-.decision-Editor-DecisionPanel .name {
+.decision-Editor-DecisionPanel > .center > .name {
   width: 15rem;
   margin-left: 2rem;
+}
+
+.decision-Editor-DecisionPanel > .right > .controls {
+  display: flex;
+  align-items: center;
+  gap: var(--l);
 }
