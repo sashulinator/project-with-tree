@@ -21,7 +21,7 @@ import {
   historyListener,
   getColumnX,
 } from '../'
-import { getStyle } from '~/utils/dom'
+
 import { getElementSize } from '~/utils/dom/get-element-size'
 
 Editor.displayName = 'decision-Editor'
@@ -114,6 +114,16 @@ export default function Editor(props: Props): JSX.Element {
   function onKeyDown(ev: KeyboardEvent): void {
     if (ev.key === 'Escape') {
       linkListState.editingId.set(undefined)
+      nodeListState.selection.set(new Set())
+    }
+
+    if (ev.key === 'Backspace') {
+      nodeListState.selection.value.forEach((id) => {
+        const state = nodeListState.get(id)
+        if (state.point.type !== 'ENTER') {
+          nodeListState.remove(id)
+        }
+      })
     }
 
     if (ev.metaKey && ev.key === 'z') {
