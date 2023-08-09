@@ -14,7 +14,7 @@ export default function Nav(): JSX.Element {
           <Link to={routes.decisionList.getURL()}>Decisions</Link>
         </ol>
         <ol>
-          <Link to={routes.rules.getURL()}>Rules</Link>
+          <Link to={routes.ruleCreate.getURL()}>Rules</Link>
         </ol>
         {isDev() && (
           <>
