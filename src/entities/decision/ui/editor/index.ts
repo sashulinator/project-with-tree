@@ -26,8 +26,11 @@ export type { Props as EditorProps } from './ui/editor'
 export { default as DecisionPanel } from './widgets/decision-panel'
 export type { DecisionPanelProps } from './widgets/decision-panel'
 
-export { default as PointPanel } from './widgets/point-panel'
-export type { PointPanelProps } from './widgets/point-panel'
+export { default as LeftPanel } from './widgets/left-panel'
+export type { LeftPanelProps } from './widgets/left-panel'
+
+export { default as RightPanel } from './widgets/right-panel'
+export type { RightPanelProps } from './widgets/right-panel'
 
 export { default as Canvas, State as CanvasState } from './widgets/canvas'
 export type { CanvasProps } from './widgets/canvas'

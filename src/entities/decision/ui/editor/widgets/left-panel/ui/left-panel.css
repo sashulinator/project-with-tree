@@ -1,6 +1,6 @@
-.decision-Editor-w-PointPanel {
+.decision-Editor-w-LeftPanel {
   position: relative;
-  width: calc(var(--pointPanel_width) * 1px);
+  width: calc(var(--leftPanel_width) * 1px);
   max-width: 35rem;
   min-width: 15rem;
   height: 100%;
@@ -8,7 +8,7 @@
   flex-direction: column;
 }
 
-.decision-Editor-w-PointPanel .Resizable {
+.decision-Editor-w-LeftPanel .Resizable {
   position: absolute;
   top: 0;
   right: 0;
@@ -17,17 +17,17 @@
   height: 100%;
 }
 
-.decision-Editor-w-PointPanel > .toolbar {
+.decision-Editor-w-LeftPanel > .toolbar {
   display: flex;
   align-items: center;
   width: 100%;
   padding: var(--xl);
 }
 
-.decision-Editor-w-PointPanel > .nodeList {
+.decision-Editor-w-LeftPanel > .nodeList {
   /* padding: var(--xxl) 0; */
 }
 
-.decision-Editor-w-PointPanel > .toolbar > .search {
+.decision-Editor-w-LeftPanel > .toolbar > .search {
   width: 100%;
 }

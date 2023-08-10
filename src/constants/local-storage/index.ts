@@ -1,2 +1,2 @@
-export * from './theme'
-export * from './language'
+export { THEME } from './theme'
+export { LANGUAGE } from './language'

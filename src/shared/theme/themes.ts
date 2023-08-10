@@ -1,4 +1,4 @@
-import { Themes } from '~/utils/theme/types/themes'
+import { Themes } from '~/utils/theme'
 
 /**
  * Наполняется темами и переменными в lib/theme/on-add-theme
