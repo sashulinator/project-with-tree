@@ -16,6 +16,7 @@ PointPanel.displayName = 'decision-Editor-w-PointPanel'
 
 export interface PointPanelProps {
   rootProps?: React.HTMLAttributes<HTMLDivElement>
+  className?: string
   nodeListState: NodeListState
   addNode: () => void
   centerNode: (id: Id) => void
@@ -25,7 +26,11 @@ export default function PointPanel(props: PointPanelProps): JSX.Element {
   const [value, setValue] = useState<string>('')
 
   return (
-    <AppearFrom {...props.rootProps} className={clsx(PointPanel.displayName, props.rootProps?.className)} offset={-33}>
+    <AppearFrom
+      {...props.rootProps}
+      className={clsx(props.className, props.rootProps?.className, PointPanel.displayName)}
+      offset={-33}
+    >
       <Resizable name='pointPanel' direction='left' defaultSize={400} />
       <div className='toolbar'>
         <div className='search'>

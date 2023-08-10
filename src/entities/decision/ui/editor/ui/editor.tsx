@@ -20,6 +20,7 @@ import {
   CanvasState,
   historyListener,
   getColumnX,
+  RightPanel,
 } from '../'
 
 import { getElementSize } from '~/utils/dom/get-element-size'
@@ -47,13 +48,9 @@ export default function Editor(props: Props): JSX.Element {
 
   return (
     <div className={c(props.className, Editor.displayName)}>
-      <DecisionPanel state={state} rootProps={{ className: 'decisionPanel panel' }} />
-      <PointPanel
-        centerNode={centerNode}
-        nodeListState={nodeListState}
-        addNode={addNode}
-        rootProps={{ className: 'panel itemsPanel' }}
-      />
+      <DecisionPanel state={state} rootProps={{ className: 'panel --header' }} />
+      <PointPanel centerNode={centerNode} nodeListState={nodeListState} addNode={addNode} className='panel --left' />
+      <RightPanel nodeListState={nodeListState} className='panel --right' />
       <Canvas removeNode={removeNode} state={canvasState} nodeListState={nodeListState} linkListState={linkListState} />
     </div>
   )

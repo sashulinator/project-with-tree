@@ -29,6 +29,9 @@ export type { DecisionPanelProps } from './widgets/decision-panel'
 export { default as PointPanel } from './widgets/point-panel'
 export type { PointPanelProps } from './widgets/point-panel'
 
+export { default as RightPanel } from './widgets/right-panel'
+export type { RightPanelProps } from './widgets/right-panel'
+
 export { default as Canvas, State as CanvasState } from './widgets/canvas'
 export type { CanvasProps } from './widgets/canvas'
 

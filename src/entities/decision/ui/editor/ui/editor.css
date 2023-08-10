@@ -4,22 +4,35 @@
   height: 100%;
 }
 
-.decision-Editor .decisionPanel {
-  width: 100%;
-}
-
-.decision-Editor .panel {
+.decision-Editor > .panel {
   position: absolute;
   z-index: 10;
 }
 
-/* decisionEditor_panel_height */
+.decision-Editor > .panel.--header {
+  width: 100%;
+  right: 0;
+  left: 0;
+}
+
+.decision-Editor > .panel.--left {
+  left: 0;
+}
+
+.decision-Editor > .panel.--right {
+  right: 0;
+}
+
+/**
+ * decisionEditor_panel_height 
+*/
 .decision-Editor {
   --decisionEditor_panel_height: 64px;
 }
-.decision-Editor .itemsPanel {
-  top: var(--decisionEditor_panel_height);
-}
-.decision-Editor .decisionPanel {
+.decision-Editor > .panel.--header {
   height: var(--decisionEditor_panel_height);
+}
+.decision-Editor > .panel.--left,
+.decision-Editor > .panel.--right {
+  top: var(--decisionEditor_panel_height);
 }
