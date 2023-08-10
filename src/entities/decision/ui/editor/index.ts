@@ -10,9 +10,9 @@ export { State } from './state/state'
 export type { Events } from './state/state'
 
 /**
- * themes
+ * theme
  */
-export * from './themes'
+export * as Theme from './theme'
 
 /**
  * ui

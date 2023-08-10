@@ -6,7 +6,6 @@ import { AppearFrom } from '~/ui/animation'
 import Resizable from '~/ui/resizable/ui/resizable'
 import { NodeListState } from '../../..'
 import { useBoolean, useUpdate } from '~/utils/hooks'
-import { useState } from 'react'
 import Checkbox from '~/ui/checkbox/ui/checkbox'
 
 RightPanel.displayName = 'decision-Editor-w-RightPanel'
@@ -14,6 +13,7 @@ RightPanel.displayName = 'decision-Editor-w-RightPanel'
 export interface Props {
   rootProps?: React.HTMLAttributes<HTMLDivElement>
   className?: string
+  resizableName: string
   nodeListState: NodeListState
 }
 
@@ -39,7 +39,7 @@ export default function RightPanel(props: Props): JSX.Element | null {
       )}
       offset={33}
     >
-      <Resizable name='rightPanel' direction='right' defaultSize={400} />
+      <Resizable name={props.resizableName} direction='right' defaultSize={400} />
       <Checkbox checked={fullscreen} placeholder='fullscreen' onChange={toogleFullscreen} />
       <div className='toolbar'>Toolbar</div>
     </AppearFrom>

@@ -19,6 +19,7 @@ export interface Props {
   rootProps?: React.HTMLAttributes<HTMLDivElement>
   className?: string
   nodeListState: NodeListState
+  resizableName: string
   addNode: () => void
   centerNode: (id: Id) => void
 }
@@ -32,7 +33,7 @@ export default function LeftPanel(props: Props): JSX.Element {
       className={clsx(props.className, props.rootProps?.className, LeftPanel.displayName)}
       offset={-33}
     >
-      <Resizable name='leftPanel' direction='left' defaultSize={400} />
+      <Resizable name={props.resizableName} direction='left' defaultSize={400} />
       <div className='toolbar'>
         <div className='search'>
           <Input
