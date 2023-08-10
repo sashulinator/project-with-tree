@@ -25,14 +25,29 @@
   /**
   * header_height 
   */
-  --header_height: 64px;
+  --panel__header_height: 64px;
 
   > .panel.--header {
-    height: var(--header_height);
+    height: var(--panel__header_height);
   }
 
   > .panel.--left,
   > .panel.--right {
-    top: var(--header_height);
+    top: var(--panel__header_height);
+  }
+
+  /* panel width */
+
+  > .panel.--left {
+    width: calc(var(--decision-Editor-panel__left_width) * 1px);
+  }
+
+  > .panel.--right {
+    width: calc(var(--decision-Editor-panel__right_width) * 1px);
+    height: 100%;
+  }
+
+  > .panel.--right.--fullscreen {
+    width: calc(100% - var(--decision-Editor-panel__left_width) * 1px);
   }
 }

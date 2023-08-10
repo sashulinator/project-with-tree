@@ -49,8 +49,18 @@ export default function Editor(props: Props): JSX.Element {
   return (
     <div className={c(props.className, Editor.displayName)}>
       <DecisionPanel state={state} rootProps={{ className: 'panel --header' }} />
-      <LeftPanel centerNode={centerNode} nodeListState={nodeListState} addNode={addNode} className='panel --left' />
-      <RightPanel nodeListState={nodeListState} className='panel --right' />
+      <LeftPanel
+        className='panel --left'
+        resizableName={`${Editor.displayName}-panel__left`}
+        centerNode={centerNode}
+        nodeListState={nodeListState}
+        addNode={addNode}
+      />
+      <RightPanel
+        className='panel --right'
+        resizableName={`${Editor.displayName}-panel__right`}
+        nodeListState={nodeListState}
+      />
       <Canvas removeNode={removeNode} state={canvasState} nodeListState={nodeListState} linkListState={linkListState} />
     </div>
   )
