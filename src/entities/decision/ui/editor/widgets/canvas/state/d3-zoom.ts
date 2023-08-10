@@ -60,8 +60,6 @@ export class D3Zoom<E extends AnyEvent> {
   }
 
   setTranslate = (translate: Position): void => {
-    console.log('translate', translate)
-
     this._emitter.d3selection.value?.transition().duration(500).call(
       // eslint-disable-next-line @typescript-eslint/unbound-method
       this.zoomBehavior.transform,
