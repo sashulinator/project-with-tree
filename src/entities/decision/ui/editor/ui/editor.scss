@@ -1,0 +1,38 @@
+.decision-Editor {
+  position: relative;
+  width: 100%;
+  height: 100%;
+
+  > .panel {
+    position: absolute;
+    z-index: 10;
+  }
+
+  > .panel.--header {
+    width: 100%;
+    right: 0;
+    left: 0;
+  }
+
+  > .panel.--left {
+    left: 0;
+  }
+
+  > .panel.--right {
+    right: 0;
+  }
+
+  /**
+  * decisionEditor_panel_height 
+  */
+  --decisionEditor_panel_height: 64px;
+
+  > .panel.--header {
+    height: var(--decisionEditor_panel_height);
+  }
+
+  > .panel.--left,
+  > .panel.--right {
+    top: var(--decisionEditor_panel_height);
+  }
+}

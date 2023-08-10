@@ -1,4 +1,4 @@
-import './editor.css'
+import './editor.scss'
 
 import { useEffect, useMemo } from 'react'
 import uniqid from 'uniqid'
