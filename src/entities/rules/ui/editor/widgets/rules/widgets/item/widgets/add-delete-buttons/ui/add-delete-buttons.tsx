@@ -14,7 +14,7 @@ interface ButtonsProps {
   rootProps?: FlexProps
 }
 
-AddDeleteButtons.displayName = 'e-Rules-ui-Editor-w-AddDeleteButtons'
+AddDeleteButtons.displayName = 'ruleEditor-w-Rules-w-AddDeleteButtons'
 
 export default function AddDeleteButtons(props: ButtonsProps): JSX.Element {
   const { id, rootProps } = props

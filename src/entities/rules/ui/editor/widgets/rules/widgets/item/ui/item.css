@@ -1,0 +1,7 @@
+.ruleEditor-w-Rules-w-Item {
+  display: flex;
+}
+
+.ruleEditor-w-Rules-w-Item > .list {
+  width: 100%;
+}

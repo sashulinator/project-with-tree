@@ -5,7 +5,7 @@ import { DomainItemProps } from '~/entities/rules/types/rules-type'
 import { Domain } from '../widgets/domain'
 import InputSearch from '../widgets/input-search'
 import { emitter } from '~/shared/emitter'
-import { themes } from '../../editor/themes'
+import { themes } from '../../rules/themes'
 
 interface DomainListProps {
   domains: DomainItemProps[]

@@ -1,5 +1,5 @@
 import { DomainItemProps } from '~/entities/rules/types/rules-type'
-import { MentionsItem } from '~/entities/rules/ui/editor/widgets/item/widgets/input/ui/input'
+import { MentionsItem } from '~/entities/rules/ui/editor/widgets/rules/widgets/item/widgets/input/ui/input'
 
 export const addDataMentions = (arr: DomainItemProps[]): MentionsItem[] => {
   let result: MentionsItem[] = []

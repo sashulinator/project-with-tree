@@ -1,0 +1,16 @@
+.ruleEditor-w-Rules {
+  border-radius: 10px;
+  background: var(--editor_bg);
+  box-shadow: var(--editor_boxShadow);
+  padding: 20px 40px;
+}
+
+.ruleEditor-w-Rules > .header {
+  margin-bottom: 25px;
+}
+
+.ruleEditor-w-Rules .item {
+  border-radius: 9px;
+  background: var(--editorItem_bg);
+  padding: 20px;
+}

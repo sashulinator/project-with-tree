@@ -1,16 +1,18 @@
-.e-Rules-ui-Editor {
-  border-radius: 10px;
-  background: var(--editor_bg);
-  box-shadow: var(--editor_boxShadow);
-  padding: 20px 40px;
+.ruleEditor {
+  background-color: var(--bg);
+  display: flex;
+  padding: 20px;
 }
 
-.e-Rules-ui-Editor > .header {
+.ruleEditor > .list {
+  width: 20%;
+}
+
+.ruleEditor .input {
   margin-bottom: 25px;
 }
 
-.e-Rules-ui-Editor .item {
-  border-radius: 9px;
-  background: var(--editorItem_bg);
-  padding: 20px;
+.ruleEditor > ul {
+  width: 78%;
+  margin-left: 20px;
 }
