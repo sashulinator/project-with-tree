@@ -23,16 +23,16 @@
   }
 
   /**
-  * decisionEditor_panel_height 
+  * header_height 
   */
-  --decisionEditor_panel_height: 64px;
+  --header_height: 64px;
 
   > .panel.--header {
-    height: var(--decisionEditor_panel_height);
+    height: var(--header_height);
   }
 
   > .panel.--left,
   > .panel.--right {
-    top: var(--decisionEditor_panel_height);
+    top: var(--header_height);
   }
 }
