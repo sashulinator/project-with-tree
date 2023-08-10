@@ -1,7 +1,6 @@
 import clr from 'color'
 
-import { RequiredVars } from '~/utils/theme/types/required-vars'
-import { Pass, check } from '~/utils/types/test'
+import { RequiredVars } from '~/utils/theme'
 
 // 🟢 See index.html
 const defaultPrimary = localStorage.getItem('--default-primary')
@@ -37,8 +36,4 @@ export const LIGHT = {
 
   focus: primary,
   focusAlt: clr('#7ed321'),
-}
-
-// TODO сделать нормальную проверку
-check<keyof RequiredVars, keyof RequiredVars, Pass>({} as keyof typeof LIGHT)
-check<keyof typeof LIGHT, keyof typeof LIGHT, Pass>({} as keyof RequiredVars)
+} satisfies RequiredVars

@@ -1,7 +1,6 @@
 import clr from 'color'
 
-import { RequiredVars } from '~/utils/theme/types/required-vars'
-import { Pass, check } from '~/utils/types/test'
+import { RequiredVars } from '~/utils/theme'
 
 const primary = clr('#027ffe')
 const color = clr('#b2bac2')
@@ -22,8 +21,4 @@ export const DARK = {
 
   focus: primary,
   focusAlt: clr('#7ed321'),
-}
-
-// TODO сделать нормальную проверку
-check<keyof RequiredVars, keyof RequiredVars, Pass>({} as keyof typeof DARK)
-check<keyof typeof DARK, keyof typeof DARK, Pass>({} as keyof RequiredVars)
+} satisfies RequiredVars
