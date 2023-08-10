@@ -1,15 +1,19 @@
 import React, { DetailedHTMLProps, useLayoutEffect, useRef, useState } from 'react'
 
+import { c } from '~/utils/core'
+
 import { removeCSSVar, setCSSVar } from '~/utils/dom/css-variable'
 
-interface ResizableProps extends DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
+Resizable.displayName = 'ui-Resizable'
+
+export interface Props extends DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
   name: string
   direction: 'left' | 'right'
   defaultSize: number
   callapsible?: boolean
 }
 
-export default function Resizable(props: ResizableProps): JSX.Element {
+export default function Resizable(props: Props): JSX.Element {
   const { name, direction, callapsible, defaultSize, ...resProps } = props
 
   const [initParentWidth, setInitParentWidth] = useState<number>(0)
@@ -69,6 +73,9 @@ export default function Resizable(props: ResizableProps): JSX.Element {
     const parentRect = parent.getBoundingClientRect()
     setInitParentWidth(Math.round(parentRect.width))
 
+    console.log('allooo')
+
+    ref.current?.classList.add('--resizing')
     document.body.style.cursor = 'col-resize'
     document.onselectstart = (): boolean => false
     document.addEventListener('mousemove', handleMouseMove)
@@ -78,6 +85,7 @@ export default function Resizable(props: ResizableProps): JSX.Element {
   function handleMouseUp(): void {
     document.body.style.cursor = 'auto'
     setInitParentWidth(0)
+    ref.current?.classList.remove('--resizing')
     removeCSSVar(names.resizing)
     removeCSSVar(names.userResize)
     document.onselectstart = null
@@ -154,5 +162,12 @@ export default function Resizable(props: ResizableProps): JSX.Element {
     }
   }
 
-  return <div className='Resizable' ref={ref} {...resProps} style={{ cursor: 'col-resize', ...props.style }} />
+  return (
+    <div
+      className={c(Resizable.displayName)}
+      ref={ref}
+      {...resProps}
+      style={{ cursor: 'col-resize', ...props.style }}
+    />
+  )
 }

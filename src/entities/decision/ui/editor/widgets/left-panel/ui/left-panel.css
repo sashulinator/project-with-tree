@@ -1,20 +1,8 @@
 .decision-Editor-w-LeftPanel {
   position: relative;
-  width: calc(var(--leftPanel_width) * 1px);
-  max-width: 35rem;
-  min-width: 15rem;
   height: 100%;
   display: flex;
   flex-direction: column;
-}
-
-.decision-Editor-w-LeftPanel .Resizable {
-  position: absolute;
-  top: 0;
-  right: 0;
-  background: transparent;
-  width: 5px;
-  height: 100%;
 }
 
 .decision-Editor-w-LeftPanel > .toolbar {
@@ -22,10 +10,6 @@
   align-items: center;
   width: 100%;
   padding: var(--xl);
-}
-
-.decision-Editor-w-LeftPanel > .nodeList {
-  /* padding: var(--xxl) 0; */
 }
 
 .decision-Editor-w-LeftPanel > .toolbar > .search {

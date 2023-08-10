@@ -8,7 +8,7 @@ import { PrimaryButton } from '~/ui/button'
 import { Plus } from '~/ui/icon'
 import Input from '~/ui/input'
 import { Id } from '~/utils/core'
-import Resizable from '~/ui/resizable'
+import Resizable, { ResizableProps } from '~/ui/resizable'
 
 import { NodeListState } from '../../..'
 import { NodeList } from '..'
@@ -16,10 +16,10 @@ import { NodeList } from '..'
 LeftPanel.displayName = 'decision-Editor-w-LeftPanel'
 
 export interface Props {
-  rootProps?: React.HTMLAttributes<HTMLDivElement>
   className?: string
   nodeListState: NodeListState
-  resizableName: string
+  resizableProps: Omit<ResizableProps, 'direction'>
+  rootProps?: React.HTMLAttributes<HTMLDivElement>
   addNode: () => void
   centerNode: (id: Id) => void
 }
@@ -33,7 +33,7 @@ export default function LeftPanel(props: Props): JSX.Element {
       className={clsx(props.className, props.rootProps?.className, LeftPanel.displayName)}
       offset={-33}
     >
-      <Resizable name={props.resizableName} direction='left' defaultSize={400} />
+      <Resizable {...props.resizableProps} direction='left' />
       <div className='toolbar'>
         <div className='search'>
           <Input

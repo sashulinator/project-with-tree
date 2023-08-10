@@ -34,7 +34,7 @@ export interface Props {
 
 export default function Editor(props: Props): JSX.Element {
   const rules = props.decision.rules || []
-
+  const resizeBarClassName = 'resizeBar'
   const history = useMemo(() => new ActionHistory(), [])
 
   const state = useMemo(() => new State(props.decision), [])
@@ -51,14 +51,14 @@ export default function Editor(props: Props): JSX.Element {
       <DecisionPanel state={state} rootProps={{ className: 'panel --header' }} />
       <LeftPanel
         className='panel --left'
-        resizableName={`${Editor.displayName}-panel__left`}
+        resizableProps={{ className: resizeBarClassName, name: `${Editor.displayName}-panel__left`, defaultSize: 300 }}
         centerNode={centerNode}
         nodeListState={nodeListState}
         addNode={addNode}
       />
       <RightPanel
         className='panel --right'
-        resizableName={`${Editor.displayName}-panel__right`}
+        resizableProps={{ className: resizeBarClassName, name: `${Editor.displayName}-panel__right`, defaultSize: 300 }}
         nodeListState={nodeListState}
       />
       <Canvas removeNode={removeNode} state={canvasState} nodeListState={nodeListState} linkListState={linkListState} />

@@ -1,4 +1,4 @@
-import './right-panel.css'
+import './right-panel.scss'
 
 import { clsx } from 'clsx'
 
@@ -7,13 +7,14 @@ import Resizable from '~/ui/resizable/ui/resizable'
 import { NodeListState } from '../../..'
 import { useBoolean, useUpdate } from '~/utils/hooks'
 import Checkbox from '~/ui/checkbox/ui/checkbox'
+import { ResizableProps } from '~/ui/resizable'
 
 RightPanel.displayName = 'decision-Editor-w-RightPanel'
 
 export interface Props {
   rootProps?: React.HTMLAttributes<HTMLDivElement>
   className?: string
-  resizableName: string
+  resizableProps: Omit<ResizableProps, 'direction'>
   nodeListState: NodeListState
 }
 
@@ -39,7 +40,7 @@ export default function RightPanel(props: Props): JSX.Element | null {
       )}
       offset={33}
     >
-      <Resizable name={props.resizableName} direction='right' defaultSize={400} />
+      <Resizable {...props.resizableProps} direction='right' />
       <Checkbox checked={fullscreen} placeholder='fullscreen' onChange={toogleFullscreen} />
       <div className='toolbar'>Toolbar</div>
     </AppearFrom>
