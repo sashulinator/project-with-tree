@@ -11,7 +11,7 @@ import { useEventListener } from '~/utils/hooks'
 
 import {
   State,
-  PointPanel,
+  LeftPanel,
   DecisionPanel,
   LinkListState,
   NodeListState,
@@ -49,7 +49,7 @@ export default function Editor(props: Props): JSX.Element {
   return (
     <div className={c(props.className, Editor.displayName)}>
       <DecisionPanel state={state} rootProps={{ className: 'panel --header' }} />
-      <PointPanel centerNode={centerNode} nodeListState={nodeListState} addNode={addNode} className='panel --left' />
+      <LeftPanel centerNode={centerNode} nodeListState={nodeListState} addNode={addNode} className='panel --left' />
       <RightPanel nodeListState={nodeListState} className='panel --right' />
       <Canvas removeNode={removeNode} state={canvasState} nodeListState={nodeListState} linkListState={linkListState} />
     </div>

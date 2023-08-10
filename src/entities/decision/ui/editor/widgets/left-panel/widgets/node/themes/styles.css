@@ -1,0 +1,8 @@
+.decision-Editor-w-LeftPanel-w-Node {
+  background: var(--decision_Editor_w_LeftPanel_w_Node_bg);
+  color: var(--decision_Editor_w_LeftPanel_w_Node_color);
+}
+
+.decision-Editor-w-LeftPanel-w-Node:hover {
+  background: var(--decision_Editor_w_LeftPanel_w_Node_bg__hover);
+}

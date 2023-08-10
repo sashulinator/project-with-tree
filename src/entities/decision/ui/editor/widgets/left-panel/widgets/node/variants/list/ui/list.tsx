@@ -5,7 +5,7 @@ import Node from '../../..'
 import { NodeListState } from '~/entities/decision/ui/editor'
 import { useUpdate } from '~/utils/hooks'
 
-List.displayName = 'decisionEditor-w-PointPanel-w-Node-v-List'
+List.displayName = 'decision-Editor-w-LeftPanel-w-Node-v-List'
 
 export interface Props {
   nodeListState: NodeListState

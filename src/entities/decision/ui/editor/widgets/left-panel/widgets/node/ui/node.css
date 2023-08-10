@@ -1,4 +1,4 @@
-.decisionEditor-w-PointPanel-w-Node {
+.decision-Editor-w-LeftPanel-w-Node {
   border: 0;
   font-size: 1rem;
   width: 100%;
@@ -7,7 +7,7 @@
   border-radius: var(--m);
 }
 
-.decisionEditor-w-PointPanel-w-Node.--selected {
+.decision-Editor-w-LeftPanel-w-Node.--selected {
   background-color: var(--primary);
   color: white;
 }

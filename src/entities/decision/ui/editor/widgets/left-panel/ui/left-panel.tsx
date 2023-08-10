@@ -1,20 +1,21 @@
-import './point-panel.css'
+import './left-panel.css'
 
 import { clsx } from 'clsx'
 import { useState } from 'react'
 
+import { AppearFrom } from '~/ui/animation'
 import { PrimaryButton } from '~/ui/button'
 import { Plus } from '~/ui/icon'
-import { Id } from '~/utils/core'
 import Input from '~/ui/input'
+import { Id } from '~/utils/core'
+import Resizable from '~/ui/resizable'
+
 import { NodeListState } from '../../..'
 import { NodeList } from '..'
-import { AppearFrom } from '~/ui/animation'
-import Resizable from '~/ui/resizable/ui/resizable'
 
-PointPanel.displayName = 'decision-Editor-w-PointPanel'
+LeftPanel.displayName = 'decision-Editor-w-LeftPanel'
 
-export interface PointPanelProps {
+export interface Props {
   rootProps?: React.HTMLAttributes<HTMLDivElement>
   className?: string
   nodeListState: NodeListState
@@ -22,16 +23,16 @@ export interface PointPanelProps {
   centerNode: (id: Id) => void
 }
 
-export default function PointPanel(props: PointPanelProps): JSX.Element {
+export default function LeftPanel(props: Props): JSX.Element {
   const [value, setValue] = useState<string>('')
 
   return (
     <AppearFrom
       {...props.rootProps}
-      className={clsx(props.className, props.rootProps?.className, PointPanel.displayName)}
+      className={clsx(props.className, props.rootProps?.className, LeftPanel.displayName)}
       offset={-33}
     >
-      <Resizable name='pointPanel' direction='left' defaultSize={400} />
+      <Resizable name='leftPanel' direction='left' defaultSize={400} />
       <div className='toolbar'>
         <div className='search'>
           <Input

@@ -1,12 +1,13 @@
 import './node.css'
 
 import React from 'react'
-import { Id, c } from '~/utils/core'
-import { NodeListState, NodeState } from '../../../../..'
-import { useUpdate } from '~/utils/hooks'
-import { fns } from '~/utils/function'
 
-Node.displayName = 'decisionEditor-w-PointPanel-w-Node'
+import { Id, c } from '~/utils/core'
+import { useUpdate } from '~/utils/hooks'
+
+import { NodeListState, NodeState } from '../../../../..'
+
+Node.displayName = 'decision-Editor-w-LeftPanel-w-Node'
 
 export interface Props extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   state: NodeState

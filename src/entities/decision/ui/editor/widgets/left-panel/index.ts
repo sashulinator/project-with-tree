@@ -1,8 +1,8 @@
 /**
  * ui
  */
-export { default } from './ui/point-panel'
-export type { PointPanelProps } from './ui/point-panel'
+export { default } from './ui/left-panel'
+export type { Props as LeftPanelProps } from './ui/left-panel'
 
 /**
  * widgets
