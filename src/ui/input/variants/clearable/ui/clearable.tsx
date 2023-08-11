@@ -1,24 +1,21 @@
 import './clearable.css'
 
-import { c } from '~/utils/core'
-
-import Input, { InputProps } from '../../../ui/input'
-import { GhostButton } from '~/ui/button'
-import { fns } from '~/utils/function'
-import { preventDefault } from '~/utils/dom/prevent-default'
 import { ForwardedRef, forwardRef, useRef } from 'react'
+
+import { GhostButton } from '~/ui/button'
 import { Close } from '~/ui/icon'
+import { c } from '~/utils/core'
+import { preventDefault, setInputValue } from '~/utils/dom'
+import { fns } from '~/utils/function'
 import { setRefs } from '~/utils/react'
-import { setInputValue } from '~/utils/dom/set-input-value'
+
+import Input, { InputProps } from '../../..'
 
 ClearableInputComponent.displayName = 'ui-Input-v-Clearable'
 
-export interface ClearableInputProps extends InputProps {
-  visible?: boolean | undefined
-  onVisibleChange?: (value: boolean) => void
-}
+export type Props = InputProps
 
-function ClearableInputComponent(props: ClearableInputProps, ref: ForwardedRef<HTMLInputElement>): JSX.Element {
+function ClearableInputComponent(props: Props, ref: ForwardedRef<HTMLInputElement>): JSX.Element {
   const inputRef = useRef<HTMLInputElement>(null)
 
   return (
@@ -47,4 +44,5 @@ function ClearableInputComponent(props: ClearableInputProps, ref: ForwardedRef<H
 }
 
 const ClearableInput = forwardRef(ClearableInputComponent)
-export { ClearableInput }
+ClearableInput.displayName = ClearableInputComponent.displayName
+export default ClearableInput

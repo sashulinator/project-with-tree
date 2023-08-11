@@ -1,15 +1,14 @@
 import './toolbar.css'
 
 import Flex from '~/abstract/flex/ui/flex'
-
 import { GhostButton } from '~/ui/button'
 import Checkbox from '~/ui/checkbox'
 import { Trash } from '~/ui/icon'
 import { c } from '~/utils/core'
-import { useUpdate } from '~/utils/hooks'
 import { fns } from '~/utils/function'
+import { useUpdate } from '~/utils/hooks'
 
-import { State, ListState } from '../../../../..'
+import { ListState, State } from '../../../../..'
 
 Toolbar.displayName = 'decisionEditor-ui-Canvas-w-Node-v-Filter-w-Toolbar'
 
@@ -40,10 +39,7 @@ export default function Toolbar(props: Props): JSX.Element {
         <GhostButton onClick={toogleComputation} style={{ fontSize: '0.6em' }}>
           {computation}
         </GhostButton>
-        <GhostButton
-          onClick={fns(props.remove, (): void => props.listState.selection.remove(props.state.id))}
-          round={true}
-        >
+        <GhostButton round={true}>
           <Trash />
         </GhostButton>
       </Flex>

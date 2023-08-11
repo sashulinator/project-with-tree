@@ -5,8 +5,7 @@ import { addToast } from '~/abstract/toast'
 import { useT } from '~/lib/i18n/use-t'
 import { routes } from '~/shared/routes'
 import { PrimaryButton } from '~/ui/button'
-
-import Input, { PasswordInput } from '~/ui/input'
+import Input, { Password } from '~/ui/input'
 import I18nDropdown from '~/ui/language-dropdown'
 import ThemeDropdown from '~/ui/theme-dropdown'
 
@@ -36,7 +35,7 @@ export default function LoginPage(): JSX.Element {
             <label className='label mb-0.5rem' htmlFor={PASSWORD}>
               {t.Password()}
             </label>
-            <PasswordInput
+            <Password
               height='l'
               autoComplete='off'
               value={value}
