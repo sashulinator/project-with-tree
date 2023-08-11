@@ -23,6 +23,7 @@ import {
   getColumnX,
   historyListener,
 } from '../'
+import { addNodeClosure } from '../lib/-add-node-closure'
 import { useKeyDownListener } from '../lib/-use-key-down-listener'
 
 Editor.displayName = 'decision-Editor'
@@ -41,6 +42,8 @@ export default function Editor(props: Props): JSX.Element {
   const canvasState = useMemo(() => new CanvasState(1, { x: -171, y: 431 }), [])
   const nodeListState = useMemo(() => new NodeListState(props.decision.data), [props.decision.data])
   const linkListState = useMemo(() => new LinkListState(rules), [rules])
+
+  const addNode = addNodeClosure({ canvasState, nodeListState })
 
   useKeyDownListener({ resetSelection, removeSelected, previousHistory, nextHistory })
   useEventListener('click', onClick)
@@ -101,25 +104,6 @@ export default function Editor(props: Props): JSX.Element {
     linkListState.values().forEach((s) => {
       if (s.sourceId.value !== id && s.targetId.value !== id) return
       linkListState.remove(s.id)
-    })
-  }
-
-  function addNode(): void {
-    const rect = canvasState.ref.value?.getBoundingClientRect()
-    assertDefined(rect)
-    const point: Point = {
-      type: 'SIFT',
-      id: uniqid(),
-      computation: 'successively',
-      name: 'new',
-      x: -canvasState.translate.value.x + rect?.width / 2 - 200,
-      y: -canvasState.translate.value.y + rect?.height / 2 - 150,
-    }
-    const nodeState = new NodeState(point)
-    nodeListState.add(nodeState)
-
-    setTimeout(() => {
-      nodeState.position.transitionMove({ x: getColumnX(nodeState.position.value.x), y: nodeState.position.value.y })
     })
   }
 
