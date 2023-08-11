@@ -1,25 +1,20 @@
 import './input.css'
 
-import { emitter } from '~/shared/emitter'
-import AbstractInput from '~/abstract/input'
-import { dark } from '../themes/dark'
-import { light } from '../themes/light'
-
 import { ForwardedRef, forwardRef } from 'react'
+
+import AbstractInput from '~/abstract/input'
 import Field, { FieldProps } from '~/ui/field'
 import { c } from '~/utils/core'
-
-emitter.emit('addTheme', { dark, light })
 
 InputComponent.displayName = 'ui-Input'
 
 export type InputProps = React.InputHTMLAttributes<HTMLInputElement> & {
+  height?: 'm' | 's' | 'l'
   left?: React.ReactNode
   right?: React.ReactNode
-  fieldProps?: FieldProps
-  height?: 'm' | 's' | 'l'
   isError?: boolean
   transparent?: boolean
+  fieldProps?: FieldProps
 }
 
 function InputComponent(props: InputProps, ref: ForwardedRef<HTMLInputElement>): JSX.Element {
@@ -28,7 +23,7 @@ function InputComponent(props: InputProps, ref: ForwardedRef<HTMLInputElement>):
   return (
     <AbstractInput
       {...inputProps}
-      className={c(InputComponent.displayName)}
+      className={c('input')}
       ref={ref}
       left={left}
       right={right}
@@ -38,7 +33,7 @@ function InputComponent(props: InputProps, ref: ForwardedRef<HTMLInputElement>):
         isError,
         transparent,
         ...fieldProps,
-        className: c(fieldProps?.className, className, 'ui-Input__field'),
+        className: c(fieldProps?.className, className, InputComponent.displayName),
       }}
     />
   )

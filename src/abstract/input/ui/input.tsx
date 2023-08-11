@@ -1,10 +1,10 @@
 import './input.css'
 
-import { clsx } from 'clsx'
-import { createElement, ForwardedRef, forwardRef } from 'react'
+import { ForwardedRef, createElement, forwardRef } from 'react'
 
-import { useBoolean } from '~/utils/hooks'
+import { c } from '~/utils/core'
 import { fns } from '~/utils/function'
+import { useBoolean } from '~/utils/hooks'
 
 InputComponent.displayName = 'a-Input'
 
@@ -15,6 +15,17 @@ export type InputProps<TFieldProps extends object> = React.InputHTMLAttributes<H
   renderField: (props: TFieldProps) => JSX.Element
 }
 
+/**
+ * Компонент Input
+ *
+ * Предполагает что сам по себе он использован не будет,
+ * но будет вложен в компонент `Field`,
+ * который принимает через пропс `renderField`
+ *
+ * Фичи:
+ * 1. Передает компоненту Field пропс isFocused
+ * 2. Отрисовывает слева/справа от инпута елемент
+ */
 function InputComponent<TFieldProps extends object>(
   props: InputProps<TFieldProps>,
   ref: ForwardedRef<HTMLInputElement>
@@ -27,10 +38,9 @@ function InputComponent<TFieldProps extends object>(
     <>
       {left}
       <input
-        key='0'
         {...inputProps}
         ref={ref}
-        className={clsx(className, InputComponent.displayName)}
+        className={c(className, InputComponent.displayName)}
         onFocus={fns(props.onFocus, setFocused)}
         onBlur={fns(props.onBlur, unsetFocused)}
       />

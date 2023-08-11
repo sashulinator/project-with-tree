@@ -1,9 +1,9 @@
 .ui-Input {
-  padding: 0 var(--m);
-}
-
-.ui-Input__field {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.ui-Input > .input {
+  padding: 0 var(--m);
 }
