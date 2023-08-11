@@ -11,7 +11,7 @@ import { Close } from '~/ui/icon'
 import { setRefs } from '~/utils/react'
 import { setInputValue } from '~/utils/dom/set-input-value'
 
-ClearableInputComponent.displayName = 'ui-PasswordInput'
+ClearableInputComponent.displayName = 'ui-Input-v-Clearable'
 
 export interface ClearableInputProps extends InputProps {
   visible?: boolean | undefined
@@ -27,18 +27,20 @@ function ClearableInputComponent(props: ClearableInputProps, ref: ForwardedRef<H
       {...props}
       ref={setRefs(inputRef, ref)}
       right={
-        <GhostButton
-          round={true}
-          className='ui-PasswordInput__eye'
-          height='s'
-          onClick={fns(
-            preventDefault,
-            (): void => setInputValue(inputRef.current, ''),
-            (): void => inputRef.current?.focus()
-          )}
-        >
-          {<Close />}
-        </GhostButton>
+        props.value ? (
+          <GhostButton
+            round={true}
+            height='s'
+            className='close'
+            onClick={fns(
+              preventDefault,
+              (): void => setInputValue(inputRef.current, ''),
+              (): void => inputRef.current?.focus()
+            )}
+          >
+            <Close />
+          </GhostButton>
+        ) : null
       }
     />
   )
