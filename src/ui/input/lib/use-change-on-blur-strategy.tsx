@@ -1,10 +1,11 @@
 import { ForwardedRef, useEffect, useRef, useState } from 'react'
 
 import { Any } from '~/utils/core'
-import { keyListener } from '~/utils/dom/key-listener'
+import { keyListener } from '~/utils/dom-event/key-listener'
 import { fns } from '~/utils/function'
 import { useForceUpdate } from '~/utils/hooks'
 import { setRefs } from '~/utils/react'
+
 import { InputProps } from '../ui/input'
 
 export type EditableProps = Omit<InputProps, 'onChange'> & {
@@ -48,8 +49,8 @@ export function useChangeOnBlurStrategy(props: EditableProps) {
     onChange: (e: React.ChangeEvent<HTMLInputElement>): void => setValue(e.target.value),
     onKeyDown: fns(
       // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-      keyListener('Enter', handleChange as Any),
-      keyListener('Escape', fns(reset, blur)),
+      keyListener({ key: 'Enter' }, handleChange as Any),
+      keyListener({ key: 'Escape' }, fns(reset, blur)),
       props.onKeyDown
     ),
   }

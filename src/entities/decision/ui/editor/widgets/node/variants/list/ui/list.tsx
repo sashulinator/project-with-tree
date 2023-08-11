@@ -6,9 +6,9 @@ import { GestureDragEvent } from '~/ui/canvas'
 import { Id } from '~/utils/core'
 import { useUpdate } from '~/utils/hooks'
 
-import { LinkListState } from '../../../../..'
-import { VariantPicker, State as NodeState } from '../../..'
 import { State } from '..'
+import { State as NodeState, VariantPicker } from '../../..'
+import { LinkListState } from '../../../../..'
 
 export interface ListProps {
   state: State

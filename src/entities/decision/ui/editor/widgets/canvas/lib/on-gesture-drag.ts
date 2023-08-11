@@ -1,6 +1,7 @@
 import { GestureDragEvent } from '~/ui/canvas'
-import { NodeState, getColumnX, getNodeMovement } from '../../..'
+
 import { State } from '..'
+import { NodeListState, NodeState, getColumnX, getNodeMovement } from '../../..'
 
 /**
  * Функция обработки драга ноды
@@ -9,7 +10,7 @@ import { State } from '..'
  * @param {NodeState} nodeState
  * @param {GestureDragEvent} event событие библиотечки @use-gesture/react
  */
-export function onGestureDrag(state: State) {
+export function onGestureDrag(state: State, nodeListState: NodeListState) {
   return (nodeState: NodeState) =>
     (event: GestureDragEvent): void => {
       event.event.stopPropagation()
@@ -21,11 +22,35 @@ export function onGestureDrag(state: State) {
       // иначе карточка дергается при простом клике на нее
       if (Math.abs(movePosition.x) < 10 && Math.abs(movePosition.y) < 10) return
 
-      const x = nodeState.position.start.x + movePosition.x
-      const y = nodeState.position.start.y + movePosition.y
+      if (event.event.shiftKey) {
+        const selectedNodeStates = [...nodeListState.selection.value].map((id) => nodeListState.get(id))
 
-      !event.last
-        ? nodeState.position.move({ x, y }, { last: false })
-        : nodeState.position.transitionMove({ x: getColumnX(x), y })
+        const x = nodeState.position.start.x + movePosition.x
+        const y = nodeState.position.start.y + movePosition.y
+
+        !event.last
+          ? nodeState.position.move({ x, y }, { last: false })
+          : nodeState.position.transitionMove({ x: getColumnX(x), y })
+
+        selectedNodeStates.forEach((selectedNodeState) => {
+          !event.last
+            ? selectedNodeState.position.move(nodeState.position.value, { last: false })
+            : selectedNodeState.position.transitionMove({
+                x: getColumnX(nodeState.position.value.x),
+                y: nodeState.position.value.y,
+              })
+        })
+      } else {
+        const selectedNodeStates = [...nodeListState.selection.value, nodeState.id].map((id) => nodeListState.get(id))
+
+        selectedNodeStates.forEach((selectedNodeState) => {
+          const x = selectedNodeState.position.start.x + movePosition.x
+          const y = selectedNodeState.position.start.y + movePosition.y
+
+          !event.last
+            ? selectedNodeState.position.move({ x, y }, { last: false })
+            : selectedNodeState.position.transitionMove({ x: getColumnX(x), y })
+        })
+      }
     }
 }

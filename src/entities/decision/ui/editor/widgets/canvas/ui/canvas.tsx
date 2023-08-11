@@ -1,10 +1,9 @@
-import { Board, GestureDragEvent, PaintingPanel } from '~/ui/canvas'
+import { Board, PaintingPanel } from '~/ui/canvas'
 import { Id } from '~/utils/core'
 import { useUpdate } from '~/utils/hooks'
 
-import { LinkListState, LinkList, NodeListState, NodeList, NodeState, getNodeMovement, getColumnX } from '../../..'
 import { State } from '../'
-import { useCallback } from 'react'
+import { LinkList, LinkListState, NodeList, NodeListState, NodeState, getColumnX, getNodeMovement } from '../../..'
 import { onGestureDrag } from '../lib/on-gesture-drag'
 
 export interface Props {
@@ -30,7 +29,7 @@ export default function Canvas(props: Props): JSX.Element {
           state={props.nodeListState}
           linkListState={props.linkListState}
           remove={props.removeNode}
-          onGestureDrug={onGestureDrag(props.state)}
+          onGestureDrug={onGestureDrag(props.state, props.nodeListState)}
         />
       </PaintingPanel>
     </Board>

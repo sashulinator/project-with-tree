@@ -1,14 +1,11 @@
-import Flex from '~/abstract/flex/ui/flex'
-
 import { useMemo } from 'react'
-import Input from '~/ui/input'
 
-import { NodeJoint, Node, NodeState } from '~/entities/decision/ui/editor'
-
+import Flex from '~/abstract/flex/ui/flex'
+import { Node, NodeJoint, NodeListState, NodeState } from '~/entities/decision/ui/editor'
+import { Point } from '~/entities/point'
 import { GhostButton } from '~/ui/button'
 import { Trash } from '~/ui/icon'
-
-import { Point } from '~/entities/point'
+import Input from '~/ui/input'
 
 export const uiCanvasNode = {
   name: Node.displayName,
@@ -33,11 +30,13 @@ const point1: Point = {
 
 export function Page(): JSX.Element {
   const state = useMemo(() => new NodeState(point1), [])
+  const listState = new NodeListState([point1])
 
   return (
     <Flex dir='column' gap='xl' width='100%'>
       <svg width='100%' height='333px' style={{ border: '1px solid red' }}>
         <Node
+          listState={listState}
           state={state}
           toolbar={
             <div style={{ display: 'flex', justifyContent: 'end', padding: 'var(--s)' }}>

@@ -1,11 +1,10 @@
-import './filter.css'
+import './filter.scss'
 
 import { Id } from '~/utils/dictionary'
-
-import Node, { VariantPickerProps, Title, SourceLinks, TargetLinks } from '../../..'
-import { Toolbar } from '..'
-
 import { useUpdate } from '~/utils/hooks'
+
+import { Toolbar } from '..'
+import Node, { SourceLinks, TargetLinks, Title, VariantPickerProps } from '../../..'
 
 Filter.displayName = 'decisionCanvas-w-Node-v-Filter'
 
@@ -17,10 +16,11 @@ export default function Filter(props: VariantPickerProps): JSX.Element {
 
   return (
     <Node
+      listState={props.nodeListState}
       state={props.state}
       onGestureDrug={props.onGestureDrug}
       className={Filter.displayName}
-      title={<Title state={props.state} />}
+      title={<Title className='title' state={props.state} />}
       toolbar={
         <Toolbar
           listState={props.nodeListState}
