@@ -28,7 +28,7 @@ function InputComponent(props: InputProps, ref: ForwardedRef<HTMLInputElement>):
   return (
     <AbstractInput
       {...inputProps}
-      className={c(className, InputComponent.displayName)}
+      className={c(InputComponent.displayName)}
       ref={ref}
       left={left}
       right={right}
@@ -38,7 +38,7 @@ function InputComponent(props: InputProps, ref: ForwardedRef<HTMLInputElement>):
         isError,
         transparent,
         ...fieldProps,
-        className: c(fieldProps?.className, 'ui-Input__field'),
+        className: c(fieldProps?.className, className, 'ui-Input__field'),
       }}
     />
   )

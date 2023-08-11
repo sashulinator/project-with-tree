@@ -1,3 +1,3 @@
-.ui-ClearableInput__close {
-  margin-right: var(--m);
+.ui-Input-v-Clearable > .close {
+  margin-right: var(--s);
 }

@@ -11,7 +11,7 @@ import { preventDefault } from '~/utils/dom/prevent-default'
 import { ForwardedRef, forwardRef, useRef } from 'react'
 import { setRefs } from '~/utils/react'
 
-PasswordInputComponent.displayName = 'ui-PasswordInput'
+PasswordInputComponent.displayName = 'ui-Input-v-Password'
 
 export interface PasswordInputProps extends InputProps {
   visible?: boolean | undefined
@@ -31,7 +31,7 @@ function PasswordInputComponent(props: PasswordInputProps, ref: ForwardedRef<HTM
       right={
         <GhostButton
           round={true}
-          className='ui-PasswordInput__eye'
+          className='eye'
           height='s'
           onClick={fns(
             preventDefault,
