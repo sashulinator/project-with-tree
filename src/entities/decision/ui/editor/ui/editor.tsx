@@ -24,6 +24,7 @@ import {
   historyListener,
 } from '../'
 import { addNodeClosure } from '../lib/-add-node-closure'
+import { removeNodeClosure } from '../lib/-remove-node-closure'
 import { useKeyDownListener } from '../lib/-use-key-down-listener'
 
 Editor.displayName = 'decision-Editor'
@@ -43,6 +44,7 @@ export default function Editor(props: Props): JSX.Element {
   const nodeListState = useMemo(() => new NodeListState(props.decision.data), [props.decision.data])
   const linkListState = useMemo(() => new LinkListState(rules), [rules])
 
+  const removeNode = removeNodeClosure({ linkListState, nodeListState })
   const addNode = addNodeClosure({ canvasState, nodeListState })
 
   useKeyDownListener({ resetSelection, removeSelected, previousHistory, nextHistory })
@@ -94,16 +96,6 @@ export default function Editor(props: Props): JSX.Element {
       if (state.point.type !== 'ENTER') {
         removeNode(id)
       }
-    })
-  }
-
-  function removeNode(id: Id): void {
-    const x = nodeListState.get(id).position.value.x
-    nodeListState.remove(id)
-    setTimeout(() => nodeListState.positionColumn(x))
-    linkListState.values().forEach((s) => {
-      if (s.sourceId.value !== id && s.targetId.value !== id) return
-      linkListState.remove(s.id)
     })
   }
 
