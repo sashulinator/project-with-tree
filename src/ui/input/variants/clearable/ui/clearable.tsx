@@ -5,7 +5,7 @@ import { ForwardedRef, forwardRef, useRef } from 'react'
 import { GhostButton } from '~/ui/button'
 import { Close } from '~/ui/icon'
 import { c } from '~/utils/core'
-import { preventDefault, setInputValue } from '~/utils/dom'
+import { preventDefault, setInputValue } from '~/utils/dom-event'
 import { fns } from '~/utils/function'
 import { setRefs } from '~/utils/react'
 

@@ -1,6 +1,6 @@
-import { preventDefault, stopPropagation } from '~/utils/dom'
-import { fns } from '~/utils/function'
 import { c } from '~/utils/core'
+import { preventDefault, stopPropagation } from '~/utils/dom-event'
+import { fns } from '~/utils/function'
 
 DropBoard.displayName = 'a-DropBoard'
 

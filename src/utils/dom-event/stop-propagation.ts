@@ -1,4 +1,4 @@
-interface Propagatable {
+interface StopPropagationEvent {
   stopPropagation: () => void
 }
 
@@ -6,6 +6,6 @@ interface Propagatable {
  * @example
  * fns(stopPropagation, doSmth1, doSmth2)
  */
-export function stopPropagation(e: Propagatable) {
+export function stopPropagation(e: StopPropagationEvent) {
   e.stopPropagation()
 }
