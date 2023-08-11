@@ -1,11 +1,10 @@
 import './enter.css'
 
 import { Id } from '~/utils/dictionary'
-
-import Node, { VariantPickerProps, Title, SourceLinks } from '../../..'
-import { Toolbar } from '..'
-
 import { useUpdate } from '~/utils/hooks'
+
+import { Toolbar } from '..'
+import Node, { SourceLinks, Title, VariantPickerProps } from '../../..'
 
 Enter.displayName = 'decisionCanvas-w-Node-v-Enter'
 
@@ -17,6 +16,7 @@ export default function Enter(props: VariantPickerProps): JSX.Element {
 
   return (
     <Node
+      listState={props.nodeListState}
       onGestureDrug={props.onGestureDrug}
       state={props.state}
       className={Enter.displayName}

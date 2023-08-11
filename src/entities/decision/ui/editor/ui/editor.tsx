@@ -7,23 +7,23 @@ import { Decision } from '~/entities/decision'
 import { Point } from '~/entities/point'
 import { ActionHistory } from '~/utils/action-history'
 import { Id, assertDefined, assertNotNull, c } from '~/utils/core'
+import { getElementSize } from '~/utils/dom/get-element-size'
 import { useEventListener } from '~/utils/hooks'
 
 import {
-  State,
-  LeftPanel,
+  Canvas,
+  CanvasState,
   DecisionPanel,
+  LeftPanel,
   LinkListState,
   NodeListState,
   NodeState,
-  Canvas,
-  CanvasState,
-  historyListener,
-  getColumnX,
   RightPanel,
+  State,
+  getColumnX,
+  historyListener,
 } from '../'
-
-import { getElementSize } from '~/utils/dom/get-element-size'
+import { useKeyDownListener } from '../lib/-use-key-down-listener'
 
 Editor.displayName = 'decision-Editor'
 
@@ -42,8 +42,9 @@ export default function Editor(props: Props): JSX.Element {
   const nodeListState = useMemo(() => new NodeListState(props.decision.data), [props.decision.data])
   const linkListState = useMemo(() => new LinkListState(rules), [rules])
 
-  useEventListener('keydown', onKeyDown)
+  useKeyDownListener({ resetSelection, removeSelected, previousHistory, nextHistory })
   useEventListener('click', onClick)
+
   useEffect(subscribeHistory, [history, state, nodeListState, linkListState])
 
   return (
@@ -67,8 +68,30 @@ export default function Editor(props: Props): JSX.Element {
 
   // Private
 
+  function previousHistory(): void {
+    history.previous()
+  }
+
+  function nextHistory(): void {
+    history.next()
+  }
+
   function subscribeHistory(): void {
     historyListener({ history, state, nodeListState, linkListState })
+  }
+
+  function resetSelection(): void {
+    linkListState.editingId.set(undefined)
+    nodeListState.selection.set(new Set())
+  }
+
+  function removeSelected(): void {
+    nodeListState.selection.value.forEach((id) => {
+      const state = nodeListState.get(id)
+      if (state.point.type !== 'ENTER') {
+        removeNode(id)
+      }
+    })
   }
 
   function removeNode(id: Id): void {
@@ -115,30 +138,7 @@ export default function Editor(props: Props): JSX.Element {
     const el = e.target as HTMLElement
     if (el.tagName === 'path' || el.tagName === 'svg') {
       linkListState.editingId.set(undefined)
-    }
-  }
-
-  function onKeyDown(ev: KeyboardEvent): void {
-    if (ev.key === 'Escape') {
-      linkListState.editingId.set(undefined)
       nodeListState.selection.set(new Set())
-    }
-
-    if (ev.key === 'Backspace') {
-      nodeListState.selection.value.forEach((id) => {
-        const state = nodeListState.get(id)
-        if (state.point.type !== 'ENTER') {
-          nodeListState.remove(id)
-        }
-      })
-    }
-
-    if (ev.metaKey && ev.key === 'z') {
-      if (ev.shiftKey) {
-        history.next()
-      } else {
-        history.previous()
-      }
     }
   }
 }

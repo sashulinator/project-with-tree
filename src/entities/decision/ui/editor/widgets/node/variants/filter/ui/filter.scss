@@ -1,0 +1,18 @@
+.decisionCanvas-w-Node-v-Filter {
+  border-radius: var(--xxl);
+  border-width: 2px;
+  border-style: solid;
+  border-color: rgba(137, 43, 226, 0.9);
+
+  > .title {
+    padding: 0 var(--l);
+  }
+
+  &.--selected {
+    box-shadow: 0px 0px 0px 2px var(--focusAlt);
+  }
+
+  & > .title.--focused {
+    background-color: rgba(137, 43, 226, 0.3);
+  }
+}

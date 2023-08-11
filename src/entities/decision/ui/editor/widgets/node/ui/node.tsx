@@ -1,14 +1,15 @@
 import './node.css'
 
-import { Item, GestureDragEvent } from '~/ui/canvas'
+import { ReactElement, cloneElement } from 'react'
 
+import { emitter } from '~/shared/emitter'
+import { GestureDragEvent, Item } from '~/ui/canvas'
+import { c } from '~/utils/core'
+import { useUpdate } from '~/utils/hooks'
+
+import { ListState, State as NodeState } from '..'
 import { dark } from '../themes/dark'
 import { light } from '../themes/light'
-import { emitter } from '~/shared/emitter'
-import { c } from '~/utils/core'
-import { State as NodeState } from '..'
-
-import { ReactElement, cloneElement } from 'react'
 
 emitter.emit('addTheme', { dark, light })
 
@@ -16,6 +17,7 @@ Node.displayName = 'decisionEditor-ui-Canvas-w-Node'
 
 export interface NodeProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'children' | 'title'> {
   state: NodeState
+  listState: ListState
   title: ReactElement | null
   toolbar: ReactElement | null
   sourceLinks?: ReactElement | null
@@ -28,7 +30,10 @@ export interface NodeProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'c
  * Элемент Canvas с фичами
  */
 export default function Node(props: NodeProps): JSX.Element {
-  const { title, toolbar, sourceLinks, targetLinks, state, rootProps, ...itemProps } = props
+  useUpdate(subscribeOnUpdates)
+
+  const { title, toolbar, sourceLinks, listState, targetLinks, state, rootProps, ...itemProps } = props
+  const selected = listState.selection.isSelected(props.state.id)
 
   return (
     <Item
@@ -37,7 +42,7 @@ export default function Node(props: NodeProps): JSX.Element {
       ref={props.state.ref.set}
       x={state.position.value.x}
       y={state.position.value.y}
-      className={c(props.className, Node.displayName)}
+      className={c(props.className, Node.displayName, selected && `--selected`)}
       style={{ width: '20rem' }}
       rootProps={{ ...rootProps, style: { overflow: 'visible', ...rootProps?.style } }}
     >
@@ -50,4 +55,8 @@ export default function Node(props: NodeProps): JSX.Element {
       </div>
     </Item>
   )
+
+  function subscribeOnUpdates(update: () => void, uns: (() => void)[]): void {
+    uns.push(listState.on('selection', update))
+  }
 }
