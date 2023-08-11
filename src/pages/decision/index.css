@@ -1,5 +1,5 @@
 .DecisionListPage {
-  background-color: var(--bgSecondary);
   overflow: hidden;
   overscroll-behavior: none;
+  padding-top: var(--xxxl);
 }

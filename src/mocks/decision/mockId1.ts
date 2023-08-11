@@ -1,10 +1,10 @@
 import { Decision } from '~/entities/decision'
 
 const mock: Decision = {
-  name: 'mockedDecision111111',
+  name: 'megafon',
   id: 'mockId1',
   version: '2.0',
-  status: 'DRAFT',
+  status: 'PUBLISHED',
   data: [
     {
       type: 'MAIN',

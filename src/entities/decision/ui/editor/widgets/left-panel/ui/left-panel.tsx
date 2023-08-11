@@ -31,7 +31,7 @@ export default function LeftPanel(props: Props): JSX.Element {
     <AppearFrom
       {...props.rootProps}
       className={clsx(props.className, props.rootProps?.className, LeftPanel.displayName)}
-      offset={-33}
+      offsetX={-33}
     >
       <Resizable {...props.resizableProps} direction='left' />
       <div className='toolbar'>
