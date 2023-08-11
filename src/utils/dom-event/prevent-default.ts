@@ -1,4 +1,4 @@
-interface PreventDefaultable {
+interface PreventDefaultEvent {
   preventDefault: () => void
 }
 
@@ -6,6 +6,6 @@ interface PreventDefaultable {
  * @example
  * fns(stopPropagation, doSmth1, doSmth2)
  */
-export function preventDefault(e: PreventDefaultable) {
+export function preventDefault(e: PreventDefaultEvent) {
   e.preventDefault()
 }

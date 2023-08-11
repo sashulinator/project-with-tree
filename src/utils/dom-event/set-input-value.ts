@@ -1,5 +1,5 @@
 /**
- * Задает значение для HTML-элемента input
+ * Задает значение для HTMLInputElement
  *
  * @param {HTMLInputElement | null} inputElement - HTML-элемент input
  * @param {string} value - Значение для установки в input
