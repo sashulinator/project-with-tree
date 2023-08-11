@@ -6,12 +6,12 @@ import { useState } from 'react'
 import { AppearFrom } from '~/ui/animation'
 import { PrimaryButton } from '~/ui/button'
 import { Plus } from '~/ui/icon'
-import Input from '~/ui/input'
-import { Id } from '~/utils/core'
+import { Clearable as ClearableInput } from '~/ui/input'
 import Resizable, { ResizableProps } from '~/ui/resizable'
+import { Id } from '~/utils/core'
 
-import { NodeListState } from '../../..'
 import { NodeList } from '..'
+import { NodeListState } from '../../..'
 
 LeftPanel.displayName = 'decision-Editor-w-LeftPanel'
 
@@ -36,7 +36,7 @@ export default function LeftPanel(props: Props): JSX.Element {
       <Resizable {...props.resizableProps} direction='left' />
       <div className='toolbar'>
         <div className='search'>
-          <Input
+          <ClearableInput
             transparent={true}
             value={value}
             onChange={(ev): void => setValue(ev.currentTarget.value)}

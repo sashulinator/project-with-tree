@@ -1,13 +1,19 @@
-export * from './lib/use-change-on-blur-strategy'
+/**
+ * lib
+ */
+export { useChangeOnBlurStrategy } from './lib/use-change-on-blur-strategy'
 
+/**
+ * ui
+ */
 export { default } from './ui/input'
 export * from './ui/input'
 
-export { common as commonTheme } from './themes/common'
-export { dark as darkTheme } from './themes/dark'
-export { light as lightTheme } from './themes/light'
+/**
+ * variants
+ */
+export { default as Password } from './variants/password'
+export type { PasswordProps } from './variants/password'
 
-export type { CSSVars as ComponentCSSVars } from './types/css-vars'
-
-export * from './variants/password'
-export * from './variants/clearable'
+export { default as Clearable } from './variants/clearable'
+export type { ClearableProps } from './variants/clearable'

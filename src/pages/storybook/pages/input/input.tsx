@@ -2,17 +2,15 @@
 import { useState } from 'react'
 
 import Flex from '~/abstract/flex/ui/flex'
-
 import { H1, H2 } from '~/ui/heading'
-
+import { User } from '~/ui/icon'
+import Input, { Clearable, InputProps, Password } from '~/ui/input'
+import Link from '~/ui/link'
 import PageSection from '~/ui/page-section'
+import { useBoolean } from '~/utils/hooks'
 
 import Section from '../../section'
-import Input, { ClearableInput, InputProps, PasswordInput } from '~/ui/input'
-import { useBoolean } from '~/utils/hooks'
 import { routes } from '../../shared/routes'
-import Link from '~/ui/link'
-import { User } from '~/ui/icon'
 
 export default function InputPage(): JSX.Element {
   return (
@@ -24,8 +22,8 @@ export default function InputPage(): JSX.Element {
         <Section>
           <Flex dir='column' gap='m'>
             <Input left={<User style={{ margin: '0 0 0 var(--m)' }} />} />
-            <PasswordInput />
-            <ClearableInput />
+            <Password />
+            <Clearable />
           </Flex>
         </Section>
       </PageSection>
