@@ -1,10 +1,14 @@
+import { memo } from 'react'
+
 import { Board, PaintingPanel } from '~/ui/canvas'
 import { Id } from '~/utils/core'
 import { useUpdate } from '~/utils/hooks'
 
 import { State } from '../'
-import { LinkList, LinkListState, NodeList, NodeListState, NodeState, getColumnX, getNodeMovement } from '../../..'
-import { onGestureDrag } from '../lib/on-gesture-drag'
+import { LinkList, LinkListState, NodeList, NodeListState } from '../../..'
+import { onGestureDrag } from '../_private'
+
+CanvasComponent.displayName = 'decision-Editor-w-Canvas'
 
 export interface Props {
   state: State
@@ -13,7 +17,7 @@ export interface Props {
   removeNode: (id: Id) => void
 }
 
-export default function Canvas(props: Props): JSX.Element {
+function CanvasComponent(props: Props): JSX.Element {
   useUpdate(updateOnEvents, [props.state])
 
   return (
@@ -67,3 +71,7 @@ export default function Canvas(props: Props): JSX.Element {
     })
   }
 }
+
+const Canvas = memo(CanvasComponent)
+Canvas.displayName = CanvasComponent.displayName
+export default Canvas

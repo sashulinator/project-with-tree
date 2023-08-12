@@ -1,20 +1,19 @@
 import './right-panel.scss'
 
 import { clsx } from 'clsx'
+import { memo } from 'react'
 
 import Flex from '~/abstract/flex/ui/flex'
-
 import { AppearFrom } from '~/ui/animation'
 import { GhostButton, PrimaryButton } from '~/ui/button'
-import Resizable, { ResizableProps } from '~/ui/resizable'
-import { SpacingWidth, Close } from '~/ui/icon'
+import { Close, SpacingWidth } from '~/ui/icon'
 import Input, { useChangeOnBlurStrategy } from '~/ui/input'
-
+import Resizable, { ResizableProps } from '~/ui/resizable'
 import { useBoolean, useUpdate } from '~/utils/hooks'
 
 import { NodeListState } from '../../..'
 
-RightPanel.displayName = 'decision-Editor-w-RightPanel'
+RightPanelComponent.displayName = 'decision-Editor-w-RightPanel'
 
 export interface Props {
   rootProps?: React.HTMLAttributes<HTMLDivElement>
@@ -23,7 +22,7 @@ export interface Props {
   nodeListState: NodeListState
 }
 
-export default function RightPanel(props: Props): JSX.Element | null {
+function RightPanelComponent(props: Props): JSX.Element | null {
   useUpdate(subscribeOnUpdates)
 
   const [fullscreen, , , toogleFullscreen] = useBoolean(false)
@@ -54,7 +53,7 @@ export default function RightPanel(props: Props): JSX.Element | null {
       className={clsx(
         props.className,
         props.rootProps?.className,
-        RightPanel.displayName,
+        RightPanelComponent.displayName,
         fullscreen && '--fullscreen'
       )}
       offsetX={33}
@@ -80,3 +79,7 @@ export default function RightPanel(props: Props): JSX.Element | null {
     uns.push(props.nodeListState.on('selection', update))
   }
 }
+
+const RightPanel = memo(RightPanelComponent)
+RightPanel.displayName = RightPanelComponent.displayName
+export default RightPanel
