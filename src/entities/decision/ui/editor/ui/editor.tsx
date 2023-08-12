@@ -21,7 +21,10 @@ import {
 import {
   addNode as addNodeBind,
   centerNode as centerNodeBind,
+  copySelectedNodes as copySelectedNodesBind,
+  cutSelectedNodes as cutSelectedNodesBind,
   nextHistory as nextHistoryBind,
+  pasteFromClipboard as pasteFromClipboardBind,
   previousHistory as previousHistoryBind,
   removeNode as removeNodeBind,
   removeSelectedNodes as removeSelectedNodesBind,
@@ -53,9 +56,20 @@ export default function Editor(props: Props): JSX.Element {
   const addNode = addNodeBind({ canvasState, nodeListState })
   const removeSelectedNodes = removeSelectedNodesBind({ nodeListState, removeNode })
   const centerNode = centerNodeBind({ nodeListState, canvasState })
+  const copySelectedNodes = copySelectedNodesBind({ nodeListState })
+  const cutSelectedNodes = cutSelectedNodesBind({ nodeListState })
+  const pasteFromClipboard = pasteFromClipboardBind({ nodeListState, addNode })
   const resetAll = resetAllBind({ linkListState, nodeListState })
 
-  useKeyDownListener({ resetAll, removeSelectedNodes, previousHistory, nextHistory })
+  useKeyDownListener({
+    resetAll,
+    removeSelectedNodes,
+    previousHistory,
+    nextHistory,
+    copySelectedNodes,
+    pasteFromClipboard,
+    cutSelectedNodes,
+  })
   useEventListener('click', onClick)
 
   useEffect(subscribeHistory, [history, state, nodeListState, linkListState])
