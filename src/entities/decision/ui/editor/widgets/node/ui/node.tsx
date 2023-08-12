@@ -4,7 +4,9 @@ import { ReactElement, cloneElement, useRef } from 'react'
 
 import { emitter } from '~/shared/emitter'
 import { GestureDragEvent, Item } from '~/ui/canvas'
-import { Position, assertNotNull, c } from '~/utils/core'
+import { Position, c } from '~/utils/core'
+import { isMetaCtrlKey } from '~/utils/dom-event'
+
 import { fns } from '~/utils/function'
 import { useUpdate } from '~/utils/hooks'
 
@@ -65,15 +67,19 @@ export default function Node(props: NodeProps): JSX.Element {
   // Private
 
   function handleMouseUp(event: React.MouseEvent<HTMLDivElement>): void {
-    assertNotNull(clickPositionRef.current)
+    if (clickPositionRef.current === null) return
 
     if (event.currentTarget !== (event.target as HTMLElement)?.parentElement) return
 
-    const mx = event.pageX - clickPositionRef.current.x
-    const my = event.pageY - clickPositionRef.current.y
+    const mx = Math.abs(event.pageX - clickPositionRef.current.x)
+    const my = Math.abs(event.pageY - clickPositionRef.current.y)
 
     if (mx < 5 && my < 5) {
-      props.listState.selection.toggle(props.state.id)
+      if (isMetaCtrlKey(event)) {
+        props.listState.selection.toggle(props.state.id)
+      } else {
+        props.listState.selection.set([props.state.id])
+      }
       props.onGestureClick?.(event)
     }
 

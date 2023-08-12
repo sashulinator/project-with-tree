@@ -1,8 +1,9 @@
 import { ZoomBehavior, ZoomTransform, zoom, zoomIdentity } from 'd3-zoom'
-import { PositionProp } from '~/lib/emitter'
 
+import { PositionProp } from '~/lib/emitter'
 import { Position } from '~/utils/core'
 import { AnyEvent, Emitter, Prop } from '~/utils/depricated-emitter'
+import { isMetaCtrlKey } from '~/utils/dom-event'
 
 import { D3Selection } from './d3-selection'
 
@@ -33,11 +34,14 @@ export class D3Zoom<E extends AnyEvent> {
     this.zoomBehavior = zoom<SVGSVGElement, unknown>()
       .on('zoom', _zoom)
       .scaleExtent([0.2, 1])
-      .filter((ev: WheelEvent | MouseEvent) => {
-        if (ev.type === 'wheel') {
+      .filter((event: WheelEvent | MouseEvent) => {
+        if (isMetaCtrlKey(event)) {
+          return false
+        }
+        if (event.type === 'wheel') {
           return true
         }
-        return ev.target === emitter.ref.value
+        return event.target === emitter.ref.value
       })
 
     emitter.d3selection.emitters.push((selection) => {

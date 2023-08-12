@@ -43,14 +43,19 @@ export function onGestureDrag(state: State, nodeListState: NodeListState) {
           ? nodeState.position.move({ x, y }, { last: false })
           : nodeState.position.transitionMove({ x: getColumnX(x), y })
 
-        selectedNodeStates.forEach((selectedNodeState) => {
-          !event.last
-            ? selectedNodeState.position.move(nodeState.position.value, { last: false })
-            : selectedNodeState.position.transitionMove({
-                x: getColumnX(nodeState.position.value.x),
-                y: nodeState.position.value.y,
-              })
-        })
+        selectedNodeStates
+          .sort((a, b) => a.position.value.y - b.position.value.y)
+          .forEach((selectedNodeState, i) => {
+            !event.last
+              ? selectedNodeState.position.move(
+                  { x: nodeState.position.value.x, y: nodeState.position.value.y + i * 1 },
+                  { last: false }
+                )
+              : selectedNodeState.position.transitionMove({
+                  x: getColumnX(nodeState.position.value.x),
+                  y: nodeState.position.value.y,
+                })
+          })
       } else {
         const selectedNodeStates = [...nodeListState.selection.value, nodeState.id].map((id) => nodeListState.get(id))
 

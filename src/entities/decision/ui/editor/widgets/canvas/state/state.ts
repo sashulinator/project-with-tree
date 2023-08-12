@@ -1,6 +1,7 @@
+import { Emitter, PositionProp } from '~/lib/emitter'
 import { Position } from '~/utils/core'
 import { Prop } from '~/utils/depricated-emitter'
-import { Emitter, PositionProp } from '~/lib/emitter'
+import { Size } from '~/utils/dom/types/size'
 
 import { D3Selection } from './d3-selection'
 import { D3Zoom } from './d3-zoom'
@@ -22,6 +23,8 @@ export class State extends Emitter<Events> {
 
   d3zoom: D3Zoom<Events>
 
+  highlight: Prop<'highlight', (Position & Size) | null>
+
   constructor(scale: number, translate: Position) {
     super()
 
@@ -34,5 +37,7 @@ export class State extends Emitter<Events> {
     this.d3selection = new D3Selection(this)
 
     this.d3zoom = new D3Zoom(scale, translate, this)
+
+    this.highlight = new Prop('highlight', null as (Position & Size) | null, this)
   }
 }
