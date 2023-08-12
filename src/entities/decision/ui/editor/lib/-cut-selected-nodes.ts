@@ -1,5 +1,5 @@
-import { addToast } from '~/abstract/toast'
 import { Point } from '~/entities/point'
+import { notify } from '~/shared/notify'
 import { Box } from '~/utils/clipboard'
 
 import { NodeListState } from '..'
@@ -24,11 +24,11 @@ export function cutSelectedNodes(props: Props): () => void {
     navigator.clipboard
       .writeText(stringifiedJSON)
       .then(() => {
-        addToast({ data: 'Вырезано', type: 'success' })
+        notify({ data: 'Вырезано', type: 'success' })
       })
       .catch((err) => {
         console.error(err)
-        addToast({ data: 'Не удалось вырезать', type: 'error' })
+        notify({ data: 'Не удалось вырезать', type: 'error' })
       })
   }
 }
