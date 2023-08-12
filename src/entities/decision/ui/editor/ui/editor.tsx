@@ -1,13 +1,10 @@
 import './editor.scss'
 
 import { useEffect, useMemo } from 'react'
-import uniqid from 'uniqid'
 
 import { Decision } from '~/entities/decision'
-import { Point } from '~/entities/point'
 import { ActionHistory } from '~/utils/action-history'
-import { Id, assertDefined, assertNotNull, c } from '~/utils/core'
-import { getElementSize } from '~/utils/dom/get-element-size'
+import { c } from '~/utils/core'
 import { useEventListener } from '~/utils/hooks'
 
 import {
@@ -17,17 +14,24 @@ import {
   LeftPanel,
   LinkListState,
   NodeListState,
-  NodeState,
   RightPanel,
   State,
-  getColumnX,
   historyListener,
 } from '../'
-import { addNodeClosure } from '../lib/-add-node-closure'
-import { removeNodeClosure } from '../lib/-remove-node-closure'
-import { useKeyDownListener } from '../lib/-use-key-down-listener'
+import {
+  addNode as addNodeBind,
+  centerNode as centerNodeBind,
+  nextHistory as nextHistoryBind,
+  previousHistory as previousHistoryBind,
+  removeNode as removeNodeBind,
+  removeSelectedNodes as removeSelectedNodesBind,
+  resetAll as resetAllBind,
+  useKeyDownListener,
+} from '../_private'
 
 Editor.displayName = 'decision-Editor'
+
+const resizeBarClassName = 'resizeBar'
 
 export interface Props {
   decision: Decision
@@ -36,7 +40,6 @@ export interface Props {
 
 export default function Editor(props: Props): JSX.Element {
   const rules = props.decision.rules || []
-  const resizeBarClassName = 'resizeBar'
   const history = useMemo(() => new ActionHistory(), [])
 
   const state = useMemo(() => new State(props.decision), [])
@@ -44,10 +47,15 @@ export default function Editor(props: Props): JSX.Element {
   const nodeListState = useMemo(() => new NodeListState(props.decision.data), [props.decision.data])
   const linkListState = useMemo(() => new LinkListState(rules), [rules])
 
-  const removeNode = removeNodeClosure({ linkListState, nodeListState })
-  const addNode = addNodeClosure({ canvasState, nodeListState })
+  const previousHistory = previousHistoryBind(history)
+  const nextHistory = nextHistoryBind(history)
+  const removeNode = removeNodeBind({ linkListState, nodeListState })
+  const addNode = addNodeBind({ canvasState, nodeListState })
+  const removeSelectedNodes = removeSelectedNodesBind({ nodeListState, removeNode })
+  const centerNode = centerNodeBind({ nodeListState, canvasState })
+  const resetAll = resetAllBind({ linkListState, nodeListState })
 
-  useKeyDownListener({ resetSelection, removeSelected, previousHistory, nextHistory })
+  useKeyDownListener({ resetAll, removeSelectedNodes, previousHistory, nextHistory })
   useEventListener('click', onClick)
 
   useEffect(subscribeHistory, [history, state, nodeListState, linkListState])
@@ -73,41 +81,8 @@ export default function Editor(props: Props): JSX.Element {
 
   // Private
 
-  function previousHistory(): void {
-    history.previous()
-  }
-
-  function nextHistory(): void {
-    history.next()
-  }
-
   function subscribeHistory(): void {
     historyListener({ history, state, nodeListState, linkListState })
-  }
-
-  function resetSelection(): void {
-    linkListState.editingId.set(undefined)
-    nodeListState.selection.set(new Set())
-  }
-
-  function removeSelected(): void {
-    nodeListState.selection.value.forEach((id) => {
-      const state = nodeListState.get(id)
-      if (state.point.type !== 'ENTER') {
-        removeNode(id)
-      }
-    })
-  }
-
-  function centerNode(id: Id): void {
-    const nodeState = nodeListState.get(id)
-    assertNotNull(nodeState.ref.value)
-    assertNotNull(canvasState.ref.value)
-    const nodeSize = getElementSize(nodeState.ref.value)
-    const canvasSize = getElementSize(canvasState.ref.value)
-    const mx = -nodeState.position.value.x + canvasSize.width / 2 - nodeSize.width / 2
-    const my = -nodeState.position.value.y + canvasSize.height / 2 - nodeSize.height / 2
-    canvasState.d3zoom.setTranslate({ x: mx, y: my })
   }
 
   function onClick(e: MouseEvent): void {

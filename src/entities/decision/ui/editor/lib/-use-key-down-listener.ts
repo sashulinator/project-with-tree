@@ -2,8 +2,8 @@ import { isActiveInput, keyListener } from '~/utils/dom-event'
 import { useEventListener } from '~/utils/hooks'
 
 interface Actions {
-  removeSelected: () => void
-  resetSelection: () => void
+  removeSelectedNodes: () => void
+  resetAll: () => void
   previousHistory: () => void
   nextHistory: () => void
 }
@@ -16,10 +16,10 @@ export function useKeyDownListener(actions: Actions): void {
   useEventListener('keydown', keyListener(nextHistoryConf, EmitAction('nextHistory')))
 
   const resetSelectionConf = { key: 'Escape' }
-  useEventListener('keydown', keyListener(resetSelectionConf, EmitAction('resetSelection')))
+  useEventListener('keydown', keyListener(resetSelectionConf, EmitAction('resetAll')))
 
-  const removeSelectedConf = { key: 'Backspace' }
-  useEventListener('keydown', keyListener(removeSelectedConf, EmitAction('removeSelected')))
+  const removeSelectedNodesConf = { key: 'Backspace' }
+  useEventListener('keydown', keyListener(removeSelectedNodesConf, EmitAction('removeSelectedNodes')))
 
   // Private
 

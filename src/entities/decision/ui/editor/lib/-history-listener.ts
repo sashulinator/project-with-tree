@@ -1,9 +1,7 @@
-// eslint-disable-next-line eslint-comments/disable-enable-pair
-/* eslint-disable @typescript-eslint/no-explicit-any */
-// eslint-disable-next-line eslint-comments/disable-enable-pair
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-import { LinkListState, NodeListState, State } from '..'
 import { ActionHistory } from '~/utils/action-history'
+import { Any } from '~/utils/core'
+
+import { LinkListState, NodeListState, State } from '..'
 
 type Props = {
   history: ActionHistory
@@ -16,13 +14,15 @@ export function historyListener(props: Props): void {
   const { history, nodeListState } = props
 
   nodeListState.on('selection', (event) => {
-    if ((event as any).isHistory) return
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+    if ((event as Any).isHistory) return
     const action = (d: 'previous' | 'value') => (): void => nodeListState.selection.set(event[d], { isHistory: true })
     history.add(action('value'), action('previous'))
   })
 
   nodeListState.on('position', (event) => {
-    if ((event as any).isHistory || !event.last || event.isPositionColumn) return
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+    if ((event as Any).isHistory || !event.last || event.isPositionColumn) return
 
     const value = { ...event.value }
     const undo = (): void => {
