@@ -6,6 +6,7 @@ import { emitter } from '~/shared/emitter'
 import { GestureDragEvent, Item } from '~/ui/canvas'
 import { Position, c } from '~/utils/core'
 import { isMetaCtrlKey } from '~/utils/dom-event'
+
 import { fns } from '~/utils/function'
 import { useUpdate } from '~/utils/hooks'
 
