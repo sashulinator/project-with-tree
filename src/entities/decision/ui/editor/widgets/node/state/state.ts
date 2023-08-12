@@ -1,4 +1,6 @@
-import { ItemState, ItemEvents } from '~/abstract/canvas'
+import uniqid from 'uniqid'
+
+import { ItemEvents, ItemState } from '~/abstract/canvas'
 import { Point } from '~/entities/point'
 import { Prop } from '~/utils/depricated-emitter'
 
@@ -28,5 +30,18 @@ export class State extends ItemState<Events> {
     this.description = new Prop('description', point.description, this)
 
     this.computation = new Prop('computation', point.computation, this)
+  }
+
+  copy = (point?: StateProps): State => {
+    return new State({ ...this.serialize(), ...point, id: uniqid() })
+  }
+
+  serialize = (): Point => {
+    return {
+      ...this.point,
+      name: this.title.value,
+      description: this.description.value || '',
+      computation: this.computation.value || 'parallel',
+    }
   }
 }

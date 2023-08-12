@@ -6,6 +6,9 @@ interface Actions {
   resetAll: () => void
   previousHistory: () => void
   nextHistory: () => void
+  copySelectedNodes: () => void
+  pasteFromClipboard: () => void
+  cutSelectedNodes: () => void
 }
 
 export function useKeyDownListener(actions: Actions): void {
@@ -20,6 +23,15 @@ export function useKeyDownListener(actions: Actions): void {
 
   const removeSelectedNodesConf = { key: 'Backspace' }
   useEventListener('keydown', keyListener(removeSelectedNodesConf, EmitAction('removeSelectedNodes')))
+
+  const copySelectedNodesConf = { key: 'c', metaCtrlKey: true }
+  useEventListener('keydown', keyListener(copySelectedNodesConf, EmitAction('copySelectedNodes')))
+
+  const cutConf = { key: 'x', metaCtrlKey: true }
+  useEventListener('keydown', keyListener(cutConf, EmitAction('cutSelectedNodes')))
+
+  const pasteConf = { key: 'v', metaCtrlKey: true }
+  useEventListener('keydown', keyListener(pasteConf, EmitAction('pasteFromClipboard')))
 
   // Private
 

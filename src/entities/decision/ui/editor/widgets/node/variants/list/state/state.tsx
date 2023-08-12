@@ -1,10 +1,10 @@
-import { getStyle } from '~/utils/dom'
 import { Point } from '~/entities/point'
-import { Selection, EmitterableDictionary } from '~/lib/emitter'
+import { EmitterableDictionary, Selection } from '~/lib/emitter'
 import { Id, Position, assertNotNull } from '~/utils/core'
+import { getStyle } from '~/utils/dom'
 
-import { NodeState } from '../../../../..'
 import { NODE_GAP } from '../../..'
+import { NodeState } from '../../../../..'
 
 export type Events = {
   // Наследуемые события
