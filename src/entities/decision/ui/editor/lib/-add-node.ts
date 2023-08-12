@@ -10,7 +10,7 @@ interface Props {
   nodeListState: NodeListState
 }
 
-export function addNodeClosure(props: Props): () => void {
+export function addNode(props: Props): () => void {
   return (): void => {
     const rect = props.canvasState.ref.value?.getBoundingClientRect()
     assertDefined(rect)

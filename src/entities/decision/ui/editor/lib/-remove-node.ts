@@ -7,8 +7,8 @@ interface Props {
   linkListState: LinkListState
 }
 
-export function removeNodeClosure(props: Props): (id: Id) => void {
-  return (id) => {
+export function removeNode(props: Props): (id: Id) => void {
+  return (id: Id) => {
     const x = props.nodeListState.get(id).position.value.x
     props.nodeListState.remove(id)
     setTimeout(() => props.nodeListState.positionColumn(x))
