@@ -1,28 +1,29 @@
 import './decision-panel.css'
 
-import { clsx } from 'clsx'
+import { memo } from 'react'
 
+import { routes } from '~/shared/routes'
+import { PrimaryButton } from '~/ui/button'
+import Input, { useChangeOnBlurStrategy } from '~/ui/input'
+import Link from '~/ui/link/ui/link'
 import ThemeDropdown from '~/ui/theme-dropdown'
+import { c } from '~/utils/core'
 import { useUpdate } from '~/utils/hooks'
 
 import { State } from '../../..'
-import Input, { useChangeOnBlurStrategy } from '~/ui/input'
-import { GhostButton, PrimaryButton } from '~/ui/button'
-import Link from '~/ui/link/ui/link'
-import { routes } from '~/shared/routes'
 
-DecisionPanel.displayName = 'decision-Editor-DecisionPanel'
+DecisionPanelComponent.displayName = 'decision-Editor-DecisionPanel'
 
 export interface DecisionPanelProps {
   rootProps?: React.HTMLAttributes<HTMLDivElement>
   state: State
 }
 
-export default function DecisionPanel(props: DecisionPanelProps): JSX.Element {
+function DecisionPanelComponent(props: DecisionPanelProps): JSX.Element {
   useUpdate(subscribeOnUpdates)
 
   return (
-    <div {...props.rootProps} className={clsx(DecisionPanel.displayName, props.rootProps?.className)}>
+    <div {...props.rootProps} className={c(DecisionPanelComponent.displayName, props.rootProps?.className)}>
       <div className='left'>
         <Link to={routes.decisionList.getURL()}>Назад</Link>
       </div>
@@ -54,3 +55,7 @@ export default function DecisionPanel(props: DecisionPanelProps): JSX.Element {
     uns.push(props.state.on('name', update))
   }
 }
+
+const DecisionPanel = memo(DecisionPanelComponent)
+DecisionPanel.displayName = DecisionPanelComponent.displayName
+export default DecisionPanel

@@ -1,7 +1,7 @@
 import './left-panel.css'
 
 import { clsx } from 'clsx'
-import { useState } from 'react'
+import { memo, useState } from 'react'
 
 import { AppearFrom } from '~/ui/animation'
 import { PrimaryButton } from '~/ui/button'
@@ -13,7 +13,7 @@ import { Id } from '~/utils/core'
 import { NodeList } from '..'
 import { NodeListState } from '../../..'
 
-LeftPanel.displayName = 'decision-Editor-w-LeftPanel'
+LeftPanelComponent.displayName = 'decision-Editor-w-LeftPanel'
 
 export interface Props {
   className?: string
@@ -24,13 +24,13 @@ export interface Props {
   centerNode: (id: Id) => void
 }
 
-export default function LeftPanel(props: Props): JSX.Element {
+function LeftPanelComponent(props: Props): JSX.Element {
   const [value, setValue] = useState<string>('')
 
   return (
     <AppearFrom
       {...props.rootProps}
-      className={clsx(props.className, props.rootProps?.className, LeftPanel.displayName)}
+      className={clsx(props.className, props.rootProps?.className, LeftPanelComponent.displayName)}
       offsetX={-33}
     >
       <Resizable {...props.resizableProps} direction='left' />
@@ -56,3 +56,7 @@ export default function LeftPanel(props: Props): JSX.Element {
     </AppearFrom>
   )
 }
+
+const LeftPanel = memo(LeftPanelComponent)
+LeftPanel.displayName = LeftPanelComponent.displayName
+export default LeftPanel
