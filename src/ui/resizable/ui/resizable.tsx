@@ -1,7 +1,6 @@
 import React, { DetailedHTMLProps, useLayoutEffect, useRef, useState } from 'react'
 
 import { c } from '~/utils/core'
-
 import { removeCSSVar, setCSSVar } from '~/utils/dom/css-variable'
 
 Resizable.displayName = 'ui-Resizable'
@@ -72,8 +71,6 @@ export default function Resizable(props: Props): JSX.Element {
 
     const parentRect = parent.getBoundingClientRect()
     setInitParentWidth(Math.round(parentRect.width))
-
-    console.log('allooo')
 
     ref.current?.classList.add('--resizing')
     document.body.style.cursor = 'col-resize'

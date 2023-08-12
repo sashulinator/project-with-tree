@@ -3,13 +3,12 @@ import './link.css'
 import { clsx } from 'clsx'
 
 import { Link as UILink } from '~/ui/canvas'
-
 import { Position } from '~/utils/core'
 import { fns } from '~/utils/function'
 import { useForceUpdate, useOnMount, useUpdate } from '~/utils/hooks'
 
+import { ListState, State, getOffset } from '..'
 import { NodeListState } from '../../..'
-import { State, ListState, getOffset } from '..'
 
 export interface LinkProps extends React.HTMLAttributes<SVGPathElement> {
   scale: number
