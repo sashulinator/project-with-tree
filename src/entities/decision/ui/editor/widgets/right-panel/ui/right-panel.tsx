@@ -41,7 +41,7 @@ function RightPanelComponent(props: Props): JSX.Element | null {
     onChange: (e) => nodeState?.title.set(e.currentTarget.value),
   })
 
-  if (selection.size !== 1) {
+  if (selection.length !== 1) {
     return null
   }
 
@@ -65,7 +65,7 @@ function RightPanelComponent(props: Props): JSX.Element | null {
           <SpacingWidthButton onClick={toogleFullscreen} round={true}>
             <SpacingWidth />
           </SpacingWidthButton>
-          <GhostButton round={true} height='l' onClick={(): void => props.nodeListState.selection.set(new Set())}>
+          <GhostButton round={true} height='l' onClick={(): void => props.nodeListState.selection.set([])}>
             <Close />
           </GhostButton>
         </Flex>

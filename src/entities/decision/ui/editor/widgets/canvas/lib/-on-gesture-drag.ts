@@ -22,6 +22,17 @@ export function onGestureDrag(state: State, nodeListState: NodeListState) {
       // иначе карточка дергается при простом клике на нее
       if (Math.abs(movePosition.x) < 10 && Math.abs(movePosition.y) < 10) return
 
+      if (!nodeListState.selection.isSelected(nodeState.id)) {
+        const x = nodeState.position.start.x + movePosition.x
+        const y = nodeState.position.start.y + movePosition.y
+
+        !event.last
+          ? nodeState.position.move({ x, y }, { last: false })
+          : nodeState.position.transitionMove({ x: getColumnX(x), y })
+
+        return
+      }
+
       if (event.event.shiftKey) {
         const selectedNodeStates = [...nodeListState.selection.value].map((id) => nodeListState.get(id))
 

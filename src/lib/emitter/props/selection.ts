@@ -1,23 +1,24 @@
 import { Id } from '~/utils/core'
 import { Prop } from '~/utils/depricated-emitter'
+import { remove, toggle } from '~/utils/key'
+import { push } from '~/utils/list'
 
-export class Selection<N extends string> extends Prop<N, Set<Id>> {
+export class Selection<N extends string> extends Prop<N, Id[]> {
   // Select
-  select = (value: Id): void => {
-    this.value = new Set(this.value).add(value)
+  select = (id: Id): void => {
+    if (this.value.includes(id)) return
+    this.value = push(id, this.value)
   }
 
   remove = (id: Id): void => {
-    const set = new Set(this.value)
-    set.delete(id)
-    this.value = set
+    this.value = remove(id, this.value)
   }
 
   toggle = (id: Id): void => {
-    this.value.has(id) ? this.remove(id) : this.select(id)
+    this.value = toggle(id, this.value)
   }
 
   isSelected = (id: Id): boolean => {
-    return this.value.has(id)
+    return this.value.includes(id)
   }
 }

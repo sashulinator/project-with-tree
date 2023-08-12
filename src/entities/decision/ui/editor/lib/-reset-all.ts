@@ -8,6 +8,6 @@ interface Props {
 export function resetAll(props: Props): () => void {
   return () => {
     props.linkListState.editingId.set(undefined)
-    props.nodeListState.selection.set(new Set())
+    props.nodeListState.selection.set([])
   }
 }

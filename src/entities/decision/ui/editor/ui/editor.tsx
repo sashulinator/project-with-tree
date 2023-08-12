@@ -100,10 +100,10 @@ export default function Editor(props: Props): JSX.Element {
   }
 
   function onClick(e: MouseEvent): void {
-    const el = e.target as HTMLElement
+    const el = e.currentTarget as HTMLElement
     if (el.tagName === 'path' || el.tagName === 'svg') {
       linkListState.editingId.set(undefined)
-      nodeListState.selection.set(new Set())
+      nodeListState.selection.set([])
     }
   }
 }

@@ -16,6 +16,6 @@ export function removeSelectedNodes(props: Props): () => void {
         props.removeNode(id)
       }
     })
-    props.nodeListState.selection.set(new Set())
+    props.nodeListState.selection.set([])
   }
 }
