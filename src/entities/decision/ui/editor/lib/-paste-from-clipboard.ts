@@ -1,6 +1,7 @@
 import uniqid from 'uniqid'
 
 import { Point } from '~/entities/point'
+import { notify } from '~/shared/notify'
 import { Box } from '~/utils/clipboard'
 import { has } from '~/utils/core'
 
@@ -18,8 +19,6 @@ export function pasteFromClipboard(props: Props): () => void {
       .then((text) => {
         try {
           const boxList: unknown = JSON.parse(text)
-
-          console.log('boxList', boxList)
 
           if (Array.isArray(boxList)) {
             boxList.forEach((box) => {
@@ -41,9 +40,8 @@ export function pasteFromClipboard(props: Props): () => void {
           console.log(text)
         }
       })
-      .catch((err) => {
-        // возможно, пользователь не дал разрешение на чтение данных из буфера обмена
-        console.log('Something went wrong', err)
+      .catch(() => {
+        notify({ type: 'error', data: 'Ошибка! Возможно, вы не дала разрешение на чтение данных из буфера обмена' })
       })
   }
 }

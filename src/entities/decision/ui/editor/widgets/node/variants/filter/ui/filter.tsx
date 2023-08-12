@@ -1,6 +1,6 @@
 import './filter.scss'
 
-import { Id } from '~/utils/dictionary'
+import { Id } from '~/utils/core'
 import { useUpdate } from '~/utils/hooks'
 
 import { Toolbar } from '..'
