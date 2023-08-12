@@ -4,7 +4,7 @@ import { c } from '~/utils/core'
 
 Flex.displayName = 'a-Flex'
 
-export interface FlexProps {
+export interface FlexProps extends React.HTMLAttributes<HTMLDivElement> {
   className?: string
   dir?: 'column' | 'row'
   mainAxis?: 'center' | 'start' | 'end' | 'space-between' | 'space-around' | 'space-evenly'
@@ -30,10 +30,13 @@ export default function Flex(props: FlexProps): JSX.Element {
     width,
     height,
     style,
+    // eslint-disable-next-line prettier/prettier
+    ...divProps
   } = props
 
   return (
     <div
+      {...divProps}
       className={c(
         props.className,
         Flex.displayName,
