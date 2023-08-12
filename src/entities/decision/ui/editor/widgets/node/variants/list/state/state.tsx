@@ -13,7 +13,7 @@ export type Events = {
   remove: { state: NodeState }
   // Уникальные события
   // ...
-  selection: { value: Set<Id>; previous: Set<Id> }
+  selection: { value: Id[]; previous: Id[] }
 
   // События стейтов
   computation: { value: Point['computation']; state: NodeState }
@@ -38,7 +38,7 @@ export class State extends EmitterableDictionary<Events, NodeState> {
     const stateList = pointList.map((point) => new NodeState(point))
     super(stateList, (s) => s.id.toString())
 
-    this.selection = new Selection('selection', new Set<Id>(), this)
+    this.selection = new Selection('selection', [] as Id[], this)
   }
 
   positionColumn(x: number): void {

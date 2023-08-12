@@ -38,7 +38,7 @@ export default function Node(props: Props): JSX.Element {
     if (e.metaKey) {
       nodeListState.selection.toggle(state.id)
     } else {
-      nodeListState.selection.set(new Set([state.id]))
+      nodeListState.selection.set([state.id])
       centerNode(state.id)
     }
   }
