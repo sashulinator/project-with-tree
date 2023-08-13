@@ -26,6 +26,8 @@ export default function LoginPage(): JSX.Element {
           <ThemeDropdown />
         </div>
         <LoginForm
+          localStorageName={USER_LIST}
+          onSubmit={onSubmit}
           translations={{
             login: t.login(),
             add: t.add(),
@@ -33,16 +35,15 @@ export default function LoginPage(): JSX.Element {
             username: t.username(),
             password: t.password(),
           }}
-          localStorageName={USER_LIST}
-          onSubmit={onSubmit}
         />
       </div>
     </main>
   )
 
   function onSubmit(data: FormSubmitData, onSuccess: (user: User) => void): void {
-    console.log(data, onSuccess)
-
+    if (!data.password || !data.username) {
+      return
+    }
     onSuccess({ name: data.username })
     navigate(routes.main.path)
     addToast({ data: t.success.loggedIn(), type: 'success' })
