@@ -1,6 +1,6 @@
 import { Id } from '~/utils/core'
 import { Prop } from '~/utils/depricated-emitter'
-import { remove, toggle } from '~/utils/key'
+import { remove, toggle } from '~/utils/id-array'
 import { push } from '~/utils/list'
 
 export class Selection<N extends string> extends Prop<N, Id[]> {
