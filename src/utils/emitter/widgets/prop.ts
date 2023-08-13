@@ -1,5 +1,9 @@
-import { Any } from '../core'
-import { Emitter } from './types/emitter'
+import { Any } from '../../core'
+import { Emitter } from '../emitter'
+
+export interface PropEvent<TValue> {
+  value: TValue
+}
 
 /**
  * @final
@@ -34,9 +38,9 @@ export class Prop<TEventName extends string, TValue, TEmitter extends Emitter<An
 
     this._value = value
 
-    this.emitter.on(this.eventName, (ev) => {
-      this._value = ev.value
-    })
+    if (eventName === '*') throw Error('`eventName` cannot be "*"')
+    // Делаем `as ''` так как мы уверены что eventName !== '*'
+    this.emitter.on(this.eventName as '', (event: PropEvent<TValue>) => (this._value = event.value))
   }
 
   get value(): TValue {
@@ -47,7 +51,7 @@ export class Prop<TEventName extends string, TValue, TEmitter extends Emitter<An
     this.emitter.emit(this.eventName, { value, previous: this._value })
   }
 
-  set = (value: TValue, ev?: Record<string, unknown> | undefined): void => {
-    this.emitter.emit(this.eventName, { value, previous: this._value, ...ev })
+  set = (value: TValue, event?: Record<string, unknown> | undefined): void => {
+    this.emitter.emit(this.eventName, { value, previous: this._value, ...event })
   }
 }

@@ -1,3 +1,6 @@
+.rule-Link {
+  stroke: var(--color);
+}
 .rule-Link:hover {
   stroke: red !important;
 }

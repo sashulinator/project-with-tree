@@ -1,6 +1,6 @@
 import { Emitter } from '~/lib/emitter/emitter'
 import { Id } from '~/utils/core'
-import { AnyEvent, Prop } from '~/utils/depricated-emitter'
+import { Prop } from '~/utils/depricated-emitter'
 
 export type Events = {
   selected: { value: Id[] }
@@ -15,16 +15,16 @@ export interface ItemStateProps<Item> {
 export class State<Item, E extends object = object> extends Emitter<E & Events> {
   selected: Prop<'selected', Id[]>
 
-  preselected: Prop<'preselected', Id[]>
+  highlighted: Prop<'highlighted', Id[]>
 
   getItemId: (item: Item) => Id
 
   constructor(props: ItemStateProps<Item>) {
     super()
 
-    this.selected = new Prop<'selected', Id[]>('selected', [], this)
+    this.selected = new Prop('selected', [] as Id[], this)
 
-    this.preselected = new Prop<'preselected', Id[]>('preselected', [], this)
+    this.highlighted = new Prop('highlighted', [] as Id[], this)
 
     this.getItemId = props.getItemId
   }
