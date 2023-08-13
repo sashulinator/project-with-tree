@@ -1,0 +1,11 @@
+.ui-Pagination {
+  flex-wrap: wrap;
+}
+
+.ui-Pagination .item {
+  width: 35px;
+}
+
+.ui-Pagination .activePage {
+  background-color: var(--button_bg__active);
+}

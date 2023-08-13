@@ -21,6 +21,7 @@ import UIButtonVGhostPage from '../pages/button/ui-v-ghost'
 import { AButtonWUnstyledPage } from '../pages/button/a-w-unstyled'
 import ChipPage from '../pages/chip'
 import UIButtonVPrimaryPage from '../pages/button/ui-v-primary'
+import PaginationPage from '../pages/pagination/pagination'
 
 export type Route = {
   path: string
@@ -114,7 +115,14 @@ export const routes = {
       return `${sharedRoutes.storybook.getURL()}${this.path}`
     },
   },
-
+  pagination: {
+    path: '/pagination',
+    element: <PaginationPage />,
+    getName: (): string => 'Pagination',
+    getURL: function (): string {
+      return `${sharedRoutes.storybook.getURL()}${this.path}`
+    },
+  },
   field: {
     path: '/field',
     element: <FieldInputPage />,
