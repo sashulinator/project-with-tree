@@ -1,6 +1,6 @@
 import { Selection, select } from 'd3-selection'
-import { PositionProp } from '~/lib/emitter'
 
+import { PositionProp } from '~/lib/emitter'
 import { AnyEvent, Emitter, Prop } from '~/utils/depricated-emitter'
 
 interface IEmitter<E extends AnyEvent> extends Emitter<E> {

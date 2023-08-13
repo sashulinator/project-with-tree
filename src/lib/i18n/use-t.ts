@@ -22,7 +22,11 @@ export function useT<T extends Dictionary<Any>>(dictionary: T, ns: string): Repl
 
     tryCatch(
       () => assertNoExcessiveTranslation(dictionary, currentTranslations),
-      (e) => addToast({ type: 'warning', data: translateError(e) })
+      (e) => {
+        addToast({ type: 'warning', data: translateError(e) })
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+        console.log((e as Any).path)
+      }
     )
   }, [currentTranslations])
 

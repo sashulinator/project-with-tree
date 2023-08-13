@@ -25,7 +25,7 @@ export class State extends Emitter<Events> {
 
   highlight: Prop<'highlight', (Position & Size) | null>
 
-  constructor(scale: number, translate: Position) {
+  constructor() {
     super()
 
     this.ref = new Prop('ref', null as null | SVGSVGElement, this)
@@ -36,7 +36,7 @@ export class State extends Emitter<Events> {
 
     this.d3selection = new D3Selection(this)
 
-    this.d3zoom = new D3Zoom(scale, translate, this)
+    this.d3zoom = new D3Zoom(this)
 
     this.highlight = new Prop('highlight', null as (Position & Size) | null, this)
   }

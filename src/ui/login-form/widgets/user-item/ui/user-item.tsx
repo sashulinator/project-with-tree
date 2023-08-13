@@ -1,8 +1,6 @@
 import './user-item.scss'
 
 import { UnstyledButton } from '~/abstract/button'
-import { GhostButton } from '~/ui/button'
-import { Close } from '~/ui/icon'
 import { c } from '~/utils/core'
 
 import { User } from '../../..'

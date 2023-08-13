@@ -7,7 +7,6 @@ export function getUserList(localStorageName: string): User[] {
   try {
     const userList = JSON.parse(string) as unknown
 
-    console.log('array', userList, Array.isArray(userList))
     if (!Array.isArray(userList)) throw Error()
 
     userList.forEach((item) => {
@@ -16,8 +15,6 @@ export function getUserList(localStorageName: string): User[] {
 
     return userList as User[]
   } catch (e) {
-    console.log(e)
-
     localStorage.removeItem(localStorageName)
     return []
   }

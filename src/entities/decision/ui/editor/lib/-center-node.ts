@@ -17,6 +17,6 @@ export function centerNode(props: Props): (id: Id) => void {
     const canvasSize = getElementSize(props.canvasState.ref.value)
     const mx = -nodeState.position.value.x + canvasSize.width / 2 - nodeSize.width / 2
     const my = -nodeState.position.value.y + canvasSize.height / 2 - nodeSize.height / 2
-    props.canvasState.d3zoom.setTranslate({ x: mx, y: my })
+    props.canvasState.d3zoom.setZoom({ x: mx, y: my })
   }
 }

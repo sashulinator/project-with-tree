@@ -10,14 +10,25 @@ import { c } from '~/utils/core'
 import { fns } from '~/utils/function'
 import { useForceUpdate } from '~/utils/hooks'
 
-import { Form, FormSubmitData, Selected, User, UserList, addUser, getUserList, removeUser, translations } from '..'
+import {
+  Form,
+  FormSubmitData,
+  Selected,
+  User,
+  UserList,
+  addUser,
+  formTranslations,
+  getUserList,
+  removeUser,
+  translations,
+} from '..'
 
 LoginForm.displayName = 'ui-LoginForm'
 
 export interface Props {
   className?: string
   localStorageName: string
-  translations: Partial<typeof translations>
+  translations: Partial<typeof translations> & Partial<typeof formTranslations>
   onSubmit: (data: FormSubmitData, onSuccess: (user: User) => void) => void
 }
 
@@ -49,7 +60,7 @@ export default function LoginForm(props: Props): JSX.Element {
             <Flex padding='0 var(--s) 0 0'>
               <Plus />
             </Flex>
-            Добавить
+            {t.add}
           </GhostButton>
         )}
         {((userList.length !== 0 && isInputMode) || isSelectedMode) && (
@@ -64,7 +75,7 @@ export default function LoginForm(props: Props): JSX.Element {
             <Flex padding='0 var(--s) 0 0'>
               <UserIcon />
             </Flex>
-            Выбрать
+            {t.change}
           </GhostButton>
         )}
       </Flex>

@@ -4,7 +4,6 @@ import { useEffect, useState } from 'react'
 
 import { PrimaryButton } from '~/ui/button'
 import Input, { Password } from '~/ui/input'
-import Labeled from '~/ui/labeled/ui/labeled'
 import { c } from '~/utils/core'
 import { preventDefault } from '~/utils/dom-event'
 import { fns } from '~/utils/function'

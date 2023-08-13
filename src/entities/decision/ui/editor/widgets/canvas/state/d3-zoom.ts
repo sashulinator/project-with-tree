@@ -5,6 +5,7 @@ import { Position } from '~/utils/core'
 import { AnyEvent, Emitter, Prop } from '~/utils/depricated-emitter'
 import { isMetaCtrlKey } from '~/utils/dom-event'
 
+import { getLocalStorageZoom, setZoomLocalStorage } from '../lib/local-storage-zoom'
 import { D3Selection } from './d3-selection'
 
 interface IEmitter<E extends AnyEvent> extends Emitter<E> {
@@ -21,10 +22,14 @@ export class D3Zoom<E extends AnyEvent> {
 
   zoomIdentity: ZoomTransform
 
-  constructor(scale: number, translate: Position, emitter: IEmitter<E>) {
+  constructor(emitter: IEmitter<E>) {
     const _zoom = ({ transform }: { transform: ZoomTransform }): void => {
-      this._emitter.translate.value = { x: transform.x, y: transform.y }
-      this._emitter.scale.value = transform.k
+      const k = Number(transform.k.toFixed(4))
+      const x = Number(transform.x.toFixed(4))
+      const y = Number(transform.y.toFixed(4))
+      this._emitter.translate.value = { x, y }
+      this._emitter.scale.value = k
+      setZoomLocalStorage({ x, y, k })
     }
 
     this._emitter = emitter
@@ -46,28 +51,21 @@ export class D3Zoom<E extends AnyEvent> {
 
     emitter.d3selection.emitters.push((selection) => {
       if (!selection) return
-      selection?.call(
-        // eslint-disable-next-line @typescript-eslint/unbound-method
-        this.zoomBehavior.transform,
-        this.zoomIdentity
-      )
+      const localStorageZoom = getLocalStorageZoom()
+
+      if (localStorageZoom) {
+        this.setZoom(localStorageZoom, localStorageZoom.k)
+      }
+
       selection?.call(this.zoomBehavior, this.zoomIdentity)
     })
   }
 
-  setScale = (scale: number): void => {
-    this._emitter.d3selection.value?.transition().duration(2500).call(
-      // eslint-disable-next-line @typescript-eslint/unbound-method
-      this.zoomBehavior.transform,
-      this.zoomIdentity.scale(scale)
-    )
-  }
-
-  setTranslate = (translate: Position): void => {
+  setZoom = (translate: Position, scale = 1): void => {
     this._emitter.d3selection.value?.transition().duration(500).call(
       // eslint-disable-next-line @typescript-eslint/unbound-method
       this.zoomBehavior.transform,
-      this.zoomIdentity.translate(translate.x, translate.y)
+      this.zoomIdentity.translate(translate.x, translate.y).scale(scale)
     )
   }
 }
