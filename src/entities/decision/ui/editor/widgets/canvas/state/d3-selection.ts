@@ -1,15 +1,15 @@
 import { Selection, select } from 'd3-selection'
 
 import { PositionProp } from '~/lib/emitter'
-import { AnyEvent, Emitter, Prop } from '~/utils/depricated-emitter'
+import { Emitter, Events, Prop } from '~/utils/emitter'
 
-interface IEmitter<E extends AnyEvent> extends Emitter<E> {
+interface IEmitter<E extends Events> extends Emitter<E> {
   ref: Prop<string, SVGSVGElement | null>
   scale: Prop<string, number>
   translate: PositionProp<string>
 }
 
-export class D3Selection<E extends AnyEvent> {
+export class D3Selection<E extends Events> {
   value: Selection<SVGSVGElement, unknown, null, undefined> | null
 
   emitters: ((s: Selection<SVGSVGElement, unknown, null, undefined> | null) => void)[]

@@ -1,5 +1,4 @@
-import { Emitter } from '~/lib/emitter'
-import { Prop } from '~/utils/depricated-emitter'
+import { Emitter, Prop } from '~/utils/emitter'
 
 import { Decision } from '../../..'
 

@@ -40,14 +40,16 @@ export class Emitter<Events extends Record<EventType, unknown>> {
    */
   on<Key extends keyof Events>(
     type: Key | '*',
-    handler: Key extends '*' ? WildcardHandler<Events> : Handler<Events[keyof Events]>
-  ) {
+    handler: Key extends '*' ? WildcardHandler<Events> : Handler<Events[Key]>
+  ): () => void {
     const handlers: (WildcardHandler<Events> | Handler<Events[keyof Events]>)[] | undefined = this.all!.get(type)
     if (handlers) {
-      handlers.push(handler)
+      handlers.push(handler as Handler<Events[keyof Events]>)
     } else {
       this.all!.set(type, [handler] as EventHandlerList<Events[keyof Events]>)
     }
+
+    return () => this.off(type as Key, handler)
   }
 
   /**
@@ -59,12 +61,12 @@ export class Emitter<Events extends Record<EventType, unknown>> {
    */
   off = <Key extends keyof Events | '*'>(
     type: Key,
-    handler?: Key extends '*' ? WildcardHandler<Events> : Handler<Events[keyof Events]>
+    handler?: Key extends '*' ? WildcardHandler<Events> : Handler<Events[Key]>
   ) => {
     const handlers: (WildcardHandler<Events> | Handler<Events[keyof Events]>)[] | undefined = this.all!.get(type)
     if (handlers) {
       if (handler) {
-        handlers.splice(handlers.indexOf(handler) >>> 0, 1)
+        handlers.splice(handlers.indexOf(handler as Handler<Events[keyof Events]>) >>> 0, 1)
       } else {
         this.all!.set(type, [])
       }

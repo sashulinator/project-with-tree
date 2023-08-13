@@ -2,7 +2,7 @@ import uniqid from 'uniqid'
 
 import { ItemEvents, ItemState } from '~/abstract/canvas'
 import { Point } from '~/entities/point'
-import { Prop } from '~/utils/depricated-emitter'
+import { Prop } from '~/utils/emitter'
 
 export type Events = ItemEvents & {
   computation: { value: Point['computation'] }

@@ -1,37 +1,34 @@
 import { Point } from '~/entities/point'
-import { EmitterableDictionary, Selection } from '~/lib/emitter'
+import { Selection } from '~/lib/emitter'
 import { Id, Position, assertNotNull } from '~/utils/core'
 import { getStyle } from '~/utils/dom'
+import { DictionaryEvents, EmitterDictionary } from '~/utils/emitter'
 
 import { NODE_GAP } from '../../..'
 import { NodeState } from '../../../../..'
 
-export type Events = {
-  // Наследуемые события
-  add: { state: NodeState }
-  update: { state: NodeState }
-  remove: { state: NodeState }
+export type Events = DictionaryEvents<NodeState> & {
   // Уникальные события
   // ...
   selection: { value: Id[]; previous: Id[] }
 
   // События стейтов
-  computation: { value: Point['computation']; state: NodeState }
-  title: { value: string; state: NodeState }
+  computation: { value: Point['computation']; item: NodeState }
+  title: { value: string; item: NodeState }
   position: {
     value: Position
     previous: Position
     start: Position
     previousStart: Position
     last: boolean
-    state: NodeState
+    item: NodeState
     // true если метод set вызван из функции positionColumn
     // TODO назвать как-то по другому
     isPositionColumn: boolean
   }
 }
 
-export class State extends EmitterableDictionary<Events, NodeState> {
+export class State extends EmitterDictionary<NodeState, Events> {
   selection: Selection<'selection'>
 
   constructor(pointList: Point[]) {

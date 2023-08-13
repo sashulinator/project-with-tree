@@ -26,10 +26,10 @@ export function historyListener(props: Props): void {
 
     const value = { ...event.value }
     const undo = (): void => {
-      event.state.position.transitionMove(event.previousStart, { isHistory: true })
+      event.item.position.transitionMove(event.previousStart, { isHistory: true })
     }
     const redo = (): void => {
-      event.state.position.transitionMove(value, { isHistory: true })
+      event.item.position.transitionMove(value, { isHistory: true })
     }
     history.add(redo, undo)
   })

@@ -2,20 +2,20 @@ import { ZoomBehavior, ZoomTransform, zoom, zoomIdentity } from 'd3-zoom'
 
 import { PositionProp } from '~/lib/emitter'
 import { Position } from '~/utils/core'
-import { AnyEvent, Emitter, Prop } from '~/utils/depricated-emitter'
 import { isMetaCtrlKey } from '~/utils/dom-event'
+import { Emitter, Events, Prop } from '~/utils/emitter'
 
 import { getLocalStorageZoom, setZoomLocalStorage } from '../lib/local-storage-zoom'
 import { D3Selection } from './d3-selection'
 
-interface IEmitter<E extends AnyEvent> extends Emitter<E> {
+interface IEmitter<E extends Events> extends Emitter<E> {
   ref: Prop<string, SVGSVGElement | null>
   scale: Prop<string, number>
   translate: PositionProp<string>
   d3selection: D3Selection<E>
 }
 
-export class D3Zoom<E extends AnyEvent> {
+export class D3Zoom<E extends Events> {
   private _emitter: IEmitter<E>
 
   zoomBehavior: ZoomBehavior<SVGSVGElement, unknown>
