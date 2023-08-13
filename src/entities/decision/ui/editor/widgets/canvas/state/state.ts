@@ -1,7 +1,7 @@
-import { Emitter, PositionProp } from '~/lib/emitter'
+import { PositionProp } from '~/lib/emitter'
 import { Position } from '~/utils/core'
-import { Prop } from '~/utils/depricated-emitter'
 import { Size } from '~/utils/dom/types/size'
+import { Emitter, Prop } from '~/utils/emitter'
 
 import { D3Selection } from './d3-selection'
 import { D3Zoom } from './d3-zoom'

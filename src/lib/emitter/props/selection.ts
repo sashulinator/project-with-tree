@@ -1,5 +1,5 @@
 import { Id } from '~/utils/core'
-import { Prop } from '~/utils/depricated-emitter'
+import { Prop } from '~/utils/emitter'
 import { remove, toggle } from '~/utils/id-array'
 import { push } from '~/utils/list'
 

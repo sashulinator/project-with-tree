@@ -1,8 +1,6 @@
-import { Emitter } from '~/lib/emitter'
 import { animate } from '~/utils/animate'
 import { Any, Position } from '~/utils/core'
-import { Prop } from '~/utils/depricated-emitter'
-import { Events } from '~/utils/emitter'
+import { Emitter, Events, Prop } from '~/utils/emitter'
 
 export interface PositionPropEvent {
   last: boolean
@@ -20,7 +18,7 @@ export class PositionProp<N extends string> extends Prop<N, Position> {
 
     this.start = value
 
-    this.emitter.on(this.eventName, (event: PositionPropEvent) => {
+    this.emitter.on(this.eventName as '', (event: PositionPropEvent) => {
       if (!event.last) return
       this.start = event.value
     })

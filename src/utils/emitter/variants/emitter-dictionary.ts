@@ -1,19 +1,13 @@
 import { Emitter } from '..'
 import { Any } from '../../core'
-import { Dictionary } from './dictionary'
-
-type Events<TEmitter> = {
-  add: { item: TEmitter }
-  update: { item: TEmitter }
-  remove: { item: TEmitter }
-}
+import { Dictionary, DictionaryEvents } from './dictionary'
 
 /**
  * Позволяет производить CRUD операции и подписывает `emitter` на все события `emitter`a элемента
  */
 export class EmitterDictionary<
   TEmitter extends Emitter<Any>,
-  TEvents extends Events<TEmitter> = Events<TEmitter>,
+  TEvents extends DictionaryEvents<TEmitter> = DictionaryEvents<TEmitter>,
 > extends Dictionary<TEmitter, TEvents> {
   constructor(emitterList: TEmitter[], getKey: (s: TEmitter) => string) {
     super(emitterList, getKey)
@@ -33,13 +27,13 @@ export class EmitterDictionary<
   }
 
   private subscribeToDictionary(): void {
-    this.on('add', (event: Events<TEmitter>['add']) => {
+    this.on('add', (event: DictionaryEvents<TEmitter>['add']) => {
       this.subscribeToEmitters([event.item])
     })
-    this.on('update', (event: Events<TEmitter>['update']) => {
+    this.on('update', (event: DictionaryEvents<TEmitter>['update']) => {
       this.subscribeToEmitters([event.item])
     })
-    this.on('remove', (event: Events<TEmitter>['remove']) => {
+    this.on('remove', (event: DictionaryEvents<TEmitter>['remove']) => {
       event.item.off('*')
     })
   }
