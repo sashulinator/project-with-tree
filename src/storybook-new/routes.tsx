@@ -4,6 +4,7 @@ import { decisionCanvasNodeVSift } from './pages/canvas/ui-w-node-v-filter'
 import { aCanvasWNodeWJoint } from './pages/canvas/ui-w-node-w-joint'
 import { uiCheckbox } from './pages/checkbox/ui-checkbox'
 import { uiLabeled } from './pages/labeled/ui-labeled'
+import { uiPaginator } from './pages/paginator/ui-paginator'
 
 export type RouteConfig = {
   name: string | undefined
@@ -85,6 +86,22 @@ export const routes = {
     },
     children: {
       uiLabeled: configToRoute(uiLabeled),
+    },
+  },
+
+  paginator: {
+    getName: (): string => 'paginator',
+    path: 'project-with-tree/storybook-new/paginator',
+    element: <></>,
+    getURL: (): string => `project-with-tree/storybook-new/paginator`,
+    config: {
+      name: 'paginator',
+      description: 'paginator',
+      features: [],
+      extends: undefined,
+    },
+    children: {
+      uiLabeled: configToRoute(uiPaginator),
     },
   },
 }
