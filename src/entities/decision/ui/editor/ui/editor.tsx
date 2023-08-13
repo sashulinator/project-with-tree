@@ -46,7 +46,7 @@ export default function Editor(props: Props): JSX.Element {
   const history = useMemo(() => new ActionHistory(), [])
 
   const state = useMemo(() => new State(props.decision), [])
-  const canvasState = useMemo(() => new CanvasState(1, { x: -171, y: 431 }), [])
+  const canvasState = useMemo(() => new CanvasState(), [])
   const nodeListState = useMemo(() => new NodeListState(props.decision.data), [props.decision.data])
   const linkListState = useMemo(() => new LinkListState(rules), [rules])
 

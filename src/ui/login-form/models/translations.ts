@@ -1,5 +1,4 @@
 export const translations = {
-  login: 'Login',
-  username: 'Username',
-  password: 'Password',
+  add: 'Add',
+  change: 'Change',
 }

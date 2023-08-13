@@ -1,7 +1,10 @@
 export const translations = {
-  Login: '',
-  Password: '',
-  Username: '',
+  login: '',
+  password: '',
+  username: '',
+  add: '',
+  remove: '',
+  change: '',
   success: {
     loggedIn: '',
   },

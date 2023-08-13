@@ -8,8 +8,8 @@ import { Props } from './types/_props'
  * @param {string} [msg] - An optional error message to include if the check fails.
  * @throws {Error} if the value is not string.
  */
-export function assertString(val: unknown | null, errorProps: Props): asserts val is string {
-  if (typeof val !== 'string') {
-    throw new BaseError(errorProps.message || 'Value is not a string.', { code: 'assertString', ...errorProps })
+export function assertInteger(val: unknown | null, errorProps?: Props): asserts val is string {
+  if (typeof val !== 'number' && Number.isNaN(val)) {
+    throw new BaseError(errorProps?.message || 'Value is not an integer.', { code: 'assertInteger', ...errorProps })
   }
 }

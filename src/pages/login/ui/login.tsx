@@ -25,7 +25,17 @@ export default function LoginPage(): JSX.Element {
           <I18nDropdown />
           <ThemeDropdown />
         </div>
-        <LoginForm translations={{}} localStorageName={USER_LIST} onSubmit={onSubmit} />
+        <LoginForm
+          translations={{
+            login: t.login(),
+            add: t.add(),
+            change: t.change(),
+            username: t.username(),
+            password: t.password(),
+          }}
+          localStorageName={USER_LIST}
+          onSubmit={onSubmit}
+        />
       </div>
     </main>
   )

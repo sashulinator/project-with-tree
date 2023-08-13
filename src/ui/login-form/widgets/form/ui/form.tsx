@@ -4,7 +4,6 @@ import { useEffect, useState } from 'react'
 
 import { PrimaryButton } from '~/ui/button'
 import Input, { Password } from '~/ui/input'
-import Labeled from '~/ui/labeled/ui/labeled'
 import { c } from '~/utils/core'
 import { preventDefault } from '~/utils/dom-event'
 import { fns } from '~/utils/function'
@@ -33,7 +32,6 @@ export default function Form(props: Props): JSX.Element {
   const [password, setPassword] = useState<string>('')
   const [username, setUsername] = useState<string>('')
 
-  console.log('username', username)
   useEffect(() => {
     if (props.selected) {
       setUsername(props.selected)
@@ -63,7 +61,6 @@ export default function Form(props: Props): JSX.Element {
         placeholder={t.password}
         autoComplete='off'
         value={password}
-        isError={password.length < 3}
         onChange={({ target }): void => setPassword(target.value)}
         id={PASSWORD}
         name={PASSWORD}
