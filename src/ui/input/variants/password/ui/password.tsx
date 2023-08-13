@@ -25,8 +25,8 @@ function PasswordComponent(props: Props, ref: ForwardedRef<HTMLInputElement>): J
 
   return (
     <Input
-      className={c(PasswordComponent.displayName)}
       {...props}
+      className={c(props.className, PasswordComponent.displayName)}
       ref={setRefs(ref, inputRef)}
       type={visible ? 'text' : 'password'}
       right={

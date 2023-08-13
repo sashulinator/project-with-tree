@@ -31,6 +31,9 @@
 .a-Field.--disabled {
   background: var(--field_bg__disabled);
 }
+.a-Field.--hidden {
+  display: none;
+}
 
 .a-Field.--error {
   background: var(--field_bg__error);

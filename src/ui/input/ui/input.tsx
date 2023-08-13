@@ -31,6 +31,7 @@ function InputComponent(props: InputProps, ref: ForwardedRef<HTMLInputElement>):
       fieldProps={{
         height,
         isError,
+        hidden: inputProps.hidden,
         transparent,
         ...fieldProps,
         className: c(fieldProps?.className, className, InputComponent.displayName),

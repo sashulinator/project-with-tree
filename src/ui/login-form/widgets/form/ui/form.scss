@@ -1,0 +1,8 @@
+.ui-LoginForm-w-Form {
+  display: flex;
+  flex-direction: column;
+
+  > .field.--password {
+    margin: var(--l) 0 var(--xl) 0;
+  }
+}
