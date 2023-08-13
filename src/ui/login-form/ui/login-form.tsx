@@ -78,13 +78,13 @@ export default function LoginForm(props: Props): JSX.Element {
           isExpanded={isLisLMode}
           userList={userList}
           onRemove={fns(
-            (user: User): void => removeUser(props.localStorageName, user),
-            () => userList.length === 1 && setMode('input'),
-            update
+            (user: User): unknown => removeUser(props.localStorageName, user),
+            (): unknown => setTimeout(() => userList.length === 1 && setMode('input')),
+            (): unknown => setTimeout(update)
           )}
           onSelect={fns(
-            (user: User): void => setSelected(user),
-            () => setMode('selected')
+            (user: User): unknown => setSelected(user),
+            (): unknown => setMode('selected')
           )}
         />
       </Collapse>
@@ -94,7 +94,15 @@ export default function LoginForm(props: Props): JSX.Element {
         to={{ opacity: !isLisLMode ? 1 : 0, y: !isLisLMode ? 0 : 20 }}
         isExpanded={!isLisLMode}
       >
-        {selected && <Selected user={selected} onClick={(): void => setMode('list')} />}
+        {selected && (
+          <Selected
+            user={selected}
+            onClick={fns(
+              (): unknown => setMode('list'),
+              (): unknown => setSelected(undefined)
+            )}
+          />
+        )}
         <Form
           className='form'
           usernameHidden={!isInputMode}

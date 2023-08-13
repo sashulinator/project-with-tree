@@ -33,7 +33,6 @@ export default function Form(props: Props): JSX.Element {
   const [password, setPassword] = useState<string>('')
   const [username, setUsername] = useState<string>('')
 
-  console.log('username', username)
   useEffect(() => {
     if (props.selected) {
       setUsername(props.selected)
@@ -63,7 +62,6 @@ export default function Form(props: Props): JSX.Element {
         placeholder={t.password}
         autoComplete='off'
         value={password}
-        isError={password.length < 3}
         onChange={({ target }): void => setPassword(target.value)}
         id={PASSWORD}
         name={PASSWORD}
