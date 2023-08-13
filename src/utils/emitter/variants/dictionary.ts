@@ -1,11 +1,6 @@
-import { toDictionary } from '~/utils/list'
-
-import { Id as Key } from '../core'
-import { Dictionary as IDictionary, find, get } from '../dictionary'
-import { Emitter } from './emitter'
-
-import { EventNotifiers } from './types/event-notifiers'
-import { Notifier } from '../notifier'
+import { Emitter } from '..'
+import { Key, find, get } from '../../dictionary'
+import { toDictionary } from '../../list'
 
 export type DictionaryEvents<TItem> = {
   add: { item: TItem }
@@ -17,16 +12,12 @@ export type DictionaryEvents<TItem> = {
  * Позволяет подписаться на события добвления/обновления/удаления
  */
 export class Dictionary<TItem> extends Emitter<DictionaryEvents<TItem>> {
-  items: IDictionary<TItem>
+  items: Record<Key, TItem>
 
   getKey: (s: TItem) => string
 
   constructor(itemList: TItem[], getKey: (s: TItem) => string) {
-    super({
-      add: new Notifier(),
-      update: new Notifier(),
-      remove: new Notifier(),
-    })
+    super()
 
     this.getKey = getKey
 
