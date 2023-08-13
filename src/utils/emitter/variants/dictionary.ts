@@ -11,7 +11,7 @@ export type DictionaryEvents<TItem> = {
 /**
  * Позволяет подписаться на события добвления/обновления/удаления
  */
-export class Dictionary<TItem> extends Emitter<DictionaryEvents<TItem>> {
+export class Dictionary<TItem, E extends DictionaryEvents<TItem> = DictionaryEvents<TItem>> extends Emitter<E> {
   items: Record<Key, TItem>
 
   getKey: (s: TItem) => string
