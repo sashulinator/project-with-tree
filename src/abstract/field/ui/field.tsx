@@ -10,15 +10,17 @@ export interface FieldProps extends React.HTMLAttributes<HTMLDivElement> {
   disabled?: boolean | undefined
   isError?: boolean | undefined
   isFocused?: boolean | undefined
+  hidden?: boolean | undefined
   transparent?: boolean | undefined
 }
 
 export default function Field(props: FieldProps): JSX.Element {
-  const { height, readOnly, isFocused, isError, disabled, transparent, ...divProps } = props
+  const { height, readOnly, isFocused, isError, disabled, transparent, hidden, ...divProps } = props
 
   return (
     <div
       {...divProps}
+      aria-hidden={hidden}
       className={clsx(
         props.className,
         Field.displayName,
@@ -26,6 +28,7 @@ export default function Field(props: FieldProps): JSX.Element {
         isError && '--error',
         disabled && '--disabled',
         readOnly && '--readonly',
+        hidden && `--hidden`,
         transparent && '--transparent',
         height && `--${height}`
       )}

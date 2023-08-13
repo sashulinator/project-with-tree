@@ -1,0 +1,32 @@
+.ui-Labeled {
+  display: flex;
+  width: 100%;
+
+  > label {
+    font-weight: 600;
+  }
+}
+
+.ui-Labeled.--hidden {
+  display: none;
+}
+
+.ui-Labeled.--vertical {
+  flex-direction: column;
+
+  > label {
+    margin-bottom: var(--s);
+    margin-left: var(--m);
+  }
+}
+
+.ui-Labeled.--horizontal {
+  flex-direction: row;
+
+  > label {
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+    padding-right: var(--m);
+  }
+}

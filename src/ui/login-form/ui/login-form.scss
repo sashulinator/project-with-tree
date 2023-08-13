@@ -1,0 +1,14 @@
+.ui-LoginForm {
+  display: flex;
+  flex-direction: column;
+  align-items: end;
+  width: 100%;
+
+  > .collapse {
+    width: 100%;
+  }
+
+  > .collapse > div {
+    padding: var(--s);
+  }
+}

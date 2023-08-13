@@ -3,7 +3,6 @@ import React from 'react'
 import Flex from '~/abstract/flex'
 import Checkbox from '~/storybook-new/checkbox'
 import { H1 } from '~/ui/heading'
-
 import { Ol } from '~/ui/list'
 import PageSection from '~/ui/page-section'
 import Paragraph from '~/ui/paragraph/ui/paragraph'
@@ -61,7 +60,6 @@ export default function Section(props: SectionProps): JSX.Element {
         >
           <Flex width='1rem' gap='s' mainAxis='center' crossAxis='center'>
             <Checkbox checked={isSecondBg} onChange={toggleSecondBg} />
-            bg
           </Flex>
           {props.children}
         </Flex>

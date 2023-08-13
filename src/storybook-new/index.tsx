@@ -1,9 +1,8 @@
+import React from 'react'
 import { Route, Routes } from 'react-router-dom'
 
 import { routes } from './routes'
-
 import Section from './ui/section'
-import React from 'react'
 
 export default function StorybookPage(): JSX.Element {
   const routeList = Object.values(routes)

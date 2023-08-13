@@ -15,6 +15,7 @@ export interface CollapseProps {
   duration?: number | undefined
   rootProps?: React.HTMLAttributes<HTMLDivElement> | undefined
   containerProps?: React.HTMLAttributes<HTMLDivElement> | undefined
+  className?: string
 }
 
 export default function Collapse(props: CollapseProps): JSX.Element {
@@ -34,7 +35,13 @@ export default function Collapse(props: CollapseProps): JSX.Element {
     <a.div
       {...props.rootProps}
       style={{ overflow: 'hidden', ...props.rootProps?.style, ...springProps }}
-      className={c(Collapse.displayName, props.rootProps?.className)}
+      className={c(
+        Collapse.displayName,
+        props.className,
+        props.rootProps?.className,
+        props.isExpanded && '--expanded',
+        !props.isExpanded && '--collapsed'
+      )}
     >
       <a.div {...props.containerProps} ref={ref}>
         {props.children}
