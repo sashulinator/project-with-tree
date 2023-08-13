@@ -3,7 +3,7 @@ import { RefObject } from 'react'
 
 import { isDev } from '~/utils/core/is/dev'
 import { isHTMLElement } from '~/utils/dom/is/is-htmlelement'
-import { remove } from '~/utils/key'
+import { remove } from '~/utils/id-array'
 
 import { EventNames } from '../types/event-names'
 import { Events } from '../types/events'
