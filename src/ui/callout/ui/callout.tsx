@@ -9,7 +9,7 @@ export interface ContentProp {
   placement: Point
 }
 
-export interface CalloutProps<IContentProp> {
+export interface Props<IContentProp> {
   /** Дети  */
   children: React.ReactElement<React.HTMLAttributes<HTMLElement>>
   /** Пропсы для контента  */
@@ -33,7 +33,7 @@ export interface CalloutProps<IContentProp> {
  * @param props
  * @returns
  */
-export default function Callout<IContentProp>(props: CalloutProps<IContentProp>): JSX.Element {
+export default function Callout<IContentProp>(props: Props<IContentProp>): JSX.Element {
   const { placement = 'bc', ...popoverProps } = props
   const [isXAdjusted, setXAdjusted] = useState(false)
   const [isYAdjusted, setYAdjusted] = useState(false)
