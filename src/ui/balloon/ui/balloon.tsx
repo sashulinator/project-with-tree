@@ -2,25 +2,54 @@ import './balloon.css'
 
 import clsx from 'clsx'
 import { Point, Points, flipPointHorizontally, flipPointVertically } from 'dom-align-ts'
-import React from 'react'
+import React, { RefAttributes } from 'react'
 
 import Popover from '~/ui/popover'
 import { Any } from '~/utils/core'
 import { useWindowSize } from '~/utils/hooks'
-import { assertValidElement, setRefs } from '~/utils/react'
+import { ReactElementWithRef, assertValidElement, setRefs } from '~/utils/react'
 
 import { calcArrowOffset } from '../lib/calc-arrow-offset'
-import { BalloonProps } from '../types/balloon-props'
+
+/**
+ *  Props for the `Balloon` component, which displays a message or other content with a tooltip-like style.
+ */
+export interface Props {
+  /**
+   * Props to be passed to the root element of the Balloon component.
+   */
+  rootProps?: React.HTMLAttributes<HTMLDivElement> & RefAttributes<HTMLDivElement>
+
+  /**
+   * Props to be passed to the content element of the Balloon component.
+   */
+  contentProps?: React.HTMLAttributes<HTMLDivElement> & RefAttributes<HTMLDivElement>
+
+  /**
+   * Props to be passed to the arrow element of the Balloon component.
+   */
+  arrowProps?: React.HTMLAttributes<HTMLDivElement> & RefAttributes<HTMLDivElement>
+
+  /**
+   * The position of the balloon relative to its target element. The arrow of the balloon is calculated based on this prop.
+   */
+  placement?: Point
+
+  /**
+   * The child element to be displayed within the balloon component.
+   */
+  children: ReactElementWithRef<HTMLElement>
+}
 
 /**
  * The `Balloon` component, which displays a message or other content with a tooltip-like style.
  *
- * @param {BalloonProps} props - The props to configure the balloon component.
+ * @param {Props} props - The props to configure the balloon component.
  *
  * @returns {JSX.Element} - A `Balloon` JSX element.
  */
 
-export default function Balloon(props: BalloonProps): JSX.Element {
+export default function Balloon(props: Props): JSX.Element {
   const [childrenEl, setChildrenEl] = React.useState<HTMLElement | null>(null)
   const [contentEl, setContentEl] = React.useState<HTMLElement | null>(null)
   const { placement = 'tc' } = props

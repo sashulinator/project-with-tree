@@ -1,8 +1,7 @@
 // import Callout, { top } from '~/ui/callout'
 import { forwardRef } from 'react'
 
-import Balloon from '~/ui/balloon'
-import { BalloonProps } from '~/ui/balloon/types/balloon-props'
+import Balloon, { BalloonProps } from '~/ui/balloon'
 import Callout from '~/ui/callout'
 import { ContentProp } from '~/ui/callout/types/callout-props'
 import { useBoolean } from '~/utils/hooks'
