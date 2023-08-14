@@ -1,8 +1,6 @@
 import uniqid from 'uniqid'
 
 import { Point } from '~/entities/point'
-import { assertDefined } from '~/utils/core'
-import { getStyle } from '~/utils/dom'
 import { getElementSize } from '~/utils/dom/get-element-size'
 
 import { CanvasState, NodeListState, NodeState, getColumnX } from '..'

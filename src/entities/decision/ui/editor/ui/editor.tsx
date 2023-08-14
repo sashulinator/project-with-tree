@@ -24,6 +24,7 @@ import {
   copySelectedNodes as copySelectedNodesBind,
   cutSelectedNodes as cutSelectedNodesBind,
   nextHistory as nextHistoryBind,
+  paste as pasteBind,
   pasteFromClipboard as pasteFromClipboardBind,
   previousHistory as previousHistoryBind,
   removeNode as removeNodeBind,
@@ -59,6 +60,7 @@ export default function Editor(props: Props): JSX.Element {
   const copySelectedNodes = copySelectedNodesBind({ nodeListState })
   const cutSelectedNodes = cutSelectedNodesBind({ nodeListState })
   const pasteFromClipboard = pasteFromClipboardBind({ nodeListState, addNode })
+  const paste = pasteBind({ nodeListState, canvasState, pasteFromClipboard })
   const resetAll = resetAllBind({ linkListState, nodeListState })
 
   useKeyDownListener({
@@ -67,7 +69,7 @@ export default function Editor(props: Props): JSX.Element {
     previousHistory,
     nextHistory,
     copySelectedNodes,
-    pasteFromClipboard,
+    paste,
     cutSelectedNodes,
   })
   useEventListener('click', onClick)

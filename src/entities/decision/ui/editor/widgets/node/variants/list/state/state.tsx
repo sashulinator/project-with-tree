@@ -11,6 +11,7 @@ export type Events = DictionaryEvents<NodeState> & {
   // Уникальные события
   // ...
   selection: { value: Id[]; previous: Id[] }
+  cutted: { value: Id[]; previous: Id[] }
 
   // События стейтов
   computation: { value: Point['computation']; item: NodeState }
@@ -31,11 +32,15 @@ export type Events = DictionaryEvents<NodeState> & {
 export class State extends EmitterDictionary<NodeState, Events> {
   selection: Selection<'selection'>
 
+  cutted: Selection<'cutted'>
+
   constructor(pointList: Point[]) {
     const stateList = pointList.map((point) => new NodeState(point))
     super(stateList, (s) => s.id.toString())
 
     this.selection = new Selection('selection', [] as Id[], this)
+
+    this.cutted = new Selection('cutted', [] as Id[], this)
   }
 
   positionColumn(x: number): void {

@@ -7,8 +7,8 @@ interface Actions {
   previousHistory: () => void
   nextHistory: () => void
   copySelectedNodes: () => void
-  pasteFromClipboard: () => void
   cutSelectedNodes: () => void
+  paste: () => void
 }
 
 export function useKeyDownListener(actions: Actions): void {
@@ -31,7 +31,7 @@ export function useKeyDownListener(actions: Actions): void {
   useEventListener('keydown', keyListener(cutConf, EmitAction('cutSelectedNodes')))
 
   const pasteConf = { key: 'v', metaCtrlKey: true }
-  useEventListener('keydown', keyListener(pasteConf, EmitAction('pasteFromClipboard')))
+  useEventListener('keydown', keyListener(pasteConf, EmitAction('paste')))
 
   // Private
 

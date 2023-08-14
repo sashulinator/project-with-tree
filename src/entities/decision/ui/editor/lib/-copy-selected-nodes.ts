@@ -23,6 +23,7 @@ export function copySelectedNodes(props: Props): () => void {
       .writeText(stringifiedJSON)
       .then(() => {
         addToast({ data: 'Скопировано', type: 'success' })
+        props.nodeListState.cutted.set([])
       })
       .catch((err) => {
         console.error(err)
