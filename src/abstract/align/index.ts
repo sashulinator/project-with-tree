@@ -1,4 +1,6 @@
-export { default } from './ui/align'
+/**
+ * ui
+ */
 
-export * from './types/align-props'
-export * from './types/overflow'
+export { default } from './ui/align'
+export type { Props as AlignProps, Overflow } from './ui/align'
