@@ -3,7 +3,7 @@ import { createElement, memo } from 'react'
 import { GestureDragEvent } from '~/ui/canvas'
 import { Id } from '~/utils/core'
 
-import { EnterNode, FilterNode, State as NodeState } from '../../..'
+import { EnterNode, FilterNode, State as NodeState, OfferNode } from '../../..'
 import { LinkListState, NodeListState } from '../../../../..'
 
 VariantPickerComponent.displayName = 'decision-Editor-w-Node-v-VariantPicker'
@@ -17,7 +17,15 @@ export interface VariantPickerProps {
 }
 
 function VariantPickerComponent(props: VariantPickerProps): JSX.Element {
-  const Component = props.state.point.type === 'MAIN' ? EnterNode : FilterNode
+  let Component: (props: VariantPickerProps) => JSX.Element
+
+  if (props.state.point.type === 'FILTER') {
+    Component = FilterNode
+  } else if (props.state.point.type === 'OFFER') {
+    Component = OfferNode
+  } else {
+    Component = EnterNode
+  }
 
   return createElement(Component, props)
 }

@@ -17,7 +17,7 @@ const mock: Decision = {
       },
     },
     {
-      type: 'SIFT',
+      type: 'FILTER',
       id: 'mockId2',
       computation: 'parallel',
       name: 'Базовые условия',
@@ -25,7 +25,7 @@ const mock: Decision = {
       y: 200,
     },
     {
-      type: 'SIFT',
+      type: 'FILTER',
       computation: 'successively',
       id: 'mockId4',
       name: 'Политика контактов',
@@ -33,7 +33,7 @@ const mock: Decision = {
       y: 200,
     },
     {
-      type: 'SIFT',
+      type: 'FILTER',
       id: 'mockId6',
       computation: 'successively',
       name: 'Срок жизни тарифа',
@@ -41,7 +41,7 @@ const mock: Decision = {
       y: 200,
     },
     {
-      type: 'SIFT',
+      type: 'FILTER',
       id: 'mockId9',
       computation: 'successively',
       name: 'Предложить тариф супер',
@@ -49,7 +49,7 @@ const mock: Decision = {
       y: 500,
     },
     {
-      type: 'SIFT',
+      type: 'FILTER',
       id: 'mockId10',
       computation: 'successively',
       name: 'Предложить тариф мега',
@@ -57,7 +57,7 @@ const mock: Decision = {
       y: 700,
     },
     {
-      type: 'SIFT',
+      type: 'FILTER',
       id: 'mockId11',
       computation: 'successively',
       name: 'Предложить тариф максимальный',

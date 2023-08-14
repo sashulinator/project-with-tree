@@ -32,6 +32,7 @@ export type { VariantPickerProps } from './variants/variant-picker'
 
 export { default as EnterNode } from './variants/enter'
 export { default as FilterNode } from './variants/filter'
+export { default as OfferNode } from './variants/offer'
 
 /**
  * widgets

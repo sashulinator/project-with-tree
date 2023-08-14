@@ -1,13 +1,11 @@
 import { useMemo } from 'react'
-
-import { ListState as LinkStateDictionary } from '~/entities/decision/ui/editor/widgets/link'
-
-import { Point } from '~/entities/point'
-
-import { FilterNode, State } from '~/entities/decision/ui/editor/widgets/node'
 import { DndProvider } from 'react-dnd'
 import { HTML5Backend } from 'react-dnd-html5-backend'
+
 import { NodeListState } from '~/entities/decision/ui/editor'
+import { ListState as LinkStateDictionary } from '~/entities/decision/ui/editor/widgets/link'
+import { FilterNode, State } from '~/entities/decision/ui/editor/widgets/node'
+import { Point } from '~/entities/point'
 
 export const decisionCanvasNodeVSift = {
   name: FilterNode.displayName,
@@ -24,7 +22,7 @@ export const decisionCanvasNodeVSift = {
 const point1: Point = {
   id: 'id1',
   name: 'name1',
-  type: 'SIFT',
+  type: 'FILTER',
   computation: 'parallel',
   x: 10,
   y: 10,
@@ -32,7 +30,7 @@ const point1: Point = {
 const point2: Point = {
   id: 'id2',
   name: 'name2',
-  type: 'SIFT',
+  type: 'FILTER',
   computation: 'parallel',
   x: 510,
   y: 10,

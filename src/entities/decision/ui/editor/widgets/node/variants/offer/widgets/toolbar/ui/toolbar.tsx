@@ -1,4 +1,4 @@
-import './toolbar.css'
+import './toolbar.scss'
 
 import Flex from '~/abstract/flex/ui/flex'
 import { GhostButton } from '~/ui/button'
@@ -41,9 +41,6 @@ export default function Toolbar(props: Props): JSX.Element {
         />
       </Flex>
       <Flex>
-        <GhostButton onClick={toogleComputation} style={{ fontSize: '0.6em' }}>
-          {computation}
-        </GhostButton>
         <GhostButton round={true} onClick={props.remove}>
           <Trash />
         </GhostButton>
