@@ -5,6 +5,7 @@ import { aCanvasWNodeWJoint } from './pages/canvas/ui-w-node-w-joint'
 import { uiCheckbox } from './pages/checkbox/ui-checkbox'
 import { uiLabeled } from './pages/labeled/ui-labeled'
 import { uiPaginator } from './pages/paginator/ui-paginator'
+import { uiTooltip } from './pages/tooltip/ui-tooltip'
 
 export type RouteConfig = {
   name: string | undefined
@@ -102,6 +103,21 @@ export const routes = {
     },
     children: {
       uiLabeled: configToRoute(uiPaginator),
+    },
+  },
+  tooltip: {
+    getName: (): string => 'tooltip',
+    path: 'project-with-tree/storybook-new/tooltip',
+    element: <></>,
+    getURL: (): string => `project-with-tree/storybook-new/tooltip`,
+    config: {
+      name: 'tooltip',
+      description: 'tooltip',
+      features: [],
+      extends: undefined,
+    },
+    children: {
+      uiLabeled: configToRoute(uiTooltip),
     },
   },
 }
