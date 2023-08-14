@@ -1,9 +1,32 @@
+import { Point, Points } from 'dom-align-ts'
 import { createElement, useState } from 'react'
 
-import Popover from '~/ui/popover'
+import Popover, { PopoverProps } from '~/ui/popover'
 
 import { adjustPlacement } from '../lib/adjust-placement'
-import { CalloutProps } from '../types/callout-props'
+
+export interface ContentProp {
+  placement: Point
+}
+
+export interface CalloutProps<IContentProp> {
+  /** Дети  */
+  children: React.ReactElement<React.HTMLAttributes<HTMLElement>>
+  /** Пропсы для контента  */
+  contentProps: IContentProp
+  /**  */
+  isOpen: boolean
+  /**  */
+  placement?: Point
+  /**  */
+  point?: Points
+
+  /* Конфиг в случае overflow  */
+  overflow?: PopoverProps['overflow']
+
+  /**  */
+  renderContent: (props: ContentProp & IContentProp) => JSX.Element | null
+}
 
 /**
  * Компонент

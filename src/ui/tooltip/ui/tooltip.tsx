@@ -15,9 +15,6 @@ export interface Props {
   /* Target  */
   children: React.ReactElement<React.HTMLAttributes<HTMLElement>>
 
-  /* Показывать Content? */
-  isOpen: boolean | undefined
-
   /* Позиция для Content */
   placement?: Point
 
