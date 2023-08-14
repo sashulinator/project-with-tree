@@ -15,7 +15,7 @@ export function addNode(props: Props): () => void {
     const canvasSize = getElementSize(props.canvasState.ref.value as Element)
 
     const newPoint: Point = {
-      type: 'SIFT',
+      type: 'FILTER',
       // id берем из приходящего point т.к. функция может быть вызвана при событии cut/paste
       id: uniqid(),
       computation: 'successively',

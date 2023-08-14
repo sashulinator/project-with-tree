@@ -1,0 +1,20 @@
+.decisionCanvas-w-Node-v-Offer {
+  border-radius: var(--xxl);
+  border-width: 2px;
+  border-style: solid;
+  border-color: rgba(211, 226, 43, 0.9);
+
+  > .title {
+    padding: 0 var(--l);
+  }
+
+  &.--selected {
+    box-shadow:
+      0px 0px 0px 2px var(--bg),
+      0px 0px 0px 4px var(--focus);
+  }
+
+  &.--cutted {
+    box-shadow: 0px 0px 0px 2px red;
+  }
+}

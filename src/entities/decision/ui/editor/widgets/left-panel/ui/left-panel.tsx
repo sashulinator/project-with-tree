@@ -3,6 +3,7 @@ import './left-panel.css'
 import { clsx } from 'clsx'
 import { memo, useState } from 'react'
 
+import { Point } from '~/entities/point'
 import { AppearFrom } from '~/ui/animation'
 import { PrimaryButton } from '~/ui/button'
 import { Plus } from '~/ui/icon'
@@ -20,7 +21,7 @@ export interface Props {
   nodeListState: NodeListState
   resizableProps: Omit<ResizableProps, 'direction'>
   rootProps?: React.HTMLAttributes<HTMLDivElement>
-  addNode: () => void
+  addNode: (point: Partial<Point>) => void
   centerNode: (id: Id) => void
 }
 
@@ -43,8 +44,21 @@ function LeftPanelComponent(props: Props): JSX.Element {
             placeholder='Поиск'
           />
         </div>
-        <PrimaryButton onClick={props.addNode} round={true} height='l' style={{ marginLeft: 'var(--l)' }}>
-          <Plus />
+        <PrimaryButton
+          onClick={(): void => props.addNode({ type: 'OFFER', name: 'new_offer' })}
+          round={true}
+          height='s'
+          style={{ marginLeft: 'var(--l)' }}
+        >
+          <Plus /> O
+        </PrimaryButton>
+        <PrimaryButton
+          onClick={(): void => props.addNode({ type: 'FILTER', name: 'new_filter' })}
+          round={true}
+          height='s'
+          style={{ marginLeft: 'var(--l)' }}
+        >
+          <Plus /> F
         </PrimaryButton>
       </div>
       <NodeList

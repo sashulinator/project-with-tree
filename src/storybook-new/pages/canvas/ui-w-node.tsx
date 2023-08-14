@@ -22,7 +22,7 @@ export const uiCanvasNode = {
 const point1: Point = {
   id: 'id1',
   name: 'name1',
-  type: 'SIFT',
+  type: 'FILTER',
   computation: 'parallel',
   x: 10,
   y: 10,
