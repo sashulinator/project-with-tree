@@ -13,4 +13,8 @@
       0px 0px 0px 2px var(--bg),
       0px 0px 0px 4px var(--focus);
   }
+
+  &.--cutted {
+    box-shadow: 0px 0px 0px 2px red;
+  }
 }

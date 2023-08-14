@@ -6,7 +6,6 @@ import { emitter } from '~/shared/emitter'
 import { GestureDragEvent, Item } from '~/ui/canvas'
 import { Position, c } from '~/utils/core'
 import { isMetaCtrlKey } from '~/utils/dom-event'
-
 import { fns } from '~/utils/function'
 import { useUpdate } from '~/utils/hooks'
 
@@ -40,6 +39,7 @@ export default function Node(props: NodeProps): JSX.Element {
 
   const { title, toolbar, sourceLinks, listState, targetLinks, state, rootProps, ...itemProps } = props
   const selected = listState.selection.isSelected(props.state.id)
+  const cutted = listState.cutted.isSelected(props.state.id)
 
   return (
     <Item
@@ -50,7 +50,7 @@ export default function Node(props: NodeProps): JSX.Element {
       y={state.position.value.y}
       onMouseDown={fns(props.onMouseDown, handleMouseDown)}
       onMouseUp={fns(props.onMouseUp, handleMouseUp)}
-      className={c(props.className, Node.displayName, selected && `--selected`)}
+      className={c(props.className, Node.displayName, selected && '--selected', cutted && '--cutted')}
       style={{ width: '20rem' }}
       rootProps={{ ...rootProps, style: { overflow: 'visible', ...rootProps?.style } }}
     >
@@ -92,5 +92,6 @@ export default function Node(props: NodeProps): JSX.Element {
 
   function subscribeOnUpdates(update: () => void, uns: (() => void)[]): void {
     uns.push(listState.on('selection', update))
+    uns.push(listState.on('cutted', update))
   }
 }
