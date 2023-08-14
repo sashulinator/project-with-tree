@@ -1,9 +1,10 @@
 import './attribute.css'
 
-import { c } from '~/utils/core'
 import { useSetRecoilState } from 'recoil'
-import { AttributeProps } from '~/entities/rules/types/rules-type'
+
 import { draggableCardAtom } from '~/entities/rules/models/draggableCard'
+import { AttributeProps } from '~/entities/rules/types/rules-type'
+import { c } from '~/utils/core'
 
 interface Props {
   attribute: AttributeProps

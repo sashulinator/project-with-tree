@@ -1,14 +1,14 @@
-import MentionsInput from '~/ui/mention-input'
-
+import { useRef } from 'react'
 import { Mention } from 'react-mentions'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
+
 import DropBoard from '~/abstract/drop-board/ui/drop-board'
-import { useRef } from 'react'
-import { mentionsDataAtom } from '~/entities/rules/models/mentionsData'
+import { onChangeTextarea } from '~/entities/rules/lib/on-change-textarea'
+import { onDropTextarea } from '~/entities/rules/lib/on-drop-textarea'
 import { draggableCardAtom } from '~/entities/rules/models/draggableCard'
 import { editorRulesValuesAtom } from '~/entities/rules/models/editorRulesValues'
-import { onDropTextarea } from '~/entities/rules/lib/on-drop-textarea'
-import { onChangeTextarea } from '~/entities/rules/lib/on-change-textarea'
+import { mentionsDataAtom } from '~/entities/rules/models/mentionsData'
+import MentionsInput from '~/ui/mention-input'
 
 export interface MentionsItem {
   display: string

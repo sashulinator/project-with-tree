@@ -1,12 +1,14 @@
 import './add-delete-buttons.css'
 
-import Flex, { FlexProps } from '~/abstract/flex'
-import { GhostButton } from '~/ui/button'
 import { useRecoilState } from 'recoil'
 import uniqid from 'uniqid'
+
+import Flex, { FlexProps } from '~/abstract/flex'
+import { EditorValues, editorRulesValuesAtom } from '~/entities/rules/models/editorRulesValues'
+import { GhostButton } from '~/ui/button'
 import { Close, Plus } from '~/ui/icon'
 import { c } from '~/utils/core'
-import { EditorValues, editorRulesValuesAtom } from '~/entities/rules/models/editorRulesValues'
+
 import Select from '../../select/ui/select'
 
 interface ButtonsProps {

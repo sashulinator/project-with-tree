@@ -1,8 +1,9 @@
 import './input-search.css'
+
+import { GhostButton } from '~/ui/button'
 import { SearchIcon } from '~/ui/icon'
 import Input from '~/ui/input'
 import { c } from '~/utils/core'
-import { GhostButton } from '~/ui/button'
 
 InputSearch.displayName = 'e-Rules-ui-DomainList-InputSearch'
 
