@@ -1,11 +1,12 @@
 import './domain-list.css'
 
-import { c } from '~/utils/core'
 import { DomainItemProps } from '~/entities/rules/types/rules-type'
+import { emitter } from '~/shared/emitter'
+import { c } from '~/utils/core'
+
+import { themes } from '../../rules/themes'
 import { Domain } from '../widgets/domain'
 import InputSearch from '../widgets/input-search'
-import { emitter } from '~/shared/emitter'
-import { themes } from '../../rules/themes'
 
 interface DomainListProps {
   domains: DomainItemProps[]

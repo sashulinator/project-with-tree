@@ -1,21 +1,23 @@
 import './rules.css'
 
+import { useEffect, useRef } from 'react'
 import { useRecoilState } from 'recoil'
+
 import Flex from '~/abstract/flex'
-import { H1 } from '~/ui/heading'
+import { getMergeArr } from '~/entities/rules/lib/get-merge-arr'
+import { editorRulesValuesAtom } from '~/entities/rules/models/editorRulesValues'
+import { emitter } from '~/shared/emitter'
 import { GhostButton } from '~/ui/button'
+import { H1 } from '~/ui/heading'
+import { ArrowLeft, ArrowRight } from '~/ui/icon'
 import { Merge } from '~/ui/icon/variants/merge'
 import { Save } from '~/ui/icon/variants/save'
-import SplitBtn from '../widgets/item/widgets/split-btn'
+import { c } from '~/utils/core'
+
+import { themes } from '../themes'
 import { Item } from '../widgets/item'
 import AddDeleteButtons from '../widgets/item/widgets/add-delete-buttons/ui/add-delete-buttons'
-import { ArrowLeft, ArrowRight } from '~/ui/icon'
-import { useEffect, useRef } from 'react'
-import { editorRulesValuesAtom } from '~/entities/rules/models/editorRulesValues'
-import { getMergeArr } from '~/entities/rules/lib/get-merge-arr'
-import { emitter } from '~/shared/emitter'
-import { themes } from '../themes'
-import { c } from '~/utils/core'
+import SplitBtn from '../widgets/item/widgets/split-btn'
 
 Rules.displayName = 'ruleEditor-w-Rules'
 

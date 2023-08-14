@@ -1,10 +1,13 @@
 import './domain.css'
-import CollapseUI from '~/ui/collapse/ui/collapse'
+
 import { memo } from 'react'
 import { useSetRecoilState } from 'recoil'
-import { DomainItemProps } from '~/entities/rules/types/rules-type'
-import Attribute from '../../attribute'
+
 import { draggableCardAtom } from '~/entities/rules/models/draggableCard'
+import { DomainItemProps } from '~/entities/rules/types/rules-type'
+import CollapseUI from '~/ui/collapse/ui/collapse'
+
+import Attribute from '../../attribute'
 
 interface DomainProps {
   domain: DomainItemProps

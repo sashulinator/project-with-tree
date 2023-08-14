@@ -1,4 +1,5 @@
 import { useSetRecoilState } from 'recoil'
+
 import { getSplitArr } from '~/entities/rules/lib/get-split-arr'
 import { editorRulesValuesAtom } from '~/entities/rules/models/editorRulesValues'
 import { GhostButton, GhostButtonProps } from '~/ui/button'
