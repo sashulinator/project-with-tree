@@ -1,5 +1,3 @@
-import { useState } from 'react'
-
 import Flex from '~/abstract/flex/ui/flex'
 import { GhostButton } from '~/ui/button'
 import Tooltip from '~/ui/tooltip'
@@ -17,12 +15,10 @@ export const uiTooltip = {
 } as const
 
 export function Page(): JSX.Element {
-  const [page, setPage] = useState(0)
-
   return (
     <>
       <Flex dir='row' gap='xl' width='100%'>
-        <Tooltip placement='tc' isOpen={true} content='hello'>
+        <Tooltip placement='tc' content='hello'>
           <GhostButton>Target</GhostButton>
         </Tooltip>
       </Flex>
