@@ -1,12 +1,12 @@
 # a-Align
 
-## description
+## Description
 
 A component for positioning an element relative to another element.
 
 ## Features
 
-### Subscribes to DOM
+### Subscribe to DOM
 
 The `a-Align` component uses the `alignElement` function from the `dom-align-ts` library. This function positions one element relative to another element once, i.e., it does not reposition when the DOM changes.
 The `a-Align` subscribes to:
@@ -15,13 +15,13 @@ The `a-Align` subscribes to:
 - Changes in the sizes of `sourceElement` and `targetElement`.
 - Changes in the browser window size.
 
-### Ports `sourceElement` to `containerElement`.
+### Port `sourceElement` to `containerElement`
 
-Ports `sourceElement` to `containerElement` by `React.createPortal`.
+Port `sourceElement` to `containerElement` by `React.createPortal`.
 
-## subtree
+## Subtree
 
-### pull/push
+### `pull`/`push`
 
 ```bash
 # Push
@@ -34,7 +34,7 @@ git push a-align `git subtree split --prefix=src/abstract/align @`:master --forc
 
 test
 
-### diff
+### `diff`
 
 ```
 git --no-pager diff a-align/master master:src/abstract/align
@@ -46,8 +46,6 @@ git --no-pager diff a-align/master master:src/abstract/align
 2. To check a list of aliases `git remote -v`, you must see `a-align`
 3. Check that your project has no changes
 4. run `git subtree add --prefix=src/abstract/align a-align master`
-
-## dependencies
 
 ### installation
 
