@@ -3,13 +3,16 @@ import type { Offset, Points } from 'dom-align-ts'
 import React, { useCallback, useLayoutEffect } from 'react'
 import { createPortal } from 'react-dom'
 
-import { curry } from '~/utils/core'
-import { listenParentScrolls, observeResize } from '~/utils/dom'
-import { useEventListener, useLatest } from '~/utils/hooks'
-import { assertValidElement, setRefs } from '~/utils/react'
-import type { ReactElementWithRef } from '~/utils/react'
-
 import { align } from '../-private'
+// https://github.com/sashulinator/utils-core
+import { curry } from '../../../utils/core'
+// https://github.com/sashulinator/utils-dom
+import { listenParentScrolls, observeResize } from '../../../utils/dom'
+// https://github.com/sashulinator/utils-hooks
+import { useEventListener, useLatest } from '../../../utils/hooks'
+// https://github.com/sashulinator/utils-react
+import { assertValidElement, setRefs } from '../../../utils/react'
+import type { ReactElementWithRef } from '../../../utils/react'
 
 Align.displayName = 'a-Align'
 
