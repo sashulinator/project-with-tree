@@ -2,9 +2,11 @@ import './rules.css'
 
 import { useEffect, useRef } from 'react'
 import { useRecoilState } from 'recoil'
+import uniqid from 'uniqid'
 
 import Flex from '~/abstract/flex'
 import { getMergeArr } from '~/entities/rules/lib/get-merge-arr'
+import { draggableItemAtom } from '~/entities/rules/models/draggableItem'
 import { editorRulesValuesAtom } from '~/entities/rules/models/editorRulesValues'
 import { emitter } from '~/shared/emitter'
 import { GhostButton } from '~/ui/button'
@@ -29,6 +31,8 @@ export function Rules(): JSX.Element {
   const memoryRulesValues = useRef([editorRulesValues])
   const flag = useRef(false)
 
+  const [draggableItem, setDraggableItem] = useRecoilState(draggableItemAtom)
+  console.log(editorRulesValues)
   useEffect(() => {
     if (flag.current) {
       flag.current = false
@@ -49,7 +53,7 @@ export function Rules(): JSX.Element {
   }, [editorRulesValues])
 
   return (
-    <ul className={c(Rules.displayName)}>
+    <ul className={c(Rules.displayName)} onDragOver={dragOver} onDrop={drop} id='ruleEditor-w-Rules'>
       <Flex className='header' gap='xl' mainAxis='space-between' crossAxis='center'>
         <Flex gap='xl'>
           <GhostButton height={'l'} padding={'s'} onClick={back}>
@@ -70,6 +74,7 @@ export function Rules(): JSX.Element {
           </GhostButton>
         </Flex>
       </Flex>
+
       {editorRulesValues.map((item, i) => {
         return (
           <li key={item.id}>
@@ -87,6 +92,32 @@ export function Rules(): JSX.Element {
   )
 
   // Private
+
+  function drop(e: React.DragEvent<HTMLElement>): void {
+    e.preventDefault()
+    e.stopPropagation()
+    if ((e.target as HTMLElement).id === 'ruleEditor-w-Rules' && draggableItem) {
+      const result = editorRulesValues.map((arr) => {
+        if (arr.id === draggableItem?.parentId) {
+          return { ...arr, valueArr: arr.valueArr.filter((item) => item.id !== draggableItem.id) }
+        }
+
+        return arr
+      })
+      setEditorVales(
+        [...result, { id: uniqid(), valueArr: [{ value: draggableItem.value, id: draggableItem.id }] }].filter(
+          (item) => item.valueArr.length
+        )
+      )
+      setDraggableItem(null)
+    }
+  }
+
+  function dragOver(e: React.DragEvent<HTMLElement>): void {
+    e.preventDefault()
+    e.stopPropagation()
+  }
+
   function mergeCondition(): void {
     setEditorVales((arr) => getMergeArr(arr))
   }

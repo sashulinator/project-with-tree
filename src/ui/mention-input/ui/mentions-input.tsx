@@ -1,13 +1,14 @@
-import Field from '~/abstract/field/ui/field'
-import { MentionsInput as RMMentionsInput, MentionsInputProps as IMentionsInputProps } from 'react-mentions'
-import style from './style'
 import './mentions-input.css'
 
-import { FieldProps } from '~/ui/field'
-import { fns } from '~/utils/function'
+import { MentionsInputProps as IMentionsInputProps, MentionsInput as RMMentionsInput } from 'react-mentions'
 
-import { useBoolean } from '~/utils/hooks'
+import Field from '~/abstract/field/ui/field'
+import { FieldProps } from '~/ui/field'
 import { c } from '~/utils/core'
+import { fns } from '~/utils/function'
+import { useBoolean } from '~/utils/hooks'
+
+import style from './style'
 
 MentionsInput.displayName = 'ui-MentionInput'
 

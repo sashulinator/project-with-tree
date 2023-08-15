@@ -12,5 +12,5 @@
 .ruleEditor-w-Rules .item {
   border-radius: 9px;
   background: var(--editorItem_bg);
-  padding: 20px;
+  padding: 10px;
 }

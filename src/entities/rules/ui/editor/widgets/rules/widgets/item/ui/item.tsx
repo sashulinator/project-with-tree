@@ -30,7 +30,7 @@ export function Item(props: Props): JSX.Element {
 
   return (
     <Flex crossAxis='center' gap='xl' className={c(Item.displayName, rootProps?.className)} {...rootProps}>
-      <Checkbox checked={checked} onChange={handleCheck} style={{ cursor: 'pointer' }} />
+      {/* <Checkbox checked={checked} onChange={handleCheck} style={{ cursor: 'pointer' }} /> */}
       <ul className='list'>
         {values.map((item, i) => (
           <li key={item.id}>
