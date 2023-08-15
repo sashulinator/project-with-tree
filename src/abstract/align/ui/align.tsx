@@ -9,7 +9,7 @@ import { useEventListener, useLatest } from '~/utils/hooks'
 import { assertValidElement, setRefs } from '~/utils/react'
 import type { ReactElementWithRef } from '~/utils/react'
 
-import { align } from '../_private'
+import { align } from '../-private'
 
 Align.displayName = 'a-Align'
 
