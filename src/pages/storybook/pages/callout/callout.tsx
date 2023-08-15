@@ -21,7 +21,7 @@ export default function CalloutPage(): JSX.Element {
         </label>
         <div>
           <Callout<BalloonProps>
-            isOpen={isDefaultOpen}
+            opened={isDefaultOpen}
             // contentProps={}
             placement='bc'
             overflow={{ adjustX: true, adjustY: true, alwaysByViewport: true }}

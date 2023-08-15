@@ -3,9 +3,9 @@ import './tooltip.css'
 import { Point } from 'dom-align-ts'
 import React, { useState } from 'react'
 
+import { PopoverProps } from '~/abstract/popover'
 import Balloon, { BalloonProps } from '~/ui/balloon'
 import Callout from '~/ui/callout'
-import { PopoverProps } from '~/ui/popover'
 import { fns } from '~/utils/function'
 import { useDebounceCallback } from '~/utils/hooks'
 
@@ -49,7 +49,7 @@ export default function Tooltip(props: Props): JSX.Element {
   })
 
   return (
-    <Callout placement={placement} contentProps={{ children: content }} renderContent={BaloonWrapper} isOpen={isOpen}>
+    <Callout placement={placement} contentProps={{ children: content }} renderContent={BaloonWrapper} opened={isOpen}>
       {clonedChildren}
     </Callout>
   )

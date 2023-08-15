@@ -1,7 +1,7 @@
 import { Point, Points } from 'dom-align-ts'
 import { createElement, useState } from 'react'
 
-import Popover, { PopoverProps } from '~/ui/popover'
+import Popover, { PopoverProps } from '~/abstract/popover'
 
 import { adjustPlacement } from '../lib/adjust-placement'
 
@@ -15,7 +15,7 @@ export interface Props<IContentProp> {
   /** Пропсы для контента  */
   contentProps: IContentProp
   /**  */
-  isOpen: boolean
+  opened: boolean
   /**  */
   placement?: Point
   /**  */
