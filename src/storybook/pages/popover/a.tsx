@@ -1,46 +1,35 @@
 import { useState } from 'react'
 
-import Align, { AlignProps } from '~/abstract/align'
 import Flex from '~/abstract/flex/ui/flex'
+import Popover, { PopoverProps } from '~/abstract/popover'
 import { setRefs } from '~/utils/react'
 
 interface Props {
   sourcePosition: 'fixed' | 'absolute'
-  points: AlignProps['points']
+  points: PopoverProps['points']
   portalSourceIntoTarget: boolean
   containerRelative: boolean
   containerOverflowHidden: boolean
-  adjustY: boolean
-  adjustX: boolean
-  alwaysByViewport: boolean
+  opened: boolean
 }
 
 export default {
   description: (): JSX.Element | string => 'Описание',
 
-  getName: (): string => Align.displayName,
+  getName: (): string => Popover.displayName,
 
-  getPath: (): string => `/align`,
+  getPath: (): string => `/popover`,
 
   controls: [
+    { name: 'opened', input: 'checkbox', defaultValue: true },
     {
-      name: 'sourcePoint',
-      path: ['points', 0],
+      name: 'placement',
       input: 'select',
       options: ['bc', 'bl', 'br', 'tc', 'tl', 'tr', 'cc', 'cl', 'cr'],
       defaultValue: 'tc',
       style: { width: '200px' },
     },
-    {
-      name: 'targetPoint',
-      path: ['points', 1],
-      input: 'select',
-      options: ['bc', 'bl', 'br', 'tc', 'tl', 'tr', 'cc', 'cl', 'cr'],
-      defaultValue: 'bc',
-      style: { width: '200px' },
-    },
     { name: 'portalSourceIntoTarget', input: 'checkbox', defaultValue: false },
-    { name: 'containerRelative', input: 'checkbox', defaultValue: false },
     { name: 'adjustX', path: ['overflow', 'adjustX'], input: 'checkbox', defaultValue: false },
     { name: 'adjustY', path: ['overflow', 'adjustY'], input: 'checkbox', defaultValue: false },
     { name: 'alwaysByViewport', path: ['overflow', 'alwaysByViewport'], input: 'checkbox', defaultValue: false },
@@ -48,10 +37,8 @@ export default {
   ],
 
   element: function Element(props: Props): JSX.Element {
-    const { portalSourceIntoTarget, containerRelative, containerOverflowHidden, ...alignProps } = props
+    const { portalSourceIntoTarget, containerRelative, containerOverflowHidden, ...popoverProps } = props
     const [ref, setRef] = useState<null | HTMLElement>()
-
-    console.log('alignProps', alignProps)
 
     return (
       <div style={{ overflow: containerOverflowHidden ? 'hidden' : undefined }}>
@@ -66,12 +53,13 @@ export default {
               height: '200px',
             }}
           >
-            <button ref={setRefs(setRef)}>Target</button>
-            {ref && (
-              <Align targetElement={ref} containerElement={portalSourceIntoTarget ? ref : undefined} {...alignProps}>
-                <div style={{ width: '400px', height: '100px', background: 'red' }}>Source</div>
-              </Align>
-            )}
+            <Popover
+              content={<div style={{ width: '400px', height: '100px', background: 'red' }}>Source</div>}
+              containerElement={portalSourceIntoTarget ? ref : undefined}
+              {...popoverProps}
+            >
+              <button ref={setRefs(setRef)}>Target</button>
+            </Popover>
           </div>
         </Flex>
       </div>
