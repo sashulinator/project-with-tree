@@ -111,7 +111,7 @@ export interface Props extends Config {
 }
 
 /**
- * A component for positioning an element relative to another element.
+ * See README.md
  *
  * @param {Props} props - The props for the Align component.
  * @return {JSX.Element} The rendered Align component.
