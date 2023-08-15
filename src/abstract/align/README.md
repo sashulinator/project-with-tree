@@ -6,14 +6,18 @@ A component for positioning an element relative to another element.
 
 ## Features
 
-1. The `a-Align` component uses the `alignElement` function from the `dom-align-ts` library. This function positions one element relative to another element once, i.e., it does not reposition when the DOM changes.
-   The `a-Align` subscribes to:
+### Subscribes to DOM
 
-1. Scrolling of the parent elements `sourceElement` and `targetElement`.
-1. Changes in the sizes of `sourceElement` and `targetElement`.
-1. Changes in the browser window size.
+The `a-Align` component uses the `alignElement` function from the `dom-align-ts` library. This function positions one element relative to another element once, i.e., it does not reposition when the DOM changes.
+The `a-Align` subscribes to:
 
-1. It ports `sourceElement` to `containerElement`.
+- Scrolling of the parent elements `sourceElement` and `targetElement`.
+- Changes in the sizes of `sourceElement` and `targetElement`.
+- Changes in the browser window size.
+
+### Ports `sourceElement` to `containerElement`.
+
+Ports `sourceElement` to `containerElement` by `React.createPortal`.
 
 ## subtree
 
