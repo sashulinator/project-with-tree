@@ -12,6 +12,7 @@ Not supports in Firefox and IE */
 *::-webkit-scrollbar {
   background-color: transparent;
   width: var(--m);
+  height: var(--m);
 }
 
 /* background of the scrollbar except button or resizer */
@@ -24,6 +25,10 @@ Not supports in Firefox and IE */
   background-color: #babac0;
   border-radius: var(--xl);
   border: var(--s) solid transparent;
+}
+
+*::-webkit-scrollbar-corner {
+  background-color: transparent;
 }
 
 /* set button(top and bottom of the scrollbar) */
