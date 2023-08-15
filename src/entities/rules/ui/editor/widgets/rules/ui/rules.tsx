@@ -5,14 +5,12 @@ import { useRecoilState } from 'recoil'
 import uniqid from 'uniqid'
 
 import Flex from '~/abstract/flex'
-import { getMergeArr } from '~/entities/rules/lib/get-merge-arr'
 import { draggableItemAtom } from '~/entities/rules/models/draggableItem'
 import { editorRulesValuesAtom } from '~/entities/rules/models/editorRulesValues'
 import { emitter } from '~/shared/emitter'
 import { GhostButton } from '~/ui/button'
 import { H1 } from '~/ui/heading'
 import { ArrowLeft, ArrowRight } from '~/ui/icon'
-import { Merge } from '~/ui/icon/variants/merge'
 import { Save } from '~/ui/icon/variants/save'
 import { c } from '~/utils/core'
 
@@ -66,9 +64,6 @@ export function Rules(): JSX.Element {
 
         <H1 style={{ marginBottom: 0 }}>Заголовок правила(id правила)</H1>
         <Flex mainAxis='end' gap='xl'>
-          <GhostButton height={'l'} padding={'s'} onClick={mergeCondition}>
-            <Merge width={'30px'} height={'30px'} />
-          </GhostButton>
           <GhostButton height={'l'} padding={'s'}>
             <Save width={'30px'} height={'30px'} />
           </GhostButton>
@@ -82,7 +77,7 @@ export function Rules(): JSX.Element {
               {item.valueArr.length > 1 && (
                 <SplitBtn index={i} rootProps={{ style: { marginLeft: 'auto', marginBottom: '20px' } }} />
               )}
-              <Item checked={!!item.checked} id={item.id} values={item.valueArr} />
+              <Item id={item.id} values={item.valueArr} />
             </div>
             <AddDeleteButtons id={item.id} />
           </li>
@@ -116,10 +111,6 @@ export function Rules(): JSX.Element {
   function dragOver(e: React.DragEvent<HTMLElement>): void {
     e.preventDefault()
     e.stopPropagation()
-  }
-
-  function mergeCondition(): void {
-    setEditorVales((arr) => getMergeArr(arr))
   }
 
   function back(): void {
