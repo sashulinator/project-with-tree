@@ -6,7 +6,7 @@ Labeled.displayName = 'ui-Labeled'
 
 export interface Props extends React.HTMLAttributes<HTMLDivElement> {
   label: React.ReactNode
-  htmlFor: string
+  htmlFor?: string
   direction?: 'horizontal' | 'vertical'
   hidden?: boolean | undefined
   labelProps?: React.HTMLAttributes<HTMLLabelElement>

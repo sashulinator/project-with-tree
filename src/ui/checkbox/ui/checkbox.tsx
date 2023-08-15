@@ -1,11 +1,11 @@
 import './checkbox.css'
 
 import { emitter } from '~/shared/emitter'
+import { Check } from '~/ui/icon/variants/check'
+import { c } from '~/utils/core'
 
 import { dark } from '../themes/dark'
 import { light } from '../themes/light'
-import { c } from '~/utils/core'
-import { Check } from '~/ui/icon/variants/check'
 
 emitter.emit('addTheme', { dark, light })
 

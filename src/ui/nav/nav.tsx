@@ -24,6 +24,9 @@ export default function Nav(): JSX.Element {
             <ol>
               <Link to={routes.storybookNew.getURL()}>New Storybook</Link>
             </ol>
+            <ol>
+              <Link to={routes.story.getURL()}>Story</Link>
+            </ol>
           </>
         )}
       </ul>
