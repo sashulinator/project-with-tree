@@ -6,16 +6,14 @@ A component for positioning an element relative to another element.
 
 ## Features
 
-Features:
-
-The `a-Align` component uses the `alignElement` function from the `dom-align-ts` library. This function positions one element relative to another element once, i.e., it does not reposition when the DOM changes.
-The `a-Align` subscribes to:
+1. The `a-Align` component uses the `alignElement` function from the `dom-align-ts` library. This function positions one element relative to another element once, i.e., it does not reposition when the DOM changes.
+   The `a-Align` subscribes to:
 
 1. Scrolling of the parent elements `sourceElement` and `targetElement`.
-2. Changes in the sizes of `sourceElement` and `targetElement`.
-3. Changes in the browser window size.
+1. Changes in the sizes of `sourceElement` and `targetElement`.
+1. Changes in the browser window size.
 
-It ports `sourceElement` to `containerElement`.
+1. It ports `sourceElement` to `containerElement`.
 
 ## subtree
 
