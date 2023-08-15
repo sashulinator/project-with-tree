@@ -39,7 +39,7 @@ export default function Popover(props: PopoverProps): JSX.Element {
           overflow={props.overflow}
           containerElement={props.containerElement}
           deps={props.deps}
-          sourceOffset={props.contentOffset}
+          offset={props.contentOffset}
           onAligned={props.onAligned}
         >
           {clonedContent}

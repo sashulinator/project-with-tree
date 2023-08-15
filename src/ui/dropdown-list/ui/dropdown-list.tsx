@@ -54,7 +54,7 @@ function DropdownList<T, P>(props: DropdownListProps<T, P>): JSX.Element | null 
   }
 
   return (
-    <Align points={['tc', 'bc']} sourceOffset={offset} targetElement={renderProps.inputElement}>
+    <Align points={['tc', 'bc']} offset={offset} targetElement={renderProps.inputElement}>
       <ControlledList {...listProps} />
     </Align>
   )
