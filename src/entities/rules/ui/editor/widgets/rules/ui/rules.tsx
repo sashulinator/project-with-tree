@@ -2,9 +2,9 @@ import './rules.css'
 
 import { useEffect, useRef } from 'react'
 import { useRecoilState } from 'recoil'
-import uniqid from 'uniqid'
 
 import Flex from '~/abstract/flex'
+import { onDropItemToCanvas } from '~/entities/rules/lib/on-drop-item-to-canvas'
 import { draggableItemAtom } from '~/entities/rules/models/draggableItem'
 import { editorRulesValuesAtom } from '~/entities/rules/models/editorRulesValues'
 import { emitter } from '~/shared/emitter'
@@ -92,18 +92,7 @@ export function Rules(): JSX.Element {
     e.preventDefault()
     e.stopPropagation()
     if ((e.target as HTMLElement).id === 'ruleEditor-w-Rules' && draggableItem) {
-      const result = editorRulesValues.map((arr) => {
-        if (arr.id === draggableItem?.parentId) {
-          return { ...arr, valueArr: arr.valueArr.filter((item) => item.id !== draggableItem.id) }
-        }
-
-        return arr
-      })
-      setEditorVales(
-        [...result, { id: uniqid(), valueArr: [{ value: draggableItem.value, id: draggableItem.id }] }].filter(
-          (item) => item.valueArr.length
-        )
-      )
+      setEditorVales(onDropItemToCanvas(editorRulesValues, draggableItem))
       setDraggableItem(null)
     }
   }

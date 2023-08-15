@@ -1,13 +1,13 @@
-import { useEffect, useRef, useState } from 'react'
+import { useRef } from 'react'
 import { Mention } from 'react-mentions'
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
+import { useRecoilState, useRecoilValue } from 'recoil'
 
-import DropBoard from '~/abstract/drop-board/ui/drop-board'
 import { onChangeTextarea } from '~/entities/rules/lib/on-change-textarea'
+import { onDropItemToItem } from '~/entities/rules/lib/on-drop-item-to-item'
 import { onDropTextarea } from '~/entities/rules/lib/on-drop-textarea'
 import { draggableCardAtom } from '~/entities/rules/models/draggableCard'
 import { draggableItemAtom } from '~/entities/rules/models/draggableItem'
-import { EditorValues, editorRulesValuesAtom } from '~/entities/rules/models/editorRulesValues'
+import { editorRulesValuesAtom } from '~/entities/rules/models/editorRulesValues'
 import { mentionsDataAtom } from '~/entities/rules/models/mentionsData'
 import MentionsInput from '~/ui/mention-input'
 
@@ -116,28 +116,8 @@ export default function Input(props: EditorInputProps): JSX.Element {
   }
 
   function mergeInputs(): void {
-    let result: EditorValues[] = []
-
-    result = editorValue
-      .map((arr) => {
-        if (arr.id === parentId) {
-          return {
-            ...arr,
-            valueArr: arr.valueArr
-              .filter((item) => item.id !== draggableItem?.id)
-              .map((item) => {
-                if (item.id === id && draggableItem) {
-                  return [item, { value: draggableItem.value, id: draggableItem.id }]
-                }
-                return item
-              })
-              .flat(1),
-          }
-        }
-        return { ...arr, valueArr: arr.valueArr.filter((item) => item.id !== draggableItem?.id) }
-      })
-      .filter((item) => item.valueArr.length)
-
-    setEditorValues(result)
+    if (draggableItem) {
+      setEditorValues(onDropItemToItem(editorValue, parentId, id, draggableItem))
+    }
   }
 }

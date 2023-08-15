@@ -1,0 +1,31 @@
+import { DraggableItem } from '../models/draggableItem'
+import { EditorValues } from '../models/editorRulesValues'
+
+export function onDropItemToItem(
+  editorValue: EditorValues[],
+  parentId: string,
+  id: string,
+  draggableItem: DraggableItem
+): EditorValues[] {
+  const result = editorValue
+    .map((arr) => {
+      if (arr.id === parentId) {
+        return {
+          ...arr,
+          valueArr: arr.valueArr
+            .filter((item) => item.id !== draggableItem?.id)
+            .map((item) => {
+              if (item.id === id && draggableItem) {
+                return [item, { value: draggableItem.value, id: draggableItem.id }]
+              }
+              return item
+            })
+            .flat(1),
+        }
+      }
+      return { ...arr, valueArr: arr.valueArr.filter((item) => item.id !== draggableItem?.id) }
+    })
+    .filter((item) => item.valueArr.length)
+
+  return result
+}
