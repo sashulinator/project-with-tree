@@ -36,20 +36,52 @@ export default function Input(props: EditorInputProps): JSX.Element {
   return (
     <div
       draggable
-      style={{ borderRadius: '9px', background: 'var(--editorItem_bg)', padding: '20px', border: '1px solid aqua' }}
+      style={{
+        position: 'relative',
+        borderRadius: '9px',
+        background: 'var(--editorItem_bg)',
+        padding: '20px',
+        border: '1px solid aqua',
+      }}
       onDragOver={dragOver}
       onDrop={drop}
       onDragStart={dragStart}
     >
-      <MentionsInput value={value} onChange={handleChangeMention} inputRef={inputRef}>
-        <Mention
-          trigger='@'
-          data={mentionsData}
-          style={{
-            backgroundColor: 'var(--mentionItem_bg)',
-          }}
-        />
-      </MentionsInput>
+      {/* <div
+        data-direction='up'
+        style={{
+          position: 'absolute',
+          background: '#8DD3D488',
+          top: '0',
+          left: '0',
+          width: '100%',
+          height: '50%',
+          opacity: 0.5,
+        }}
+      ></div>
+      <div
+        data-direction='down'
+        style={{
+          position: 'absolute',
+          background: '#8DD3D488',
+          bottom: '0',
+          left: '0',
+          width: '100%',
+          height: '50%',
+          opacity: 0.5,
+        }}
+      ></div> */}
+      <div>
+        <MentionsInput value={value} onChange={handleChangeMention} inputRef={inputRef}>
+          <Mention
+            trigger='@'
+            data={mentionsData}
+            style={{
+              backgroundColor: 'var(--mentionItem_bg)',
+            }}
+          />
+        </MentionsInput>
+      </div>
     </div>
   )
 
@@ -59,6 +91,7 @@ export default function Input(props: EditorInputProps): JSX.Element {
 
   function drop(e: React.DragEvent<HTMLDivElement>): void {
     e.preventDefault()
+    e.stopPropagation()
     if (draggableCard) {
       setEditorValues((arr) => onDropTextarea(arr, draggableCard, id))
       setDraggableCard(null)
