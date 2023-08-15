@@ -32,8 +32,6 @@ git subtree pull --prefix=src/abstract/align a-align master
 git push a-align `git subtree split --prefix=src/abstract/align @`:master --force
 ```
 
-test
-
 ### `diff`
 
 ```
@@ -46,17 +44,3 @@ git --no-pager diff a-align/master master:src/abstract/align
 2. To check a list of aliases `git remote -v`, you must see `a-align`
 3. Check that your project has no changes
 4. run `git subtree add --prefix=src/abstract/align a-align master`
-
-### installation
-
-```bash
-yarn add dom-align-ts
-git remote add utils-hooks git@github.com:sashulinator/utils-core.git
-git subtree add --prefix=src/utils/core utils-core master
-git remote add utils-hooks git@github.com:sashulinator/utils-hooks.git
-git subtree add --prefix=src/utils/hooks utils-hooks master
-git remote add utils-dom git@github.com:sashulinator/utils-dom.git
-git subtree add --prefix=src/utils/dom utils-dom master
-git remote add utils-react git@github.com:sashulinator/utils-react.git
-git subtree add --prefix=src/utils/react utils-react master
-```
