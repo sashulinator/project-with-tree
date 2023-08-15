@@ -1,10 +1,10 @@
 import './balloon.css'
 
-import clsx from 'clsx'
+import { clsx } from 'clsx'
 import { Point, Points, flipPointHorizontally, flipPointVertically } from 'dom-align-ts'
 import React, { RefAttributes } from 'react'
 
-import Popover from '~/ui/popover'
+import Popover from '~/abstract/popover'
 import { Any } from '~/utils/core'
 import { useWindowSize } from '~/utils/hooks'
 import { ReactElementWithRef, assertValidElement, setRefs } from '~/utils/react'
@@ -76,7 +76,7 @@ export default function Balloon(props: Props): JSX.Element {
             style={{ position: 'absolute', ...props.arrowProps?.style }}
           />
         }
-        isOpen={true}
+        opened={true}
         containerElement={contentEl}
         points={toPoints(placement)}
         contentOffset={calcArrowOffset(placement)}

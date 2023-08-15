@@ -2,7 +2,7 @@
 import { Point } from 'dom-align-ts'
 import { useState } from 'react'
 
-import Popover from '~/ui/popover'
+import Popover from '~/abstract/popover'
 import { useBoolean } from '~/utils/hooks'
 
 export default function PopoverPage(): JSX.Element {
@@ -130,7 +130,7 @@ export default function PopoverPage(): JSX.Element {
           <Popover
             overflow={{ adjustX, adjustY, alwaysByViewport }}
             containerElement={isPortalToMainContainer ? containerEl : undefined}
-            isOpen={isOpen}
+            opened={isOpen}
             deps={[adjustX, adjustY, contentPosition]}
             placement={placement ? placement : undefined}
             points={pointTarget && pointSource ? [pointSource, pointTarget] : undefined}
