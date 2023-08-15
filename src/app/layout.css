@@ -26,19 +26,18 @@ main {
   grid-area: main;
   grid-template-rows: 1fr;
   grid-template-columns: 1fr;
-  /* background-color: rgb(255, 243, 243); */
 }
 
 nav {
   grid-area: nav;
-  z-index: 300;
-  /* background-color: rgb(244, 243, 255); */
+  z-index: 1;
+  background-color: var(--bg);
 }
 
 header {
   grid-area: header;
-  z-index: 300;
-  /* background-color: rgb(254, 254, 243); */
+  z-index: 1;
+  background-color: var(--bg);
 }
 
 /* CENTERED */

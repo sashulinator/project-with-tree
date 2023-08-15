@@ -3,14 +3,14 @@ import { createElement } from 'react'
 import Select from '~/storybook/ui/select'
 import Checkbox from '~/ui/checkbox'
 import Labeled from '~/ui/labeled'
-import { Any, SetterOrUpdater, c } from '~/utils/core'
-import { useOnMount } from '~/utils/hooks'
+import { Any, Key, SetterOrUpdater, c } from '~/utils/core'
+import { getPath, setPath } from '~/utils/dictionary'
 
 Controls.displayName = 'story-Page-w-Controls'
 
 export interface Props {
   className?: string
-  controls: ({ name: string; input: string } & Record<string, Any>)[]
+  controls: ({ name: string; input: string; defaultValue: unknown } & Record<string, Any>)[]
   state: Record<string, Any>
   setState: SetterOrUpdater<Record<string, Any>>
 }
@@ -26,18 +26,14 @@ export default function Controls(props: Props): JSX.Element {
 }
 
 interface ControlProps {
-  control: { name: string; input: string } & Record<string, Any>
+  control: { name: string; input: string; path?: Key[]; defaultValue: unknown } & Record<string, Any>
   state: Record<string, Any>
   setState: SetterOrUpdater<Record<string, Any>>
 }
 
 function Control(props: ControlProps): JSX.Element {
-  const { name, input, ...controlProps } = props.control
+  const { name, input, path, defaultValue: _, ...controlProps } = props.control
 
-  useOnMount(() => {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-    props.setState((state) => ({ ...state, [name]: controlProps.defaultValue }))
-  })
   return (
     <Labeled label={name || 'UNKNOWN'}>
       {((): React.ReactNode => {
@@ -45,9 +41,9 @@ function Control(props: ControlProps): JSX.Element {
           return createElement(Checkbox, {
             ...controlProps,
             // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-            checked: props.state[name] ?? false,
+            checked: getPath(props.state, path || [name]) || false,
             onChange: (e) => {
-              props.setState((state) => ({ ...state, [name]: e.target.checked }))
+              props.setState((state) => setPath(path || [name], e.target.checked, state))
             },
           })
         }
@@ -57,10 +53,10 @@ function Control(props: ControlProps): JSX.Element {
             ...controlProps,
 
             // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-            value: props.state[name],
+            value: getPath(props.state, path || [name]),
             placeholder: name,
             onChange: (e) => {
-              props.setState((state) => ({ ...state, [name]: e.target.value }))
+              props.setState((state) => setPath(path || [name], e.target.value, state))
             },
           })
         }

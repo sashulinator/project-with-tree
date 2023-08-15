@@ -1,6 +1,6 @@
 import { i18n } from '~/shared/i18n'
-import { Any } from '~/utils/core'
-import { Dictionary, isObject, setPath, walk } from '~/utils/dictionary'
+import { Any, isObject } from '~/utils/core'
+import { Dictionary, setPath, walk } from '~/utils/dictionary'
 
 import { ReplaceValuesByGetter } from './types/_replace-values-by-getter'
 
@@ -14,7 +14,7 @@ export function generateSchema<T extends Dictionary<Any>>(structure: T, ns: stri
   walk(structure, ({ value, path }) => {
     if (!isObject(value)) {
       const key = `${ns}:${path.join('.')}`
-      schema = setPath(schema, path, (params) => i18n.t(key, params))
+      schema = setPath(path, (params) => i18n.t(key, params), schema)
     }
   })
 
