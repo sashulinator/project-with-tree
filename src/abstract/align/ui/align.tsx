@@ -3,10 +3,13 @@ import type { Offset, Points } from 'dom-align-ts'
 import React, { useCallback, useLayoutEffect } from 'react'
 import { createPortal } from 'react-dom'
 
+import { curry } from '~/utils/core'
 import { listenParentScrolls, observeResize } from '~/utils/dom'
 import { useEventListener, useLatest } from '~/utils/hooks'
 import { assertValidElement, setRefs } from '~/utils/react'
 import type { ReactElementWithRef } from '~/utils/react'
+
+import { align } from '../_private'
 
 Align.displayName = 'a-Align'
 
@@ -30,36 +33,14 @@ export interface Overflow {
   adjustY?: boolean
 }
 
-export interface Props {
-  /**
-   * The target element to align the child element with.
-   */
-  targetElement: HTMLElement
-
-  /**
-   * The container element for the component; defaults to `document.body`.
-   */
-  containerElement?: HTMLElement | null | undefined
-
-  /**
-   * The child element to be positioned.
-   */
-  children: ReactElementWithRef<HTMLElement>
-
+/**
+ * Config of `align` function from `dom-align-ts` library
+ */
+export interface Config {
   /**
    * An Array that specifies the positioning of the child element relative to the target element.
    */
   points: Points
-
-  /**
-   * An optional array of dependencies used to trigger repositioning of the child element.
-   */
-  deps?: unknown[] | undefined
-
-  /**
-   * An optional x/y offset for the child element.
-   */
-  sourceOffset?: Offset | undefined
 
   /**
    * An optional x/y offset for the target element
@@ -92,6 +73,38 @@ export interface Props {
   ignoreShake?: boolean | undefined
 
   /**
+   * An optional x/y offset for the child element.
+   */
+  offset?: Offset | undefined
+}
+
+export interface Props extends Config {
+  /**
+   * The target element to align the child element with.
+   */
+  targetElement: HTMLElement
+
+  /**
+   * The container element for the component; defaults to `document.body`.
+   */
+  containerElement?: HTMLElement | null | undefined
+
+  /**
+   * The child element to be positioned.
+   */
+  children: ReactElementWithRef<HTMLElement>
+
+  /**
+   * An optional array of dependencies used to trigger repositioning of the child element.
+   */
+  deps?: unknown[] | undefined
+
+  /**
+   * An optional flag to use CSS `bottom` property instead of `top`.
+   */
+  useCssBottom?: boolean | undefined
+
+  /**
    *  An optional function to be called after the child element is positioned.
    */
   onAligned?: ((ret: ReturnType<typeof alignElement>) => void) | undefined
@@ -104,30 +117,24 @@ export interface Props {
  * @return {JSX.Element} The rendered Align component.
  */
 export default function Align(props: Props): JSX.Element {
-  const { targetElement, children, containerElement, deps = [], onAligned, sourceOffset, ...config } = props
+  const { targetElement, children, containerElement, deps = [], onAligned, ...config } = props
   const [sourceElement, setSourceEl] = React.useState<null | HTMLElement>(null)
   const onAlignedRef = useLatest(onAligned)
 
+  const alignDeps = [targetElement, sourceElement, containerElement, ...config.points, ...deps]
+
   assertValidElement(children)
 
-  const align = useCallback(_align, [targetElement, sourceElement, containerElement, ...config.points, ...deps])
+  const carryAlign = useCallback(() => curry(align)({ targetElement, sourceElement, config, onAlignedRef }), alignDeps)
 
-  useLayoutEffect(align, [align])
-  useEventListener('resize', align, undefined, { passive: true })
-  useLayoutEffect(() => listenParentScrolls(targetElement, align, { passive: true }), [align])
-  useLayoutEffect(() => listenParentScrolls(sourceElement, align, { passive: true }), [align])
-  useLayoutEffect(() => observeResize(targetElement, align), [align])
-  useLayoutEffect(() => observeResize(sourceElement, align), [align])
+  useLayoutEffect(carryAlign, [alignDeps])
+  useEventListener('resize', carryAlign, undefined, { passive: true })
+  useLayoutEffect(() => listenParentScrolls(targetElement, carryAlign, { passive: true }), [alignDeps])
+  useLayoutEffect(() => listenParentScrolls(sourceElement, carryAlign, { passive: true }), [alignDeps])
+  useLayoutEffect(() => observeResize(targetElement, carryAlign), [alignDeps])
+  useLayoutEffect(() => observeResize(sourceElement, carryAlign), [alignDeps])
 
   const clonedChildren = React.cloneElement(children, { ref: setRefs(children.ref, setSourceEl) })
 
   return <>{createPortal(clonedChildren, containerElement || targetElement.ownerDocument.body)}</>
-
-  // Private
-
-  function _align(): void {
-    if (!targetElement || !sourceElement) return
-    const ret = alignElement(sourceElement, targetElement, { ...config, offset: sourceOffset })
-    onAlignedRef.current?.(ret)
-  }
 }
