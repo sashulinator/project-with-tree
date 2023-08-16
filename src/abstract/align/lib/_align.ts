@@ -9,7 +9,7 @@ type Context = {
   onAlignedRef: { current: AlignProps['onAligned'] }
 }
 
-export function align(ctx: Context): void {
+export function _align(ctx: Context): void {
   if (!ctx.targetElement || !ctx.sourceElement) return
 
   const ret = alignElement(ctx.sourceElement, ctx.targetElement, ctx.config)
