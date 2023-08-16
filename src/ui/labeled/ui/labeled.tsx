@@ -22,7 +22,7 @@ export default function Labeled(props: Props): JSX.Element {
       aria-hidden={hidden}
       className={c(className, Labeled.displayName, `--${direction}`, hidden && `--hidden`)}
     >
-      <label {...labelProps} htmlFor={htmlFor}>
+      <label className='label' {...labelProps} htmlFor={htmlFor}>
         {props.label}
       </label>
       {children}

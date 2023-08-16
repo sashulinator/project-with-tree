@@ -2,7 +2,7 @@
   display: flex;
   width: 100%;
 
-  > label {
+  > .label {
     font-weight: 600;
   }
 }
@@ -14,7 +14,7 @@
 .ui-Labeled.--vertical {
   flex-direction: column;
 
-  > label {
+  > .label {
     margin-bottom: var(--s);
     margin-left: var(--m);
   }
@@ -23,7 +23,7 @@
 .ui-Labeled.--horizontal {
   flex-direction: row;
 
-  > label {
+  > .label {
     white-space: nowrap;
     display: flex;
     align-items: center;

@@ -1,0 +1,3 @@
+.page-Storybook {
+  height: calc(100vh - calc(var(--header-height) * 1px));
+}

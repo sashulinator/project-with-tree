@@ -1,4 +1,5 @@
 import { createElement } from 'react'
+import { Control } from '~/storybook/types'
 
 import Select from '~/storybook/ui/select'
 import Checkbox from '~/ui/checkbox'
@@ -11,7 +12,7 @@ Controls.displayName = 'story-Page-w-Controls'
 
 export interface Props {
   className?: string
-  controls: ({ name: string; input: string; defaultValue: unknown } & Record<string, Any>)[]
+  controls: Control[]
   state: Record<string, Any>
   setState: SetterOrUpdater<Record<string, Any>>
 }
@@ -27,7 +28,7 @@ export default function Controls(props: Props): JSX.Element {
 }
 
 interface ControlProps {
-  control: { name: string; input: string; path?: Key[]; defaultValue: unknown } & Record<string, Any>
+  control: Control
   state: Record<string, Any>
   setState: SetterOrUpdater<Record<string, Any>>
 }

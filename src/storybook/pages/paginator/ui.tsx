@@ -1,23 +1,35 @@
-import { useState } from 'react'
-
 import Flex from '~/abstract/flex/ui/flex'
+import { Config, Props } from '~/storybook/types'
 import Paginator from '~/ui/paginator'
 
-export default {
-  description: (): JSX.Element | string => 'Описание',
+interface State {
+  page: number
+}
 
+export default {
   getName: (): string => Paginator.displayName,
 
   getPath: (): string => `/paginator`,
 
-  controls: [],
+  getDescription: (): JSX.Element | string => 'Описание',
 
-  element: function Element(props): JSX.Element {
-    const [page, setPage] = useState()
+  element: function Element(props: Props<State>): JSX.Element {
+    const { state, setState } = props
+
     return (
       <Flex dir='column' gap='xl' width='100%'>
-        <Paginator page={page} size={10} total={3000} {...props} onChange={setPage} />
+        <Paginator size={10} total={3000} onChange={(page): void => setState((s) => ({ ...s, page }))} {...state} />
       </Flex>
     )
   },
-}
+
+  controls: [
+    {
+      name: 'page',
+      input: 'input',
+      defaultValue: 1,
+      width: '200px',
+      type: 'number',
+    },
+  ],
+} satisfies Config<State>
