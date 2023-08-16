@@ -1,4 +1,4 @@
-.decision-Editor-ui-Canvas-w-Node {
+.decision-Editor-w-Canvas-w-Node {
   background-color: var(--canvasNode_bg);
   display: flex;
   width: 300px;
@@ -6,11 +6,11 @@
   overflow: hidden;
 }
 
-.decision-Editor-ui-Canvas-w-Node > .links {
+.decision-Editor-w-Canvas-w-Node > .links {
   width: 100%;
   display: flex;
 }
 
-.decision-Editor-ui-Canvas-w-Node > .toolbar {
+.decision-Editor-w-Canvas-w-Node > .toolbar {
   height: 2.75rem;
 }

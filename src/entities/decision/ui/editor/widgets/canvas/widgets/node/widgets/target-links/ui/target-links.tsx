@@ -9,7 +9,7 @@ import { useUpdate } from '~/utils/hooks'
 import { Joint, State } from '../../..'
 import { LinkListState } from '../../../../../../..'
 
-TargetLink.displayName = 'decision-Editor-ui-Canvas-w-Node-w-TargetLink'
+TargetLink.displayName = 'decision-Editor-w-Canvas-w-Node-w-TargetLink'
 
 export interface Props {
   className?: string

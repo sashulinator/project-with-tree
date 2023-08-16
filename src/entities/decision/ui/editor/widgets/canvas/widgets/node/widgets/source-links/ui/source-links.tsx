@@ -11,7 +11,7 @@ import { useUpdate } from '~/utils/hooks'
 import { Joint, State } from '../../..'
 import { LinkListState, LinkState } from '../../../../../../..'
 
-SourceLinks.displayName = 'decision-Editor-ui-Canvas-w-Node-w-SourceLinks'
+SourceLinks.displayName = 'decision-Editor-w-Canvas-w-Node-w-SourceLinks'
 
 export interface Props {
   className?: string
