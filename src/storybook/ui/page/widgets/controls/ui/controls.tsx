@@ -2,6 +2,7 @@ import { createElement } from 'react'
 
 import Select from '~/storybook/ui/select'
 import Checkbox from '~/ui/checkbox'
+import Input from '~/ui/input'
 import Labeled from '~/ui/labeled'
 import { Any, Key, SetterOrUpdater, c } from '~/utils/core'
 import { getPath, setPath } from '~/utils/dictionary'
@@ -50,6 +51,19 @@ function Control(props: ControlProps): JSX.Element {
 
         if (input === 'select') {
           return createElement(Select, {
+            ...controlProps,
+
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+            value: getPath(props.state, path || [name]),
+            placeholder: name,
+            onChange: (e) => {
+              props.setState((state) => setPath(path || [name], e.target.value, state))
+            },
+          })
+        }
+
+        if (input === 'input') {
+          return createElement(Input, {
             ...controlProps,
 
             // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
