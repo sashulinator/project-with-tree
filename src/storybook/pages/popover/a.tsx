@@ -1,15 +1,13 @@
 import { useState } from 'react'
 
-import Flex from '~/abstract/flex/ui/flex'
 import Popover, { PopoverProps } from '~/abstract/popover'
 import { Config, Props } from '~/storybook/types'
 import { H1 } from '~/ui/heading'
-import { setRefs } from '~/utils/react'
 
 interface State {
   sourcePosition: 'fixed' | 'absolute'
   points: PopoverProps['points']
-  portalSourceIntoTarget: boolean
+  portalSourceIntoContainer: boolean
   containerRelative: boolean
   containerOverflowHidden: boolean
   opened: boolean
@@ -31,33 +29,30 @@ export default {
 
   element: function Element(props: Props<State>): JSX.Element {
     const {
-      state: { portalSourceIntoTarget, containerRelative, containerOverflowHidden, ...popoverProps },
+      state: { portalSourceIntoContainer, containerRelative, containerOverflowHidden, ...popoverProps },
     } = props
 
-    const [ref, setRef] = useState<null | HTMLElement>()
+    const [containerRef, setContainerRef] = useState<null | HTMLElement>()
 
     return (
-      <div style={{ overflow: containerOverflowHidden ? 'hidden' : undefined }}>
-        <Flex dir='column' width='300px' height='100px' padding='5rem'>
-          <br />
-          container
-          <div
-            style={{
-              border: containerRelative ? '1px solid red' : '1px solid blue',
-              position: containerRelative ? 'relative' : undefined,
-              width: '2000px',
-              height: '2000px',
-            }}
+      <div style={{ width: '100%', height: '100%' }}>
+        <div
+          ref={setContainerRef}
+          style={{
+            overflow: containerOverflowHidden ? 'hidden' : undefined,
+            border: containerRelative ? '1px solid red' : '1px solid blue',
+            position: containerRelative ? 'relative' : undefined,
+            padding: '200px 0 0 500px',
+          }}
+        >
+          <Popover
+            content={<div style={{ width: '400px', height: '100px', background: 'red' }}>Source</div>}
+            containerElement={portalSourceIntoContainer ? containerRef : undefined}
+            {...popoverProps}
           >
-            <Popover
-              content={<div style={{ width: '400px', height: '100px', background: 'red' }}>Source</div>}
-              containerElement={portalSourceIntoTarget ? ref : undefined}
-              {...popoverProps}
-            >
-              <button ref={setRefs(setRef)}>Target</button>
-            </Popover>
-          </div>
-        </Flex>
+            <button>Target</button>
+          </Popover>
+        </div>
       </div>
     )
   },
@@ -68,10 +63,10 @@ export default {
       name: 'placement',
       input: 'select',
       options: ['bc', 'bl', 'br', 'tc', 'tl', 'tr', 'cc', 'cl', 'cr'],
-      defaultValue: 'tc',
+      defaultValue: 'cr',
       style: { width: '200px' },
     },
-    { name: 'portalSourceIntoTarget', input: 'checkbox', defaultValue: false },
+    { name: 'portalSourceIntoContainer', input: 'checkbox', defaultValue: false },
     { name: 'adjustX', path: ['overflow', 'adjustX'], input: 'checkbox', defaultValue: false },
     { name: 'adjustY', path: ['overflow', 'adjustY'], input: 'checkbox', defaultValue: false },
     { name: 'alwaysByViewport', path: ['overflow', 'alwaysByViewport'], input: 'checkbox', defaultValue: false },
