@@ -1,10 +1,13 @@
 import './flex.css'
 
+import { createElement } from 'react'
+
 import { c } from '~/utils/core'
 
 Flex.displayName = 'a-Flex'
 
-export interface FlexProps extends React.HTMLAttributes<HTMLDivElement> {
+export interface FlexProps extends React.HTMLAttributes<HTMLElement> {
+  as?: React.ElementType<React.HTMLAttributes<HTMLElement>>
   className?: string
   dir?: 'column' | 'row'
   mainAxis?: 'center' | 'start' | 'end' | 'space-between' | 'space-around' | 'space-evenly'
@@ -20,6 +23,7 @@ export interface FlexProps extends React.HTMLAttributes<HTMLDivElement> {
 
 export default function Flex(props: FlexProps): JSX.Element {
   const {
+    as = 'div',
     dir = 'row',
     gap,
     mainAxis = 'start',
@@ -30,30 +34,29 @@ export default function Flex(props: FlexProps): JSX.Element {
     width,
     height,
     style,
-    // eslint-disable-next-line prettier/prettier
-    ...divProps
+    ...restProps
   } = props
 
-  return (
-    <div
-      {...divProps}
-      className={c(
+  return createElement(
+    as,
+    {
+      ...restProps,
+      className: c(
         props.className,
         Flex.displayName,
         `--${dir}`,
         gap && `--${gap}`,
         `--mainAxis-${mainAxis}`,
         `--crossAxis-${crossAxis}`
-      )}
-      style={{
+      ),
+      style: {
         margin,
         padding,
         width,
         height,
         ...style,
-      }}
-    >
-      {children}
-    </div>
+      },
+    },
+    children
   )
 }
