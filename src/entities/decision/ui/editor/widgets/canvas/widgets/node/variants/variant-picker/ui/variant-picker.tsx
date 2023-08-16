@@ -4,7 +4,7 @@ import { GestureDragEvent } from '~/ui/canvas'
 import { Id } from '~/utils/core'
 
 import { EnterNode, FilterNode, State as NodeState, OfferNode } from '../../..'
-import { LinkListState, NodeListState } from '../../../../..'
+import { LinkListState, NodeListState } from '../../../../../../..'
 
 VariantPickerComponent.displayName = 'decision-Editor-w-Node-v-VariantPicker'
 

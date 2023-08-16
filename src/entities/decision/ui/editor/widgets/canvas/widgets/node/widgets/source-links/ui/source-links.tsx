@@ -9,7 +9,7 @@ import { Id, c } from '~/utils/core'
 import { useUpdate } from '~/utils/hooks'
 
 import { Joint, State } from '../../..'
-import { LinkListState, LinkState } from '../../../../../'
+import { LinkListState, LinkState } from '../../../../../../..'
 
 SourceLinks.displayName = 'decision-Editor-ui-Canvas-w-Node-w-SourceLinks'
 

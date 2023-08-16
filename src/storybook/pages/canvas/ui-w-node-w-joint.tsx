@@ -1,4 +1,4 @@
-import { Joint } from '~/entities/decision/ui/editor/widgets/node'
+import { Joint } from '~/entities/decision/ui/editor/widgets/canvas/widgets/node'
 import { Config, Props } from '~/storybook/types'
 import { H1 } from '~/ui/heading'
 import Labeled from '~/ui/labeled/ui/labeled'

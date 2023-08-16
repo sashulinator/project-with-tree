@@ -3,7 +3,7 @@ import { DndProvider } from 'react-dnd'
 import { HTML5Backend } from 'react-dnd-html5-backend'
 
 import { LinkListState, NodeListState } from '~/entities/decision/ui/editor'
-import { FilterNode } from '~/entities/decision/ui/editor/widgets/node'
+import { FilterNode } from '~/entities/decision/ui/editor/widgets/canvas/widgets/node'
 import { Point } from '~/entities/point'
 import { Config, Props } from '~/storybook/types'
 import { H1 } from '~/ui/heading'

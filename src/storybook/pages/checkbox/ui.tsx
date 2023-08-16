@@ -1,5 +1,5 @@
 import Flex from '~/abstract/flex/ui/flex'
-import { Joint } from '~/entities/decision/ui/editor/widgets/node'
+import { Joint } from '~/entities/decision/ui/editor/widgets/canvas/widgets/node'
 import { Config, Props } from '~/storybook/types'
 import Checkbox from '~/ui/checkbox'
 import { H1 } from '~/ui/heading'

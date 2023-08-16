@@ -32,8 +32,29 @@ export type { LeftPanelProps } from './widgets/left-panel'
 export { default as RightPanel } from './widgets/right-panel'
 export type { RightPanelProps } from './widgets/right-panel'
 
-export { default as Canvas, State as CanvasState } from './widgets/canvas'
-export type { CanvasProps } from './widgets/canvas'
+export {
+  default as Canvas,
+  State as CanvasState,
+  Node,
+  NodeList,
+  NodeState,
+  NodeListState,
+  NodeJoint,
+  NodeVariantPicker,
+  getNodeMovement,
+  NODE_GAP,
+  COLUMN_GAP,
+  getColumnX,
+} from './widgets/canvas'
+export type {
+  CanvasProps,
+  NodeListProps,
+  NodeProps,
+  NodeStateProps,
+  NodeEvents,
+  NodeJointProps,
+  NodeVariantPickerProps,
+} from './widgets/canvas'
 
 export { default as Link, List as LinkList, State as LinkState, ListState as LinkListState } from './widgets/link'
 export type {
@@ -42,24 +63,3 @@ export type {
   StateProps as LinkStateProps,
   Events as LinkEvents,
 } from './widgets/link'
-
-export {
-  default as Node,
-  List as NodeList,
-  State as NodeState,
-  ListState as NodeListState,
-  Joint as NodeJoint,
-  VariantPicker as NodeVariantPicker,
-  getMovement as getNodeMovement,
-  NODE_GAP,
-  COLUMN_GAP,
-  getColumnX,
-} from './widgets/node'
-export type {
-  ListProps as NodeListProps,
-  NodeProps,
-  StateProps as NodeStateProps,
-  ListEvents as NodeEvents,
-  JointProps as NodeJointProps,
-  VariantPickerProps as NodeVariantPickerProps,
-} from './widgets/node'

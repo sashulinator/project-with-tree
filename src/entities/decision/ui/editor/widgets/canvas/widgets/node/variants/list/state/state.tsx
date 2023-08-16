@@ -5,7 +5,7 @@ import { getStyle } from '~/utils/dom'
 import { DictionaryEvents, EmitterDictionary } from '~/utils/emitter'
 
 import { NODE_GAP } from '../../..'
-import { NodeState } from '../../../../..'
+import { NodeState } from '../../../../../../..'
 
 export type Events = DictionaryEvents<NodeState> & {
   // Уникальные события
