@@ -1,9 +1,10 @@
 // import Callout, { top } from '~/ui/callout'
 import { forwardRef } from 'react'
 
+import Callout, { ContentProp } from '~/abstract/callout'
 import Balloon, { BalloonProps } from '~/ui/balloon'
-import Callout, { ContentProp } from '~/ui/callout'
 import { useBoolean } from '~/utils/hooks'
+import { setRefs } from '~/utils/react'
 
 export default function CalloutPage(): JSX.Element {
   const [isDefaultOpen, , , toggleDefault] = useBoolean(false)
@@ -40,12 +41,12 @@ export default function CalloutPage(): JSX.Element {
   )
 }
 
-const BalloonWrapper = forwardRef<HTMLDivElement, ContentProp & BalloonProps>(function BubbleWrapper(
+const BalloonWrapper = forwardRef<HTMLElement, ContentProp & BalloonProps>(function BubbleWrapper(
   props: ContentProp & BalloonProps,
   ref
 ) {
   return (
-    <div ref={ref}>
+    <div ref={setRefs(ref)}>
       <Balloon {...props} />
     </div>
   )
