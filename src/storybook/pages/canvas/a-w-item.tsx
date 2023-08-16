@@ -10,7 +10,7 @@ interface State {
 export default {
   getName: (): string => Item.displayName || '',
 
-  getPath: (): string => `/canvas-w-item`,
+  getPath: (): string => `/${Item.displayName?.toLowerCase() || ''}`,
 
   getDescription: (): JSX.Element | string => {
     return 'Размер `foreignObject` подстраивается под размер детей'
