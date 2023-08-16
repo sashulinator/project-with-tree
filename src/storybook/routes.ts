@@ -1,5 +1,5 @@
 import aAlign from './pages/align/a'
-import uiCallout from './pages/callout/ui'
+import aCallout from './pages/callout/a'
 import aCanvasWItem from './pages/canvas/a-w-item'
 import decisionCanvasWNode from './pages/canvas/decision-w-node'
 import decisionCanvasWNodeVFilter from './pages/canvas/decision-w-node-v-filter'
@@ -12,7 +12,7 @@ import uiTolltip from './pages/tooltip/ui'
 
 export const routes = [
   ['Align', aAlign],
-  ['Callout', uiCallout],
+  ['Callout', aCallout],
   ['Canvas', aCanvasWItem, decisionCanvasWNode, decisionCanvasWNodeWJoint, decisionCanvasWNodeVFilter],
   ['Checkbox', uiCheckbox],
   ['Labeled', uiLabeled],

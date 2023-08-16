@@ -15,5 +15,5 @@ Link.displayName = 'ui-Link'
 export type { LinkProps }
 
 export default function Link(props: LinkProps): JSX.Element {
-  return <RRDLink className={clsx(Link.displayName)} {...props} />
+  return <RRDLink {...props} className={clsx(Link.displayName)} />
 }

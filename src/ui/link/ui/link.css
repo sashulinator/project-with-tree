@@ -1,9 +1,6 @@
 .ui-Link {
   color: var(--link_color);
   text-decoration: none;
-  display: flex;
-  justify-content: start;
-  align-items: center;
 }
 
 .ui-Link:hover {

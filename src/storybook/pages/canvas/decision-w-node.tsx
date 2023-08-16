@@ -24,8 +24,6 @@ interface State {}
 export default {
   getName: (): string => Node.displayName || '',
 
-  getPath: (): string => `/${Node.displayName.toLowerCase()}`,
-
   getDescription: function Description(): JSX.Element {
     return (
       <>
