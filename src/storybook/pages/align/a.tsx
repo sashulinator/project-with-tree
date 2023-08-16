@@ -32,8 +32,6 @@ export default {
     const [ref, setRef] = useState<null | HTMLElement>()
     const [containerRef, setContainerRef] = useState<null | HTMLElement>()
 
-    console.log('alignProps', compProps)
-
     return (
       <div style={{ overflow: 'hidden', width: '100%', height: '100%' }} ref={setContainerRef}>
         <div
