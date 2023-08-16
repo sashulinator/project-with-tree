@@ -10,6 +10,7 @@ InputComponent.displayName = 'ui-Input'
 
 export type InputProps = React.InputHTMLAttributes<HTMLInputElement> & {
   height?: 'm' | 's' | 'l'
+  width?: string
   left?: React.ReactNode
   right?: React.ReactNode
   isError?: boolean
@@ -18,7 +19,7 @@ export type InputProps = React.InputHTMLAttributes<HTMLInputElement> & {
 }
 
 function InputComponent(props: InputProps, ref: ForwardedRef<HTMLInputElement>): JSX.Element {
-  const { left, right, className, fieldProps, height = 'm', transparent, isError, ...inputProps } = props
+  const { left, right, className, fieldProps, height = 'm', transparent, width, isError, ...inputProps } = props
 
   return (
     <AbstractInput
@@ -34,6 +35,7 @@ function InputComponent(props: InputProps, ref: ForwardedRef<HTMLInputElement>):
         hidden: inputProps.hidden,
         transparent,
         ...fieldProps,
+        style: { width, ...props.fieldProps?.style },
         className: c(fieldProps?.className, className, InputComponent.displayName),
       }}
     />
