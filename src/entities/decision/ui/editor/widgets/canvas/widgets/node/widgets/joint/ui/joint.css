@@ -1,4 +1,4 @@
-.decision-Editor-ui-Canvas-w-Node-w-Joint {
+.decision-Editor-w-Canvas-w-Node-w-Joint {
   border: 0;
   margin: 0;
   padding: 0.2rem;
@@ -10,7 +10,7 @@
   background: transparent;
 }
 
-.decision-Editor-ui-Canvas-w-Node-w-Joint div {
+.decision-Editor-w-Canvas-w-Node-w-Joint div {
   width: 100%;
   height: 100%;
   border-radius: 50%;
@@ -20,30 +20,30 @@
 
 /* Variants */
 
-.decision-Editor-ui-Canvas-w-Node-w-Joint.--unlinked {
+.decision-Editor-w-Canvas-w-Node-w-Joint.--unlinked {
   background-color: var(--point_nodeJoint_outline__unlinked);
 }
 
-.decision-Editor-ui-Canvas-w-Node-w-Joint.--linked:hover {
+.decision-Editor-w-Canvas-w-Node-w-Joint.--linked:hover {
   background-color: var(--point_nodeJoint_outline__linked);
 }
 
-.decision-Editor-ui-Canvas-w-Node-w-Joint.--new:hover {
+.decision-Editor-w-Canvas-w-Node-w-Joint.--new:hover {
   background-color: var(--point_nodeJoint_outline__new);
 }
 
-.decision-Editor-ui-Canvas-w-Node-w-Joint.--unlinked div {
+.decision-Editor-w-Canvas-w-Node-w-Joint.--unlinked div {
   background-color: var(--point_nodeJoint_bg__unlinked);
 }
 
-.decision-Editor-ui-Canvas-w-Node-w-Joint.--linked div {
+.decision-Editor-w-Canvas-w-Node-w-Joint.--linked div {
   background-color: var(--point_nodeJoint_bg__linked);
 }
 
-.decision-Editor-ui-Canvas-w-Node-w-Joint.--new div {
+.decision-Editor-w-Canvas-w-Node-w-Joint.--new div {
   background-color: var(--point_nodeJoint_bg__new);
 }
 
-.decision-Editor-ui-Canvas-w-Node-w-Joint.--disabled {
+.decision-Editor-w-Canvas-w-Node-w-Joint.--disabled {
   opacity: 0.5;
 }
