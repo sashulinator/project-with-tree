@@ -1,14 +1,15 @@
 import './target-links.css'
 
+import { useState } from 'react'
 import uniqid from 'uniqid'
 
-import { LinkListState } from '../../../../../'
-import { Joint, State } from '../../..'
-import { useUpdate } from '~/utils/hooks'
-import { useState } from 'react'
 import { Id, c } from '~/utils/core'
+import { useUpdate } from '~/utils/hooks'
 
-TargetLink.displayName = 'decisionEditor-ui-Canvas-w-Node-w-TargetLink'
+import { Joint, State } from '../../..'
+import { LinkListState } from '../../../../../'
+
+TargetLink.displayName = 'decision-Editor-ui-Canvas-w-Node-w-TargetLink'
 
 export interface Props {
   className?: string

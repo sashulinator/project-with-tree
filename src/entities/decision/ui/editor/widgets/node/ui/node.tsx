@@ -15,7 +15,7 @@ import { light } from '../themes/light'
 
 emitter.emit('addTheme', { dark, light })
 
-Node.displayName = 'decisionEditor-ui-Canvas-w-Node'
+Node.displayName = 'decision-Editor-ui-Canvas-w-Node'
 
 export interface NodeProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'children' | 'title'> {
   state: NodeState

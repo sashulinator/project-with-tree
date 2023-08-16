@@ -1,4 +1,4 @@
-.decisionEditor-ui-Canvas-w-Node-w-SourceLinks {
+.decision-Editor-ui-Canvas-w-Node-w-SourceLinks {
   display: flex;
   flex-direction: column;
   width: 100%;
@@ -7,7 +7,7 @@
   gap: var(--m);
 }
 
-.decisionEditor-ui-Canvas-w-Node-w-SourceLinks > .rule {
+.decision-Editor-ui-Canvas-w-Node-w-SourceLinks > .rule {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -15,7 +15,7 @@
   padding-left: var(--m);
 }
 
-.decisionEditor-ui-Canvas-w-Node-w-SourceLinks > .rule:hover {
+.decision-Editor-ui-Canvas-w-Node-w-SourceLinks > .rule:hover {
   background-color: var(--field_bg__hover);
   border-radius: 1rem;
 }
