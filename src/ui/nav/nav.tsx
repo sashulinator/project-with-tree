@@ -19,13 +19,10 @@ export default function Nav(): JSX.Element {
         {isDev() && (
           <>
             <ol>
-              <Link to={routes.storybook.getURL()}>Storybook</Link>
+              <Link to={routes.story.getURL()}>Storybook</Link>
             </ol>
             <ol>
-              <Link to={routes.storybookNew.getURL()}>New Storybook</Link>
-            </ol>
-            <ol>
-              <Link to={routes.story.getURL()}>Story</Link>
+              <Link to={routes.storybook.getURL()}>Depricated Storybook</Link>
             </ol>
           </>
         )}
