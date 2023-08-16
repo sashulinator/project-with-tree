@@ -1,5 +1,6 @@
 import Flex from '~/abstract/flex/ui/flex'
 import { Config, Props } from '~/storybook/types'
+import { H1 } from '~/ui/heading'
 import Input from '~/ui/input'
 import Labeled from '~/ui/labeled'
 
@@ -9,11 +10,18 @@ interface State {
 }
 
 export default {
-  getDescription: (): JSX.Element | string => 'Описание',
-
   getName: (): string => Labeled.displayName,
 
   getPath: (): string => `/labeled`,
+
+  getDescription: function Description(): JSX.Element {
+    return (
+      <>
+        <H1>{Labeled.displayName}</H1>
+        Добавьте описание
+      </>
+    )
+  },
 
   element: function Element(props: Props<State>): JSX.Element {
     const { state } = props

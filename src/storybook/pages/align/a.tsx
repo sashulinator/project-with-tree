@@ -3,6 +3,7 @@ import { useState } from 'react'
 import Align, { AlignProps } from '~/abstract/align'
 import Flex from '~/abstract/flex/ui/flex'
 import { Config, Props } from '~/storybook/types'
+import { H1 } from '~/ui/heading'
 import { setRefs } from '~/utils/react'
 
 interface State {
@@ -21,7 +22,14 @@ export default {
 
   getPath: (): string => `/align`,
 
-  getDescription: (): JSX.Element | string => 'Описание',
+  getDescription: function Description(): JSX.Element {
+    return (
+      <>
+        <H1>{Align.displayName}</H1>
+        Добавьте описание
+      </>
+    )
+  },
 
   element: function Element(props: Props<State>): JSX.Element {
     const {

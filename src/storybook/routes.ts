@@ -10,11 +10,11 @@ import aPopover from './pages/popover/a'
 import uiTolltip from './pages/tooltip/ui'
 
 export const routes = [
+  ['Align', aAlign],
+  ['Canvas', aCanvasWItem, decisionCanvasWNode, decisionCanvasWNodeWJoint, decisionCanvasWNodeVFilter],
   ['Checkbox', uiCheckbox],
   ['Labeled', uiLabeled],
-  ['Align', aAlign],
+  ['Paginator', uiPaginator],
   ['Popover', aPopover],
   ['Tooltip', uiTolltip],
-  ['Paginator', uiPaginator],
-  ['Canvas', aCanvasWItem, decisionCanvasWNodeWJoint, decisionCanvasWNode, decisionCanvasWNodeVFilter],
 ] as const
