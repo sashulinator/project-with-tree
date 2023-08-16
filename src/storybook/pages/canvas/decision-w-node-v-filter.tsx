@@ -6,6 +6,7 @@ import { LinkListState, NodeListState } from '~/entities/decision/ui/editor'
 import { FilterNode } from '~/entities/decision/ui/editor/widgets/node'
 import { Point } from '~/entities/point'
 import { Config, Props } from '~/storybook/types'
+import { H1 } from '~/ui/heading'
 
 const point1: Point = {
   id: 'id1',
@@ -32,8 +33,13 @@ export default {
 
   getPath: (): string => `/${FilterNode.displayName.toLowerCase()}`,
 
-  getDescription: (): JSX.Element | string => {
-    return 'Описание'
+  getDescription: function Description(): JSX.Element {
+    return (
+      <>
+        <H1>{FilterNode.displayName}</H1>
+        Добавьте описание
+      </>
+    )
   },
 
   element: function Element(props: Props<State>): JSX.Element {
@@ -53,7 +59,7 @@ export default {
     )
 
     return (
-      <svg width='100%' height='333px' style={{ border: '1px solid red' }}>
+      <svg width='100%' height='100%' style={{ border: '1px solid red' }}>
         <DndProvider backend={HTML5Backend}>
           {states.values().map((state) => {
             return (
