@@ -6,7 +6,7 @@ import { useUpdate } from '~/utils/hooks'
 
 import { State } from '../../..'
 
-Title.displayName = 'decision-Editor-ui-Canvas-w-Node-w-Title'
+Title.displayName = 'decision-Editor-w-Canvas-w-Node-w-Title'
 
 export interface Props {
   className?: string
