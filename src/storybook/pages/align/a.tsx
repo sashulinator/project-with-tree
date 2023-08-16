@@ -38,6 +38,7 @@ export default {
       <div style={{ overflow: 'hidden', width: '100%', height: '100%' }} ref={setContainerRef}>
         <div
           style={{
+            padding: '200px 0 0 500px',
             border: containerRelative ? '1px solid red' : '1px solid blue',
             position: containerRelative ? 'relative' : undefined,
           }}
