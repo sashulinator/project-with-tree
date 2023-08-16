@@ -4,7 +4,7 @@ import { Props } from './props'
 export interface Config<State> {
   getName: () => string
 
-  getPath: () => string
+  getPath?: () => string
 
   getDescription: () => JSX.Element | string
 

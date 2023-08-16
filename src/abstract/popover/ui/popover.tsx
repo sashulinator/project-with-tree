@@ -1,4 +1,3 @@
-import { Offset, Point, Points, alignElement } from 'dom-align-ts'
 import * as React from 'react'
 
 import { toPoints } from '..'
@@ -11,7 +10,7 @@ import { useEventListener, useOnClickOutside } from '../../../utils/hooks'
 import { assertValidElement, setRefs } from '../../../utils/react'
 import type { ReactElementWithRef } from '../../../utils/react'
 // https://github.com/sashulinator/a-align
-import Align, { Overflow } from '../../align'
+import Align, { Offset, Overflow, Point, Points, onAligned } from '../../align'
 
 Popover.displayName = 'a-Popover'
 
@@ -82,7 +81,7 @@ export interface Props {
   /**
    *  An optional function to be called after the child element is positioned.
    */
-  onAligned?: ((ret: ReturnType<typeof alignElement>) => void) | undefined
+  onAligned?: onAligned | undefined
 }
 
 /**

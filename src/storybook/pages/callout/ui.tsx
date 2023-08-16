@@ -1,26 +1,25 @@
-import { useState } from 'react'
+import { forwardRef, useState } from 'react'
 
-import Popover, { PopoverProps } from '~/abstract/popover'
+import Callout, { Point } from '~/abstract/callout'
 import { Config, Props } from '~/storybook/types'
 import { H1 } from '~/ui/heading'
+import { setRefs } from '~/utils/react'
 
 interface State {
+  opened: boolean
   sourcePosition: 'fixed' | 'absolute'
-  points: PopoverProps['points']
+  placement: Point
   portalSourceIntoContainer: boolean
   containerRelative: boolean
-  opened: boolean
 }
 
 export default {
-  getName: (): string => Popover.displayName,
-
-  getPath: (): string => `/popover`,
+  getName: (): string => Callout.displayName,
 
   getDescription: function Description(): JSX.Element {
     return (
       <>
-        <H1>{Popover.displayName}</H1>
+        <H1>{Callout.displayName}</H1>
         Добавьте описание
       </>
     )
@@ -28,9 +27,8 @@ export default {
 
   element: function Element(props: Props<State>): JSX.Element {
     const {
-      state: { portalSourceIntoContainer, containerRelative, ...popoverProps },
+      state: { portalSourceIntoContainer, containerRelative, ...compProps },
     } = props
-
     const [containerRef, setContainerRef] = useState<null | HTMLElement>()
 
     return (
@@ -44,13 +42,27 @@ export default {
             padding: '200px 0 0 500px',
           }}
         >
-          <Popover
-            content={<div style={{ width: '400px', height: '100px', background: 'red' }}>Source</div>}
+          <Callout
+            {...compProps}
+            contentProps={{}}
             containerElement={portalSourceIntoContainer ? containerRef : undefined}
-            {...popoverProps}
+            renderContent={forwardRef(function Element(props, ref): JSX.Element {
+              return (
+                <div
+                  ref={setRefs(ref)}
+                  style={{
+                    background: 'red',
+                    width: '200px',
+                    height: '100px',
+                  }}
+                >
+                  Placement: {props.placement}
+                </div>
+              )
+            })}
           >
             <button>Target</button>
-          </Popover>
+          </Callout>
         </div>
       </div>
     )

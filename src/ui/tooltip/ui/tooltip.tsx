@@ -3,11 +3,12 @@ import './tooltip.css'
 import { Point } from 'dom-align-ts'
 import React, { useState } from 'react'
 
+import Callout from '~/abstract/callout'
 import { PopoverProps } from '~/abstract/popover'
 import Balloon, { BalloonProps } from '~/ui/balloon'
-import Callout from '~/ui/callout'
 import { fns } from '~/utils/function'
 import { useDebounceCallback } from '~/utils/hooks'
+import { setRefs } from '~/utils/react'
 
 Tooltip.displayName = 'ui-Tooltip'
 
@@ -57,9 +58,9 @@ export default function Tooltip(props: Props): JSX.Element {
 
 type BaloonWrapperProps = Omit<BalloonProps, 'children'> & { children: React.ReactNode }
 
-const BaloonWrapper = React.forwardRef<HTMLDivElement, BaloonWrapperProps>(function BubbleWrapper(props, ref) {
+const BaloonWrapper = React.forwardRef<HTMLElement, BaloonWrapperProps>(function BubbleWrapper(props, ref) {
   return (
-    <div className='mirion-tooltip' ref={ref}>
+    <div className='mirion-tooltip' ref={setRefs(ref)}>
       <Balloon placement={props.placement || 'tc'}>
         <div className='mirion-tooltip__content'>{props.children}</div>
       </Balloon>

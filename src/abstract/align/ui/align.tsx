@@ -16,6 +16,8 @@ import { _align } from '../_private'
 
 Align.displayName = 'a-Align'
 
+export type onAligned = (ret: ReturnType<typeof alignElement>) => void
+
 /**
  * Configuration options for handling positioning when the content overflows the container.
  */
@@ -110,7 +112,7 @@ export interface Props extends Config {
   /**
    *  An optional function to be called after the child element is positioned.
    */
-  onAligned?: ((ret: ReturnType<typeof alignElement>) => void) | undefined
+  onAligned?: onAligned | undefined
 }
 
 /**
