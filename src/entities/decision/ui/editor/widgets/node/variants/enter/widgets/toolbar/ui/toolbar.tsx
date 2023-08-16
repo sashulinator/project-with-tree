@@ -5,7 +5,7 @@ import { useUpdate } from '~/utils/hooks'
 
 import { State } from '../../../../..'
 
-Toolbar.displayName = 'decisionEditor-ui-Canvas-w-Node-v-Enter-w-Toolbar'
+Toolbar.displayName = 'decision-Editor-ui-Canvas-w-Node-v-Enter-w-Toolbar'
 
 export interface Props {
   className?: string

@@ -6,7 +6,7 @@ import { useUpdate } from '~/utils/hooks'
 import { Toolbar } from '..'
 import Node, { SourceLinks, TargetLinks, Title, VariantPickerProps } from '../../..'
 
-Filter.displayName = 'decision-Canvas-w-Node-v-Filter'
+Filter.displayName = 'decision-Editor-ui-Canvas-w-Node-v-Filter'
 
 /**
  * Node вариант filter

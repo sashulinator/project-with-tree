@@ -1,17 +1,17 @@
-.decisionEditor-ui-Canvas-w-Node-v-Filter-w-Toolbar {
+.decision-Editor-ui-Canvas-w-Node-v-Filter-w-Toolbar {
   display: flex;
   justify-content: space-between;
 }
 
-.decisionEditor-ui-Canvas-w-Node-v-Filter-w-Toolbar .selection {
+.decision-Editor-ui-Canvas-w-Node-v-Filter-w-Toolbar .selection {
   margin-left: var(--l);
 }
-.decisionEditor-ui-Canvas-w-Node-v-Filter-w-Toolbar .a-Button {
+.decision-Editor-ui-Canvas-w-Node-v-Filter-w-Toolbar .a-Button {
   border-top-left-radius: 0;
   border-top-right-radius: 0;
 }
 
-.decisionEditor-ui-Canvas-w-Node-v-Filter-w-Toolbar .a-Button:last-child {
+.decision-Editor-ui-Canvas-w-Node-v-Filter-w-Toolbar .a-Button:last-child {
   border-top-left-radius: 0;
   border-bottom-right-radius: 0;
 }

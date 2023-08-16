@@ -1,17 +1,17 @@
 import './source-links.css'
 
+import type { Identifier, XYCoord } from 'dnd-core'
 import { useRef, useState } from 'react'
 import { useDrag, useDrop } from 'react-dnd'
-import type { Identifier, XYCoord } from 'dnd-core'
 import uniqid from 'uniqid'
 
 import { Id, c } from '~/utils/core'
 import { useUpdate } from '~/utils/hooks'
 
-import { LinkState, LinkListState } from '../../../../../'
-import { State, Joint } from '../../..'
+import { Joint, State } from '../../..'
+import { LinkListState, LinkState } from '../../../../../'
 
-SourceLinks.displayName = 'decisionEditor-ui-Canvas-w-Node-w-SourceLinks'
+SourceLinks.displayName = 'decision-Editor-ui-Canvas-w-Node-w-SourceLinks'
 
 export interface Props {
   className?: string
