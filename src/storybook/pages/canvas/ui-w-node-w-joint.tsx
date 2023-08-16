@@ -19,16 +19,17 @@ export default {
   },
 
   element: function Element(props: Props<State>): JSX.Element {
+    const { state } = props
     return (
       <>
         <Labeled label='new'>
-          <Joint linkId='test' variant='new' {...props} />
+          <Joint linkId='test' variant='new' {...state} />
         </Labeled>
         <Labeled label='linked'>
-          <Joint linkId='test' variant='linked' {...props} />
+          <Joint linkId='test' variant='linked' {...state} />
         </Labeled>
         <Labeled label='unlinked'>
-          <Joint linkId='test' variant='unlinked' {...props} />
+          <Joint linkId='test' variant='unlinked' {...state} />
         </Labeled>
       </>
     )

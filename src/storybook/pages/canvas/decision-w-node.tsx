@@ -8,6 +8,7 @@ import { GhostButton } from '~/ui/button'
 import { H1 } from '~/ui/heading'
 import { Trash } from '~/ui/icon'
 import Input from '~/ui/input'
+import { emptyFn } from '~/utils/function/empty-fn'
 
 const point1: Point = {
   id: 'id1',
@@ -34,15 +35,16 @@ export default {
   },
 
   element: function Element(props: Props<State>): JSX.Element {
-    const state = useMemo(() => new NodeState(point1), [])
+    const nodeState = useMemo(() => new NodeState(point1), [])
     const listState = new NodeListState([point1])
+    const { state } = props
 
     return (
       <svg width='100%' height='100%' style={{ border: '1px solid red' }}>
         <Node
-          {...props}
+          {...state}
           listState={listState}
-          state={state}
+          state={nodeState}
           toolbar={
             <div style={{ display: 'flex', justifyContent: 'end', padding: 'var(--s)' }}>
               <GhostButton height='s' style={{ padding: 'var(--l)' }}>
@@ -53,7 +55,7 @@ export default {
               </GhostButton>
             </div>
           }
-          title={<Input height='l' value='title' />}
+          title={<Input height='l' value='title' onChange={emptyFn} />}
           targetLinks={
             <Flex style={{ border: '1px solid blue' }} gap='xxl' dir='column' padding='var(--xxl) .2rem'>
               <NodeJoint variant='linked' linkId='test1' />
@@ -78,9 +80,9 @@ export default {
             </Flex>
           }
           onGestureDrug={(event): void => {
-            const x = state.position.start.x + event.movement[0]
-            const y = state.position.start.y + event.movement[1]
-            state.position.move({ x, y }, event)
+            const x = nodeState.position.start.x + event.movement[0]
+            const y = nodeState.position.start.y + event.movement[1]
+            nodeState.position.move({ x, y }, event)
           }}
           style={{ border: '1px solid red', width: '300px' }}
         />

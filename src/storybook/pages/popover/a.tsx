@@ -1,11 +1,9 @@
 import { useState } from 'react'
 
 import Popover, { PopoverProps } from '~/abstract/popover'
-import { configToPath } from '~/storybook/lib'
 import { Config, Props } from '~/storybook/types'
 import ConfigLink from '~/storybook/ui/config-link/ui/config-link'
 import { H1 } from '~/ui/heading'
-import Link from '~/ui/link'
 
 import aAlign from '../align/a'
 
