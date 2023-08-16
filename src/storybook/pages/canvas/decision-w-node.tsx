@@ -5,6 +5,7 @@ import { Node, NodeJoint, NodeListState, NodeState } from '~/entities/decision/u
 import { Point } from '~/entities/point'
 import { Config, Props } from '~/storybook/types'
 import { GhostButton } from '~/ui/button'
+import { H1 } from '~/ui/heading'
 import { Trash } from '~/ui/icon'
 import Input from '~/ui/input'
 
@@ -25,8 +26,13 @@ export default {
 
   getPath: (): string => `/${Node.displayName.toLowerCase()}`,
 
-  getDescription: (): JSX.Element | string => {
-    return 'Описание'
+  getDescription: function Description(): JSX.Element {
+    return (
+      <>
+        <H1>{Node.displayName}</H1>
+        Добавьте описание
+      </>
+    )
   },
 
   element: function Element(props: Props<State>): JSX.Element {
@@ -34,7 +40,7 @@ export default {
     const listState = new NodeListState([point1])
 
     return (
-      <svg width='100%' height='333px' style={{ border: '1px solid red' }}>
+      <svg width='100%' height='100%' style={{ border: '1px solid red' }}>
         <Node
           {...props}
           listState={listState}

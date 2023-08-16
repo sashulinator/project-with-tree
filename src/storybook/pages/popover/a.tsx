@@ -3,6 +3,7 @@ import { useState } from 'react'
 import Flex from '~/abstract/flex/ui/flex'
 import Popover, { PopoverProps } from '~/abstract/popover'
 import { Config, Props } from '~/storybook/types'
+import { H1 } from '~/ui/heading'
 import { setRefs } from '~/utils/react'
 
 interface State {
@@ -19,7 +20,14 @@ export default {
 
   getPath: (): string => `/popover`,
 
-  getDescription: (): JSX.Element | string => 'Описание',
+  getDescription: function Description(): JSX.Element {
+    return (
+      <>
+        <H1>{Popover.displayName}</H1>
+        Добавьте описание
+      </>
+    )
+  },
 
   element: function Element(props: Props<State>): JSX.Element {
     const {

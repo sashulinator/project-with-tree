@@ -1,5 +1,6 @@
 import Flex from '~/abstract/flex/ui/flex'
 import { Config, Props } from '~/storybook/types'
+import { H1 } from '~/ui/heading'
 import Paginator from '~/ui/paginator'
 
 interface State {
@@ -11,7 +12,14 @@ export default {
 
   getPath: (): string => `/paginator`,
 
-  getDescription: (): JSX.Element | string => 'Описание',
+  getDescription: function Description(): JSX.Element {
+    return (
+      <>
+        <H1>{Paginator.displayName}</H1>
+        Добавьте описание
+      </>
+    )
+  },
 
   element: function Element(props: Props<State>): JSX.Element {
     const { state, setState } = props

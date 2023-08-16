@@ -1,5 +1,6 @@
 import { Item } from '~/abstract/canvas'
 import { Config, Props } from '~/storybook/types'
+import { H1 } from '~/ui/heading'
 
 interface State {
   contentAdded: boolean
@@ -12,8 +13,13 @@ export default {
 
   getPath: (): string => `/${Item.displayName?.toLowerCase() || ''}`,
 
-  getDescription: (): JSX.Element | string => {
-    return 'Размер `foreignObject` подстраивается под размер детей'
+  getDescription: function Description(): JSX.Element {
+    return (
+      <>
+        <H1>{Item.displayName}</H1>
+        Размер `foreignObject` подстраивается под размер детей
+      </>
+    )
   },
 
   element: function Element(props: Props<State>): JSX.Element {
@@ -22,7 +28,7 @@ export default {
     } = props
 
     return (
-      <svg width='100%' height='333px' style={{ border: '1px solid red' }}>
+      <svg width='100%' height='100%' style={{ border: '1px solid red' }}>
         <Item dataId={'test'} {...compProps}>
           <div style={{ border: '1px solid blue' }}>
             Hello{' '}

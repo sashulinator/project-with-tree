@@ -1,5 +1,6 @@
 import Flex from '~/abstract/flex/ui/flex'
 import { Config, Props } from '~/storybook/types'
+import { H1 } from '~/ui/heading'
 import Tooltip, { TooltipProps } from '~/ui/tooltip'
 
 interface State {
@@ -12,7 +13,14 @@ export default {
 
   getPath: (): string => `/tooltip`,
 
-  getDescription: (): JSX.Element | string => 'Описание',
+  getDescription: function Description(): JSX.Element {
+    return (
+      <>
+        <H1>{Tooltip.displayName}</H1>
+        Добавьте описание
+      </>
+    )
+  },
 
   element: function Element(props: Props<State>): JSX.Element {
     return (

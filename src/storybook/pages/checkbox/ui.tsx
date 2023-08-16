@@ -1,6 +1,8 @@
 import Flex from '~/abstract/flex/ui/flex'
+import { Joint } from '~/entities/decision/ui/editor/widgets/node'
 import { Config, Props } from '~/storybook/types'
 import Checkbox from '~/ui/checkbox'
+import { H1 } from '~/ui/heading'
 import Labeled from '~/ui/labeled/ui/labeled'
 import { emptyFn } from '~/utils/function/empty-fn'
 
@@ -13,7 +15,14 @@ export default {
 
   getPath: (): string => `/checkbox`,
 
-  getDescription: (): JSX.Element | string => 'Описание',
+  getDescription: function Description(): JSX.Element {
+    return (
+      <>
+        <H1>{Checkbox.displayName}</H1>
+        Добавьте описание
+      </>
+    )
+  },
 
   element: function Element(props: Props<State>): JSX.Element {
     const { state } = props
