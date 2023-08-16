@@ -1,12 +1,28 @@
 import Flex from '~/abstract/flex/ui/flex'
-import Tooltip from '~/ui/tooltip'
+import { Config, Props } from '~/storybook/types'
+import Tooltip, { TooltipProps } from '~/ui/tooltip'
+
+interface State {
+  delay: number
+  points: TooltipProps['placement']
+}
 
 export default {
-  description: (): JSX.Element | string => 'Описание',
-
   getName: (): string => Tooltip.displayName,
 
   getPath: (): string => `/tooltip`,
+
+  getDescription: (): JSX.Element | string => 'Описание',
+
+  element: function Element(props: Props<State>): JSX.Element {
+    return (
+      <Flex dir='column' gap='xl' width='100%'>
+        <Tooltip content={'World'} {...props}>
+          <button>Hello</button>
+        </Tooltip>
+      </Flex>
+    )
+  },
 
   controls: [
     {
@@ -24,14 +40,4 @@ export default {
       type: 'number',
     },
   ],
-
-  element: function Element(props): JSX.Element {
-    return (
-      <Flex dir='column' gap='xl' width='100%'>
-        <Tooltip content={'World'} placeholder='placeholder' {...props}>
-          <button>Hello</button>
-        </Tooltip>
-      </Flex>
-    )
-  },
-}
+} satisfies Config<State>

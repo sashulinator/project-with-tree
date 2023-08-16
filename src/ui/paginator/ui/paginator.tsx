@@ -13,8 +13,6 @@ export default function Paginator(props: PaginationProps): JSX.Element {
   const total = parseNum(props.total)
   const size = parseNum(props.size)
 
-  console.log(total, size)
-
   const totalPages = Math.ceil(total / size)
 
   return (

@@ -1,4 +1,5 @@
 import aAlign from './pages/align/a'
+import aCanvasWItem from './pages/canvas/a-w-item'
 import uiCheckbox from './pages/checkbox/ui'
 import uiLabeled from './pages/labeled/ui'
 import uiPaginator from './pages/paginator/ui'
@@ -12,4 +13,5 @@ export const routes = [
   ['Popover', aPopover],
   ['Tooltip', uiTolltip],
   ['Paginator', uiPaginator],
+  ['Canvas', aCanvasWItem],
 ] as const
