@@ -7,7 +7,7 @@ import { Id, c } from '~/utils/core'
 import { useUpdate } from '~/utils/hooks'
 
 import { Joint, State } from '../../..'
-import { LinkListState } from '../../../../../'
+import { LinkListState } from '../../../../../../..'
 
 TargetLink.displayName = 'decision-Editor-ui-Canvas-w-Node-w-TargetLink'
 

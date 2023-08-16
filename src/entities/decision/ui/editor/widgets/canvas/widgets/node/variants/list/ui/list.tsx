@@ -8,7 +8,7 @@ import { useUpdate } from '~/utils/hooks'
 
 import { State } from '..'
 import { State as NodeState, VariantPicker } from '../../..'
-import { LinkListState } from '../../../../..'
+import { LinkListState } from '../../../../../../..'
 
 export interface ListProps {
   state: State
