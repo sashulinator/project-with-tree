@@ -13,8 +13,6 @@ interface State {
 export default {
   getName: (): string => Checkbox.displayName,
 
-  getPath: (): string => `/checkbox`,
-
   getDescription: function Description(): JSX.Element {
     return (
       <>

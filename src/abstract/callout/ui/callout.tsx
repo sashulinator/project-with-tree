@@ -5,7 +5,7 @@ import type { Offset, Overflow, Point, Points, onAligned } from '..'
 import type { ReactElementWithRef } from '../../../utils/react'
 import Popover from '../../popover'
 
-Callout.displayName = 'ui-Callout'
+Callout.displayName = 'a-Callout'
 
 export interface ContentProp {
   placement: Point

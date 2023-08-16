@@ -11,8 +11,6 @@ interface State {
 export default {
   getName: (): string => Tooltip.displayName,
 
-  getPath: (): string => `/tooltip`,
-
   getDescription: function Description(): JSX.Element {
     return (
       <>

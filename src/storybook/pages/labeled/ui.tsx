@@ -12,8 +12,6 @@ interface State {
 export default {
   getName: (): string => Labeled.displayName,
 
-  getPath: (): string => `/labeled`,
-
   getDescription: function Description(): JSX.Element {
     return (
       <>

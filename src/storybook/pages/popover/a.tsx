@@ -1,8 +1,13 @@
 import { useState } from 'react'
 
 import Popover, { PopoverProps } from '~/abstract/popover'
+import { configToPath } from '~/storybook/lib'
 import { Config, Props } from '~/storybook/types'
+import ConfigLink from '~/storybook/ui/config-link/ui/config-link'
 import { H1 } from '~/ui/heading'
+import Link from '~/ui/link'
+
+import aAlign from '../align/a'
 
 interface State {
   sourcePosition: 'fixed' | 'absolute'
@@ -15,13 +20,11 @@ interface State {
 export default {
   getName: (): string => Popover.displayName,
 
-  getPath: (): string => `/popover`,
-
   getDescription: function Description(): JSX.Element {
     return (
       <>
         <H1>{Popover.displayName}</H1>
-        Добавьте описание
+        Расширяет <ConfigLink config={aAlign} />
       </>
     )
   },

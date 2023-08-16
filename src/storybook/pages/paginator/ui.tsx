@@ -10,8 +10,6 @@ interface State {
 export default {
   getName: (): string => Paginator.displayName,
 
-  getPath: (): string => `/paginator`,
-
   getDescription: function Description(): JSX.Element {
     return (
       <>

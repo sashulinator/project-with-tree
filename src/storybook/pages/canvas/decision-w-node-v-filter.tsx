@@ -31,8 +31,6 @@ interface State {}
 export default {
   getName: (): string => FilterNode.displayName || '',
 
-  getPath: (): string => `/${FilterNode.displayName.toLowerCase()}`,
-
   getDescription: function Description(): JSX.Element {
     return (
       <>

@@ -16,8 +16,6 @@ interface State {
 export default {
   getName: (): string => Align.displayName,
 
-  getPath: (): string => `/align`,
-
   getDescription: function Description(): JSX.Element {
     return (
       <>

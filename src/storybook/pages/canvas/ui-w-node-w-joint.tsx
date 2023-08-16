@@ -9,8 +9,6 @@ interface State {}
 export default {
   getName: (): string => Joint.displayName || '',
 
-  getPath: (): string => `/${Joint.displayName.toLowerCase()}`,
-
   getDescription: function Description(): JSX.Element {
     return (
       <>

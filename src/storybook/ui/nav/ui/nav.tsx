@@ -2,12 +2,15 @@ import { Fragment } from 'react'
 
 import Flex from '~/abstract/flex'
 import getRootElement from '~/lib/dom/get-root-element'
+import { configToPath } from '~/storybook/lib'
 import { routes } from '~/storybook/routes'
 import { Config } from '~/storybook/types'
 import Link from '~/ui/link'
 import ThemeDropdown from '~/ui/theme-dropdown'
 import { Any } from '~/utils/core'
 import { setCSSVar } from '~/utils/dom'
+
+import ConfigLink from '../../config-link/ui/config-link'
 
 export default function Nav(): JSX.Element {
   setCSSVar('nav-width', 200, getRootElement())
@@ -26,10 +29,10 @@ export default function Nav(): JSX.Element {
                     <ul>
                       {configs.map((c: unknown) => {
                         const config = c as Config<Any>
-                        const path = config.getPath?.() || `/${config.getName().toLowerCase()}`
+                        const path = configToPath(config)
                         return (
-                          <li key={`project-with-tree/story${path}`}>
-                            <Link to={`project-with-tree/story${path}`}>{config.getName()}</Link>
+                          <li key={path}>
+                            <ConfigLink config={config} />
                           </li>
                         )
                       })}
