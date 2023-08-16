@@ -30,10 +30,10 @@ interface State {}
 export default {
   getName: (): string => FilterNode.displayName || '',
 
-  getPath: (): string => `/canvas-w-item`,
+  getPath: (): string => `/${FilterNode.displayName.toLowerCase()}`,
 
   getDescription: (): JSX.Element | string => {
-    return 'Размер `foreignObject` подстраивается под размер детей'
+    return 'Описание'
   },
 
   element: function Element(props: Props<State>): JSX.Element {
