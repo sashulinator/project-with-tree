@@ -1,7 +1,6 @@
 import { useState } from 'react'
 
 import Align, { AlignProps } from '~/abstract/align'
-import Flex from '~/abstract/flex/ui/flex'
 import { Config, Props } from '~/storybook/types'
 import { H1 } from '~/ui/heading'
 import { setRefs } from '~/utils/react'
@@ -9,12 +8,9 @@ import { setRefs } from '~/utils/react'
 interface State {
   sourcePosition: 'fixed' | 'absolute'
   points: AlignProps['points']
-  portalSourceIntoTarget: boolean
+  everflow: AlignProps['overflow']
+  portalSourceIntoContainer: boolean
   containerRelative: boolean
-  containerOverflowHidden: boolean
-  adjustY: boolean
-  adjustX: boolean
-  alwaysByViewport: boolean
 }
 
 export default {
@@ -33,33 +29,32 @@ export default {
 
   element: function Element(props: Props<State>): JSX.Element {
     const {
-      state: { portalSourceIntoTarget, containerRelative, containerOverflowHidden, ...alignProps },
+      state: { portalSourceIntoContainer, containerRelative, ...compProps },
     } = props
     const [ref, setRef] = useState<null | HTMLElement>()
+    const [containerRef, setContainerRef] = useState<null | HTMLElement>()
 
-    console.log('alignProps', alignProps)
+    console.log('alignProps', compProps)
 
     return (
-      <div style={{ overflow: containerOverflowHidden ? 'hidden' : undefined }}>
-        <Flex dir='column' width='3000px' height='1000px' padding='5rem'>
-          <br />
-          container
-          <div
-            style={{
-              border: containerRelative ? '1px solid red' : '1px solid blue',
-              position: containerRelative ? 'relative' : undefined,
-              width: '200px',
-              height: '200px',
-            }}
-          >
-            <button ref={setRefs(setRef)}>Target</button>
-            {ref && (
-              <Align targetElement={ref} containerElement={portalSourceIntoTarget ? ref : undefined} {...alignProps}>
-                <div style={{ width: '400px', height: '100px', background: 'red' }}>Source</div>
-              </Align>
-            )}
-          </div>
-        </Flex>
+      <div style={{ overflow: 'hidden', width: '100%', height: '100%' }} ref={setContainerRef}>
+        <div
+          style={{
+            border: containerRelative ? '1px solid red' : '1px solid blue',
+            position: containerRelative ? 'relative' : undefined,
+          }}
+        >
+          <button ref={setRefs(setRef)}>Target</button>
+          {ref && (
+            <Align
+              targetElement={ref}
+              containerElement={portalSourceIntoContainer ? containerRef : undefined}
+              {...compProps}
+            >
+              <div style={{ width: '400px', height: '100px', background: 'red' }}>Source</div>
+            </Align>
+          )}
+        </div>
       </div>
     )
   },
@@ -70,7 +65,7 @@ export default {
       path: ['points', 0],
       input: 'select',
       options: ['bc', 'bl', 'br', 'tc', 'tl', 'tr', 'cc', 'cl', 'cr'],
-      defaultValue: 'tc',
+      defaultValue: 'cr',
       style: { width: '200px' },
     },
     {
@@ -78,14 +73,13 @@ export default {
       path: ['points', 1],
       input: 'select',
       options: ['bc', 'bl', 'br', 'tc', 'tl', 'tr', 'cc', 'cl', 'cr'],
-      defaultValue: 'bc',
+      defaultValue: 'cl',
       style: { width: '200px' },
     },
-    { name: 'portalSourceIntoTarget', input: 'checkbox', defaultValue: false },
+    { name: 'portalSourceIntoContainer', input: 'checkbox', defaultValue: false },
     { name: 'containerRelative', input: 'checkbox', defaultValue: false },
     { name: 'adjustX', path: ['overflow', 'adjustX'], input: 'checkbox', defaultValue: false },
     { name: 'adjustY', path: ['overflow', 'adjustY'], input: 'checkbox', defaultValue: false },
     { name: 'alwaysByViewport', path: ['overflow', 'alwaysByViewport'], input: 'checkbox', defaultValue: false },
-    { name: 'containerOverflowHidden', input: 'checkbox', defaultValue: false },
   ],
 } satisfies Config<State>
