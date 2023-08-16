@@ -3,7 +3,6 @@ import type { Offset, Points } from 'dom-align-ts'
 import React, { useCallback, useLayoutEffect } from 'react'
 import { createPortal } from 'react-dom'
 
-import { align } from '../-private'
 // https://github.com/sashulinator/utils-core
 import { curry } from '../../../utils/core'
 // https://github.com/sashulinator/utils-dom
@@ -13,6 +12,7 @@ import { useEventListener, useLatest } from '../../../utils/hooks'
 // https://github.com/sashulinator/utils-react
 import { assertValidElement, setRefs } from '../../../utils/react'
 import type { ReactElementWithRef } from '../../../utils/react'
+import { _align } from '../_private'
 
 Align.displayName = 'a-Align'
 
@@ -128,14 +128,14 @@ export default function Align(props: Props): JSX.Element {
 
   assertValidElement(children)
 
-  const carryAlign = useCallback(() => curry(align)({ targetElement, sourceElement, config, onAlignedRef }), alignDeps)
+  const align = useCallback(() => curry(_align)({ targetElement, sourceElement, config, onAlignedRef }), alignDeps)
 
-  useLayoutEffect(carryAlign, [alignDeps])
-  useEventListener('resize', carryAlign, undefined, { passive: true })
-  useLayoutEffect(() => listenParentScrolls(targetElement, carryAlign, { passive: true }), [alignDeps])
-  useLayoutEffect(() => listenParentScrolls(sourceElement, carryAlign, { passive: true }), [alignDeps])
-  useLayoutEffect(() => observeResize(targetElement, carryAlign), [alignDeps])
-  useLayoutEffect(() => observeResize(sourceElement, carryAlign), [alignDeps])
+  useLayoutEffect(align, [alignDeps])
+  useEventListener('resize', align, undefined, { passive: true })
+  useLayoutEffect(() => listenParentScrolls(targetElement, align, { passive: true }), [alignDeps])
+  useLayoutEffect(() => listenParentScrolls(sourceElement, align, { passive: true }), [alignDeps])
+  useLayoutEffect(() => observeResize(targetElement, align), [alignDeps])
+  useLayoutEffect(() => observeResize(sourceElement, align), [alignDeps])
 
   const clonedChildren = React.cloneElement(children, { ref: setRefs(children.ref, setSourceEl) })
 
