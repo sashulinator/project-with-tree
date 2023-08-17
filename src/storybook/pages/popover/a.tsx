@@ -76,7 +76,7 @@ export default {
             })}
             containerElement={portalSourceIntoContainer ? containerRef : undefined}
             {...popoverProps}
-          ></Popover>
+          />
         </div>
       </div>
     )

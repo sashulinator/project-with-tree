@@ -3,8 +3,9 @@ import React, { forwardRef } from 'react'
 import { calcArrowOffset } from '..'
 import { c } from '../../../utils/core'
 import { setRefs } from '../../../utils/react'
-import Callout, { CalloutProps, Point, flipPointHorizontally, flipPointVertically } from '../../callout'
+import { Point, flipPointHorizontally, flipPointVertically } from '../../callout'
 import FitContent from '../../fit-content'
+import Popover, { OnAligned, Points, PopoverProps } from '../../popover'
 
 BalloonComponent.displayName = 'a-Balloon'
 
@@ -15,7 +16,9 @@ export interface Props extends React.HTMLAttributes<HTMLDivElement> {
   /**
    * Props to be passed to the arrow element of the Balloon component.
    */
-  renderArrow: CalloutProps<unknown>['renderContent']
+  renderArrow: (
+    props: { ref: React.ForwardedRef<HTMLElement> } & PopoverProps & { adjustedPoints: Points }
+  ) => JSX.Element
 
   /**
    * The position of the balloon relative to its target element. The arrow of the balloon is calculated based on this prop.
@@ -31,6 +34,26 @@ export interface Props extends React.HTMLAttributes<HTMLDivElement> {
    * Content props.
    */
   contentProps: React.HTMLAttributes<HTMLDivElement>
+
+  /**
+   * A function that is called when the popover is closed.
+   */
+  onClose?: ((e: MouseEvent | TouchEvent | KeyboardEvent) => void) | undefined
+
+  /**
+   * A function that is called when a click or touch event occurs outside the popover.
+   */
+  onClickOutside?: ((e: MouseEvent | TouchEvent) => void) | undefined
+
+  /**
+   * A function that is called when an escape key or touch event occurs.
+   */
+  onEscKeyDown?: ((e: KeyboardEvent) => void) | undefined
+
+  /**
+   *  An optional function to be called after the child element is positioned.
+   */
+  onAligned?: OnAligned | undefined
 }
 
 /**
@@ -41,10 +64,10 @@ function BalloonComponent(props: Props): JSX.Element {
   const [contentEl, setContentEl] = React.useState<HTMLElement | null>(null)
 
   return (
-    <Callout
+    <Popover
       placement={flipPointVertically(flipPointHorizontally(placement))}
       opened={true}
-      contentOffset={calcArrowOffset(placement)}
+      offset={calcArrowOffset(placement)}
       containerElement={contentEl}
       renderContent={renderArrow}
     >
@@ -57,7 +80,7 @@ function BalloonComponent(props: Props): JSX.Element {
           {children}
         </div>
       </FitContent>
-    </Callout>
+    </Popover>
   )
 }
 

@@ -1,6 +1,6 @@
 import * as React from 'react'
 
-import { toPoints } from '..'
+import { adjustPoints, toPoints } from '..'
 // https://github.com/sashulinator/utils-dom-events
 import { keyListener } from '../../../utils/dom-event'
 // https://github.com/sashulinator/utils-function
@@ -11,7 +11,6 @@ import { assertValidElement, setRefs } from '../../../utils/react'
 import type { ReactElementWithRef } from '../../../utils/react'
 // https://github.com/sashulinator/a-align
 import Align, { Offset, OnAligned, Overflow, Point, Points } from '../../align'
-import { adjustPoints } from '../lib/adjust-placement'
 
 Popover.displayName = 'a-Popover'
 
@@ -104,12 +103,13 @@ export interface Props {
  */
 export default function Popover(props: Props): JSX.Element {
   const points = _getPoints()
-  const content = _getContent()
-  const children = _getChildren()
 
   const sourceRef = React.useRef<null | HTMLElement>(null)
   const [childrenEl, setChildrenEl] = React.useState<null | HTMLElement>(null)
   const [adjustedPoints, setAdjustedPoints] = React.useState(points)
+
+  const content = _getContent()
+  const children = _getChildren()
 
   useOnClickOutside(sourceRef, fns(props.onClickOutside, props.onClose))
   useEventListener('keydown', keyListener({ key: 'Escape' }, fns(props.onEscKeyDown, props.onClose)))
