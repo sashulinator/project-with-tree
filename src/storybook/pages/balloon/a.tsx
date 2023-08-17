@@ -49,7 +49,7 @@ export default {
                 }}
               />
             )
-          }) as any
+          })
         }
         {...state}
         // contentProps={{ style: { background: 'red' } }}

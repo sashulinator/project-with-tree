@@ -21,9 +21,10 @@ export default {
   },
 
   element: function Element(props: Props<State>): JSX.Element {
+    const { state } = props
     return (
       <Flex dir='column' gap='xl' width='100%'>
-        <Tooltip content={'World'} {...props}>
+        <Tooltip content={'World'} {...state}>
           <button>Hello</button>
         </Tooltip>
       </Flex>

@@ -60,16 +60,19 @@ export default {
                   style={{
                     width: '400px',
                     height: '100px',
-                    background: props.adjustedPoints[0] === 'cl' ? 'red' : 'blue',
+                    background: props.popoverProps.adjustedPoints[0] === 'cl' ? 'red' : 'blue',
                   }}
                 >
-                  Points {props.adjustedPoints.join(' - ')}
+                  Points {props.popoverProps.adjustedPoints.join(' - ')}
                 </div>
               )
             })}
             renderTarget={forwardRef(function Element(props, ref): JSX.Element {
               return (
-                <button ref={setRefs(ref)} style={{ background: props.adjustedPoints[0] === 'cl' ? 'red' : 'blue' }}>
+                <button
+                  ref={setRefs(ref)}
+                  style={{ background: props.popoverProps.adjustedPoints[0] === 'cl' ? 'red' : 'blue' }}
+                >
                   Target
                 </button>
               )

@@ -1,5 +1,7 @@
 import * as React from 'react'
 
+import { Any } from '~/utils/core'
+
 import { adjustPoints, toPoints } from '..'
 // https://github.com/sashulinator/utils-dom-events
 import { keyListener } from '../../../utils/dom-event'
@@ -13,8 +15,8 @@ import Align, { Offset, OnAligned, Overflow, Point, Points } from '../../align'
 
 Popover.displayName = 'a-Popover'
 
-type RenderProps = Props & { adjustedPoints: Points; ref: React.ForwardedRef<HTMLElement> }
-type Render = (props: RenderProps) => JSX.Element | null
+export type RenderProps = { ref: React.ForwardedRef<HTMLElement>; popoverProps: Props & { adjustedPoints: Points } }
+export type Render = (props: RenderProps) => JSX.Element | null
 
 /**
  * Props for the `Popover` component, which displays a content over a target element.
@@ -34,6 +36,8 @@ export interface Props {
    * The content to be displayed in the popover.
    */
   renderContent: Render
+
+  contentProps?: Record<string, unknown> | undefined
 
   /**
    * An Array that specifies the positioning of the popover relative to its trigger element.
@@ -135,16 +139,21 @@ export default function Popover(props: Props): JSX.Element {
   function _getContent(): React.FunctionComponentElement<RenderProps> {
     return React.createElement(props.renderContent, {
       ref: sourceRef,
-      adjustedPoints,
-      ...props,
+      ...props.contentProps,
+      popoverProps: {
+        adjustedPoints,
+        ...props,
+      },
     })
   }
 
   function _getChildren(): React.FunctionComponentElement<RenderProps> {
     return React.createElement(props.renderTarget, {
       ref: setChildrenEl,
-      adjustedPoints,
-      ...props,
+      popoverProps: {
+        adjustedPoints,
+        ...props,
+      },
     })
   }
 }

@@ -1,18 +1,17 @@
-import './tooltip.css'
+import './tooltip.scss'
 
-import { Point } from 'dom-align-ts'
-import React, { useState } from 'react'
+import React, { forwardRef } from 'react'
 
-import Callout from '~/abstract/callout'
-import { DepricatedPopoverProps } from '~/abstract/popover'
-import Balloon, { BalloonProps } from '~/ui/balloon'
-import { fns } from '~/utils/function'
-import { useDebounceCallback } from '~/utils/hooks'
+import { Overflow, Point } from '~/abstract/align'
+import Balloon from '~/abstract/balloon'
+import ATooltip from '~/abstract/tooltip'
+import { AppearFrom } from '~/ui/animation'
+import { c } from '~/utils/core'
 import { setRefs } from '~/utils/react'
 
 Tooltip.displayName = 'ui-Tooltip'
 
-export interface Props {
+export interface Props extends React.HTMLAttributes<HTMLElement> {
   /* Target  */
   children: React.ReactElement<React.HTMLAttributes<HTMLElement>>
 
@@ -20,13 +19,13 @@ export interface Props {
   placement?: Point
 
   /* Конфиг в случае overflow */
-  overflow?: DepricatedPopoverProps['overflow']
+  overflow?: Overflow | undefined
 
   /* Контент */
   content: React.ReactNode
 
   /* Задержка */
-  delay?: number
+  delay?: number | undefined
 
   /* Срабатывает при onClickOutside и onEscKeyDown */
   onClose?: (() => void) | undefined
@@ -39,31 +38,36 @@ export interface Props {
  * @returns
  */
 export default function Tooltip(props: Props): JSX.Element {
-  const { delay = 300, content, placement = 'tc', children } = props
+  const { delay = 1000, placement = 'tc', children, content, overflow, onClose, className, ...divProps } = props
 
-  const [isOpen, setOpen] = useState(false)
-  const [openWithDebounce, clearDebounce] = useDebounceCallback(() => setOpen(true), delay)
-
-  const clonedChildren = React.cloneElement(children, {
-    onMouseEnter: fns(children.props.onMouseEnter, openWithDebounce),
-    onMouseLeave: fns(children.props.onMouseLeave, clearDebounce, () => setOpen(false)),
-  })
+  console.log('placement', placement)
 
   return (
-    <Callout placement={placement} contentProps={{ children: content }} renderContent={BaloonWrapper} opened={isOpen}>
-      {clonedChildren}
-    </Callout>
+    <ATooltip
+      {...divProps}
+      delay={delay}
+      overflow={overflow}
+      onClose={onClose}
+      placement={placement}
+      renderBalloon={forwardRef(function Element(props, ref): JSX.Element {
+        return (
+          <AppearFrom duration={100} from={{ y: 5 }} to={{ y: -5 }} style={{ position: 'fixed' }}>
+            <Balloon
+              className={c(className, Tooltip.displayName, `--${props.popoverProps.placement || ''}`)}
+              placement={props.popoverProps.placement}
+              ref={setRefs(ref)}
+              contentProps={{ className: 'content', style: { position: 'absolute' } }}
+              renderArrow={forwardRef(function Element(props, ref): JSX.Element {
+                return <div className='arrow' ref={setRefs(ref)} style={{ position: 'absolute' }} />
+              })}
+            >
+              {content}
+            </Balloon>
+          </AppearFrom>
+        )
+      })}
+    >
+      {children}
+    </ATooltip>
   )
 }
-
-type BaloonWrapperProps = Omit<BalloonProps, 'children'> & { children: React.ReactNode }
-
-const BaloonWrapper = React.forwardRef<HTMLElement, BaloonWrapperProps>(function BubbleWrapper(props, ref) {
-  return (
-    <div className='mirion-tooltip' ref={setRefs(ref)}>
-      <Balloon placement={props.placement || 'tc'}>
-        <div className='mirion-tooltip__content'>{props.children}</div>
-      </Balloon>
-    </div>
-  )
-})

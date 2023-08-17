@@ -1,0 +1,28 @@
+.ui-Tooltip {
+  --tooltip_shadow: 0 1.2px 18px rgba(0, 0, 0, 0.15), 0 6.4px 29px rgba(0, 0, 0, 0.15);
+  --tooltip_bg: #3b4258;
+  --tooltip_color: white;
+  background-color: var(--tooltip_bg);
+  box-shadow: var(--tooltip_shadow);
+  border-radius: var(--m);
+  font-size: 14px;
+  box-sizing: content-box;
+}
+
+.ui-Tooltip > .content {
+  position: absolute;
+  border-radius: var(--m);
+  padding: var(--m) var(--xl);
+  color: var(--tooltip_color);
+  background-color: var(--tooltip_bg);
+  z-index: 2;
+}
+
+.ui-Tooltip > .arrow {
+  width: 10px;
+  height: 10px;
+  position: absolute;
+  background-color: var(--tooltip_bg);
+  transform: rotate(45deg);
+  z-index: 1;
+}
