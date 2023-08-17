@@ -3,7 +3,7 @@
  */
 
 export { default } from './ui/align'
-export type { Props as AlignProps, Overflow, Config, onAligned } from './ui/align'
+export type { Props as AlignProps, Overflow, Config, OnAligned, AlignResult } from './ui/align'
 
 /**
  * reexports
