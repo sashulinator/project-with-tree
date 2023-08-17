@@ -13,4 +13,4 @@ export type { Props as DepricatedPopoverProps } from './ui/depricated-popover'
  * reexports
  */
 export { flipPointHorizontally, flipPointVertically } from '../align'
-export type { Overflow, Offset, Point, Points, onAligned } from '../align'
+export type { Overflow, Offset, Point, Points, OnAligned as onAligned } from '../align'
