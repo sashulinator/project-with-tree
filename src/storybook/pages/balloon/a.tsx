@@ -33,21 +33,24 @@ export default {
             zIndex: 2,
           },
         }}
-        renderArrow={forwardRef(function Element(props, ref) {
-          return (
-            <div
-              ref={setRefs(ref)}
-              style={{
-                position: 'absolute',
-                background: 'red',
-                width: '10px',
-                height: '10px',
-                transform: 'rotate(45deg)',
-                zIndex: 1,
-              }}
-            />
-          )
-        })}
+        renderArrow={
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+          forwardRef(function Element(props, ref): JSX.Element {
+            return (
+              <div
+                ref={setRefs(ref)}
+                style={{
+                  position: 'absolute',
+                  background: 'red',
+                  width: '10px',
+                  height: '10px',
+                  transform: 'rotate(45deg)',
+                  zIndex: 1,
+                }}
+              />
+            )
+          }) as any
+        }
         {...state}
         // contentProps={{ style: { background: 'red' } }}
       >
