@@ -1,10 +1,11 @@
-import React, { forwardRef } from 'react'
+import React, { ForwardedRef, forwardRef, useRef } from 'react'
+
+import { getStyle } from '~/utils/dom'
 
 import { calcArrowOffset } from '..'
-import { c } from '../../../utils/core'
+import { assertDefined, c } from '../../../utils/core'
 import { setRefs } from '../../../utils/react'
 import { Point, flipPointHorizontally, flipPointVertically } from '../../callout'
-import FitContent from '../../fit-content'
 import Popover, { OnAligned, Points, PopoverProps } from '../../popover'
 
 BalloonComponent.displayName = 'a-Balloon'
@@ -59,29 +60,49 @@ export interface Props extends React.HTMLAttributes<HTMLDivElement> {
 /**
  * See README.md
  */
-function BalloonComponent(props: Props): JSX.Element {
-  const { renderArrow, placement = 'tc', contentProps, children, ...fitContentProps } = props
-  const [contentEl, setContentEl] = React.useState<HTMLElement | null>(null)
+function BalloonComponent(props: Props, ref: ForwardedRef<HTMLElement>): JSX.Element {
+  const { renderArrow, placement = 'tc', contentProps, children, ...divProps } = props
+  const [containerEl, setContainerEl] = React.useState<HTMLElement | null>(null)
+  const contentRef = useRef<HTMLElement>(null)
 
   return (
-    <Popover
-      placement={flipPointVertically(flipPointHorizontally(placement))}
-      opened={true}
-      offset={calcArrowOffset(placement)}
-      containerElement={contentEl}
-      renderContent={renderArrow}
+    <div
+      {...divProps}
+      ref={setRefs(setContainerEl, ref, syncSizes)}
+      className={c(divProps.className, BalloonComponent.displayName)}
     >
-      <FitContent
-        {...fitContentProps}
-        className={c(BalloonComponent.displayName, props.className)}
-        ref={setRefs(setContentEl)}
-      >
-        <div {...contentProps} className={c('content', contentProps.className)}>
-          {children}
-        </div>
-      </FitContent>
-    </Popover>
+      <Popover
+        opened={true}
+        placement={flipPointVertically(flipPointHorizontally(placement))}
+        offset={calcArrowOffset(placement)}
+        containerElement={containerEl}
+        renderContent={renderArrow}
+        renderTarget={forwardRef(function Element(_, targetRef) {
+          return (
+            <div
+              {...contentProps}
+              ref={setRefs(targetRef, contentRef, syncSizes)}
+              className={c('content', contentProps.className)}
+            >
+              {children}
+            </div>
+          )
+        })}
+      />
+    </div>
   )
+
+  // private
+
+  function syncSizes(): void {
+    if (!containerEl || !contentRef.current) return
+    const width = getStyle(contentRef.current)?.width
+    const height = getStyle(contentRef.current)?.height
+    assertDefined(width)
+    assertDefined(height)
+    containerEl.style.width = width
+    containerEl.style.height = height
+  }
 }
 
 const Balloon = forwardRef(BalloonComponent)

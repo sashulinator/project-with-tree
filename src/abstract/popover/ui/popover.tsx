@@ -7,47 +7,33 @@ import { keyListener } from '../../../utils/dom-event'
 import { fns } from '../../../utils/function'
 import { useEventListener, useOnClickOutside } from '../../../utils/hooks'
 // https://github.com/sashulinator/utils-react
-import { assertValidElement, setRefs } from '../../../utils/react'
 import type { ReactElementWithRef } from '../../../utils/react'
 // https://github.com/sashulinator/a-align
 import Align, { Offset, OnAligned, Overflow, Point, Points } from '../../align'
 
 Popover.displayName = 'a-Popover'
 
+type RenderProps = Props & { adjustedPoints: Points; ref: React.ForwardedRef<HTMLElement> }
+type Render = (props: RenderProps) => JSX.Element | null
+
 /**
  * Props for the `Popover` component, which displays a content over a target element.
  */
 export interface Props {
-  /**
-   * The Element that displays the popover.
-   */
-  children?: ReactElementWithRef<HTMLElement>
-
-  renderTarget?:
-    | ((props: { ref: React.ForwardedRef<HTMLElement> } & Props & { adjustedPoints: Points }) => JSX.Element | null)
-    | undefined
-
   /**
    * Flag indicating whether the popover is currently open.
    */
   opened: boolean | undefined
 
   /**
-   * The content to be displayed in the popover.
+   * Render target
    */
-  content?: ReactElementWithRef<HTMLElement>
+  renderTarget: Render
 
   /**
    * The content to be displayed in the popover.
    */
-  renderContent?:
-    | ((props: { ref: React.ForwardedRef<HTMLElement> } & Props & { adjustedPoints: Points }) => JSX.Element | null)
-    | undefined
-
-  /**
-   * An optional x/y offset for the content
-   */
-  offset?: Offset
+  renderContent: Render
 
   /**
    * An Array that specifies the positioning of the popover relative to its trigger element.
@@ -63,6 +49,11 @@ export interface Props {
    * The container element for the component; defaults to `document.body`.
    */
   containerElement?: HTMLElement | null | undefined
+
+  /**
+   * An optional x/y offset for the content
+   */
+  offset?: Offset
 
   /**
    * An optional configuration to handle positioning when the content overflows the container.
@@ -127,7 +118,7 @@ export default function Popover(props: Props): JSX.Element {
           deps={props.deps}
           offset={props.offset}
         >
-          {content}
+          {content as ReactElementWithRef<HTMLElement>}
         </Align>
       )}
     </>
@@ -141,29 +132,19 @@ export default function Popover(props: Props): JSX.Element {
     return ['tc', 'bc']
   }
 
-  function _getContent(): ReactElementWithRef<HTMLElement> {
-    if (props.renderContent) {
-      return React.createElement(props.renderContent, {
-        ref: sourceRef,
-        adjustedPoints,
-        ...props,
-      }) as ReactElementWithRef<HTMLElement>
-    }
-
-    assertValidElement(props.content)
-    return React.cloneElement(props.content, { ref: setRefs(props.content.ref, sourceRef) })
+  function _getContent(): React.FunctionComponentElement<RenderProps> {
+    return React.createElement(props.renderContent, {
+      ref: sourceRef,
+      adjustedPoints,
+      ...props,
+    })
   }
 
-  function _getChildren(): ReactElementWithRef<HTMLElement> {
-    if (props.renderTarget) {
-      return React.createElement(props.renderTarget, {
-        ref: setChildrenEl,
-        adjustedPoints,
-        ...props,
-      }) as ReactElementWithRef<HTMLElement>
-    }
-
-    assertValidElement(props.children)
-    return React.cloneElement(props.children, { ref: setRefs(props.children.ref, setChildrenEl) })
+  function _getChildren(): React.FunctionComponentElement<RenderProps> {
+    return React.createElement(props.renderTarget, {
+      ref: setChildrenEl,
+      adjustedPoints,
+      ...props,
+    })
   }
 }

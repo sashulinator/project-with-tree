@@ -1,7 +1,7 @@
-import { ForwardedRef, cloneElement, createElement, forwardRef } from 'react'
+import { ForwardedRef, cloneElement, createElement, forwardRef, useRef } from 'react'
 
-import { c } from '~/utils/core'
-import { useMeasure } from '~/utils/hooks'
+import { assertDefined, c } from '~/utils/core'
+import { getStyle } from '~/utils/dom'
 import { ReactElementWithRef, setRefs } from '~/utils/react'
 
 FitContentComponent.displayName = 'a-FitContent'
@@ -17,9 +17,10 @@ export interface Props extends React.HTMLAttributes<HTMLElement> {
 function FitContentComponent(props: Props, ref: ForwardedRef<HTMLElement>): JSX.Element {
   const { as = 'div', ...restProps } = props
 
-  const [setRef, size] = useMeasure()
+  const containerRef = useRef<HTMLElement>(null)
+  const elementRef = useRef<HTMLElement>(null)
 
-  const clonedChildren = cloneElement(props.children, { ref: setRefs(props.children.ref, setRef) })
+  const clonedChildren = cloneElement(props.children, { ref: setRefs(props.children.ref, elementRef, sync) })
 
   return createElement(
     as,
@@ -27,12 +28,21 @@ function FitContentComponent(props: Props, ref: ForwardedRef<HTMLElement>): JSX.
       ...restProps,
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
-      ref: setRefs(ref),
+      ref: setRefs(ref, containerRef, sync),
       className: c(props.className, FitContent.displayName),
-      style: { ...size, ...props.style },
     },
     clonedChildren
   )
+
+  function sync(): void {
+    if (!containerRef.current || !elementRef.current) return
+    const width = getStyle(elementRef.current)?.width
+    const height = getStyle(elementRef.current)?.height
+    assertDefined(width)
+    assertDefined(height)
+    containerRef.current.style.width = width
+    containerRef.current.style.height = height
+  }
 }
 
 const FitContent = forwardRef(FitContentComponent)
