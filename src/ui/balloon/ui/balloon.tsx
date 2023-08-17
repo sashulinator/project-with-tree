@@ -4,7 +4,7 @@ import { clsx } from 'clsx'
 import { Point, Points, flipPointHorizontally, flipPointVertically } from 'dom-align-ts'
 import React, { RefAttributes } from 'react'
 
-import Popover from '~/abstract/popover'
+import { DepricatedPopover } from '~/abstract/popover'
 import { Any } from '~/utils/core'
 import { useWindowSize } from '~/utils/hooks'
 import { ReactElementWithRef, assertValidElement, setRefs } from '~/utils/react'
@@ -68,7 +68,7 @@ export default function Balloon(props: Props): JSX.Element {
       style={{ height: rect?.height, width: rect?.width, ...props.rootProps?.style }}
       className={clsx('ui-Balloon', props.rootProps?.className)}
     >
-      <Popover
+      <DepricatedPopover
         content={
           <div
             {...props.arrowProps}
@@ -89,7 +89,7 @@ export default function Balloon(props: Props): JSX.Element {
         >
           {clonedChildren}
         </div>
-      </Popover>
+      </DepricatedPopover>
     </div>
   )
 

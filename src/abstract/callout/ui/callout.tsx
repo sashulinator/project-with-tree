@@ -3,7 +3,7 @@ import { ForwardedRef, createElement, useState } from 'react'
 import { adjustPlacement } from '..'
 import type { Offset, Overflow, Point, Points, onAligned } from '..'
 import type { ReactElementWithRef } from '../../../utils/react'
-import Popover from '../../popover'
+import { DepricatedPopover } from '../../popover'
 
 Callout.displayName = 'a-Callout'
 
@@ -99,7 +99,7 @@ export default function Callout<TContentProp = unknown>(props: Props<TContentPro
   } as ContentProp & TContentProp)
 
   return (
-    <Popover
+    <DepricatedPopover
       {...popoverProps}
       placement={placement}
       // Complains about `ref` prop, but it will be passed in Popover
@@ -110,6 +110,6 @@ export default function Callout<TContentProp = unknown>(props: Props<TContentPro
       }}
     >
       {props.children}
-    </Popover>
+    </DepricatedPopover>
   )
 }

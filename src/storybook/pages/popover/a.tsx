@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-import Popover, { PopoverProps } from '~/abstract/popover'
+import { DepricatedPopover, DepricatedPopoverProps } from '~/abstract/popover'
 import { Config, Props } from '~/storybook/types'
 import ConfigLink from '~/storybook/ui/config-link/ui/config-link'
 import { H1 } from '~/ui/heading'
@@ -9,19 +9,19 @@ import aAlign from '../align/a'
 
 interface State {
   sourcePosition: 'fixed' | 'absolute'
-  points: PopoverProps['points']
+  points: DepricatedPopoverProps['points']
   portalSourceIntoContainer: boolean
   containerRelative: boolean
   opened: boolean
 }
 
 export default {
-  getName: (): string => Popover.displayName,
+  getName: (): string => DepricatedPopover.displayName,
 
   getDescription: function Description(): JSX.Element {
     return (
       <>
-        <H1>{Popover.displayName}</H1>
+        <H1>{DepricatedPopover.displayName}</H1>
         Расширяет <ConfigLink config={aAlign} />
       </>
     )
@@ -45,13 +45,13 @@ export default {
             padding: '200px 0 0 500px',
           }}
         >
-          <Popover
+          <DepricatedPopover
             content={<div style={{ width: '400px', height: '100px', background: 'red' }}>Source</div>}
             containerElement={portalSourceIntoContainer ? containerRef : undefined}
             {...popoverProps}
           >
             <button>Target</button>
-          </Popover>
+          </DepricatedPopover>
         </div>
       </div>
     )
