@@ -63,6 +63,8 @@ function BalloonComponent(props: Props, ref: ForwardedRef<HTMLElement>): JSX.Ele
   const [containerEl, setContainerEl] = React.useState<HTMLElement | null>(null)
   const contentRef = useRef<HTMLElement>(null)
 
+  console.log('placement', placement)
+
   return (
     <div
       {...divProps}
@@ -71,7 +73,7 @@ function BalloonComponent(props: Props, ref: ForwardedRef<HTMLElement>): JSX.Ele
     >
       <Popover
         opened={true}
-        placement={flipPointVertically(flipPointHorizontally(placement))}
+        placement={_getArrowPlacement(placement)}
         offset={calcArrowOffset(placement)}
         containerElement={containerEl}
         renderContent={renderArrow}
@@ -100,6 +102,13 @@ function BalloonComponent(props: Props, ref: ForwardedRef<HTMLElement>): JSX.Ele
     assertDefined(height)
     containerEl.style.width = width
     containerEl.style.height = height
+  }
+
+  function _getArrowPlacement(placement: Point): Point {
+    if (placement.charAt(0) === 'c') {
+      return flipPointHorizontally(placement)
+    }
+    return flipPointVertically(placement)
   }
 }
 

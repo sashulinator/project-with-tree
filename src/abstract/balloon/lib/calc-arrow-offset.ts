@@ -9,18 +9,29 @@ import { Offset, Point } from 'dom-align-ts'
  */
 
 export function calcArrowOffset(placement: Point): Offset {
-  const isLeft = placement.charAt(1) === 'l'
-  const isRight = placement.charAt(1) === 'r'
-  const isTop = placement.charAt(0) === 't'
-  const isBottom = placement.charAt(0) === 'b'
-  const isCenter = placement.charAt(0) === 'c'
-
-  if (isCenter) {
-    const offsetX = isLeft ? '-50%' : isRight ? '50%' : 0
-    return [offsetX, 0]
+  if (placement === 'tl') {
+    return ['-100%', '-50%']
   }
-
-  const offsetX = isLeft ? '-50%' : isRight ? '50%' : 0
-  const offsetY = isTop ? '-50%' : isBottom ? '50%' : 0
-  return [offsetX, offsetY]
+  if (placement === 'tr') {
+    return ['100%', '-50%']
+  }
+  if (placement === 'tc') {
+    return [0, '-50%']
+  }
+  if (placement === 'bl') {
+    return ['-100%', '50%']
+  }
+  if (placement === 'br') {
+    return ['100%', '50%']
+  }
+  if (placement === 'bc') {
+    return [0, '50%']
+  }
+  if (placement === 'cr') {
+    return ['50%', 0]
+  }
+  if (placement === 'cl') {
+    return ['-50%', 0]
+  }
+  return [0, 0]
 }

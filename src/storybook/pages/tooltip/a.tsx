@@ -1,3 +1,4 @@
+import { flipHorizontally } from 'dom-align-ts/dist/lib/point/flip'
 import { forwardRef } from 'react'
 
 import Balloon from '~/abstract/balloon'
@@ -9,7 +10,7 @@ import { setRefs } from '~/utils/react'
 
 interface State {
   delay: number
-  points: TooltipProps['placement']
+  placement: TooltipProps['placement']
 }
 
 export default {
@@ -31,9 +32,11 @@ export default {
       <Flex dir='column' gap='xl' width='100%'>
         <Tooltip
           renderBalloon={forwardRef(function Element(props, ref): JSX.Element {
+            const placement = state.placement
+
             return (
               <Balloon
-                placement={props.popoverProps.placement}
+                placement={placement}
                 ref={setRefs(ref)}
                 contentProps={{
                   style: {
@@ -76,7 +79,7 @@ export default {
       name: 'placement',
       input: 'select',
       options: ['bc', 'bl', 'br', 'tc', 'tl', 'tr', 'cc', 'cl', 'cr'],
-      defaultValue: 'tc',
+      defaultValue: 'tl',
       style: { width: '200px' },
     },
     {

@@ -12,5 +12,5 @@ export function toPoints(placement: Point): Points {
     return [flipPointHorizontally(placement), placement]
   }
 
-  return [flipPointVertically(placement), placement]
+  return [flipPointHorizontally(flipPointVertically(placement)), flipPointHorizontally(placement)]
 }
