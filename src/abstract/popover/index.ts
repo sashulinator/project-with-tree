@@ -1,8 +1,8 @@
 /**
  * lib
  */
-export * from './lib/to-points'
-export { adjustPoints as adjustPlacement } from './lib/adjust-placement'
+export { toPoints } from './lib/to-points'
+export { adjustPoints } from './lib/adjust-points'
 
 /**
  * ui
