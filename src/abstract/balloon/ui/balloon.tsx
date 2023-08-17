@@ -1,11 +1,10 @@
 import React, { forwardRef } from 'react'
 
-import FitContent from '~/abstract/fit-content'
-import Popover, { Point, Points, flipPointHorizontally, flipPointVertically } from '~/abstract/popover'
-import { c } from '~/utils/core'
-import { ReactElementWithRef, setRefs } from '~/utils/react'
-
-import { calcArrowOffset } from '../lib/calc-arrow-offset'
+import { calcArrowOffset } from '..'
+import { c } from '../../../utils/core'
+import { setRefs } from '../../../utils/react'
+import Callout, { CalloutProps, Point, flipPointHorizontally, flipPointVertically } from '../../callout'
+import FitContent from '../../fit-content'
 
 BalloonComponent.displayName = 'a-Balloon'
 
@@ -16,7 +15,7 @@ export interface Props extends React.HTMLAttributes<HTMLDivElement> {
   /**
    * Props to be passed to the arrow element of the Balloon component.
    */
-  arrow: ReactElementWithRef<HTMLElement>
+  renderArrow: CalloutProps<unknown>['renderContent']
 
   /**
    * The position of the balloon relative to its target element. The arrow of the balloon is calculated based on this prop.
@@ -27,38 +26,39 @@ export interface Props extends React.HTMLAttributes<HTMLDivElement> {
    * The child element to be displayed within the balloon component.
    */
   children: React.ReactNode
+
+  /**
+   * Content props.
+   */
+  contentProps: React.HTMLAttributes<HTMLDivElement>
 }
 
 /**
  * See README.md
  */
 function BalloonComponent(props: Props): JSX.Element {
-  const { arrow, placement = 'tc', ...divProps } = props
+  const { renderArrow, placement = 'tc', contentProps, children, ...fitContentProps } = props
   const [contentEl, setContentEl] = React.useState<HTMLElement | null>(null)
 
   return (
-    <Popover
-      content={arrow}
+    <Callout
+      placement={flipPointVertically(flipPointHorizontally(placement))}
       opened={true}
-      containerElement={contentEl}
-      points={toPoints(placement)}
       contentOffset={calcArrowOffset(placement)}
-      deps={[props.placement]}
+      containerElement={contentEl}
+      renderContent={renderArrow}
     >
-      <FitContent className={`__${BalloonComponent.displayName}__`} ref={setContentEl}>
-        <div {...divProps} className={c(BalloonComponent.displayName, props?.className)} ref={setRefs(setContentEl)} />
+      <FitContent
+        {...fitContentProps}
+        className={c(BalloonComponent.displayName, props.className)}
+        ref={setRefs(setContentEl)}
+      >
+        <div {...contentProps} className={c('content', contentProps.className)}>
+          {children}
+        </div>
       </FitContent>
-    </Popover>
+    </Callout>
   )
-
-  // Private
-
-  function toPoints(placement: Point): Points {
-    if (placement.charAt(0) === 'c') {
-      return [placement, flipPointHorizontally(placement)]
-    }
-    return [placement, flipPointVertically(placement)]
-  }
 }
 
 const Balloon = forwardRef(BalloonComponent)

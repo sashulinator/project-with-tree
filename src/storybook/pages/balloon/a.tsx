@@ -1,7 +1,9 @@
+import { forwardRef } from 'react'
+
 import Balloon, { BalloonProps } from '~/abstract/balloon'
 import { Config, Props } from '~/storybook/types'
 import { H1 } from '~/ui/heading'
-import { c } from '~/utils/core'
+import { setRefs } from '~/utils/react'
 
 interface State {
   placement: BalloonProps['placement']
@@ -24,28 +26,32 @@ export default {
 
     return (
       <Balloon
-        style={{
-          background: 'red',
-          position: 'absolute',
-          zIndex: 2,
+        contentProps={{
+          style: {
+            background: 'red',
+            position: 'absolute',
+            zIndex: 2,
+          },
         }}
-        arrow={
-          <div
-            className={c('ui-Balloon_arrow')}
-            style={{
-              position: 'absolute',
-              background: 'red',
-              width: '10px',
-              height: '10px',
-              transform: 'rotate(45deg)',
-              zIndex: 1,
-            }}
-          />
-        }
+        renderArrow={forwardRef(function Element(props, ref) {
+          return (
+            <div
+              ref={setRefs(ref)}
+              style={{
+                position: 'absolute',
+                background: 'red',
+                width: '10px',
+                height: '10px',
+                transform: 'rotate(45deg)',
+                zIndex: 1,
+              }}
+            />
+          )
+        })}
         {...state}
         // contentProps={{ style: { background: 'red' } }}
       >
-        Content
+        <div style={{ width: '200px', height: '200px' }}>Content</div>
       </Balloon>
     )
   },
