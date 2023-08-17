@@ -11,6 +11,7 @@ import { assertValidElement, setRefs } from '../../../utils/react'
 import type { ReactElementWithRef } from '../../../utils/react'
 // https://github.com/sashulinator/a-align
 import Align, { Offset, OnAligned, Overflow, Point, Points } from '../../align'
+import { adjustPoints } from '../lib/adjust-placement'
 
 Popover.displayName = 'a-Popover'
 
@@ -21,7 +22,11 @@ export interface Props {
   /**
    * The Element that displays the popover.
    */
-  children: ReactElementWithRef<HTMLElement>
+  children?: ReactElementWithRef<HTMLElement>
+
+  renderTarget?:
+    | ((props: { ref: React.ForwardedRef<HTMLElement> } & Props & { adjustedPoints: Points }) => JSX.Element | null)
+    | undefined
 
   /**
    * Flag indicating whether the popover is currently open.
@@ -31,12 +36,19 @@ export interface Props {
   /**
    * The content to be displayed in the popover.
    */
-  content: ReactElementWithRef<HTMLElement>
+  content?: ReactElementWithRef<HTMLElement>
+
+  /**
+   * The content to be displayed in the popover.
+   */
+  renderContent?:
+    | ((props: { ref: React.ForwardedRef<HTMLElement> } & Props & { adjustedPoints: Points }) => JSX.Element | null)
+    | undefined
 
   /**
    * An optional x/y offset for the content
    */
-  contentOffset?: Offset
+  offset?: Offset
 
   /**
    * An Array that specifies the positioning of the popover relative to its trigger element.
@@ -91,35 +103,67 @@ export interface Props {
  * @returns {JSX.Element | null}
  */
 export default function Popover(props: Props): JSX.Element {
-  const points = props.placement ? toPoints(props.placement) : props.points ?? ['tc', 'bc']
-  const sourceRef = React.useRef<null | HTMLDivElement>(null)
+  const points = _getPoints()
+  const content = _getContent()
+  const children = _getChildren()
+
+  const sourceRef = React.useRef<null | HTMLElement>(null)
   const [childrenEl, setChildrenEl] = React.useState<null | HTMLElement>(null)
+  const [adjustedPoints, setAdjustedPoints] = React.useState(points)
 
   useOnClickOutside(sourceRef, fns(props.onClickOutside, props.onClose))
   useEventListener('keydown', keyListener({ key: 'Escape' }, fns(props.onEscKeyDown, props.onClose)))
 
-  assertValidElement(props.children)
-  assertValidElement(props.content)
-
-  const clonedChildren = React.cloneElement(props.children, { ref: setRefs(props.children.ref, setChildrenEl) })
-  const clonedContent = React.cloneElement(props.content, { ref: setRefs(props.content.ref, sourceRef) })
-
   return (
     <>
-      {clonedChildren}
+      {children}
       {props.opened && childrenEl && (
         <Align
+          onAligned={fns(props.onAligned, (ret) => setAdjustedPoints(adjustPoints({ ...ret, adjustedPoints })))}
           targetElement={childrenEl}
           points={points}
           overflow={props.overflow}
           containerElement={props.containerElement}
           deps={props.deps}
-          offset={props.contentOffset}
-          onAligned={props.onAligned}
+          offset={props.offset}
         >
-          {clonedContent}
+          {content}
         </Align>
       )}
     </>
   )
+
+  // Private
+
+  function _getPoints(): Points {
+    if (props.points) return props.points
+    if (props.placement) return toPoints(props.placement)
+    return ['tc', 'bc']
+  }
+
+  function _getContent(): ReactElementWithRef<HTMLElement> {
+    if (props.renderContent) {
+      return React.createElement(props.renderContent, {
+        ref: sourceRef,
+        adjustedPoints,
+        ...props,
+      }) as ReactElementWithRef<HTMLElement>
+    }
+
+    assertValidElement(props.content)
+    return React.cloneElement(props.content, { ref: setRefs(props.content.ref, sourceRef) })
+  }
+
+  function _getChildren(): ReactElementWithRef<HTMLElement> {
+    if (props.renderTarget) {
+      return React.createElement(props.renderTarget, {
+        ref: setChildrenEl,
+        adjustedPoints,
+        ...props,
+      }) as ReactElementWithRef<HTMLElement>
+    }
+
+    assertValidElement(props.children)
+    return React.cloneElement(props.children, { ref: setRefs(props.children.ref, setChildrenEl) })
+  }
 }
