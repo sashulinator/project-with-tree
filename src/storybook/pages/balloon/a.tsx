@@ -41,7 +41,7 @@ export default {
                 ref={setRefs(ref)}
                 style={{
                   position: 'absolute',
-                  background: 'red',
+                  background: 'blue',
                   width: '10px',
                   height: '10px',
                   transform: 'rotate(45deg)',
