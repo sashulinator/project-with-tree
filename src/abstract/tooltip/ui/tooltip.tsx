@@ -1,11 +1,13 @@
-import { Point } from 'dom-align-ts'
+import { Point, Points } from 'dom-align-ts'
 import React, { forwardRef, useState } from 'react'
 
-import Popover, { Overflow, Render } from '~/abstract/popover'
+import Popover, { Overflow, Render, toPoints } from '~/abstract/popover'
 import { c } from '~/utils/core'
 import { fns } from '~/utils/function'
 import { useDebounceCallback } from '~/utils/hooks'
 import { ReactElementWithRef, setRefs } from '~/utils/react'
+
+import { getOffset } from '..'
 
 Tooltip.displayName = 'a-Tooltip'
 
@@ -76,14 +78,18 @@ export default function Tooltip(props: Props): JSX.Element {
 
   const [opened, setOpened] = useState(false)
   const [openWithDebounce, clearDebounce] = useDebounceCallback(() => setOpened(true), delay)
+  const points = toPoints(placement)
+  const [adjustedPoints, setAdjustedPoints] = useState<Points | null>(points)
 
   return (
     <Popover
       opened={opened}
-      placement={placement}
+      points={points}
       onClose={onClose}
+      offset={getOffset(adjustedPoints)}
       onClickOutside={onClickOutside}
       overflow={overflow}
+      onPointsAdjusted={setAdjustedPoints}
       onEscKeyDown={onEscKeyDown}
       containerElement={containerElement}
       contentProps={{ ...balloonProps, className: c(className, Tooltip.displayName) }}

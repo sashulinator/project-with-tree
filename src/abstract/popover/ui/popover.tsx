@@ -1,6 +1,4 @@
-import * as React from 'react'
-
-import { Any } from '~/utils/core'
+import React, { ForwardedRef, FunctionComponentElement } from 'react'
 
 import { adjustPoints, toPoints } from '..'
 // https://github.com/sashulinator/utils-dom-events
@@ -11,7 +9,7 @@ import { useEventListener, useOnClickOutside } from '../../../utils/hooks'
 // https://github.com/sashulinator/utils-react
 import type { ReactElementWithRef } from '../../../utils/react'
 // https://github.com/sashulinator/a-align
-import Align, { Offset, OnAligned, Overflow, Point, Points } from '../../align'
+import Align, { AlignResult, Offset, OnAligned, Overflow, Point, Points, arePointsEqual } from '../../align'
 
 Popover.displayName = 'a-Popover'
 
@@ -88,6 +86,11 @@ export interface Props {
    *  An optional function to be called after the child element is positioned.
    */
   onAligned?: OnAligned | undefined
+
+  /**
+   *  An optional function to be called after the child element is positioned.
+   */
+  onPointsAdjusted?: (adjustedPoints: Points) => void
 }
 
 /**
@@ -100,22 +103,22 @@ export default function Popover(props: Props): JSX.Element {
   const points = _getPoints()
 
   const sourceRef = React.useRef<null | HTMLElement>(null)
-  const [childrenEl, setChildrenEl] = React.useState<null | HTMLElement>(null)
+  const [targetElement, setTargetElement] = React.useState<null | HTMLElement>(null)
   const [adjustedPoints, setAdjustedPoints] = React.useState(points)
 
-  const content = _getContent()
-  const children = _getChildren()
+  const content = _createElement(props.renderContent, sourceRef, props.contentProps)
+  const target = _createElement(props.renderTarget, setTargetElement, undefined)
 
   useOnClickOutside(sourceRef, fns(props.onClickOutside, props.onClose))
   useEventListener('keydown', keyListener({ key: 'Escape' }, fns(props.onEscKeyDown, props.onClose)))
 
   return (
     <>
-      {children}
-      {props.opened && childrenEl && (
+      {target}
+      {props.opened && targetElement && (
         <Align
-          onAligned={fns(props.onAligned, (ret) => setAdjustedPoints(adjustPoints({ ...ret, adjustedPoints })))}
-          targetElement={childrenEl}
+          onAligned={fns(props.onAligned, _onAligned)}
+          targetElement={targetElement}
           points={points}
           overflow={props.overflow}
           containerElement={props.containerElement}
@@ -130,30 +133,26 @@ export default function Popover(props: Props): JSX.Element {
 
   // Private
 
+  function _onAligned(ret: AlignResult): void {
+    const newAdjustedPoints = adjustPoints({ ...ret })
+    if (!arePointsEqual(newAdjustedPoints, adjustedPoints)) {
+      setAdjustedPoints(points)
+      props.onPointsAdjusted?.(points)
+    }
+  }
+
   function _getPoints(): Points {
     if (props.points) return props.points
     if (props.placement) return toPoints(props.placement)
     return ['tc', 'bc']
   }
 
-  function _getContent(): React.FunctionComponentElement<RenderProps> {
-    return React.createElement(props.renderContent, {
-      ref: sourceRef,
-      ...props.contentProps,
-      popoverProps: {
-        adjustedPoints,
-        ...props,
-      },
-    })
-  }
-
-  function _getChildren(): React.FunctionComponentElement<RenderProps> {
-    return React.createElement(props.renderTarget, {
-      ref: setChildrenEl,
-      popoverProps: {
-        adjustedPoints,
-        ...props,
-      },
-    })
+  function _createElement(
+    render: Render,
+    ref: ForwardedRef<HTMLElement>,
+    compProps: Record<string, unknown> | undefined
+  ): FunctionComponentElement<RenderProps> {
+    const popoverProps = { adjustedPoints, ...props }
+    return React.createElement(render, { ref, ...compProps, popoverProps })
   }
 }
