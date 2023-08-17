@@ -5,7 +5,8 @@ export function onDropItemToItem(
   editorValue: EditorValues[],
   parentId: string,
   id: string,
-  draggableItem: DraggableItem
+  draggableItem: DraggableItem,
+  direction: 'up' | 'down' = 'down'
 ): EditorValues[] {
   const result = editorValue
     .map((arr) => {
@@ -16,7 +17,11 @@ export function onDropItemToItem(
             .filter((item) => item.id !== draggableItem?.id)
             .map((item) => {
               if (item.id === id && draggableItem) {
-                return [item, { value: draggableItem.value, id: draggableItem.id }]
+                if (direction === 'up') {
+                  return [{ value: draggableItem.value, id: draggableItem.id }, item]
+                } else {
+                  return [item, { value: draggableItem.value, id: draggableItem.id }]
+                }
               }
               return item
             })

@@ -1,10 +1,11 @@
 import './add-delete-buttons.css'
 
 import { useRecoilState } from 'recoil'
-import uniqid from 'uniqid'
 
 import Flex, { FlexProps } from '~/abstract/flex'
-import { EditorValues, editorRulesValuesAtom } from '~/entities/rules/models/editorRulesValues'
+import { getArrAddCondition } from '~/entities/rules/lib/get-arr-add-condition'
+import { getArrDeleteCondition } from '~/entities/rules/lib/get-arr-delete-condition'
+import { editorRulesValuesAtom } from '~/entities/rules/models/editorRulesValues'
 import { GhostButton } from '~/ui/button'
 import { Close, Plus } from '~/ui/icon'
 import { c } from '~/utils/core'
@@ -39,30 +40,10 @@ export default function AddDeleteButtons(props: ButtonsProps): JSX.Element {
     if (editorRulesValues.length === 1) {
       return
     }
-    const result = editorRulesValues
-      .map((arr) => {
-        if (arr.valueArr.length !== 1) {
-          return { ...arr, valueArr: arr.valueArr.filter((item) => item.id !== id) }
-        }
-        return { ...arr, valueArr: arr.valueArr.filter(() => arr.id !== id) }
-      })
-      .filter((arr) => arr.valueArr.length > 0)
-    setEditorValues(result)
+    setEditorValues(getArrDeleteCondition(editorRulesValues, id))
   }
 
   function addCondition(): void {
-    const index = editorRulesValues.findIndex((item) => item.id === id)
-    const result: EditorValues[] = []
-    editorRulesValues.forEach((item, i) => {
-      result.push(item)
-      if (i === index) {
-        result.push({
-          id: uniqid(),
-          valueArr: [{ id: uniqid(), value: '' }],
-        })
-      }
-    })
-
-    setEditorValues(result)
+    setEditorValues(getArrAddCondition(editorRulesValues, id))
   }
 }

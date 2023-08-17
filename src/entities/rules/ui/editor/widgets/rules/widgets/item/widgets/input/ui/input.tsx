@@ -1,3 +1,5 @@
+import './input.css'
+
 import { useRef } from 'react'
 import { Mention } from 'react-mentions'
 import { useRecoilState, useRecoilValue } from 'recoil'
@@ -22,6 +24,8 @@ interface EditorInputProps {
   parentId: string
 }
 
+Input.displayName = 'Editor-w-Rules-w-Input'
+
 export default function Input(props: EditorInputProps): JSX.Element {
   const { value, id, parentId } = props
 
@@ -34,54 +38,19 @@ export default function Input(props: EditorInputProps): JSX.Element {
   // useEffect(() => console.log(editorValue), [editorValue])
   // TODO ??? Создать e-Domain-ui-Mentions ???
   return (
-    <div
-      draggable
-      style={{
-        position: 'relative',
-        borderRadius: '9px',
-        background: 'var(--editorItem_bg)',
-        padding: '20px',
-        border: '1px solid aqua',
-      }}
-      onDragOver={dragOver}
-      onDrop={drop}
-      onDragStart={dragStart}
-    >
-      {/* <div
-        data-direction='up'
-        style={{
-          position: 'absolute',
-          background: '#8DD3D488',
-          top: '0',
-          left: '0',
-          width: '100%',
-          height: '50%',
-          opacity: 0.5,
-        }}
-      ></div>
-      <div
-        data-direction='down'
-        style={{
-          position: 'absolute',
-          background: '#8DD3D488',
-          bottom: '0',
-          left: '0',
-          width: '100%',
-          height: '50%',
-          opacity: 0.5,
-        }}
-      ></div> */}
-      <div>
-        <MentionsInput value={value} onChange={handleChangeMention} inputRef={inputRef}>
-          <Mention
-            trigger='@'
-            data={mentionsData}
-            style={{
-              backgroundColor: 'var(--mentionItem_bg)',
-            }}
-          />
-        </MentionsInput>
-      </div>
+    <div draggable className={Input.displayName} onDragOver={dragOver} onDrop={drop} onDragStart={dragStart}>
+      <div onDrop={(_): void => drop(_, 'up')} className='marker up' />
+      <div onDrop={(_): void => drop(_, 'down')} className='marker down' />
+
+      <MentionsInput value={value} onChange={handleChangeMention} inputRef={inputRef}>
+        <Mention
+          trigger='@'
+          data={mentionsData}
+          style={{
+            backgroundColor: 'var(--mentionItem_bg)',
+          }}
+        />
+      </MentionsInput>
     </div>
   )
 
@@ -89,7 +58,7 @@ export default function Input(props: EditorInputProps): JSX.Element {
     setEditorValues((arr) => onChangeTextarea(arr, id, v))
   }
 
-  function drop(e: React.DragEvent<HTMLDivElement>): void {
+  function drop(e: React.DragEvent<HTMLDivElement>, direction: 'up' | 'down' = 'down'): void {
     e.preventDefault()
     e.stopPropagation()
     if (draggableCard) {
@@ -98,7 +67,7 @@ export default function Input(props: EditorInputProps): JSX.Element {
       inputRef.current?.focus()
     }
     if (draggableItem && id !== draggableItem.id) {
-      mergeInputs()
+      setEditorValues(onDropItemToItem(editorValue, parentId, id, draggableItem, direction))
       setDraggableItem(null)
     }
   }
@@ -113,11 +82,5 @@ export default function Input(props: EditorInputProps): JSX.Element {
       setDraggableCard(null)
     }
     setDraggableItem({ value: value, id: id, parentId: parentId })
-  }
-
-  function mergeInputs(): void {
-    if (draggableItem) {
-      setEditorValues(onDropItemToItem(editorValue, parentId, id, draggableItem))
-    }
   }
 }

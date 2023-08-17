@@ -30,7 +30,7 @@ export function Rules(): JSX.Element {
   const flag = useRef(false)
 
   const [draggableItem, setDraggableItem] = useRecoilState(draggableItemAtom)
-  console.log(editorRulesValues)
+
   useEffect(() => {
     if (flag.current) {
       flag.current = false
@@ -51,7 +51,7 @@ export function Rules(): JSX.Element {
   }, [editorRulesValues])
 
   return (
-    <ul className={c(Rules.displayName)} onDragOver={dragOver} onDrop={drop} id='ruleEditor-w-Rules'>
+    <ul className={c(Rules.displayName)} onDragOver={dragOver} onDrop={dropToBoard} id='ruleEditor-w-Rules'>
       <Flex className='header' gap='xl' mainAxis='space-between' crossAxis='center'>
         <Flex gap='xl'>
           <GhostButton height={'l'} padding={'s'} onClick={back}>
@@ -79,7 +79,7 @@ export function Rules(): JSX.Element {
               )}
               <Item id={item.id} values={item.valueArr} />
             </div>
-            <AddDeleteButtons id={item.id} />
+            <AddDeleteButtons rootProps={{ onDrop: (_) => dropToBoard(_, item.id) }} id={item.id} />
           </li>
         )
       })}
@@ -88,11 +88,15 @@ export function Rules(): JSX.Element {
 
   // Private
 
-  function drop(e: React.DragEvent<HTMLElement>): void {
+  function dropToBoard(e: React.DragEvent<HTMLElement>, parentId: string | null = null): void {
     e.preventDefault()
     e.stopPropagation()
-    if ((e.target as HTMLElement).id === 'ruleEditor-w-Rules' && draggableItem) {
-      setEditorVales(onDropItemToCanvas(editorRulesValues, draggableItem))
+    // if ((e.target as HTMLElement).id === 'ruleEditor-w-Rules' && draggableItem) {
+    //   setEditorVales(onDropItemToCanvas(editorRulesValues, draggableItem))
+    //   setDraggableItem(null)
+    // }
+    if (draggableItem) {
+      setEditorVales(onDropItemToCanvas(editorRulesValues, draggableItem, parentId))
       setDraggableItem(null)
     }
   }

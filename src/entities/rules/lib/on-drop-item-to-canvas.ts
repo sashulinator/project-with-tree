@@ -3,7 +3,11 @@ import uniqid from 'uniqid'
 import { DraggableItem } from '../models/draggableItem'
 import { EditorValues } from '../models/editorRulesValues'
 
-export function onDropItemToCanvas(editorRulesValues: EditorValues[], draggableItem: DraggableItem): EditorValues[] {
+export function onDropItemToCanvas(
+  editorRulesValues: EditorValues[],
+  draggableItem: DraggableItem,
+  parentId: string | null = null
+): EditorValues[] {
   const result = editorRulesValues.map((arr) => {
     if (arr.id === draggableItem?.parentId) {
       return { ...arr, valueArr: arr.valueArr.filter((item) => item.id !== draggableItem.id) }
@@ -11,8 +15,19 @@ export function onDropItemToCanvas(editorRulesValues: EditorValues[], draggableI
 
     return arr
   })
+  if (!parentId) {
+    return [...result, { id: uniqid(), valueArr: [{ value: draggableItem.value, id: draggableItem.id }] }].filter(
+      (item) => item.valueArr.length
+    )
+  }
 
-  return [...result, { id: uniqid(), valueArr: [{ value: draggableItem.value, id: draggableItem.id }] }].filter(
-    (item) => item.valueArr.length
-  )
+  return result
+    .map((item) => {
+      if (item.id === parentId) {
+        return [item, { id: uniqid(), valueArr: [{ value: draggableItem.value, id: draggableItem.id }] }]
+      }
+      return item
+    })
+    .flat(1)
+    .filter((item) => item.valueArr.length)
 }
