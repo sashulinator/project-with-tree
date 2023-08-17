@@ -4,7 +4,7 @@ import { Point } from 'dom-align-ts'
 import React, { useState } from 'react'
 
 import Callout from '~/abstract/callout'
-import { PopoverProps } from '~/abstract/popover'
+import { DepricatedPopoverProps } from '~/abstract/popover'
 import Balloon, { BalloonProps } from '~/ui/balloon'
 import { fns } from '~/utils/function'
 import { useDebounceCallback } from '~/utils/hooks'
@@ -20,7 +20,7 @@ export interface Props {
   placement?: Point
 
   /* Конфиг в случае overflow */
-  overflow?: PopoverProps['overflow']
+  overflow?: DepricatedPopoverProps['overflow']
 
   /* Контент */
   content: React.ReactNode
