@@ -9,7 +9,8 @@ import uiCheckbox from './pages/checkbox/ui'
 import uiLabeled from './pages/labeled/ui'
 import uiPaginator from './pages/paginator/ui'
 import aPopover from './pages/popover/a'
-import uiTolltip from './pages/tooltip/ui'
+import aTooltip from './pages/tooltip/a'
+import uiTooltip from './pages/tooltip/ui'
 
 export const routes = [
   ['Align', aAlign],
@@ -20,5 +21,5 @@ export const routes = [
   ['Labeled', uiLabeled],
   ['Paginator', uiPaginator],
   ['Popover', aPopover],
-  ['Tooltip', uiTolltip],
+  ['Tooltip', aTooltip, uiTooltip],
 ] as const

@@ -6,7 +6,7 @@ import { calcArrowOffset } from '..'
 import { assertDefined, c } from '../../../utils/core'
 import { setRefs } from '../../../utils/react'
 import { Point, flipPointHorizontally, flipPointVertically } from '../../callout'
-import Popover, { OnAligned, Points, PopoverProps } from '../../popover'
+import Popover, { OnAligned, Render } from '../../popover'
 
 BalloonComponent.displayName = 'a-Balloon'
 
@@ -17,9 +17,7 @@ export interface Props extends React.HTMLAttributes<HTMLDivElement> {
   /**
    * Props to be passed to the arrow element of the Balloon component.
    */
-  renderArrow: (
-    props: { ref: React.ForwardedRef<HTMLElement> } & PopoverProps & { adjustedPoints: Points }
-  ) => JSX.Element
+  renderArrow: Render
 
   /**
    * The position of the balloon relative to its target element. The arrow of the balloon is calculated based on this prop.

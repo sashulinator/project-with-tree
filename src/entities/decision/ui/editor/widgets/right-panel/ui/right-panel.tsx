@@ -56,7 +56,7 @@ function RightPanelComponent(props: Props): JSX.Element | null {
         RightPanelComponent.displayName,
         fullscreen && '--fullscreen'
       )}
-      offsetX={33}
+      from={{ x: 33 }}
     >
       <Resizable {...props.resizableProps} direction='right' />
       <Flex className='header' gap='m' crossAxis='center' mainAxis='space-between' width='100%'>
