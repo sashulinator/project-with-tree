@@ -16,7 +16,7 @@ import { _align } from '../_private'
 
 Align.displayName = 'a-Align'
 
-export type AlignResult = ReturnType<typeof alignElement>
+export type AlignResult = ReturnType<typeof alignElement> & { adjustedPoints: Points }
 
 export type OnAligned = (ret: AlignResult) => void
 

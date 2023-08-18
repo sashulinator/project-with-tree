@@ -12,5 +12,5 @@ export type { Props as PopoverProps, Render, RenderProps } from './ui/popover'
 /**
  * reexports
  */
-export { flipPointHorizontally, flipPointVertically, adjustPoints } from '../align'
+export { flipPointHorizontally, flipPointVertically, adjustPoints, arePointsEqual } from '../align'
 export type { Overflow, Offset, Point, Points, OnAligned } from '../align'

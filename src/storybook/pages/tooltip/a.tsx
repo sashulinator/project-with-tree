@@ -1,4 +1,3 @@
-import { flipHorizontally } from 'dom-align-ts/dist/lib/point/flip'
 import { forwardRef } from 'react'
 
 import Balloon from '~/abstract/balloon'
@@ -6,6 +5,7 @@ import Flex from '~/abstract/flex/ui/flex'
 import Tooltip, { TooltipProps } from '~/abstract/tooltip'
 import { Config, Props } from '~/storybook/types'
 import { H1 } from '~/ui/heading'
+import { c } from '~/utils/core'
 import { setRefs } from '~/utils/react'
 
 interface State {
@@ -31,11 +31,12 @@ export default {
     return (
       <Flex dir='column' gap='xl' width='100%'>
         <Tooltip
+          className='story-Tooltip'
           renderBalloon={forwardRef(function Element(props, ref): JSX.Element {
             const placement = state.placement
-
             return (
               <Balloon
+                className={c(props.className)}
                 placement={placement}
                 ref={setRefs(ref)}
                 contentProps={{

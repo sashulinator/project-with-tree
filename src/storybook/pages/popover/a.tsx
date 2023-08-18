@@ -1,6 +1,6 @@
 import { forwardRef, useState } from 'react'
 
-import Popover, { PopoverProps } from '~/abstract/popover'
+import Popover, { Points, PopoverProps, arePointsEqual } from '~/abstract/popover'
 import { Config, Props } from '~/storybook/types'
 import ConfigLink from '~/storybook/ui/config-link/ui/config-link'
 import { H1 } from '~/ui/heading'
@@ -40,6 +40,7 @@ export default {
     } = props
 
     const [containerRef, setContainerRef] = useState<null | HTMLElement>()
+    const [adjustedPoints, setAdjustedPoints] = useState<Points>(['tl', 'tc'])
 
     return (
       <div style={{ width: '100%', height: '100%' }}>
@@ -53,6 +54,9 @@ export default {
           }}
         >
           <Popover
+            onAligned={(result): void => {
+              if (!arePointsEqual(result.adjustedPoints, adjustedPoints)) setAdjustedPoints(result.adjustedPoints)
+            }}
             renderContent={forwardRef(function Element(props, ref) {
               return (
                 <div
@@ -60,19 +64,16 @@ export default {
                   style={{
                     width: '400px',
                     height: '100px',
-                    background: props.popoverProps.adjustedPoints[0] === 'cl' ? 'red' : 'blue',
+                    background: adjustedPoints[0] === 'cl' ? 'red' : 'blue',
                   }}
                 >
-                  Points {props.popoverProps.adjustedPoints.join(' - ')}
+                  Points {adjustedPoints.join(' - ')}
                 </div>
               )
             })}
             renderTarget={forwardRef(function Element(props, ref): JSX.Element {
               return (
-                <button
-                  ref={setRefs(ref)}
-                  style={{ background: props.popoverProps.adjustedPoints[0] === 'cl' ? 'red' : 'blue' }}
-                >
+                <button ref={setRefs(ref)} style={{ background: adjustedPoints[0] === 'cl' ? 'red' : 'blue' }}>
                   Target
                 </button>
               )

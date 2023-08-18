@@ -1,6 +1,8 @@
 import React, { ForwardedRef, FunctionComponentElement } from 'react'
 
-import { adjustPoints, toPoints } from '..'
+import { c } from '~/utils/core'
+
+import { toPoints } from '..'
 // https://github.com/sashulinator/utils-dom-events
 import { keyListener } from '../../../utils/dom-event'
 // https://github.com/sashulinator/utils-function
@@ -9,17 +11,22 @@ import { useEventListener, useOnClickOutside } from '../../../utils/hooks'
 // https://github.com/sashulinator/utils-react
 import type { ReactElementWithRef } from '../../../utils/react'
 // https://github.com/sashulinator/a-align
-import Align, { AlignResult, Offset, OnAligned, Overflow, Point, Points, arePointsEqual } from '../../align'
+import Align, { Offset, OnAligned, Overflow, Point, Points } from '../../align'
 
 Popover.displayName = 'a-Popover'
 
-export type RenderProps = { ref: React.ForwardedRef<HTMLElement>; popoverProps: Props & { adjustedPoints: Points } }
+export type RenderProps = Props & { ref: React.ForwardedRef<HTMLElement> }
 export type Render = (props: RenderProps) => JSX.Element | null
 
 /**
  * Props for the `Popover` component, which displays a content over a target element.
  */
 export interface Props {
+  /**
+   * Classnames
+   */
+  className?: string | undefined
+
   /**
    * Flag indicating whether the popover is currently open.
    */
@@ -35,6 +42,9 @@ export interface Props {
    */
   renderContent: Render
 
+  /**
+   * Props will be passed to `renderContent`
+   */
   contentProps?: Record<string, unknown> | undefined
 
   /**
@@ -55,7 +65,7 @@ export interface Props {
   /**
    * An optional x/y offset for the content
    */
-  offset?: Offset
+  offset?: Offset | undefined
 
   /**
    * An optional configuration to handle positioning when the content overflows the container.
@@ -86,11 +96,6 @@ export interface Props {
    *  An optional function to be called after the child element is positioned.
    */
   onAligned?: OnAligned | undefined
-
-  /**
-   *  An optional function to be called after the child element is positioned.
-   */
-  onPointsAdjusted?: (adjustedPoints: Points) => void
 }
 
 /**
@@ -104,9 +109,9 @@ export default function Popover(props: Props): JSX.Element {
 
   const sourceRef = React.useRef<null | HTMLElement>(null)
   const [targetElement, setTargetElement] = React.useState<null | HTMLElement>(null)
-  const [adjustedPoints, setAdjustedPoints] = React.useState(points)
 
-  const content = _createElement(props.renderContent, sourceRef, props.contentProps)
+  const className = c(props.className, Popover.displayName)
+  const content = _createElement(props.renderContent, sourceRef, { ...props, ...props.contentProps, className })
   const target = _createElement(props.renderTarget, setTargetElement, undefined)
 
   useOnClickOutside(sourceRef, fns(props.onClickOutside, props.onClose))
@@ -117,7 +122,7 @@ export default function Popover(props: Props): JSX.Element {
       {target}
       {props.opened && targetElement && (
         <Align
-          onAligned={fns(props.onAligned, _onAligned)}
+          onAligned={fns(props.onAligned)}
           targetElement={targetElement}
           points={points}
           overflow={props.overflow}
@@ -133,14 +138,6 @@ export default function Popover(props: Props): JSX.Element {
 
   // Private
 
-  function _onAligned(ret: AlignResult): void {
-    const newAdjustedPoints = adjustPoints({ ...ret })
-    if (!arePointsEqual(newAdjustedPoints, adjustedPoints)) {
-      setAdjustedPoints(points)
-      props.onPointsAdjusted?.(points)
-    }
-  }
-
   function _getPoints(): Points {
     if (props.points) return props.points
     if (props.placement) return toPoints(props.placement)
@@ -152,7 +149,6 @@ export default function Popover(props: Props): JSX.Element {
     ref: ForwardedRef<HTMLElement>,
     compProps: Record<string, unknown> | undefined
   ): FunctionComponentElement<RenderProps> {
-    const popoverProps = { adjustedPoints, ...props }
-    return React.createElement(render, { ref, ...compProps, popoverProps })
+    return React.createElement(render, { ref, ...props, ...compProps })
   }
 }
