@@ -1,6 +1,6 @@
 import { alignElement } from 'dom-align-ts'
 
-import { AlignProps, Config } from '..'
+import { AlignProps, Config, adjustPoints } from '..'
 
 type Context = {
   config: Config
@@ -12,7 +12,7 @@ type Context = {
 export function _align(ctx: Context): void {
   if (!ctx.targetElement || !ctx.sourceElement) return
 
-  const ret = alignElement(ctx.sourceElement, ctx.targetElement, ctx.config)
+  const result = alignElement(ctx.sourceElement, ctx.targetElement, ctx.config)
 
-  ctx.onAlignedRef.current?.(ret)
+  ctx.onAlignedRef.current?.({ ...result, adjustedPoints: adjustPoints(result) })
 }

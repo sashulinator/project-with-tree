@@ -1,34 +1,50 @@
 import './tooltip.scss'
 
-import React, { forwardRef } from 'react'
+import React from 'react'
 
-import { Overflow, Point } from '~/abstract/align'
-import Balloon from '~/abstract/balloon'
-import ATooltip from '~/abstract/tooltip'
-import { AppearFrom } from '~/ui/animation'
-import { Position, c } from '~/utils/core'
-import { setRefs } from '~/utils/react'
+import ATooltip, { Render } from '~/abstract/tooltip'
+import { c } from '~/utils/core'
+import { ReactElementWithRef } from '~/utils/react'
+
+import { Balloon, Overflow, Point } from '..'
 
 Tooltip.displayName = 'ui-Tooltip'
 
 export interface Props extends React.HTMLAttributes<HTMLElement> {
-  /* Target  */
-  children: React.ReactElement<React.HTMLAttributes<HTMLElement>>
+  /**
+   * Target
+   */
+  children: ReactElementWithRef<HTMLElement, React.HTMLAttributes<HTMLElement>>
 
-  /* Позиция для Content */
-  placement?: Point
-
-  /* Конфиг в случае overflow */
-  overflow?: Overflow | undefined
-
-  /* Контент */
+  /**
+   * Tooltip content
+   */
   content: React.ReactNode
 
-  /* Задержка */
+  /**
+   * Delay before opening
+   */
   delay?: number | undefined
 
-  /* Срабатывает при onClickOutside и onEscKeyDown */
-  onClose?: (() => void) | undefined
+  /**
+   * Tooltip placent
+   */
+  placement?: Point | undefined
+
+  /**
+   * The container element for the component; defaults to `document.body`.
+   */
+  containerElement?: HTMLElement | null | undefined
+
+  /**
+   * Overflow config
+   */
+  overflow?: Overflow | undefined
+
+  /**
+   * A function that is called when the popover is closed.
+   */
+  onClose?: ((e: MouseEvent | TouchEvent | KeyboardEvent) => void) | undefined
 }
 
 /**
@@ -38,63 +54,16 @@ export interface Props extends React.HTMLAttributes<HTMLElement> {
  * @returns
  */
 export default function Tooltip(props: Props): JSX.Element {
-  const { delay = 1000, placement = 'tc', children, content, overflow, onClose, className, ...divProps } = props
+  const { delay = 500, placement = 'tc', content, className, ...tooltipProps } = props
 
   return (
     <ATooltip
-      {...divProps}
+      {...tooltipProps}
       delay={delay}
-      overflow={overflow}
-      onClose={onClose}
+      className={c(className, Tooltip.displayName)}
       placement={placement}
-      renderBalloon={forwardRef(function Element(props, ref): JSX.Element {
-        return (
-          <AppearFrom duration={100} {...getAnimationPosition(placement)} style={{ position: 'fixed', zIndex: 1 }}>
-            <Balloon
-              className={c(className, Tooltip.displayName)}
-              placement={placement}
-              ref={setRefs(ref)}
-              contentProps={{ className: 'content', style: { position: 'absolute' } }}
-              renderArrow={forwardRef(function Element(props, ref): JSX.Element {
-                return <div className='arrow' ref={setRefs(ref)} style={{ position: 'absolute' }} />
-              })}
-            >
-              {content}
-            </Balloon>
-          </AppearFrom>
-        )
-      })}
-    >
-      {children}
-    </ATooltip>
+      renderBalloon={Balloon as unknown as Render}
+      balloonProps={{ content, placement }}
+    />
   )
-
-  function getAnimationPosition(placement: Point): { from: Position; to: Position } {
-    const from = { x: 0, y: 0 }
-    const to = { x: 0, y: 0 }
-
-    if (placement.charAt(0) === 'b') {
-      from.y = -5
-      to.y = 5
-      return { from, to }
-    }
-    if (placement.charAt(0) === 't') {
-      from.y = 5
-      to.y = -5
-      return { from, to }
-    }
-    if (placement.charAt(1) === 'l') {
-      from.x = 5
-      to.x = -5
-      return { from, to }
-    }
-
-    if (placement.charAt(1) === 'r') {
-      from.x = -5
-      to.x = 5
-      return { from, to }
-    }
-
-    return { from, to }
-  }
 }

@@ -62,8 +62,6 @@ function BalloonComponent(props: Props, ref: ForwardedRef<HTMLElement>): JSX.Ele
   const [containerEl, setContainerEl] = React.useState<HTMLElement | null>(null)
   const contentRef = useRef<HTMLElement>(null)
 
-  console.log('placement', placement)
-
   return (
     <div
       {...divProps}
@@ -78,11 +76,7 @@ function BalloonComponent(props: Props, ref: ForwardedRef<HTMLElement>): JSX.Ele
         renderContent={renderArrow}
         renderTarget={forwardRef(function Element(_, targetRef) {
           return (
-            <div
-              {...contentProps}
-              ref={setRefs(targetRef, contentRef, syncSizes)}
-              className={c('content', contentProps.className)}
-            >
+            <div {...contentProps} ref={setRefs(targetRef, contentRef, syncSizes)}>
               {children}
             </div>
           )
