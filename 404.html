@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <style>
+      html,
+      body {
+        background-color: var(--bg);
+        color: var(--color);
+        display: grid;
+        grid-template-rows: 1fr;
+        grid-template-columns: 1fr;
+        height: 100%;
+        width: 100%;
+        /* overscroll-behavior: none; */
+      }
+    </style>
+    <meta charset="UTF-8" />
+    <!-- <link rel="icon" type="image/svg+xml" href="/vite.svg" /> -->
+    <link rel="icon" type="image/x-icon" href="/project-with-tree/assets/favicon-4a5b763d.ico" />
+    <meta
+      name="viewport"
+      content="viewport-fit=cover, width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="msapplication-tap-highlight" content="no" />
+    <link rel="icon" type="image/x-icon" href="/project-with-tree/assets/favicon-4a5b763d.ico" />
+    <script type="module" crossorigin src="/project-with-tree/assets/index-439cf5f3.js"></script>
+    <link rel="modulepreload" crossorigin href="/project-with-tree/assets/vendor-5d1559fa.js">
+    <link rel="modulepreload" crossorigin href="/project-with-tree/assets/packages-ad17f75a.js">
+    <link rel="stylesheet" href="/project-with-tree/assets/index-04fbc12a.css">
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="text/javascript">
+      // Single Page Apps for GitHub Pages
+      // https://github.com/rafrex/spa-github-pages
+      // Copyright (c) 2016 Rafael Pedicini, licensed under the MIT License
+      // ----------------------------------------------------------------------
+      // This script checks to see if a redirect is present in the query string
+      // and converts it back into the correct url and adds it to the
+      // browser's history using window.history.replaceState(...),
+      // which won't cause the browser to attempt to load the new url.
+      // When the single page app is loaded further down in this file,
+      // the correct url will be waiting in the browser's history for
+      // the single page app to route accordingly.
+      (function(l) {
+        if (l.search) {
+          var q = {};
+          l.search.slice(1).split('&').forEach(function(v) {
+            var a = v.split('=');
+            q[a[0]] = a.slice(1).join('=').replace(/~and~/g, '&');
+          });
+          if (q.p !== undefined) {
+            window.history.replaceState(null, null,
+              l.pathname.slice(0, -1) + (q.p || '') +
+              (q.q ? ('?' + q.q) : '') +
+              l.hash
+            );
+          }
+        }
+      }(window.location))
+    </script>
+    <script>
+      const projectName = 'Calibri'
+      document.title = projectName
+      window.projectName = projectName
+      
+      // 🔴 CONSTANTS 🔴
+      const defaultBg = '#f6f7f8'
+      const defaultColor = '#34343c'
+      const defaultPrimary = '#0062ff'
+
+      const bg = localStorage.getItem('--bg') || defaultBg
+      const color = localStorage.getItem('--color') || defaultColor
+      const primary = localStorage.getItem('--primary') || defaultPrimary
+
+      localStorage.setItem('--bg', bg)
+      localStorage.setItem('--color', color)
+      localStorage.setItem('--primary', primary)
+      localStorage.setItem('--default-bg', defaultBg)
+      localStorage.setItem('--default-color', defaultColor)
+      localStorage.setItem('--default-primary', defaultPrimary)
+
+      setCSSVar('bg', bg)
+      setCSSVar('color', color)
+      setCSSVar('primary', primary)
+      setThemeColorMeta(bg)
+
+      // Private
+
+      function setCSSVar(name, value, element = document.documentElement) {
+        element.style.setProperty(`--${name}`, value.toString())
+      }
+
+      function setThemeColorMeta(color) {
+        const meta = document.createElement('meta')
+        meta.name = 'theme-color'
+        meta.content = color
+        document.querySelector('head')?.appendChild(meta)
+      }
+    </script>
+  </body>
+</html>

@@ -1,8 +1,0 @@
-{
-  "Login": "Login",
-  "Username": "Username",
-  "Password": "Password",
-  "success": {
-    "loggedIn": "<h4>Authorization</h4>Logged in"
-  }
-}
