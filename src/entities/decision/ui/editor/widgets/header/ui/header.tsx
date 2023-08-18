@@ -1,4 +1,4 @@
-import './decision-panel.css'
+import './header.css'
 
 import { memo } from 'react'
 
@@ -12,18 +12,18 @@ import { useUpdate } from '~/utils/hooks'
 
 import { State } from '../../..'
 
-DecisionPanelComponent.displayName = 'decision-Editor-DecisionPanel'
+HeaderComponent.displayName = 'decision-Editor-w-Header'
 
-export interface DecisionPanelProps {
-  rootProps?: React.HTMLAttributes<HTMLDivElement>
+export interface Props {
+  className?: string
   state: State
 }
 
-function DecisionPanelComponent(props: DecisionPanelProps): JSX.Element {
+function HeaderComponent(props: Props): JSX.Element {
   useUpdate(subscribeOnUpdates)
 
   return (
-    <div {...props.rootProps} className={c(DecisionPanelComponent.displayName, props.rootProps?.className)}>
+    <div className={c(props.className, HeaderComponent.displayName)}>
       <div className='left'>
         <Link to={routes.decisionList.getURL()}>Назад</Link>
       </div>
@@ -56,6 +56,6 @@ function DecisionPanelComponent(props: DecisionPanelProps): JSX.Element {
   }
 }
 
-const DecisionPanel = memo(DecisionPanelComponent)
-DecisionPanel.displayName = DecisionPanelComponent.displayName
-export default DecisionPanel
+const Header = memo(HeaderComponent)
+Header.displayName = HeaderComponent.displayName
+export default Header

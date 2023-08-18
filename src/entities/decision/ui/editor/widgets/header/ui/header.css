@@ -1,16 +1,16 @@
-.decision-Editor-DecisionPanel {
+.decision-Editor-w-Header {
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 0 var(--xxl);
 }
 
-.decision-Editor-DecisionPanel > .center > .name {
+.decision-Editor-w-Header > .center > .name {
   width: 15rem;
   margin-left: 2rem;
 }
 
-.decision-Editor-DecisionPanel > .right > .controls {
+.decision-Editor-w-Header > .right > .controls {
   display: flex;
   align-items: center;
   gap: var(--l);
