@@ -2,7 +2,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 var(--xxl);
+  padding: 0 var(--xxl) 0 0;
 }
 
 .decision-Editor-w-Header > .center > .name {
