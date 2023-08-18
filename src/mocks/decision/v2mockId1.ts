@@ -1,6 +1,6 @@
 export default {
-  _id: 'v2mockId1',
-  _rev: '1-242ad841aac3d82e5e94464504e16393',
+  id: 'v2mockId1',
+  rev: '1-242ad841aac3d82e5e94464504e16393',
   name: 'surveys_start',
   description: 'surveys start',
   createDttm: '2023-07-12T12:15:00.000',
@@ -10,6 +10,8 @@ export default {
     {
       level: 'main',
       id: 'm1',
+      x: 0,
+      y: 0,
       children: [
         {
           id: 'a1',
@@ -21,6 +23,8 @@ export default {
       name: 'Арбитраж 1',
       id: 'a1',
       maxOffers: 1,
+      x: 0,
+      y: 0,
       sortDesc: 'desc',
       arbFormula: 'communications.baseParams.OfferPriority',
       children: [
@@ -32,6 +36,8 @@ export default {
     {
       level: 'controlGroup',
       id: 'cg1',
+      x: 0,
+      y: 0,
       name: 'Выделение КГ',
       partitionType: 'syrveys_start_1',
       percentCg: 5,
@@ -44,6 +50,8 @@ export default {
     {
       level: 'decisionPoint',
       name: 'Базовые условия',
+      x: 0,
+      y: 0,
       id: 'dp1',
       mode: 'any',
       index: 2,
@@ -66,6 +74,8 @@ export default {
       level: 'decisionPoint',
       name: 'Разделение',
       id: 'dp2',
+      x: 0,
+      y: 0,
       mode: 'any',
       children: [
         {
@@ -109,6 +119,8 @@ export default {
     {
       level: 'decisionPoint',
       name: 'Прайм',
+      x: 0,
+      y: 0,
       id: 'dp3',
       mode: 'any',
       children: [
@@ -142,6 +154,8 @@ export default {
       level: 'decisionPoint',
       name: 'КП Искл',
       id: 'dp4',
+      x: 0,
+      y: 0,
       mode: 'any',
       children: [
         {
@@ -161,6 +175,8 @@ export default {
     {
       level: 'offer',
       name: 'Оффер +',
+      x: 0,
+      y: 0,
       id: 'o1',
       baseParams: {
         offerId: '1101',
@@ -181,6 +197,8 @@ export default {
     {
       level: 'offer',
       name: 'Оффер Озон',
+      x: 0,
+      y: 0,
       id: 'o2',
       baseParams: {
         offerId: '1147',
@@ -201,6 +219,8 @@ export default {
     {
       level: 'offer',
       name: 'Оффер Старт',
+      x: 0,
+      y: 0,
       id: 'o3',
       baseParams: {
         offerId: '1158',

@@ -4,12 +4,12 @@ import { Dictionary } from '~/utils/dictionary'
 
 export interface Point<P = Dictionary<Any>> {
   id: Id
-  name: string
-  description?: string
-  type: string
+  name?: string
+  level: 'arbitration' | 'main' | 'decisionPoint' | 'controlGroup' | 'offer'
   x: number
   y: number
   componentName?: string
   computation?: 'parallel' | 'successively'
   props?: P
+  children?: unknown[]
 }

@@ -16,8 +16,6 @@ export class State extends ItemState<Events> {
 
   title: Prop<'title', string>
 
-  description: Prop<'description', string | undefined>
-
   computation: Prop<'computation', 'parallel' | 'successively' | undefined>
 
   constructor(point: StateProps) {
@@ -25,9 +23,7 @@ export class State extends ItemState<Events> {
 
     this.point = point
 
-    this.title = new Prop('title', point.name, this)
-
-    this.description = new Prop('description', point.description, this)
+    this.title = new Prop('title', point.name || '_____UNDEFINED_____', this)
 
     this.computation = new Prop('computation', point.computation, this)
   }
@@ -40,7 +36,6 @@ export class State extends ItemState<Events> {
     return {
       ...this.point,
       name: this.title.value,
-      description: this.description.value || '',
       computation: this.computation.value || 'parallel',
     }
   }

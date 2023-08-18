@@ -19,9 +19,9 @@ export interface VariantPickerProps {
 function VariantPickerComponent(props: VariantPickerProps): JSX.Element {
   let Component: (props: VariantPickerProps) => JSX.Element
 
-  if (props.state.point.type === 'FILTER') {
+  if (props.state.point.level === 'decisionPoint') {
     Component = FilterNode
-  } else if (props.state.point.type === 'OFFER') {
+  } else if (props.state.point.level === 'offer') {
     Component = OfferNode
   } else {
     Component = EnterNode

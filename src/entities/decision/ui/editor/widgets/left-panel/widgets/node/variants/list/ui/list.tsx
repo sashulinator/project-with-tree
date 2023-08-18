@@ -1,9 +1,10 @@
 import './list.css'
 
-import { Id, c } from '~/utils/core'
-import Node from '../../..'
 import { NodeListState } from '~/entities/decision/ui/editor'
+import { Id, c } from '~/utils/core'
 import { useUpdate } from '~/utils/hooks'
+
+import Node from '../../..'
 
 List.displayName = 'decision-Editor-w-LeftPanel-w-Node-v-List'
 
@@ -15,9 +16,9 @@ export interface Props {
 }
 
 export default function List(props: Props): JSX.Element {
-  const filtered = Object.values(props.nodeListState.items).filter(
-    (node) => node.point.name.toUpperCase().indexOf(props.searchQuery.toUpperCase()) !== -1
-  )
+  const filtered = Object.values(props.nodeListState.items).filter((node) => {
+    return node.point.name?.toUpperCase().indexOf(props.searchQuery.toUpperCase()) !== -1
+  })
 
   useUpdate(subscribeOnUpdates)
 
