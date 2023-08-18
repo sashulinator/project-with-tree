@@ -5,5 +5,5 @@
 
 .decision-Editor-w-LeftPanel-w-Node-v-List > li {
   width: 100%;
-  padding: 0 var(--xl);
+  padding: 0 var(--m) 0 calc(var(--m) + var(--button_height__m));
 }

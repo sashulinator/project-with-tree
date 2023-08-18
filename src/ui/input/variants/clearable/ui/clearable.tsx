@@ -24,20 +24,19 @@ function ClearableInputComponent(props: Props, ref: ForwardedRef<HTMLInputElemen
       {...props}
       ref={setRefs(inputRef, ref)}
       right={
-        props.value ? (
-          <GhostButton
-            round={true}
-            height='s'
-            className='close'
-            onClick={fns(
-              preventDefault,
-              (): void => setInputValue(inputRef.current, ''),
-              (): void => inputRef.current?.focus()
-            )}
-          >
-            <Close />
-          </GhostButton>
-        ) : null
+        <GhostButton
+          round={true}
+          style={{ visibility: props.value ? 'visible' : 'hidden' }}
+          height='s'
+          className='close'
+          onClick={fns(
+            preventDefault,
+            (): void => setInputValue(inputRef.current, ''),
+            (): void => inputRef.current?.focus()
+          )}
+        >
+          <Close />
+        </GhostButton>
       }
     />
   )

@@ -2,7 +2,7 @@ import { Point } from '~/entities/point'
 import { Selection } from '~/lib/emitter'
 import { Id, Position, assertNotNull } from '~/utils/core'
 import { getStyle } from '~/utils/dom'
-import { DictionaryEvents, EmitterDictionary } from '~/utils/emitter'
+import { DictionaryEvents, EmitterDictionary, Prop } from '~/utils/emitter'
 
 import { NODE_GAP } from '../../..'
 import { NodeState } from '../../../../../../..'
@@ -12,6 +12,7 @@ export type Events = DictionaryEvents<NodeState> & {
   // ...
   selection: { value: Id[]; previous: Id[] }
   cutted: { value: Id[]; previous: Id[] }
+  searchQuery: { value: string }
 
   // События стейтов
   computation: { value: Point['computation']; item: NodeState }
@@ -34,6 +35,8 @@ export class State extends EmitterDictionary<NodeState, Events> {
 
   cutted: Selection<'cutted'>
 
+  searchQuery: Prop<'searchQuery', string>
+
   constructor(pointList: Point[]) {
     const stateList = pointList.map((point) => new NodeState(point))
     super(stateList, (s) => s.id.toString())
@@ -41,6 +44,8 @@ export class State extends EmitterDictionary<NodeState, Events> {
     this.selection = new Selection('selection', [] as Id[], this)
 
     this.cutted = new Selection('cutted', [] as Id[], this)
+
+    this.searchQuery = new Prop('searchQuery', '', this)
   }
 
   positionColumn(x: number): void {

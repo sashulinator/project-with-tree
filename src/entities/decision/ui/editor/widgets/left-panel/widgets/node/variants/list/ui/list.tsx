@@ -10,14 +10,15 @@ List.displayName = 'decision-Editor-w-LeftPanel-w-Node-v-List'
 
 export interface Props {
   nodeListState: NodeListState
-  searchQuery: string
   className?: string
   centerNode: (id: Id) => void
 }
 
 export default function List(props: Props): JSX.Element {
+  const searchQuery = props.nodeListState.searchQuery.value
+
   const filtered = Object.values(props.nodeListState.items).filter((node) => {
-    return node.point.name?.toUpperCase().indexOf(props.searchQuery.toUpperCase()) !== -1
+    return node.point.level !== 'main' && node.point.name?.toUpperCase().indexOf(searchQuery.toUpperCase()) !== -1
   })
 
   useUpdate(subscribeOnUpdates)
@@ -38,5 +39,6 @@ export default function List(props: Props): JSX.Element {
     uns.push(props.nodeListState.on('update', update))
     uns.push(props.nodeListState.on('remove', () => setTimeout(update)))
     uns.push(props.nodeListState.on('add', update))
+    uns.push(props.nodeListState.on('searchQuery', update))
   }
 }

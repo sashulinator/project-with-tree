@@ -23,8 +23,8 @@ export type { Props as EditorProps } from './ui/editor'
 /**
  * widgets
  */
-export { default as DecisionPanel } from './widgets/decision-panel'
-export type { DecisionPanelProps } from './widgets/decision-panel'
+export { default as Header } from './widgets/header'
+export type { HeaderProps } from './widgets/header'
 
 export { default as LeftPanel } from './widgets/left-panel'
 export type { LeftPanelProps } from './widgets/left-panel'

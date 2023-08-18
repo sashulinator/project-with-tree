@@ -1,15 +1,12 @@
 import './left-panel.css'
 
 import { clsx } from 'clsx'
-import { memo, useState } from 'react'
+import { memo } from 'react'
 
-import { Point } from '~/entities/point'
 import { AppearFrom } from '~/ui/animation'
-import { PrimaryButton } from '~/ui/button'
-import { Plus } from '~/ui/icon'
-import { Clearable as ClearableInput } from '~/ui/input'
 import Resizable, { ResizableProps } from '~/ui/resizable'
 import { Id } from '~/utils/core'
+import { useUpdate } from '~/utils/hooks'
 
 import { NodeList } from '..'
 import { NodeListState } from '../../..'
@@ -21,54 +18,29 @@ export interface Props {
   nodeListState: NodeListState
   resizableProps: Omit<ResizableProps, 'direction'>
   rootProps?: React.HTMLAttributes<HTMLDivElement>
-  addNode: (point: Partial<Point>) => void
   centerNode: (id: Id) => void
 }
 
-function LeftPanelComponent(props: Props): JSX.Element {
-  const [value, setValue] = useState<string>('')
+function LeftPanelComponent(props: Props): JSX.Element | null {
+  useUpdate(subscribeOnUpdates)
+  if (props.nodeListState.searchQuery.value === '') {
+    return null
+  }
 
   return (
     <AppearFrom
       {...props.rootProps}
       className={clsx(props.className, props.rootProps?.className, LeftPanelComponent.displayName)}
-      from={{ x: 33 }}
+      from={{ x: -33 }}
     >
       <Resizable {...props.resizableProps} direction='left' />
-      <div className='toolbar'>
-        <div className='search'>
-          <ClearableInput
-            transparent={true}
-            value={value}
-            onChange={(ev): void => setValue(ev.currentTarget.value)}
-            placeholder='Поиск'
-          />
-        </div>
-        <PrimaryButton
-          onClick={(): void => props.addNode({ level: 'offer', name: 'new_offer' })}
-          round={true}
-          height='s'
-          style={{ marginLeft: 'var(--l)' }}
-        >
-          <Plus /> O
-        </PrimaryButton>
-        <PrimaryButton
-          onClick={(): void => props.addNode({ level: 'decisionPoint', name: 'new_filter' })}
-          round={true}
-          height='s'
-          style={{ marginLeft: 'var(--l)' }}
-        >
-          <Plus /> F
-        </PrimaryButton>
-      </div>
-      <NodeList
-        className='nodeList'
-        centerNode={props.centerNode}
-        searchQuery={value}
-        nodeListState={props.nodeListState}
-      />
+      <NodeList className='nodeList' centerNode={props.centerNode} nodeListState={props.nodeListState} />
     </AppearFrom>
   )
+
+  function subscribeOnUpdates(update: () => void, uns: (() => void)[]): void {
+    uns.push(props.nodeListState.on('searchQuery', update))
+  }
 }
 
 const LeftPanel = memo(LeftPanelComponent)
