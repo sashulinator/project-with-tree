@@ -10,7 +10,7 @@ import { useEventListener } from '~/utils/hooks'
 import {
   Canvas,
   CanvasState,
-  DecisionPanel,
+  Header,
   LeftPanel,
   LinkListState,
   NodeListState,
@@ -78,13 +78,12 @@ export default function Editor(props: Props): JSX.Element {
 
   return (
     <div className={c(props.className, Editor.displayName)}>
-      <DecisionPanel state={state} rootProps={{ className: 'panel --header' }} />
+      <Header nodeListState={nodeListState} addNode={addNode} state={state} className='panel --header' />
       <LeftPanel
         className='panel --left'
         resizableProps={{ className: resizeBarClassName, name: `${Editor.displayName}-panel__left`, defaultSize: 300 }}
         centerNode={centerNode}
         nodeListState={nodeListState}
-        addNode={addNode}
       />
       <RightPanel
         className='panel --right'
