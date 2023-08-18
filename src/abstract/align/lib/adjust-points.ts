@@ -10,10 +10,10 @@ export function adjustPoints(alignResult: AlignResult): Points {
   let adjustedPoints = alignResult.points
 
   if (alignResult.isYAdjusted) {
-    adjustedPoints = [adjustedPoints[0], flipPointVertically(adjustedPoints[1])]
+    adjustedPoints = [flipPointVertically(adjustedPoints[0]), flipPointVertically(adjustedPoints[1])]
   }
   if (alignResult.isXAdjusted) {
-    adjustedPoints = [adjustedPoints[0], flipPointHorizontally(adjustedPoints[1])]
+    adjustedPoints = [flipPointHorizontally(adjustedPoints[0]), flipPointHorizontally(adjustedPoints[1])]
   }
 
   return adjustedPoints
