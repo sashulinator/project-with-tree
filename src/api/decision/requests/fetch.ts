@@ -1,22 +1,24 @@
 import { AxiosResponse } from 'axios'
 
-import { Rule } from '~/entities/rule'
+import { Decision } from '~/entities/decision'
 import api from '~/shared/axios'
 import { Id } from '~/utils/core'
 
 export interface RequestData {
-  decisionId: Id
+  id: Id
 }
 
-export type ResponseData = Rule[]
+export type ResponseData = Decision[]
 
 export type Response = AxiosResponse<ResponseData>
 
-export const url = `/api/v2/decision`
+export const url = `/tree/decisionUITree`
 
 export async function request(requestData: RequestData): Promise<Response> {
   // TODO validation
-  const response = await api.get<ResponseData>(`${url}/${requestData.decisionId}`)
+  const response = await api.get<ResponseData>(`${url}`, {
+    params: { id: requestData.id },
+  })
   // TODO validation
   return response
 }
