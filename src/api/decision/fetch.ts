@@ -2,7 +2,7 @@ import { UseQueryOptions, UseQueryResult, useQuery } from 'react-query'
 
 import { QueryError } from '~/shared/types'
 
-import { RequestData, Response, ResponseData, makeRequest, url } from './v1/fetch'
+import { RequestData, Response, ResponseData, request, url } from './requests/fetch'
 
 export type Keys = [string, string, RequestData]
 export type Options<TData = ResponseData> = UseQueryOptions<Response, QueryError, TData, Keys>
@@ -20,5 +20,5 @@ export function useFetchRulesV1<TData = ResponseData>(
     ...preferedOptions,
   }
 
-  return useQuery(keys, () => makeRequest(requestData), options)
+  return useQuery(keys, () => request(requestData), options)
 }

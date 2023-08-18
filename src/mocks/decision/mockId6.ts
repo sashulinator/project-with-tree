@@ -3,8 +3,13 @@ import { Decision } from '~/entities/decision'
 const mock: Decision = {
   name: 'lermontov-pushkin',
   id: 'mockId6',
-  version: '0.0',
-  status: 'DRAFT',
+  updateDttm: 'string',
+  createDttm: 'string',
+  updatedBy: 'string',
+  createdBy: 'string',
+  description: 'string',
+  keyName: 'string',
+  rev: 'string',
   data: [
     {
       type: 'MAIN',
