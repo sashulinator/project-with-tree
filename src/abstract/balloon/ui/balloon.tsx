@@ -5,8 +5,7 @@ import { getStyle } from '~/utils/dom'
 import { calcArrowOffset } from '..'
 import { assertDefined, c } from '../../../utils/core'
 import { setRefs } from '../../../utils/react'
-import { Point, flipPointHorizontally, flipPointVertically } from '../../callout'
-import Popover, { OnAligned, Render } from '../../popover'
+import Popover, { OnAligned, Point, Render, flipPointHorizontally, flipPointVertically } from '../../popover'
 
 BalloonComponent.displayName = 'a-Balloon'
 
