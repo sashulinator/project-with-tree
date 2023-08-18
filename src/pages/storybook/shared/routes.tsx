@@ -1,26 +1,21 @@
 import { routes as sharedRoutes } from '~/shared/routes'
 
-import Balloon from '../pages/balloon'
+import AccordionPage from '../pages/accordion/accordion'
 import ButtonPage from '../pages/button'
-import CalloutPage from '../pages/callout'
+import { AButtonWUnstyledPage } from '../pages/button/a-w-unstyled'
+import { ButtoUIPage } from '../pages/button/ui'
+import UIButtonVGhostPage from '../pages/button/ui-v-ghost'
+import UIButtonVPrimaryPage from '../pages/button/ui-v-primary'
+import CanvasPage from '../pages/canvas'
+import ChipPage from '../pages/chip'
+import CollapsePage from '../pages/collapse'
 import DropdownPage from '../pages/dropdown'
-
-import OldListPage from '../pages/old-list'
-import UINodePage from '../pages/node'
-import PopoverPage from '../pages/popover'
-
 import FieldInputPage from '../pages/field'
 import InputPage from '../pages/input'
 import ListPage from '../pages/list'
-import CanvasPage from '../pages/canvas'
-import CollapsePage from '../pages/collapse'
 import MentionPage from '../pages/mentions/mentions'
-import AccordionPage from '../pages/accordion/accordion'
-import { ButtoUIPage } from '../pages/button/ui'
-import UIButtonVGhostPage from '../pages/button/ui-v-ghost'
-import { AButtonWUnstyledPage } from '../pages/button/a-w-unstyled'
-import ChipPage from '../pages/chip'
-import UIButtonVPrimaryPage from '../pages/button/ui-v-primary'
+import UINodePage from '../pages/node'
+import OldListPage from '../pages/old-list'
 import PaginationPage from '../pages/pagination/pagination'
 
 export type Route = {
@@ -168,14 +163,6 @@ export const routes = {
     },
   },
 
-  callout: {
-    path: '/ui/callout',
-    element: <CalloutPage />,
-    getName: (): string => 'Callout',
-    getURL: function (): string {
-      return `${sharedRoutes.storybook.getURL()}${this.path}`
-    },
-  },
   dropdown: {
     path: '/ui/dropdown',
     element: <DropdownPage />,
@@ -193,22 +180,6 @@ export const routes = {
     },
   },
 
-  popover: {
-    path: '/ui/popover',
-    element: <PopoverPage />,
-    getName: (): string => 'Popover',
-    getURL: function (): string {
-      return `${sharedRoutes.storybook.getURL()}${this.path}`
-    },
-  },
-  speechBubble: {
-    path: '/ui/speech-bubble',
-    element: <Balloon />,
-    getName: (): string => 'speechBubble',
-    getURL: function (): string {
-      return `${sharedRoutes.storybook.getURL()}${this.path}`
-    },
-  },
   uiNode: {
     path: '/ui/node',
     element: <UINodePage />,
