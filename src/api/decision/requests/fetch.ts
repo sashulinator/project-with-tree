@@ -14,7 +14,7 @@ export type Response = AxiosResponse<ResponseData>
 
 export const url = `/api/v2/decision`
 
-export async function makeRequest(requestData: RequestData): Promise<Response> {
+export async function request(requestData: RequestData): Promise<Response> {
   // TODO validation
   const response = await api.get<ResponseData>(`${url}/${requestData.decisionId}`)
   // TODO validation

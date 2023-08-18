@@ -3,8 +3,13 @@ import { Decision } from '~/entities/decision'
 const mock: Decision = {
   name: 'tinkoff',
   id: 'mockId3',
-  version: '5.0',
-  status: 'PUBLISHED',
+  updateDttm: 'string',
+  createDttm: 'string',
+  updatedBy: 'string',
+  createdBy: 'string',
+  description: 'string',
+  keyName: 'string',
+  rev: 'string',
   data: [
     {
       type: 'MAIN',
