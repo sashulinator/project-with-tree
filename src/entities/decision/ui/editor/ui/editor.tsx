@@ -43,13 +43,13 @@ export interface Props {
 }
 
 export default function Editor(props: Props): JSX.Element {
-  const rules = props.decision.rules || []
+  // const rules = props.decision.rules || []
   const history = useMemo(() => new ActionHistory(), [])
 
   const state = useMemo(() => new State(props.decision), [])
   const canvasState = useMemo(() => new CanvasState(), [])
-  const nodeListState = useMemo(() => new NodeListState(props.decision.data), [props.decision.data])
-  const linkListState = useMemo(() => new LinkListState(rules), [rules])
+  const nodeListState = useMemo(() => new NodeListState(props.decision.decisionTree), [props.decision.decisionTree])
+  const linkListState = useMemo(() => new LinkListState([]), [])
 
   const previousHistory = previousHistoryBind(history)
   const nextHistory = nextHistoryBind(history)

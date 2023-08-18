@@ -1,6 +1,6 @@
 import './index.css'
 
-import { useFetchDecisionList } from '~/api/decision/fetch-list'
+// import { useFetchDecisionList } from '~/api/decision/fetch-list'
 import { useFetchDecisionMock } from '~/api/decision/fetch-mock'
 import { List } from '~/entities/decision/ui/item'
 
