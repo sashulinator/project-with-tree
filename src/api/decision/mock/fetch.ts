@@ -15,7 +15,7 @@ export type Response = AxiosResponse<ResponseData>
 
 export const url = addGHPagesUrl(`/mocks/decision`)
 
-export async function makeRequest(requestData: RequestData): Promise<Response> {
+export async function request(requestData: RequestData): Promise<Response> {
   // TODO validation
   const response = await api.get<ResponseData>(`${url}/${requestData.id}.json`)
   // TODO validation
