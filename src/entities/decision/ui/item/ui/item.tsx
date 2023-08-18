@@ -16,7 +16,7 @@ export default function Item(props: Props): JSX.Element {
   return (
     <div className={c(props.className, Item.displayName)}>
       <NameCell {...props} />
-      <VersionCell {...props} />
+      {/* <VersionCell {...props} /> */}
       <StatusCell {...props} />
     </div>
   )
@@ -30,10 +30,10 @@ function NameCell(props: Props): JSX.Element {
   )
 }
 
-function VersionCell(props: Props): JSX.Element {
-  return <div className='versionCell'>{props.item?.version}</div>
-}
+// function VersionCell(props: Props): JSX.Element {
+//   return <div className='versionCell'>{props.item?.rev}</div>
+// }
 
 function StatusCell(props: Props): JSX.Element {
-  return <div className={c('statusCell', `--${props.item?.status.toLowerCase()}`)}>{props.item?.status}</div>
+  return <div className={c('statusCell', `--${props.item?.rev.toLowerCase()}`)}>{props.item?.updatedBy}</div>
 }

@@ -45,7 +45,7 @@ function LeftPanelComponent(props: Props): JSX.Element {
           />
         </div>
         <PrimaryButton
-          onClick={(): void => props.addNode({ type: 'OFFER', name: 'new_offer' })}
+          onClick={(): void => props.addNode({ level: 'offer', name: 'new_offer' })}
           round={true}
           height='s'
           style={{ marginLeft: 'var(--l)' }}
@@ -53,7 +53,7 @@ function LeftPanelComponent(props: Props): JSX.Element {
           <Plus /> O
         </PrimaryButton>
         <PrimaryButton
-          onClick={(): void => props.addNode({ type: 'FILTER', name: 'new_filter' })}
+          onClick={(): void => props.addNode({ level: 'decisionPoint', name: 'new_filter' })}
           round={true}
           height='s'
           style={{ marginLeft: 'var(--l)' }}

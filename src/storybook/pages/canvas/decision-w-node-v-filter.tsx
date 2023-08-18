@@ -11,7 +11,7 @@ import { H1 } from '~/ui/heading'
 const point1: Point = {
   id: 'id1',
   name: 'name1',
-  type: 'FILTER',
+  level: 'decisionPoint',
   computation: 'parallel',
   x: 10,
   y: 10,
@@ -19,7 +19,7 @@ const point1: Point = {
 const point2: Point = {
   id: 'id2',
   name: 'name2',
-  type: 'FILTER',
+  level: 'decisionPoint',
   computation: 'parallel',
   x: 510,
   y: 10,

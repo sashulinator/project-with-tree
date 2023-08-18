@@ -13,7 +13,7 @@ import { emptyFn } from '~/utils/function/empty-fn'
 const point1: Point = {
   id: 'id1',
   name: 'name1',
-  type: 'FILTER',
+  level: 'decisionPoint',
   computation: 'parallel',
   x: 10,
   y: 10,
