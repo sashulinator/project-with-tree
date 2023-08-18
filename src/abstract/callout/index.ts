@@ -13,4 +13,4 @@ export type { ContentProp, Props as CalloutProps } from './ui/callout'
  * reexports
  */
 export { flipPointHorizontally, flipPointVertically } from '../popover'
-export type { Overflow, Offset, Point, Points, onAligned } from '../popover'
+export type { Overflow, Offset, Point, Points, OnAligned as onAligned } from '../popover'

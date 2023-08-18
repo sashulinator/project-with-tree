@@ -2,7 +2,7 @@
 import { Point } from 'dom-align-ts'
 import { useState } from 'react'
 
-import Popover from '~/abstract/popover'
+import { DepricatedPopover } from '~/abstract/popover'
 import { useBoolean } from '~/utils/hooks'
 
 export default function PopoverPage(): JSX.Element {
@@ -127,7 +127,7 @@ export default function PopoverPage(): JSX.Element {
           </div>
         </div>
         <div>
-          <Popover
+          <DepricatedPopover
             overflow={{ adjustX, adjustY, alwaysByViewport }}
             containerElement={isPortalToMainContainer ? containerEl : undefined}
             opened={isOpen}
@@ -153,7 +153,7 @@ export default function PopoverPage(): JSX.Element {
             }
           >
             <button onClick={toggle}>Target</button>
-          </Popover>
+          </DepricatedPopover>
         </div>
       </div>
     </div>

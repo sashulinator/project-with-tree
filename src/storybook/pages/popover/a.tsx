@@ -1,9 +1,11 @@
-import { useState } from 'react'
+import { forwardRef, useState } from 'react'
 
 import Popover, { PopoverProps } from '~/abstract/popover'
 import { Config, Props } from '~/storybook/types'
 import ConfigLink from '~/storybook/ui/config-link/ui/config-link'
 import { H1 } from '~/ui/heading'
+import Paragraph from '~/ui/paragraph/ui/paragraph'
+import { setRefs } from '~/utils/react'
 
 import aAlign from '../align/a'
 
@@ -22,7 +24,12 @@ export default {
     return (
       <>
         <H1>{Popover.displayName}</H1>
-        Расширяет <ConfigLink config={aAlign} />
+        <Paragraph>
+          Расширяет <ConfigLink config={aAlign} />
+        </Paragraph>
+        <Paragraph>
+          Должен мгновенно менять цвет и положение при `adjustX === true` если происходит перепозиционирование
+        </Paragraph>
       </>
     )
   },
@@ -46,12 +53,33 @@ export default {
           }}
         >
           <Popover
-            content={<div style={{ width: '400px', height: '100px', background: 'red' }}>Source</div>}
+            renderContent={forwardRef(function Element(props, ref) {
+              return (
+                <div
+                  ref={setRefs(ref)}
+                  style={{
+                    width: '400px',
+                    height: '100px',
+                    background: props.popoverProps.adjustedPoints[0] === 'cl' ? 'red' : 'blue',
+                  }}
+                >
+                  Points {props.popoverProps.adjustedPoints.join(' - ')}
+                </div>
+              )
+            })}
+            renderTarget={forwardRef(function Element(props, ref): JSX.Element {
+              return (
+                <button
+                  ref={setRefs(ref)}
+                  style={{ background: props.popoverProps.adjustedPoints[0] === 'cl' ? 'red' : 'blue' }}
+                >
+                  Target
+                </button>
+              )
+            })}
             containerElement={portalSourceIntoContainer ? containerRef : undefined}
             {...popoverProps}
-          >
-            <button>Target</button>
-          </Popover>
+          />
         </div>
       </div>
     )

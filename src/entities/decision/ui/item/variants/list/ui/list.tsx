@@ -18,7 +18,7 @@ export default function List(props: Props): JSX.Element {
     <ul className={c(props.className, List.displayName)}>
       {props.list.map((item: Decision, i) => {
         return (
-          <AppearFrom key={item.id} offsetY={10} delay={i * 30}>
+          <AppearFrom key={item.id} from={{ y: 10 }} delay={i * 30}>
             <Item item={item} />
           </AppearFrom>
         )
