@@ -5,8 +5,7 @@ import { getStyle } from '~/utils/dom'
 import { calcArrowOffset } from '..'
 import { assertDefined, c } from '../../../utils/core'
 import { setRefs } from '../../../utils/react'
-import { Point, flipPointHorizontally, flipPointVertically } from '../../callout'
-import Popover, { OnAligned, Render } from '../../popover'
+import Popover, { OnAligned, Point, Render, flipPointHorizontally, flipPointVertically } from '../../popover'
 
 BalloonComponent.displayName = 'a-Balloon'
 
@@ -63,8 +62,6 @@ function BalloonComponent(props: Props, ref: ForwardedRef<HTMLElement>): JSX.Ele
   const [containerEl, setContainerEl] = React.useState<HTMLElement | null>(null)
   const contentRef = useRef<HTMLElement>(null)
 
-  console.log('placement', placement)
-
   return (
     <div
       {...divProps}
@@ -79,11 +76,7 @@ function BalloonComponent(props: Props, ref: ForwardedRef<HTMLElement>): JSX.Ele
         renderContent={renderArrow}
         renderTarget={forwardRef(function Element(_, targetRef) {
           return (
-            <div
-              {...contentProps}
-              ref={setRefs(targetRef, contentRef, syncSizes)}
-              className={c('content', contentProps.className)}
-            >
+            <div {...contentProps} ref={setRefs(targetRef, contentRef, syncSizes)}>
               {children}
             </div>
           )

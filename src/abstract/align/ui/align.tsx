@@ -16,7 +16,7 @@ import { _align } from '../_private'
 
 Align.displayName = 'a-Align'
 
-export type AlignResult = ReturnType<typeof alignElement>
+export type AlignResult = ReturnType<typeof alignElement> & { adjustedPoints: Points }
 
 export type OnAligned = (ret: AlignResult) => void
 
@@ -128,7 +128,7 @@ export default function Align(props: Props): JSX.Element {
   const [sourceElement, setSourceEl] = React.useState<null | HTMLElement>(null)
   const onAlignedRef = useLatest(onAligned)
 
-  const alignDeps = [targetElement, sourceElement, containerElement, ...config.points, ...deps]
+  const alignDeps = [targetElement, sourceElement, containerElement, config.points[0], config.points[1], ...deps]
 
   assertValidElement(children)
 
@@ -143,5 +143,5 @@ export default function Align(props: Props): JSX.Element {
 
   const clonedChildren = React.cloneElement(children, { ref: setRefs(children.ref, setSourceEl) })
 
-  return <>{createPortal(clonedChildren, containerElement || targetElement.ownerDocument.body)}</>
+  return createPortal(clonedChildren, containerElement || targetElement.ownerDocument.body)
 }
