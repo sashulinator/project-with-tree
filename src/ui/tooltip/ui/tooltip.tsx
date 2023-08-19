@@ -19,7 +19,7 @@ export interface Props extends React.HTMLAttributes<HTMLElement> {
   /**
    * Tooltip content
    */
-  content: React.ReactNode
+  contents: React.ReactNode
 
   /**
    * Delay before opening
@@ -54,7 +54,7 @@ export interface Props extends React.HTMLAttributes<HTMLElement> {
  * @returns
  */
 export default function Tooltip(props: Props): JSX.Element {
-  const { delay = 500, placement = 'tc', content, className, ...tooltipProps } = props
+  const { delay = 500, placement = 'tc', contents, className, ...tooltipProps } = props
 
   return (
     <ATooltip
@@ -63,7 +63,7 @@ export default function Tooltip(props: Props): JSX.Element {
       className={c(className, Tooltip.displayName)}
       placement={placement}
       renderBalloon={Balloon as unknown as Render}
-      balloonProps={{ content, placement }}
+      balloonProps={{ contents, placement }}
     />
   )
 }

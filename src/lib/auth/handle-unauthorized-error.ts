@@ -19,7 +19,7 @@ export async function handleUnauthorizedError(error: unknown | AxiosError, url: 
   if (refreshPromise) {
     await refreshPromise
     refreshPromise = null
-    return api(error?.config)
+    return api(error?.config as any)
   }
 
   return Promise.reject(error)

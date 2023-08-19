@@ -5,4 +5,4 @@ export interface InputRenderProps
   ref?: MutableRefObject<HTMLInputElement>
 }
 
-export type OnInputRender<P> = (props: Required<InputRenderProps> & P) => JSX.Element | null
+export type OnInputRender<P> = (props: Required<InputRenderProps> & P) => React.ReactNode

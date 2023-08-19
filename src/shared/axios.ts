@@ -15,7 +15,7 @@ const api = axios.create({
 api.defaults.headers.common['Content-Type'] = 'application/json'
 api.defaults.headers.common['Accept'] = '*/*'
 
-api.interceptors.request.use(setAuthorizationHeader)
+api.interceptors.request.use(setAuthorizationHeader as any)
 api.interceptors.response.use(undefined, (error) => handleUnauthorizedError(error, refreshTokenUrl))
 
 export default api

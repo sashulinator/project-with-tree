@@ -11,7 +11,7 @@ import { _getAnimationPosition } from '../_private'
 BalloonComponent.displayName = 'ui-Tooltip-w-Balloon'
 
 export interface Props extends RenderProps {
-  content: React.ReactNode
+  contents: React.ReactNode
   placement: Point
 }
 
@@ -27,7 +27,7 @@ function BalloonComponent(props: Props, ref: ForwardedRef<HTMLElement>): JSX.Ele
           return <div className='arrow' ref={setRefs(ref)} style={{ position: 'absolute' }} />
         })}
       >
-        {props.content}
+        {props.contents}
       </ABalloon>
     </AppearFrom>
   )
