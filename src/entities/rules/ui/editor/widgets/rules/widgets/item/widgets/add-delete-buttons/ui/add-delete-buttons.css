@@ -1,3 +1,4 @@
 .ruleEditor-w-Rules-w-AddDeleteButtons {
-  align-items: center;
+  padding: 10px 0;
+  min-height: 50px;
 }

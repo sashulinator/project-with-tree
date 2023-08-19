@@ -8,7 +8,8 @@ import { useRecoilState } from 'recoil'
 import Flex from '~/abstract/flex'
 import { onDropItemToCanvas } from '~/entities/rules/lib/on-drop-item-to-canvas'
 import { onDropItemToItem } from '~/entities/rules/lib/on-drop-item-to-item'
-import { dragOverIdAtom } from '~/entities/rules/models/drag-over-id'
+import { dragOverButtonsIdAtom } from '~/entities/rules/models/drag-over-buttons-id'
+import { dragOverItemIdAtom } from '~/entities/rules/models/drag-over-item-id'
 import { draggableItemAtom } from '~/entities/rules/models/draggableItem'
 import { editorRulesValuesAtom } from '~/entities/rules/models/editorRulesValues'
 import { emitter } from '~/shared/emitter'
@@ -35,8 +36,10 @@ export function Rules(): JSX.Element {
   const flag = useRef(false)
 
   const [draggableItem, setDraggableItem] = useRecoilState(draggableItemAtom)
-  const [dragOverId, setDragOverId] = useRecoilState(dragOverIdAtom)
+  const [dragOverItemId, setDragOverId] = useRecoilState(dragOverItemIdAtom)
+  const [dragOverButtonsId, setDragOverButtonsId] = useRecoilState(dragOverButtonsIdAtom)
   const [editorValue, setEditorValues] = useRecoilState(editorRulesValuesAtom)
+
   useEffect(() => {
     if (flag.current) {
       flag.current = false
@@ -78,7 +81,7 @@ export function Rules(): JSX.Element {
 
       {editorRulesValues.map((item, i) => {
         return (
-          <li onDrop={(_): void => drop(_, item.id)} onDragOver={dragOver} key={item.id} className='list'>
+          <li onDrop={(_): void => dropItemToItem(_, item.id)} onDragOver={dragOver} key={item.id} className='list'>
             <div className='item'>
               {item.valueArr.length > 1 && (
                 <SplitBtn index={i} rootProps={{ style: { marginLeft: 'auto', marginBottom: '20px' } }} />
@@ -86,8 +89,14 @@ export function Rules(): JSX.Element {
               <Item id={item.id} values={item.valueArr} />
             </div>
             <AddDeleteButtons
-              rootProps={{ onDrop: (_) => dropToBoard(_, item.id), id: 'ruleEditor-w-Rules' }}
+              isDragOver={item.id === dragOverButtonsId}
+              rootProps={{
+                onDrop: (_) => dropToBoard(_, item.id),
+                onDragOver: (_) => dragOver(_, item.id),
+                id: 'ruleEditor-w-Rules',
+              }}
               itemId={item.id}
+              parentId={item.id}
             />
           </li>
         )
@@ -96,39 +105,44 @@ export function Rules(): JSX.Element {
   )
 
   // Private
+  function dragOver(e: React.DragEvent<HTMLElement>, parentId: string | null = null): void {
+    e.preventDefault()
+    e.stopPropagation()
+    const reg = new RegExp(AddDeleteButtons.displayName)
+    if (reg.test((e.target as HTMLElement).className) && draggableItem) {
+      if (dragOverItemId) setDragOverId(null)
+      if (parentId !== dragOverButtonsId) {
+        setDragOverButtonsId(parentId)
+      }
+    }
+  }
 
   function dropToBoard(e: React.DragEvent<HTMLElement>, parentId: string | null = null): void {
     e.preventDefault()
     e.stopPropagation()
-    console.log(2)
+
     if ((e.target as HTMLElement).id === 'ruleEditor-w-Rules' && draggableItem) {
-      setEditorVales(onDropItemToCanvas(editorRulesValues, draggableItem, parentId))
+      setEditorVales(onDropItemToCanvas(editorRulesValues, draggableItem))
       setDraggableItem(null)
     }
-    if (dragOverId) setDragOverId(null)
+    if (parentId && dragOverButtonsId && draggableItem) {
+      setEditorVales(onDropItemToCanvas(editorRulesValues, draggableItem, dragOverButtonsId))
+      setDraggableItem(null)
+    }
+    if (dragOverItemId) setDragOverId(null)
+    if (dragOverButtonsId) setDragOverButtonsId(null)
   }
 
-  function dragOver(e: React.DragEvent<HTMLElement>): void {
+  function dropItemToItem(e: React.DragEvent<HTMLElement>, id: string, direction: 'up' | 'down' = 'down'): void {
     e.preventDefault()
     e.stopPropagation()
-  }
-
-  function drop(e: React.DragEvent<HTMLElement>, id: string, direction: 'up' | 'down' = 'down'): void {
-    e.preventDefault()
-    console.log(e.target)
-    if (draggableItem && id !== draggableItem.id && dragOverId) {
-      // console.log('----item--------')
-      // console.log('parentId', id)
-      // console.log('dragOverId', dragOverId)
-      // console.log('draggableItem', draggableItem)
-      // console.log('direction', direction)
-      // console.log('------------------------------------------')
-
-      setEditorValues(onDropItemToItem(editorValue, id, dragOverId, draggableItem, direction))
+    if (draggableItem && id !== draggableItem.id && dragOverItemId) {
+      setEditorValues(onDropItemToItem(editorValue, id, dragOverItemId, draggableItem, direction))
       setDraggableItem(null)
     }
 
-    if (dragOverId) setDragOverId(null)
+    if (dragOverItemId) setDragOverId(null)
+    if (dragOverButtonsId) setDragOverButtonsId(null)
   }
 
   function back(): void {

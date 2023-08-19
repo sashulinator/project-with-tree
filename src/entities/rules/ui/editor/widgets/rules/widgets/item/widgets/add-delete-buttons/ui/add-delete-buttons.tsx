@@ -14,36 +14,42 @@ import Select from '../../select/ui/select'
 
 interface ButtonsProps {
   itemId: string
-  rootProps?: FlexProps
+  parentId: string
+  flexProps?: FlexProps
+  rootProps?: React.HTMLAttributes<HTMLDivElement>
+  isDragOver: boolean
 }
 
 AddDeleteButtons.displayName = 'ruleEditor-w-Rules-w-AddDeleteButtons'
 
 export default function AddDeleteButtons(props: ButtonsProps): JSX.Element {
-  const { itemId, rootProps } = props
+  const { itemId, flexProps, isDragOver, parentId, rootProps } = props
   const [editorRulesValues, setEditorValues] = useRecoilState(editorRulesValuesAtom)
 
   return (
-    <Flex className={c(AddDeleteButtons.displayName, rootProps?.className)} gap='xl' crossAxis='center' {...rootProps}>
-      <GhostButton height={'s'} square onClick={deleteCondition}>
-        <Close />
-      </GhostButton>
-      <GhostButton height={'s'} square onClick={addCondition}>
-        <Plus />
-      </GhostButton>
-      <Select id={itemId} />
-    </Flex>
+    <div {...rootProps} className={c(AddDeleteButtons.displayName, rootProps?.className)}>
+      <Flex gap='xl' crossAxis='center' {...flexProps}>
+        <GhostButton height={'s'} square onClick={deleteCondition}>
+          <Close />
+        </GhostButton>
+        <GhostButton height={'s'} square onClick={addCondition}>
+          <Plus />
+        </GhostButton>
+        <Select id={itemId} />
+      </Flex>
+      {isDragOver && <div style={{ width: '100%', height: '50px', border: '1px solid yellow' }}></div>}
+    </div>
   )
 
   // Private
   function deleteCondition(): void {
-    if (editorRulesValues.length === 1) {
+    if (editorRulesValues.length === 1 && parentId === itemId) {
       return
     }
-    setEditorValues(getArrDeleteCondition(editorRulesValues, itemId))
+    setEditorValues(getArrDeleteCondition(editorRulesValues, itemId, parentId))
   }
 
   function addCondition(): void {
-    setEditorValues(getArrAddCondition(editorRulesValues, itemId))
+    setEditorValues(getArrAddCondition(editorRulesValues, itemId, parentId))
   }
 }

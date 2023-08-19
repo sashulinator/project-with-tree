@@ -2,7 +2,7 @@
   border-radius: 10px;
   background: var(--editor_bg);
   box-shadow: var(--editor_boxShadow);
-  /* padding: 20px 40px; */
+  padding: 20px 40px;
   min-height: 80vh;
 }
 
