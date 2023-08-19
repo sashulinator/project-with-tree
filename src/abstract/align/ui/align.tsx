@@ -143,5 +143,5 @@ export default function Align(props: Props): JSX.Element {
 
   const clonedChildren = React.cloneElement(children, { ref: setRefs(children.ref, setSourceEl) })
 
-  return createPortal(clonedChildren, containerElement || targetElement.ownerDocument.body)
+  return createPortal(clonedChildren as any, containerElement || targetElement.ownerDocument.body)
 }

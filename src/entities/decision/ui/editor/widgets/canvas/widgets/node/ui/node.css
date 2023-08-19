@@ -1,3 +1,11 @@
+/* Variables */
+
+.decision-Editor-w-Canvas-w-Node {
+  --node-padding: 0.6rem;
+}
+
+/* Styles */
+
 .decision-Editor-w-Canvas-w-Node {
   background-color: var(--canvasNode_bg);
   display: flex;

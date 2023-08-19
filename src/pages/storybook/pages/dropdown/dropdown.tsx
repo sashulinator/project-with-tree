@@ -79,7 +79,7 @@ const data: User[] = [
   },
 ]
 
-export default function DropdownPage(): JSX.Element {
+export default function DropdownPage(): React.ReactNode {
   const [checked, setChecked] = useState<Key[]>([])
   const [selected, setSelected] = useState<Key[]>([])
   const listStateRef = useRef<ListState<User>>(null)

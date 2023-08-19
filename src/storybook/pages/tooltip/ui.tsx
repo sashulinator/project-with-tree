@@ -24,7 +24,7 @@ export default {
     const { state } = props
     return (
       <Flex dir='column' gap='xl' width='100%'>
-        <Tooltip content={'World'} {...state}>
+        <Tooltip contents={'World'} {...state}>
           <button>Hello</button>
         </Tooltip>
       </Flex>

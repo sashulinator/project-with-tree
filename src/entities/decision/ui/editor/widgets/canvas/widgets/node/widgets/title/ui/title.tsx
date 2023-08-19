@@ -1,4 +1,4 @@
-import './title.css'
+import './title.scss'
 
 import Input, { useChangeOnBlurStrategy } from '~/ui/input'
 import { c } from '~/utils/core'
@@ -19,12 +19,13 @@ export default function Title(props: Props): JSX.Element {
   return (
     <Input
       {...useChangeOnBlurStrategy({
+        className: c(props.className, Title.displayName),
+        inputClassname: 'input',
         value: props.state.title.value,
         cannotBeEmpty: true,
         transparent: true,
         height: 'm',
         placeholder: 'Описание',
-        fieldProps: { className: c(props.className, Title.displayName) },
         onChange: (e) => props.state.title.set(e.currentTarget.value),
       })}
     />

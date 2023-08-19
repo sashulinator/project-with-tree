@@ -16,7 +16,7 @@ import Align, { Offset, OnAligned, Overflow, Point, Points } from '../../align'
 Popover.displayName = 'a-Popover'
 
 export type RenderProps = Props & { ref: React.ForwardedRef<HTMLElement> }
-export type Render = (props: RenderProps) => JSX.Element | null
+export type Render = (props: RenderProps) => React.ReactNode
 
 /**
  * Props for the `Popover` component, which displays a content over a target element.

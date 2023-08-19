@@ -6,7 +6,3 @@
   display: flex;
   justify-content: right;
 }
-
-.decisionCanvas-w-Node-v-Enter .ui-Input {
-  padding: 0 var(--l);
-}
