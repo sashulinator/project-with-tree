@@ -1,13 +1,18 @@
 import './rules.css'
 
+import { animated, useSpring } from '@react-spring/web'
+
 import { useEffect, useRef } from 'react'
 import { useRecoilState } from 'recoil'
 
 import Flex from '~/abstract/flex'
 import { onDropItemToCanvas } from '~/entities/rules/lib/on-drop-item-to-canvas'
+import { onDropItemToItem } from '~/entities/rules/lib/on-drop-item-to-item'
+import { dragOverIdAtom } from '~/entities/rules/models/drag-over-id'
 import { draggableItemAtom } from '~/entities/rules/models/draggableItem'
 import { editorRulesValuesAtom } from '~/entities/rules/models/editorRulesValues'
 import { emitter } from '~/shared/emitter'
+import { AppearFrom } from '~/ui/animation'
 import { GhostButton } from '~/ui/button'
 import { H1 } from '~/ui/heading'
 import { ArrowLeft, ArrowRight } from '~/ui/icon'
@@ -30,7 +35,8 @@ export function Rules(): JSX.Element {
   const flag = useRef(false)
 
   const [draggableItem, setDraggableItem] = useRecoilState(draggableItemAtom)
-
+  const [dragOverId, setDragOverId] = useRecoilState(dragOverIdAtom)
+  const [editorValue, setEditorValues] = useRecoilState(editorRulesValuesAtom)
   useEffect(() => {
     if (flag.current) {
       flag.current = false
@@ -72,14 +78,17 @@ export function Rules(): JSX.Element {
 
       {editorRulesValues.map((item, i) => {
         return (
-          <li key={item.id}>
+          <li onDrop={(_): void => drop(_, item.id)} onDragOver={dragOver} key={item.id} className='list'>
             <div className='item'>
               {item.valueArr.length > 1 && (
                 <SplitBtn index={i} rootProps={{ style: { marginLeft: 'auto', marginBottom: '20px' } }} />
               )}
               <Item id={item.id} values={item.valueArr} />
             </div>
-            <AddDeleteButtons rootProps={{ onDrop: (_) => dropToBoard(_, item.id) }} id={item.id} />
+            <AddDeleteButtons
+              rootProps={{ onDrop: (_) => dropToBoard(_, item.id), id: 'ruleEditor-w-Rules' }}
+              itemId={item.id}
+            />
           </li>
         )
       })}
@@ -91,19 +100,35 @@ export function Rules(): JSX.Element {
   function dropToBoard(e: React.DragEvent<HTMLElement>, parentId: string | null = null): void {
     e.preventDefault()
     e.stopPropagation()
-    // if ((e.target as HTMLElement).id === 'ruleEditor-w-Rules' && draggableItem) {
-    //   setEditorVales(onDropItemToCanvas(editorRulesValues, draggableItem))
-    //   setDraggableItem(null)
-    // }
-    if (draggableItem) {
+    console.log(2)
+    if ((e.target as HTMLElement).id === 'ruleEditor-w-Rules' && draggableItem) {
       setEditorVales(onDropItemToCanvas(editorRulesValues, draggableItem, parentId))
       setDraggableItem(null)
     }
+    if (dragOverId) setDragOverId(null)
   }
 
   function dragOver(e: React.DragEvent<HTMLElement>): void {
     e.preventDefault()
     e.stopPropagation()
+  }
+
+  function drop(e: React.DragEvent<HTMLElement>, id: string, direction: 'up' | 'down' = 'down'): void {
+    e.preventDefault()
+    console.log(e.target)
+    if (draggableItem && id !== draggableItem.id && dragOverId) {
+      // console.log('----item--------')
+      // console.log('parentId', id)
+      // console.log('dragOverId', dragOverId)
+      // console.log('draggableItem', draggableItem)
+      // console.log('direction', direction)
+      // console.log('------------------------------------------')
+
+      setEditorValues(onDropItemToItem(editorValue, id, dragOverId, draggableItem, direction))
+      setDraggableItem(null)
+    }
+
+    if (dragOverId) setDragOverId(null)
   }
 
   function back(): void {

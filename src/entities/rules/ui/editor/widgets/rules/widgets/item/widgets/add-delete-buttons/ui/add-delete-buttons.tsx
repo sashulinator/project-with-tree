@@ -13,14 +13,14 @@ import { c } from '~/utils/core'
 import Select from '../../select/ui/select'
 
 interface ButtonsProps {
-  id: string
+  itemId: string
   rootProps?: FlexProps
 }
 
 AddDeleteButtons.displayName = 'ruleEditor-w-Rules-w-AddDeleteButtons'
 
 export default function AddDeleteButtons(props: ButtonsProps): JSX.Element {
-  const { id, rootProps } = props
+  const { itemId, rootProps } = props
   const [editorRulesValues, setEditorValues] = useRecoilState(editorRulesValuesAtom)
 
   return (
@@ -31,7 +31,7 @@ export default function AddDeleteButtons(props: ButtonsProps): JSX.Element {
       <GhostButton height={'s'} square onClick={addCondition}>
         <Plus />
       </GhostButton>
-      <Select id={id} />
+      <Select id={itemId} />
     </Flex>
   )
 
@@ -40,10 +40,10 @@ export default function AddDeleteButtons(props: ButtonsProps): JSX.Element {
     if (editorRulesValues.length === 1) {
       return
     }
-    setEditorValues(getArrDeleteCondition(editorRulesValues, id))
+    setEditorValues(getArrDeleteCondition(editorRulesValues, itemId))
   }
 
   function addCondition(): void {
-    setEditorValues(getArrAddCondition(editorRulesValues, id))
+    setEditorValues(getArrAddCondition(editorRulesValues, itemId))
   }
 }

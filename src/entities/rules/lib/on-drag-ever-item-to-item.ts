@@ -1,10 +1,10 @@
 import { DraggableItem } from '../models/draggableItem'
 import { EditorValues } from '../models/editorRulesValues'
 
-export function onDropItemToItem(
+export function onDragEventItemToItem(
   editorValue: EditorValues[],
   parentId: string,
-  id: string | null,
+  id: string,
   draggableItem: DraggableItem,
   direction: 'up' | 'down' = 'down'
 ): EditorValues[] {
@@ -18,9 +18,9 @@ export function onDropItemToItem(
             .map((item) => {
               if (item.id === id && draggableItem) {
                 if (direction === 'up') {
-                  return [{ value: draggableItem.value, id: draggableItem.id }, item]
+                  return [{ value: '', id: '' }, item]
                 } else {
-                  return [item, { value: draggableItem.value, id: draggableItem.id }]
+                  return [item, { value: '', id: '' }]
                 }
               }
               return item

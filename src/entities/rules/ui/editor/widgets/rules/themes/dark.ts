@@ -1,5 +1,5 @@
-import { CSSVars } from './types'
 import { common } from './common'
+import { CSSVars } from './types'
 
 export const dark: CSSVars = {
   ...common,
