@@ -16,15 +16,27 @@ export type InputProps = React.InputHTMLAttributes<HTMLInputElement> & {
   isError?: boolean
   transparent?: boolean
   fieldProps?: FieldProps
+  inputClassname?: string
 }
 
 function InputComponent(props: InputProps, ref: ForwardedRef<HTMLInputElement>): JSX.Element {
-  const { left, right, className, fieldProps, height = 'm', transparent, width, isError, ...inputProps } = props
+  const {
+    left,
+    right,
+    className,
+    fieldProps,
+    height = 'm',
+    inputClassname,
+    transparent,
+    width,
+    isError,
+    ...inputProps
+  } = props
 
   return (
     <AbstractInput
       {...inputProps}
-      className={c('input')}
+      className={c(inputClassname, 'input')}
       ref={ref}
       left={left}
       right={right}
