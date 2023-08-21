@@ -1,3 +1,4 @@
 export * from './gt'
-export * from './lt'
+export * from './gt'
+export * from './clamp'
 export * from './parse-num'
