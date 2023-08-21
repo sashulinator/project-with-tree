@@ -23,6 +23,7 @@ ENV NGINX_VERSION nginx-1.22.1
 
 RUN apk --update add openssl-dev pcre-dev zlib-dev wget build-base \
     libxml2-dev libxslt-dev gd-dev perl-dev && \
+    mkdir -p /tmp/nginx && \
     mkdir -p /tmp/src && \
     cd /tmp/src && \
     wget http://nginx.org/download/${NGINX_VERSION}.tar.gz && \
@@ -36,9 +37,9 @@ RUN apk --update add openssl-dev pcre-dev zlib-dev wget build-base \
         --with-http_xslt_module \
         --with-mail \
         --with-stream \
-        --prefix=/etc/nginx \
-        --http-log-path=/var/log/nginx/access.log \
-        --error-log-path=/var/log/nginx/error.log \
+        --prefix=/tmp/nginx \
+        --http-log-path=/tmp/nginx/access.log \
+        --error-log-path=/tmp/nginx/error.log \
         --sbin-path=/usr/local/sbin/nginx && \
     make && \
     make install && \
@@ -61,7 +62,7 @@ COPY --from=build-stage /app/dist/ /usr/share/nginx/html
 COPY nginx_conf/default.conf /etc/nginx/conf.d/default.conf
 COPY nginx_conf/nginx.conf /etc/nginx/conf/nginx.conf
 
-EXPOSE 80
+EXPOSE 1080
 
 CMD ["nginx", "-g", "daemon off;"]
 
