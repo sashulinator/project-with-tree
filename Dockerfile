@@ -23,7 +23,7 @@ ENV NGINX_VERSION nginx-1.22.1
 
 RUN apk --update add openssl-dev pcre-dev zlib-dev wget build-base \
     libxml2-dev libxslt-dev gd-dev perl-dev && \
-    mkdir -p /tmp/nginx && \
+    mkdir -p /tmp/nginx && chmod 777 /tmp/nginx && \
     mkdir -p /tmp/src && \
     cd /tmp/src && \
     wget http://nginx.org/download/${NGINX_VERSION}.tar.gz && \
@@ -53,14 +53,18 @@ RUN ln -sf /dev/stderr /var/log/nginx/error.log
 
 VOLUME ["/var/log/nginx"]
 
-WORKDIR /etc/nginx
+WORKDIR /tmp/nginx
 
 # Copy builded source
 COPY --from=build-stage /app/dist/ /usr/share/nginx/html
 
+RUN chmod -R 777 /usr/share/nginx/html
+
 # Copy nginx configuration
-COPY nginx_conf/default.conf /etc/nginx/conf.d/default.conf
-COPY nginx_conf/nginx.conf /etc/nginx/conf/nginx.conf
+COPY nginx_conf/default.conf /tmp/nginx/conf.d/default.conf
+COPY nginx_conf/nginx.conf /tmp/nginx/conf/nginx.conf
+
+RUN chown -R nobody /tmp/nginx
 
 EXPOSE 1080
 
