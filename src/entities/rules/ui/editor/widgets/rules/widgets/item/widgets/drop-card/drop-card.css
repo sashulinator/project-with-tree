@@ -1,0 +1,7 @@
+.Editor-w-Drop-Card {
+  border-radius: 9px;
+  background: var(--editorItem_bg);
+  padding: 20px;
+  box-shadow: 0px 0px 8px 0px rgba(0, 0, 0, 0.1);
+  width: 100%;
+}

@@ -10,6 +10,7 @@ import { GhostButton } from '~/ui/button'
 import { Close, Plus } from '~/ui/icon'
 import { c } from '~/utils/core'
 
+import { DropCard } from '../../drop-card/drop-card'
 import Select from '../../select/ui/select'
 
 interface ButtonsProps {
@@ -27,7 +28,7 @@ export default function AddDeleteButtons(props: ButtonsProps): JSX.Element {
   const [editorRulesValues, setEditorValues] = useRecoilState(editorRulesValuesAtom)
 
   return (
-    <div {...rootProps} className={c(AddDeleteButtons.displayName, rootProps?.className)}>
+    <div {...rootProps} className={c(AddDeleteButtons.displayName, rootProps?.className, isDragOver && '--DragOver')}>
       <Flex gap='xl' crossAxis='center' {...flexProps}>
         <GhostButton height={'s'} square onClick={deleteCondition}>
           <Close />
@@ -37,7 +38,6 @@ export default function AddDeleteButtons(props: ButtonsProps): JSX.Element {
         </GhostButton>
         <Select id={itemId} />
       </Flex>
-      {isDragOver && <div style={{ width: '100%', height: '50px', border: '1px solid yellow' }}></div>}
     </div>
   )
 

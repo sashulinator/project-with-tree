@@ -24,7 +24,7 @@ export function Item(props: Props): JSX.Element {
         {values.map((item, i) => {
           return (
             <li key={item.id}>
-              <Input id={item.id} value={item.value} parentId={id} />
+              <Input id={item.id} value={item.value} parentId={id} isOneCard={values.length === 1} />
               {i !== values.length - 1 && <AddDeleteButtons parentId={id} itemId={item.id} isDragOver={false} />}
             </li>
           )

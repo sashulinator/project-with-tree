@@ -2,13 +2,16 @@ import './rules.css'
 
 import { animated, useSpring } from '@react-spring/web'
 
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useRecoilState } from 'recoil'
 
 import Flex from '~/abstract/flex'
 import { onDropItemToCanvas } from '~/entities/rules/lib/on-drop-item-to-canvas'
 import { onDropItemToItem } from '~/entities/rules/lib/on-drop-item-to-item'
+import { directionAtom } from '~/entities/rules/models/direction'
 import { dragOverButtonsIdAtom } from '~/entities/rules/models/drag-over-buttons-id'
+import { dragOverHeaderAtom } from '~/entities/rules/models/drag-over-header'
+import { dragOverItemHeaderIdAtom } from '~/entities/rules/models/drag-over-item-header-id'
 import { dragOverItemIdAtom } from '~/entities/rules/models/drag-over-item-id'
 import { draggableItemAtom } from '~/entities/rules/models/draggableItem'
 import { editorRulesValuesAtom } from '~/entities/rules/models/editorRulesValues'
@@ -39,6 +42,9 @@ export function Rules(): JSX.Element {
   const [dragOverItemId, setDragOverId] = useRecoilState(dragOverItemIdAtom)
   const [dragOverButtonsId, setDragOverButtonsId] = useRecoilState(dragOverButtonsIdAtom)
   const [editorValue, setEditorValues] = useRecoilState(editorRulesValuesAtom)
+  const [direction, setDirection] = useRecoilState(directionAtom)
+  const [overHeader, setOverHeader] = useRecoilState(dragOverHeaderAtom)
+  const [overHeaderItemId, setOverHeaderItemId] = useRecoilState(dragOverItemHeaderIdAtom)
 
   useEffect(() => {
     if (flag.current) {
@@ -61,7 +67,19 @@ export function Rules(): JSX.Element {
 
   return (
     <ul className={c(Rules.displayName)} onDragOver={dragOver} onDrop={dropToBoard} id='ruleEditor-w-Rules'>
-      <Flex className='header' gap='xl' mainAxis='space-between' crossAxis='center'>
+      <Flex
+        onDrop={dropToBoardUp}
+        onDragOver={dragOverHeader}
+        onDragLeave={(e): void => {
+          e.preventDefault()
+          e.stopPropagation()
+          if (overHeader) setOverHeader(false)
+        }}
+        className={c('header', overHeader && '--dragOver')}
+        gap='xl'
+        mainAxis='space-between'
+        crossAxis='center'
+      >
         <Flex gap='xl'>
           <GhostButton height={'l'} padding={'s'} onClick={back}>
             <ArrowLeft width={'30px'} height={'30px'} />
@@ -83,9 +101,31 @@ export function Rules(): JSX.Element {
         return (
           <li onDrop={(_): void => dropItemToItem(_, item.id)} onDragOver={dragOver} key={item.id} className='list'>
             <div className='item'>
-              {item.valueArr.length > 1 && (
-                <SplitBtn index={i} rootProps={{ style: { marginLeft: 'auto', marginBottom: '20px' } }} />
-              )}
+              <div
+                className={c('header-item', overHeaderItemId === item.id && '--dragOver')}
+                style={{
+                  minHeight: item.valueArr.length > 1 ? '70px' : '20px',
+                }}
+                onDrop={(_): void => dropItemToHeaderItem(_, item.id)}
+                onDragOver={(e): void => {
+                  e.preventDefault()
+                  e.stopPropagation()
+                  if (overHeaderItemId !== item.id) {
+                    setOverHeaderItemId(item.id)
+                  }
+                  if (dragOverItemId) setDragOverId(null)
+                  if (dragOverButtonsId) setDragOverButtonsId(null)
+                }}
+              >
+                {item.valueArr.length > 1 && (
+                  <SplitBtn
+                    rootProps={{
+                      style: { marginLeft: 'auto' },
+                    }}
+                    index={i}
+                  />
+                )}
+              </div>
               <Item id={item.id} values={item.valueArr} />
             </div>
             <AddDeleteButtons
@@ -108,7 +148,12 @@ export function Rules(): JSX.Element {
   function dragOver(e: React.DragEvent<HTMLElement>, parentId: string | null = null): void {
     e.preventDefault()
     e.stopPropagation()
+
     const reg = new RegExp(AddDeleteButtons.displayName)
+    if (overHeaderItemId) {
+      setOverHeaderItemId(null)
+    }
+
     if (reg.test((e.target as HTMLElement).className) && draggableItem) {
       if (dragOverItemId) setDragOverId(null)
       if (parentId !== dragOverButtonsId) {
@@ -117,32 +162,97 @@ export function Rules(): JSX.Element {
     }
   }
 
+  function dragOverHeader(e: React.DragEvent<HTMLElement>): void {
+    e.preventDefault()
+    e.stopPropagation()
+    if (overHeaderItemId) {
+      setOverHeaderItemId(null)
+    }
+    if (!overHeader) setOverHeader(true)
+  }
+
   function dropToBoard(e: React.DragEvent<HTMLElement>, parentId: string | null = null): void {
     e.preventDefault()
     e.stopPropagation()
-
+    if (overHeaderItemId) {
+      setOverHeaderItemId(null)
+    }
     if ((e.target as HTMLElement).id === 'ruleEditor-w-Rules' && draggableItem) {
       setEditorVales(onDropItemToCanvas(editorRulesValues, draggableItem))
       setDraggableItem(null)
     }
+
     if (parentId && dragOverButtonsId && draggableItem) {
       setEditorVales(onDropItemToCanvas(editorRulesValues, draggableItem, dragOverButtonsId))
       setDraggableItem(null)
     }
     if (dragOverItemId) setDragOverId(null)
     if (dragOverButtonsId) setDragOverButtonsId(null)
+    if (draggableItem) setDraggableItem(null)
+    if (overHeader) setOverHeader(false)
   }
 
-  function dropItemToItem(e: React.DragEvent<HTMLElement>, id: string, direction: 'up' | 'down' = 'down'): void {
+  function dropToBoardUp(e: React.DragEvent<HTMLElement>): void {
     e.preventDefault()
     e.stopPropagation()
+    if (draggableItem) {
+      setEditorVales(onDropItemToCanvas(editorRulesValues, draggableItem, null, 'up'))
+      setDraggableItem(null)
+    }
+    if (overHeaderItemId) {
+      setOverHeaderItemId(null)
+    }
+    if (dragOverItemId) setDragOverId(null)
+    if (dragOverButtonsId) setDragOverButtonsId(null)
+    if (draggableItem) setDraggableItem(null)
+    if (overHeader) setOverHeader(false)
+  }
+
+  function dropItemToItem(e: React.DragEvent<HTMLElement>, id: string): void {
+    e.preventDefault()
+    e.stopPropagation()
+
     if (draggableItem && id !== draggableItem.id && dragOverItemId) {
       setEditorValues(onDropItemToItem(editorValue, id, dragOverItemId, draggableItem, direction))
       setDraggableItem(null)
     }
+    if (overHeaderItemId) {
+      setOverHeaderItemId(null)
+    }
 
     if (dragOverItemId) setDragOverId(null)
     if (dragOverButtonsId) setDragOverButtonsId(null)
+    if (draggableItem) setDraggableItem(null)
+    if (overHeader) setOverHeader(false)
+  }
+
+  function dropItemToHeaderItem(e: React.DragEvent<HTMLElement>, id: string): void {
+    e.preventDefault()
+    e.stopPropagation()
+    if (draggableItem) {
+      const result = editorValue
+        .map((arr) => {
+          if (arr.id === id) {
+            return {
+              ...arr,
+              valueArr: [draggableItem, ...arr.valueArr.filter((item) => item.id !== draggableItem?.id)],
+            }
+          }
+          return { ...arr, valueArr: arr.valueArr.filter((item) => item.id !== draggableItem?.id) }
+        })
+        .filter((item) => item.valueArr.length)
+      setEditorValues(result)
+      setDraggableItem(null)
+    }
+
+    if (overHeaderItemId) {
+      setOverHeaderItemId(null)
+    }
+
+    if (dragOverItemId) setDragOverId(null)
+    if (dragOverButtonsId) setDragOverButtonsId(null)
+    if (draggableItem) setDraggableItem(null)
+    if (overHeader) setOverHeader(false)
   }
 
   function back(): void {

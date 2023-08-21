@@ -3,7 +3,10 @@
   border-radius: 9px;
   background: var(--editorItem_bg);
   padding: 20px;
-  border: 1px solid aqua;
+  box-shadow: 0px 0px 8px 0px rgba(0, 0, 0, 0.1);
+}
+.Editor-w-Rules-w-Input.is-draggable {
+  opacity: 0.15;
 }
 
 .Editor-w-Rules-w-Input > .marker {
