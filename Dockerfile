@@ -38,8 +38,8 @@ RUN apk --update add openssl-dev pcre-dev zlib-dev wget build-base \
         --with-mail \
         --with-stream \
         --prefix=/tmp/nginx \
-        --http-log-path=/tmp/nginx/access.log \
-        --error-log-path=/tmp/nginx/error.log \
+        --http-log-path=/var/log/nginx/access.log \
+        --error-log-path=/var/log/nginx/error.log \
         --sbin-path=/usr/local/sbin/nginx && \
     make && \
     make install && \
