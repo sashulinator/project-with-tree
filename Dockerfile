@@ -66,6 +66,8 @@ COPY nginx_conf/nginx.conf /tmp/nginx/conf/nginx.conf
 
 RUN chown -R nobody /tmp/nginx
 
+RUN chmod -R 777 /tmp/nginx
+
 EXPOSE 1080
 
 CMD ["nginx", "-g", "daemon off;"]
