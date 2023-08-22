@@ -1,7 +1,7 @@
 import { emitter } from '~/shared/emitter'
 
-import { light } from './light'
 import { dark } from './dark'
+import { light } from './light'
 
 const themes = { dark, light }
 

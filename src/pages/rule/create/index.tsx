@@ -1,6 +1,6 @@
 import { useQuery } from 'react-query'
-import { url, makeRequest } from '~/api/rules/mock/fetch'
 
+import { makeRequest, url } from '~/api/rules/mock/fetch'
 import { Editor } from '~/entities/rules/ui/editor'
 import mockRules from '~/mocks/rules/mock-rules'
 

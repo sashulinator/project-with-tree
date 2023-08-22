@@ -1,5 +1,6 @@
 .ruleEditor-w-Rules-w-Item {
   display: flex;
+  padding: 0 20px 20px 20px;
 }
 
 .ruleEditor-w-Rules-w-Item > .list {

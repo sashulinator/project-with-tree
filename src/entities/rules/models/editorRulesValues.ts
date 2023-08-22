@@ -8,7 +8,6 @@ export type EditorItem = {
 export type EditorValues = {
   id: string
   valueArr: EditorItem[]
-  checked?: boolean
 }
 
 export const editorRulesValuesAtom = atom<EditorValues[]>({

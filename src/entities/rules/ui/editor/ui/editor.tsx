@@ -1,13 +1,15 @@
 import './editor.css'
 
+import { useEffect } from 'react'
+import { useSetRecoilState } from 'recoil'
+
+import { addDataMentions } from '~/entities/rules/lib/add-data-mentions'
+import { mentionsDataAtom } from '~/entities/rules/models/mentionsData'
 import { DomainItemProps } from '~/entities/rules/types/rules-type'
+import { c } from '~/utils/core'
+
 import { DomainList } from '../widgets/domain-list'
 import { Rules } from '../widgets/rules'
-import { c } from '~/utils/core'
-import { useSetRecoilState } from 'recoil'
-import { mentionsDataAtom } from '~/entities/rules/models/mentionsData'
-import { addDataMentions } from '~/entities/rules/lib/add-data-mentions'
-import { useEffect } from 'react'
 
 Editor.displayName = 'ruleEditor'
 

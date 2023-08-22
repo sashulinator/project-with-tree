@@ -1,66 +1,55 @@
 import './add-delete-buttons.css'
 
-import Flex, { FlexProps } from '~/abstract/flex'
-import { GhostButton } from '~/ui/button'
 import { useRecoilState } from 'recoil'
-import uniqid from 'uniqid'
+
+import Flex, { FlexProps } from '~/abstract/flex'
+import { getArrAddCondition } from '~/entities/rules/lib/get-arr-add-condition'
+import { getArrDeleteCondition } from '~/entities/rules/lib/get-arr-delete-condition'
+import { editorRulesValuesAtom } from '~/entities/rules/models/editorRulesValues'
+import { GhostButton } from '~/ui/button'
 import { Close, Plus } from '~/ui/icon'
 import { c } from '~/utils/core'
-import { EditorValues, editorRulesValuesAtom } from '~/entities/rules/models/editorRulesValues'
+
+import { DropCard } from '../../drop-card/drop-card'
 import Select from '../../select/ui/select'
 
 interface ButtonsProps {
-  id: string
-  rootProps?: FlexProps
+  itemId: string
+  parentId: string
+  flexProps?: FlexProps
+  rootProps?: React.HTMLAttributes<HTMLDivElement>
+  isDragOver: boolean
 }
 
 AddDeleteButtons.displayName = 'ruleEditor-w-Rules-w-AddDeleteButtons'
 
 export default function AddDeleteButtons(props: ButtonsProps): JSX.Element {
-  const { id, rootProps } = props
+  const { itemId, flexProps, isDragOver, parentId, rootProps } = props
   const [editorRulesValues, setEditorValues] = useRecoilState(editorRulesValuesAtom)
 
   return (
-    <Flex className={c(AddDeleteButtons.displayName, rootProps?.className)} gap='xl' crossAxis='center' {...rootProps}>
-      <GhostButton height={'s'} square onClick={deleteCondition}>
-        <Close />
-      </GhostButton>
-      <GhostButton height={'s'} square onClick={addCondition}>
-        <Plus />
-      </GhostButton>
-      <Select id={id} />
-    </Flex>
+    <div {...rootProps} className={c(AddDeleteButtons.displayName, rootProps?.className, isDragOver && '--DragOver')}>
+      <Flex gap='xl' crossAxis='center' {...flexProps}>
+        <GhostButton height={'s'} square onClick={deleteCondition}>
+          <Close />
+        </GhostButton>
+        <GhostButton height={'s'} square onClick={addCondition}>
+          <Plus />
+        </GhostButton>
+        <Select id={itemId} />
+      </Flex>
+    </div>
   )
 
   // Private
   function deleteCondition(): void {
-    if (editorRulesValues.length === 1) {
+    if (editorRulesValues.length === 1 && parentId === itemId) {
       return
     }
-    const result = editorRulesValues
-      .map((arr) => {
-        if (arr.valueArr.length !== 1) {
-          return { ...arr, valueArr: arr.valueArr.filter((item) => item.id !== id) }
-        }
-        return { ...arr, valueArr: arr.valueArr.filter(() => arr.id !== id) }
-      })
-      .filter((arr) => arr.valueArr.length > 0)
-    setEditorValues(result)
+    setEditorValues(getArrDeleteCondition(editorRulesValues, itemId, parentId))
   }
 
   function addCondition(): void {
-    const index = editorRulesValues.findIndex((item) => item.id === id)
-    const result: EditorValues[] = []
-    editorRulesValues.forEach((item, i) => {
-      result.push(item)
-      if (i === index) {
-        result.push({
-          id: uniqid(),
-          valueArr: [{ id: uniqid(), value: '' }],
-        })
-      }
-    })
-
-    setEditorValues(result)
+    setEditorValues(getArrAddCondition(editorRulesValues, itemId, parentId))
   }
 }

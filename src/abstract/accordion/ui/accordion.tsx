@@ -1,9 +1,10 @@
-import Collapse, { CollapseProps } from '~/abstract/collapse'
-
 import './accordion.css'
+
+import { createElement } from 'react'
+
+import Collapse, { CollapseProps } from '~/abstract/collapse'
 import { c } from '~/utils/core'
 import { useControlledState } from '~/utils/hooks'
-import { createElement } from 'react'
 
 Accordion.displayName = 'a-Accordion'
 
