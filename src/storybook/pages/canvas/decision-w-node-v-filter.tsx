@@ -13,16 +13,20 @@ const point1: Point = {
   name: 'name1',
   level: 'decisionPoint',
   computation: 'parallel',
-  x: 10,
-  y: 10,
+  position: {
+    x: 10,
+    y: 10,
+  },
 }
 const point2: Point = {
   id: 'id2',
   name: 'name2',
   level: 'decisionPoint',
   computation: 'parallel',
-  x: 510,
-  y: 10,
+  position: {
+    x: 510,
+    y: 10,
+  },
 }
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface

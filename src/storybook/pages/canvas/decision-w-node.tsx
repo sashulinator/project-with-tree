@@ -15,8 +15,10 @@ const point1: Point = {
   name: 'name1',
   level: 'decisionPoint',
   computation: 'parallel',
-  x: 10,
-  y: 10,
+  position: {
+    x: 10,
+    y: 10,
+  },
 }
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface

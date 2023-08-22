@@ -8,16 +8,16 @@ export interface RequestData {
   limit: number
 }
 
-export type ResponseData = Decision[]
+export type ResponseData = { total: number; items: Decision[] }
 
 export type Response = AxiosResponse<ResponseData>
 
-export const url = `/tree/decisionUITreeList`
+export const url = `/api/v1/tree/decisionUITreeList`
 
 export async function request(requestData: RequestData): Promise<Response> {
   // TODO validation
   const response = await api.get<ResponseData>(`${url}`, {
-    params: { pageN: requestData.page, limit: requestData.limit },
+    params: { page: requestData.page, limit: requestData.limit },
   })
   // TODO validation
   return response

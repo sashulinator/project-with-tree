@@ -2,7 +2,7 @@ import './index.css'
 
 import { useParams } from 'react-router-dom'
 
-import { useFetchDecisionMock } from '~/api/decision/fetch-mock'
+import { useFetchDecision } from '~/api/decision/fetch'
 import { Editor } from '~/entities/decision'
 import { assertDefined } from '~/utils/core'
 
@@ -10,7 +10,7 @@ export default function DecisionPage(): JSX.Element {
   const { id } = useParams<{ id: string }>()
 
   assertDefined(id)
-  const fetcher = useFetchDecisionMock({ id })
+  const fetcher = useFetchDecision({ id })
 
   return <main className='DecisionIdPage'>{fetcher.data && <Editor decision={fetcher.data} />}</main>
 

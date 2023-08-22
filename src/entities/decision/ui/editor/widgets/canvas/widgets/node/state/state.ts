@@ -19,7 +19,8 @@ export class State extends ItemState<Events> {
   computation: Prop<'computation', 'parallel' | 'successively' | undefined>
 
   constructor(point: StateProps) {
-    super({ id: point.id, position: { x: point.x, y: point.y } })
+    // TODO убрать после демо `|| { x: 0, y: 0 }`
+    super({ id: point.id, position: point.position || { x: 0, y: 0 } })
 
     this.point = point
 

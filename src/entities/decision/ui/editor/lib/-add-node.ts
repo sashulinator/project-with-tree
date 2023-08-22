@@ -14,16 +14,20 @@ export function addNode(props: Props): () => void {
   return (point?: Point): void => {
     const canvasSize = getElementSize(props.canvasState.ref.value as Element)
 
+    const x = (-props.canvasState.translate.value.x + canvasSize?.width / 2) / props.canvasState.scale.value - 150
+    const y = (-props.canvasState.translate.value.y + canvasSize?.height / 2) / props.canvasState.scale.value - 100
+
     const newPoint: Point = {
       level: 'decisionPoint',
       // id берем из приходящего point т.к. функция может быть вызвана при событии cut/paste
       id: uniqid(),
       computation: 'successively',
       name: 'new',
-      y: (-props.canvasState.translate.value.y + canvasSize?.height / 2) / props.canvasState.scale.value - 100,
       ...point,
-      // Вставлять мы будет ВСЕГДА туда куда смотрит пользователь
-      x: (-props.canvasState.translate.value.x + canvasSize?.width / 2) / props.canvasState.scale.value - 150,
+      position: {
+        y,
+        x,
+      },
     }
 
     const nodeState = new NodeState(newPoint)
