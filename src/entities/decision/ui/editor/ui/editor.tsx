@@ -49,7 +49,7 @@ export default function Editor(props: Props): JSX.Element {
   const state = useMemo(() => new State(props.decision), [])
   const canvasState = useMemo(() => new CanvasState(), [])
   const nodeListState = useMemo(() => new NodeListState(props.decision.decisionTree), [props.decision.decisionTree])
-  const linkListState = useMemo(() => new LinkListState([]), [])
+  const linkListState = useMemo(() => new LinkListState(props.decision.decisionTree), [])
 
   const previousHistory = previousHistoryBind(history)
   const nextHistory = nextHistoryBind(history)

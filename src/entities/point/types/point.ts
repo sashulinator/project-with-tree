@@ -10,5 +10,18 @@ export interface Point<P = Dictionary<Any>> {
   componentName?: string
   computation?: 'parallel' | 'successively'
   props?: P
-  children?: unknown[]
+  children?: RuleSet[]
+}
+
+export interface RuleSet {
+  id?: Id | undefined
+  rules: Rule[]
+  index: number
+}
+
+export interface Rule {
+  level: 'rule'
+  name: string
+  id: Id
+  value: string
 }

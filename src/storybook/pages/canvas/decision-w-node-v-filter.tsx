@@ -51,10 +51,25 @@ export default {
         new LinkListState([
           {
             id: 'id1',
-            name: 'name',
-            sourceId: 'id1',
-            targetId: 'id2',
-            i: 1,
+            name: 'string',
+            level: 'decisionPoint',
+            position: { x: 1, y: 0 },
+            componentName: 'string',
+            computation: 'successively',
+            children: [
+              {
+                id: 'id2',
+                index: 1,
+                rules: [
+                  {
+                    level: 'rule',
+                    name: 'string',
+                    id: 'id3',
+                    value: 'string',
+                  },
+                ],
+              },
+            ],
           },
         ]),
       []

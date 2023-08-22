@@ -1,10 +1,9 @@
 import uniqid from 'uniqid'
 
+import { RuleSet } from '~/entities/point'
 import { Emitter } from '~/lib/emitter'
 import { Id } from '~/utils/core'
 import { Prop } from '~/utils/depricated-emitter'
-
-import { Rule } from '../../../../../../rule/types/rule'
 
 export type Events = {
   targetId: { value: Id }
@@ -13,14 +12,14 @@ export type Events = {
 }
 
 export interface StateProps {
-  id: Id
-  rule: Rule
+  pointId: Id
+  ruleSet: RuleSet
 }
 
 export class State extends Emitter<Events> {
   id: Id
 
-  readonly rule: Rule
+  readonly ruleSet: RuleSet
 
   targetId: Prop<'targetId', Id | undefined>
 
@@ -31,28 +30,28 @@ export class State extends Emitter<Events> {
   constructor(props: StateProps) {
     super()
 
-    this.id = props.id
+    this.id = uniqid()
 
-    this.rule = props.rule
+    this.ruleSet = props.ruleSet
 
-    this.targetId = new Prop('targetId', props.rule.targetId, this)
+    this.targetId = new Prop('targetId', props.ruleSet.id, this)
 
-    this.sourceId = new Prop('sourceId', props.rule.sourceId, this)
+    this.sourceId = new Prop('sourceId', props.pointId as Id | undefined, this)
 
-    this.index = new Prop('index', props.rule.i, this)
+    this.index = new Prop('index', props.ruleSet.index, this)
   }
 
-  static createDefaultRule(rule: Partial<Rule>): Rule {
+  static createDefaultRuleSet(ruleSet: Partial<RuleSet>): RuleSet {
     return {
       id: uniqid(),
-      ...rule,
-      name: 'new_rule',
-      i: 0,
+      ...ruleSet,
+      index: 0,
+      rules: [],
     }
   }
 
-  static createDefaultInstance(rule: Partial<Rule>): State {
-    const newRule = State.createDefaultRule(rule)
-    return new State({ id: newRule.id, rule: newRule })
+  static createDefaultInstance(pointId: Id, partialRuleSet: Partial<RuleSet>): State {
+    const ruleSet = State.createDefaultRuleSet(partialRuleSet)
+    return new State({ pointId, ruleSet })
   }
 }

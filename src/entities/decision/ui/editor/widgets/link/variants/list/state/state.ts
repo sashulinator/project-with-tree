@@ -1,8 +1,9 @@
-import { State as LinkState } from '../../..'
-import { Rule } from '~/entities/rule/types/rule'
+import { Point } from '~/entities/point'
 import { EmitterableDictionary } from '~/lib/emitter/dictionary'
 import { Id, assertDefined, invariant } from '~/utils/core'
 import { Prop } from '~/utils/depricated-emitter'
+
+import { State as LinkState } from '../../..'
 
 type Events = {
   // Наследуемые события
@@ -20,8 +21,12 @@ type Events = {
 export class State extends EmitterableDictionary<Events, LinkState> {
   editingId: Prop<'editingId', Id | undefined>
 
-  constructor(ruleList: Rule[]) {
-    const linkStates = ruleList?.map((rule) => new LinkState({ id: rule.id, rule }))
+  constructor(pointList: Point[]) {
+    const linkStates = pointList
+      .flatMap((point) => {
+        return point.children?.map((ruleSet) => new LinkState({ pointId: point.id, ruleSet: ruleSet }))
+      })
+      .filter((t) => !!t) as LinkState[]
 
     super(linkStates, (l) => l.id.toString())
 
@@ -44,13 +49,13 @@ export class State extends EmitterableDictionary<Events, LinkState> {
     return this.values().filter((state) => state.targetId.value === id)
   }
 
-  startNewLink(nodeId: Id, newLinkId: Id, startLinkType: 'source' | 'target'): void {
+  startNewLink(nodeId: Id, pointId: Id, startLinkType: 'source' | 'target'): void {
     const editingLinkState = this.findEditingLinkState()
     invariant(!editingLinkState, 'You cannot start new Link while editing')
-    const rule = { id: newLinkId }
-    rule[startLinkType === 'target' ? 'targetId' : 'sourceId'] = nodeId
-    this.add(LinkState.createDefaultInstance(rule))
-    this.editingId.value = newLinkId
+    const ruleSet = {}
+    ruleSet[startLinkType === 'target' ? 'targetId' : 'sourceId'] = nodeId
+    this.add(LinkState.createDefaultInstance(pointId, ruleSet))
+    this.editingId.value = pointId
   }
 
   finishNewLink(nodeId: Id): void {
@@ -84,12 +89,12 @@ export class State extends EmitterableDictionary<Events, LinkState> {
     const isSourceEditing = linkState.sourceId.value === nodeId
 
     if (isSourceEditing) {
-      const newState = LinkState.createDefaultInstance({
-        i: linkState.rule.i,
-        targetId: linkState.targetId.value,
-      } as Partial<Rule>)
-      this.add(newState)
-      this.editingId.value = newState.id
+      // const newState = LinkState.createDefaultInstance({
+      //   index: linkState.ruleSet.i,
+      //   targetId: linkState.targetId.value,
+      // } as Partial<Rule>)
+      // this.add(newState)
+      // this.editingId.value = newState.id
     } else {
       this.editingId.value = linkId
     }
