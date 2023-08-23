@@ -3,7 +3,7 @@ import { EmitterableDictionary } from '~/lib/emitter/dictionary'
 import { Id, assertDefined, invariant } from '~/utils/core'
 import { Prop } from '~/utils/depricated-emitter'
 
-import { State as LinkState } from '../../..'
+import { State as LinkState, StateProps } from '../../..'
 
 type Events = {
   // Наследуемые события
@@ -24,7 +24,10 @@ export class State extends EmitterableDictionary<Events, LinkState> {
   constructor(pointList: Point[]) {
     const linkStates = pointList
       .flatMap((point) => {
-        return point.children?.map((ruleSet) => new LinkState({ pointId: point.id, ruleSet: ruleSet }))
+        return point.children?.map(
+          (ruleSet) =>
+            new LinkState({ sourceId: point.id, targetId: ruleSet.id, rules: ruleSet.rules, index: ruleSet.index })
+        )
       })
       .filter((t) => !!t) as LinkState[]
 
@@ -49,13 +52,13 @@ export class State extends EmitterableDictionary<Events, LinkState> {
     return this.values().filter((state) => state.targetId.value === id)
   }
 
-  startNewLink(nodeId: Id, pointId: Id, startLinkType: 'source' | 'target'): void {
+  startNewLink(props: StateProps): void {
     const editingLinkState = this.findEditingLinkState()
     invariant(!editingLinkState, 'You cannot start new Link while editing')
-    const ruleSet = {}
-    ruleSet[startLinkType === 'target' ? 'targetId' : 'sourceId'] = nodeId
-    this.add(LinkState.createDefaultInstance(pointId, ruleSet))
-    this.editingId.value = pointId
+    const newLink = LinkState.createDefaultInstance(props)
+    this.add(newLink)
+    if (!props.sourceId && !props.targetId) throw new Error('`sourceId` or `targetId` must be passed')
+    this.editingId.value = newLink.id
   }
 
   finishNewLink(nodeId: Id): void {
@@ -89,12 +92,12 @@ export class State extends EmitterableDictionary<Events, LinkState> {
     const isSourceEditing = linkState.sourceId.value === nodeId
 
     if (isSourceEditing) {
-      // const newState = LinkState.createDefaultInstance({
-      //   index: linkState.ruleSet.i,
-      //   targetId: linkState.targetId.value,
-      // } as Partial<Rule>)
-      // this.add(newState)
-      // this.editingId.value = newState.id
+      const newState = LinkState.createDefaultInstance({
+        index: 0,
+        targetId: linkState.targetId.value,
+      })
+      this.add(newState)
+      this.editingId.value = newState.id
     } else {
       this.editingId.value = linkId
     }

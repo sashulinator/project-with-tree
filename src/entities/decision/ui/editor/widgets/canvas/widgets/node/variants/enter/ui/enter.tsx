@@ -27,7 +27,7 @@ export default function Enter(props: VariantPickerProps): JSX.Element {
           hideNewLink={true}
           linkListState={props.linkListState}
           state={props.state}
-          onNewJointClick={onNewJointClick('source')}
+          onNewJointClick={onNewJointClick('sourceId')}
           onJointClick={onJointClick}
         />
       }
@@ -53,12 +53,12 @@ export default function Enter(props: VariantPickerProps): JSX.Element {
     }
   }
 
-  function onNewJointClick(startLinkType: 'target' | 'source'): (newLinkId: Id) => void {
+  function onNewJointClick(startLinkType: 'targetId' | 'sourceId'): (newLinkId: Id) => void {
     return (newLinkId: Id) => {
       if (props.linkListState.editingId.value) {
         props.linkListState.finishNewLink(props.state.id)
       } else {
-        props.linkListState.startNewLink(props.state.id, newLinkId, startLinkType)
+        props.linkListState.startNewLink({ [startLinkType]: props.state.id, id: newLinkId, index: 0 })
       }
     }
   }
