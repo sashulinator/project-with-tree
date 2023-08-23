@@ -1,0 +1,17 @@
+.decision-Editor-w-Canvas-w-Node-v-ControlGroup-w-Toolbar {
+  display: flex;
+  justify-content: space-between;
+}
+
+.decision-Editor-w-Canvas-w-Node-v-ControlGroup-w-Toolbar .selection {
+  margin-left: var(--l);
+}
+.decision-Editor-w-Canvas-w-Node-v-ControlGroup-w-Toolbar .a-Button {
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+
+.decision-Editor-w-Canvas-w-Node-v-ControlGroup-w-Toolbar .a-Button:last-child {
+  border-top-left-radius: 0;
+  border-bottom-right-radius: 0;
+}

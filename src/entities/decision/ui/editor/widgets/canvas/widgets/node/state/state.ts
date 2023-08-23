@@ -24,7 +24,8 @@ export class State extends ItemState<Events> {
 
     this.point = point
 
-    this.title = new Prop('title', point.name || '_____UNDEFINED_____', this)
+    // TODO убрать ВХОД после демо
+    this.title = new Prop('title', point.name || 'ВХОД', this)
 
     this.computation = new Prop('computation', point.computation, this)
   }
