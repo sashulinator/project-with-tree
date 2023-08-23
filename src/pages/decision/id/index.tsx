@@ -12,7 +12,18 @@ export default function DecisionPage(): JSX.Element {
   assertDefined(id)
   const fetcher = useFetchDecision({ id })
 
-  return <main className='DecisionIdPage'>{fetcher.data && <Editor decision={fetcher.data} />}</main>
+  return (
+    <main className='DecisionIdPage'>
+      {fetcher.data && (
+        <Editor
+          onSubmit={(states): void => {
+            console.log('states', states)
+          }}
+          decision={fetcher.data}
+        />
+      )}
+    </main>
+  )
 
   // Private
 }
