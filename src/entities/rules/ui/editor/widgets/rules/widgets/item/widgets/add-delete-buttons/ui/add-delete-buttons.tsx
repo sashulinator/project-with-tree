@@ -10,7 +10,6 @@ import { GhostButton } from '~/ui/button'
 import { Close, Plus } from '~/ui/icon'
 import { c } from '~/utils/core'
 
-import { DropCard } from '../../drop-card/drop-card'
 import Select from '../../select/ui/select'
 
 interface ButtonsProps {

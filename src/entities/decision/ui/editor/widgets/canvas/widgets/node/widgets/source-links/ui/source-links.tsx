@@ -3,9 +3,8 @@ import './source-links.css'
 import type { Identifier, XYCoord } from 'dnd-core'
 import { useRef, useState } from 'react'
 import { useDrag, useDrop } from 'react-dnd'
-import uniqid from 'uniqid'
 
-import { Id, c } from '~/utils/core'
+import { Id, c, generateId } from '~/utils/core'
 import { useUpdate } from '~/utils/hooks'
 
 import { Joint, State } from '../../..'
@@ -23,7 +22,7 @@ export interface Props {
 }
 
 export default function SourceLinks(props: Props): JSX.Element {
-  const [newLinkId, setNewLinkId] = useState(uniqid)
+  const [newLinkId, setNewLinkId] = useState(generateId)
 
   useUpdate(subscribeOnUpdates)
 
@@ -79,7 +78,7 @@ export default function SourceLinks(props: Props): JSX.Element {
     props.linkListState.on('remove', update)
     props.linkListState.on('index', update)
     props.linkListState.on('update', update)
-    props.linkListState.on('targetId', () => setNewLinkId(uniqid()))
+    props.linkListState.on('targetId', () => setNewLinkId(generateId()))
   }
 }
 

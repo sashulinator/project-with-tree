@@ -1,9 +1,7 @@
-import uniqid from 'uniqid'
-
 import { Point } from '~/entities/point'
 import { notify } from '~/shared/notify'
 import { Box } from '~/utils/clipboard'
-import { has } from '~/utils/core'
+import { generateId, has } from '~/utils/core'
 
 import { NodeListState } from '..'
 
@@ -30,7 +28,7 @@ export function pasteFromClipboard(props: Props): () => void {
                     }
                     setTimeout(() => props.addNode(point), 10)
                   } else {
-                    props.addNode({ ...point, id: uniqid() })
+                    props.addNode({ ...point, id: generateId() })
                   }
                 })
               }

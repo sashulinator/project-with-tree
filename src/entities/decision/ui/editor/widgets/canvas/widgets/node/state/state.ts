@@ -1,7 +1,6 @@
-import uniqid from 'uniqid'
-
 import { ItemEvents, ItemState } from '~/abstract/canvas'
 import { Point } from '~/entities/point'
+import { generateId } from '~/utils/core'
 import { Prop } from '~/utils/emitter'
 
 export type Events = ItemEvents & {
@@ -30,7 +29,7 @@ export class State extends ItemState<Events> {
   }
 
   copy = (point?: StateProps): State => {
-    return new State({ ...this.serialize(), ...point, id: uniqid() })
+    return new State({ ...this.serialize(), ...point, id: generateId() })
   }
 
   serialize = (): Point => {

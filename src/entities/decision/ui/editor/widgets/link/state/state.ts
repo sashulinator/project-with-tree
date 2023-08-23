@@ -1,8 +1,6 @@
-import uniqid from 'uniqid'
-
 import { Rule, RuleSet } from '~/entities/point'
 import { Emitter } from '~/lib/emitter'
-import { Id } from '~/utils/core'
+import { Id, generateId } from '~/utils/core'
 import { Prop } from '~/utils/depricated-emitter'
 
 export type Events = {
@@ -33,7 +31,7 @@ export class State extends Emitter<Events> {
   constructor(props: StateProps) {
     super()
 
-    this.id = props.id || uniqid()
+    this.id = props.id || generateId()
 
     this.rules = props.rules || []
 
