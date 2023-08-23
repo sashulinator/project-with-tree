@@ -1,7 +1,6 @@
 import { UseQueryOptions, UseQueryResult, useQuery } from 'react-query'
 
 import { QueryError } from '~/shared/types'
-import { Id } from '~/utils/core'
 
 import { RequestData, Response, ResponseData, request, url } from './mock/fetch'
 

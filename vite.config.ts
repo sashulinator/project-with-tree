@@ -25,9 +25,7 @@ export default defineConfig({
   },
   server: {
     proxy: {
-      '/tree': 'http://10.4.87.16:8084',
-      '/attribute': 'http://10.4.87.16:8084',
-      '/domain': 'http://10.4.87.16:8084',
+      '/api': 'http://10.4.87.16:8084',
     },
   },
 })

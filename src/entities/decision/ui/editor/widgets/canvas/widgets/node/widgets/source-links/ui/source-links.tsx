@@ -180,7 +180,7 @@ export function RuleSet(props: RuleSetProps): JSX.Element {
 
   return (
     <div className='rule' key={props.linkState.id} ref={ref} style={{ opacity }} data-handler-id={handlerId}>
-      <div>{props.linkState.rule.name}</div>
+      <div>{props.linkState.ruleSet.index}</div>
       <Joint
         disabled={
           props.isEditingThisNode || props.isEditingHasSource || (props.isLinked && Boolean(props.editingLinkState))

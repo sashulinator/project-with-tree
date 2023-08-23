@@ -40,6 +40,12 @@ const resizeBarClassName = 'resizeBar'
 export interface Props {
   decision: Decision
   className?: string
+  onSubmit: (states: {
+    editorState: State
+    canvasState: CanvasState
+    nodeListState: NodeListState
+    linkListState: LinkListState
+  }) => void
 }
 
 export default function Editor(props: Props): JSX.Element {
@@ -49,7 +55,7 @@ export default function Editor(props: Props): JSX.Element {
   const state = useMemo(() => new State(props.decision), [])
   const canvasState = useMemo(() => new CanvasState(), [])
   const nodeListState = useMemo(() => new NodeListState(props.decision.decisionTree), [props.decision.decisionTree])
-  const linkListState = useMemo(() => new LinkListState([]), [])
+  const linkListState = useMemo(() => new LinkListState(props.decision.decisionTree), [])
 
   const previousHistory = previousHistoryBind(history)
   const nextHistory = nextHistoryBind(history)
@@ -78,7 +84,13 @@ export default function Editor(props: Props): JSX.Element {
 
   return (
     <div className={c(props.className, Editor.displayName)}>
-      <Header nodeListState={nodeListState} addNode={addNode} state={state} className='panel --header' />
+      <Header
+        submit={submit}
+        nodeListState={nodeListState}
+        addNode={addNode}
+        state={state}
+        className='panel --header'
+      />
       <LeftPanel
         className='panel --left'
         resizableProps={{ className: resizeBarClassName, name: `${Editor.displayName}-panel__left`, defaultSize: 300 }}
@@ -95,6 +107,10 @@ export default function Editor(props: Props): JSX.Element {
   )
 
   // Private
+
+  function submit(): void {
+    props.onSubmit({ editorState: state, canvasState, nodeListState, linkListState })
+  }
 
   function subscribeHistory(): void {
     historyListener({ history, state, nodeListState, linkListState })

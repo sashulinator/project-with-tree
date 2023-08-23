@@ -13,16 +13,14 @@ const point1: Point = {
   name: 'name1',
   level: 'decisionPoint',
   computation: 'parallel',
-  x: 10,
-  y: 10,
+  xy: [10, 10],
 }
 const point2: Point = {
   id: 'id2',
   name: 'name2',
   level: 'decisionPoint',
   computation: 'parallel',
-  x: 510,
-  y: 10,
+  xy: [510, 10],
 }
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
@@ -47,10 +45,25 @@ export default {
         new LinkListState([
           {
             id: 'id1',
-            name: 'name',
-            sourceId: 'id1',
-            targetId: 'id2',
-            i: 1,
+            name: 'string',
+            level: 'decisionPoint',
+            xy: [0, 1],
+            componentName: 'string',
+            computation: 'successively',
+            children: [
+              {
+                id: 'id2',
+                index: 1,
+                rules: [
+                  {
+                    level: 'rule',
+                    name: 'string',
+                    id: 'id3',
+                    value: 'string',
+                  },
+                ],
+              },
+            ],
           },
         ]),
       []

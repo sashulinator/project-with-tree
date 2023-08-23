@@ -19,11 +19,12 @@ export class State extends ItemState<Events> {
   computation: Prop<'computation', 'parallel' | 'successively' | undefined>
 
   constructor(point: StateProps) {
-    super({ id: point.id, position: { x: point.x, y: point.y } })
+    super({ id: point.id, position: { x: point.xy[0], y: point.xy[1] } })
 
     this.point = point
 
-    this.title = new Prop('title', point.name || '_____UNDEFINED_____', this)
+    // TODO убрать ВХОД после демо
+    this.title = new Prop('title', point.name || 'ВХОД', this)
 
     this.computation = new Prop('computation', point.computation, this)
   }
@@ -37,6 +38,15 @@ export class State extends ItemState<Events> {
       ...this.point,
       name: this.title.value,
       computation: this.computation.value || 'parallel',
+    }
+  }
+
+  deserialize(): Point {
+    return {
+      ...this.point,
+      name: this.title.value,
+      xy: [this.position.value.x, this.position.value.y],
+      // computation: this.computation.value || 'parallel',
     }
   }
 }

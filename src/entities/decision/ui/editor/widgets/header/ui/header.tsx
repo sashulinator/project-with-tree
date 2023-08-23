@@ -1,6 +1,6 @@
 import './header.css'
 
-import { memo, useState } from 'react'
+import { memo } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 import Flex from '~/abstract/flex/ui/flex'
@@ -24,6 +24,7 @@ export interface Props {
   state: State
   nodeListState: NodeListState
   addNode: (point: Partial<Point>) => void
+  submit: () => void
 }
 
 function HeaderComponent(props: Props): JSX.Element {
@@ -80,7 +81,7 @@ function HeaderComponent(props: Props): JSX.Element {
           <div className='tools'>
             <ThemeDropdown />
           </div>
-          <PrimaryButton>Сохранить</PrimaryButton>
+          <PrimaryButton onClick={props.submit}>Сохранить</PrimaryButton>
         </div>
       </div>
     </div>
