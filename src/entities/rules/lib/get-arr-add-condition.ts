@@ -1,4 +1,4 @@
-import uniqid from 'uniqid'
+import { generateId } from '~/utils/core'
 
 import { EditorValues } from '../models/editorRulesValues'
 
@@ -10,8 +10,8 @@ export function getArrAddCondition(editorRulesValues: EditorValues[], id: string
       result.push(item)
       if (i === index) {
         result.push({
-          id: uniqid(),
-          valueArr: [{ id: uniqid(), value: '' }],
+          id: generateId(),
+          valueArr: [{ id: generateId(), value: '' }],
         })
       }
     })
@@ -23,7 +23,7 @@ export function getArrAddCondition(editorRulesValues: EditorValues[], id: string
           valueArr: item.valueArr
             .map((item) => {
               if (item.id === id) {
-                return [item, { id: uniqid(), value: '' }]
+                return [item, { id: generateId(), value: '' }]
               }
               return item
             })

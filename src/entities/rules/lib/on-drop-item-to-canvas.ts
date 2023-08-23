@@ -1,4 +1,4 @@
-import uniqid from 'uniqid'
+import { generateId } from '~/utils/core'
 
 import { DraggableItem } from '../models/draggableItem'
 import { EditorValues } from '../models/editorRulesValues'
@@ -18,11 +18,11 @@ export function onDropItemToCanvas(
   })
   if (!parentId) {
     if (direction === 'down') {
-      return [...result, { id: uniqid(), valueArr: [{ value: draggableItem.value, id: draggableItem.id }] }].filter(
+      return [...result, { id: generateId(), valueArr: [{ value: draggableItem.value, id: draggableItem.id }] }].filter(
         (item) => item.valueArr.length
       )
     } else {
-      return [{ id: uniqid(), valueArr: [{ value: draggableItem.value, id: draggableItem.id }] }, ...result].filter(
+      return [{ id: generateId(), valueArr: [{ value: draggableItem.value, id: draggableItem.id }] }, ...result].filter(
         (item) => item.valueArr.length
       )
     }
@@ -31,7 +31,7 @@ export function onDropItemToCanvas(
   return result
     .map((item) => {
       if (item.id === parentId) {
-        return [item, { id: uniqid(), valueArr: [{ value: draggableItem.value, id: draggableItem.id }] }]
+        return [item, { id: generateId(), valueArr: [{ value: draggableItem.value, id: draggableItem.id }] }]
       }
       return item
     })
