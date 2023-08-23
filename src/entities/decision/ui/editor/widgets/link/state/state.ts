@@ -54,4 +54,12 @@ export class State extends Emitter<Events> {
     const ruleSet = State.createDefaultRuleSet(partialRuleSet)
     return new State({ pointId, ruleSet })
   }
+
+  deserialize(): RuleSet {
+    return {
+      ...this.ruleSet,
+      id: this.targetId.value,
+      index: this.index.value,
+    }
+  }
 }

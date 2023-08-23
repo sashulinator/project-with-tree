@@ -40,4 +40,13 @@ export class State extends ItemState<Events> {
       computation: this.computation.value || 'parallel',
     }
   }
+
+  deserialize(): Point {
+    return {
+      ...this.point,
+      name: this.title.value,
+      xy: [this.position.value.x, this.position.value.y],
+      // computation: this.computation.value || 'parallel',
+    }
+  }
 }
