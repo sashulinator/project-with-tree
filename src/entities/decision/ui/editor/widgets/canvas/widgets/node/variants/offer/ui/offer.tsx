@@ -4,7 +4,7 @@ import { Id } from '~/utils/core'
 import { useUpdate } from '~/utils/hooks'
 
 import { Toolbar } from '..'
-import Node, { SourceLinks, TargetLinks, Title, VariantPickerProps } from '../../..'
+import Node, { TargetLinks, Title, VariantPickerProps } from '../../..'
 
 Filter.displayName = 'decisionCanvas-w-Node-v-Offer'
 
@@ -32,7 +32,7 @@ export default function Filter(props: VariantPickerProps): JSX.Element {
         <TargetLinks
           linkStates={props.linkListState}
           state={props.state}
-          onNewJointClick={onNewJointClick('target')}
+          onNewJointClick={onNewJointClick('targetId')}
           onJointClick={onJointClick}
         />
       }
@@ -58,12 +58,12 @@ export default function Filter(props: VariantPickerProps): JSX.Element {
     }
   }
 
-  function onNewJointClick(startLinkType: 'target' | 'source'): (newLinkId: Id) => void {
+  function onNewJointClick(startLinkType: 'targetId' | 'sourceId'): (newLinkId: Id) => void {
     return (newLinkId: Id) => {
       if (props.linkListState.editingId.value) {
         props.linkListState.finishNewLink(props.state.id)
       } else {
-        props.linkListState.startNewLink(props.state.id, newLinkId, startLinkType)
+        props.linkListState.startNewLink({ [startLinkType]: newLinkId, index: 0 })
       }
     }
   }

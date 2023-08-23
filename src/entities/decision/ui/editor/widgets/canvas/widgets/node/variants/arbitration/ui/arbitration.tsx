@@ -32,7 +32,7 @@ export default function Filter(props: VariantPickerProps): JSX.Element {
         <SourceLinks
           linkListState={props.linkListState}
           state={props.state}
-          onNewJointClick={onNewJointClick('source')}
+          onNewJointClick={onNewJointClick('sourceId')}
           onJointClick={onJointClick}
         />
       }
@@ -40,7 +40,7 @@ export default function Filter(props: VariantPickerProps): JSX.Element {
         <TargetLinks
           linkStates={props.linkListState}
           state={props.state}
-          onNewJointClick={onNewJointClick('target')}
+          onNewJointClick={onNewJointClick('targetId')}
           onJointClick={onJointClick}
         />
       }
@@ -66,12 +66,13 @@ export default function Filter(props: VariantPickerProps): JSX.Element {
     }
   }
 
-  function onNewJointClick(startLinkType: 'target' | 'source'): (newLinkId: Id) => void {
+  function onNewJointClick(startLinkType: 'targetId' | 'sourceId'): (newLinkId: Id) => void {
     return (newLinkId: Id) => {
       if (props.linkListState.editingId.value) {
         props.linkListState.finishNewLink(props.state.id)
       } else {
-        props.linkListState.startNewLink(props.state.id, newLinkId, startLinkType)
+        // console.log(startLinkType, newLinkId, props.state.id)
+        props.linkListState.startNewLink({ [startLinkType]: props.state.id, id: newLinkId, index: 0 })
       }
     }
   }
