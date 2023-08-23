@@ -24,10 +24,7 @@ export function addNode(props: Props): () => void {
       computation: 'successively',
       name: 'new',
       ...point,
-      position: {
-        y,
-        x,
-      },
+      xy: [x, y],
     }
 
     const nodeState = new NodeState(newPoint)

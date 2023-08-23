@@ -13,20 +13,14 @@ const point1: Point = {
   name: 'name1',
   level: 'decisionPoint',
   computation: 'parallel',
-  position: {
-    x: 10,
-    y: 10,
-  },
+  xy: [10, 10],
 }
 const point2: Point = {
   id: 'id2',
   name: 'name2',
   level: 'decisionPoint',
   computation: 'parallel',
-  position: {
-    x: 510,
-    y: 10,
-  },
+  xy: [510, 10],
 }
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
@@ -53,7 +47,7 @@ export default {
             id: 'id1',
             name: 'string',
             level: 'decisionPoint',
-            position: { x: 1, y: 0 },
+            xy: [0, 1],
             componentName: 'string',
             computation: 'successively',
             children: [
