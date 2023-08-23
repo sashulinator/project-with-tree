@@ -1,9 +1,8 @@
 import './target-links.css'
 
 import { useState } from 'react'
-import uniqid from 'uniqid'
 
-import { Id, c } from '~/utils/core'
+import { Id, c, generateId } from '~/utils/core'
 import { useUpdate } from '~/utils/hooks'
 
 import { Joint, State } from '../../..'
@@ -20,7 +19,7 @@ export interface Props {
 }
 
 export default function TargetLink(props: Props): JSX.Element {
-  const [newLinkId, setNewLinkId] = useState(uniqid)
+  const [newLinkId, setNewLinkId] = useState(generateId)
 
   useUpdate(subscribeOnUpdates)
 
@@ -63,6 +62,6 @@ export default function TargetLink(props: Props): JSX.Element {
     props.linkStates.on('update', update)
     props.linkStates.on('targetId', update)
     props.linkStates.on('editingId', update)
-    props.linkStates.on('sourceId', () => setNewLinkId(uniqid()))
+    props.linkStates.on('sourceId', () => setNewLinkId(generateId()))
   }
 }

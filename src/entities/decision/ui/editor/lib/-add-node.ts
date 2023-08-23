@@ -1,6 +1,5 @@
-import uniqid from 'uniqid'
-
 import { Point } from '~/entities/point'
+import { generateId } from '~/utils/core'
 import { getElementSize } from '~/utils/dom/get-element-size'
 
 import { CanvasState, NodeListState, NodeState, getColumnX } from '..'
@@ -20,7 +19,7 @@ export function addNode(props: Props): () => void {
     const newPoint: Point = {
       level: 'decisionPoint',
       // id берем из приходящего point т.к. функция может быть вызвана при событии cut/paste
-      id: uniqid(),
+      id: generateId(),
       computation: 'successively',
       name: 'new',
       ...point,
