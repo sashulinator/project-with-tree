@@ -1,0 +1,15 @@
+.page-Main {
+  padding: var(--xxxl) 0 0 0;
+  display: flex;
+
+  > .list > div {
+    background-color: var(--bgSecondary);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  > .list > div > a {
+    padding: var(--s);
+  }
+}

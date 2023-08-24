@@ -5,6 +5,7 @@ import { useDrag } from '@use-gesture/react'
 
 import { useRef } from 'react'
 
+import { c } from '~/utils/core'
 import { move } from '~/utils/list'
 import { clamp } from '~/utils/number'
 
@@ -16,8 +17,8 @@ const fn =
   (index: number) =>
     active && index === originalIndex
       ? {
-          y: Math.floor(curIndex / 3) * 100 + y,
-          x: (curIndex % 3) * 100 + x,
+          y: Math.floor(curIndex / 3) * 200 + y,
+          x: (curIndex % 3) * 200 + x,
           scale: 1.1,
           zIndex: 1,
           shadow: 15,
@@ -25,8 +26,8 @@ const fn =
           config: (key: string): Partial<AnimationConfig> => (key === 'y' ? config.stiff : config.default),
         }
       : {
-          y: Math.floor(order.indexOf(index) / 3) * 100,
-          x: (order.indexOf(index) % 3) * 100,
+          y: Math.floor(order.indexOf(index) / 3) * 200,
+          x: (order.indexOf(index) % 3) * 200,
           scale: 1,
           zIndex: 0,
           shadow: 1,
@@ -34,7 +35,9 @@ const fn =
         }
 
 export interface Props {
-  items: string[]
+  className?: string | undefined
+  items: React.ReactNode[]
+  onChange?: ((order: number[]) => void) | undefined
 }
 
 export default function OrderedList(props: Props): JSX.Element {
@@ -53,19 +56,22 @@ export default function OrderedList(props: Props): JSX.Element {
     // console.log('origRow', origRow)
     // console.log('origCol', origCol)
 
-    const curRow = clamp(Math.round((origRow * 100 + y) / 100), 1, Math.ceil(items.length / 3))
-    const curCol = clamp(Math.round((origCol * 100 + x) / 100), 1, 3)
+    const curRow = clamp(Math.round((origRow * 200 + y) / 200), 1, Math.ceil(items.length / 3))
+    const curCol = clamp(Math.round((origCol * 200 + x) / 200), 1, 3)
 
     const curItem = (curRow - 1) * 3 + curCol - 1
     console.log('curItem', curItem)
 
     const newOrder = move(order.current, curIndex, curItem)
     api.start(fn(newOrder, active, originalIndex as number, curIndex, y, x)) // Feed springs new style data, they'll animate the view without causing a single render
-    if (!active) order.current = newOrder
+    if (!active) {
+      order.current = newOrder
+      props.onChange?.(newOrder)
+    }
   })
 
   return (
-    <div className={styles.content} style={{ height: items.length * 100 }}>
+    <div className={c(props.className, styles.content)} style={{ height: items.length * 200 }}>
       {springs.map(({ zIndex, shadow, y, x, scale }, i) => (
         <animated.div
           {...bind(i)}
