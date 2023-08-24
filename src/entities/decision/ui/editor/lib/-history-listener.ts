@@ -1,11 +1,11 @@
 import { ActionHistory } from '~/utils/action-history'
 import { Any } from '~/utils/core'
 
-import { LinkListState, NodeListState, State } from '..'
+import { LinkListState, Manager, NodeListState } from '..'
 
 type Props = {
   history: ActionHistory
-  state: State
+  state: Manager
   nodeListState: NodeListState
   linkListState: LinkListState
 }
