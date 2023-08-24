@@ -14,12 +14,6 @@ export default function Nav(): JSX.Element {
   return (
     <nav className={c(Nav.displayName)}>
       <ul>
-        <ol>
-          <Link to={routes.decisionList.getURL()}>Decisions</Link>
-        </ol>
-        <ol>
-          <Link to={routes.ruleCreate.getURL()}>Rules</Link>
-        </ol>
         {isDev() && (
           <>
             <ol>
