@@ -15,14 +15,14 @@ import ThemeDropdown from '~/ui/theme-dropdown'
 import { c } from '~/utils/core'
 import { useUpdate } from '~/utils/hooks'
 
-import { NodeListState, State } from '../../..'
+import { Manager, NodeListState } from '../../..'
 
 HeaderComponent.displayName = 'decision-Editor-w-Header'
 
 export interface Props {
   className?: string
-  state: State
-  nodeListState: NodeListState
+  editorManager: Manager
+  nodeList: NodeListState
   addNode: (point: Partial<Point>) => void
   submit: () => void
 }
@@ -40,8 +40,8 @@ function HeaderComponent(props: Props): JSX.Element {
         </GhostButton>
         <ClearableInput
           transparent={true}
-          value={props.nodeListState.searchQuery.value}
-          onChange={(ev): void => props.nodeListState.searchQuery.set(ev.currentTarget.value)}
+          value={props.nodeList.searchQuery.value}
+          onChange={(ev): void => props.nodeList.searchQuery.set(ev.currentTarget.value)}
           placeholder='Поиск'
         />
         <Flex className='toolbar' crossAxis='center'>
@@ -69,9 +69,9 @@ function HeaderComponent(props: Props): JSX.Element {
             {...useChangeOnBlurStrategy({
               transparent: true,
               cannotBeEmpty: true,
-              value: props.state.name.value,
+              value: props.editorManager.name.value,
               placeholder: 'Имя',
-              onChange: (ev): void => props.state.name.set(ev.currentTarget.value),
+              onChange: (ev): void => props.editorManager.name.set(ev.currentTarget.value),
             })}
           />
         </div>
@@ -88,8 +88,8 @@ function HeaderComponent(props: Props): JSX.Element {
   )
 
   function subscribeOnUpdates(update: () => void, uns: (() => void)[]): void {
-    uns.push(props.state.on('name', update))
-    uns.push(props.nodeListState.on('searchQuery', update))
+    uns.push(props.editorManager.on('name', update))
+    uns.push(props.nodeList.on('searchQuery', update))
   }
 }
 

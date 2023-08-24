@@ -4,10 +4,10 @@
 export * from './lib/-history-listener'
 
 /**
- * state
+ * modules
  */
-export { State } from './state/state'
-export type { Events } from './state/state'
+export { Manager } from './modules/manager'
+export type { ManagerEvents } from './modules/manager'
 
 /**
  * theme

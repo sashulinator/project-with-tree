@@ -13,9 +13,9 @@ import {
   Header,
   LeftPanel,
   LinkListState,
+  Manager,
   NodeListState,
   RightPanel,
-  State,
   historyListener,
 } from '../'
 import {
@@ -41,7 +41,7 @@ export interface Props {
   decision: Decision
   className?: string
   onSubmit: (states: {
-    editorState: State
+    editorManager: Manager
     canvasState: CanvasState
     nodeListState: NodeListState
     linkListState: LinkListState
@@ -52,7 +52,7 @@ export default function Editor(props: Props): JSX.Element {
   // const rules = props.decision.rules || []
   const history = useMemo(() => new ActionHistory(), [])
 
-  const state = useMemo(() => new State(props.decision), [])
+  const manager = useMemo(() => new Manager(props.decision), [])
   const canvasState = useMemo(() => new CanvasState(), [])
   const nodeListState = useMemo(() => new NodeListState(props.decision.decisionTree), [props.decision.decisionTree])
   const linkListState = useMemo(() => new LinkListState(props.decision.decisionTree), [])
@@ -80,15 +80,15 @@ export default function Editor(props: Props): JSX.Element {
   })
   useEventListener('click', onClick)
 
-  useEffect(subscribeHistory, [history, state, nodeListState, linkListState])
+  useEffect(subscribeHistory, [history, manager, nodeListState, linkListState])
 
   return (
     <div className={c(props.className, Editor.displayName)}>
       <Header
         submit={submit}
-        nodeListState={nodeListState}
+        nodeList={nodeListState}
         addNode={addNode}
-        state={state}
+        editorManager={manager}
         className='panel --header'
       />
       <LeftPanel
@@ -109,11 +109,11 @@ export default function Editor(props: Props): JSX.Element {
   // Private
 
   function submit(): void {
-    props.onSubmit({ editorState: state, canvasState, nodeListState, linkListState })
+    props.onSubmit({ editorManager: manager, canvasState, nodeListState, linkListState })
   }
 
   function subscribeHistory(): void {
-    historyListener({ history, state, nodeListState, linkListState })
+    historyListener({ history, state: manager, nodeListState, linkListState })
   }
 
   function onClick(e: MouseEvent): void {
