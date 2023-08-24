@@ -2,7 +2,6 @@ import './editor.scss'
 
 import { useEffect, useMemo } from 'react'
 
-import { Decision } from '~/entities/decision'
 import { ActionHistory } from '~/utils/action-history'
 import { c } from '~/utils/core'
 import { useEventListener } from '~/utils/hooks'
@@ -10,6 +9,7 @@ import { useEventListener } from '~/utils/hooks'
 import {
   Canvas,
   CanvasState,
+  Decision,
   Header,
   LeftPanel,
   LinkListState,

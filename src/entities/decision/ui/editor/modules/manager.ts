@@ -1,6 +1,6 @@
 import { Emitter, Prop } from '~/utils/emitter'
 
-import { Decision } from '../../..'
+import { Decision } from '..'
 
 export type ManagerEvents = {
   name: { value: string }

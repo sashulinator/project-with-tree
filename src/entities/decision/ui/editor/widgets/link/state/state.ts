@@ -13,7 +13,7 @@ export interface StateProps {
   id?: Id | undefined
   sourceId?: Id | undefined
   targetId?: Id | undefined
-  rules?: Rule[]
+  rules?: Rule[] | undefined
   index: number
 }
 
