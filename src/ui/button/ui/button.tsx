@@ -1,10 +1,10 @@
 import './button.css'
 
-import { clsx } from 'clsx'
 import { ForwardedRef, forwardRef } from 'react'
 
 import AbstractButton, { ButtonProps as AbstractButtonProps } from '~/abstract/button'
 import { emitter } from '~/shared/emitter'
+import { c } from '~/utils/core'
 
 import { dark } from '../themes/dark'
 import { light } from '../themes/light'
@@ -21,7 +21,7 @@ function ButtonComponent(props: ButtonProps, ref: ForwardedRef<HTMLButtonElement
   const { height = 'm' } = props
 
   return (
-    <AbstractButton {...props} ref={ref} className={clsx(props.className, ButtonComponent.displayName)} height={height}>
+    <AbstractButton {...props} ref={ref} className={c(props.className, ButtonComponent.displayName)} height={height}>
       <span>{props.children}</span>
     </AbstractButton>
   )

@@ -1,8 +1,6 @@
-import { clsx } from 'clsx'
 import { ForwardedRef, forwardRef } from 'react'
 
-import { Id } from '~/utils/core'
-
+import { Id, c } from '~/utils/core'
 import { useMeasure } from '~/utils/hooks'
 import { setRefs } from '~/utils/react'
 
@@ -27,7 +25,7 @@ function Component(props: Props, ref: ForwardedRef<HTMLDivElement>): JSX.Element
     <foreignObject data-id={dataId} x={x} y={y} height={height} width={width} {...rootProps}>
       <div
         {...divProps}
-        className={clsx(props.className, Component.displayName)}
+        className={c(props.className, Component.displayName)}
         style={{ height: 'fit-content', width: 'fit-content', ...props.style }}
         ref={setRefs(setMeasureRef, ref)}
       >

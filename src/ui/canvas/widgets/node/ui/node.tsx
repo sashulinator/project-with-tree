@@ -1,9 +1,8 @@
 import './node.css'
 
-import { clsx } from 'clsx'
 import React, { ForwardedRef, forwardRef, useRef } from 'react'
 
-import { Id } from '~/utils/core'
+import { Id, c } from '~/utils/core'
 
 import { GestureDragEvent, Item } from '../../item'
 
@@ -34,14 +33,14 @@ function NodeComponent(props: NodeProps, ref: ForwardedRef<HTMLDivElement>): JSX
   const rulesRef = useRef(null)
 
   return (
-    <Item {...itemProps} dataId={dataId} ref={ref} className={clsx(props.className, 'ui-Node')}>
-      <div className={clsx('container')}>
+    <Item {...itemProps} dataId={dataId} ref={ref} className={c(props.className, 'ui-Node')}>
+      <div className={c('container')}>
         {left}
         <div className='content'>
-          <div {...titleProps} className={clsx('title', titleProps?.className)}>
+          <div {...titleProps} className={c('title', titleProps?.className)}>
             {nodeTitle}
           </div>
-          <div className={clsx('description')}>{nodeDescription}</div>
+          <div className={c('description')}>{nodeDescription}</div>
           {props.children}
         </div>
         <div ref={rulesRef}>{right}</div>

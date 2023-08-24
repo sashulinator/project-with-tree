@@ -1,6 +1,6 @@
 import './field.css'
 
-import { clsx } from 'clsx'
+import { c } from '~/utils/core'
 
 Field.displayName = 'a-Field'
 
@@ -21,7 +21,7 @@ export default function Field(props: FieldProps): JSX.Element {
     <div
       {...divProps}
       aria-hidden={hidden}
-      className={clsx(
+      className={c(
         props.className,
         Field.displayName,
         isFocused && '--focused',

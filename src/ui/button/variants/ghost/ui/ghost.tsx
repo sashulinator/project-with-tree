@@ -1,9 +1,9 @@
 import './ghost.css'
 
-import { clsx } from 'clsx'
 import { ForwardedRef, forwardRef } from 'react'
 
 import { emitter } from '~/shared/emitter'
+import { c } from '~/utils/core'
 
 import Button, { ButtonProps } from '../../../ui/button'
 import { dark } from '../_themes/dark'
@@ -17,7 +17,7 @@ GhostButtonComponent.displayName = 'ui-Button-v-Ghost'
 export interface GhostButtonProps extends ButtonProps {}
 
 function GhostButtonComponent(props: GhostButtonProps, ref: ForwardedRef<HTMLButtonElement>): JSX.Element {
-  return <Button {...props} ref={ref} className={clsx(props.className, GhostButtonComponent.displayName)} />
+  return <Button {...props} ref={ref} className={c(props.className, GhostButtonComponent.displayName)} />
 }
 
 const GhostButton = forwardRef(GhostButtonComponent)

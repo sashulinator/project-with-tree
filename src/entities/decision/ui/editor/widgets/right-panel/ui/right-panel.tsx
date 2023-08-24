@@ -1,6 +1,5 @@
 import './right-panel.scss'
 
-import { clsx } from 'clsx'
 import { memo } from 'react'
 
 import Flex from '~/abstract/flex/ui/flex'
@@ -9,6 +8,7 @@ import { GhostButton, PrimaryButton } from '~/ui/button'
 import { Close, SpacingWidth } from '~/ui/icon'
 import Input, { useChangeOnBlurStrategy } from '~/ui/input'
 import Resizable, { ResizableProps } from '~/ui/resizable'
+import { c } from '~/utils/core'
 import { useBoolean, useUpdate } from '~/utils/hooks'
 
 import { NodeListState } from '../../..'
@@ -50,7 +50,7 @@ function RightPanelComponent(props: Props): JSX.Element | null {
   return (
     <AppearFrom
       {...props.rootProps}
-      className={clsx(
+      className={c(
         props.className,
         props.rootProps?.className,
         RightPanelComponent.displayName,

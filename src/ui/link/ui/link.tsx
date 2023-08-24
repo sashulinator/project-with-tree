@@ -1,9 +1,9 @@
 import './link.css'
 
-import { clsx } from 'clsx'
 import { LinkProps, Link as RRDLink } from 'react-router-dom'
 
 import { emitter } from '~/shared/emitter'
+import { c } from '~/utils/core'
 
 import { dark } from '../_themes/dark'
 import { light } from '../_themes/light'
@@ -15,5 +15,5 @@ Link.displayName = 'ui-Link'
 export type { LinkProps }
 
 export default function Link(props: LinkProps): JSX.Element {
-  return <RRDLink {...props} className={clsx(Link.displayName)} />
+  return <RRDLink {...props} className={c(Link.displayName)} />
 }

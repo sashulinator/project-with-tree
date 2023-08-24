@@ -1,7 +1,8 @@
 import './button.css'
 
-import { clsx } from 'clsx'
 import { ForwardedRef, forwardRef } from 'react'
+
+import { c } from '~/utils/core'
 
 import { UnstyledButton } from '../widgets/unstyled-button'
 
@@ -21,7 +22,7 @@ function ButtonComponent(props: ButtonProps, ref: ForwardedRef<HTMLButtonElement
     <UnstyledButton
       {...restProps}
       ref={ref}
-      className={clsx(
+      className={c(
         ButtonComponent.displayName,
         height && `--${height}`,
         square && '--square',
