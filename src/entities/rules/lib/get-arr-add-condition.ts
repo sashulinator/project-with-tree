@@ -1,9 +1,10 @@
 import { generateId } from '~/utils/core'
 
-import { EditorValues } from '../models/editorRulesValues'
+import { EditorValues, SelectValue } from '../models/editorRulesValues'
 
 export function getArrAddCondition(editorRulesValues: EditorValues[], id: string, parentId: string): EditorValues[] {
   const index = editorRulesValues.findIndex((item) => item.id === id)
+
   let result: EditorValues[] = []
   if (parentId === id) {
     editorRulesValues.forEach((item, i) => {
@@ -11,7 +12,8 @@ export function getArrAddCondition(editorRulesValues: EditorValues[], id: string
       if (i === index) {
         result.push({
           id: generateId(),
-          valueArr: [{ id: generateId(), value: '' }],
+          valueArr: [{ id: generateId(), value: '', condition: SelectValue.and }],
+          condition: SelectValue.and,
         })
       }
     })
@@ -23,7 +25,7 @@ export function getArrAddCondition(editorRulesValues: EditorValues[], id: string
           valueArr: item.valueArr
             .map((item) => {
               if (item.id === id) {
-                return [item, { id: generateId(), value: '' }]
+                return [item, { id: generateId(), value: '', condition: SelectValue.and }]
               }
               return item
             })

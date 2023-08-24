@@ -1,6 +1,6 @@
 import './domain-list.css'
 
-import { DomainItemProps } from '~/entities/rules/types/rules-type'
+import { DomainRes } from '~/entities/rules/types/rules-type'
 import { emitter } from '~/shared/emitter'
 import { c } from '~/utils/core'
 
@@ -9,7 +9,7 @@ import { Domain } from '../widgets/domain'
 import InputSearch from '../widgets/input-search'
 
 interface DomainListProps {
-  domains: DomainItemProps[]
+  domains: DomainRes[]
   defaultExpanded?: boolean | undefined
   rootProps?: React.HTMLAttributes<HTMLDListElement>
 }

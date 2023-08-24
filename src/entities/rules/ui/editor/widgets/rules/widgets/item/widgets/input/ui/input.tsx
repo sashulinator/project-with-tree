@@ -2,22 +2,19 @@ import './input.css'
 
 import { useRef } from 'react'
 import { Mention } from 'react-mentions'
-import { useRecoilState, useRecoilValue } from 'recoil'
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
 
 import { onChangeTextarea } from '~/entities/rules/lib/on-change-textarea'
-import { onDropItemToItem } from '~/entities/rules/lib/on-drop-item-to-item'
 import { onDropTextarea } from '~/entities/rules/lib/on-drop-textarea'
 import { directionAtom } from '~/entities/rules/models/direction'
 import { dragOverButtonsIdAtom } from '~/entities/rules/models/drag-over-buttons-id'
 import { dragOverItemIdAtom } from '~/entities/rules/models/drag-over-item-id'
 import { draggableCardAtom } from '~/entities/rules/models/draggableCard'
 import { draggableItemAtom } from '~/entities/rules/models/draggableItem'
-import { editorRulesValuesAtom } from '~/entities/rules/models/editorRulesValues'
+import { SelectValue, editorRulesValuesAtom } from '~/entities/rules/models/editorRulesValues'
 import { mentionsDataAtom } from '~/entities/rules/models/mentionsData'
 import MentionsInput from '~/ui/mention-input'
 import { c } from '~/utils/core'
-
-import { DropCard } from '../../drop-card/drop-card'
 
 export interface MentionsItem {
   display: string
@@ -28,17 +25,17 @@ interface EditorInputProps {
   value: string
   id: string
   parentId: string
-  isOneCard: boolean
+  condition: SelectValue
 }
 
 Input.displayName = 'Editor-w-Rules-w-Input'
 
 export default function Input(props: EditorInputProps): JSX.Element {
-  const { value, id, parentId, isOneCard } = props
+  const { value, id, parentId, condition } = props
 
   const mentionsData = useRecoilValue(mentionsDataAtom)
   const [draggableCard, setDraggableCard] = useRecoilState(draggableCardAtom)
-  const [editorValue, setEditorValues] = useRecoilState(editorRulesValuesAtom)
+  const setEditorValues = useSetRecoilState(editorRulesValuesAtom)
   const [draggableItem, setDraggableItem] = useRecoilState(draggableItemAtom)
   const [dragOverItemId, setDragOverId] = useRecoilState(dragOverItemIdAtom)
   const [dragOverButtonsId, setDragOverButtonsId] = useRecoilState(dragOverButtonsIdAtom)
@@ -126,6 +123,6 @@ export default function Input(props: EditorInputProps): JSX.Element {
     if (draggableCard) {
       setDraggableCard(null)
     }
-    setDraggableItem({ value: value, id: id, parentId: parentId })
+    setDraggableItem({ value: value, id: id, parentId: parentId, condition: condition })
   }
 }

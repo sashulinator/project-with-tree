@@ -18,12 +18,13 @@ interface ButtonsProps {
   flexProps?: FlexProps
   rootProps?: React.HTMLAttributes<HTMLDivElement>
   isDragOver: boolean
+  condition?: 'И' | 'ИЛИ' | 'НЕ' | 'ИСКЛ ИЛИ' | null
 }
 
 AddDeleteButtons.displayName = 'ruleEditor-w-Rules-w-AddDeleteButtons'
 
 export default function AddDeleteButtons(props: ButtonsProps): JSX.Element {
-  const { itemId, flexProps, isDragOver, parentId, rootProps } = props
+  const { itemId, flexProps, isDragOver, parentId, rootProps, condition } = props
   const [editorRulesValues, setEditorValues] = useRecoilState(editorRulesValuesAtom)
 
   return (
@@ -35,7 +36,7 @@ export default function AddDeleteButtons(props: ButtonsProps): JSX.Element {
         <GhostButton height={'s'} square onClick={addCondition}>
           <Plus />
         </GhostButton>
-        <Select id={itemId} />
+        {condition && <Select id={itemId} condition={condition} />}
       </Flex>
     </div>
   )

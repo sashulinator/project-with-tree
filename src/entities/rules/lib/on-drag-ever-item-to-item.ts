@@ -1,5 +1,5 @@
 import { DraggableItem } from '../models/draggableItem'
-import { EditorValues } from '../models/editorRulesValues'
+import { EditorValues, SelectValue } from '../models/editorRulesValues'
 
 export function onDragEventItemToItem(
   editorValue: EditorValues[],
@@ -18,9 +18,9 @@ export function onDragEventItemToItem(
             .map((item) => {
               if (item.id === id && draggableItem) {
                 if (direction === 'up') {
-                  return [{ value: '', id: '' }, item]
+                  return [{ value: '', id: '', condition: SelectValue.and }, item]
                 } else {
-                  return [item, { value: '', id: '' }]
+                  return [item, { value: '', id: '', condition: SelectValue.and }]
                 }
               }
               return item

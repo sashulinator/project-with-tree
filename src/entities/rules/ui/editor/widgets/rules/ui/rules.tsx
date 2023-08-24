@@ -1,9 +1,7 @@
 import './rules.css'
 
-import { animated, useSpring } from '@react-spring/web'
-
-import { useEffect, useRef, useState } from 'react'
-import { useRecoilState } from 'recoil'
+import { useEffect, useRef } from 'react'
+import { useRecoilState, useRecoilValue } from 'recoil'
 
 import Flex from '~/abstract/flex'
 import { onDropItemToCanvas } from '~/entities/rules/lib/on-drop-item-to-canvas'
@@ -16,7 +14,6 @@ import { dragOverItemIdAtom } from '~/entities/rules/models/drag-over-item-id'
 import { draggableItemAtom } from '~/entities/rules/models/draggableItem'
 import { editorRulesValuesAtom } from '~/entities/rules/models/editorRulesValues'
 import { emitter } from '~/shared/emitter'
-import { AppearFrom } from '~/ui/animation'
 import { GhostButton } from '~/ui/button'
 import { H1 } from '~/ui/heading'
 import { ArrowLeft, ArrowRight } from '~/ui/icon'
@@ -33,18 +30,18 @@ Rules.displayName = 'ruleEditor-w-Rules'
 emitter.emit('addTheme', themes)
 
 export function Rules(): JSX.Element {
-  const [editorRulesValues, setEditorVales] = useRecoilState(editorRulesValuesAtom)
-  const versionNum = useRef(0)
-  const memoryRulesValues = useRef([editorRulesValues])
-  const flag = useRef(false)
+  const [editorValue, setEditorValues] = useRecoilState(editorRulesValuesAtom)
 
   const [draggableItem, setDraggableItem] = useRecoilState(draggableItemAtom)
   const [dragOverItemId, setDragOverId] = useRecoilState(dragOverItemIdAtom)
   const [dragOverButtonsId, setDragOverButtonsId] = useRecoilState(dragOverButtonsIdAtom)
-  const [editorValue, setEditorValues] = useRecoilState(editorRulesValuesAtom)
-  const [direction, setDirection] = useRecoilState(directionAtom)
+  const direction = useRecoilValue(directionAtom)
   const [overHeader, setOverHeader] = useRecoilState(dragOverHeaderAtom)
   const [overHeaderItemId, setOverHeaderItemId] = useRecoilState(dragOverItemHeaderIdAtom)
+
+  const versionNum = useRef(0)
+  const memoryRulesValues = useRef([editorValue])
+  const flag = useRef(false)
 
   useEffect(() => {
     if (flag.current) {
@@ -56,14 +53,14 @@ export function Rules(): JSX.Element {
     }
 
     if (memoryRulesValues.current.length < 50) {
-      memoryRulesValues.current.push(editorRulesValues)
+      memoryRulesValues.current.push(editorValue)
     } else {
       memoryRulesValues.current.shift()
-      memoryRulesValues.current.push(editorRulesValues)
+      memoryRulesValues.current.push(editorValue)
     }
 
     versionNum.current = memoryRulesValues.current.length - 1
-  }, [editorRulesValues])
+  }, [editorValue])
 
   return (
     <ul className={c(Rules.displayName)} onDragOver={dragOver} onDrop={dropToBoard} id='ruleEditor-w-Rules'>
@@ -91,13 +88,13 @@ export function Rules(): JSX.Element {
 
         <H1 style={{ marginBottom: 0 }}>Заголовок правила(id правила)</H1>
         <Flex mainAxis='end' gap='xl'>
-          <GhostButton height={'l'} padding={'s'}>
+          <GhostButton height={'l'} padding={'s'} onClick={(): void => console.log(editorValue)}>
             <Save width={'30px'} height={'30px'} />
           </GhostButton>
         </Flex>
       </Flex>
 
-      {editorRulesValues.map((item, i) => {
+      {editorValue.map((item, i) => {
         return (
           <li onDrop={(_): void => dropItemToItem(_, item.id)} onDragOver={dragOver} key={item.id} className='list'>
             <div className='item'>
@@ -126,9 +123,10 @@ export function Rules(): JSX.Element {
                   />
                 )}
               </div>
-              <Item id={item.id} values={item.valueArr} />
+              <Item condition={item.condition} id={item.id} values={item.valueArr} />
             </div>
             <AddDeleteButtons
+              condition={item.condition}
               isDragOver={item.id === dragOverButtonsId}
               rootProps={{
                 onDrop: (_) => dropToBoard(_, item.id),
@@ -178,12 +176,12 @@ export function Rules(): JSX.Element {
       setOverHeaderItemId(null)
     }
     if ((e.target as HTMLElement).id === 'ruleEditor-w-Rules' && draggableItem) {
-      setEditorVales(onDropItemToCanvas(editorRulesValues, draggableItem))
+      setEditorValues(onDropItemToCanvas(editorValue, draggableItem))
       setDraggableItem(null)
     }
 
     if (parentId && dragOverButtonsId && draggableItem) {
-      setEditorVales(onDropItemToCanvas(editorRulesValues, draggableItem, dragOverButtonsId))
+      setEditorValues(onDropItemToCanvas(editorValue, draggableItem, dragOverButtonsId))
       setDraggableItem(null)
     }
     if (dragOverItemId) setDragOverId(null)
@@ -196,7 +194,7 @@ export function Rules(): JSX.Element {
     e.preventDefault()
     e.stopPropagation()
     if (draggableItem) {
-      setEditorVales(onDropItemToCanvas(editorRulesValues, draggableItem, null, 'up'))
+      setEditorValues(onDropItemToCanvas(editorValue, draggableItem, null, 'up'))
       setDraggableItem(null)
     }
     if (overHeaderItemId) {
@@ -259,7 +257,7 @@ export function Rules(): JSX.Element {
     flag.current = true
 
     if (versionNum.current >= 2) {
-      setEditorVales(memoryRulesValues.current[versionNum.current - 1])
+      setEditorValues(memoryRulesValues.current[versionNum.current - 1])
       versionNum.current -= 1
     }
   }
@@ -268,7 +266,7 @@ export function Rules(): JSX.Element {
     flag.current = true
 
     if (versionNum.current <= memoryRulesValues.current.length - 2) {
-      setEditorVales(memoryRulesValues.current[versionNum.current + 1])
+      setEditorValues(memoryRulesValues.current[versionNum.current + 1])
       versionNum.current += 1
     }
   }
