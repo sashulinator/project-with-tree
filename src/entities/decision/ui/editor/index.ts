@@ -4,6 +4,11 @@
 export * from './lib/-history-listener'
 
 /**
+ * types
+ */
+export type { Decision } from './types/decision'
+
+/**
  * modules
  */
 export { Manager } from './modules/manager'

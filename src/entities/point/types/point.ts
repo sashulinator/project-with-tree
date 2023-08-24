@@ -15,7 +15,7 @@ export interface Point<P = Dictionary<Any>> {
 
 export interface RuleSet {
   id?: Id | undefined
-  rules: Rule[]
+  rules?: Rule[]
   index: number
 }
 

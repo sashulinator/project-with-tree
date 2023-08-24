@@ -42,7 +42,7 @@ export default function DecisionPage(): JSX.Element {
               decisionTree: items,
             }
 
-            mutator.mutate({ decision })
+            mutator.mutate({ editorDecision: decision })
           }}
           decision={fetcher.data}
         />
