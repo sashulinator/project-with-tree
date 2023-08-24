@@ -1,12 +1,13 @@
-import { ForwardedRef, forwardRef } from 'react'
 import './ol.css'
 
-import { clsx } from 'clsx'
+import { ForwardedRef, forwardRef } from 'react'
+
+import { c } from '~/utils/core'
 
 OlComponent.displayName = 'ui-List-v-Ol'
 
 function OlComponent(props: React.HTMLAttributes<HTMLOListElement>, ref: ForwardedRef<HTMLOListElement>): JSX.Element {
-  return <ol ref={ref} className={clsx(OlComponent.displayName)} {...props} />
+  return <ol ref={ref} className={c(OlComponent.displayName)} {...props} />
 }
 
 const Ol = forwardRef(OlComponent)

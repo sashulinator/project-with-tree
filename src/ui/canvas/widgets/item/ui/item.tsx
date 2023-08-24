@@ -1,9 +1,11 @@
 import { useDrag } from '@use-gesture/react'
-import { clsx } from 'clsx'
+
 import { ForwardedRef, forwardRef } from 'react'
 
 import { Item as AbstractItem, ItemProps as AbstractItemProps } from '~/abstract/canvas'
+import { c } from '~/utils/core'
 import { fns } from '~/utils/function'
+
 import { GestureDragEvent } from '../types/gesture-drag-event'
 
 Component.displayName = 'ui-Canvas-w-Item'
@@ -25,7 +27,7 @@ export function Component(props: Props, ref: ForwardedRef<HTMLDivElement>): JSX.
     <AbstractItem
       {...canvasItemProps}
       ref={ref}
-      className={clsx(props.className, Component.displayName)}
+      className={c(props.className, Component.displayName)}
       style={{ touchAction: 'none', ...canvasItemProps.style }}
       onKeyDown={fns(draggableProps.onKeyDown, canvasItemProps.onKeyDown)}
       onKeyUp={fns(draggableProps.onKeyUp, canvasItemProps.onKeyUp)}

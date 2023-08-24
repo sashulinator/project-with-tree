@@ -1,9 +1,9 @@
 import './primary.css'
 
-import { clsx } from 'clsx'
 import { ForwardedRef, forwardRef } from 'react'
 
 import { emitter } from '~/shared/emitter'
+import { c } from '~/utils/core'
 
 import Button, { ButtonProps } from '../../../ui/button'
 import { dark } from '../_themes/dark'
@@ -17,7 +17,7 @@ PrimaryButtonComponent.displayName = 'ui-Button-v-Primary'
 export interface PrimaryButtonProps extends ButtonProps {}
 
 function PrimaryButtonComponent(props: PrimaryButtonProps, ref: ForwardedRef<HTMLButtonElement>): JSX.Element {
-  return <Button {...props} ref={ref} className={clsx(props.className, PrimaryButtonComponent.displayName)} />
+  return <Button {...props} ref={ref} className={c(props.className, PrimaryButtonComponent.displayName)} />
 }
 
 const PrimaryButton = forwardRef(PrimaryButtonComponent)

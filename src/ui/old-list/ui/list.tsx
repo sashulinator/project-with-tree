@@ -1,6 +1,6 @@
-import c from 'clsx'
 import React, { useMemo, useRef } from 'react'
 
+import { c } from '~/utils/core'
 import { useControlledState } from '~/utils/hooks/controlled-state'
 import { useLatest } from '~/utils/hooks/latest'
 import { setRefs } from '~/utils/react'

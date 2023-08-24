@@ -1,11 +1,10 @@
 import './left-panel.css'
 
-import { clsx } from 'clsx'
 import { memo } from 'react'
 
 import { AppearFrom } from '~/ui/animation'
 import Resizable, { ResizableProps } from '~/ui/resizable'
-import { Id } from '~/utils/core'
+import { Id, c } from '~/utils/core'
 import { useUpdate } from '~/utils/hooks'
 
 import { NodeList } from '..'
@@ -30,7 +29,7 @@ function LeftPanelComponent(props: Props): JSX.Element | null {
   return (
     <AppearFrom
       {...props.rootProps}
-      className={clsx(props.className, props.rootProps?.className, LeftPanelComponent.displayName)}
+      className={c(props.className, props.rootProps?.className, LeftPanelComponent.displayName)}
       from={{ x: -33 }}
     >
       <Resizable {...props.resizableProps} direction='left' />

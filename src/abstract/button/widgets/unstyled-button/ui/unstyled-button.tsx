@@ -1,7 +1,8 @@
 import './unstyled-button.css'
 
-import { clsx } from 'clsx'
 import React, { ForwardedRef, forwardRef } from 'react'
+
+import { c } from '~/utils/core'
 
 export type UnstyledButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement>
 
@@ -12,7 +13,7 @@ function UnstyledButtonComponent(props: UnstyledButtonProps, ref: ForwardedRef<H
     <button
       {...props}
       type={props.type || 'button'}
-      className={clsx(props.className, UnstyledButtonComponent.displayName)}
+      className={c(props.className, UnstyledButtonComponent.displayName)}
       ref={ref}
     />
   )

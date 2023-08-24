@@ -1,5 +1,6 @@
-import { clsx } from 'clsx'
 import { ForwardedRef, forwardRef } from 'react'
+
+import { c } from '~/utils/core'
 
 IconComponent.displayName = 'a-Icon'
 
@@ -19,7 +20,7 @@ function IconComponent(props: IconProps, ref: ForwardedRef<SVGSVGElement>): JSX.
       xmlns='http://www.w3.org/2000/svg'
       ref={ref}
       {...props}
-      className={clsx(props.className, IconComponent.displayName)}
+      className={c(props.className, IconComponent.displayName)}
     />
   )
 }

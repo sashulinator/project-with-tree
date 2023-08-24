@@ -1,9 +1,7 @@
 import './joint.css'
 
-import { clsx } from 'clsx'
-
 import { emitter } from '~/shared/emitter'
-import { Id } from '~/utils/core'
+import { Id, c } from '~/utils/core'
 
 import { dark } from '../themes/dark'
 import { light } from '../themes/light'
@@ -25,7 +23,7 @@ export default function Joint(props: Props): JSX.Element {
       {...divProps}
       data-link-id={linkId}
       disabled={disabled}
-      className={clsx(Joint.displayName, `--${props.variant}`, disabled && `--disabled`, props.className)}
+      className={c(Joint.displayName, `--${props.variant}`, disabled && `--disabled`, props.className)}
     >
       <div />
     </button>

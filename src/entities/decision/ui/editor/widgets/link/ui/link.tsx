@@ -1,9 +1,7 @@
 import './link.css'
 
-import { clsx } from 'clsx'
-
 import { Link as UILink } from '~/ui/canvas'
-import { Position } from '~/utils/core'
+import { Position, c } from '~/utils/core'
 import { fns } from '~/utils/function'
 import { useForceUpdate, useOnMount, useUpdate } from '~/utils/hooks'
 
@@ -35,7 +33,7 @@ export default function Link(props: LinkProps): JSX.Element | null {
   return (
     <UILink
       {...pathProps}
-      className={clsx(pathProps.className, 'rule-Link')}
+      className={c(pathProps.className, 'rule-Link')}
       scale={scale}
       sourceOffset={getOffset(props.state.id, sourceState?.ref.value)}
       targetOffset={getOffset(props.state.id, targetState?.ref.value)}
