@@ -18,9 +18,15 @@ export function onDropItemToItem(
             .map((item) => {
               if (item.id === id && draggableItem) {
                 if (direction === 'up') {
-                  return [{ value: draggableItem.value, id: draggableItem.id }, item]
+                  return [
+                    { value: draggableItem.value, id: draggableItem.id, condition: draggableItem.condition },
+                    item,
+                  ]
                 } else {
-                  return [item, { value: draggableItem.value, id: draggableItem.id }]
+                  return [
+                    item,
+                    { value: draggableItem.value, id: draggableItem.id, condition: draggableItem.condition },
+                  ]
                 }
               }
               return item

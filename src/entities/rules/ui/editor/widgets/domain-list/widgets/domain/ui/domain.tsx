@@ -23,7 +23,7 @@ function DomainComponent({ domain, pl = 0, ...props }: DomainProps): JSX.Element
 
   const dragStart = (e: React.DragEvent<HTMLParagraphElement>): void => {
     e.stopPropagation()
-    setDraggableCard({ id: domain.id, name: domain.name })
+    setDraggableCard({ id: domain.id, name: domain.name, type: 'domain' })
   }
 
   return (

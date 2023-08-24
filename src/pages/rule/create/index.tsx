@@ -10,7 +10,7 @@ export default function RulesPage(): JSX.Element {
   )
 
   const dataList = data?.data.data ?? []
-  console.log(dataList)
+
   return (
     <main>
       {isError && <div>error...</div>}

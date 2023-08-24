@@ -18,7 +18,7 @@ export default function Attribute({ attribute, rootProps }: Props): JSX.Element 
 
   const dragStart = (e: React.DragEvent<HTMLParagraphElement>): void => {
     e.stopPropagation()
-    setDraggableCard({ id: attribute.id, name: attribute.name })
+    setDraggableCard({ id: attribute.id, name: attribute.name, type: 'attribute' })
   }
 
   return (

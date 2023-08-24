@@ -88,7 +88,36 @@ export function Rules(): JSX.Element {
 
         <H1 style={{ marginBottom: 0 }}>Заголовок правила(id правила)</H1>
         <Flex mainAxis='end' gap='xl'>
-          <GhostButton height={'l'} padding={'s'} onClick={(): void => console.log(editorValue)}>
+          <GhostButton
+            height={'l'}
+            padding={'s'}
+            onClick={(): void => {
+              let result = ''
+              editorValue.map((arr, index, editor) => {
+                arr.valueArr.map((item, i, valueArr) => {
+                  if (valueArr.length > 1) {
+                    if (i === 0) {
+                      result += `(${item.value} ${item.condition} `
+                    } else if (i === valueArr.length - 1) {
+                      if (index !== editor.length - 1) {
+                        result += `${item.value}) ${arr.condition} `
+                      } else {
+                        result += `${item.value})`
+                      }
+                    } else {
+                      result += `${item.value} ${item.condition} `
+                    }
+                  } else if (index !== editor.length - 1) {
+                    result += `${item.value} ${arr.condition} `
+                  } else {
+                    result += item.value
+                  }
+                })
+              })
+              console.log(`(${result})`)
+              console.log(editorValue)
+            }}
+          >
             <Save width={'30px'} height={'30px'} />
           </GhostButton>
         </Flex>
