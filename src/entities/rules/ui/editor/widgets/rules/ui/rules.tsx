@@ -1,9 +1,12 @@
 import './rules.css'
 
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
+import { useMutation } from 'react-query'
 import { useRecoilState, useRecoilValue } from 'recoil'
 
 import Flex from '~/abstract/flex'
+import { requestRule } from '~/api/rules/requests/create-rule'
+import { getReqForCreateRule } from '~/entities/rules/lib/get-request-for-create-rule'
 import { onDropItemToCanvas } from '~/entities/rules/lib/on-drop-item-to-canvas'
 import { onDropItemToItem } from '~/entities/rules/lib/on-drop-item-to-item'
 import { directionAtom } from '~/entities/rules/models/direction'
@@ -15,9 +18,9 @@ import { draggableItemAtom } from '~/entities/rules/models/draggableItem'
 import { editorRulesValuesAtom } from '~/entities/rules/models/editorRulesValues'
 import { emitter } from '~/shared/emitter'
 import { GhostButton } from '~/ui/button'
-import { H1 } from '~/ui/heading'
 import { ArrowLeft, ArrowRight } from '~/ui/icon'
 import { Save } from '~/ui/icon/variants/save'
+import Input from '~/ui/input'
 import { c } from '~/utils/core'
 
 import { themes } from '../themes'
@@ -39,9 +42,13 @@ export function Rules(): JSX.Element {
   const [overHeader, setOverHeader] = useRecoilState(dragOverHeaderAtom)
   const [overHeaderItemId, setOverHeaderItemId] = useRecoilState(dragOverItemHeaderIdAtom)
 
+  const [title, setTitle] = useState('')
+
   const versionNum = useRef(0)
   const memoryRulesValues = useRef([editorValue])
   const flag = useRef(false)
+
+  const mutation = useMutation(requestRule)
 
   useEffect(() => {
     if (flag.current) {
@@ -85,37 +92,21 @@ export function Rules(): JSX.Element {
             <ArrowRight width={'30px'} height={'30px'} />
           </GhostButton>
         </Flex>
-
-        <H1 style={{ marginBottom: 0 }}>Заголовок правила(id правила)</H1>
+        <Flex style={{ width: '100%' }} dir='column'>
+          <Input
+            value={title}
+            onChange={(e): void => setTitle(e.target.value)}
+            style={{ paddingTop: '20px', textAlign: 'center' }}
+            height={'l'}
+            placeholder='Заголовок правила (id правила)'
+          />
+        </Flex>
         <Flex mainAxis='end' gap='xl'>
           <GhostButton
             height={'l'}
             padding={'s'}
             onClick={(): void => {
-              let result = ''
-              editorValue.map((arr, index, editor) => {
-                arr.valueArr.map((item, i, valueArr) => {
-                  if (valueArr.length > 1) {
-                    if (i === 0) {
-                      result += `(${item.value} ${item.condition} `
-                    } else if (i === valueArr.length - 1) {
-                      if (index !== editor.length - 1) {
-                        result += `${item.value}) ${arr.condition} `
-                      } else {
-                        result += `${item.value})`
-                      }
-                    } else {
-                      result += `${item.value} ${item.condition} `
-                    }
-                  } else if (index !== editor.length - 1) {
-                    result += `${item.value} ${arr.condition} `
-                  } else {
-                    result += item.value
-                  }
-                })
-              })
-              console.log(`(${result})`)
-              console.log(editorValue)
+              mutation.mutate(getReqForCreateRule(editorValue, title))
             }}
           >
             <Save width={'30px'} height={'30px'} />

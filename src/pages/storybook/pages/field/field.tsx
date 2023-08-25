@@ -2,16 +2,14 @@
 import { useState } from 'react'
 
 import Flex from '~/abstract/flex/ui/flex'
-
-import { H1, H2 } from '~/ui/heading'
-
-import PageSection from '~/ui/page-section'
-
-import Section from '../../section'
 import Field, { FieldProps } from '~/ui/field'
-import { useBoolean } from '~/utils/hooks'
+import { H1, H2 } from '~/ui/heading'
 import Input from '~/ui/input'
 import Link from '~/ui/link'
+import PageSection from '~/ui/page-section'
+import { useBoolean } from '~/utils/hooks'
+
+import Section from '../../section'
 import { routes } from '../../shared/routes'
 
 export default function FieldPage(): JSX.Element {
