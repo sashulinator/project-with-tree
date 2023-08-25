@@ -3,11 +3,11 @@ import './attribute.css'
 import { useSetRecoilState } from 'recoil'
 
 import { draggableCardAtom } from '~/entities/rules/models/draggableCard'
-import { AttributeProps } from '~/entities/rules/types/rules-type'
+import { AttributeRes } from '~/entities/rules/types/rules-type'
 import { c } from '~/utils/core'
 
 interface Props {
-  attribute: AttributeProps
+  attribute: AttributeRes
   rootProps?: React.HTMLAttributes<HTMLDivElement> | undefined
 }
 
@@ -18,7 +18,7 @@ export default function Attribute({ attribute, rootProps }: Props): JSX.Element 
 
   const dragStart = (e: React.DragEvent<HTMLParagraphElement>): void => {
     e.stopPropagation()
-    setDraggableCard({ id: attribute.nodeType, name: attribute.name })
+    setDraggableCard({ id: attribute.id, name: attribute.name, type: 'attribute' })
   }
 
   return (

@@ -7,7 +7,7 @@ export function onDropTextarea(array: EditorValues[], draggableCard: DraggableCa
       ...arr,
       valueArr: arr.valueArr.map((item) => {
         if (item.id === id) {
-          return { ...item, value: `${item.value}@[${draggableCard.name}](${draggableCard.id})` }
+          return { ...item, value: `${item.value}@[${draggableCard.name}](${draggableCard.type}, ${draggableCard.id})` }
         }
         return item
       }),

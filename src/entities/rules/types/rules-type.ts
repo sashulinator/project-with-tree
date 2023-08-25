@@ -1,25 +1,34 @@
-export interface DomainsResponse {
+export interface DomainListResponse {
   id: string
   name: string
   version: string
   status: string
-  data: DomainItemProps[]
+  data: DomainRes[]
 }
 
-export interface DomainItemProps {
-  id: number
-  domainName: string
-  domainNodeType: string
-  parentId: null | number
-  childDomain: null | DomainItemProps[]
-  attributes: AttributeProps[]
-}
-
-export interface AttributeProps {
-  id: number
+export interface DomainRes {
+  id: string
   name: string
-  nodeType: string
-  value: string | number | boolean
-  type: 'boolean' | 'string' | 'number' | 'date'
-  rootProps?: React.HTMLAttributes<HTMLDivElement> | undefined
+  keyName: string
+  description: string
+  type: string
+  parentId: string
+  sourceSystemId: string
+  createdBy: string
+  updatedBy: string
+  attributes: AttributeRes[]
+}
+
+export interface AttributeRes {
+  id: string
+  rev: string
+  description: string
+  domainId: string
+  valueType: string
+  createDttm: string
+  updateDttm: string
+  createdBy: string
+  updatedBy: string
+  keyName: string
+  name: string
 }

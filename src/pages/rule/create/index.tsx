@@ -2,11 +2,11 @@ import { useQuery } from 'react-query'
 
 import { makeRequest, url } from '~/api/rules/mock/fetch'
 import { Editor } from '~/entities/rules/ui/editor'
-import mockRules from '~/mocks/rules/mock-rules'
+import mockDomainList from '~/mocks/rules/mock-domains'
 
 export default function RulesPage(): JSX.Element {
-  const { data, isLoading, isSuccess, isError } = useQuery([url, mockRules.name, { id: mockRules.id }], () =>
-    makeRequest({ id: mockRules.id })
+  const { data, isLoading, isSuccess, isError } = useQuery([url, mockDomainList.name, { id: mockDomainList.id }], () =>
+    makeRequest({ id: mockDomainList.id })
   )
 
   const dataList = data?.data.data ?? []
