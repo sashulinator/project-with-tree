@@ -1,7 +1,16 @@
 import './rule-item.scss'
 
+import { useMutation } from 'react-query'
+
+import Flex from '~/abstract/flex/ui/flex'
+import { QueryResult } from '~/api/rules/fetch-rules'
+import { requestRuleDelete } from '~/api/rules/requests/delete-rule'
+import { ResponseData } from '~/api/rules/requests/fetch-rules'
 import { RulesRes } from '~/entities/rules/types/rules-type'
+import { notify } from '~/shared/notify'
 import { routes } from '~/shared/routes'
+import { GhostButton } from '~/ui/button'
+import { Close } from '~/ui/icon'
 import Link from '~/ui/link'
 import { c } from '~/utils/core'
 
@@ -10,16 +19,32 @@ RuleItem.displayName = 'rule-Item'
 export interface Props {
   className?: string
   item: RulesRes
+  fetcher: QueryResult<ResponseData>
 }
 
 export default function RuleItem(props: Props): JSX.Element {
+  const mutation = useMutation(() => requestRuleDelete(props.item?.id.toString()), {
+    onSuccess: () => {
+      void props.fetcher.refetch()
+      notify({ data: 'Удалено', type: 'success' })
+    },
+    onError: () => notify({ data: 'Ошибка', type: 'error' }),
+  })
+
   return (
     <div className={c(props.className, RuleItem.displayName)}>
-      <div className='nameCell'>
-        <Link to={routes.ruleCreate.path.replace(':id', props.item?.id.toString() || '')}>{props.item?.name}</Link>
-      </div>
+      <Flex mainAxis='space-between' crossAxis='center' className='nameCell'>
+        <Link to={routes.ruleUpdate.path.replace(':id', props.item?.id.toString() || '')}>{props.item?.name}</Link>
+        <GhostButton onClick={onDelete}>
+          <Close></Close>
+        </GhostButton>
+      </Flex>
 
       <div className={c('statusCell', `--${props.item?.rev.toLowerCase()}`)}>{props.item?.updatedBy}</div>
     </div>
   )
+
+  function onDelete(): void {
+    mutation.mutate()
+  }
 }

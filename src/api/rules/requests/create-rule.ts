@@ -2,16 +2,8 @@ import { AxiosResponse } from 'axios'
 
 import api from '~/shared/axios'
 
-export interface RequestData {
-  name: string
-  keyName: string
-  frontValue: string
-}
-
-export type ResponseData = {
-  message: 'Rule created successfully'
-  response_code: '200'
-}
+import { RequestData } from '../types/RequestRule'
+import { ResponseData } from '../types/response-data'
 
 export type Response = AxiosResponse<ResponseData>
 
