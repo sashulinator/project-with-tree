@@ -1,6 +1,6 @@
 import './index.css'
 
-import { useUpdateDecision } from '~/api/decision/update'
+import { useCreateDecision } from '~/api/decision/create'
 import { Editor, EditorDecision } from '~/entities/decision'
 import { notify } from '~/shared/notify'
 
@@ -23,7 +23,7 @@ const decision: EditorDecision = {
 }
 
 export default function Page(): JSX.Element {
-  const mutator = useUpdateDecision({
+  const mutator = useCreateDecision({
     onSuccess: () => notify({ data: 'Сохранено', type: 'success' }),
     onError: () => notify({ data: 'Ошибка', type: 'error' }),
   })

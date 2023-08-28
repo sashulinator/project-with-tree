@@ -2,8 +2,8 @@ import './index.css'
 
 import { useParams } from 'react-router-dom'
 
-// import { useFetchDecision } from '~/api/decision/fetch'
-import { useFetchDecisionMock } from '~/api/decision/fetch-mock'
+import { useFetchDecision } from '~/api/decision/fetch'
+// import { useFetchDecisionMock } from '~/api/decision/fetch-mock'
 import { useUpdateDecision } from '~/api/decision/update'
 import { Decision, Editor } from '~/entities/decision'
 import { notify } from '~/shared/notify'
@@ -13,8 +13,8 @@ export default function DecisionPage(): JSX.Element {
   const { id } = useParams<{ id: string }>()
 
   assertDefined(id)
-  const fetcher = useFetchDecisionMock({ id })
-  // const fetcher = useFetchDecision({ id })
+  // const fetcher = useFetchDecisionMock({ id })
+  const fetcher = useFetchDecision({ id })
 
   const mutator = useUpdateDecision({
     onSuccess: () => notify({ data: 'Сохранено', type: 'success' }),
