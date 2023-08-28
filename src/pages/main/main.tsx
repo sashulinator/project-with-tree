@@ -24,7 +24,7 @@ export default function MainPage(): JSX.Element {
     <Link key={3} to={routes.decisionList.getURL()}>
       Атрибуты
     </Link>,
-    <Link key={4} to={routes.ruleCreate.getURL()}>
+    <Link key={4} to={routes.ruleList.getURL()}>
       Правила
     </Link>,
     <Link key={5} to={routes.decisionList.getURL()}>
