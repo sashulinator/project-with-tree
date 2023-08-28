@@ -4,6 +4,8 @@ interface Response {
   name: string
   keyName: string
   frontValue: string
+  editor: string
+  userId: string
 }
 
 export function getReqForCreateRule(editorValue: EditorValues[], title: string): Response {
@@ -47,6 +49,8 @@ export function getReqForCreateRule(editorValue: EditorValues[], title: string):
     name: name.trim(),
     keyName: keyName.trim(),
     frontValue: `(${frontValue})`,
+    editor: JSON.stringify(editorValue),
+    userId: 'user@mail.ru',
   }
   return result
 }
