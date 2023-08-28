@@ -1,11 +1,10 @@
 import './rules.css'
 
 import { useEffect, useRef, useState } from 'react'
-import { useMutation, useQuery } from 'react-query'
+import { useMutation } from 'react-query'
 import { useRecoilState, useRecoilValue } from 'recoil'
 
 import Flex from '~/abstract/flex'
-import { makeRequestRules, url } from '~/api/rules/mock/fetch-rules'
 import { requestRule } from '~/api/rules/requests/create-rule'
 import { getReqForCreateRule } from '~/entities/rules/lib/get-request-for-create-rule'
 import { onDropItemToCanvas } from '~/entities/rules/lib/on-drop-item-to-canvas'
@@ -16,14 +15,14 @@ import { dragOverHeaderAtom } from '~/entities/rules/models/drag-over-header'
 import { dragOverItemHeaderIdAtom } from '~/entities/rules/models/drag-over-item-header-id'
 import { dragOverItemIdAtom } from '~/entities/rules/models/drag-over-item-id'
 import { draggableItemAtom } from '~/entities/rules/models/draggableItem'
-import { EditorValues, SelectValue, editorRulesValuesAtom } from '~/entities/rules/models/editorRulesValues'
-import mockRules from '~/mocks/rules/mock-rules'
+import { editorRulesValuesAtom } from '~/entities/rules/models/editorRulesValues'
 import { emitter } from '~/shared/emitter'
+import { notify } from '~/shared/notify'
 import { GhostButton } from '~/ui/button'
 import { ArrowLeft, ArrowRight } from '~/ui/icon'
 import { Save } from '~/ui/icon/variants/save'
 import Input from '~/ui/input'
-import { c, generateId } from '~/utils/core'
+import { c } from '~/utils/core'
 
 import { themes } from '../themes'
 import { Item } from '../widgets/item'
@@ -38,8 +37,9 @@ interface RulesProps {
   id: string | null
 }
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export function Rules(props: RulesProps): JSX.Element {
-  const { id } = props
+  // const { id } = props
 
   const [editorValue, setEditorValues] = useRecoilState(editorRulesValuesAtom)
   const [draggableItem, setDraggableItem] = useRecoilState(draggableItemAtom)
@@ -55,30 +55,34 @@ export function Rules(props: RulesProps): JSX.Element {
   const memoryRulesValues = useRef([editorValue])
   const flag = useRef(false)
 
-  const mutation = useMutation(requestRule)
-  const rules = useQuery([url, mockRules.name, { id: mockRules.id }], () => makeRequestRules({ id: mockRules.id }))
+  const mutation = useMutation(requestRule, {
+    onSuccess: () => notify({ data: 'Сохранено', type: 'success' }),
+    onError: () => notify({ data: 'Ошибка', type: 'error' }),
+  })
 
-  if (rules.isSuccess && id !== 'new') {
-    const rulesItem = rules.data?.data.data.filter((item) => item.id === id)[0]
-    const testResult: EditorValues[] = []
-    rulesItem.frontValue.split(' ')
-    let valueT = ''
-    rulesItem.frontValue.split(' ').forEach((item) => {
-      if (item === 'or' || item === 'and' || item === 'not' || item === 'xor') {
-        testResult.push({
-          id: generateId(),
-          valueArr: [{ id: generateId(), value: valueT, condition: SelectValue[item] }],
-          condition: SelectValue[item],
-        })
-        valueT = ''
-      } else {
-        valueT += item
-      }
-      // testResult.push({ id: generateId(),  })
-    })
-    console.log(testResult)
-    console.log(rulesItem.frontValue.split(' '))
-  }
+  // const rules = useQuery([url, mockRules.name, { id: mockRules.id }], () => makeRequestRules({ id: mockRules.id }))
+
+  // if (rules.isSuccess && id !== 'new') {
+  //   const rulesItem = rules.data?.data.data.filter((item) => item.id === id)[0]
+  //   const testResult: EditorValues[] = []
+  //   rulesItem.frontValue.split(' ')
+  //   let valueT = ''
+  //   rulesItem.frontValue.split(' ').forEach((item) => {
+  //     if (item === 'or' || item === 'and' || item === 'not' || item === 'xor') {
+  //       testResult.push({
+  //         id: generateId(),
+  //         valueArr: [{ id: generateId(), value: valueT, condition: SelectValue[item] }],
+  //         condition: SelectValue[item],
+  //       })
+  //       valueT = ''
+  //     } else {
+  //       valueT += item
+  //     }
+  //     // testResult.push({ id: generateId(),  })
+  //   })
+  //   console.log(testResult)
+  //   console.log(rulesItem.frontValue.split(' '))
+  // }
 
   useEffect(() => {
     if (flag.current) {
@@ -133,13 +137,7 @@ export function Rules(props: RulesProps): JSX.Element {
             />
           </Flex>
           <Flex mainAxis='end' gap='xl'>
-            <GhostButton
-              height={'l'}
-              padding={'s'}
-              onClick={(): void => {
-                mutation.mutate(getReqForCreateRule(editorValue, title))
-              }}
-            >
+            <GhostButton height={'l'} padding={'s'} onClick={onSubmit}>
               <Save width={'30px'} height={'30px'} />
             </GhostButton>
           </Flex>
@@ -195,6 +193,10 @@ export function Rules(props: RulesProps): JSX.Element {
   )
 
   // Private
+  function onSubmit(): void {
+    mutation.mutate(getReqForCreateRule(editorValue, title))
+  }
+
   function dragOver(e: React.DragEvent<HTMLElement>, parentId: string | null = null): void {
     e.preventDefault()
     e.stopPropagation()
