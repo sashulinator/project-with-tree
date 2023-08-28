@@ -35,6 +35,7 @@ interface RulesProps {
   rule: RulesRes | null
 }
 
+
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export function Rules(props: RulesProps): JSX.Element {
   const { onSubmit, rule } = props
