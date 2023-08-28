@@ -15,12 +15,11 @@ Editor.displayName = 'ruleEditor'
 
 interface AddRulesProps {
   dataList: DomainRes[]
-  id: string | null
   className?: string
 }
 
 export function Editor(props: AddRulesProps): JSX.Element {
-  const { dataList, id } = props
+  const { dataList } = props
 
   const setMentionsData = useSetRecoilState(mentionsDataAtom)
 
@@ -31,7 +30,7 @@ export function Editor(props: AddRulesProps): JSX.Element {
       <div className='list'>
         <DomainList domains={dataList} defaultExpanded={true} />
       </div>
-      <Rules id={id} />
+      <Rules />
     </div>
   )
 }

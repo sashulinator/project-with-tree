@@ -40,6 +40,7 @@ export interface RulesRes {
   keyName: string
   value: string
   frontValue: string
+  editor: string
   createDttm: string
   updateDttm: string
   createdBy: string | null

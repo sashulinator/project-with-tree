@@ -51,8 +51,17 @@ export const routes = {
   ruleCreate: {
     Header,
     getName: () => 'Create rule',
-    path: '/project-with-tree/rule/create/:id',
+    path: '/project-with-tree/rule/create',
     element: <RuleCreatePage />,
+    getURL(): string {
+      return this.path
+    },
+  },
+  ruleUpdate: {
+    Header,
+    getName: () => 'Create rule',
+    path: '/project-with-tree/rule/create/:id',
+    element: <div>/project-with-tree/rule/create/:id</div>,
     getURL(): string {
       return this.path
     },

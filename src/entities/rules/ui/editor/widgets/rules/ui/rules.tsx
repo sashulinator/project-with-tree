@@ -33,9 +33,7 @@ Rules.displayName = 'ruleEditor-w-Rules'
 
 emitter.emit('addTheme', themes)
 
-interface RulesProps {
-  id: string | null
-}
+interface RulesProps {}
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export function Rules(props: RulesProps): JSX.Element {
