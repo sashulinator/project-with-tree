@@ -9,6 +9,7 @@ import MainPage from '~/pages/main'
 import NotFoundPage from '~/pages/not-found'
 import RuleCreatePage from '~/pages/rule/create/create'
 import RuleListPage from '~/pages/rule/list/list'
+import RuleUpdatePage from '~/pages/rule/update/update'
 import SettingsPage from '~/pages/settings'
 import Header from '~/ui/header'
 import Nav from '~/ui/nav'
@@ -60,8 +61,8 @@ export const routes = {
   ruleUpdate: {
     Header,
     getName: () => 'Create rule',
-    path: '/project-with-tree/rule/create/:id',
-    element: <div>/project-with-tree/rule/create/:id</div>,
+    path: '/project-with-tree/rule/update/:id',
+    element: <RuleUpdatePage />,
     getURL(): string {
       return this.path
     },

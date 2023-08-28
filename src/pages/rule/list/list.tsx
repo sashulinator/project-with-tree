@@ -10,13 +10,9 @@ import { routes } from '~/shared/routes'
 import Button from '~/ui/button'
 
 export default function RuleListPage(): JSX.Element {
-  // const { data, isLoading, isSuccess, isError } = useQuery([url, mockRules.name, { id: mockRules.id }], () =>
-  //   makeRequestRules({ id: mockRules.id })
-  // )
-
-  // const dataList = data?.data.data
   const fetcher = useFetchRulesList({ page: 1, limit: 1000 })
   const dataList = fetcher.data?.items.filter((item) => item.editor)
+
   return (
     <main style={{ maxWidth: '1400px', margin: '0 auto', width: '100%' }}>
       <Button style={{ marginBottom: '20px' }}>
@@ -27,7 +23,7 @@ export default function RuleListPage(): JSX.Element {
 
       {fetcher.isError && <div>error...</div>}
       {fetcher.isLoading && <div>loading...</div>}
-      {fetcher.isSuccess && <ListRules list={dataList || []} />}
+      {fetcher.isSuccess && <ListRules fetcher={fetcher} list={dataList || []} />}
     </main>
   )
 }
