@@ -16,17 +16,9 @@ export default function InputSearch(props: InputSearchProps): JSX.Element {
   return (
     <div className={c(InputSearch.displayName, rootProps?.className)} {...rootProps}>
       <Input
+        style={{ paddingTop: '22px' }}
         right={
-          <GhostButton
-            style={{ marginRight: '5px' }}
-            round={true}
-            height='s'
-            //   onClick={fns(
-            //     preventDefault,
-            //     (): void => setVisible(!visible),
-            //     (): void => inputRef.current?.focus()
-            //   )}
-          >
+          <GhostButton style={{ marginRight: '5px' }} round={true} height='s'>
             <SearchIcon />
           </GhostButton>
         }

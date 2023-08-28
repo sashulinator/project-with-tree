@@ -3,12 +3,11 @@ import react from '@vitejs/plugin-react-swc'
 import path from 'path'
 import { defineConfig } from 'vite'
 import checker from 'vite-plugin-checker'
-import circleDependency from 'vite-plugin-circular-dependency'
 
 const vendors = [`react`, `react-dom`]
 
 export default defineConfig({
-  plugins: [circleDependency({ circleImportThrowErr: false }), react(), checker({ typescript: true })],
+  plugins: [react(), checker({ typescript: true })],
   build: {
     rollupOptions: {
       output: {

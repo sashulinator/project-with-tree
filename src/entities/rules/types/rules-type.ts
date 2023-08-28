@@ -32,3 +32,24 @@ export interface AttributeRes {
   keyName: string
   name: string
 }
+
+export interface RulesRes {
+  id: string
+  rev: string
+  name: string
+  keyName: string
+  value: string
+  frontValue: string
+  createDttm: string
+  updateDttm: string
+  createdBy: string | null
+  updatedBy: string | null
+}
+
+export interface RulesListResponse {
+  id: string
+  name: string
+  version: string
+  status: string
+  data: RulesRes[]
+}

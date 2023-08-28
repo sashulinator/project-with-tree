@@ -7,7 +7,8 @@ import DecisionIdPage from '~/pages/decision/id'
 import LoginPage from '~/pages/login'
 import MainPage from '~/pages/main'
 import NotFoundPage from '~/pages/not-found'
-import RuleCreatePage from '~/pages/rule/create'
+import RuleCreatePage from '~/pages/rule/create/create'
+import RuleListPage from '~/pages/rule/list/list'
 import SettingsPage from '~/pages/settings'
 import Header from '~/ui/header'
 import Nav from '~/ui/nav'
@@ -50,8 +51,17 @@ export const routes = {
   ruleCreate: {
     Header,
     getName: () => 'Create rule',
-    path: '/project-with-tree/rule/create',
+    path: '/project-with-tree/rule/create/:id',
     element: <RuleCreatePage />,
+    getURL(): string {
+      return this.path
+    },
+  },
+  ruleList: {
+    Header,
+    getName: () => 'List rule',
+    path: '/project-with-tree/rule/list',
+    element: <RuleListPage />,
     getURL(): string {
       return this.path
     },
