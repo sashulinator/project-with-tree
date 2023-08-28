@@ -1,12 +1,9 @@
 import './rules.css'
 
-import { useEffect, useRef, useState } from 'react'
-import { useMutation } from 'react-query'
+import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { useRecoilState, useRecoilValue } from 'recoil'
 
 import Flex from '~/abstract/flex'
-import { requestRule } from '~/api/rules/requests/create-rule'
-import { getReqForCreateRule } from '~/entities/rules/lib/get-request-for-create-rule'
 import { onDropItemToCanvas } from '~/entities/rules/lib/on-drop-item-to-canvas'
 import { onDropItemToItem } from '~/entities/rules/lib/on-drop-item-to-item'
 import { directionAtom } from '~/entities/rules/models/direction'
@@ -15,9 +12,9 @@ import { dragOverHeaderAtom } from '~/entities/rules/models/drag-over-header'
 import { dragOverItemHeaderIdAtom } from '~/entities/rules/models/drag-over-item-header-id'
 import { dragOverItemIdAtom } from '~/entities/rules/models/drag-over-item-id'
 import { draggableItemAtom } from '~/entities/rules/models/draggableItem'
-import { editorRulesValuesAtom } from '~/entities/rules/models/editorRulesValues'
+import { EditorValues, SelectValue, editorRulesValuesAtom } from '~/entities/rules/models/editorRulesValues'
+import { RulesRes } from '~/entities/rules/types/rules-type'
 import { emitter } from '~/shared/emitter'
-import { notify } from '~/shared/notify'
 import { GhostButton } from '~/ui/button'
 import { ArrowLeft, ArrowRight } from '~/ui/icon'
 import { Save } from '~/ui/icon/variants/save'
@@ -33,11 +30,14 @@ Rules.displayName = 'ruleEditor-w-Rules'
 
 emitter.emit('addTheme', themes)
 
-interface RulesProps {}
+interface RulesProps {
+  onSubmit: (editorValue: EditorValues[], title: string) => void
+  rule: RulesRes | null
+}
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export function Rules(props: RulesProps): JSX.Element {
-  // const { id } = props
+  const { onSubmit, rule } = props
 
   const [editorValue, setEditorValues] = useRecoilState(editorRulesValuesAtom)
   const [draggableItem, setDraggableItem] = useRecoilState(draggableItemAtom)
@@ -49,38 +49,38 @@ export function Rules(props: RulesProps): JSX.Element {
 
   const [title, setTitle] = useState('')
 
+  const [loading, setLoading] = useState(false)
+
+  useLayoutEffect(() => {
+    setLoading(false)
+    try {
+      if (rule?.editor && rule?.name && rule?.keyName) {
+        setEditorValues(JSON.parse(rule.editor) as EditorValues[])
+        setTitle(`${rule.name} (${rule.keyName})`)
+      } else {
+        setEditorValues([
+          {
+            id: '5',
+            valueArr: [{ id: '3', value: '', condition: SelectValue.and }],
+            condition: SelectValue.and,
+          },
+        ])
+      }
+      setLoading(true)
+    } catch {
+      setEditorValues([
+        {
+          id: '5',
+          valueArr: [{ id: '3', value: '', condition: SelectValue.and }],
+          condition: SelectValue.and,
+        },
+      ])
+    }
+  }, [rule?.editor])
+
   const versionNum = useRef(0)
   const memoryRulesValues = useRef([editorValue])
   const flag = useRef(false)
-
-  const mutation = useMutation(requestRule, {
-    onSuccess: () => notify({ data: 'Сохранено', type: 'success' }),
-    onError: () => notify({ data: 'Ошибка', type: 'error' }),
-  })
-
-  // const rules = useQuery([url, mockRules.name, { id: mockRules.id }], () => makeRequestRules({ id: mockRules.id }))
-
-  // if (rules.isSuccess && id !== 'new') {
-  //   const rulesItem = rules.data?.data.data.filter((item) => item.id === id)[0]
-  //   const testResult: EditorValues[] = []
-  //   rulesItem.frontValue.split(' ')
-  //   let valueT = ''
-  //   rulesItem.frontValue.split(' ').forEach((item) => {
-  //     if (item === 'or' || item === 'and' || item === 'not' || item === 'xor') {
-  //       testResult.push({
-  //         id: generateId(),
-  //         valueArr: [{ id: generateId(), value: valueT, condition: SelectValue[item] }],
-  //         condition: SelectValue[item],
-  //       })
-  //       valueT = ''
-  //     } else {
-  //       valueT += item
-  //     }
-  //     // testResult.push({ id: generateId(),  })
-  //   })
-  //   console.log(testResult)
-  //   console.log(rulesItem.frontValue.split(' '))
-  // }
 
   useEffect(() => {
     if (flag.current) {
@@ -103,96 +103,99 @@ export function Rules(props: RulesProps): JSX.Element {
 
   return (
     <>
-      <ul className={c(Rules.displayName)} onDragOver={dragOver} onDrop={dropToBoard} id='ruleEditor-w-Rules'>
-        <Flex
-          onDrop={dropToBoardUp}
-          onDragOver={dragOverHeader}
-          onDragLeave={(e): void => {
-            e.preventDefault()
-            e.stopPropagation()
-            if (overHeader) setOverHeader(false)
-          }}
-          className={c('header', overHeader && '--dragOver')}
-          gap='xl'
-          mainAxis='space-between'
-          crossAxis='center'
-        >
-          <Flex gap='xl'>
-            <GhostButton height={'l'} padding={'s'} onClick={back}>
-              <ArrowLeft width={'30px'} height={'30px'} />
-            </GhostButton>
-            <GhostButton height={'l'} padding={'s'} onClick={forth}>
-              <ArrowRight width={'30px'} height={'30px'} />
-            </GhostButton>
-          </Flex>
-          <Flex style={{ width: '100%' }} dir='column'>
-            <Input
-              value={title}
-              onChange={(e): void => setTitle(e.target.value)}
-              style={{ paddingTop: '20px', textAlign: 'center' }}
-              height={'l'}
-              placeholder='Заголовок правила (id правила)'
-            />
-          </Flex>
-          <Flex mainAxis='end' gap='xl'>
-            <GhostButton height={'l'} padding={'s'} onClick={onSubmit}>
-              <Save width={'30px'} height={'30px'} />
-            </GhostButton>
-          </Flex>
-        </Flex>
-
-        {editorValue.map((item, i) => {
-          return (
-            <li onDrop={(_): void => dropItemToItem(_, item.id)} onDragOver={dragOver} key={item.id} className='list'>
-              <div className='item'>
-                <div
-                  className={c('header-item', overHeaderItemId === item.id && '--dragOver')}
-                  style={{
-                    minHeight: item.valueArr.length > 1 ? '70px' : '20px',
-                  }}
-                  onDrop={(_): void => dropItemToHeaderItem(_, item.id)}
-                  onDragOver={(e): void => {
-                    e.preventDefault()
-                    e.stopPropagation()
-                    if (overHeaderItemId !== item.id) {
-                      setOverHeaderItemId(item.id)
-                    }
-                    if (dragOverItemId) setDragOverId(null)
-                    if (dragOverButtonsId) setDragOverButtonsId(null)
-                  }}
-                >
-                  {item.valueArr.length > 1 && (
-                    <SplitBtn
-                      rootProps={{
-                        style: { marginLeft: 'auto' },
-                      }}
-                      index={i}
-                    />
-                  )}
-                </div>
-                <Item condition={item.condition} id={item.id} values={item.valueArr} />
-              </div>
-              <AddDeleteButtons
-                condition={item.condition}
-                isDragOver={item.id === dragOverButtonsId}
-                rootProps={{
-                  onDrop: (_) => dropToBoard(_, item.id),
-                  onDragOver: (_) => dragOver(_, item.id),
-                  id: 'ruleEditor-w-Rules',
-                }}
-                itemId={item.id}
-                parentId={item.id}
+      {loading && (
+        <ul className={c(Rules.displayName)} onDragOver={dragOver} onDrop={dropToBoard} id='ruleEditor-w-Rules'>
+          <Flex
+            onDrop={dropToBoardUp}
+            onDragOver={dragOverHeader}
+            onDragLeave={(e): void => {
+              e.preventDefault()
+              e.stopPropagation()
+              if (overHeader) setOverHeader(false)
+            }}
+            className={c('header', overHeader && '--dragOver')}
+            gap='xl'
+            mainAxis='space-between'
+            crossAxis='center'
+          >
+            <Flex gap='xl'>
+              <GhostButton height={'l'} padding={'s'} onClick={back}>
+                <ArrowLeft width={'30px'} height={'30px'} />
+              </GhostButton>
+              <GhostButton height={'l'} padding={'s'} onClick={forth}>
+                <ArrowRight width={'30px'} height={'30px'} />
+              </GhostButton>
+            </Flex>
+            <Flex style={{ width: '100%' }} dir='column'>
+              <Input
+                value={title}
+                onChange={(e): void => setTitle(e.target.value)}
+                style={{ paddingTop: '20px', textAlign: 'center' }}
+                height={'l'}
+                placeholder='Заголовок правила (id правила)'
               />
-            </li>
-          )
-        })}
-      </ul>
+            </Flex>
+            <Flex mainAxis='end' gap='xl'>
+              <GhostButton height={'l'} padding={'s'} onClick={onSubmitFun}>
+                <Save width={'30px'} height={'30px'} />
+              </GhostButton>
+            </Flex>
+          </Flex>
+
+          {editorValue.map((item, i) => {
+            return (
+              <li onDrop={(_): void => dropItemToItem(_, item.id)} onDragOver={dragOver} key={item.id} className='list'>
+                <div className='item'>
+                  <div
+                    className={c('header-item', overHeaderItemId === item.id && '--dragOver')}
+                    style={{
+                      minHeight: item.valueArr.length > 1 ? '70px' : '20px',
+                    }}
+                    onDrop={(_): void => dropItemToHeaderItem(_, item.id)}
+                    onDragOver={(e): void => {
+                      e.preventDefault()
+                      e.stopPropagation()
+                      if (overHeaderItemId !== item.id) {
+                        setOverHeaderItemId(item.id)
+                      }
+                      if (dragOverItemId) setDragOverId(null)
+                      if (dragOverButtonsId) setDragOverButtonsId(null)
+                    }}
+                  >
+                    {item.valueArr.length > 1 && (
+                      <SplitBtn
+                        rootProps={{
+                          style: { marginLeft: 'auto' },
+                        }}
+                        index={i}
+                      />
+                    )}
+                  </div>
+                  <Item condition={item.condition} id={item.id} values={item.valueArr} />
+                </div>
+                <AddDeleteButtons
+                  condition={item.condition}
+                  isDragOver={item.id === dragOverButtonsId}
+                  rootProps={{
+                    onDrop: (_) => dropToBoard(_, item.id),
+                    onDragOver: (_) => dragOver(_, item.id),
+                    id: 'ruleEditor-w-Rules',
+                  }}
+                  itemId={item.id}
+                  parentId={item.id}
+                />
+              </li>
+            )
+          })}
+        </ul>
+      )}
+      {!loading && <div>Загрузка</div>}
     </>
   )
 
   // Private
-  function onSubmit(): void {
-    mutation.mutate(getReqForCreateRule(editorValue, title))
+  function onSubmitFun(): void {
+    onSubmit(editorValue, title)
   }
 
   function dragOver(e: React.DragEvent<HTMLElement>, parentId: string | null = null): void {

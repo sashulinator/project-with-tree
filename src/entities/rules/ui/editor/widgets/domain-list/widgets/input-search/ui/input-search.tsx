@@ -2,13 +2,14 @@ import './input-search.css'
 
 import { GhostButton } from '~/ui/button'
 import { SearchIcon } from '~/ui/icon'
-import Input from '~/ui/input'
+import Input, { InputProps } from '~/ui/input'
 import { c } from '~/utils/core'
 
 InputSearch.displayName = 'e-Rules-ui-DomainList-InputSearch'
 
 interface InputSearchProps {
   rootProps?: React.HTMLAttributes<HTMLDivElement>
+  inputProps?: InputProps
 }
 
 export default function InputSearch(props: InputSearchProps): JSX.Element {
@@ -22,6 +23,7 @@ export default function InputSearch(props: InputSearchProps): JSX.Element {
             <SearchIcon />
           </GhostButton>
         }
+        {...props.inputProps}
       />
     </div>
   )

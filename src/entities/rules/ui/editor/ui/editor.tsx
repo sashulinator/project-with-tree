@@ -4,8 +4,9 @@ import { useEffect } from 'react'
 import { useSetRecoilState } from 'recoil'
 
 import { addDataMentions } from '~/entities/rules/lib/add-data-mentions'
+import { EditorValues } from '~/entities/rules/models/editorRulesValues'
 import { mentionsDataAtom } from '~/entities/rules/models/mentionsData'
-import { DomainRes } from '~/entities/rules/types/rules-type'
+import { DomainRes, RulesRes } from '~/entities/rules/types/rules-type'
 import { c } from '~/utils/core'
 
 import { DomainList } from '../widgets/domain-list'
@@ -15,11 +16,13 @@ Editor.displayName = 'ruleEditor'
 
 interface AddRulesProps {
   dataList: DomainRes[]
+  onSubmit: (editorValue: EditorValues[], title: string) => void
   className?: string
+  rule: RulesRes | null
 }
 
 export function Editor(props: AddRulesProps): JSX.Element {
-  const { dataList } = props
+  const { dataList, onSubmit, rule } = props
 
   const setMentionsData = useSetRecoilState(mentionsDataAtom)
 
@@ -30,7 +33,7 @@ export function Editor(props: AddRulesProps): JSX.Element {
       <div className='list'>
         <DomainList domains={dataList} defaultExpanded={true} />
       </div>
-      <Rules />
+      <Rules rule={rule} onSubmit={onSubmit} />
     </div>
   )
 }

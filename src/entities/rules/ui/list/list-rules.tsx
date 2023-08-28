@@ -1,5 +1,7 @@
 import './list-rules.css'
 
+import { QueryResult } from '~/api/rules/fetch-rules'
+import { ResponseData } from '~/api/rules/requests/fetch-rules'
 import { AppearFrom } from '~/ui/animation'
 import { c } from '~/utils/core'
 
@@ -11,6 +13,7 @@ ListRules.displayName = 'rules-e-ui-list'
 export interface Props {
   className?: string
   list: RulesRes[]
+  fetcher: QueryResult<ResponseData>
 }
 
 export default function ListRules(props: Props): JSX.Element {
@@ -19,7 +22,7 @@ export default function ListRules(props: Props): JSX.Element {
       {props.list.map((item: RulesRes, i) => {
         return (
           <AppearFrom key={item.id} from={{ y: 10 }} delay={i * 30}>
-            <RuleItem item={item} />
+            <RuleItem fetcher={props.fetcher} item={item} />
           </AppearFrom>
         )
       })}
