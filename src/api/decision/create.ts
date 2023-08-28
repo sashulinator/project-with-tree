@@ -2,7 +2,7 @@ import { MutationOptions, UseMutationResult, useMutation } from 'react-query'
 
 import { QueryError } from '~/shared/types'
 
-import { RequestData, Response, request } from './requests/update'
+import { RequestData, Response, request } from './requests/create'
 
 export function useCreateDecision(
   options: MutationOptions<Response, QueryError, RequestData>
