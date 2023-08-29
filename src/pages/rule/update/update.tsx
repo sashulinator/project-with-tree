@@ -23,9 +23,11 @@ export default function RulesUpdatePage(): JSX.Element {
 
   return (
     <main>
-      {data.isLoading && <div>Загрузка</div>}
+      {(data.isLoading || id !== data.data?.data.id) && <div>Загрузка</div>}
       {data.isError && <div>Ошибка</div>}
-      {data.isSuccess && <Editor rule={data.data?.data} onSubmit={onSubmit} dataList={domains} />}
+      {data.isSuccess && id === data.data?.data.id && (
+        <Editor rule={data.data?.data} onSubmit={onSubmit} dataList={domains} />
+      )}
     </main>
   )
 
