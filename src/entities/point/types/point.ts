@@ -20,7 +20,8 @@ export interface RuleSet {
 }
 
 export interface Rule {
-  level: 'rule'
+  level: string
+  keyName: string
   name: string
   id: Id
   value: string

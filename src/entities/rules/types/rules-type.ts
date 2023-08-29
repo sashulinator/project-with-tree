@@ -41,6 +41,7 @@ export interface RulesRes {
   value: string
   frontValue: string
   editor: string
+  level: string
   createDttm: string
   updateDttm: string
   createdBy: string | null

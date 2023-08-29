@@ -1,14 +1,17 @@
 import './chip.css'
 
+import clr from 'color'
+import { createElement } from 'react'
+
+import { getCurrentThemeName } from '~/lib/theme'
 import { emitter } from '~/shared/emitter'
+import { themes } from '~/shared/theme/themes'
+import Button, { ButtonProps } from '~/ui/button'
+import Link, { LinkProps } from '~/ui/link'
+import { c } from '~/utils/core'
 
 import { dark } from '../themes/dark'
 import { light } from '../themes/light'
-import { c } from '~/utils/core'
-import Button, { ButtonProps } from '~/ui/button'
-import Link, { LinkProps } from '~/ui/link'
-import { createElement } from 'react'
-import clr from 'color'
 
 emitter.emit('addTheme', { dark, light })
 
@@ -19,11 +22,15 @@ export type ChipProps<T extends 'button' | 'link' | 'div'> = {
   type: T
   height?: 's' | 'm' | 'l' | null | undefined
   children?: React.ReactNode
-  color: string
+  color?: string
 } & { button: ButtonProps; link: LinkProps; div: React.HTMLAttributes<HTMLDivElement> }[T]
 
 export default function Chip<T extends 'button' | 'link' | 'div' = 'link'>(props: ChipProps<T>): JSX.Element {
-  const { type, height = 'm', color, ...restProps } = props
+  const currentTheme = getCurrentThemeName()
+  const bg = themes[currentTheme].bg
+  console.log('bg', bg)
+
+  const { type, height = 'm', color = bg, ...restProps } = props
 
   const className = c(props.className, Chip.displayName, height && `--${height}`)
   const style = buildStyle()

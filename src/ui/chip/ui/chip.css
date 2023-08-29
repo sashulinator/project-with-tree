@@ -9,12 +9,15 @@
 .ui-Chip.--s {
   border-radius: calc(var(--chip_height__s) / 2);
   height: var(--chip_height__s);
+  padding: 0 var(--m);
 }
 .ui-Chip.--m {
   border-radius: calc(var(--chip_height__m) / 2);
   height: var(--chip_height__m);
+  padding: 0 var(--m);
 }
 .ui-Chip.--l {
   border-radius: calc(var(--chip_height__l) / 2);
   height: var(--chip_height__l);
+  padding: 0 var(--m);
 }

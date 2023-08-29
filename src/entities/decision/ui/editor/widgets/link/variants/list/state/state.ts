@@ -1,4 +1,4 @@
-import { Point } from '~/entities/point'
+import { Point, Rule } from '~/entities/point'
 import { EmitterableDictionary } from '~/lib/emitter/dictionary'
 import { Id, assertDefined, invariant } from '~/utils/core'
 import { Prop } from '~/utils/depricated-emitter'
@@ -17,6 +17,7 @@ type Events = {
   index: { value: number; state: LinkState }
   targetId: { value: Id; state: LinkState }
   sourceId: { value: Id; state: LinkState }
+  rules: { value: Rule; state: LinkState }
 }
 
 export class State extends EmitterableDictionary<Events, LinkState> {
