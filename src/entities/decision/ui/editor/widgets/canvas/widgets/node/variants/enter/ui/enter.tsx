@@ -24,7 +24,6 @@ export default function Enter(props: VariantPickerProps): JSX.Element {
       toolbar={<Toolbar state={props.state} remove={(): void => props.remove(props.state.id)} />}
       sourceLinks={
         <SourceLinks
-          hideNewLink={true}
           linkListState={props.linkListState}
           state={props.state}
           onNewJointClick={onNewJointClick('sourceId')}
