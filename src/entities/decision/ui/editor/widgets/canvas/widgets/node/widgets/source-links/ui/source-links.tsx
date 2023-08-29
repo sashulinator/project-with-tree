@@ -4,6 +4,7 @@ import type { Identifier, XYCoord } from 'dnd-core'
 import { useRef, useState } from 'react'
 import { useDrag, useDrop } from 'react-dnd'
 
+import { UnstyledButton } from '~/abstract/button'
 import { Id, c, generateId } from '~/utils/core'
 import { useUpdate } from '~/utils/hooks'
 
@@ -179,7 +180,12 @@ export function RuleSet(props: RuleSetProps): JSX.Element {
 
   return (
     <div className='rule' key={props.linkState.id} ref={ref} style={{ opacity }} data-handler-id={handlerId}>
-      <div>{props.linkState.rules.map((rule) => rule.name).join(', ')}</div>
+      <UnstyledButton
+        className='editRule'
+        onClick={(): void => props.linkListState.editingRuleSet.set(props.linkState.id)}
+      >
+        {props.linkState.rules.map((rule) => rule.name).join(', ')}
+      </UnstyledButton>
       <Joint
         disabled={
           props.isEditingThisNode || props.isEditingHasSource || (props.isLinked && Boolean(props.editingLinkState))

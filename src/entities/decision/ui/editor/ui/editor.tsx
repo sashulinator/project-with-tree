@@ -98,6 +98,7 @@ export default function Editor(props: Props): JSX.Element {
         nodeListState={nodeListState}
       />
       <RightPanel
+        linkListState={linkListState}
         className='panel --right'
         resizableProps={{ className: resizeBarClassName, name: `${Editor.displayName}-panel__right`, defaultSize: 300 }}
         nodeListState={nodeListState}

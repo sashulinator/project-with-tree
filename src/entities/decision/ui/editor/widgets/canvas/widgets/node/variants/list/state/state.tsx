@@ -33,8 +33,6 @@ export type Events = DictionaryEvents<NodeState> & {
 export class State extends EmitterDictionary<NodeState, Events> {
   selection: Selection<'selection'>
 
-  selectedRuleSet: Prop<'selectedRuleSet', Id | null>
-
   cutted: Selection<'cutted'>
 
   searchQuery: Prop<'searchQuery', string>
@@ -44,8 +42,6 @@ export class State extends EmitterDictionary<NodeState, Events> {
     super(stateList, (s) => s.id.toString())
 
     this.selection = new Selection('selection', [] as Id[], this)
-
-    this.selectedRuleSet = new Prop('selectedRuleSet', null as Id | null, this)
 
     this.cutted = new Selection('cutted', [] as Id[], this)
 

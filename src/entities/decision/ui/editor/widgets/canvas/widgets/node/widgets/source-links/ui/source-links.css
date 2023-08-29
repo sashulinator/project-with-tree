@@ -15,6 +15,12 @@
   padding-left: var(--m);
 }
 
+.decision-Editor-w-Canvas-w-Node-w-SourceLinks > .rule > .editRule {
+  width: 100%;
+  height: 100%;
+  display: flex;
+}
+
 .decision-Editor-w-Canvas-w-Node-w-SourceLinks > .rule:hover {
   background-color: var(--field_bg__hover);
   border-radius: 1rem;
