@@ -3,6 +3,7 @@ import './right-panel.scss'
 import { memo } from 'react'
 
 import Flex from '~/abstract/flex/ui/flex'
+import { RulesRes } from '~/entities/rules/types/rules-type'
 import { AppearFrom } from '~/ui/animation'
 import { GhostButton, PrimaryButton } from '~/ui/button'
 import { Close, SpacingWidth } from '~/ui/icon'
@@ -21,6 +22,7 @@ export interface Props {
   resizableProps: Omit<ResizableProps, 'direction'>
   nodeListState: NodeListState
   linkListState: LinkListState
+  ruleList: RulesRes[]
 }
 
 function RightPanelComponent(props: Props): JSX.Element | null {
