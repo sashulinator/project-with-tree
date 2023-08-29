@@ -12,12 +12,6 @@ const decision: EditorDecision = {
       name: 'ВХОД',
       xy: [0, -84],
       level: 'main',
-      children: [
-        {
-          id: 'a1',
-          index: 0,
-        },
-      ],
     },
   ],
 }
