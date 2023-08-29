@@ -59,6 +59,7 @@ export default {
                     level: 'rule',
                     name: 'string',
                     id: 'id3',
+                    keyName: 'est_keyname',
                     value: 'string',
                   },
                 ],

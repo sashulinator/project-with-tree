@@ -1,4 +1,4 @@
-import { Point } from '~/entities/point'
+import { Point, Rule } from '~/entities/point'
 import { EmitterableDictionary } from '~/lib/emitter/dictionary'
 import { Id, assertDefined, invariant } from '~/utils/core'
 import { Prop } from '~/utils/depricated-emitter'
@@ -12,14 +12,18 @@ type Events = {
   remove: { state: LinkState }
   // Уникальные события
   editingId: { value: Id }
+  editingRuleSet: { value: Id }
   // События стейтов
   index: { value: number; state: LinkState }
   targetId: { value: Id; state: LinkState }
   sourceId: { value: Id; state: LinkState }
+  rules: { value: Rule; state: LinkState }
 }
 
 export class State extends EmitterableDictionary<Events, LinkState> {
   editingId: Prop<'editingId', Id | undefined>
+
+  editingRuleSet: Prop<'editingRuleSet', Id | undefined>
 
   constructor(pointList: Point[]) {
     const linkStates = pointList
@@ -34,10 +38,16 @@ export class State extends EmitterableDictionary<Events, LinkState> {
     super(linkStates, (l) => l.id.toString())
 
     this.editingId = new Prop<'editingId', Id | undefined>('editingId', undefined, this)
+
+    this.editingRuleSet = new Prop('editingRuleSet', undefined as Id | undefined, this)
   }
 
   getEditingLinkState = (): LinkState => {
     return this.get(this.editingId.value)
+  }
+
+  getEditingRuleState = (): LinkState => {
+    return this.get(this.editingRuleSet.value)
   }
 
   findEditingLinkState = (): LinkState | undefined => {

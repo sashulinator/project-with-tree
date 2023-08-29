@@ -2,6 +2,7 @@ import './editor.scss'
 
 import { useEffect, useMemo } from 'react'
 
+import { RulesRes } from '~/entities/rules/types/rules-type'
 import { ActionHistory } from '~/utils/action-history'
 import { c } from '~/utils/core'
 import { useEventListener } from '~/utils/hooks'
@@ -40,6 +41,7 @@ const resizeBarClassName = 'resizeBar'
 export interface Props {
   decision: Decision
   className?: string
+  ruleList: RulesRes[]
   onSubmit: (states: {
     editorManager: Manager
     canvasState: CanvasState
@@ -98,6 +100,8 @@ export default function Editor(props: Props): JSX.Element {
         nodeListState={nodeListState}
       />
       <RightPanel
+        ruleList={props.ruleList}
+        linkListState={linkListState}
         className='panel --right'
         resizableProps={{ className: resizeBarClassName, name: `${Editor.displayName}-panel__right`, defaultSize: 300 }}
         nodeListState={nodeListState}

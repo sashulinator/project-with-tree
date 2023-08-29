@@ -20,7 +20,7 @@ export interface StateProps {
 export class State extends Emitter<Events> {
   id: Id
 
-  readonly rules: Rule[]
+  rules: Prop<'rules', Rule[]>
 
   targetId: Prop<'targetId', Id | undefined>
 
@@ -33,7 +33,7 @@ export class State extends Emitter<Events> {
 
     this.id = props.id || generateId()
 
-    this.rules = props.rules || []
+    this.rules = new Prop('rules', props.rules || [], this)
 
     this.targetId = new Prop('targetId', props.targetId, this)
 
@@ -51,7 +51,7 @@ export class State extends Emitter<Events> {
 
   deserialize(): RuleSet {
     return {
-      rules: this.rules,
+      rules: this.rules.value,
       id: this.targetId.value,
       index: this.index.value,
     }

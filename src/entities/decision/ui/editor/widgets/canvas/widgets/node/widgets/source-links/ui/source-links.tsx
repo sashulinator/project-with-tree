@@ -4,6 +4,7 @@ import type { Identifier, XYCoord } from 'dnd-core'
 import { useRef, useState } from 'react'
 import { useDrag, useDrop } from 'react-dnd'
 
+import { UnstyledButton } from '~/abstract/button'
 import { Id, c, generateId } from '~/utils/core'
 import { useUpdate } from '~/utils/hooks'
 
@@ -73,12 +74,13 @@ export default function SourceLinks(props: Props): JSX.Element {
 
   // Private
 
-  function subscribeOnUpdates(update: () => void): void {
-    props.linkListState.on('add', update)
-    props.linkListState.on('remove', update)
-    props.linkListState.on('index', update)
-    props.linkListState.on('update', update)
-    props.linkListState.on('targetId', () => setNewLinkId(generateId()))
+  function subscribeOnUpdates(update: () => void, uns: (() => void)[]): void {
+    uns.push(props.linkListState.on('add', update))
+    uns.push(props.linkListState.on('remove', update))
+    uns.push(props.linkListState.on('index', update))
+    uns.push(props.linkListState.on('update', update))
+    uns.push(props.linkListState.on('targetId', () => setNewLinkId(generateId())))
+    uns.push(props.linkListState.on('rules', update))
   }
 }
 
@@ -179,7 +181,12 @@ export function RuleSet(props: RuleSetProps): JSX.Element {
 
   return (
     <div className='rule' key={props.linkState.id} ref={ref} style={{ opacity }} data-handler-id={handlerId}>
-      <div>{props.linkState.rules.map((rule) => rule.name).join(', ')}</div>
+      <UnstyledButton
+        className='editRule'
+        onClick={(): void => props.linkListState.editingRuleSet.set(props.linkState.id)}
+      >
+        {props.linkState.rules.value.map((rule) => rule.keyName || rule.name).join(', ')}
+      </UnstyledButton>
       <Joint
         disabled={
           props.isEditingThisNode || props.isEditingHasSource || (props.isLinked && Boolean(props.editingLinkState))
