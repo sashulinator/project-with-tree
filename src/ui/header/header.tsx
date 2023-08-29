@@ -9,7 +9,6 @@ import Link from '~/ui/link'
 import { c } from '~/utils/core'
 import { setCSSVar } from '~/utils/dom'
 
-import { Logo } from '../icon'
 import { Logout } from '../icon/variants/logout'
 import { User } from '../icon/variants/user'
 
@@ -21,9 +20,7 @@ export default function Header(): JSX.Element {
 
   return (
     <header className={c(Header.displayName)}>
-      <Link to={routes.main.path}>
-        <Logo height={20} />
-      </Link>
+      <Link to={routes.main.path}>Colibri</Link>
       <div style={{ display: 'flex' }}>
         <GhostButton onClick={(): void => navigate(routes.settings.path)} square={true}>
           <User />

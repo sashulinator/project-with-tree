@@ -2,14 +2,17 @@ import './item.scss'
 
 import { Decision } from '~/entities/decision'
 import { routes } from '~/shared/routes'
+import { GhostButton } from '~/ui/button'
+import { Close } from '~/ui/icon'
 import Link from '~/ui/link'
-import { c } from '~/utils/core'
+import { Id, c } from '~/utils/core'
 
 Item.displayName = 'decision-Item'
 
 export interface Props {
   className?: string
   item: Decision
+  remove: (id: Id) => void
 }
 
 export default function Item(props: Props): JSX.Element {
@@ -18,6 +21,9 @@ export default function Item(props: Props): JSX.Element {
       <NameCell {...props} />
       {/* <VersionCell {...props} /> */}
       <StatusCell {...props} />
+      <GhostButton round={true} onClick={(): void => props.remove(props.item.id)}>
+        <Close />
+      </GhostButton>
     </div>
   )
 }

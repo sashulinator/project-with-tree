@@ -3,6 +3,8 @@
   border-radius: var(--m);
   padding: var(--xl) var(--xxl);
   position: relative;
+  display: flex;
+  justify-content: space-between;
 
   > .versionCell {
     position: absolute;
