@@ -1,6 +1,6 @@
 import './rules.css'
 
-import { useEffect, useLayoutEffect, useRef, useState } from 'react'
+import { useLayoutEffect, useState } from 'react'
 import { useRecoilState, useRecoilValue } from 'recoil'
 
 import Flex from '~/abstract/flex'
@@ -16,7 +16,7 @@ import { EditorValues, SelectValue, editorRulesValuesAtom } from '~/entities/rul
 import { RulesRes } from '~/entities/rules/types/rules-type'
 import { emitter } from '~/shared/emitter'
 import { GhostButton } from '~/ui/button'
-import { ArrowLeft, ArrowRight } from '~/ui/icon'
+// import { ArrowLeft, ArrowRight } from '~/ui/icon'
 import { Save } from '~/ui/icon/variants/save'
 import Input from '~/ui/input'
 import { c } from '~/utils/core'
@@ -35,8 +35,6 @@ interface RulesProps {
   rule: RulesRes | null
 }
 
-
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export function Rules(props: RulesProps): JSX.Element {
   const { onSubmit, rule } = props
 
@@ -79,28 +77,28 @@ export function Rules(props: RulesProps): JSX.Element {
     }
   }, [rule?.editor])
 
-  const versionNum = useRef(0)
-  const memoryRulesValues = useRef([editorValue])
-  const flag = useRef(false)
+  // const versionNum = useRef(0)
+  // const memoryRulesValues = useRef([editorValue])
+  // const flag = useRef(false)
 
-  useEffect(() => {
-    if (flag.current) {
-      flag.current = false
-      return
-    }
-    if (versionNum.current !== memoryRulesValues.current.length - 1) {
-      memoryRulesValues.current = memoryRulesValues.current.splice(0, versionNum.current)
-    }
+  // useEffect(() => {
+  //   if (flag.current) {
+  //     flag.current = false
+  //     return
+  //   }
+  //   if (versionNum.current !== memoryRulesValues.current.length - 1) {
+  //     memoryRulesValues.current = memoryRulesValues.current.splice(0, versionNum.current)
+  //   }
 
-    if (memoryRulesValues.current.length < 50) {
-      memoryRulesValues.current.push(editorValue)
-    } else {
-      memoryRulesValues.current.shift()
-      memoryRulesValues.current.push(editorValue)
-    }
+  //   if (memoryRulesValues.current.length < 50) {
+  //     memoryRulesValues.current.push(editorValue)
+  //   } else {
+  //     memoryRulesValues.current.shift()
+  //     memoryRulesValues.current.push(editorValue)
+  //   }
 
-    versionNum.current = memoryRulesValues.current.length - 1
-  }, [editorValue])
+  //   versionNum.current = memoryRulesValues.current.length - 1
+  // }, [editorValue])
 
   return (
     <>
@@ -119,14 +117,14 @@ export function Rules(props: RulesProps): JSX.Element {
             mainAxis='space-between'
             crossAxis='center'
           >
-            <Flex gap='xl'>
+            {/* <Flex gap='xl'>
               <GhostButton height={'l'} padding={'s'} onClick={back}>
                 <ArrowLeft width={'30px'} height={'30px'} />
               </GhostButton>
               <GhostButton height={'l'} padding={'s'} onClick={forth}>
                 <ArrowRight width={'30px'} height={'30px'} />
               </GhostButton>
-            </Flex>
+            </Flex> */}
             <Flex style={{ width: '100%' }} dir='column'>
               <Input
                 value={title}
@@ -309,21 +307,21 @@ export function Rules(props: RulesProps): JSX.Element {
     if (overHeader) setOverHeader(false)
   }
 
-  function back(): void {
-    flag.current = true
+  // function back(): void {
+  //   flag.current = true
 
-    if (versionNum.current >= 2) {
-      setEditorValues(memoryRulesValues.current[versionNum.current - 1])
-      versionNum.current -= 1
-    }
-  }
+  //   if (versionNum.current >= 2) {
+  //     setEditorValues(memoryRulesValues.current[versionNum.current - 1])
+  //     versionNum.current -= 1
+  //   }
+  // }
 
-  function forth(): void {
-    flag.current = true
+  // function forth(): void {
+  //   flag.current = true
 
-    if (versionNum.current <= memoryRulesValues.current.length - 2) {
-      setEditorValues(memoryRulesValues.current[versionNum.current + 1])
-      versionNum.current += 1
-    }
-  }
+  //   if (versionNum.current <= memoryRulesValues.current.length - 2) {
+  //     setEditorValues(memoryRulesValues.current[versionNum.current + 1])
+  //     versionNum.current += 1
+  //   }
+  // }
 }

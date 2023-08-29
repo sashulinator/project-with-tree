@@ -22,9 +22,7 @@ interface AddRulesProps {
 }
 
 export function Editor(props: AddRulesProps): JSX.Element {
-
   const { dataList, onSubmit, rule } = props
-
 
   const setMentionsData = useSetRecoilState(mentionsDataAtom)
 
