@@ -10,7 +10,7 @@ import Link from '~/ui/link'
 import { Id } from '~/utils/core'
 
 export default function DecisionPage(): JSX.Element {
-  const fetcher = useFetchDecisionList({ page: 1, limit: 30 })
+  const fetcher = useFetchDecisionList({ page: 1, limit: 30 }, { staleTime: 60_000 })
   const removeMutator = useRemoveDecision({
     onSuccess: () => {
       notify({ data: 'Удалено', type: 'success' })

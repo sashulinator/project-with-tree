@@ -14,7 +14,7 @@ export default function DecisionPage(): JSX.Element {
 
   assertDefined(id)
   // const fetcher = useFetchDecisionMock({ id })
-  const fetcher = useFetchDecision({ id })
+  const fetcher = useFetchDecision({ id }, { staleTime: 1 })
 
   const mutator = useUpdateDecision({
     onSuccess: () => notify({ data: 'Сохранено', type: 'success' }),
