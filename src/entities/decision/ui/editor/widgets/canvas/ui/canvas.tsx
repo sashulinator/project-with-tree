@@ -53,8 +53,8 @@ function CanvasComponent(props: Props): JSX.Element {
 
     props.linkListState.on('targetId', (event) => {
       setTimeout(() => {
-        const sNodeState = props.nodeListState.find(event.state.sourceId.value)
-        const tNodeState = props.nodeListState.find(event.state.targetId.value)
+        const sNodeState = props.nodeListState.find(event.item.sourceId.value)
+        const tNodeState = props.nodeListState.find(event.item.targetId.value)
         tNodeState && props.nodeListState.positionColumn(tNodeState?.position.value.x)
         sNodeState && props.nodeListState.positionColumn(sNodeState?.position.value.x)
       })
@@ -62,8 +62,8 @@ function CanvasComponent(props: Props): JSX.Element {
 
     props.linkListState.on('sourceId', (event) => {
       setTimeout(() => {
-        const sNodeState = props.nodeListState.find(event.state.sourceId.value)
-        const tNodeState = props.nodeListState.find(event.state.targetId.value)
+        const sNodeState = props.nodeListState.find(event.item.sourceId.value)
+        const tNodeState = props.nodeListState.find(event.item.targetId.value)
         tNodeState && props.nodeListState.positionColumn(tNodeState?.position.value.x)
         sNodeState && props.nodeListState.positionColumn(sNodeState?.position.value.x)
       })

@@ -1,26 +1,25 @@
 import { Point, Rule } from '~/entities/point'
-import { EmitterableDictionary } from '~/lib/emitter/dictionary'
 import { Id, assertDefined, invariant } from '~/utils/core'
-import { Prop } from '~/utils/depricated-emitter'
+import { Dictionary, Prop } from '~/utils/emitter'
 
 import { ControllerProps, Controller as LinkState } from '../../..'
 
 type Events = {
   // Наследуемые события
-  add: { state: LinkState }
-  update: { state: LinkState }
-  remove: { state: LinkState }
+  add: { item: LinkState }
+  update: { item: LinkState }
+  remove: { item: LinkState }
   // Уникальные события
   editingId: { value: Id }
   editingRuleSet: { value: Id }
   // События стейтов
-  index: { value: number; state: LinkState }
-  targetId: { value: Id; state: LinkState }
-  sourceId: { value: Id; state: LinkState }
-  rules: { value: Rule; state: LinkState }
+  index: { value: number; item: LinkState }
+  targetId: { value: Id; item: LinkState }
+  sourceId: { value: Id; item: LinkState }
+  rules: { value: Rule; item: LinkState }
 }
 
-export class State extends EmitterableDictionary<Events, LinkState> {
+export class State extends Dictionary<LinkState, Events> {
   editingId: Prop<'editingId', Id | undefined>
 
   editingRuleSet: Prop<'editingRuleSet', Id | undefined>
