@@ -10,7 +10,6 @@ Toolbar.displayName = 'decision-Editor-w-Canvas-w-Node-v-Enter-w-Toolbar'
 export interface Props {
   className?: string
   state: State
-  remove: () => void
 }
 
 export default function Toolbar(props: Props): JSX.Element {

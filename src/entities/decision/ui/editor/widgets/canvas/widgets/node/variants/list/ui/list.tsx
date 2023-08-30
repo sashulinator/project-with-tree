@@ -25,7 +25,6 @@ export function ListComponent(props: ListProps): JSX.Element {
       {props.state.values().map((nodeState) => {
         return (
           <VariantPicker
-            remove={props.remove}
             key={nodeState.id}
             state={nodeState}
             nodeListState={props.state}

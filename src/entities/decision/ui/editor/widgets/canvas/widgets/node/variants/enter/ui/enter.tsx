@@ -21,7 +21,7 @@ export default function Enter(props: VariantPickerProps): JSX.Element {
       state={props.state}
       className={Enter.displayName}
       title={<Title state={props.state} />}
-      toolbar={<Toolbar state={props.state} remove={(): void => props.remove(props.state.id)} />}
+      toolbar={<Toolbar state={props.state} />}
       sourceLinks={
         <SourceLinks
           linkListState={props.linkListState}

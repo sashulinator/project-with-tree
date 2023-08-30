@@ -3,7 +3,6 @@ import './toolbar.css'
 import Flex from '~/abstract/flex/ui/flex'
 import { GhostButton } from '~/ui/button'
 import Checkbox from '~/ui/checkbox'
-import { Trash } from '~/ui/icon'
 import { c } from '~/utils/core'
 import { stopPropagation } from '~/utils/dom-event'
 import { useUpdate } from '~/utils/hooks'
@@ -16,7 +15,6 @@ export interface Props {
   state: State
   listState: ListState
   className?: string
-  remove: () => void
 }
 
 const RU = {
@@ -48,9 +46,6 @@ export default function Toolbar(props: Props): JSX.Element {
       <Flex>
         <GhostButton onClick={toogleComputation} style={{ fontSize: '0.6em' }}>
           {RU[computation || 'parallel']}
-        </GhostButton>
-        <GhostButton round={true} onClick={props.remove}>
-          <Trash />
         </GhostButton>
       </Flex>
     </div>

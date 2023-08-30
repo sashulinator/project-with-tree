@@ -21,13 +21,7 @@ export default function Filter(props: VariantPickerProps): JSX.Element {
       onGestureDrug={props.onGestureDrug}
       className={Filter.displayName}
       title={<Title className='title' state={props.state} />}
-      toolbar={
-        <Toolbar
-          listState={props.nodeListState}
-          state={props.state}
-          remove={(): void => props.remove(props.state.id)}
-        />
-      }
+      toolbar={<Toolbar listState={props.nodeListState} state={props.state} />}
       targetLinks={
         <TargetLinks
           linkStates={props.linkListState}
