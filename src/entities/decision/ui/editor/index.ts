@@ -31,6 +31,9 @@ export type { Props as EditorProps } from './ui/editor'
 export { default as Header } from './widgets/header'
 export type { HeaderProps } from './widgets/header'
 
+export { default as Toolbar } from './widgets/toolbar'
+export type { ToolbarProps } from './widgets/toolbar'
+
 export { default as LeftPanel } from './widgets/left-panel'
 export type { LeftPanelProps } from './widgets/left-panel'
 

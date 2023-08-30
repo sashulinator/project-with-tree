@@ -4,10 +4,8 @@ import { memo } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 import Flex from '~/abstract/flex/ui/flex'
-import { Point } from '~/entities/point'
 import { routes } from '~/shared/routes'
 import { GhostButton, PrimaryButton } from '~/ui/button'
-import { Plus } from '~/ui/icon'
 import { ChevronLeft } from '~/ui/icon/variants/chevron-left'
 import Input, { useChangeOnBlurStrategy } from '~/ui/input'
 import ClearableInput from '~/ui/input/variants/clearable'
@@ -23,7 +21,6 @@ export interface Props {
   className?: string
   editorController: Controller
   nodeList: NodeListState
-  addNode: (point: Partial<Point>) => void
   submit: () => void
 }
 
@@ -44,24 +41,6 @@ function HeaderComponent(props: Props): JSX.Element {
           onChange={(ev): void => props.nodeList.searchQuery.set(ev.currentTarget.value)}
           placeholder='Поиск'
         />
-        <Flex className='toolbar' crossAxis='center'>
-          <PrimaryButton
-            onClick={(): void => props.addNode({ level: 'offer', name: 'new_offer' })}
-            round={true}
-            height='s'
-            style={{ marginLeft: 'var(--l)' }}
-          >
-            <Plus /> O
-          </PrimaryButton>
-          <PrimaryButton
-            onClick={(): void => props.addNode({ level: 'decisionPoint', name: 'new_filter' })}
-            round={true}
-            height='s'
-            style={{ marginLeft: 'var(--l)' }}
-          >
-            <Plus /> F
-          </PrimaryButton>
-        </Flex>
       </Flex>
       <div className='center'>
         <div className='name'>

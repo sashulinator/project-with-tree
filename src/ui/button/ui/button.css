@@ -12,6 +12,10 @@
   align-items: center;
 }
 
-.ui-Button:active > span {
+.ui-Button:active:not(:disabled) > span {
   transform: translateY(1px);
+}
+.ui-Button:disabled > span {
+  opacity: 0.5;
+  cursor: not-allowed;
 }

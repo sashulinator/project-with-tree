@@ -17,6 +17,7 @@ import {
   LinkListState,
   NodeListState,
   RightPanel,
+  Toolbar,
   historyListener,
 } from '../'
 import {
@@ -86,12 +87,15 @@ export default function Editor(props: Props): JSX.Element {
 
   return (
     <div className={c(props.className, Editor.displayName)}>
-      <Header
-        submit={submit}
-        nodeList={nodeListState}
+      <Header submit={submit} nodeList={nodeListState} editorController={controller} className='panel --header' />
+      <Toolbar
+        history={history}
+        nextHistory={nextHistory}
+        previousHistory={previousHistory}
+        nodeListState={nodeListState}
+        className='panel --toolbar'
         addNode={addNode}
-        editorController={controller}
-        className='panel --header'
+        removeSelectedNodes={removeSelectedNodes}
       />
       <LeftPanel
         className='panel --left'
@@ -100,9 +104,9 @@ export default function Editor(props: Props): JSX.Element {
         nodeListState={nodeListState}
       />
       <RightPanel
+        className='panel --right'
         ruleList={props.ruleList}
         linkListState={linkListState}
-        className='panel --right'
         resizableProps={{ className: resizeBarClassName, name: `${Editor.displayName}-panel__right`, defaultSize: 300 }}
         nodeListState={nodeListState}
       />
