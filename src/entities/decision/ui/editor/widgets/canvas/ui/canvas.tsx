@@ -3,6 +3,7 @@ import { memo } from 'react'
 import { Board, PaintingPanel } from '~/ui/canvas'
 import { Id } from '~/utils/core'
 import { useUpdate } from '~/utils/hooks'
+import { setRefs } from '~/utils/react'
 
 import { LinkList, LinkListController, NodeList, NodeListState, State } from '../'
 import { onGestureDrag } from '../_private'
@@ -20,13 +21,13 @@ function CanvasComponent(props: Props): JSX.Element {
   useUpdate(updateOnEvents, [props.state])
 
   return (
-    <Board ref={props.state.ref.set}>
-      <PaintingPanel translate={props.state.translate.value} scale={props.state.scale.value}>
+    <Board ref={setRefs(props.state.ref.set, props.state.zoom.setRef)}>
+      <PaintingPanel translate={props.state.zoom.value} scale={props.state.zoom.value.k}>
         <LinkList
           state={props.linkListState}
           nodeListState={props.nodeListState}
-          canvasTranslate={props.state.translate.value}
-          scale={props.state.scale.value}
+          canvasTranslate={props.state.zoom.value}
+          scale={props.state.zoom.value.k}
         />
         <NodeList
           state={props.nodeListState}
@@ -41,8 +42,7 @@ function CanvasComponent(props: Props): JSX.Element {
   // Private
 
   function updateOnEvents(update: () => void): void {
-    props.state.on('translate', update)
-    props.state.on('scale', update)
+    props.state.on('zoom', update)
 
     props.nodeListState.on('position', (event) => {
       if (!event.last || event.isPositionColumn) return

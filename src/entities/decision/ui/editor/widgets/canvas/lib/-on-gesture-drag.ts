@@ -15,7 +15,7 @@ export function onGestureDrag(state: State, nodeListState: NodeListState) {
     (event: GestureDragEvent): void => {
       event.event.stopPropagation()
 
-      const movePosition = getNodeMovement(event, state.scale.value)
+      const movePosition = getNodeMovement(event, state.zoom.value.k)
       if (movePosition === null) return
 
       // Начинаем двигать карточку только если movePosition больше 10

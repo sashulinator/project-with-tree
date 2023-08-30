@@ -13,8 +13,8 @@ export function addNode(props: Props): () => void {
   return (point?: Point): void => {
     const canvasSize = getElementSize(props.canvasState.ref.value as Element)
 
-    const x = (-props.canvasState.translate.value.x + canvasSize?.width / 2) / props.canvasState.scale.value - 150
-    const y = (-props.canvasState.translate.value.y + canvasSize?.height / 2) / props.canvasState.scale.value - 100
+    const x = (-props.canvasState.zoom.value.x + canvasSize?.width / 2) / props.canvasState.zoom.value.k - 150
+    const y = (-props.canvasState.zoom.value.y + canvasSize?.height / 2) / props.canvasState.zoom.value.k - 100
 
     const newPoint: Point = {
       level: 'decisionPoint',
