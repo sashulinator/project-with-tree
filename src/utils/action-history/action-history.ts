@@ -1,51 +1,31 @@
-import { History, HistoryProps } from '../history/history'
-
 export interface HistoryItem {
-  redo: () => void
-  undo: () => void
   done: boolean
+  type: string
+  username: string
+  redo: Record<string, unknown>
+  undo: Record<string, unknown>
 }
 
 export class ActionHistory {
-  history: History<HistoryItem>
+  array: HistoryItem[]
 
-  constructor(props?: HistoryProps<HistoryItem>) {
-    this.history = new History<HistoryItem>(props)
+  constructor(array?: HistoryItem[]) {
+    this.array = array || []
   }
 
-  add(onRedo: () => void, onUndo: () => void): void {
-    function redo(): void {
-      onRedo()
-      item.done = true
-    }
-    function undo(): void {
-      onUndo()
-      item.done = false
-    }
-
-    const isCurrentDone = this.history.getCurrent()?.done
-    const item: HistoryItem = { done: true, redo, undo }
-
-    if (!isCurrentDone) {
-      this.history.previous()
-    }
-
-    this.history.add(item)
+  add(item: HistoryItem) {
+    this.array.unshift(item)
   }
 
-  previous(): void {
-    const { done, undo } = this.history.getCurrent()
-    this.history.previous()
-    done ? undo() : this.history.getCurrent()?.undo()
+  findCurrent(): HistoryItem | undefined {
+    return this.array.find((item) => item.done)
   }
 
-  next(): void {
-    const { done, redo } = this.history.getCurrent()
-    this.history.next()
-    done ? this.history.getCurrent()?.redo() : redo()
+  findNext(): HistoryItem | undefined {
+    return this.array.find((_, i) => this.array[i + 1]?.done)
   }
 
-  redo(): void {
-    this.history.getCurrent()?.redo()
+  findPrevious(): HistoryItem | undefined {
+    return this.array.find((_, i) => this.array[i - 1]?.done)
   }
 }
