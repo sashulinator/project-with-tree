@@ -5,7 +5,7 @@ import { Position, c } from '~/utils/core'
 import { fns } from '~/utils/function'
 import { useForceUpdate, useOnMount, useUpdate } from '~/utils/hooks'
 
-import { Controller, ListState, getOffset } from '..'
+import { Controller, ListController, getOffset } from '..'
 import { NodeListState } from '../../../../..'
 
 export interface LinkProps extends React.HTMLAttributes<SVGPathElement> {
@@ -14,7 +14,7 @@ export interface LinkProps extends React.HTMLAttributes<SVGPathElement> {
   state: Controller
   nodeListState: NodeListState
   // TODO не ничего не должен знать о Листе
-  listState: ListState
+  listState: ListController
 }
 
 export default function Link(props: LinkProps): JSX.Element | null {

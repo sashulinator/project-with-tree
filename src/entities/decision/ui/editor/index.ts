@@ -53,7 +53,7 @@ export {
   Link,
   LinkList,
   LinkController,
-  LinkListState,
+  LinkListController as LinkListState,
 } from './widgets/canvas'
 export type {
   CanvasProps,

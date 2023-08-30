@@ -18,5 +18,5 @@ export type { LinkProps } from './ui/link'
 /**
  * variants
  */
-export { State as ListState, default as List } from './variants/list'
+export { Controller as ListController, default as List } from './variants/list'
 export type { ListProps } from './variants/list'

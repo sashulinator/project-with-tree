@@ -42,7 +42,7 @@ export {
   default as Link,
   List as LinkList,
   Controller as LinkController,
-  ListState as LinkListState,
+  ListController as LinkListController,
 } from './widgets/link'
 export type {
   ListProps as LinkListProps,

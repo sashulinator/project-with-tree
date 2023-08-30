@@ -4,14 +4,14 @@ import { Board, PaintingPanel } from '~/ui/canvas'
 import { Id } from '~/utils/core'
 import { useUpdate } from '~/utils/hooks'
 
-import { LinkList, LinkListState, NodeList, NodeListState, State } from '../'
+import { LinkList, LinkListController, NodeList, NodeListState, State } from '../'
 import { onGestureDrag } from '../_private'
 
 CanvasComponent.displayName = 'decision-Editor-w-Canvas'
 
 export interface Props {
   state: State
-  linkListState: LinkListState
+  linkListState: LinkListController
   nodeListState: NodeListState
   removeNode: (id: Id) => void
 }
