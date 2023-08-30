@@ -1,7 +1,6 @@
 import { Rule, RuleSet } from '~/entities/point'
-import { Emitter } from '~/lib/emitter'
 import { Id, generateId } from '~/utils/core'
-import { Prop } from '~/utils/depricated-emitter'
+import { Emitter, Prop } from '~/utils/emitter'
 
 export type Events = {
   targetId: { value: Id }
@@ -9,7 +8,7 @@ export type Events = {
   index: { value: number }
 }
 
-export interface StateProps {
+export interface Props {
   id?: Id | undefined
   sourceId?: Id | undefined
   targetId?: Id | undefined
@@ -17,7 +16,7 @@ export interface StateProps {
   index: number
 }
 
-export class State extends Emitter<Events> {
+export class Controller extends Emitter<Events> {
   id: Id
 
   rules: Prop<'rules', Rule[]>
@@ -28,7 +27,7 @@ export class State extends Emitter<Events> {
 
   index: Prop<'index', number>
 
-  constructor(props: StateProps) {
+  constructor(props: Props) {
     super()
 
     this.id = props.id || generateId()
@@ -40,13 +39,6 @@ export class State extends Emitter<Events> {
     this.sourceId = new Prop('sourceId', props.sourceId, this)
 
     this.index = new Prop('index', props.index, this)
-  }
-
-  static createDefaultInstance(partialProps: Partial<StateProps>): State {
-    return new State({
-      index: 0,
-      ...partialProps,
-    })
   }
 
   deserialize(): RuleSet {

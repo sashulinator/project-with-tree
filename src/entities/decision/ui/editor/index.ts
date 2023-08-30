@@ -11,8 +11,8 @@ export type { Decision } from './types/decision'
 /**
  * modules
  */
-export { Manager } from './modules/manager'
-export type { ManagerEvents } from './modules/manager'
+export { Controller } from './modules/controller'
+export type { Events as ControllerEvents } from './modules/controller'
 
 /**
  * theme
@@ -50,6 +50,10 @@ export {
   NODE_GAP,
   COLUMN_GAP,
   getColumnX,
+  Link,
+  LinkList,
+  LinkController,
+  LinkListController as LinkListState,
 } from './widgets/canvas'
 export type {
   CanvasProps,
@@ -59,12 +63,8 @@ export type {
   NodeEvents,
   NodeJointProps,
   NodeVariantPickerProps,
-} from './widgets/canvas'
-
-export { default as Link, List as LinkList, State as LinkState, ListState as LinkListState } from './widgets/link'
-export type {
-  ListProps as LinkListProps,
+  LinkListProps,
   LinkProps,
-  StateProps as LinkStateProps,
-  Events as LinkEvents,
-} from './widgets/link'
+  LinkControllerProps,
+  LinkControllerEvents,
+} from './widgets/canvas'

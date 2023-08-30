@@ -15,13 +15,13 @@ import ThemeDropdown from '~/ui/theme-dropdown'
 import { c } from '~/utils/core'
 import { useUpdate } from '~/utils/hooks'
 
-import { Manager, NodeListState } from '../../..'
+import { Controller, NodeListState } from '../../..'
 
 HeaderComponent.displayName = 'decision-Editor-w-Header'
 
 export interface Props {
   className?: string
-  editorManager: Manager
+  editorController: Controller
   nodeList: NodeListState
   addNode: (point: Partial<Point>) => void
   submit: () => void
@@ -69,9 +69,9 @@ function HeaderComponent(props: Props): JSX.Element {
             {...useChangeOnBlurStrategy({
               transparent: true,
               cannotBeEmpty: true,
-              value: props.editorManager.name.value,
+              value: props.editorController.name.value,
               placeholder: 'Имя',
-              onChange: (ev): void => props.editorManager.name.set(ev.currentTarget.value),
+              onChange: (ev): void => props.editorController.name.set(ev.currentTarget.value),
             })}
           />
         </div>
@@ -88,7 +88,7 @@ function HeaderComponent(props: Props): JSX.Element {
   )
 
   function subscribeOnUpdates(update: () => void, uns: (() => void)[]): void {
-    uns.push(props.editorManager.on('name', update))
+    uns.push(props.editorController.on('name', update))
     uns.push(props.nodeList.on('searchQuery', update))
   }
 }

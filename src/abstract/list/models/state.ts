@@ -1,6 +1,5 @@
-import { Emitter } from '~/lib/emitter/emitter'
 import { Id } from '~/utils/core'
-import { Prop } from '~/utils/depricated-emitter'
+import { Emitter, Prop } from '~/utils/emitter'
 
 export type Events = {
   selected: { value: Id[] }

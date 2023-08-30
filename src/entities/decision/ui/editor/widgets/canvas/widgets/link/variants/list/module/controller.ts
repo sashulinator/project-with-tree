@@ -1,26 +1,25 @@
 import { Point, Rule } from '~/entities/point'
-import { EmitterableDictionary } from '~/lib/emitter/dictionary'
 import { Id, assertDefined, invariant } from '~/utils/core'
-import { Prop } from '~/utils/depricated-emitter'
+import { Dictionary, Prop } from '~/utils/emitter'
 
-import { State as LinkState, StateProps } from '../../..'
+import { ControllerProps, Controller as LinkController } from '../../..'
 
 type Events = {
   // Наследуемые события
-  add: { state: LinkState }
-  update: { state: LinkState }
-  remove: { state: LinkState }
+  add: { item: LinkController }
+  update: { item: LinkController }
+  remove: { item: LinkController }
   // Уникальные события
   editingId: { value: Id }
   editingRuleSet: { value: Id }
   // События стейтов
-  index: { value: number; state: LinkState }
-  targetId: { value: Id; state: LinkState }
-  sourceId: { value: Id; state: LinkState }
-  rules: { value: Rule; state: LinkState }
+  index: { value: number; item: LinkController }
+  targetId: { value: Id; item: LinkController }
+  sourceId: { value: Id; item: LinkController }
+  rules: { value: Rule; item: LinkController }
 }
 
-export class State extends EmitterableDictionary<Events, LinkState> {
+export class Controller extends Dictionary<LinkController, Events> {
   editingId: Prop<'editingId', Id | undefined>
 
   editingRuleSet: Prop<'editingRuleSet', Id | undefined>
@@ -30,10 +29,10 @@ export class State extends EmitterableDictionary<Events, LinkState> {
       .flatMap((point) => {
         return point.children?.map(
           (ruleSet) =>
-            new LinkState({ sourceId: point.id, targetId: ruleSet.id, rules: ruleSet.rules, index: ruleSet.index })
+            new LinkController({ sourceId: point.id, targetId: ruleSet.id, rules: ruleSet.rules, index: ruleSet.index })
         )
       })
-      .filter((t) => !!t) as LinkState[]
+      .filter((t) => !!t) as LinkController[]
 
     super(linkStates, (l) => l.id.toString())
 
@@ -42,30 +41,30 @@ export class State extends EmitterableDictionary<Events, LinkState> {
     this.editingRuleSet = new Prop('editingRuleSet', undefined as Id | undefined, this)
   }
 
-  getEditingLinkState = (): LinkState => {
+  getEditingLinkState = (): LinkController => {
     return this.get(this.editingId.value)
   }
 
-  getEditingRuleState = (): LinkState => {
+  getEditingRuleState = (): LinkController => {
     return this.get(this.editingRuleSet.value)
   }
 
-  findEditingLinkState = (): LinkState | undefined => {
+  findEditingLinkState = (): LinkController | undefined => {
     return this.find(this.editingId.value)
   }
 
-  getLinksBySourceId = (id: Id): LinkState[] => {
+  getLinksBySourceId = (id: Id): LinkController[] => {
     return this.values().filter((state) => state.sourceId.value === id)
   }
 
-  getLinksByTargetId = (id: Id): LinkState[] => {
+  getLinksByTargetId = (id: Id): LinkController[] => {
     return this.values().filter((state) => state.targetId.value === id)
   }
 
-  startNewLink(props: StateProps): void {
+  startNewLink(props: ControllerProps): void {
     const editingLinkState = this.findEditingLinkState()
     invariant(!editingLinkState, 'You cannot start new Link while editing')
-    const newLink = LinkState.createDefaultInstance(props)
+    const newLink = new LinkController(props)
     this.add(newLink)
     if (!props.sourceId && !props.targetId) throw new Error('`sourceId` or `targetId` must be passed')
     this.editingId.value = newLink.id
@@ -102,10 +101,7 @@ export class State extends EmitterableDictionary<Events, LinkState> {
     const isSourceEditing = linkState.sourceId.value === nodeId
 
     if (isSourceEditing) {
-      const newState = LinkState.createDefaultInstance({
-        index: 0,
-        targetId: linkState.targetId.value,
-      })
+      const newState = new LinkController({ index: 0, targetId: linkState.targetId.value })
       this.add(newState)
       this.editingId.value = newState.id
     } else {

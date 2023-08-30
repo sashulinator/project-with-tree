@@ -4,15 +4,14 @@ import { Board, PaintingPanel } from '~/ui/canvas'
 import { Id } from '~/utils/core'
 import { useUpdate } from '~/utils/hooks'
 
-import { State } from '../'
-import { LinkList, LinkListState, NodeList, NodeListState } from '../../..'
+import { LinkList, LinkListController, NodeList, NodeListState, State } from '../'
 import { onGestureDrag } from '../_private'
 
 CanvasComponent.displayName = 'decision-Editor-w-Canvas'
 
 export interface Props {
   state: State
-  linkListState: LinkListState
+  linkListState: LinkListController
   nodeListState: NodeListState
   removeNode: (id: Id) => void
 }
@@ -54,8 +53,8 @@ function CanvasComponent(props: Props): JSX.Element {
 
     props.linkListState.on('targetId', (event) => {
       setTimeout(() => {
-        const sNodeState = props.nodeListState.find(event.state.sourceId.value)
-        const tNodeState = props.nodeListState.find(event.state.targetId.value)
+        const sNodeState = props.nodeListState.find(event.item.sourceId.value)
+        const tNodeState = props.nodeListState.find(event.item.targetId.value)
         tNodeState && props.nodeListState.positionColumn(tNodeState?.position.value.x)
         sNodeState && props.nodeListState.positionColumn(sNodeState?.position.value.x)
       })
@@ -63,8 +62,8 @@ function CanvasComponent(props: Props): JSX.Element {
 
     props.linkListState.on('sourceId', (event) => {
       setTimeout(() => {
-        const sNodeState = props.nodeListState.find(event.state.sourceId.value)
-        const tNodeState = props.nodeListState.find(event.state.targetId.value)
+        const sNodeState = props.nodeListState.find(event.item.sourceId.value)
+        const tNodeState = props.nodeListState.find(event.item.targetId.value)
         tNodeState && props.nodeListState.positionColumn(tNodeState?.position.value.x)
         sNodeState && props.nodeListState.positionColumn(sNodeState?.position.value.x)
       })
