@@ -37,3 +37,11 @@ export type {
   JointProps as NodeJointProps,
   VariantPickerProps as NodeVariantPickerProps,
 } from './widgets/node'
+
+export { default as Link, List as LinkList, State as LinkState, ListState as LinkListState } from './widgets/link'
+export type {
+  ListProps as LinkListProps,
+  LinkProps,
+  StateProps as LinkStateProps,
+  Events as LinkEvents,
+} from './widgets/link'

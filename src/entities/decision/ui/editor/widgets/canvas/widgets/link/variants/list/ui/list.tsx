@@ -5,7 +5,7 @@ import { useUpdate } from '~/utils/hooks'
 
 import { State } from '..'
 import Link from '../../..'
-import { NodeListState } from '../../../../..'
+import { NodeListState } from '../../../../../../..'
 
 export interface Props {
   state: State

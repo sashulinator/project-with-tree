@@ -4,8 +4,7 @@ import { Board, PaintingPanel } from '~/ui/canvas'
 import { Id } from '~/utils/core'
 import { useUpdate } from '~/utils/hooks'
 
-import { State } from '../'
-import { LinkList, LinkListState, NodeList, NodeListState } from '../../..'
+import { LinkList, LinkListState, NodeList, NodeListState, State } from '../'
 import { onGestureDrag } from '../_private'
 
 CanvasComponent.displayName = 'decision-Editor-w-Canvas'
