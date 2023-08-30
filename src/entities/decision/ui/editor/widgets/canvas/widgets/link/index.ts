@@ -6,8 +6,8 @@ export * from './lib/get-offset'
 /**
  * state
  */
-export { State } from './state/state'
-export type { StateProps, Events } from './state/state'
+export { Controller } from './models/constroller'
+export type { Props as ControllerProps, Events as ControllerEvents } from './models/constroller'
 
 /**
  * ui

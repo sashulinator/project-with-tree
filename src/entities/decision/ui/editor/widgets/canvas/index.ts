@@ -38,10 +38,15 @@ export type {
   VariantPickerProps as NodeVariantPickerProps,
 } from './widgets/node'
 
-export { default as Link, List as LinkList, State as LinkState, ListState as LinkListState } from './widgets/link'
+export {
+  default as Link,
+  List as LinkList,
+  Controller as LinkController,
+  ListState as LinkListState,
+} from './widgets/link'
 export type {
   ListProps as LinkListProps,
   LinkProps,
-  StateProps as LinkStateProps,
-  Events as LinkEvents,
+  ControllerProps as LinkControllerProps,
+  ControllerEvents as LinkControllerEvents,
 } from './widgets/link'

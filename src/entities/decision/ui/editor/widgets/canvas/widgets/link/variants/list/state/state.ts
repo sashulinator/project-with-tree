@@ -3,7 +3,7 @@ import { EmitterableDictionary } from '~/lib/emitter/dictionary'
 import { Id, assertDefined, invariant } from '~/utils/core'
 import { Prop } from '~/utils/depricated-emitter'
 
-import { State as LinkState, StateProps } from '../../..'
+import { ControllerProps, Controller as LinkState } from '../../..'
 
 type Events = {
   // Наследуемые события
@@ -62,10 +62,10 @@ export class State extends EmitterableDictionary<Events, LinkState> {
     return this.values().filter((state) => state.targetId.value === id)
   }
 
-  startNewLink(props: StateProps): void {
+  startNewLink(props: ControllerProps): void {
     const editingLinkState = this.findEditingLinkState()
     invariant(!editingLinkState, 'You cannot start new Link while editing')
-    const newLink = LinkState.createDefaultInstance(props)
+    const newLink = new LinkState(props)
     this.add(newLink)
     if (!props.sourceId && !props.targetId) throw new Error('`sourceId` or `targetId` must be passed')
     this.editingId.value = newLink.id
@@ -102,10 +102,7 @@ export class State extends EmitterableDictionary<Events, LinkState> {
     const isSourceEditing = linkState.sourceId.value === nodeId
 
     if (isSourceEditing) {
-      const newState = LinkState.createDefaultInstance({
-        index: 0,
-        targetId: linkState.targetId.value,
-      })
+      const newState = new LinkState({ index: 0, targetId: linkState.targetId.value })
       this.add(newState)
       this.editingId.value = newState.id
     } else {

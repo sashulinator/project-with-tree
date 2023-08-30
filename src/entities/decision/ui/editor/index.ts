@@ -52,7 +52,7 @@ export {
   getColumnX,
   Link,
   LinkList,
-  LinkState,
+  LinkController,
   LinkListState,
 } from './widgets/canvas'
 export type {
@@ -65,6 +65,6 @@ export type {
   NodeVariantPickerProps,
   LinkListProps,
   LinkProps,
-  LinkStateProps,
-  LinkEvents,
+  LinkControllerProps,
+  LinkControllerEvents,
 } from './widgets/canvas'

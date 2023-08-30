@@ -9,7 +9,7 @@ import { Id, c, generateId } from '~/utils/core'
 import { useUpdate } from '~/utils/hooks'
 
 import { Joint, State } from '../../..'
-import { LinkListState, LinkState } from '../../../../../../..'
+import { LinkController, LinkListState } from '../../../../../../..'
 
 SourceLinks.displayName = 'decision-Editor-w-Canvas-w-Node-w-SourceLinks'
 
@@ -88,13 +88,13 @@ export default function SourceLinks(props: Props): JSX.Element {
 
 export interface RuleSetProps {
   nodeId: Id
-  linkState: LinkState
+  linkState: LinkController
   index: number
   isLinked: boolean
   isEditingThisNode: boolean
   linkListState: LinkListState
   isEditingHasSource: boolean
-  editingLinkState: LinkState | undefined
+  editingLinkState: LinkController | undefined
   onJointClick: (linkId: Id) => void
 }
 
