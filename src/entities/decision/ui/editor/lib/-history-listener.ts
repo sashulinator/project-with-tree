@@ -1,4 +1,5 @@
 import { ActionHistory } from '~/utils/action-history'
+import { has } from '~/utils/core'
 
 import { Controller, LinkListState, NodeListState } from '..'
 
@@ -10,13 +11,20 @@ type Props = {
 }
 
 export function historyListener(props: Props): void {
-  // const { history, nodeListState } = props
-  // nodeListState.on('selection', (event) => {
-  //   // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-  //   if ((event as Any).isHistory) return
-  //   const action = (d: 'previous' | 'value') => (): void => nodeListState.selection.set(event[d], { isHistory: true })
-  //   history.add(action('value'), action('previous'))
-  // })
+  const { history, nodeListState } = props
+
+  nodeListState.on('selection', (event) => {
+    if (isHistory(event)) return
+
+    history.add({
+      storeLocally: true,
+      redo: { value: event.value },
+      undo: { value: event.previous },
+      done: true,
+      username: 'username',
+      type: 'selection',
+    })
+  })
   // nodeListState.on('position', (event) => {
   //   // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
   //   if ((event as Any).isHistory || !event.last || event.isPositionColumn) return
@@ -29,4 +37,8 @@ export function historyListener(props: Props): void {
   //   }
   //   history.add(redo, undo)
   // })
+}
+
+function isHistory(event: unknown): boolean {
+  return has(event, 'isHistory') && Boolean(event.isHistory)
 }

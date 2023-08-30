@@ -40,7 +40,9 @@ export class Prop<TEventName extends string, TValue, TEmitter extends Emitter<An
 
     if (eventName === '*') throw Error('`eventName` cannot be "*"')
     // Делаем `as ''` так как мы уверены что eventName !== '*'
-    this.emitter.on(this.eventName as '', (event: PropEvent<TValue>) => (this._value = event.value))
+    this.emitter.on(this.eventName as '', (event: PropEvent<TValue>) => {
+      this._value = event.value
+    })
   }
 
   get value(): TValue {
