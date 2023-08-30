@@ -10,11 +10,11 @@ import { useEventListener } from '~/utils/hooks'
 import {
   Canvas,
   CanvasState,
+  Controller,
   Decision,
   Header,
   LeftPanel,
   LinkListState,
-  Manager,
   NodeListState,
   RightPanel,
   historyListener,
@@ -43,7 +43,7 @@ export interface Props {
   className?: string
   ruleList: RulesRes[]
   onSubmit: (states: {
-    editorManager: Manager
+    editorManager: Controller
     canvasState: CanvasState
     nodeListState: NodeListState
     linkListState: LinkListState
@@ -54,7 +54,7 @@ export default function Editor(props: Props): JSX.Element {
   // const rules = props.decision.rules || []
   const history = useMemo(() => new ActionHistory(), [])
 
-  const manager = useMemo(() => new Manager(props.decision), [])
+  const controller = useMemo(() => new Controller(props.decision), [])
   const canvasState = useMemo(() => new CanvasState(), [])
   const nodeListState = useMemo(() => new NodeListState(props.decision.decisionTree), [props.decision.decisionTree])
   const linkListState = useMemo(() => new LinkListState(props.decision.decisionTree), [])
@@ -82,7 +82,7 @@ export default function Editor(props: Props): JSX.Element {
   })
   useEventListener('click', onClick)
 
-  useEffect(subscribeHistory, [history, manager, nodeListState, linkListState])
+  useEffect(subscribeHistory, [history, controller, nodeListState, linkListState])
 
   return (
     <div className={c(props.className, Editor.displayName)}>
@@ -90,7 +90,7 @@ export default function Editor(props: Props): JSX.Element {
         submit={submit}
         nodeList={nodeListState}
         addNode={addNode}
-        editorManager={manager}
+        editorController={controller}
         className='panel --header'
       />
       <LeftPanel
@@ -113,11 +113,11 @@ export default function Editor(props: Props): JSX.Element {
   // Private
 
   function submit(): void {
-    props.onSubmit({ editorManager: manager, canvasState, nodeListState, linkListState })
+    props.onSubmit({ editorManager: controller, canvasState, nodeListState, linkListState })
   }
 
   function subscribeHistory(): void {
-    historyListener({ history, state: manager, nodeListState, linkListState })
+    historyListener({ history, controller: controller, nodeListState, linkListState })
   }
 
   function onClick(e: MouseEvent): void {

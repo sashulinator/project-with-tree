@@ -11,8 +11,8 @@ export type { Decision } from './types/decision'
 /**
  * modules
  */
-export { Manager } from './modules/manager'
-export type { ManagerEvents } from './modules/manager'
+export { Controller } from './modules/controller'
+export type { Events as ControllerEvents } from './modules/controller'
 
 /**
  * theme
