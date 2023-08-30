@@ -36,6 +36,7 @@ export class State extends Emitter<Events> {
         if (event.type === 'wheel') return true
         return event.target === this.ref.value
       },
+      scaleExtent: [0.1, 1],
     })
   }
 }

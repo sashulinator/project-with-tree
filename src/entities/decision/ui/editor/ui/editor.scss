@@ -51,6 +51,12 @@
     height: 100%;
   }
 
+  > .panel.--toolbar {
+    bottom: 1rem;
+    right: 50%;
+    transform: translateX(50%);
+  }
+
   > .panel.--right.--fullscreen {
     width: calc(100% - var(--decision-Editor-panel__left_width) * 1px);
     max-width: none;

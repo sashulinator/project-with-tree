@@ -1,5 +1,6 @@
 import Flex from '~/abstract/flex/ui/flex'
 import { Config, Props } from '~/storybook/types'
+import { PrimaryButton } from '~/ui/button'
 import { H1 } from '~/ui/heading'
 import Tooltip, { TooltipProps } from '~/ui/tooltip'
 
@@ -25,7 +26,7 @@ export default {
     return (
       <Flex dir='column' gap='xl' width='100%'>
         <Tooltip contents={'World'} {...state}>
-          <button>Hello</button>
+          <PrimaryButton>Hello</PrimaryButton>
         </Tooltip>
       </Flex>
     )
