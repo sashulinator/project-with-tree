@@ -1,6 +1,9 @@
 import './index.css'
 
+import { useMemo } from 'react'
+
 import { useCreateDecision } from '~/api/decision/create'
+import { useFetchRulesList } from '~/api/rules/fetch-rules'
 import { Editor, EditorDecision } from '~/entities/decision'
 import { notify } from '~/shared/notify'
 
@@ -21,6 +24,12 @@ export default function Page(): JSX.Element {
     onSuccess: () => notify({ data: 'Сохранено', type: 'success' }),
     onError: () => notify({ data: 'Ошибка', type: 'error' }),
   })
+
+  const ruleListFetcher = useFetchRulesList({ page: 1, limit: 1000 })
+  const filteredRuleList = useMemo(
+    () => ruleListFetcher.data?.items.filter((item) => item.editor) || [],
+    [ruleListFetcher.data]
+  )
 
   return (
     <main className='DecisionCreatePage'>
@@ -45,6 +54,7 @@ export default function Page(): JSX.Element {
           mutator.mutate({ editorDecision: decision })
         }}
         decision={decision}
+        ruleList={filteredRuleList}
       />
     </main>
   )

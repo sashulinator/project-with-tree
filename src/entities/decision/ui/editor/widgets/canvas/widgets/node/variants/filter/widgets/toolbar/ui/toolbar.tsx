@@ -19,6 +19,11 @@ export interface Props {
   remove: () => void
 }
 
+const RU = {
+  successively: 'Последовательно',
+  parallel: 'Параллельно',
+}
+
 export default function Toolbar(props: Props): JSX.Element {
   useUpdate(subscribeOnUpdates)
 
@@ -42,7 +47,7 @@ export default function Toolbar(props: Props): JSX.Element {
       </Flex>
       <Flex>
         <GhostButton onClick={toogleComputation} style={{ fontSize: '0.6em' }}>
-          {computation}
+          {RU[computation || 'parallel']}
         </GhostButton>
         <GhostButton round={true} onClick={props.remove}>
           <Trash />
