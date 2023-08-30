@@ -41,11 +41,18 @@ export class State extends ItemState<Events> {
   }
 
   deserialize(): Point {
-    return {
+    const res = {
       ...this.point,
       name: this.title.value,
+
       xy: [this.position.value.x, this.position.value.y],
       // computation: this.computation.value || 'parallel',
     }
+
+    if (this.computation.value) {
+      res['computation'] = this.computation.value
+    }
+
+    return res as Point
   }
 }
