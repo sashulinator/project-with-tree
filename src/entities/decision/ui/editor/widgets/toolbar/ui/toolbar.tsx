@@ -9,6 +9,8 @@ import Line from '~/ui/line'
 import Tooltip from '~/ui/tooltip'
 import { ActionHistory } from '~/utils/action-history'
 import { c } from '~/utils/core'
+import { stopPropagation } from '~/utils/dom-event'
+import { fns } from '~/utils/function'
 import { useUpdate } from '~/utils/hooks'
 import { setRefs } from '~/utils/react'
 
@@ -46,7 +48,7 @@ export default function Toolbar(props: Props): JSX.Element {
         }
         placement='tc'
       >
-        <GhostButton onClick={props.previousHistory} square={true} height='s'>
+        <GhostButton onClick={fns(stopPropagation, props.previousHistory)} square={true} height='s'>
           <ArrowLeft />
         </GhostButton>
       </Tooltip>
@@ -63,7 +65,7 @@ export default function Toolbar(props: Props): JSX.Element {
         }
         placement='tc'
       >
-        <GhostButton onClick={props.nextHistory} square={true} height='s'>
+        <GhostButton onClick={fns(stopPropagation, props.nextHistory)} square={true} height='s'>
           <ArrowRight />
         </GhostButton>
       </Tooltip>

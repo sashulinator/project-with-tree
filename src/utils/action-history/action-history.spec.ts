@@ -1,78 +1,69 @@
-import { ActionHistory } from './action-history'
+import { ActionHistory, HistoryItem } from './action-history'
 
-describe(History.name, () => {
+describe(ActionHistory.name, () => {
   it('basic', () => {
-    const h = new ActionHistory()
+    const next = {
+      done: false,
+      storeLocally: true,
+      type: 'next',
+      username: 'next',
+      redo: { test: 'next' },
+      undo: { test: 'next' },
+    }
+    const current = {
+      done: true,
+      storeLocally: true,
+      type: 'current',
+      username: 'current',
+      redo: { test: 'current' },
+      undo: { test: 'current' },
+    }
+    const previous = {
+      done: true,
+      storeLocally: true,
+      type: 'previous',
+      username: 'previous',
+      redo: { test: 'previous' },
+      undo: { test: 'previous' },
+    }
+    const items: HistoryItem[] = [next, current, previous]
+    const h = new ActionHistory(items)
 
-    let str = 'a'
-    const addB = () => (str = `${str}B`)
-    const removeB = () => (str = str.replace('B', ''))
-    const addC = () => (str = `${str}C`)
-    const removeC = () => (str = str.replace('C', ''))
-    const addD = () => (str = `${str}D`)
-    const removeD = () => (str = str.replace('D', ''))
+    expect(h.findCurrent()).toEqual(current)
+    expect(h.findNext()).toEqual(next)
+    expect(h.findPrevious()).toEqual(previous)
+  })
 
-    h.add(addB, removeB)
-    h.redo()
+  it('all false', () => {
+    const item1 = {
+      done: false,
+      storeLocally: true,
+      type: 'item1',
+      username: 'item1',
+      redo: { test: 'item1' },
+      undo: { test: 'item1' },
+    }
+    const item2 = {
+      done: false,
+      storeLocally: true,
+      type: 'item2',
+      username: 'item2',
+      redo: { test: 'item2' },
+      undo: { test: 'item2' },
+    }
+    const item3 = {
+      done: false,
+      storeLocally: true,
+      type: 'item3',
+      username: 'item3',
+      redo: { test: 'item3' },
+      undo: { test: 'item3' },
+    }
+    const items: HistoryItem[] = [item1, item2, item3]
+    const h = new ActionHistory(items)
 
-    expect(str).toBe('aB')
-
-    h.add(addC, removeC)
-    h.redo()
-
-    expect(str).toBe('aBC')
-
-    h.add(addD, removeD)
-    h.redo()
-
-    expect(str).toBe('aBCD')
-
-    h.previous()
-
-    expect(str).toBe('aBC')
-
-    h.previous()
-
-    expect(str).toBe('aB')
-
-    h.next()
-    h.next()
-
-    expect(str).toBe('aBCD')
-
-    h.previous()
-    h.previous()
-    h.previous()
-    // that prevs does not exists
-    h.previous()
-    h.previous()
-    h.previous()
-
-    expect(str).toBe('a')
-
-    h.next()
-    expect(str).toBe('aB')
-
-    h.next()
-    expect(str).toBe('aBC')
-
-    h.next()
-    expect(str).toBe('aBCD')
-
-    h.previous()
-    h.previous()
-    h.previous()
-    // that prevs does not exists
-    h.previous()
-    h.previous()
-    h.previous()
-
-    expect(str).toBe('a')
-
-    h.next() // aB
-    h.add(addD, removeD)
-    h.redo() // aBD
-
-    expect(str).toBe('aBD')
+    expect(h.findCurrent()).toEqual(undefined)
+    expect(h.findNext()).toEqual(item3)
+    expect(h.findPrevious()).toEqual(undefined)
   })
 })

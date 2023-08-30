@@ -14,7 +14,7 @@ export function addNode(props: Props): () => void {
     const canvasSize = getElementSize(props.canvasState.ref.value as Element)
 
     const x = (-props.canvasState.zoom.value.x + canvasSize?.width / 2) / props.canvasState.zoom.value.k - 150
-    const y = (-props.canvasState.zoom.value.y + canvasSize?.height / 2) / props.canvasState.zoom.value.k - 100
+    const y = (-props.canvasState.zoom.value.y + canvasSize?.height) / props.canvasState.zoom.value.k
 
     const newPoint: Point = {
       level: 'decisionPoint',
@@ -30,7 +30,12 @@ export function addNode(props: Props): () => void {
     props.nodeListState.add(nodeState)
 
     setTimeout(() => {
-      nodeState.position.transitionMove({ x: getColumnX(nodeState.position.value.x), y: nodeState.position.value.y })
+      nodeState.position.transitionMove(
+        { x: getColumnX(nodeState.position.value.x), y: nodeState.position.value.y },
+        {},
+        () => {},
+        { duration: 0 }
+      )
     }, 10)
   }
 }
