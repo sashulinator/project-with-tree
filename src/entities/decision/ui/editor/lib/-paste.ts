@@ -1,9 +1,9 @@
 import { getElementSize } from '~/utils/dom'
 
-import { CanvasState, NodeListState, getColumnX } from '..'
+import { CanvasController, NodeListState, getColumnX } from '..'
 
 interface Props {
-  canvasState: CanvasState
+  canvasController: CanvasController
   nodeListState: NodeListState
   pasteFromClipboard: () => void
 }
@@ -13,13 +13,16 @@ export function paste(props: Props): () => void {
     if (props.nodeListState.cutted.value.length > 0) {
       props.nodeListState.cutted.value.forEach((id, i) => {
         const nodeState = props.nodeListState.get(id)
-        const canvasSize = getElementSize(props.canvasState.ref.value as Element)
+        const canvasSize = getElementSize(props.canvasController.ref.value as Element)
 
         nodeState.position.transitionMove({
           x: getColumnX(
-            (-props.canvasState.zoom.value.x + canvasSize?.width / 2) / props.canvasState.zoom.value.k - 150
+            (-props.canvasController.zoom.value.x + canvasSize?.width / 2) / props.canvasController.zoom.value.k - 150
           ),
-          y: (-props.canvasState.zoom.value.y + canvasSize?.height / 2) / props.canvasState.zoom.value.k - 100 + i,
+          y:
+            (-props.canvasController.zoom.value.y + canvasSize?.height / 2) / props.canvasController.zoom.value.k -
+            100 +
+            i,
         })
       })
     } else {

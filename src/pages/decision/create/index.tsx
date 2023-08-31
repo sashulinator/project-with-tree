@@ -47,7 +47,7 @@ export default function Page(): JSX.Element {
           })
 
           const decision: EditorDecision = {
-            name: states.editorManager.name.value,
+            name: states.editorController.name.value,
             decisionTree: items,
           }
 

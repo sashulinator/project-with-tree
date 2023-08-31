@@ -1,16 +1,16 @@
 import { GestureDragEvent } from '~/ui/canvas'
 
-import { State } from '..'
+import { Controller } from '..'
 import { NodeListState, NodeState, getColumnX, getNodeMovement } from '../../..'
 
 /**
  * Функция обработки драга ноды
  * `Gesture` в названии отсылает к библиотечке @use-gesture/react
- * @param {State} state
+ * @param {Controller} state
  * @param {NodeState} nodeState
  * @param {GestureDragEvent} event событие библиотечки @use-gesture/react
  */
-export function onGestureDrag(state: State, nodeListState: NodeListState) {
+export function onGestureDrag(state: Controller, nodeListState: NodeListState) {
   return (nodeState: NodeState) =>
     (event: GestureDragEvent): void => {
       event.event.stopPropagation()

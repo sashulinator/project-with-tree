@@ -3,16 +3,16 @@ import { TransitionMoveEvent } from '~/lib/emitter'
 import { generateId } from '~/utils/core'
 import { Events } from '~/utils/emitter'
 
-import { CanvasState, NodeListState, NodeState, getColumnX } from '..'
+import { CanvasController, NodeListState, NodeState, getColumnX } from '..'
 
 interface Props {
-  canvasState: CanvasState
+  canvasController: CanvasController
   nodeListState: NodeListState
 }
 
 export function addNode(props: Props): () => void {
   return (point?: Partial<Point>, event?: TransitionMoveEvent & Events): void => {
-    const position = props.canvasState.getPointPosition('bc')
+    const position = props.canvasController.getPointPosition('bc')
 
     const newPoint: Point = {
       level: 'decisionPoint',

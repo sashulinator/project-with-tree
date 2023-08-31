@@ -12,7 +12,7 @@ export type Events = {
   ref: { element: SVGSVGElement }
 }
 
-export class State extends Emitter<Events> {
+export class Controller extends Emitter<Events> {
   ref: Prop<'ref', null | SVGSVGElement>
 
   zoom: ZoomProp<'zoom'>
@@ -47,7 +47,7 @@ export class State extends Emitter<Events> {
   }
 
   /**
-   *
+   * Высчитывает точку на конве
    * @param {Point} point тип как в библиотечке dom-align-ts
    * @returns {Position}
    */

@@ -6,7 +6,8 @@ export * from './lib/local-storage-zoom'
 /**
  * state
  */
-export { State } from './state/state'
+export { Controller } from './models/controller'
+export type { Events as ControllerEvents } from './models/controller'
 
 /**
  * ui

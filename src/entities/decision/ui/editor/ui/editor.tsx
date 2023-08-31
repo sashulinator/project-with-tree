@@ -8,7 +8,7 @@ import { useEventListener } from '~/utils/hooks'
 
 import {
   Canvas,
-  CanvasState,
+  CanvasController,
   Controller,
   Decision,
   Header,
@@ -41,8 +41,8 @@ export interface Props {
   className?: string
   ruleList: RulesRes[]
   onSubmit: (states: {
-    editorManager: Controller
-    canvasState: CanvasState
+    editorController: Controller
+    canvasController: CanvasController
     nodeListState: NodeListState
     linkListState: LinkListState
   }) => void
@@ -50,18 +50,18 @@ export interface Props {
 
 export default function Editor(props: Props): JSX.Element {
   const controller = useMemo(() => new Controller(props.decision), [props.decision.decisionTree])
-  const canvasState = useMemo(() => new CanvasState(), [props.decision.decisionTree])
+  const canvasController = useMemo(() => new CanvasController(), [props.decision.decisionTree])
   const nodeListState = useMemo(() => new NodeListState(props.decision.decisionTree), [props.decision.decisionTree])
   const linkListState = useMemo(() => new LinkListState(props.decision.decisionTree), [props.decision.decisionTree])
 
   const removeNode = removeNodeBind({ linkListState, nodeListState })
-  const addNode = addNodeBind({ canvasState, nodeListState })
+  const addNode = addNodeBind({ canvasController, nodeListState })
   const removeSelectedNodes = removeSelectedNodesBind({ nodeListState, removeNode })
-  const centerNode = centerNodeBind({ nodeListState, canvasState })
+  const centerNode = centerNodeBind({ nodeListState, canvasController })
   const copySelectedNodes = copySelectedNodesBind({ nodeListState })
   const cutSelectedNodes = cutSelectedNodesBind({ nodeListState })
   const pasteFromClipboard = pasteFromClipboardBind({ nodeListState, addNode })
-  const paste = pasteBind({ nodeListState, canvasState, pasteFromClipboard })
+  const paste = pasteBind({ nodeListState, canvasController, pasteFromClipboard })
   const resetAll = resetAllBind({ linkListState, nodeListState })
 
   const history = useMemo(
@@ -112,7 +112,7 @@ export default function Editor(props: Props): JSX.Element {
       <Canvas
         selectNodes={selectNodes}
         removeNode={removeNode}
-        state={canvasState}
+        controller={canvasController}
         nodeListState={nodeListState}
         linkListState={linkListState}
       />
@@ -128,7 +128,7 @@ export default function Editor(props: Props): JSX.Element {
   }
 
   function submit(): void {
-    props.onSubmit({ editorManager: controller, canvasState, nodeListState, linkListState })
+    props.onSubmit({ editorController: controller, canvasController, nodeListState, linkListState })
   }
 
   function onClick(e: MouseEvent): void {

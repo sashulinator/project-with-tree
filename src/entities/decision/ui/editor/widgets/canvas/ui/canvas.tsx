@@ -5,13 +5,13 @@ import { Id } from '~/utils/core'
 import { useUpdate } from '~/utils/hooks'
 import { setRefs } from '~/utils/react'
 
-import { LinkList, LinkListController, NodeList, NodeListState, State } from '../'
+import { Controller, LinkList, LinkListController, NodeList, NodeListState } from '../'
 import { onGestureDrag } from '../_private'
 
 CanvasComponent.displayName = 'decision-Editor-w-Canvas'
 
 export interface Props {
-  state: State
+  controller: Controller
   linkListState: LinkListController
   nodeListState: NodeListState
   selectNodes: (ids: Id[]) => void
@@ -19,23 +19,23 @@ export interface Props {
 }
 
 function CanvasComponent(props: Props): JSX.Element {
-  useUpdate(updateOnEvents, [props.state])
+  useUpdate(updateOnEvents, [props.controller])
 
   return (
-    <Board ref={setRefs(props.state.ref.set, props.state.zoom.setRef)}>
-      <PaintingPanel translate={props.state.zoom.value} scale={props.state.zoom.value.k}>
+    <Board ref={setRefs(props.controller.ref.set, props.controller.zoom.setRef)}>
+      <PaintingPanel translate={props.controller.zoom.value} scale={props.controller.zoom.value.k}>
         <LinkList
           state={props.linkListState}
           nodeListState={props.nodeListState}
-          canvasTranslate={props.state.zoom.value}
-          scale={props.state.zoom.value.k}
+          canvasTranslate={props.controller.zoom.value}
+          scale={props.controller.zoom.value.k}
         />
         <NodeList
           state={props.nodeListState}
           linkListState={props.linkListState}
           remove={props.removeNode}
           selectNodes={props.selectNodes}
-          onGestureDrug={onGestureDrag(props.state, props.nodeListState)}
+          onGestureDrug={onGestureDrag(props.controller, props.nodeListState)}
         />
       </PaintingPanel>
     </Board>
@@ -44,7 +44,7 @@ function CanvasComponent(props: Props): JSX.Element {
   // Private
 
   function updateOnEvents(update: () => void): void {
-    props.state.on('zoom', update)
+    props.controller.on('zoom', update)
 
     props.nodeListState.on('position', (event) => {
       if (!event.last || event.isPositionColumn) return

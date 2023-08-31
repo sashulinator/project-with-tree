@@ -37,7 +37,7 @@ export type { RightPanelProps } from './widgets/right-panel'
 
 export {
   default as Canvas,
-  State as CanvasState,
+  Controller as CanvasController,
   Node,
   NodeList,
   NodeState,
