@@ -26,7 +26,7 @@ export default function Filter(props: FactoryProps): JSX.Element {
       toolbar={<Toolbar listState={props.nodeListState} state={props.state} />}
       targetLinks={
         <TargetLinks
-          linkStates={props.linkListState}
+          linkStates={props.linkListController}
           state={props.state}
           onNewJointClick={onNewJointClick('targetId')}
           onJointClick={onJointClick}
@@ -42,24 +42,24 @@ export default function Filter(props: FactoryProps): JSX.Element {
   }
 
   function onJointClick(linkId: Id): void {
-    if (props.linkListState.editingId.value) {
-      props.linkListState.finishEditing(linkId)
+    if (props.linkListController.editingId.value) {
+      props.linkListController.finishEditing(linkId)
     } else {
-      const linkState = props.linkListState.get(linkId)
+      const linkState = props.linkListController.get(linkId)
       if (!linkState.targetId.value) {
-        props.linkListState.editingId.set(linkState.id)
+        props.linkListController.editingId.set(linkState.id)
       } else {
-        props.linkListState.startEditing(linkId, props.state.id)
+        props.linkListController.startEditing(linkId, props.state.id)
       }
     }
   }
 
   function onNewJointClick(startLinkType: 'targetId' | 'sourceId'): (newLinkId: Id) => void {
     return (newLinkId: Id) => {
-      if (props.linkListState.editingId.value) {
-        props.linkListState.finishNewLink(props.state.id)
+      if (props.linkListController.editingId.value) {
+        props.linkListController.finishNewLink(props.state.id)
       } else {
-        props.linkListState.startNewLink({ [startLinkType]: newLinkId, index: 0 })
+        props.linkListController.startNewLink({ [startLinkType]: newLinkId, index: 0 })
       }
     }
   }

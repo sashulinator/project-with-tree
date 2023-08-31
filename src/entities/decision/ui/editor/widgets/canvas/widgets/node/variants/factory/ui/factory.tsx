@@ -4,13 +4,13 @@ import { GestureDragEvent } from '~/ui/canvas'
 import { Id } from '~/utils/core'
 
 import { ArbitrationNode, ControlGroupNode, EnterNode, FilterNode, State as NodeState, OfferNode } from '../../..'
-import { LinkListState, NodeListState } from '../../../../../../..'
+import { LinkListController, NodeListState } from '../../../../../../..'
 
 FactoryComponent.displayName = 'decision-Editor-w-Node-v-Factory'
 
 export interface FactoryProps {
   state: NodeState
-  linkListState: LinkListState
+  linkListController: LinkListController
   nodeListState: NodeListState
   selectNodes: (ids: Id[]) => void
   onGestureDrug: (event: GestureDragEvent) => void

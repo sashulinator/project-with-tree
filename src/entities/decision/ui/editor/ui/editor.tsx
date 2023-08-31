@@ -13,7 +13,7 @@ import {
   Decision,
   Header,
   LeftPanel,
-  LinkListState,
+  LinkListController,
   NodeListState,
   RightPanel,
   Toolbar,
@@ -44,7 +44,7 @@ export interface Props {
     editorController: Controller
     canvasController: CanvasController
     nodeListState: NodeListState
-    linkListState: LinkListState
+    linkListController: LinkListController
   }) => void
 }
 
@@ -52,9 +52,12 @@ export default function Editor(props: Props): JSX.Element {
   const controller = useMemo(() => new Controller(props.decision), [props.decision.decisionTree])
   const canvasController = useMemo(() => new CanvasController(), [props.decision.decisionTree])
   const nodeListState = useMemo(() => new NodeListState(props.decision.decisionTree), [props.decision.decisionTree])
-  const linkListState = useMemo(() => new LinkListState(props.decision.decisionTree), [props.decision.decisionTree])
+  const linkListController = useMemo(
+    () => new LinkListController(props.decision.decisionTree),
+    [props.decision.decisionTree]
+  )
 
-  const removeNode = removeNodeBind({ linkListState, nodeListState })
+  const removeNode = removeNodeBind({ linkListController, nodeListState })
   const addNode = addNodeBind({ canvasController, nodeListState })
   const removeSelectedNodes = removeSelectedNodesBind({ nodeListState, removeNode })
   const centerNode = centerNodeBind({ nodeListState, canvasController })
@@ -62,7 +65,7 @@ export default function Editor(props: Props): JSX.Element {
   const cutSelectedNodes = cutSelectedNodesBind({ nodeListState })
   const pasteFromClipboard = pasteFromClipboardBind({ nodeListState, addNode })
   const paste = pasteBind({ nodeListState, canvasController, pasteFromClipboard })
-  const resetAll = resetAllBind({ linkListState, nodeListState })
+  const resetAll = resetAllBind({ linkListController, nodeListState })
 
   const history = useMemo(
     () =>
@@ -105,7 +108,7 @@ export default function Editor(props: Props): JSX.Element {
         selectNodes={selectNodes}
         className='panel --right'
         ruleList={props.ruleList}
-        linkListState={linkListState}
+        linkListController={linkListController}
         resizableProps={{ className: resizeBarClassName, name: `${Editor.displayName}-panel__right`, defaultSize: 300 }}
         nodeListState={nodeListState}
       />
@@ -114,7 +117,7 @@ export default function Editor(props: Props): JSX.Element {
         removeNode={removeNode}
         controller={canvasController}
         nodeListState={nodeListState}
-        linkListState={linkListState}
+        linkListController={linkListController}
       />
     </div>
   )
@@ -128,13 +131,13 @@ export default function Editor(props: Props): JSX.Element {
   }
 
   function submit(): void {
-    props.onSubmit({ editorController: controller, canvasController, nodeListState, linkListState })
+    props.onSubmit({ editorController: controller, canvasController, nodeListState, linkListController })
   }
 
   function onClick(e: MouseEvent): void {
     const el = e.target as HTMLElement
     if (el.tagName === 'path' || el.tagName === 'svg') {
-      linkListState.editingId.set(undefined)
+      linkListController.editingId.set(undefined)
       selectNodes([])
     }
   }

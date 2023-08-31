@@ -8,11 +8,11 @@ import { useUpdate } from '~/utils/hooks'
 
 import { State } from '..'
 import { Factory, State as NodeState } from '../../..'
-import { LinkListState } from '../../../../../../..'
+import { LinkListController } from '../../../../../../..'
 
 export interface ListProps {
   state: State
-  linkListState: LinkListState
+  linkListController: LinkListController
   remove: (id: Id) => void
   selectNodes: (ids: Id[]) => void
   onGestureDrug: (state: NodeState) => (event: GestureDragEvent) => void
@@ -30,7 +30,7 @@ export function ListComponent(props: ListProps): JSX.Element {
             state={nodeState}
             selectNodes={props.selectNodes}
             nodeListState={props.state}
-            linkListState={props.linkListState}
+            linkListController={props.linkListController}
             onGestureDrug={props.onGestureDrug(nodeState)}
           />
         )

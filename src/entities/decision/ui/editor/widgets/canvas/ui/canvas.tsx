@@ -12,7 +12,7 @@ CanvasComponent.displayName = 'decision-Editor-w-Canvas'
 
 export interface Props {
   controller: Controller
-  linkListState: LinkListController
+  linkListController: LinkListController
   nodeListState: NodeListState
   selectNodes: (ids: Id[]) => void
   removeNode: (id: Id) => void
@@ -25,14 +25,14 @@ function CanvasComponent(props: Props): JSX.Element {
     <Board ref={setRefs(props.controller.ref.set, props.controller.zoom.setRef)}>
       <PaintingPanel translate={props.controller.zoom.value} scale={props.controller.zoom.value.k}>
         <LinkList
-          state={props.linkListState}
+          state={props.linkListController}
           nodeListState={props.nodeListState}
           canvasTranslate={props.controller.zoom.value}
           scale={props.controller.zoom.value.k}
         />
         <NodeList
           state={props.nodeListState}
-          linkListState={props.linkListState}
+          linkListController={props.linkListController}
           remove={props.removeNode}
           selectNodes={props.selectNodes}
           onGestureDrug={onGestureDrag(props.controller, props.nodeListState)}
@@ -53,7 +53,7 @@ function CanvasComponent(props: Props): JSX.Element {
       props.nodeListState.positionColumn(event.previousStart.x)
     })
 
-    props.linkListState.on('targetId', (event) => {
+    props.linkListController.on('targetId', (event) => {
       setTimeout(() => {
         const sNodeState = props.nodeListState.find(event.item.sourceId.value)
         const tNodeState = props.nodeListState.find(event.item.targetId.value)
@@ -62,7 +62,7 @@ function CanvasComponent(props: Props): JSX.Element {
       })
     })
 
-    props.linkListState.on('sourceId', (event) => {
+    props.linkListController.on('sourceId', (event) => {
       setTimeout(() => {
         const sNodeState = props.nodeListState.find(event.item.sourceId.value)
         const tNodeState = props.nodeListState.find(event.item.targetId.value)

@@ -36,7 +36,7 @@ export default function Page(): JSX.Element {
       <Editor
         onSubmit={(states): void => {
           const items = states.nodeListState.values().map((nodeState) => {
-            const links = states.linkListState.getLinksBySourceId(nodeState.point.id)
+            const links = states.linkListController.getLinksBySourceId(nodeState.point.id)
             const point = nodeState.deserialize()
             point['children'] = links.map((l, i) => {
               const ruleSet = l.deserialize()

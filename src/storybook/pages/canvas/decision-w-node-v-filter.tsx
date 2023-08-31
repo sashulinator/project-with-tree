@@ -2,7 +2,7 @@ import { useMemo } from 'react'
 import { DndProvider } from 'react-dnd'
 import { HTML5Backend } from 'react-dnd-html5-backend'
 
-import { LinkListState, NodeListState } from '~/entities/decision/ui/editor'
+import { LinkListController, NodeListState } from '~/entities/decision/ui/editor'
 import { FilterNode } from '~/entities/decision/ui/editor/widgets/canvas/widgets/node'
 import { Point } from '~/entities/point'
 import { Config, Props } from '~/storybook/types'
@@ -43,7 +43,7 @@ export default {
     const states = useMemo(() => new NodeListState([point1, point2]), [])
     const linkStates = useMemo(
       () =>
-        new LinkListState([
+        new LinkListController([
           {
             id: 'id1',
             name: 'string',
@@ -82,7 +82,7 @@ export default {
                 selectNodes={emptyFn}
                 key={state.id}
                 state={state}
-                linkListState={linkStates}
+                linkListController={linkStates}
                 onGestureDrug={(event): void => {
                   const x = state.position.start.x + event.movement[0]
                   const y = state.position.start.y + event.movement[1]

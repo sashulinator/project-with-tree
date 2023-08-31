@@ -51,7 +51,7 @@ export {
   Link,
   LinkList,
   LinkController,
-  LinkListController as LinkListState,
+  LinkListController,
 } from './widgets/canvas'
 export type {
   CanvasProps,
