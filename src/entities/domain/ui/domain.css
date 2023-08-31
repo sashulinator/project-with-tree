@@ -1,0 +1,11 @@
+.e-domain-ui-Domain {
+  padding: 10px;
+  border: 1px solid slategrey;
+}
+
+.e-domain-ui-Domain.--header {
+  padding: 10px;
+  border: 1px solid slategrey;
+  display: flex;
+  justify-content: space-between;
+}
