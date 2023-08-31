@@ -32,7 +32,7 @@ export type AddNodeEvent = {
   redo: { point: Point }
 }
 export type RemoveNodeEvent = {
-  type: 'removeNode'
+  type: 'removeNodes'
   historical: true
   redo: { id: Id }
   undo: { point: Point }
@@ -71,7 +71,7 @@ export class HistoryController extends ActionHistory {
       if (event.type === 'addNode') {
         item.done ? removeNode(this, event.undo.id) : addNode(this, event.redo.point, { duration: 0 })
       }
-      if (event.type === 'removeNode') {
+      if (event.type === 'removeNodes') {
         item.done ? addNode(this, event.undo.point, { duration: 0 }) : removeNode(this, event.redo.id)
       }
       if (event.type === 'removeLink') {
@@ -145,7 +145,7 @@ export class HistoryController extends ActionHistory {
       const point = this.nodeList.get(id).deserialize()
 
       historyItem.events.push({
-        type: 'removeNode',
+        type: 'removeNodes',
         historical: true,
         redo: { id: point.id },
         undo: { point },
