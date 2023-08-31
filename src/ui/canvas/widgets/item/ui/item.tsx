@@ -26,6 +26,8 @@ export function Component(props: Props, ref: ForwardedRef<HTMLDivElement>): JSX.
   return (
     <AbstractItem
       {...canvasItemProps}
+      // eslint-disable-next-line jsx-a11y/tabindex-no-positive
+      tabIndex={0}
       ref={ref}
       className={c(props.className, Component.displayName)}
       style={{ touchAction: 'none', ...canvasItemProps.style }}

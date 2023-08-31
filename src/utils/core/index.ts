@@ -17,6 +17,7 @@ export * from './types/key'
 export * from './types/offset'
 export * from './types/position'
 export * from './types/to-stringable'
+export * from './types/undefineable'
 export * from './types/value-or-setter'
 export * from './types/setter-or-updater'
 

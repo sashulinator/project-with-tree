@@ -1,36 +1,32 @@
 import './offer.scss'
 
 import { Id } from '~/utils/core'
+import { emptyFn } from '~/utils/function/empty-fn'
 import { useUpdate } from '~/utils/hooks'
 
 import { Toolbar } from '..'
-import Node, { TargetLinks, Title, VariantPickerProps } from '../../..'
+import Node, { FactoryProps, TargetLinks, Title } from '../../..'
 
 Filter.displayName = 'decisionCanvas-w-Node-v-Offer'
 
 /**
  * Node вариант filter
  */
-export default function Filter(props: VariantPickerProps): JSX.Element {
+export default function Filter(props: FactoryProps): JSX.Element {
   useUpdate(subscribeOnUpdates)
 
   return (
     <Node
-      listState={props.nodeListState}
+      selectNodes={emptyFn}
+      listState={props.nodeListController}
       state={props.state}
       onGestureDrug={props.onGestureDrug}
       className={Filter.displayName}
       title={<Title className='title' state={props.state} />}
-      toolbar={
-        <Toolbar
-          listState={props.nodeListState}
-          state={props.state}
-          remove={(): void => props.remove(props.state.id)}
-        />
-      }
+      toolbar={<Toolbar listState={props.nodeListController} state={props.state} />}
       targetLinks={
         <TargetLinks
-          linkStates={props.linkListState}
+          linkControllers={props.linkListController}
           state={props.state}
           onNewJointClick={onNewJointClick('targetId')}
           onJointClick={onJointClick}
@@ -46,24 +42,24 @@ export default function Filter(props: VariantPickerProps): JSX.Element {
   }
 
   function onJointClick(linkId: Id): void {
-    if (props.linkListState.editingId.value) {
-      props.linkListState.finishEditing(linkId)
+    if (props.linkListController.editingId.value) {
+      props.linkListController.finishEditing(linkId)
     } else {
-      const linkState = props.linkListState.get(linkId)
-      if (!linkState.targetId.value) {
-        props.linkListState.editingId.set(linkState.id)
+      const linkController = props.linkListController.get(linkId)
+      if (!linkController.targetId.value) {
+        props.linkListController.editingId.set(linkController.id)
       } else {
-        props.linkListState.startEditing(linkId, props.state.id)
+        props.linkListController.startEditing(linkId, props.state.id)
       }
     }
   }
 
   function onNewJointClick(startLinkType: 'targetId' | 'sourceId'): (newLinkId: Id) => void {
     return (newLinkId: Id) => {
-      if (props.linkListState.editingId.value) {
-        props.linkListState.finishNewLink(props.state.id)
+      if (props.linkListController.editingId.value) {
+        props.linkListController.finishNewLink(props.state.id)
       } else {
-        props.linkListState.startNewLink({ [startLinkType]: newLinkId, index: 0 })
+        props.linkListController.startNewLink({ [startLinkType]: newLinkId, index: 0 })
       }
     }
   }

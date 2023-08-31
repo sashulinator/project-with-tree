@@ -6,14 +6,15 @@ import { GestureDragEvent } from '~/ui/canvas'
 import { Id } from '~/utils/core'
 import { useUpdate } from '~/utils/hooks'
 
-import { State } from '..'
-import { State as NodeState, VariantPicker } from '../../..'
-import { LinkListState } from '../../../../../../..'
+import { Controller } from '..'
+import { Factory, Controller as NodeState } from '../../..'
+import { LinkListController } from '../../../../../../..'
 
 export interface ListProps {
-  state: State
-  linkListState: LinkListState
+  state: Controller
+  linkListController: LinkListController
   remove: (id: Id) => void
+  selectNodes: (ids: Id[]) => void
   onGestureDrug: (state: NodeState) => (event: GestureDragEvent) => void
 }
 
@@ -22,15 +23,15 @@ export function ListComponent(props: ListProps): JSX.Element {
 
   return (
     <DndProvider backend={HTML5Backend}>
-      {props.state.values().map((nodeState) => {
+      {props.state.values().map((nodeController) => {
         return (
-          <VariantPicker
-            remove={props.remove}
-            key={nodeState.id}
-            state={nodeState}
-            nodeListState={props.state}
-            linkListState={props.linkListState}
-            onGestureDrug={props.onGestureDrug(nodeState)}
+          <Factory
+            key={nodeController.id}
+            state={nodeController}
+            selectNodes={props.selectNodes}
+            nodeListController={props.state}
+            linkListController={props.linkListController}
+            onGestureDrug={props.onGestureDrug(nodeController)}
           />
         )
       })}

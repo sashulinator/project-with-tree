@@ -1,9 +1,4 @@
 /**
- * lib
- */
-export * from './lib/-history-listener'
-
-/**
  * types
  */
 export type { Decision } from './types/decision'
@@ -42,13 +37,13 @@ export type { RightPanelProps } from './widgets/right-panel'
 
 export {
   default as Canvas,
-  State as CanvasState,
+  Controller as CanvasController,
   Node,
   NodeList,
-  NodeState,
-  NodeListState,
+  NodeController as NodeController,
+  NodeListController as NodeListController,
   NodeJoint,
-  NodeVariantPicker,
+  NodeFactory,
   getNodeMovement,
   NODE_GAP,
   COLUMN_GAP,
@@ -56,16 +51,15 @@ export {
   Link,
   LinkList,
   LinkController,
-  LinkListController as LinkListState,
+  LinkListController,
 } from './widgets/canvas'
 export type {
   CanvasProps,
   NodeListProps,
   NodeProps,
-  NodeStateProps,
-  NodeEvents,
+  NodeListControllerEvents as NodeEvents,
   NodeJointProps,
-  NodeVariantPickerProps,
+  NodeFactoryProps,
   LinkListProps,
   LinkProps,
   LinkControllerProps,

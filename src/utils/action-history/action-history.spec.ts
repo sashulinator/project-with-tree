@@ -5,26 +5,33 @@ describe(ActionHistory.name, () => {
     const next = {
       done: false,
       storeLocally: true,
-      type: 'next',
       username: 'next',
-      redo: { test: 'next' },
-      undo: { test: 'next' },
+      events: [
+        {
+          historical: true,
+          type: 'next',
+          redo: { test: 'next' },
+          undo: { test: 'next' },
+        },
+      ],
     }
     const current = {
       done: true,
-      storeLocally: true,
-      type: 'current',
       username: 'current',
-      redo: { test: 'current' },
-      undo: { test: 'current' },
+      events: [{ type: 'current', historical: true, redo: { test: 'current' }, undo: { test: 'current' } }],
     }
     const previous = {
       done: true,
       storeLocally: true,
-      type: 'previous',
       username: 'previous',
-      redo: { test: 'previous' },
-      undo: { test: 'previous' },
+      events: [
+        {
+          historical: true,
+          type: 'previous',
+          redo: { test: 'previous' },
+          undo: { test: 'previous' },
+        },
+      ],
     }
     const items: HistoryItem[] = [next, current, previous]
     const h = new ActionHistory(items)
@@ -38,26 +45,41 @@ describe(ActionHistory.name, () => {
     const item1 = {
       done: false,
       storeLocally: true,
-      type: 'item1',
       username: 'item1',
-      redo: { test: 'item1' },
-      undo: { test: 'item1' },
+      events: [
+        {
+          historical: true,
+          type: 'item1',
+          redo: { test: 'item1' },
+          undo: { test: 'item1' },
+        },
+      ],
     }
     const item2 = {
       done: false,
       storeLocally: true,
-      type: 'item2',
       username: 'item2',
-      redo: { test: 'item2' },
-      undo: { test: 'item2' },
+      events: [
+        {
+          historical: true,
+          type: 'item2',
+          redo: { test: 'item2' },
+          undo: { test: 'item2' },
+        },
+      ],
     }
     const item3 = {
       done: false,
       storeLocally: true,
-      type: 'item3',
       username: 'item3',
-      redo: { test: 'item3' },
-      undo: { test: 'item3' },
+      events: [
+        {
+          historical: true,
+          type: 'item3',
+          redo: { test: 'item3' },
+          undo: { test: 'item3' },
+        },
+      ],
     }
     const items: HistoryItem[] = [item1, item2, item3]
     const h = new ActionHistory(items)

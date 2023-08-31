@@ -1,21 +1,20 @@
 import { Id } from '~/utils/core'
 
-import { NodeListState } from '..'
+import { NodeListController } from '..'
 
 interface Props {
-  nodeListState: NodeListState
+  nodeListController: NodeListController
   removeNode: (id: Id) => void
 }
 
 export function removeSelectedNodes(props: Props): () => void {
   return () => {
-    props.nodeListState.selection.value.forEach((id) => {
-      console.log('id', id)
-      const state = props.nodeListState.get(id)
+    props.nodeListController.selection.value.forEach((id) => {
+      const state = props.nodeListController.get(id)
       if (state.point.level !== 'main') {
         props.removeNode(id)
       }
     })
-    props.nodeListState.selection.set([])
+    props.nodeListController.selection.set([])
   }
 }

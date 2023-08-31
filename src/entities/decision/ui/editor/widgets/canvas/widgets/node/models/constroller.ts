@@ -1,5 +1,5 @@
 import { ItemEvents, ItemState } from '~/abstract/canvas'
-import { Point } from '~/entities/point'
+import { Point } from '~/entities/decision'
 import { generateId } from '~/utils/core'
 import { Prop } from '~/utils/emitter'
 
@@ -8,16 +8,14 @@ export type Events = ItemEvents & {
   title: { value: string }
 }
 
-export type StateProps = Point
-
-export class State extends ItemState<Events> {
+export class Controller extends ItemState<Events> {
   readonly point: Point
 
   title: Prop<'title', string>
 
   computation: Prop<'computation', 'parallel' | 'successively' | undefined>
 
-  constructor(point: StateProps) {
+  constructor(point: Point) {
     super({ id: point.id, position: { x: point.xy[0], y: point.xy[1] } })
 
     this.point = point
@@ -28,8 +26,8 @@ export class State extends ItemState<Events> {
     this.computation = new Prop('computation', point.computation, this)
   }
 
-  copy = (point?: StateProps): State => {
-    return new State({ ...this.serialize(), ...point, id: generateId() })
+  copy = (point?: Point): Controller => {
+    return new Controller({ ...this.serialize(), ...point, id: generateId() })
   }
 
   serialize = (): Point => {

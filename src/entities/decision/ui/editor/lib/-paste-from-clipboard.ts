@@ -1,12 +1,12 @@
-import { Point } from '~/entities/point'
 import { notify } from '~/shared/notify'
 import { Box } from '~/utils/clipboard'
 import { generateId, has } from '~/utils/core'
 
-import { NodeListState } from '..'
+import { NodeListController } from '..'
+import { Point } from '../../..'
 
 interface Props {
-  nodeListState: NodeListState
+  nodeListController: NodeListController
   addNode: (point: Point) => void
 }
 
@@ -23,8 +23,8 @@ export function pasteFromClipboard(props: Props): () => void {
               if (isPointListBox(box)) {
                 box.data.forEach((point) => {
                   if (box.action === 'cut') {
-                    if (props.nodeListState.find(point.id)) {
-                      props.nodeListState.remove(point.id)
+                    if (props.nodeListController.find(point.id)) {
+                      props.nodeListController.remove(point.id)
                     }
                     setTimeout(() => props.addNode(point), 10)
                   } else {

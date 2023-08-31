@@ -1,13 +1,13 @@
-import { LinkListState, NodeListState } from '..'
+import { LinkListController, NodeListController } from '..'
 
 interface Props {
-  nodeListState: NodeListState
-  linkListState: LinkListState
+  nodeListController: NodeListController
+  linkListController: LinkListController
 }
 
 export function resetAll(props: Props): () => void {
   return () => {
-    props.linkListState.editingId.set(undefined)
-    props.nodeListState.selection.set([])
+    props.linkListController.editingId.set(undefined)
+    props.nodeListController.selection.set([])
   }
 }

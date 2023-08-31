@@ -2,29 +2,28 @@ import './toolbar.scss'
 
 import { useState } from 'react'
 
-import { Point } from '~/entities/point'
 import { GhostButton, PrimaryButton } from '~/ui/button'
 import { ArrowLeft, ArrowRight, Trash } from '~/ui/icon'
 import Line from '~/ui/line'
 import Tooltip from '~/ui/tooltip'
-import { ActionHistory } from '~/utils/action-history'
 import { c } from '~/utils/core'
 import { stopPropagation } from '~/utils/dom-event'
 import { fns } from '~/utils/function'
 import { useUpdate } from '~/utils/hooks'
 import { setRefs } from '~/utils/react'
+import { Required } from '~/utils/types/object'
 
-import { NodeListState } from '../../..'
+import { NodeListController } from '../../..'
+import { Point } from '../../../../..'
+import { HistoryController } from '../../../_private'
 
 Toolbar.displayName = 'decision-Editor-w-Toolbar'
 
 export interface Props {
   className?: string
-  nodeListState: NodeListState
-  history: ActionHistory
-  nextHistory: () => void
-  previousHistory: () => void
-  addNode: (point: Partial<Point>) => void
+  nodeListController: NodeListController
+  history: HistoryController
+  addNode: (point: Required<Partial<Point>, 'level'>) => void
   removeSelectedNodes: () => void
 }
 
@@ -48,7 +47,7 @@ export default function Toolbar(props: Props): JSX.Element {
         }
         placement='tc'
       >
-        <GhostButton onClick={fns(stopPropagation, props.previousHistory)} square={true} height='s'>
+        <GhostButton onClick={fns(stopPropagation, () => props.history.undo())} square={true} height='s'>
           <ArrowLeft />
         </GhostButton>
       </Tooltip>
@@ -65,7 +64,7 @@ export default function Toolbar(props: Props): JSX.Element {
         }
         placement='tc'
       >
-        <GhostButton onClick={fns(stopPropagation, props.nextHistory)} square={true} height='s'>
+        <GhostButton onClick={fns(stopPropagation, () => props.history.redo())} square={true} height='s'>
           <ArrowRight />
         </GhostButton>
       </Tooltip>
@@ -112,7 +111,7 @@ export default function Toolbar(props: Props): JSX.Element {
           onClick={props.removeSelectedNodes}
           square={true}
           height='s'
-          disabled={props.nodeListState.selection.value.length === 0}
+          disabled={props.nodeListController.selection.value.length === 0}
         >
           <Trash />
         </GhostButton>
@@ -121,6 +120,6 @@ export default function Toolbar(props: Props): JSX.Element {
   )
 
   function subscribeOnUpdates(update: () => void, uns: (() => void)[]): void {
-    uns.push(props.nodeListState.on('selection', update))
+    uns.push(props.nodeListController.on('selection', update))
   }
 }

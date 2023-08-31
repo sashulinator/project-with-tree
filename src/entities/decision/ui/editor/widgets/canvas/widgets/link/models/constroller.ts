@@ -1,6 +1,7 @@
-import { Rule, RuleSet } from '~/entities/point'
 import { Id, generateId } from '~/utils/core'
 import { Emitter, Prop } from '~/utils/emitter'
+
+import { Rule, RuleSet } from '../../../../../../../'
 
 export type Events = {
   targetId: { value: Id }

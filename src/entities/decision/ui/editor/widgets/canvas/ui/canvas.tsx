@@ -5,35 +5,37 @@ import { Id } from '~/utils/core'
 import { useUpdate } from '~/utils/hooks'
 import { setRefs } from '~/utils/react'
 
-import { LinkList, LinkListController, NodeList, NodeListState, State } from '../'
+import { Controller, LinkList, LinkListController, NodeList, NodeListController } from '../'
 import { onGestureDrag } from '../_private'
 
 CanvasComponent.displayName = 'decision-Editor-w-Canvas'
 
 export interface Props {
-  state: State
-  linkListState: LinkListController
-  nodeListState: NodeListState
+  controller: Controller
+  linkListController: LinkListController
+  nodeListController: NodeListController
+  selectNodes: (ids: Id[]) => void
   removeNode: (id: Id) => void
 }
 
 function CanvasComponent(props: Props): JSX.Element {
-  useUpdate(updateOnEvents, [props.state])
+  useUpdate(updateOnEvents, [props.controller])
 
   return (
-    <Board ref={setRefs(props.state.ref.set, props.state.zoom.setRef)}>
-      <PaintingPanel translate={props.state.zoom.value} scale={props.state.zoom.value.k}>
+    <Board ref={setRefs(props.controller.ref.set, props.controller.zoom.setRef)}>
+      <PaintingPanel translate={props.controller.zoom.value} scale={props.controller.zoom.value.k}>
         <LinkList
-          state={props.linkListState}
-          nodeListState={props.nodeListState}
-          canvasTranslate={props.state.zoom.value}
-          scale={props.state.zoom.value.k}
+          state={props.linkListController}
+          nodeListController={props.nodeListController}
+          canvasTranslate={props.controller.zoom.value}
+          scale={props.controller.zoom.value.k}
         />
         <NodeList
-          state={props.nodeListState}
-          linkListState={props.linkListState}
+          state={props.nodeListController}
+          linkListController={props.linkListController}
           remove={props.removeNode}
-          onGestureDrug={onGestureDrag(props.state, props.nodeListState)}
+          selectNodes={props.selectNodes}
+          onGestureDrug={onGestureDrag(props.controller, props.nodeListController)}
         />
       </PaintingPanel>
     </Board>
@@ -42,30 +44,30 @@ function CanvasComponent(props: Props): JSX.Element {
   // Private
 
   function updateOnEvents(update: () => void): void {
-    props.state.on('zoom', update)
+    props.controller.on('zoom', update)
 
-    props.nodeListState.on('position', (event) => {
+    props.nodeListController.on('position', (event) => {
       if (!event.last || event.isPositionColumn) return
-      props.nodeListState.positionColumn(event.value.x)
+      props.nodeListController.positionColumn(event.value.x)
       if (event.value.x === event.previousStart.x) return
-      props.nodeListState.positionColumn(event.previousStart.x)
+      props.nodeListController.positionColumn(event.previousStart.x)
     })
 
-    props.linkListState.on('targetId', (event) => {
+    props.linkListController.on('targetId', (event) => {
       setTimeout(() => {
-        const sNodeState = props.nodeListState.find(event.item.sourceId.value)
-        const tNodeState = props.nodeListState.find(event.item.targetId.value)
-        tNodeState && props.nodeListState.positionColumn(tNodeState?.position.value.x)
-        sNodeState && props.nodeListState.positionColumn(sNodeState?.position.value.x)
+        const sNodeState = props.nodeListController.find(event.item.sourceId.value)
+        const tNodeState = props.nodeListController.find(event.item.targetId.value)
+        tNodeState && props.nodeListController.positionColumn(tNodeState?.position.value.x)
+        sNodeState && props.nodeListController.positionColumn(sNodeState?.position.value.x)
       })
     })
 
-    props.linkListState.on('sourceId', (event) => {
+    props.linkListController.on('sourceId', (event) => {
       setTimeout(() => {
-        const sNodeState = props.nodeListState.find(event.item.sourceId.value)
-        const tNodeState = props.nodeListState.find(event.item.targetId.value)
-        tNodeState && props.nodeListState.positionColumn(tNodeState?.position.value.x)
-        sNodeState && props.nodeListState.positionColumn(sNodeState?.position.value.x)
+        const sNodeState = props.nodeListController.find(event.item.sourceId.value)
+        const tNodeState = props.nodeListController.find(event.item.targetId.value)
+        tNodeState && props.nodeListController.positionColumn(tNodeState?.position.value.x)
+        sNodeState && props.nodeListController.positionColumn(sNodeState?.position.value.x)
       })
     })
   }

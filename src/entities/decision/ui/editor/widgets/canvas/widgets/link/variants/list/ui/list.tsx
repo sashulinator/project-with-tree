@@ -5,11 +5,11 @@ import { useUpdate } from '~/utils/hooks'
 
 import { Controller } from '..'
 import Link from '../../..'
-import { NodeListState } from '../../../../../../..'
+import { NodeListController } from '../../../../../../..'
 
 export interface Props {
   state: Controller
-  nodeListState: NodeListState
+  nodeListController: NodeListController
   canvasTranslate: Position
   scale: number
 }
@@ -19,14 +19,14 @@ function ListComponent(props: Props): JSX.Element {
 
   return (
     <>
-      {props.state.values().map((linkState) => {
+      {props.state.values().map((linkController) => {
         return (
           <Link
-            key={linkState.id}
+            key={linkController.id}
             scale={props.scale}
             canvasTranslate={props.canvasTranslate}
-            nodeListState={props.nodeListState}
-            state={linkState}
+            nodeListController={props.nodeListController}
+            state={linkController}
             listState={props.state}
           />
         )

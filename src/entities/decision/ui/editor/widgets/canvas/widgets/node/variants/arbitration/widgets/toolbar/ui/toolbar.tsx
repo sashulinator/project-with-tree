@@ -1,22 +1,19 @@
 import './toolbar.css'
 
 import Flex from '~/abstract/flex/ui/flex'
-import { GhostButton } from '~/ui/button'
 import Checkbox from '~/ui/checkbox'
-import { Trash } from '~/ui/icon'
 import { c } from '~/utils/core'
 import { stopPropagation } from '~/utils/dom-event'
 import { useUpdate } from '~/utils/hooks'
 
-import { ListState, State } from '../../../../..'
+import { Controller, ListController } from '../../../../..'
 
 Toolbar.displayName = 'decision-Editor-w-Canvas-w-Node-v-Arbitration-w-Toolbar'
 
 export interface Props {
-  state: State
-  listState: ListState
+  state: Controller
+  listState: ListController
   className?: string
-  remove: () => void
 }
 
 export default function Toolbar(props: Props): JSX.Element {
@@ -38,11 +35,6 @@ export default function Toolbar(props: Props): JSX.Element {
           className='selection'
           onChange={(): void => props.listState.selection.toggle(props.state.id)}
         />
-      </Flex>
-      <Flex>
-        <GhostButton round={true} onClick={props.remove}>
-          <Trash />
-        </GhostButton>
       </Flex>
     </div>
   )

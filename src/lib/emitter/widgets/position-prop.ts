@@ -7,6 +7,8 @@ export interface PositionPropEvent {
   value: Position
 }
 
+export type TransitionMoveEvent = { duration?: number; onEnd?: () => void }
+
 /**
  * @final
  */
@@ -31,16 +33,16 @@ export class PositionProp<N extends string> extends Prop<N, Position> {
     this.set({ x, y }, { ...event, previousStart })
   }
 
-  transitionMove = (position: Position, event?: Events, onEnd?: () => void, conf?: { duration?: number }): void => {
+  transitionMove = (position: Position, event?: TransitionMoveEvent & Events): void => {
     const delta: Position = { x: this.value.x - position.x, y: this.value.y - position.y }
     const fromPosition: Position = { ...this.value }
 
-    animate(conf?.duration ?? 250, (progress) => {
+    animate(event?.duration ?? 250, (progress) => {
       const x = Math.round(fromPosition.x - delta.x * progress)
       const y = Math.round(fromPosition.y - delta.y * progress)
       const last = progress === 1
       this.move({ x, y }, { last, ...event })
-      if (last) onEnd?.()
+      if (last) event?.onEnd?.()
     })
   }
 }
