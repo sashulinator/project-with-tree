@@ -25,8 +25,6 @@ import {
   cutSelectedNodes as cutSelectedNodesBind,
   paste as pasteBind,
   pasteFromClipboard as pasteFromClipboardBind,
-  removeNode as removeNodeBind,
-  removeSelectedNodes as removeSelectedNodesBind,
   resetAll as resetAllBind,
   useKeyDownListener,
 } from '../_private'
@@ -59,9 +57,9 @@ export default function Editor(props: Props): JSX.Element {
   }, [props.decision.decisionTree])
 
   const addNode = history.addNode
+  const removeNode = (id: Id): void => history.removeNodes([id])
+  const removeSelectedNodes = (): void => history.removeNodes(nodeList.selection.value)
 
-  const removeNode = removeNodeBind({ linkList: linkList, nodeList: nodeList })
-  const removeSelectedNodes = removeSelectedNodesBind({ nodeListController: nodeList, removeNode })
   const centerNode = centerNodeBind({ nodeListController: nodeList, canvasController: canvas })
   const copySelectedNodes = copySelectedNodesBind({ nodeListController: nodeList })
   const cutSelectedNodes = cutSelectedNodesBind({ nodeListController: nodeList })

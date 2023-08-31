@@ -8,6 +8,7 @@ describe(ActionHistory.name, () => {
       username: 'next',
       events: [
         {
+          historical: true,
           type: 'next',
           redo: { test: 'next' },
           undo: { test: 'next' },
@@ -16,9 +17,8 @@ describe(ActionHistory.name, () => {
     }
     const current = {
       done: true,
-      storeLocally: true,
       username: 'current',
-      events: [{ type: 'current', redo: { test: 'current' }, undo: { test: 'current' } }],
+      events: [{ type: 'current', historical: true, redo: { test: 'current' }, undo: { test: 'current' } }],
     }
     const previous = {
       done: true,
@@ -26,6 +26,7 @@ describe(ActionHistory.name, () => {
       username: 'previous',
       events: [
         {
+          historical: true,
           type: 'previous',
           redo: { test: 'previous' },
           undo: { test: 'previous' },
@@ -47,6 +48,7 @@ describe(ActionHistory.name, () => {
       username: 'item1',
       events: [
         {
+          historical: true,
           type: 'item1',
           redo: { test: 'item1' },
           undo: { test: 'item1' },
@@ -59,6 +61,7 @@ describe(ActionHistory.name, () => {
       username: 'item2',
       events: [
         {
+          historical: true,
           type: 'item2',
           redo: { test: 'item2' },
           undo: { test: 'item2' },
@@ -71,6 +74,7 @@ describe(ActionHistory.name, () => {
       username: 'item3',
       events: [
         {
+          historical: true,
           type: 'item3',
           redo: { test: 'item3' },
           undo: { test: 'item3' },
