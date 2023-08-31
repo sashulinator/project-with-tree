@@ -27,8 +27,8 @@ export type { NodeProps } from './ui/node'
 export { State as ListState, default as List } from './variants/list'
 export type { ListProps as ListProps, Events as ListEvents } from './variants/list'
 
-export { default as VariantPicker } from './variants/variant-picker'
-export type { VariantPickerProps } from './variants/variant-picker'
+export { default as Factory } from './variants/factory'
+export type { FactoryProps } from './variants/factory'
 
 export { default as EnterNode } from './variants/enter'
 export { default as FilterNode } from './variants/filter'

@@ -4,14 +4,14 @@ import { Id } from '~/utils/core'
 import { useUpdate } from '~/utils/hooks'
 
 import { Toolbar } from '..'
-import Node, { SourceLinks, TargetLinks, Title, VariantPickerProps } from '../../..'
+import Node, { FactoryProps, SourceLinks, TargetLinks, Title } from '../../..'
 
 Filter.displayName = 'decision-Editor-w-Canvas-w-Node-v-Arbitration'
 
 /**
  * Node вариант filter
  */
-export default function Filter(props: VariantPickerProps): JSX.Element {
+export default function Filter(props: FactoryProps): JSX.Element {
   useUpdate(subscribeOnUpdates)
 
   return (

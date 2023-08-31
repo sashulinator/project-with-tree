@@ -7,7 +7,7 @@ import { Id } from '~/utils/core'
 import { useUpdate } from '~/utils/hooks'
 
 import { State } from '..'
-import { State as NodeState, VariantPicker } from '../../..'
+import { Factory, State as NodeState } from '../../..'
 import { LinkListState } from '../../../../../../..'
 
 export interface ListProps {
@@ -25,7 +25,7 @@ export function ListComponent(props: ListProps): JSX.Element {
     <DndProvider backend={HTML5Backend}>
       {props.state.values().map((nodeState) => {
         return (
-          <VariantPicker
+          <Factory
             key={nodeState.id}
             state={nodeState}
             selectNodes={props.selectNodes}

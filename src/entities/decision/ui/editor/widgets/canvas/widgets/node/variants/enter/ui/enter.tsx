@@ -4,14 +4,14 @@ import { Id } from '~/utils/dictionary'
 import { useUpdate } from '~/utils/hooks'
 
 import { Toolbar } from '..'
-import Node, { SourceLinks, Title, VariantPickerProps } from '../../..'
+import Node, { FactoryProps, SourceLinks, Title } from '../../..'
 
 Enter.displayName = 'decisionCanvas-w-Node-v-Enter'
 
 /**
  * Node вариант filter
  */
-export default function Enter(props: VariantPickerProps): JSX.Element {
+export default function Enter(props: FactoryProps): JSX.Element {
   useUpdate(subscribeOnUpdates)
 
   return (

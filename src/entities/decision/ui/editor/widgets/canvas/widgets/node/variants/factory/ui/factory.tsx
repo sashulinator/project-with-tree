@@ -6,9 +6,9 @@ import { Id } from '~/utils/core'
 import { ArbitrationNode, ControlGroupNode, EnterNode, FilterNode, State as NodeState, OfferNode } from '../../..'
 import { LinkListState, NodeListState } from '../../../../../../..'
 
-VariantPickerComponent.displayName = 'decision-Editor-w-Node-v-VariantPicker'
+FactoryComponent.displayName = 'decision-Editor-w-Node-v-Factory'
 
-export interface VariantPickerProps {
+export interface FactoryProps {
   state: NodeState
   linkListState: LinkListState
   nodeListState: NodeListState
@@ -16,8 +16,8 @@ export interface VariantPickerProps {
   onGestureDrug: (event: GestureDragEvent) => void
 }
 
-function VariantPickerComponent(props: VariantPickerProps): JSX.Element {
-  let Component: (props: VariantPickerProps) => JSX.Element
+function FactoryComponent(props: FactoryProps): JSX.Element {
+  let Component: (props: FactoryProps) => JSX.Element
 
   if (props.state.point.level === 'decisionPoint') {
     Component = FilterNode
@@ -34,6 +34,6 @@ function VariantPickerComponent(props: VariantPickerProps): JSX.Element {
   return createElement(Component, props)
 }
 
-const VariantPicker = memo(VariantPickerComponent)
-VariantPicker.displayName = VariantPickerComponent.displayName
-export default VariantPicker
+const FactoryPicker = memo(FactoryComponent)
+FactoryPicker.displayName = FactoryComponent.displayName
+export default FactoryPicker

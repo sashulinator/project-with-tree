@@ -23,7 +23,7 @@ export {
   State as NodeState,
   ListState as NodeListState,
   Joint as NodeJoint,
-  VariantPicker as NodeVariantPicker,
+  Factory as NodeFactory,
   getMovement as getNodeMovement,
   NODE_GAP,
   COLUMN_GAP,
@@ -35,7 +35,7 @@ export type {
   StateProps as NodeStateProps,
   ListEvents as NodeEvents,
   JointProps as NodeJointProps,
-  VariantPickerProps as NodeVariantPickerProps,
+  FactoryProps as NodeFactoryProps,
 } from './widgets/node'
 
 export {

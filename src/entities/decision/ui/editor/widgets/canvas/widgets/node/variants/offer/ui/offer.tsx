@@ -5,14 +5,14 @@ import { emptyFn } from '~/utils/function/empty-fn'
 import { useUpdate } from '~/utils/hooks'
 
 import { Toolbar } from '..'
-import Node, { TargetLinks, Title, VariantPickerProps } from '../../..'
+import Node, { FactoryProps, TargetLinks, Title } from '../../..'
 
 Filter.displayName = 'decisionCanvas-w-Node-v-Offer'
 
 /**
  * Node вариант filter
  */
-export default function Filter(props: VariantPickerProps): JSX.Element {
+export default function Filter(props: FactoryProps): JSX.Element {
   useUpdate(subscribeOnUpdates)
 
   return (
