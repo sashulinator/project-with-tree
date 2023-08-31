@@ -1,7 +1,6 @@
 import { Point } from '~/entities/point'
 import { TransitionMoveEvent } from '~/lib/emitter'
 import { generateId } from '~/utils/core'
-import { getElementSize } from '~/utils/dom/get-element-size'
 import { Events } from '~/utils/emitter'
 
 import { CanvasState, NodeListState, NodeState, getColumnX } from '..'
@@ -11,21 +10,17 @@ interface Props {
   nodeListState: NodeListState
 }
 
-export function addNode(props: Props, event?: TransitionMoveEvent & Events): () => void {
-  return (point?: Point): void => {
-    const canvasSize = getElementSize(props.canvasState.ref.value as Element)
-
-    const x = (-props.canvasState.zoom.value.x + canvasSize?.width / 2) / props.canvasState.zoom.value.k - 150
-    const y = (-props.canvasState.zoom.value.y + canvasSize?.height) / props.canvasState.zoom.value.k
+export function addNode(props: Props): () => void {
+  return (point?: Partial<Point>, event?: TransitionMoveEvent & Events): void => {
+    const position = props.canvasState.getPointPosition('bc')
 
     const newPoint: Point = {
       level: 'decisionPoint',
-      // id берем из приходящего point т.к. функция может быть вызвана при событии cut/paste
-      id: generateId(),
       computation: 'successively',
       name: 'new',
-      xy: [x, y],
+      xy: [position.x, position.y],
       ...point,
+      id: point?.id ?? generateId(),
     }
 
     const nodeState = new NodeState(newPoint)

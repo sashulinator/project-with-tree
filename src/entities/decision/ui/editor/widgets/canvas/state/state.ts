@@ -1,5 +1,6 @@
 import { Zoom, ZoomProp } from '~/lib/emitter'
-import { Position } from '~/utils/core'
+import { Position, assertNotNull } from '~/utils/core'
+import { getElementSize } from '~/utils/dom'
 import { isMetaCtrlKey } from '~/utils/dom-event'
 import { Size } from '~/utils/dom/types/size'
 import { Emitter, Prop } from '~/utils/emitter'
@@ -38,5 +39,36 @@ export class State extends Emitter<Events> {
       },
       scaleExtent: [0.1, 1],
     })
+  }
+
+  get size(): Size {
+    assertNotNull(this.ref.value)
+    return getElementSize(this.ref.value)
+  }
+
+  /**
+   *
+   * @param {Point} point тип как в библиотечке dom-align-ts
+   * @returns {Position}
+   */
+  getPointPosition(point: 'cc' | 'bc'): Position {
+    const size = this.size
+    // center-center
+    if (point === 'cc') {
+      return {
+        x: (-this.zoom.value.x + size.width / 2) / this.zoom.value.k,
+        y: (-this.zoom.value.y + size.height / 2) / this.zoom.value.k,
+      }
+    }
+
+    // bottom-center
+    if (point === 'bc') {
+      return {
+        x: (-this.zoom.value.x + size.width / 2) / this.zoom.value.k,
+        y: (-this.zoom.value.y + size.height) / this.zoom.value.k,
+      }
+    }
+
+    throw Error(`unknown Point`)
   }
 }
