@@ -1,7 +1,11 @@
 import { ActionHistory, HistoryItem } from '~/utils/action-history'
-import { Id, Position } from '~/utils/core'
+import { Id } from '~/utils/core'
+import { Required } from '~/utils/types/object'
 
-import { NodeListController } from '../widgets/canvas'
+import { CanvasController } from '..'
+import { Point } from '../../..'
+import { addNode, removeNode } from '../_private'
+import { LinkListController, NodeListController } from '../widgets/canvas'
 
 type Event<T> = {
   previous: T
@@ -9,31 +13,46 @@ type Event<T> = {
 }
 
 interface Props {
-  nodeListController: NodeListController
+  canvas: CanvasController
+  nodeList: NodeListController
+  linkList: LinkListController
 }
 
 export type SelectionEvent = { type: 'selection'; undo: { value: Id[] }; redo: { value: Id[] } }
+
 export type NodePositionEvent = {
-  type: 'node-position'
-  undo: { value: Position }
-  redo: { value: Position }
+  type: 'node-add'
+  undo: { id: Id }
+  redo: { point: Point }
 }
 
 type Events = SelectionEvent | NodePositionEvent
 
 export class HistoryController extends ActionHistory {
-  nodeListController: NodeListController
+  nodeList: NodeListController
+
+  canvas: CanvasController
+
+  linkList: LinkListController
 
   constructor(props: Props) {
     super()
 
-    this.nodeListController = props.nodeListController
+    this.nodeList = props.nodeList
+
+    this.linkList = props.linkList
+
+    this.canvas = props.canvas
   }
 
   factory = (item: HistoryItem<Events>): void => {
     item.events.forEach((event) => {
       if (event.type === 'selection') {
-        item.done ? this.undoSelection(event.undo.value) : this.redoSelection(event.redo.value)
+        this.selectNodes(item.done ? event.undo.value : event.redo.value)
+        item.done = !item.done
+      }
+      if (event.type === 'node-add') {
+        item.done ? removeNode(this)(event.undo.id) : addNode(this, event.redo.point, { duration: 0 })
         item.done = !item.done
       }
     })
@@ -50,10 +69,35 @@ export class HistoryController extends ActionHistory {
   }
 
   /**
+   * ADD NODE
+   */
+
+  addNode = (
+    point: Required<Partial<Point>, 'level'>
+    // event?: (TransitionMoveEvent & Record<string, unknown>) | undefined
+  ): void => {
+    const newPoint = addNode(this, point)
+
+    const historyItem: HistoryItem<NodePositionEvent> = {
+      done: true,
+      storeLocally: false,
+      username: 'username',
+      events: [
+        {
+          type: 'node-add',
+          redo: { point: newPoint },
+          undo: { id: newPoint.id },
+        },
+      ],
+    }
+    this.add(historyItem)
+  }
+
+  /**
    * SELECTION
    */
 
-  addSelection = (event: Event<Id[]>): void => {
+  addNodeSelection = (event: Event<Id[]>): void => {
     this.add({
       done: true,
       storeLocally: true,
@@ -68,11 +112,7 @@ export class HistoryController extends ActionHistory {
     })
   }
 
-  undoSelection = (ids: Id[]): void => {
-    this.nodeListController.selection.set(ids)
-  }
-
-  redoSelection = (ids: Id[]): void => {
-    this.nodeListController.selection.set(ids)
+  selectNodes = (ids: Id[]): void => {
+    this.nodeList.selection.set(ids)
   }
 }

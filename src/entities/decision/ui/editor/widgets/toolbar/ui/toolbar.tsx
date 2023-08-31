@@ -11,6 +11,7 @@ import { stopPropagation } from '~/utils/dom-event'
 import { fns } from '~/utils/function'
 import { useUpdate } from '~/utils/hooks'
 import { setRefs } from '~/utils/react'
+import { Required } from '~/utils/types/object'
 
 import { NodeListController } from '../../..'
 import { Point } from '../../../../..'
@@ -22,7 +23,7 @@ export interface Props {
   className?: string
   nodeListController: NodeListController
   history: HistoryController
-  addNode: (point: Partial<Point>) => void
+  addNode: (point: Required<Partial<Point>, 'level'>) => void
   removeSelectedNodes: () => void
 }
 

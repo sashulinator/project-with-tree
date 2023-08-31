@@ -1,4 +1,4 @@
-export * from './lib/-add-node'
+export * from './lib/_add-node'
 export * from './lib/-center-node'
 export * from './lib/-copy-selected-nodes'
 export * from './lib/-cut-selected-nodes'

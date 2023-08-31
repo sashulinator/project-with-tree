@@ -20,7 +20,6 @@ import {
 } from '../'
 import {
   HistoryController,
-  addNode as addNodeBind,
   centerNode as centerNodeBind,
   copySelectedNodes as copySelectedNodesBind,
   cutSelectedNodes as cutSelectedNodesBind,
@@ -54,23 +53,21 @@ export default function Editor(props: Props): JSX.Element {
   const nodeList = useMemo(() => new NodeListController(props.decision.decisionTree), [props.decision.decisionTree])
   const linkList = useMemo(() => new LinkListController(props.decision.decisionTree), [props.decision.decisionTree])
 
-  const removeNode = removeNodeBind({ linkListController: linkList, nodeListController: nodeList })
-  const addNode = addNodeBind({ canvas: canvas, nodeList: nodeList })
+  const history = useMemo(() => {
+    const props = { nodeList, canvas, linkList }
+    return new HistoryController(props)
+  }, [props.decision.decisionTree])
+
+  const addNode = history.addNode
+
+  const removeNode = removeNodeBind({ linkList: linkList, nodeList: nodeList })
   const removeSelectedNodes = removeSelectedNodesBind({ nodeListController: nodeList, removeNode })
   const centerNode = centerNodeBind({ nodeListController: nodeList, canvasController: canvas })
   const copySelectedNodes = copySelectedNodesBind({ nodeListController: nodeList })
   const cutSelectedNodes = cutSelectedNodesBind({ nodeListController: nodeList })
+  const resetAll = resetAllBind({ linkListController: linkList, nodeListController: nodeList })
   const pasteFromClipboard = pasteFromClipboardBind({ nodeListController: nodeList, addNode })
   const paste = pasteBind({ nodeListController: nodeList, canvasController: canvas, pasteFromClipboard })
-  const resetAll = resetAllBind({ linkListController: linkList, nodeListController: nodeList })
-
-  const history = useMemo(
-    () =>
-      new HistoryController({
-        nodeListController: nodeList,
-      }),
-    [props.decision.decisionTree]
-  )
 
   useKeyDownListener(
     {
@@ -124,7 +121,7 @@ export default function Editor(props: Props): JSX.Element {
   function selectNodes(value: Id[]): void {
     const previous = [...nodeList.selection.value]
     nodeList.selection.set(value)
-    history.addSelection({ value, previous })
+    history.addNodeSelection({ value, previous })
   }
 
   function submit(): void {
