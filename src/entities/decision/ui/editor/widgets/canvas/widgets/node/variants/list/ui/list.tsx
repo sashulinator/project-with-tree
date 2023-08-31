@@ -7,7 +7,7 @@ import { Id } from '~/utils/core'
 import { useUpdate } from '~/utils/hooks'
 
 import { Controller } from '..'
-import { Factory, State as NodeState } from '../../..'
+import { Factory, Controller as NodeState } from '../../..'
 import { LinkListController } from '../../../../../../..'
 
 export interface ListProps {

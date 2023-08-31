@@ -5,9 +5,9 @@ import { getStyle } from '~/utils/dom'
 import { DictionaryEvents, EmitterDictionary, Prop } from '~/utils/emitter'
 
 import { NODE_GAP } from '../../..'
-import { NodeState } from '../../../../../../..'
+import { NodeController } from '../../../../../../..'
 
-export type Events = DictionaryEvents<NodeState> & {
+export type Events = DictionaryEvents<NodeController> & {
   // Уникальные события
   // ...
   selection: { value: Id[]; previous: Id[] }
@@ -15,22 +15,22 @@ export type Events = DictionaryEvents<NodeState> & {
   searchQuery: { value: string }
 
   // События стейтов
-  computation: { value: Point['computation']; item: NodeState }
-  title: { value: string; item: NodeState }
+  computation: { value: Point['computation']; item: NodeController }
+  title: { value: string; item: NodeController }
   position: {
     value: Position
     previous: Position
     start: Position
     previousStart: Position
     last: boolean
-    item: NodeState
+    item: NodeController
     // true если метод set вызван из функции positionColumn
     // TODO назвать как-то по другому
     isPositionColumn: boolean
   }
 }
 
-export class Controller extends EmitterDictionary<NodeState, Events> {
+export class Controller extends EmitterDictionary<NodeController, Events> {
   selection: Selection<'selection'>
 
   cutted: Selection<'cutted'>
@@ -38,7 +38,7 @@ export class Controller extends EmitterDictionary<NodeState, Events> {
   searchQuery: Prop<'searchQuery', string>
 
   constructor(pointList: Point[]) {
-    const stateList = pointList.map((point) => new NodeState(point))
+    const stateList = pointList.map((point) => new NodeController(point))
     super(stateList, (s) => s.id.toString())
 
     this.selection = new Selection('selection', [] as Id[], this)

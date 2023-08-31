@@ -5,12 +5,12 @@ import React from 'react'
 import { Id, c } from '~/utils/core'
 import { useUpdate } from '~/utils/hooks'
 
-import { NodeListController, NodeState } from '../../../../..'
+import { NodeController, NodeListController } from '../../../../..'
 
 Node.displayName = 'decision-Editor-w-LeftPanel-w-Node'
 
 export interface Props extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  state: NodeState
+  state: NodeController
   nodeListController: NodeListController
   centerNode: (id: Id) => void
   selectNodes: (ids: Id[]) => void

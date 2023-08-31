@@ -2,7 +2,7 @@ import { useMemo } from 'react'
 
 import Flex from '~/abstract/flex/ui/flex'
 import { Point } from '~/entities/decision'
-import { Node, NodeJoint, NodeListController, NodeState } from '~/entities/decision/ui/editor'
+import { Node, NodeController, NodeJoint, NodeListController } from '~/entities/decision/ui/editor'
 import { Config, Props } from '~/storybook/types'
 import { GhostButton } from '~/ui/button'
 import { H1 } from '~/ui/heading'
@@ -34,7 +34,7 @@ export default {
   },
 
   element: function Element(props: Props<State>): JSX.Element {
-    const nodeController = useMemo(() => new NodeState(point1), [])
+    const nodeController = useMemo(() => new NodeController(point1), [])
     const listState = new NodeListController([point1])
     const { state } = props
 

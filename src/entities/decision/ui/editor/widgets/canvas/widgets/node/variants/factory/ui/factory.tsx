@@ -3,7 +3,7 @@ import { createElement, memo } from 'react'
 import { GestureDragEvent } from '~/ui/canvas'
 import { Id } from '~/utils/core'
 
-import { ArbitrationNode, ControlGroupNode, EnterNode, FilterNode, State as NodeState, OfferNode } from '../../..'
+import { ArbitrationNode, ControlGroupNode, EnterNode, FilterNode, Controller as NodeState, OfferNode } from '../../..'
 import { LinkListController, NodeListController } from '../../../../../../..'
 
 FactoryComponent.displayName = 'decision-Editor-w-Node-v-Factory'

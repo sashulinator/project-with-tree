@@ -10,7 +10,7 @@ import { fns } from '~/utils/function'
 import { useUpdate } from '~/utils/hooks'
 import { toggle } from '~/utils/id-array'
 
-import { ListController, State as NodeState } from '..'
+import { ListController, Controller as NodeState } from '..'
 import { dark } from '../themes/dark'
 import { light } from '../themes/light'
 

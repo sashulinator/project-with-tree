@@ -4,13 +4,13 @@ import Input, { useChangeOnBlurStrategy } from '~/ui/input'
 import { c } from '~/utils/core'
 import { useUpdate } from '~/utils/hooks'
 
-import { State } from '../../..'
+import { Controller } from '../../..'
 
 Title.displayName = 'decision-Editor-w-Canvas-w-Node-w-Title'
 
 export interface Props {
   className?: string
-  state: State
+  state: Controller
 }
 
 export default function Title(props: Props): JSX.Element {

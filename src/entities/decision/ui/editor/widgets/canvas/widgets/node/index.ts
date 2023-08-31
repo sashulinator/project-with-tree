@@ -12,8 +12,8 @@ export * from './lib/get-movement'
 /**
  * state
  */
-export { State } from './state/state'
-export type { StateProps, Events } from './state/state'
+export { Controller } from './models/constroller'
+export type { Events as ControllerEvents } from './models/constroller'
 
 /**
  * ui

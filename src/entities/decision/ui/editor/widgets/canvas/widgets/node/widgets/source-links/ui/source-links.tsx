@@ -8,14 +8,14 @@ import { UnstyledButton } from '~/abstract/button'
 import { Id, c, generateId } from '~/utils/core'
 import { useUpdate } from '~/utils/hooks'
 
-import { Joint, State } from '../../..'
+import { Controller, Joint } from '../../..'
 import { LinkController, LinkListController } from '../../../../../../..'
 
 SourceLinks.displayName = 'decision-Editor-w-Canvas-w-Node-w-SourceLinks'
 
 export interface Props {
   className?: string
-  state: State
+  state: Controller
   linkListController: LinkListController
   hideNewLink?: boolean
   onNewJointClick: (newLinkId: Id) => void

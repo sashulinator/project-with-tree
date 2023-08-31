@@ -21,7 +21,7 @@ export type { Props as CanvasProps } from './ui/canvas'
 export {
   default as Node,
   List as NodeList,
-  State as NodeState,
+  Controller as NodeController,
   ListController as NodeListController,
   Joint as NodeJoint,
   Factory as NodeFactory,
@@ -33,7 +33,6 @@ export {
 export type {
   ListProps as NodeListProps,
   NodeProps,
-  StateProps as NodeStateProps,
   ListControllerEvents as NodeListControllerEvents,
   JointProps as NodeJointProps,
   FactoryProps as NodeFactoryProps,

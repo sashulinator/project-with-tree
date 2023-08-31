@@ -7,12 +7,12 @@ import { c } from '~/utils/core'
 import { stopPropagation } from '~/utils/dom-event'
 import { useUpdate } from '~/utils/hooks'
 
-import { ListController, State } from '../../../../..'
+import { Controller, ListController } from '../../../../..'
 
 Toolbar.displayName = 'decision-Editor-w-Canvas-w-Node-v-Filter-w-Toolbar'
 
 export interface Props {
-  state: State
+  state: Controller
   listState: ListController
   className?: string
 }

@@ -5,14 +5,14 @@ import { useState } from 'react'
 import { Id, c, generateId } from '~/utils/core'
 import { useUpdate } from '~/utils/hooks'
 
-import { Joint, State } from '../../..'
+import { Controller, Joint } from '../../..'
 import { LinkListController } from '../../../../../../..'
 
 TargetLink.displayName = 'decision-Editor-w-Canvas-w-Node-w-TargetLink'
 
 export interface Props {
   className?: string
-  state: State
+  state: Controller
   linkControllers: LinkListController
   onNewJointClick: (linkController: Id) => void
   onJointClick: (id: Id) => void
