@@ -1,4 +1,5 @@
-import { Point, Rule } from '~/entities/point'
+import { Point } from '~/entities/decision'
+import { Rule } from '~/entities/rule'
 import { Id, assertDefined, invariant } from '~/utils/core'
 import { Dictionary, Prop } from '~/utils/emitter'
 

@@ -1,8 +1,8 @@
 import { useMemo } from 'react'
 
 import Flex from '~/abstract/flex/ui/flex'
+import { Point } from '~/entities/decision'
 import { Node, NodeJoint, NodeListController, NodeState } from '~/entities/decision/ui/editor'
-import { Point } from '~/entities/point'
 import { Config, Props } from '~/storybook/types'
 import { GhostButton } from '~/ui/button'
 import { H1 } from '~/ui/heading'

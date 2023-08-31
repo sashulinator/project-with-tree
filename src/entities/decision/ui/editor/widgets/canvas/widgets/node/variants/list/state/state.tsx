@@ -1,4 +1,4 @@
-import { Point } from '~/entities/point'
+import { Point } from '~/entities/decision'
 import { Selection } from '~/lib/emitter'
 import { Id, Position, assertNotNull } from '~/utils/core'
 import { getStyle } from '~/utils/dom'

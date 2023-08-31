@@ -2,7 +2,6 @@ import './toolbar.scss'
 
 import { useState } from 'react'
 
-import { Point } from '~/entities/point'
 import { GhostButton, PrimaryButton } from '~/ui/button'
 import { ArrowLeft, ArrowRight, Trash } from '~/ui/icon'
 import Line from '~/ui/line'
@@ -14,6 +13,7 @@ import { useUpdate } from '~/utils/hooks'
 import { setRefs } from '~/utils/react'
 
 import { NodeListController } from '../../..'
+import { Point } from '../../../../..'
 import { HistoryController } from '../../../_private'
 
 Toolbar.displayName = 'decision-Editor-w-Toolbar'

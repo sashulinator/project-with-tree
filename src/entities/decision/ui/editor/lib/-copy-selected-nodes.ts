@@ -1,8 +1,8 @@
 import { addToast } from '~/abstract/toast'
-import { Point } from '~/entities/point'
 import { Box } from '~/utils/clipboard'
 
 import { NodeListController } from '..'
+import { Point } from '../../..'
 
 interface Props {
   nodeListController: NodeListController

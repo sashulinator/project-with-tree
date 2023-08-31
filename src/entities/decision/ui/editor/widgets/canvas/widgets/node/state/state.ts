@@ -1,5 +1,5 @@
 import { ItemEvents, ItemState } from '~/abstract/canvas'
-import { Point } from '~/entities/point'
+import { Point } from '~/entities/decision'
 import { generateId } from '~/utils/core'
 import { Prop } from '~/utils/emitter'
 

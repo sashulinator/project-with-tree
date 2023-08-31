@@ -1,9 +1,9 @@
-import { Point } from '~/entities/point'
 import { TransitionMoveEvent } from '~/lib/emitter'
 import { generateId } from '~/utils/core'
 import { Events } from '~/utils/emitter'
 
 import { CanvasController, NodeListController, NodeState, getColumnX } from '..'
+import { Point } from '../../..'
 
 interface Props {
   canvasController: CanvasController

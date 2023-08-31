@@ -1,9 +1,9 @@
-import { Point } from '~/entities/point'
 import { notify } from '~/shared/notify'
 import { Box } from '~/utils/clipboard'
 import { generateId, has } from '~/utils/core'
 
 import { NodeListController } from '..'
+import { Point } from '../../..'
 
 interface Props {
   nodeListController: NodeListController
