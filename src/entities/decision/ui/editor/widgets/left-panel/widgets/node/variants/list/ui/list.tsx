@@ -12,6 +12,7 @@ export interface Props {
   nodeListState: NodeListState
   className?: string
   centerNode: (id: Id) => void
+  selectNodes: (ids: Id[]) => void
 }
 
 export default function List(props: Props): JSX.Element {
@@ -28,7 +29,12 @@ export default function List(props: Props): JSX.Element {
       {filtered.map((state) => {
         return (
           <li key={state.id}>
-            <Node nodeListState={props.nodeListState} state={state} centerNode={props.centerNode} />
+            <Node
+              selectNodes={props.selectNodes}
+              nodeListState={props.nodeListState}
+              state={state}
+              centerNode={props.centerNode}
+            />
           </li>
         )
       })}

@@ -16,12 +16,13 @@ export default function Filter(props: VariantPickerProps): JSX.Element {
 
   return (
     <Node
+      selectNodes={props.selectNodes}
       listState={props.nodeListState}
       state={props.state}
       onGestureDrug={props.onGestureDrug}
       className={Filter.displayName}
       title={<Title className='title' state={props.state} />}
-      toolbar={<Toolbar listState={props.nodeListState} state={props.state} />}
+      toolbar={<Toolbar selectNodes={props.selectNodes} listState={props.nodeListState} state={props.state} />}
       sourceLinks={
         <SourceLinks
           linkListState={props.linkListState}

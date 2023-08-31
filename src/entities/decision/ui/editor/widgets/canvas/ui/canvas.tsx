@@ -14,6 +14,7 @@ export interface Props {
   state: State
   linkListState: LinkListController
   nodeListState: NodeListState
+  selectNodes: (ids: Id[]) => void
   removeNode: (id: Id) => void
 }
 
@@ -33,6 +34,7 @@ function CanvasComponent(props: Props): JSX.Element {
           state={props.nodeListState}
           linkListState={props.linkListState}
           remove={props.removeNode}
+          selectNodes={props.selectNodes}
           onGestureDrug={onGestureDrag(props.state, props.nodeListState)}
         />
       </PaintingPanel>

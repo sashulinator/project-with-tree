@@ -1,6 +1,7 @@
 import { createElement, memo } from 'react'
 
 import { GestureDragEvent } from '~/ui/canvas'
+import { Id } from '~/utils/core'
 
 import { ArbitrationNode, ControlGroupNode, EnterNode, FilterNode, State as NodeState, OfferNode } from '../../..'
 import { LinkListState, NodeListState } from '../../../../../../..'
@@ -11,6 +12,7 @@ export interface VariantPickerProps {
   state: NodeState
   linkListState: LinkListState
   nodeListState: NodeListState
+  selectNodes: (ids: Id[]) => void
   onGestureDrug: (event: GestureDragEvent) => void
 }
 

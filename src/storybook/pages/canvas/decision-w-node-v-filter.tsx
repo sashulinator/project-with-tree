@@ -7,6 +7,7 @@ import { FilterNode } from '~/entities/decision/ui/editor/widgets/canvas/widgets
 import { Point } from '~/entities/point'
 import { Config, Props } from '~/storybook/types'
 import { H1 } from '~/ui/heading'
+import { emptyFn } from '~/utils/function/empty-fn'
 
 const point1: Point = {
   id: 'id1',
@@ -78,6 +79,7 @@ export default {
               <FilterNode
                 {...props}
                 nodeListState={states}
+                selectNodes={emptyFn}
                 key={state.id}
                 state={state}
                 linkListState={linkStates}

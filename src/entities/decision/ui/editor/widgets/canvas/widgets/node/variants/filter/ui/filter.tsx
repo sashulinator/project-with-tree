@@ -16,6 +16,7 @@ export default function Filter(props: VariantPickerProps): JSX.Element {
 
   return (
     <Node
+      selectNodes={props.selectNodes}
       listState={props.nodeListState}
       state={props.state}
       onGestureDrug={props.onGestureDrug}

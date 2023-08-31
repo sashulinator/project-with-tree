@@ -13,6 +13,7 @@ export interface Props extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   state: NodeState
   nodeListState: NodeListState
   centerNode: (id: Id) => void
+  selectNodes: (ids: Id[]) => void
 }
 
 export default function Node(props: Props): JSX.Element {
@@ -37,8 +38,9 @@ export default function Node(props: Props): JSX.Element {
   function onClick(e: React.MouseEvent): void {
     if (e.metaKey) {
       nodeListState.selection.toggle(state.id)
+      props.selectNodes([...nodeListState.selection.value])
     } else {
-      nodeListState.selection.set([state.id])
+      props.selectNodes([state.id])
       centerNode(state.id)
     }
   }

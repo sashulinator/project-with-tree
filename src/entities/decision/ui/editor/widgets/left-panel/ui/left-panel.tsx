@@ -18,6 +18,7 @@ export interface Props {
   resizableProps: Omit<ResizableProps, 'direction'>
   rootProps?: React.HTMLAttributes<HTMLDivElement>
   centerNode: (id: Id) => void
+  selectNodes: (id: Id[]) => void
 }
 
 function LeftPanelComponent(props: Props): JSX.Element | null {
@@ -33,7 +34,12 @@ function LeftPanelComponent(props: Props): JSX.Element | null {
       from={{ x: -33 }}
     >
       <Resizable {...props.resizableProps} direction='left' />
-      <NodeList className='nodeList' centerNode={props.centerNode} nodeListState={props.nodeListState} />
+      <NodeList
+        selectNodes={props.selectNodes}
+        className='nodeList'
+        centerNode={props.centerNode}
+        nodeListState={props.nodeListState}
+      />
     </AppearFrom>
   )
 

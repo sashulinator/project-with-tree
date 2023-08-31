@@ -14,6 +14,7 @@ export interface ListProps {
   state: State
   linkListState: LinkListState
   remove: (id: Id) => void
+  selectNodes: (ids: Id[]) => void
   onGestureDrug: (state: NodeState) => (event: GestureDragEvent) => void
 }
 
@@ -27,6 +28,7 @@ export function ListComponent(props: ListProps): JSX.Element {
           <VariantPicker
             key={nodeState.id}
             state={nodeState}
+            selectNodes={props.selectNodes}
             nodeListState={props.state}
             linkListState={props.linkListState}
             onGestureDrug={props.onGestureDrug(nodeState)}

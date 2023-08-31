@@ -1,6 +1,8 @@
 import { Point } from '~/entities/point'
+import { TransitionMoveEvent } from '~/lib/emitter'
 import { generateId } from '~/utils/core'
 import { getElementSize } from '~/utils/dom/get-element-size'
+import { Events } from '~/utils/emitter'
 
 import { CanvasState, NodeListState, NodeState, getColumnX } from '..'
 
@@ -9,7 +11,7 @@ interface Props {
   nodeListState: NodeListState
 }
 
-export function addNode(props: Props): () => void {
+export function addNode(props: Props, event?: TransitionMoveEvent & Events): () => void {
   return (point?: Point): void => {
     const canvasSize = getElementSize(props.canvasState.ref.value as Element)
 
@@ -22,8 +24,8 @@ export function addNode(props: Props): () => void {
       id: generateId(),
       computation: 'successively',
       name: 'new',
-      ...point,
       xy: [x, y],
+      ...point,
     }
 
     const nodeState = new NodeState(newPoint)
@@ -32,9 +34,7 @@ export function addNode(props: Props): () => void {
     setTimeout(() => {
       nodeState.position.transitionMove(
         { x: getColumnX(nodeState.position.value.x), y: nodeState.position.value.y },
-        {},
-        () => {},
-        { duration: 0 }
+        { duration: 0, ...event }
       )
     }, 10)
   }

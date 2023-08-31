@@ -1,13 +1,21 @@
 import { Id, generateId } from '../core'
 
-export interface HistoryItem {
+export interface HistoryItem<
+  TEvent extends {
+    type: string
+    redo: Record<string, unknown>
+    undo: Record<string, unknown>
+  } = {
+    type: string
+    redo: Record<string, unknown>
+    undo: Record<string, unknown>
+  },
+> {
   id?: Id
   done: boolean
   storeLocally: boolean
-  type: string
   username: string
-  redo: Record<string, unknown>
-  undo: Record<string, unknown>
+  events: TEvent[]
 }
 
 export class ActionHistory {
@@ -29,7 +37,7 @@ export class ActionHistory {
 
   findNext(): HistoryItem | undefined {
     return this.array.find((item, i) => {
-      return this.array[i + 1]?.done || i === this.array.length - 1
+      return (this.array[i + 1]?.done || i === this.array.length - 1) && !item.done
     })
   }
 

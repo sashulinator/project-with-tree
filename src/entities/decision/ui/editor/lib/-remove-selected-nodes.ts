@@ -10,7 +10,6 @@ interface Props {
 export function removeSelectedNodes(props: Props): () => void {
   return () => {
     props.nodeListState.selection.value.forEach((id) => {
-      console.log('id', id)
       const state = props.nodeListState.get(id)
       if (state.point.level !== 'main') {
         props.removeNode(id)

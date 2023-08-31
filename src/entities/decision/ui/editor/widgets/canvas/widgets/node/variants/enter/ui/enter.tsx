@@ -16,6 +16,7 @@ export default function Enter(props: VariantPickerProps): JSX.Element {
 
   return (
     <Node
+      selectNodes={props.selectNodes}
       listState={props.nodeListState}
       onGestureDrug={props.onGestureDrug}
       state={props.state}

@@ -7,7 +7,6 @@ import { GhostButton, PrimaryButton } from '~/ui/button'
 import { ArrowLeft, ArrowRight, Trash } from '~/ui/icon'
 import Line from '~/ui/line'
 import Tooltip from '~/ui/tooltip'
-import { ActionHistory } from '~/utils/action-history'
 import { c } from '~/utils/core'
 import { stopPropagation } from '~/utils/dom-event'
 import { fns } from '~/utils/function'
@@ -15,15 +14,14 @@ import { useUpdate } from '~/utils/hooks'
 import { setRefs } from '~/utils/react'
 
 import { NodeListState } from '../../..'
+import { HistoryController } from '../../../_private'
 
 Toolbar.displayName = 'decision-Editor-w-Toolbar'
 
 export interface Props {
   className?: string
   nodeListState: NodeListState
-  history: ActionHistory
-  nextHistory: () => void
-  previousHistory: () => void
+  history: HistoryController
   addNode: (point: Partial<Point>) => void
   removeSelectedNodes: () => void
 }
@@ -48,7 +46,7 @@ export default function Toolbar(props: Props): JSX.Element {
         }
         placement='tc'
       >
-        <GhostButton onClick={fns(stopPropagation, props.previousHistory)} square={true} height='s'>
+        <GhostButton onClick={fns(stopPropagation, () => props.history.undo())} square={true} height='s'>
           <ArrowLeft />
         </GhostButton>
       </Tooltip>
@@ -65,7 +63,7 @@ export default function Toolbar(props: Props): JSX.Element {
         }
         placement='tc'
       >
-        <GhostButton onClick={fns(stopPropagation, props.nextHistory)} square={true} height='s'>
+        <GhostButton onClick={fns(stopPropagation, () => props.history.redo())} square={true} height='s'>
           <ArrowRight />
         </GhostButton>
       </Tooltip>

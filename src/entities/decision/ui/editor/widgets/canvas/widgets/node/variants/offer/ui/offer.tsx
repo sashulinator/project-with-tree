@@ -1,6 +1,7 @@
 import './offer.scss'
 
 import { Id } from '~/utils/core'
+import { emptyFn } from '~/utils/function/empty-fn'
 import { useUpdate } from '~/utils/hooks'
 
 import { Toolbar } from '..'
@@ -16,6 +17,7 @@ export default function Filter(props: VariantPickerProps): JSX.Element {
 
   return (
     <Node
+      selectNodes={emptyFn}
       listState={props.nodeListState}
       state={props.state}
       onGestureDrug={props.onGestureDrug}

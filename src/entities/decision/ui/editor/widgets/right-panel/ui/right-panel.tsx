@@ -10,7 +10,7 @@ import Chip from '~/ui/chip/ui/chip'
 import { Close } from '~/ui/icon'
 import Input, { useChangeOnBlurStrategy } from '~/ui/input'
 import Resizable, { ResizableProps } from '~/ui/resizable'
-import { assertDefined, c } from '~/utils/core'
+import { Id, assertDefined, c } from '~/utils/core'
 import { useUpdate } from '~/utils/hooks'
 
 import { RuleList } from '..'
@@ -25,6 +25,7 @@ export interface Props {
   nodeListState: NodeListState
   linkListState: LinkListState
   ruleList: RulesRes[]
+  selectNodes: (ids: Id[]) => void
 }
 
 function RightPanelComponent(props: Props): JSX.Element | null {
@@ -70,7 +71,7 @@ function RightPanelComponent(props: Props): JSX.Element | null {
             round={true}
             height='l'
             onClick={(): void => {
-              props.nodeListState.selection.set([])
+              props.selectNodes([])
               props.linkListState.editingRuleSet.set(undefined)
             }}
           >
