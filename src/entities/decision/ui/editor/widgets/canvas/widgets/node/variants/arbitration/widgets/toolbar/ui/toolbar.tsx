@@ -6,13 +6,13 @@ import { c } from '~/utils/core'
 import { stopPropagation } from '~/utils/dom-event'
 import { useUpdate } from '~/utils/hooks'
 
-import { ListState, State } from '../../../../..'
+import { ListController, State } from '../../../../..'
 
 Toolbar.displayName = 'decision-Editor-w-Canvas-w-Node-v-Arbitration-w-Toolbar'
 
 export interface Props {
   state: State
-  listState: ListState
+  listState: ListController
   className?: string
 }
 

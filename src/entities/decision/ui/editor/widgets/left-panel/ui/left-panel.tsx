@@ -8,13 +8,13 @@ import { Id, c } from '~/utils/core'
 import { useUpdate } from '~/utils/hooks'
 
 import { NodeList } from '..'
-import { NodeListState } from '../../..'
+import { NodeListController } from '../../..'
 
 LeftPanelComponent.displayName = 'decision-Editor-w-LeftPanel'
 
 export interface Props {
   className?: string
-  nodeListState: NodeListState
+  nodeListController: NodeListController
   resizableProps: Omit<ResizableProps, 'direction'>
   rootProps?: React.HTMLAttributes<HTMLDivElement>
   centerNode: (id: Id) => void
@@ -23,7 +23,7 @@ export interface Props {
 
 function LeftPanelComponent(props: Props): JSX.Element | null {
   useUpdate(subscribeOnUpdates)
-  if (props.nodeListState.searchQuery.value === '') {
+  if (props.nodeListController.searchQuery.value === '') {
     return null
   }
 
@@ -38,13 +38,13 @@ function LeftPanelComponent(props: Props): JSX.Element | null {
         selectNodes={props.selectNodes}
         className='nodeList'
         centerNode={props.centerNode}
-        nodeListState={props.nodeListState}
+        nodeListController={props.nodeListController}
       />
     </AppearFrom>
   )
 
   function subscribeOnUpdates(update: () => void, uns: (() => void)[]): void {
-    uns.push(props.nodeListState.on('searchQuery', update))
+    uns.push(props.nodeListController.on('searchQuery', update))
   }
 }
 

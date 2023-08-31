@@ -6,22 +6,22 @@ import { fns } from '~/utils/function'
 import { useForceUpdate, useOnMount, useUpdate } from '~/utils/hooks'
 
 import { Controller, ListController, getOffset } from '..'
-import { NodeListState } from '../../../../..'
+import { NodeListController } from '../../../../..'
 
 export interface LinkProps extends React.HTMLAttributes<SVGPathElement> {
   scale: number
   canvasTranslate: Position
   state: Controller
-  nodeListState: NodeListState
+  nodeListController: NodeListController
   // TODO не ничего не должен знать о Листе
   listState: ListController
 }
 
 export default function Link(props: LinkProps): JSX.Element | null {
-  const { scale, state, canvasTranslate, listState, nodeListState, ...pathProps } = props
+  const { scale, state, canvasTranslate, listState, nodeListController, ...pathProps } = props
 
-  const sourceState = nodeListState.find(props.state.sourceId.value)
-  const targetState = nodeListState.find(props.state.targetId.value)
+  const sourceState = nodeListController.find(props.state.sourceId.value)
+  const targetState = nodeListController.find(props.state.targetId.value)
 
   useUpdate(subscribeOnUpdates, [sourceState, targetState])
   useOnMount(useForceUpdate())

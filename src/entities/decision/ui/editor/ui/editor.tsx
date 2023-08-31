@@ -14,7 +14,7 @@ import {
   Header,
   LeftPanel,
   LinkListController,
-  NodeListState,
+  NodeListController,
   RightPanel,
   Toolbar,
 } from '../'
@@ -43,7 +43,7 @@ export interface Props {
   onSubmit: (states: {
     editorController: Controller
     canvasController: CanvasController
-    nodeListState: NodeListState
+    nodeListController: NodeListController
     linkListController: LinkListController
   }) => void
 }
@@ -51,26 +51,29 @@ export interface Props {
 export default function Editor(props: Props): JSX.Element {
   const controller = useMemo(() => new Controller(props.decision), [props.decision.decisionTree])
   const canvasController = useMemo(() => new CanvasController(), [props.decision.decisionTree])
-  const nodeListState = useMemo(() => new NodeListState(props.decision.decisionTree), [props.decision.decisionTree])
+  const nodeListController = useMemo(
+    () => new NodeListController(props.decision.decisionTree),
+    [props.decision.decisionTree]
+  )
   const linkListController = useMemo(
     () => new LinkListController(props.decision.decisionTree),
     [props.decision.decisionTree]
   )
 
-  const removeNode = removeNodeBind({ linkListController, nodeListState })
-  const addNode = addNodeBind({ canvasController, nodeListState })
-  const removeSelectedNodes = removeSelectedNodesBind({ nodeListState, removeNode })
-  const centerNode = centerNodeBind({ nodeListState, canvasController })
-  const copySelectedNodes = copySelectedNodesBind({ nodeListState })
-  const cutSelectedNodes = cutSelectedNodesBind({ nodeListState })
-  const pasteFromClipboard = pasteFromClipboardBind({ nodeListState, addNode })
-  const paste = pasteBind({ nodeListState, canvasController, pasteFromClipboard })
-  const resetAll = resetAllBind({ linkListController, nodeListState })
+  const removeNode = removeNodeBind({ linkListController, nodeListController })
+  const addNode = addNodeBind({ canvasController, nodeListController })
+  const removeSelectedNodes = removeSelectedNodesBind({ nodeListController, removeNode })
+  const centerNode = centerNodeBind({ nodeListController, canvasController })
+  const copySelectedNodes = copySelectedNodesBind({ nodeListController })
+  const cutSelectedNodes = cutSelectedNodesBind({ nodeListController })
+  const pasteFromClipboard = pasteFromClipboardBind({ nodeListController, addNode })
+  const paste = pasteBind({ nodeListController, canvasController, pasteFromClipboard })
+  const resetAll = resetAllBind({ linkListController, nodeListController })
 
   const history = useMemo(
     () =>
       new HistoryController({
-        nodeListState,
+        nodeListController,
       }),
     [props.decision.decisionTree]
   )
@@ -89,10 +92,10 @@ export default function Editor(props: Props): JSX.Element {
 
   return (
     <div className={c(props.className, Editor.displayName)}>
-      <Header submit={submit} nodeList={nodeListState} editorController={controller} className='panel --header' />
+      <Header submit={submit} nodeList={nodeListController} editorController={controller} className='panel --header' />
       <Toolbar
         history={history}
-        nodeListState={nodeListState}
+        nodeListController={nodeListController}
         className='panel --toolbar'
         addNode={addNode}
         removeSelectedNodes={removeSelectedNodes}
@@ -102,7 +105,7 @@ export default function Editor(props: Props): JSX.Element {
         className='panel --left'
         resizableProps={{ className: resizeBarClassName, name: `${Editor.displayName}-panel__left`, defaultSize: 300 }}
         centerNode={centerNode}
-        nodeListState={nodeListState}
+        nodeListController={nodeListController}
       />
       <RightPanel
         selectNodes={selectNodes}
@@ -110,13 +113,13 @@ export default function Editor(props: Props): JSX.Element {
         ruleList={props.ruleList}
         linkListController={linkListController}
         resizableProps={{ className: resizeBarClassName, name: `${Editor.displayName}-panel__right`, defaultSize: 300 }}
-        nodeListState={nodeListState}
+        nodeListController={nodeListController}
       />
       <Canvas
         selectNodes={selectNodes}
         removeNode={removeNode}
         controller={canvasController}
-        nodeListState={nodeListState}
+        nodeListController={nodeListController}
         linkListController={linkListController}
       />
     </div>
@@ -125,13 +128,13 @@ export default function Editor(props: Props): JSX.Element {
   // Private
 
   function selectNodes(value: Id[]): void {
-    const previous = [...nodeListState.selection.value]
-    nodeListState.selection.set(value)
+    const previous = [...nodeListController.selection.value]
+    nodeListController.selection.set(value)
     history.addSelection({ value, previous })
   }
 
   function submit(): void {
-    props.onSubmit({ editorController: controller, canvasController, nodeListState, linkListController })
+    props.onSubmit({ editorController: controller, canvasController, nodeListController, linkListController })
   }
 
   function onClick(e: MouseEvent): void {

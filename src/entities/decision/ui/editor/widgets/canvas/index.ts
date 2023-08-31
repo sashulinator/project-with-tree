@@ -22,7 +22,7 @@ export {
   default as Node,
   List as NodeList,
   State as NodeState,
-  ListState as NodeListState,
+  ListController as NodeListController,
   Joint as NodeJoint,
   Factory as NodeFactory,
   getMovement as getNodeMovement,
@@ -34,7 +34,7 @@ export type {
   ListProps as NodeListProps,
   NodeProps,
   StateProps as NodeStateProps,
-  ListEvents as NodeEvents,
+  ListControllerEvents as NodeListControllerEvents,
   JointProps as NodeJointProps,
   FactoryProps as NodeFactoryProps,
 } from './widgets/node'

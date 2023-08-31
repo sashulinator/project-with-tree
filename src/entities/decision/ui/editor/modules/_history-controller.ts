@@ -1,7 +1,7 @@
 import { ActionHistory, HistoryItem } from '~/utils/action-history'
 import { Id, Position } from '~/utils/core'
 
-import { NodeListState } from '../widgets/canvas'
+import { NodeListController } from '../widgets/canvas'
 
 type Event<T> = {
   previous: T
@@ -9,7 +9,7 @@ type Event<T> = {
 }
 
 interface Props {
-  nodeListState: NodeListState
+  nodeListController: NodeListController
 }
 
 export type SelectionEvent = { type: 'selection'; undo: { value: Id[] }; redo: { value: Id[] } }
@@ -22,12 +22,12 @@ export type NodePositionEvent = {
 type Events = SelectionEvent | NodePositionEvent
 
 export class HistoryController extends ActionHistory {
-  nodeListState: NodeListState
+  nodeListController: NodeListController
 
   constructor(props: Props) {
     super()
 
-    this.nodeListState = props.nodeListState
+    this.nodeListController = props.nodeListController
   }
 
   factory = (item: HistoryItem<Events>): void => {
@@ -69,10 +69,10 @@ export class HistoryController extends ActionHistory {
   }
 
   undoSelection = (ids: Id[]): void => {
-    this.nodeListState.selection.set(ids)
+    this.nodeListController.selection.set(ids)
   }
 
   redoSelection = (ids: Id[]): void => {
-    this.nodeListState.selection.set(ids)
+    this.nodeListController.selection.set(ids)
   }
 }

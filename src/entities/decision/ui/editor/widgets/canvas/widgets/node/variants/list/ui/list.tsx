@@ -6,12 +6,12 @@ import { GestureDragEvent } from '~/ui/canvas'
 import { Id } from '~/utils/core'
 import { useUpdate } from '~/utils/hooks'
 
-import { State } from '..'
+import { Controller } from '..'
 import { Factory, State as NodeState } from '../../..'
 import { LinkListController } from '../../../../../../..'
 
 export interface ListProps {
-  state: State
+  state: Controller
   linkListController: LinkListController
   remove: (id: Id) => void
   selectNodes: (ids: Id[]) => void
@@ -23,15 +23,15 @@ export function ListComponent(props: ListProps): JSX.Element {
 
   return (
     <DndProvider backend={HTML5Backend}>
-      {props.state.values().map((nodeState) => {
+      {props.state.values().map((nodeController) => {
         return (
           <Factory
-            key={nodeState.id}
-            state={nodeState}
+            key={nodeController.id}
+            state={nodeController}
             selectNodes={props.selectNodes}
-            nodeListState={props.state}
+            nodeListController={props.state}
             linkListController={props.linkListController}
-            onGestureDrug={props.onGestureDrug(nodeState)}
+            onGestureDrug={props.onGestureDrug(nodeController)}
           />
         )
       })}

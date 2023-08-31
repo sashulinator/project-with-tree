@@ -1,8 +1,8 @@
 /**
  * state
  */
-export { State } from './state/state'
-export type { Events } from './state/state'
+export { Controller } from './state/state'
+export type { Events as ControllerEvents } from './state/state'
 
 /**
  * ui

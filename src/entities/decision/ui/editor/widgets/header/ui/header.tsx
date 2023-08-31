@@ -13,14 +13,14 @@ import ThemeDropdown from '~/ui/theme-dropdown'
 import { c } from '~/utils/core'
 import { useUpdate } from '~/utils/hooks'
 
-import { Controller, NodeListState } from '../../..'
+import { Controller, NodeListController } from '../../..'
 
 HeaderComponent.displayName = 'decision-Editor-w-Header'
 
 export interface Props {
   className?: string
   editorController: Controller
-  nodeList: NodeListState
+  nodeList: NodeListController
   submit: () => void
 }
 

@@ -24,8 +24,8 @@ export type { NodeProps } from './ui/node'
 /**
  * variants
  */
-export { State as ListState, default as List } from './variants/list'
-export type { ListProps as ListProps, Events as ListEvents } from './variants/list'
+export { Controller as ListController, default as List } from './variants/list'
+export type { ListProps as ListProps, ControllerEvents as ListControllerEvents } from './variants/list'
 
 export { default as Factory } from './variants/factory'
 export type { FactoryProps } from './variants/factory'

@@ -25,7 +25,7 @@ export class Controller extends Dictionary<LinkController, Events> {
   editingRuleSet: Prop<'editingRuleSet', Id | undefined>
 
   constructor(pointList: Point[]) {
-    const linkStates = pointList
+    const linkControllers = pointList
       .flatMap((point) => {
         return point.children?.map(
           (ruleSet) =>
@@ -34,7 +34,7 @@ export class Controller extends Dictionary<LinkController, Events> {
       })
       .filter((t) => !!t) as LinkController[]
 
-    super(linkStates, (l) => l.id.toString())
+    super(linkControllers, (l) => l.id.toString())
 
     this.editingId = new Prop<'editingId', Id | undefined>('editingId', undefined, this)
 
@@ -92,23 +92,23 @@ export class Controller extends Dictionary<LinkController, Events> {
 
     invariant(!editingLinkState, 'You are already in the middle of editing')
 
-    const linkState = this.get(linkId)
+    const linkController = this.get(linkId)
 
-    if (linkState.targetId.value !== nodeId && linkState.sourceId.value !== nodeId) {
+    if (linkController.targetId.value !== nodeId && linkController.sourceId.value !== nodeId) {
       throw new Error('nodeId is neither targetId nor sourceId')
     }
 
-    const isSourceEditing = linkState.sourceId.value === nodeId
+    const isSourceEditing = linkController.sourceId.value === nodeId
 
     if (isSourceEditing) {
-      const newState = new LinkController({ index: 0, targetId: linkState.targetId.value })
+      const newState = new LinkController({ index: 0, targetId: linkController.targetId.value })
       this.add(newState)
       this.editingId.value = newState.id
     } else {
       this.editingId.value = linkId
     }
 
-    linkState.targetId.value = undefined
+    linkController.targetId.value = undefined
   }
 
   finishEditing(linkId: Id): void {
@@ -122,15 +122,15 @@ export class Controller extends Dictionary<LinkController, Events> {
       throw new Error('state has no targetId and no sourceId')
     }
 
-    const linkState = this.get(linkId)
-    linkState.targetId.value = editingLinkState.targetId.value
+    const linkController = this.get(linkId)
+    linkController.targetId.value = editingLinkState.targetId.value
     this.remove(editingLinkState.id)
   }
 
   swapSourceIndexes(nodeId: Id, dragIndex: number, hoverIndex: number): void {
-    const linkStates = this.getLinksBySourceId(nodeId)
-    const dragState = linkStates.find((s) => s.index.value === dragIndex)
-    const hoverState = linkStates.find((s) => s.index.value === hoverIndex)
+    const linkControllers = this.getLinksBySourceId(nodeId)
+    const dragState = linkControllers.find((s) => s.index.value === dragIndex)
+    const hoverState = linkControllers.find((s) => s.index.value === hoverIndex)
     assertDefined(dragState)
     assertDefined(hoverState)
     hoverState.index.value = dragIndex

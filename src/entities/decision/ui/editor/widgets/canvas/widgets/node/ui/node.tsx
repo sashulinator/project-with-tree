@@ -10,7 +10,7 @@ import { fns } from '~/utils/function'
 import { useUpdate } from '~/utils/hooks'
 import { toggle } from '~/utils/id-array'
 
-import { ListState, State as NodeState } from '..'
+import { ListController, State as NodeState } from '..'
 import { dark } from '../themes/dark'
 import { light } from '../themes/light'
 
@@ -20,7 +20,7 @@ Node.displayName = 'decision-Editor-w-Canvas-w-Node'
 
 export interface NodeProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'children' | 'title'> {
   state: NodeState
-  listState: ListState
+  listState: ListController
   title: ReactElement | null
   toolbar: ReactElement | null
   sourceLinks?: ReactElement | null

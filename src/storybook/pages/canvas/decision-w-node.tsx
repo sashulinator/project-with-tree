@@ -1,7 +1,7 @@
 import { useMemo } from 'react'
 
 import Flex from '~/abstract/flex/ui/flex'
-import { Node, NodeJoint, NodeListState, NodeState } from '~/entities/decision/ui/editor'
+import { Node, NodeJoint, NodeListController, NodeState } from '~/entities/decision/ui/editor'
 import { Point } from '~/entities/point'
 import { Config, Props } from '~/storybook/types'
 import { GhostButton } from '~/ui/button'
@@ -34,8 +34,8 @@ export default {
   },
 
   element: function Element(props: Props<State>): JSX.Element {
-    const nodeState = useMemo(() => new NodeState(point1), [])
-    const listState = new NodeListState([point1])
+    const nodeController = useMemo(() => new NodeState(point1), [])
+    const listState = new NodeListController([point1])
     const { state } = props
 
     return (
@@ -44,7 +44,7 @@ export default {
           {...state}
           selectNodes={emptyFn}
           listState={listState}
-          state={nodeState}
+          state={nodeController}
           toolbar={
             <div style={{ display: 'flex', justifyContent: 'end', padding: 'var(--s)' }}>
               <GhostButton height='s' style={{ padding: 'var(--l)' }}>
@@ -80,9 +80,9 @@ export default {
             </Flex>
           }
           onGestureDrug={(event): void => {
-            const x = nodeState.position.start.x + event.movement[0]
-            const y = nodeState.position.start.y + event.movement[1]
-            nodeState.position.move({ x, y }, event)
+            const x = nodeController.position.start.x + event.movement[0]
+            const y = nodeController.position.start.y + event.movement[1]
+            nodeController.position.move({ x, y }, event)
           }}
           style={{ border: '1px solid red', width: '300px' }}
         />

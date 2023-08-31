@@ -30,7 +30,7 @@ export type Events = DictionaryEvents<NodeState> & {
   }
 }
 
-export class State extends EmitterDictionary<NodeState, Events> {
+export class Controller extends EmitterDictionary<NodeState, Events> {
   selection: Selection<'selection'>
 
   cutted: Selection<'cutted'>

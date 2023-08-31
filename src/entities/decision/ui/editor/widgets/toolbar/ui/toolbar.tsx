@@ -13,14 +13,14 @@ import { fns } from '~/utils/function'
 import { useUpdate } from '~/utils/hooks'
 import { setRefs } from '~/utils/react'
 
-import { NodeListState } from '../../..'
+import { NodeListController } from '../../..'
 import { HistoryController } from '../../../_private'
 
 Toolbar.displayName = 'decision-Editor-w-Toolbar'
 
 export interface Props {
   className?: string
-  nodeListState: NodeListState
+  nodeListController: NodeListController
   history: HistoryController
   addNode: (point: Partial<Point>) => void
   removeSelectedNodes: () => void
@@ -110,7 +110,7 @@ export default function Toolbar(props: Props): JSX.Element {
           onClick={props.removeSelectedNodes}
           square={true}
           height='s'
-          disabled={props.nodeListState.selection.value.length === 0}
+          disabled={props.nodeListController.selection.value.length === 0}
         >
           <Trash />
         </GhostButton>
@@ -119,6 +119,6 @@ export default function Toolbar(props: Props): JSX.Element {
   )
 
   function subscribeOnUpdates(update: () => void, uns: (() => void)[]): void {
-    uns.push(props.nodeListState.on('selection', update))
+    uns.push(props.nodeListController.on('selection', update))
   }
 }

@@ -14,7 +14,7 @@ import { Id, assertDefined, c } from '~/utils/core'
 import { useUpdate } from '~/utils/hooks'
 
 import { RuleList } from '..'
-import { LinkListController, NodeListState } from '../../..'
+import { LinkListController, NodeListController } from '../../..'
 
 RightPanelComponent.displayName = 'decision-Editor-w-RightPanel'
 
@@ -22,7 +22,7 @@ export interface Props {
   rootProps?: React.HTMLAttributes<HTMLDivElement>
   className?: string
   resizableProps: Omit<ResizableProps, 'direction'>
-  nodeListState: NodeListState
+  nodeListController: NodeListController
   linkListController: LinkListController
   ruleList: RulesRes[]
   selectNodes: (ids: Id[]) => void
@@ -33,18 +33,18 @@ function RightPanelComponent(props: Props): JSX.Element | null {
 
   // const [fullscreen, , , toogleFullscreen] = useBoolean(false)
 
-  const selection = props.nodeListState.selection.value
+  const selection = props.nodeListController.selection.value
 
   const selectedNodeId = [...selection][0]
-  const nodeState = props.nodeListState.find(selectedNodeId)
+  const nodeController = props.nodeListController.find(selectedNodeId)
 
   const inputProps = useChangeOnBlurStrategy({
-    value: nodeState?.title.value || '',
+    value: nodeController?.title.value || '',
     cannotBeEmpty: true,
     transparent: true,
     height: 'm',
     placeholder: 'Описание',
-    onChange: (e) => nodeState?.title.set(e.currentTarget.value),
+    onChange: (e) => nodeController?.title.set(e.currentTarget.value),
   })
 
   if (selection.length !== 1 && props.linkListController.editingRuleSet.value === undefined) {
@@ -96,8 +96,8 @@ function RightPanelComponent(props: Props): JSX.Element | null {
                     height='s'
                     key={rule.id}
                     onClick={(): void => {
-                      const linkState = props.linkListController.getEditingRuleState()
-                      linkState.rules.set(linkState.rules.value.filter((r) => r.id !== rule.id))
+                      const linkController = props.linkListController.getEditingRuleState()
+                      linkController.rules.set(linkController.rules.value.filter((r) => r.id !== rule.id))
                     }}
                   >
                     {rule.keyName || rule.name}
@@ -113,8 +113,8 @@ function RightPanelComponent(props: Props): JSX.Element | null {
               onSelect={(id): void => {
                 const rule = props.ruleList.find((rule) => rule.id === id)
                 assertDefined(rule)
-                const linkState = props.linkListController.getEditingRuleState()
-                linkState.rules.set([...linkState.rules.value, rule])
+                const linkController = props.linkListController.getEditingRuleState()
+                linkController.rules.set([...linkController.rules.value, rule])
               }}
             />
           </>
@@ -126,7 +126,7 @@ function RightPanelComponent(props: Props): JSX.Element | null {
   // Private
 
   function subscribeOnUpdates(update: () => void, uns: (() => void)[]): void {
-    uns.push(props.nodeListState.on('selection', update))
+    uns.push(props.nodeListController.on('selection', update))
     uns.push(props.linkListController.on('editingRuleSet', update))
     uns.push(props.linkListController.on('rules', update))
   }

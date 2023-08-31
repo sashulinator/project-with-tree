@@ -7,13 +7,13 @@ import { stopPropagation } from '~/utils/dom-event'
 import { useUpdate } from '~/utils/hooks'
 import { toggle } from '~/utils/id-array'
 
-import { ListState, State } from '../../../../..'
+import { ListController, State } from '../../../../..'
 
 Toolbar.displayName = 'decision-Editor-w-Canvas-w-Node-v-ControlGroup-w-Toolbar'
 
 export interface Props {
   state: State
-  listState: ListState
+  listState: ListController
   className?: string
   selectNodes: (ids: Id[]) => void
 }

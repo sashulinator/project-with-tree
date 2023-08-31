@@ -1,21 +1,21 @@
 import { getElementSize } from '~/utils/dom'
 
-import { CanvasController, NodeListState, getColumnX } from '..'
+import { CanvasController, NodeListController, getColumnX } from '..'
 
 interface Props {
   canvasController: CanvasController
-  nodeListState: NodeListState
+  nodeListController: NodeListController
   pasteFromClipboard: () => void
 }
 
 export function paste(props: Props): () => void {
   return () => {
-    if (props.nodeListState.cutted.value.length > 0) {
-      props.nodeListState.cutted.value.forEach((id, i) => {
-        const nodeState = props.nodeListState.get(id)
+    if (props.nodeListController.cutted.value.length > 0) {
+      props.nodeListController.cutted.value.forEach((id, i) => {
+        const nodeController = props.nodeListController.get(id)
         const canvasSize = getElementSize(props.canvasController.ref.value as Element)
 
-        nodeState.position.transitionMove({
+        nodeController.position.transitionMove({
           x: getColumnX(
             (-props.canvasController.zoom.value.x + canvasSize?.width / 2) / props.canvasController.zoom.value.k - 150
           ),

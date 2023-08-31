@@ -17,7 +17,7 @@ export default function Enter(props: FactoryProps): JSX.Element {
   return (
     <Node
       selectNodes={props.selectNodes}
-      listState={props.nodeListState}
+      listState={props.nodeListController}
       onGestureDrug={props.onGestureDrug}
       state={props.state}
       className={Enter.displayName}
@@ -44,9 +44,9 @@ export default function Enter(props: FactoryProps): JSX.Element {
     if (props.linkListController.editingId.value) {
       props.linkListController.finishEditing(linkId)
     } else {
-      const linkState = props.linkListController.get(linkId)
-      if (!linkState.targetId.value) {
-        props.linkListController.editingId.set(linkState.id)
+      const linkController = props.linkListController.get(linkId)
+      if (!linkController.targetId.value) {
+        props.linkListController.editingId.set(linkController.id)
       } else {
         props.linkListController.startEditing(linkId, props.state.id)
       }

@@ -3,11 +3,11 @@ import { TransitionMoveEvent } from '~/lib/emitter'
 import { generateId } from '~/utils/core'
 import { Events } from '~/utils/emitter'
 
-import { CanvasController, NodeListState, NodeState, getColumnX } from '..'
+import { CanvasController, NodeListController, NodeState, getColumnX } from '..'
 
 interface Props {
   canvasController: CanvasController
-  nodeListState: NodeListState
+  nodeListController: NodeListController
 }
 
 export function addNode(props: Props): () => void {
@@ -23,12 +23,12 @@ export function addNode(props: Props): () => void {
       id: point?.id ?? generateId(),
     }
 
-    const nodeState = new NodeState(newPoint)
-    props.nodeListState.add(nodeState)
+    const nodeController = new NodeState(newPoint)
+    props.nodeListController.add(nodeController)
 
     setTimeout(() => {
-      nodeState.position.transitionMove(
-        { x: getColumnX(nodeState.position.value.x), y: nodeState.position.value.y },
+      nodeController.position.transitionMove(
+        { x: getColumnX(nodeController.position.value.x), y: nodeController.position.value.y },
         { duration: 0, ...event }
       )
     }, 10)

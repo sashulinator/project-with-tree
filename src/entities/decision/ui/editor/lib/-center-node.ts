@@ -1,22 +1,22 @@
 import { Id, assertNotNull } from '~/utils/core'
 import { getElementSize } from '~/utils/dom/get-element-size'
 
-import { CanvasController, NodeListState } from '..'
+import { CanvasController, NodeListController } from '..'
 
 interface Props {
-  nodeListState: NodeListState
+  nodeListController: NodeListController
   canvasController: CanvasController
 }
 
 export function centerNode(props: Props): (id: Id) => void {
   return (id) => {
-    const nodeState = props.nodeListState.get(id)
-    assertNotNull(nodeState.ref.value)
+    const nodeController = props.nodeListController.get(id)
+    assertNotNull(nodeController.ref.value)
     assertNotNull(props.canvasController.ref.value)
-    const nodeSize = getElementSize(nodeState.ref.value)
+    const nodeSize = getElementSize(nodeController.ref.value)
     const canvasSize = getElementSize(props.canvasController.ref.value)
-    const mx = -nodeState.position.value.x + canvasSize.width / 2 - nodeSize.width / 2
-    const my = -nodeState.position.value.y + canvasSize.height / 2 - nodeSize.height / 2
+    const mx = -nodeController.position.value.x + canvasSize.width / 2 - nodeSize.width / 2
+    const my = -nodeController.position.value.y + canvasSize.height / 2 - nodeSize.height / 2
     props.canvasController.zoom.setZoom({ x: mx, y: my })
   }
 }

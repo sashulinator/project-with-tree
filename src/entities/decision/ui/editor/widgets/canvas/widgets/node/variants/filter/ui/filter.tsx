@@ -17,12 +17,12 @@ export default function Filter(props: FactoryProps): JSX.Element {
   return (
     <Node
       selectNodes={props.selectNodes}
-      listState={props.nodeListState}
+      listState={props.nodeListController}
       state={props.state}
       onGestureDrug={props.onGestureDrug}
       className={Filter.displayName}
       title={<Title className='title' state={props.state} />}
-      toolbar={<Toolbar listState={props.nodeListState} state={props.state} />}
+      toolbar={<Toolbar listState={props.nodeListController} state={props.state} />}
       sourceLinks={
         <SourceLinks
           linkListController={props.linkListController}
@@ -33,7 +33,7 @@ export default function Filter(props: FactoryProps): JSX.Element {
       }
       targetLinks={
         <TargetLinks
-          linkStates={props.linkListController}
+          linkControllers={props.linkListController}
           state={props.state}
           onNewJointClick={onNewJointClick('targetId')}
           onJointClick={onJointClick}
@@ -52,9 +52,9 @@ export default function Filter(props: FactoryProps): JSX.Element {
     if (props.linkListController.editingId.value) {
       props.linkListController.finishEditing(linkId)
     } else {
-      const linkState = props.linkListController.get(linkId)
-      if (!linkState.targetId.value) {
-        props.linkListController.editingId.set(linkState.id)
+      const linkController = props.linkListController.get(linkId)
+      if (!linkController.targetId.value) {
+        props.linkListController.editingId.set(linkController.id)
       } else {
         props.linkListController.startEditing(linkId, props.state.id)
       }

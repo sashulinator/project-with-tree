@@ -42,9 +42,9 @@ export default function SourceLinks(props: Props): JSX.Element {
 
   return (
     <div className={c(props.className, SourceLinks.displayName)}>
-      {sourceLinkStates.map((linkState, i) => {
-        if (linkState.id === newLinkId) return null
-        const isLinked = Boolean(linkState.targetId.value)
+      {sourceLinkStates.map((linkController, i) => {
+        if (linkController.id === newLinkId) return null
+        const isLinked = Boolean(linkController.targetId.value)
 
         return (
           <RuleSet
@@ -53,8 +53,8 @@ export default function SourceLinks(props: Props): JSX.Element {
             nodeId={props.state.id}
             isEditingThisNode={isEditingThisNode}
             isLinked={isLinked}
-            key={linkState.id}
-            linkState={linkState}
+            key={linkController.id}
+            linkController={linkController}
             isEditingHasSource={isEditingHasSource}
             editingLinkState={editingLinkState}
             onJointClick={props.onJointClick}
@@ -88,7 +88,7 @@ export default function SourceLinks(props: Props): JSX.Element {
 
 export interface RuleSetProps {
   nodeId: Id
-  linkState: LinkController
+  linkController: LinkController
   index: number
   isLinked: boolean
   isEditingThisNode: boolean
@@ -168,7 +168,7 @@ export function RuleSet(props: RuleSetProps): JSX.Element {
   const [{ isDragging }, drag] = useDrag({
     type: `RuleSet-${props.nodeId}`,
     item: () => {
-      return { id: props.linkState.id, index: props.index }
+      return { id: props.linkController.id, index: props.index }
     },
     collect: (monitor) => ({
       isDragging: monitor.isDragging(),
@@ -180,20 +180,20 @@ export function RuleSet(props: RuleSetProps): JSX.Element {
   drag(drop(ref))
 
   return (
-    <div className='rule' key={props.linkState.id} ref={ref} style={{ opacity }} data-handler-id={handlerId}>
+    <div className='rule' key={props.linkController.id} ref={ref} style={{ opacity }} data-handler-id={handlerId}>
       <UnstyledButton
         className='editRule'
-        onClick={(): void => props.linkListController.editingRuleSet.set(props.linkState.id)}
+        onClick={(): void => props.linkListController.editingRuleSet.set(props.linkController.id)}
       >
-        {props.linkState.rules.value.map((rule) => rule.keyName || rule.name).join(', ')}
+        {props.linkController.rules.value.map((rule) => rule.keyName || rule.name).join(', ')}
       </UnstyledButton>
       <Joint
         disabled={
           props.isEditingThisNode || props.isEditingHasSource || (props.isLinked && Boolean(props.editingLinkState))
         }
         variant={props.isLinked ? 'linked' : 'unlinked'}
-        linkId={props.linkState.id}
-        onClick={(): void => props.onJointClick(props.linkState.id)}
+        linkId={props.linkController.id}
+        onClick={(): void => props.onJointClick(props.linkController.id)}
       />
     </div>
   )
