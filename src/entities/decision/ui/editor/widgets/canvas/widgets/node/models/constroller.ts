@@ -1,6 +1,8 @@
 import { ItemEvents, ItemState } from '~/abstract/canvas'
 import { Point } from '~/entities/decision'
-import { generateId } from '~/utils/core'
+import { assertNotNull, generateId } from '~/utils/core'
+import { getElementSize } from '~/utils/dom'
+import { Size } from '~/utils/dom/types/size'
 import { Prop } from '~/utils/emitter'
 
 export type Events = ItemEvents & {
@@ -28,6 +30,11 @@ export class Controller extends ItemState<Events> {
 
   copy = (point?: Point): Controller => {
     return new Controller({ ...this.serialize(), ...point, id: generateId() })
+  }
+
+  get size(): Size {
+    assertNotNull(this.ref.value)
+    return getElementSize(this.ref.value)
   }
 
   serialize = (): Point => {

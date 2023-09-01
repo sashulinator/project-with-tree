@@ -3,7 +3,7 @@ import './editor.scss'
 import { useMemo } from 'react'
 
 import { RulesRes } from '~/entities/rules/types/rules-type'
-import { Id, c } from '~/utils/core'
+import { Id, c, curry } from '~/utils/core'
 import { useEventListener } from '~/utils/hooks'
 
 import {
@@ -20,7 +20,7 @@ import {
 } from '../'
 import {
   HistoryController,
-  centerNode as centerNodeBind,
+  centerNode,
   copySelectedNodes as copySelectedNodesBind,
   cutSelectedNodes as cutSelectedNodesBind,
   paste as pasteBind,
@@ -59,7 +59,7 @@ export default function Editor(props: Props): JSX.Element {
   const addNode = history.addNode
   const removeSelectedNodes = (): void => history.removeNodes(nodeList.selection.value)
 
-  const centerNode = centerNodeBind({ nodeListController: nodeList, canvasController: canvas })
+  const curriedCenterNode = curry(centerNode)({ nodeList, canvas })
   const copySelectedNodes = copySelectedNodesBind({ nodeListController: nodeList })
   const cutSelectedNodes = cutSelectedNodesBind({ nodeListController: nodeList })
   const resetAll = resetAllBind({ linkListController: linkList, nodeListController: nodeList })
@@ -92,7 +92,7 @@ export default function Editor(props: Props): JSX.Element {
         selectNodes={selectNodes}
         className='panel --left'
         resizableProps={{ className: resizeBarClassName, name: `${Editor.displayName}-panel__left`, defaultSize: 300 }}
-        centerNode={centerNode}
+        centerNode={curriedCenterNode}
         nodeListController={nodeList}
       />
       <RightPanel

@@ -54,6 +54,7 @@ export class ZoomProp<E extends string> extends Prop<E, Zoom, Emitter<Record<E, 
     this.setZoom(this.value, this.value.k, { duration: 0 })
   }
 
+  // TODO по идее если не передать скейл то он должен сохраниться
   setZoom = (translate: Position, scale = 1, config?: { duration?: number }): void => {
     assertNotNull(this._ref)
     select(this._ref)
