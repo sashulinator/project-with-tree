@@ -13,7 +13,7 @@ import { LinkListController } from '../../../../../../..'
 export interface ListProps {
   state: Controller
   linkListController: LinkListController
-  remove: (id: Id) => void
+
   selectNodes: (ids: Id[]) => void
   onGestureDrug: (state: NodeState) => (event: GestureDragEvent) => void
 }

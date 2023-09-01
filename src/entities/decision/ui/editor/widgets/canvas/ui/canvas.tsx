@@ -6,6 +6,7 @@ import { useUpdate } from '~/utils/hooks'
 import { setRefs } from '~/utils/react'
 
 import { Controller, LinkList, LinkListController, NodeList, NodeListController } from '../'
+import { HistoryController } from '../../../_private'
 import { onGestureDrag } from '../_private'
 
 CanvasComponent.displayName = 'decision-Editor-w-Canvas'
@@ -14,8 +15,8 @@ export interface Props {
   controller: Controller
   linkListController: LinkListController
   nodeListController: NodeListController
+  history: HistoryController
   selectNodes: (ids: Id[]) => void
-  removeNode: (id: Id) => void
 }
 
 function CanvasComponent(props: Props): JSX.Element {
@@ -33,7 +34,6 @@ function CanvasComponent(props: Props): JSX.Element {
         <NodeList
           state={props.nodeListController}
           linkListController={props.linkListController}
-          remove={props.removeNode}
           selectNodes={props.selectNodes}
           onGestureDrug={onGestureDrag(props.controller, props.nodeListController)}
         />

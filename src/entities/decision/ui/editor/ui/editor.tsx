@@ -57,7 +57,6 @@ export default function Editor(props: Props): JSX.Element {
   }, [props.decision.decisionTree])
 
   const addNode = history.addNode
-  const removeNode = (id: Id): void => history.removeNodes([id])
   const removeSelectedNodes = (): void => history.removeNodes(nodeList.selection.value)
 
   const centerNode = centerNodeBind({ nodeListController: nodeList, canvasController: canvas })
@@ -105,8 +104,8 @@ export default function Editor(props: Props): JSX.Element {
         nodeListController={nodeList}
       />
       <Canvas
+        history={history}
         selectNodes={selectNodes}
-        removeNode={removeNode}
         controller={canvas}
         nodeListController={nodeList}
         linkListController={linkList}
