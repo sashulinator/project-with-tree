@@ -23,7 +23,7 @@ export default function Labeled(props: Props): JSX.Element {
       className={c(className, Labeled.displayName, `--${direction}`, hidden && `--hidden`)}
     >
       <label className='label' {...labelProps} htmlFor={htmlFor}>
-        {props.label}
+        {label}
       </label>
       {children}
     </div>

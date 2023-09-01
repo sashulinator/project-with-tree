@@ -4,6 +4,7 @@ import { RouteProps } from 'react-router-dom'
 import DecisionListPage from '~/pages/decision'
 import DecisionCreatePage from '~/pages/decision/create'
 import DecisionIdPage from '~/pages/decision/id'
+import DomainListPage from '~/pages/domain/domain-list/domain-list'
 import LoginPage from '~/pages/login'
 import MainPage from '~/pages/main'
 import NotFoundPage from '~/pages/not-found'
@@ -72,6 +73,15 @@ export const routes = {
     getName: () => 'List rule',
     path: '/project-with-tree/rule/list',
     element: <RuleListPage />,
+    getURL(): string {
+      return this.path
+    },
+  },
+  domainList: {
+    Header,
+    getName: () => 'List rule',
+    path: '/project-with-tree/domain/list',
+    element: <DomainListPage />,
     getURL(): string {
       return this.path
     },
