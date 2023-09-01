@@ -7,11 +7,6 @@ import { Point, RuleSet } from '../../..'
 import { addNode, removeNode } from '../_private'
 import { LinkController, LinkListController, NodeListController } from '../widgets/canvas'
 
-type Event<T> = {
-  previous: T
-  value: T
-}
-
 interface Props {
   canvas: CanvasController
   nodeList: NodeListController
@@ -21,8 +16,8 @@ interface Props {
 export type SelectionEvent = {
   type: 'selection'
   historical: false
-  undo: { value: Id[] }
-  redo: { value: Id[] }
+  undo: { ids: Id[] }
+  redo: { ids: Id[] }
 }
 
 export type AddNodeEvent = {
@@ -66,7 +61,7 @@ export class HistoryController extends ActionHistory {
   factory = (item: HistoryItem<Events>): void => {
     item.events.forEach((event) => {
       if (event.type === 'selection') {
-        this.selectNodes(item.done ? event.undo.value : event.redo.value)
+        this.nodeList.selection.set(item.done ? event.undo.ids : event.redo.ids)
       }
       if (event.type === 'addNode') {
         item.done ? removeNode(this, event.undo.id) : addNode(this, event.redo.point, { duration: 0 })
@@ -97,7 +92,8 @@ export class HistoryController extends ActionHistory {
 
   undo = (): void => {
     const current = this.findCurrent()
-    if (current) this.factory(current as HistoryItem<Events>)
+    if (!current) return
+    this.factory(current as HistoryItem<Events>)
   }
 
   redo = (): void => {
@@ -179,8 +175,8 @@ export class HistoryController extends ActionHistory {
     historyItem.events.push({
       type: 'selection',
       historical: false,
-      redo: { value: newSelectedIds },
-      undo: { value: [...this.nodeList.selection.value] },
+      redo: { ids: newSelectedIds },
+      undo: { ids: [...this.nodeList.selection.value] },
     })
     this.nodeList.selection.set(newSelectedIds)
   }
@@ -189,22 +185,21 @@ export class HistoryController extends ActionHistory {
    * SELECTION
    */
 
-  addNodeSelection = (event: Event<Id[]>): void => {
-    this.add({
+  selectNodes = (ids: Id[]): void => {
+    const historyItem: HistoryItem<SelectionEvent> = {
       done: true,
       username: 'username',
       events: [
         {
           historical: false,
           type: 'selection',
-          redo: { value: event.value },
-          undo: { value: event.previous },
+          redo: { ids },
+          undo: { ids: [...this.nodeList.selection.value] },
         },
       ],
-    })
-  }
+    }
 
-  selectNodes = (ids: Id[]): void => {
+    this.add(historyItem)
     this.nodeList.selection.set(ids)
   }
 }

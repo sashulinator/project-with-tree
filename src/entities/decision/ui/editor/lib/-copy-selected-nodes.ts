@@ -8,6 +8,7 @@ interface Props {
   nodeListController: NodeListController
 }
 
+// TODO функция должна быть `copyNodes`
 export function copySelectedNodes(props: Props): () => void {
   return () => {
     const copiedPoints = [...props.nodeListController.selection.value].map((id) => {

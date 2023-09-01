@@ -41,9 +41,9 @@ export class ActionHistory {
       const item = this.array[i]
       const nextItem = this.array[i + 1]
       const isLast = i === this.array.length - 1
-      // Если первый и втрой done то next не существует
+      // Если первый и второй done то next не существует
       if (i === 0 && item?.done && nextItem?.done) return undefined
-      // Если следующий done то этот next
+      // Если следующий done значит он current, а этот next
       if (nextItem?.done) return item
       // Если все элементы не done, то последний next
       if (isLast) return item

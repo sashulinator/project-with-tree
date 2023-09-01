@@ -5,8 +5,6 @@ export * from './lib/-cut-selected-nodes'
 export * from './lib/-paste-from-clipboard'
 export * from './lib/-paste'
 export * from './lib/_remove-node'
-export * from './lib/-remove-selected-nodes'
-export * from './lib/-reset-all'
 export * from './lib/-use-key-down-listener'
 
 export * from './modules/_history-controller'

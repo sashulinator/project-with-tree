@@ -2,9 +2,10 @@ import './toolbar.scss'
 
 import Flex from '~/abstract/flex/ui/flex'
 import Checkbox from '~/ui/checkbox'
-import { c } from '~/utils/core'
+import { Id, c } from '~/utils/core'
 import { stopPropagation } from '~/utils/dom-event'
 import { useUpdate } from '~/utils/hooks'
+import { toggle } from '~/utils/id-array'
 
 import { Controller, ListController } from '../../../../..'
 
@@ -14,6 +15,7 @@ export interface Props {
   state: Controller
   listState: ListController
   className?: string
+  selectNodes: (ids: Id[]) => void
 }
 
 export default function Toolbar(props: Props): JSX.Element {
@@ -33,7 +35,7 @@ export default function Toolbar(props: Props): JSX.Element {
           round={true}
           checked={checked}
           className='selection'
-          onChange={(): void => props.listState.selection.toggle(props.state.id)}
+          onChange={(): void => props.selectNodes(toggle(props.state.id, props.listState.selection.value))}
         />
       </Flex>
     </div>

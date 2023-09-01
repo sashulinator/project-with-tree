@@ -23,7 +23,7 @@ export default function Filter(props: FactoryProps): JSX.Element {
       onGestureDrug={props.onGestureDrug}
       className={Filter.displayName}
       title={<Title className='title' state={props.state} />}
-      toolbar={<Toolbar listState={props.nodeListController} state={props.state} />}
+      toolbar={<Toolbar selectNodes={props.selectNodes} listState={props.nodeListController} state={props.state} />}
       targetLinks={
         <TargetLinks
           linkControllers={props.linkListController}

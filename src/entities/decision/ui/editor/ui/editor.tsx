@@ -25,7 +25,6 @@ import {
   cutSelectedNodes as cutSelectedNodesBind,
   paste as pasteBind,
   pasteFromClipboard as pasteFromClipboardBind,
-  resetAll as resetAllBind,
   useKeyDownListener,
 } from '../_private'
 
@@ -56,14 +55,10 @@ export default function Editor(props: Props): JSX.Element {
     return new HistoryController(props)
   }, [props.decision.decisionTree])
 
-  const addNode = history.addNode
-  const removeSelectedNodes = (): void => history.removeNodes(nodeList.selection.value)
-
   const curriedCenterNode = curry(centerNode)({ nodeList, canvas })
   const copySelectedNodes = copySelectedNodesBind({ nodeListController: nodeList })
   const cutSelectedNodes = cutSelectedNodesBind({ nodeListController: nodeList })
-  const resetAll = resetAllBind({ linkListController: linkList, nodeListController: nodeList })
-  const pasteFromClipboard = pasteFromClipboardBind({ nodeListController: nodeList, addNode })
+  const pasteFromClipboard = pasteFromClipboardBind({ nodeListController: nodeList, addNode: history.addNode })
   const paste = pasteBind({ nodeListController: nodeList, canvasController: canvas, pasteFromClipboard })
 
   useKeyDownListener(
@@ -85,7 +80,7 @@ export default function Editor(props: Props): JSX.Element {
         history={history}
         nodeListController={nodeList}
         className='panel --toolbar'
-        addNode={addNode}
+        addNode={history.addNode}
         removeSelectedNodes={removeSelectedNodes}
       />
       <LeftPanel
@@ -115,10 +110,23 @@ export default function Editor(props: Props): JSX.Element {
 
   // Private
 
-  function selectNodes(value: Id[]): void {
-    const previous = [...nodeList.selection.value]
-    nodeList.selection.set(value)
-    history.addNodeSelection({ value, previous })
+  /**
+   * Nodes
+   */
+  function removeSelectedNodes(): void {
+    history.removeNodes(nodeList.selection.value)
+  }
+
+  function selectNodes(ids: Id[]): void {
+    history.selectNodes(ids)
+  }
+
+  /**
+   * Other
+   */
+  function resetAll(): void {
+    linkList.editingId.set(undefined)
+    selectNodes([])
   }
 
   function submit(): void {
@@ -132,9 +140,7 @@ export default function Editor(props: Props): JSX.Element {
 
   function onClick(e: MouseEvent): void {
     const el = e.target as HTMLElement
-    if (el.tagName === 'path' || el.tagName === 'svg') {
-      linkList.editingId.set(undefined)
-      selectNodes([])
-    }
+    if (el.tagName !== 'path' && el.tagName !== 'svg') return
+    resetAll()
   }
 }

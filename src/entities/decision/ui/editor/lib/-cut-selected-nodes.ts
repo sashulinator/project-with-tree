@@ -7,6 +7,7 @@ interface Props {
   nodeListController: NodeListController
 }
 
+// TODO функция должна быть `cutNodes`
 export function cutSelectedNodes(props: Props): () => void {
   return () => {
     props.nodeListController.cutted.set([...props.nodeListController.selection.value])
