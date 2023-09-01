@@ -6,7 +6,7 @@ import { Close } from '~/ui/icon'
 import { c } from '~/utils/core'
 
 /**
- * data: AttributeRes
+ * attribute: AttributeRes
  *
  * wrapperProps?: React.HTMLAttributes<HTMLElement>
  *
@@ -15,7 +15,7 @@ import { c } from '~/utils/core'
  * closeButtonProps?: GhostButtonProps
  */
 export interface AttributeProps {
-  data: AttributeRes
+  attribute: AttributeRes
   wrapperProps?: React.HTMLAttributes<HTMLElement>
   titleProps?: React.HTMLAttributes<HTMLElement>
   closeButtonProps?: GhostButtonProps
@@ -24,10 +24,10 @@ export interface AttributeProps {
 Attribute.displayName = 'e-ui-attribute'
 
 export default function Attribute(props: AttributeProps): JSX.Element {
-  const { data } = props
+  const { attribute } = props
   return (
     <div {...props.wrapperProps} className={c(props.wrapperProps?.className, Attribute.displayName)}>
-      <h2 {...props.titleProps}>{data?.name ? data.name : 'нет имени'}</h2>
+      <h2 {...props.titleProps}>{attribute?.name ? attribute.name : 'нет имени'}</h2>
       <GhostButton {...props.closeButtonProps}>
         <Close />
       </GhostButton>

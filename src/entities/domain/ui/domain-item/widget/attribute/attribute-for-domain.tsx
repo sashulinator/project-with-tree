@@ -7,5 +7,5 @@ interface Props extends AttributeProps {}
 AttributeForDomain.displayName = 'e-domain-ui-w-AttributeForDomain'
 
 export default function AttributeForDomain(props: Props): JSX.Element {
-  return <Attribute wrapperProps={{ className: AttributeForDomain.displayName }} data={props.data} />
+  return <Attribute wrapperProps={{ className: AttributeForDomain.displayName }} attribute={props.attribute} />
 }

@@ -1,36 +1,33 @@
 import { useState } from 'react'
 
-import Modal from '~/abstract/modal/ui/modal'
 import { useFetchParentDomainList } from '~/api/domain/fetch-parent-domains'
+import { AddDomain } from '~/entities/domain/ui/add-domain'
 import { Domain } from '~/entities/domain/ui/domain-item'
-import { GhostButton } from '~/ui/button'
 
 export default function DomainListPage(): JSX.Element {
   const fetcher = useFetchParentDomainList({ page: 1, limit: 2000 })
 
-  const [isModalActive, setModalActive] = useState(false)
-
+  const [isAddDomainActive, setAddDomainActive] = useState(false)
+  const [parentId, setParentId] = useState('')
   return (
     <>
       <main style={{ maxWidth: '1400px', margin: '0 auto', width: '100%' }}>
-        <GhostButton onClick={handleModalOpen}>open modal</GhostButton>
-        <div>
-          {isModalActive && (
-            <Modal title='some modal title' onClose={handleModalClose}>
-              Hello world
-            </Modal>
-          )}
-        </div>
-        {fetcher.isSuccess && fetcher.data.items.map((item) => <Domain key={item.domain.id} data={item} />)}
+        {isAddDomainActive && <AddDomain parentId={parentId} handleModalClose={handleModalClose} />}
+        {fetcher.isSuccess &&
+          fetcher.data.items.map((item) => (
+            <Domain handleModalOpen={handleModalOpen} key={item.domain.id} domainData={item} />
+          ))}
       </main>
     </>
   )
 
   // Private
-  function handleModalOpen(): void {
-    setModalActive(true)
+  function handleModalOpen(id: string): void {
+    setParentId(id)
+    setAddDomainActive(true)
   }
   function handleModalClose(): void {
-    setModalActive(false)
+    setAddDomainActive(false)
+    setParentId('')
   }
 }

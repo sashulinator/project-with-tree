@@ -1,6 +1,7 @@
 .a-Modal {
   background: rgba(255, 255, 255, 0.4);
   position: fixed;
+
   width: 100%;
   height: 100%;
   z-index: 5;
@@ -17,6 +18,7 @@
   background: rgba(255, 255, 255, 1);
   border-radius: 5px;
   padding: 10px 40px 20px 20px;
+  min-width: 600px;
 }
 
 .a-Modal .closeButton {

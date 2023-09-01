@@ -12,14 +12,15 @@ import { useBoolean } from '~/utils/hooks'
 import AttributeForDomain from '../widget/attribute/attribute-for-domain'
 
 interface Props {
-  data: ParentDomainRes
+  domainData: ParentDomainRes
   isExpanded?: boolean
+  handleModalOpen: (string) => void
 }
 
 Domain.displayName = 'e-domain-ui-Domain'
 
 export function Domain(props: Props): JSX.Element {
-  const { data, isExpanded = true } = props
+  const { domainData, isExpanded = true, handleModalOpen } = props
   const [expanded, , , toggleExpanded] = useBoolean(isExpanded)
 
   return (
@@ -29,16 +30,24 @@ export function Domain(props: Props): JSX.Element {
         onExpandedChange={toggleExpanded}
         isExpanded={expanded}
         renderHeader={Header}
-        headerProps={{ title: data.domain.name }}
+        headerProps={{ title: domainData.domain.name }}
       >
         <div>
           <Flex padding='10px' mainAxis='space-between'>
-            <GhostButton style={{ border: '1px solid slategrey' }}>Добавить дочерний домен</GhostButton>
+            <GhostButton
+              onClick={(): void => handleModalOpen(domainData.domain.id)}
+              style={{ border: '1px solid slategrey' }}
+            >
+              Добавить дочерний домен
+            </GhostButton>
             <GhostButton style={{ border: '1px solid slategrey' }}>Добавить атрибут</GhostButton>
           </Flex>
-          {!!data.childDomains.length && data.childDomains.map((item) => <Domain key={item.domain.id} data={item} />)}
-          {data.attributes.length !== 0 ? (
-            data.attributes.map((item) => <AttributeForDomain key={item.id} data={item} />)
+          {!!domainData.childDomains.length &&
+            domainData.childDomains.map((item) => (
+              <Domain handleModalOpen={handleModalOpen} key={item.domain.id} domainData={item} />
+            ))}
+          {domainData.attributes.length !== 0 ? (
+            domainData.attributes.map((item) => <AttributeForDomain key={item.id} attribute={item} />)
           ) : (
             <div>Нет атрибутов</div>
           )}
