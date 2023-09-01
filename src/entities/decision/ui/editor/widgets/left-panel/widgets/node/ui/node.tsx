@@ -10,18 +10,18 @@ import { NodeController, NodeListController } from '../../../../..'
 Node.displayName = 'decision-Editor-w-LeftPanel-w-Node'
 
 export interface Props extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  state: NodeController
+  controller: NodeController
   nodeListController: NodeListController
   centerNode: (id: Id) => void
   selectNodes: (ids: Id[]) => void
 }
 
 export default function Node(props: Props): JSX.Element {
-  const { nodeListController, state, centerNode, ...buttonProps } = props
+  const { nodeListController, controller: state, centerNode, ...buttonProps } = props
 
   useUpdate(subscribeOnUpdates)
 
-  const selected = nodeListController.selection.isSelected(props.state.id)
+  const selected = nodeListController.selection.isSelected(props.controller.id)
 
   return (
     <button

@@ -1,6 +1,6 @@
 import './toolbar.scss'
 
-import { useState } from 'react'
+import { memo, useState } from 'react'
 
 import { GhostButton, PrimaryButton } from '~/ui/button'
 import { ArrowLeft, ArrowRight, Trash } from '~/ui/icon'
@@ -15,19 +15,19 @@ import { Required } from '~/utils/types/object'
 
 import { NodeListController } from '../../..'
 import { Point } from '../../../../..'
-import { _HistoryController } from '../../../_private'
 
-Toolbar.displayName = 'decision-Editor-w-Toolbar'
+ToolbarComponent.displayName = 'decision-Editor-w-Toolbar'
 
 export interface Props {
   className?: string
-  nodeListController: NodeListController
-  history: _HistoryController
+  nodeList: NodeListController
   addNode: (point: Required<Partial<Point>, 'level'>) => void
   removeSelectedNodes: () => void
+  undo: () => void
+  redo: () => void
 }
 
-export default function Toolbar(props: Props): JSX.Element {
+function ToolbarComponent(props: Props): JSX.Element {
   const [headerElement, setHeaderElement] = useState<null | HTMLElement>(null)
 
   useUpdate(subscribeOnUpdates)
@@ -47,7 +47,7 @@ export default function Toolbar(props: Props): JSX.Element {
         }
         placement='tc'
       >
-        <GhostButton onClick={fns(stopPropagation, () => props.history.undo())} square={true} height='s'>
+        <GhostButton onClick={fns(stopPropagation, () => props.undo())} square={true} height='s'>
           <ArrowLeft />
         </GhostButton>
       </Tooltip>
@@ -64,7 +64,7 @@ export default function Toolbar(props: Props): JSX.Element {
         }
         placement='tc'
       >
-        <GhostButton onClick={fns(stopPropagation, () => props.history.redo())} square={true} height='s'>
+        <GhostButton onClick={fns(stopPropagation, () => props.redo())} square={true} height='s'>
           <ArrowRight />
         </GhostButton>
       </Tooltip>
@@ -111,7 +111,7 @@ export default function Toolbar(props: Props): JSX.Element {
           onClick={props.removeSelectedNodes}
           square={true}
           height='s'
-          disabled={props.nodeListController.selection.value.length === 0}
+          disabled={props.nodeList.selection.value.length === 0}
         >
           <Trash />
         </GhostButton>
@@ -120,6 +120,10 @@ export default function Toolbar(props: Props): JSX.Element {
   )
 
   function subscribeOnUpdates(update: () => void, uns: (() => void)[]): void {
-    uns.push(props.nodeListController.on('selection', update))
+    uns.push(props.nodeList.on('selection', update))
   }
 }
+
+const Toolbar = memo(ToolbarComponent)
+Toolbar.displayName = ToolbarComponent.displayName
+export default Toolbar

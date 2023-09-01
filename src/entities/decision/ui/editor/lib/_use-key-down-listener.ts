@@ -1,32 +1,22 @@
 import { isActiveInput, keyListener } from '~/utils/dom-event'
 import { useEventListener } from '~/utils/hooks'
 
-import { _HistoryController } from '../_private'
-
 interface Actions {
   removeSelected: () => void
   reset: () => void
   copySelected: () => void
   cutSelected: () => void
   paste: () => void
+  redo: () => void
+  undo: () => void
 }
 
-export function _useKeyDownListener(actions: Actions, history: _HistoryController): void {
+export function _useKeyDownListener(actions: Actions): void {
   const previousHistoryConf = { key: 'z', metaCtrlKey: true, shiftKey: false }
-  useEventListener(
-    'keydown',
-    keyListener(previousHistoryConf, () => {
-      history.undo()
-    })
-  )
+  useEventListener('keydown', keyListener(previousHistoryConf, EmitAction('undo')))
 
   const nextHistoryConf = { key: 'z', metaCtrlKey: true, shiftKey: true }
-  useEventListener(
-    'keydown',
-    keyListener(nextHistoryConf, () => {
-      history.redo()
-    })
-  )
+  useEventListener('keydown', keyListener(nextHistoryConf, EmitAction('redo')))
 
   const resetSelectionConf = { key: 'Escape' }
   useEventListener('keydown', keyListener(resetSelectionConf, EmitAction('reset')))

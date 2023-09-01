@@ -1,6 +1,6 @@
 import { memo } from 'react'
 
-import { Position } from '~/utils/core'
+import { Id, Position } from '~/utils/core'
 import { useUpdate } from '~/utils/hooks'
 
 import { Controller } from '..'
@@ -12,6 +12,7 @@ export interface Props {
   nodeListController: NodeListController
   canvasTranslate: Position
   scale: number
+  selectLinks: (ids: Id[]) => void
 }
 
 function ListComponent(props: Props): JSX.Element {
@@ -25,9 +26,10 @@ function ListComponent(props: Props): JSX.Element {
             key={linkController.id}
             scale={props.scale}
             canvasTranslate={props.canvasTranslate}
-            nodeListController={props.nodeListController}
+            nodeList={props.nodeListController}
             state={linkController}
             listState={props.state}
+            selectLinks={props.selectLinks}
           />
         )
       })}

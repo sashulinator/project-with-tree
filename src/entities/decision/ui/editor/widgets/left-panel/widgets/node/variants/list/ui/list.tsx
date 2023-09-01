@@ -26,13 +26,13 @@ export default function List(props: Props): JSX.Element {
 
   return (
     <ul className={c(props.className, List.displayName)}>
-      {filtered.map((state) => {
+      {filtered.map((controller) => {
         return (
-          <li key={state.id}>
+          <li key={controller.id}>
             <Node
               selectNodes={props.selectNodes}
               nodeListController={props.nodeListController}
-              state={state}
+              controller={controller}
               centerNode={props.centerNode}
             />
           </li>

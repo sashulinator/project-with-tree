@@ -57,49 +57,49 @@ export default function Editor(props: Props): JSX.Element {
     return new _HistoryController(props)
   }, [props.decision.decisionTree])
 
-  _useKeyDownListener(
-    {
-      reset,
-      removeSelected,
-      copySelected,
-      paste,
-      cutSelected,
-    },
-    history
-  )
+  _useKeyDownListener({
+    undo,
+    redo,
+    reset,
+    removeSelected,
+    copySelected,
+    paste,
+    cutSelected,
+  })
   useEventListener('click', onClick)
 
   return (
     <div className={c(props.className, Editor.displayName)}>
-      <Header submit={submit} nodeList={nodeList} editorController={controller} className='panel --header' />
+      <Header submit={submit} nodeList={nodeList} editor={controller} className='panel --header' />
       <Toolbar
-        history={history}
-        nodeListController={nodeList}
         className='panel --toolbar'
+        nodeList={nodeList}
         addNode={history.addNode}
         removeSelectedNodes={removeSelected}
+        undo={undo}
+        redo={redo}
       />
       <LeftPanel
         selectNodes={selectNodes}
         className='panel --left'
         resizableProps={{ className: resizeBarClassName, name: `${Editor.displayName}-panel__left`, defaultSize: 300 }}
         centerNode={centerNode}
-        nodeListController={nodeList}
+        nodeList={nodeList}
       />
       <RightPanel
         selectNodes={selectNodes}
         className='panel --right'
         ruleList={props.ruleList}
-        linkListController={linkList}
+        linkList={linkList}
         resizableProps={{ className: resizeBarClassName, name: `${Editor.displayName}-panel__right`, defaultSize: 300 }}
-        nodeListController={nodeList}
+        nodeList={nodeList}
       />
       <Canvas
-        history={history}
+        selectLinks={selectLinks}
         selectNodes={selectNodes}
         controller={canvas}
-        nodeListController={nodeList}
-        linkListController={linkList}
+        nodeList={nodeList}
+        linkList={linkList}
       />
     </div>
   )
@@ -121,8 +121,20 @@ export default function Editor(props: Props): JSX.Element {
     reset()
   }
 
+  function undo(): void {
+    history.undo()
+  }
+
+  function redo(): void {
+    history.redo()
+  }
+
   function selectNodes(ids: Id[]): void {
     history.selectNodes(ids)
+  }
+
+  function selectLinks(ids: Id[]): void {
+    // history.select(ids)
   }
 
   function cutSelected(): void {
