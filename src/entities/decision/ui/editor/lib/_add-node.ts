@@ -11,7 +11,7 @@ interface Context {
   nodeList: NodeListController
 }
 
-export function addNode(
+export function _addNode(
   context: Context,
   point: Required<Partial<Point>, 'level'>,
   event?: TransitionMoveEvent & Events

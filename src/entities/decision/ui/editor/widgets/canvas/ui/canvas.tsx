@@ -6,7 +6,7 @@ import { useUpdate } from '~/utils/hooks'
 import { setRefs } from '~/utils/react'
 
 import { Controller, LinkList, LinkListController, NodeList, NodeListController } from '../'
-import { HistoryController } from '../../../_private'
+import { _HistoryController } from '../../../_private'
 import { onGestureDrag } from '../_private'
 
 CanvasComponent.displayName = 'decision-Editor-w-Canvas'
@@ -15,7 +15,7 @@ export interface Props {
   controller: Controller
   linkListController: LinkListController
   nodeListController: NodeListController
-  history: HistoryController
+  history: _HistoryController
   selectNodes: (ids: Id[]) => void
 }
 

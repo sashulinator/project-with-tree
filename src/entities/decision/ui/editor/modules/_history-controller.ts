@@ -4,7 +4,7 @@ import { Required } from '~/utils/types/object'
 
 import { CanvasController } from '..'
 import { Point, RuleSet } from '../../..'
-import { addNode, removeNode } from '../_private'
+import { _addNode, _removeNode } from '../_private'
 import { LinkController, LinkListController, NodeListController } from '../widgets/canvas'
 
 interface Props {
@@ -41,7 +41,7 @@ export type RemoveLinkEvent = {
 
 type Events = SelectionEvent | AddNodeEvent | RemoveNodeEvent | RemoveLinkEvent
 
-export class HistoryController extends ActionHistory {
+export class _HistoryController extends ActionHistory {
   nodeList: NodeListController
 
   canvas: CanvasController
@@ -64,10 +64,10 @@ export class HistoryController extends ActionHistory {
         this.nodeList.selection.set(item.done ? event.undo.ids : event.redo.ids)
       }
       if (event.type === 'addNode') {
-        item.done ? removeNode(this, event.undo.id) : addNode(this, event.redo.point, { duration: 0 })
+        item.done ? _removeNode(this, event.undo.id) : _addNode(this, event.redo.point, { duration: 0 })
       }
       if (event.type === 'removeNodes') {
-        item.done ? addNode(this, event.undo.point, { duration: 0 }) : removeNode(this, event.redo.id)
+        item.done ? _addNode(this, event.undo.point, { duration: 0 }) : _removeNode(this, event.redo.id)
       }
       if (event.type === 'removeLink') {
         console.log('item', item)
@@ -109,7 +109,7 @@ export class HistoryController extends ActionHistory {
     point: Required<Partial<Point>, 'level'>
     // event?: (TransitionMoveEvent & Record<string, unknown>) | undefined
   ): void => {
-    const newPoint = addNode(this, point)
+    const newPoint = _addNode(this, point)
 
     const historyItem: HistoryItem<AddNodeEvent> = {
       done: true,
@@ -167,7 +167,7 @@ export class HistoryController extends ActionHistory {
         }
       })
 
-      removeNode(this, point.id)
+      _removeNode(this, point.id)
       this.add(historyItem)
     })
 

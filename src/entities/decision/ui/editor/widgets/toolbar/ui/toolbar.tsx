@@ -15,14 +15,14 @@ import { Required } from '~/utils/types/object'
 
 import { NodeListController } from '../../..'
 import { Point } from '../../../../..'
-import { HistoryController } from '../../../_private'
+import { _HistoryController } from '../../../_private'
 
 Toolbar.displayName = 'decision-Editor-w-Toolbar'
 
 export interface Props {
   className?: string
   nodeListController: NodeListController
-  history: HistoryController
+  history: _HistoryController
   addNode: (point: Required<Partial<Point>, 'level'>) => void
   removeSelectedNodes: () => void
 }
