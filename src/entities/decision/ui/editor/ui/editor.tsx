@@ -168,7 +168,8 @@ export default function Editor(props: Props): JSX.Element {
 
   function reset(): void {
     linkList.editingId.set(undefined)
-    selectNodes([])
+    if (!linkList.selection.value.length && !nodeList.selection.value.length) return
+    history.select([], [])
   }
 
   function paste(): void {

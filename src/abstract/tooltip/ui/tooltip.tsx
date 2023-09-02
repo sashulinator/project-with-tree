@@ -4,7 +4,7 @@ import { c } from '../../../utils/core'
 import { fns } from '../../../utils/function'
 import { useDebounceCallback } from '../../../utils/hooks'
 import { ReactElementWithRef, setRefs } from '../../../utils/react'
-import Popover, { Overflow, Point, Render, arePointsEqual, toPoints } from '../../popover'
+import Popover, { Offset, Overflow, Point, Render, arePointsEqual, toPoints } from '../../popover'
 
 Tooltip.displayName = 'a-Tooltip'
 
@@ -38,6 +38,11 @@ export interface Props extends React.HTMLAttributes<HTMLElement> {
    * The container element for the component; defaults to `document.body`.
    */
   containerElement?: HTMLElement | null | undefined
+
+  /**
+   * An optional x/y offset for the content
+   */
+  offset?: Offset | undefined
 
   /**
    * Overflow config

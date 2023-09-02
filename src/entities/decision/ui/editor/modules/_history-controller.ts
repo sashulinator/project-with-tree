@@ -1,5 +1,6 @@
 import { ActionHistory, Step, StepController } from '~/utils/action-history'
 import { Id, Position } from '~/utils/core'
+import { emptyFn } from '~/utils/function/empty-fn'
 import { Required } from '~/utils/types/object'
 
 import { CanvasController } from '..'
@@ -80,6 +81,8 @@ export class _HistoryController extends ActionHistory<Step<StepItem>> {
   }
 
   factory = (item: Step<StepItem>): void => {
+    console.log(this.steps)
+
     item.list.forEach((event) => {
       if (event.type === 'selectNodes') {
         this.nodeList.selection.set(item.done ? event.undo.ids : event.redo.ids)
@@ -88,10 +91,10 @@ export class _HistoryController extends ActionHistory<Step<StepItem>> {
         this.linkList.selection.set(item.done ? event.undo.ids : event.redo.ids)
       }
       if (event.type === 'addNode') {
-        item.done ? this.nodeList.remove(event.undo.id) : _addNode(this, event.redo.point, { duration: 0 })
+        item.done ? this.nodeList.remove(event.undo.id) : _addNode(this, event.redo.point, emptyFn, { duration: 0 })
       }
       if (event.type === 'removeNodes') {
-        item.done ? _addNode(this, event.undo.point, { duration: 0 }) : this.nodeList.remove(event.redo.id)
+        item.done ? _addNode(this, event.undo.point, emptyFn, { duration: 0 }) : this.nodeList.remove(event.redo.id)
       }
       if (event.type === 'moveNodes') {
         Object.entries(item.done ? event.undo : event.redo).forEach(([key, value]) => {
@@ -135,18 +138,21 @@ export class _HistoryController extends ActionHistory<Step<StepItem>> {
    * ADD NODE
    */
   private itemifyCreateNode = (
-    point: Required<Partial<Point>, 'level'>
+    point: Required<Partial<Point>, 'level'>,
+    onAdded: (node: NodeController) => void
     // event?: (TransitionMoveEvent & Record<string, unknown>) | undefined
   ): void => {
-    const newPoint = _addNode(this, point)
-    this.step.add('addNode', { point: newPoint }, { id: newPoint.id }, true).build()
+    const newPoint = _addNode(this, point, onAdded)
+    this.step.add('addNode', { point: newPoint }, { id: newPoint.id }, true)
   }
 
   create = (
     point: Required<Partial<Point>, 'level'>
     // event?: (TransitionMoveEvent & Record<string, unknown>) | undefined
   ): void => {
-    this.itemifyCreateNode(point)
+    this.itemifyCreateNode(point, (node) => {
+      this.itemifyMoveNodes([node.id])
+    })
     this.addStep(this.step.build() as Step<StepItem>)
     this.factory(this.steps[0])
   }
@@ -261,6 +267,25 @@ export class _HistoryController extends ActionHistory<Step<StepItem>> {
   }
 
   select = (nodeIds: Id[], linkIds: Id[]): void => {
+    // Проверка на бессмысленный клик по уже выделенному элементу
+    if (
+      nodeIds.length === 1 &&
+      linkIds.length === 0 &&
+      this.nodeList.selection.value.length === 1 &&
+      nodeIds[0] === this.nodeList.selection.value[0] &&
+      this.linkList.selection.value.length === 0
+    )
+      return
+    // Проверка на бессмысленный клик по уже выделенному элементу
+    if (
+      linkIds.length === 1 &&
+      nodeIds.length === 0 &&
+      this.linkList.selection.value.length === 1 &&
+      linkIds[0] === this.linkList.selection.value[0] &&
+      this.nodeList.selection.value.length === 0
+    )
+      return
+
     this.itemifySelectNodes(nodeIds)
     this.itemifySelectLinks(linkIds)
     this.addStep(this.step.build() as Step<StepItem>)

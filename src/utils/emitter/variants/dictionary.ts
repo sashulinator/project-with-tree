@@ -36,7 +36,6 @@ export class Dictionary<TItem, E extends DictionaryEvents<TItem> = DictionaryEve
     return find(this.items, id)
   }
 
-  // TODO добавить cb onAdded, который вызывается как только появляется ref
   add = (item: TItem, event?: Record<string, unknown>): void => {
     this.items[this.getKey(item)] = item
     this.emit('add', { item, ...event })

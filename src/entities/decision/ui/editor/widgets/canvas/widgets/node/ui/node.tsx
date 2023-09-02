@@ -19,7 +19,7 @@ Node.displayName = 'decision-Editor-w-Canvas-w-Node'
 
 export interface NodeProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'children' | 'title'> {
   state: NodeState
-  listState: ListController
+  list: ListController
   title: ReactElement | null
   toolbar: ReactElement | null
   sourceLinks?: ReactElement | null
@@ -39,10 +39,9 @@ export default function Node(props: NodeProps): JSX.Element {
 
   const clickPositionRef = useRef<null | Position>(null)
 
-  const { title, toolbar, sourceLinks, listState, toggle, targetLinks, state, rootProps, selectNodes, ...itemProps } =
-    props
-  const selected = listState.selection.isSelected(props.state.id)
-  const cutted = listState.cutted.isSelected(props.state.id)
+  const { title, toolbar, sourceLinks, list, toggle, targetLinks, state, rootProps, selectNodes, ...itemProps } = props
+  const selected = list.selection.isSelected(props.state.id)
+  const cutted = list.cutted.isSelected(props.state.id)
 
   return (
     <Item
@@ -94,7 +93,7 @@ export default function Node(props: NodeProps): JSX.Element {
   }
 
   function subscribeOnUpdates(update: () => void, uns: (() => void)[]): void {
-    uns.push(listState.on('selection', update))
-    uns.push(listState.on('cutted', update))
+    uns.push(list.on('selection', update))
+    uns.push(list.on('cutted', update))
   }
 }

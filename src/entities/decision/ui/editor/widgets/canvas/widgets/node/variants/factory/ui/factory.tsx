@@ -10,8 +10,8 @@ FactoryComponent.displayName = 'decision-Editor-w-Node-v-Factory'
 
 export interface FactoryProps {
   state: NodeState
-  linkListController: LinkListController
-  nodeListController: NodeListController
+  linkList: LinkListController
+  nodeList: NodeListController
   selectNodes: (ids: Id[]) => void
   toggle: () => void
   onGestureDrug: (event: GestureDragEvent) => void

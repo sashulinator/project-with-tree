@@ -79,11 +79,11 @@ export default {
               <FilterNode
                 {...props}
                 toggle={emptyFn}
-                nodeListController={states}
+                nodeList={states}
                 selectNodes={emptyFn}
                 key={state.id}
                 state={state}
-                linkListController={linkControllers}
+                linkList={linkControllers}
                 onGestureDrug={(event): void => {
                   const x = state.position.start.x + event.movement[0]
                   const y = state.position.start.y + event.movement[1]

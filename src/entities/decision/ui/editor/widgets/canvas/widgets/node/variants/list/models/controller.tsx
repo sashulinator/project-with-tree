@@ -48,6 +48,18 @@ export class Controller extends EmitterDictionary<NodeController, Events> {
     this.searchQuery = new Prop('searchQuery', '', this)
   }
 
+  addOn = (
+    item: NodeController,
+    on: (item: NodeController) => void,
+    event?: Record<string, unknown> | undefined
+  ): void => {
+    this.add(item, event)
+    item.on('ref', function cb() {
+      on(item)
+      item.off('ref', cb)
+    })
+  }
+
   getColumnNodes = (isNew: boolean): Record<number, NodeController[]> => {
     return this.values().reduce<Record<number, NodeController[]>>((acc, node) => {
       const x = isNew ? getColumnX(node.position.value.x) : node.position.start.x

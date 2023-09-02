@@ -1,4 +1,4 @@
-import { forwardRef } from 'react'
+import { forwardRef, useEffect, useState } from 'react'
 
 import Balloon from '~/abstract/balloon'
 import Flex from '~/abstract/flex/ui/flex'
@@ -26,11 +26,20 @@ export default {
   },
 
   element: function Element(props: Props<State>): JSX.Element {
+    const [count, setCount] = useState(0)
+
+    useEffect(() => {
+      setTimeout(() => {
+        setCount(count + 1)
+      }, 1000)
+    }, [])
+
     const { state } = props
 
     return (
       <Flex dir='column' gap='xl' width='100%'>
         <Tooltip
+          offset={[0, -20]}
           className='story-Tooltip'
           renderBalloon={forwardRef(function Element(props, ref): JSX.Element {
             const placement = state.placement
@@ -63,14 +72,17 @@ export default {
                 })}
                 // contentProps={{ style: { background: 'red' } }}
               >
-                <div style={{ width: '200px', height: '200px' }}>Content</div>
+                <div style={{ width: '200px', height: '200px' }}>Rerender ({count})</div>
               </Balloon>
             )
           })}
           {...state}
         >
-          <button>Hello</button>
+          <button onClick={(): void => setCount(count + 1)}>Count ({count})</button>
         </Tooltip>
+        <button ref={console.log} onClick={(): void => setCount(count + 1)}>
+          Count ({count})
+        </button>
       </Flex>
     )
   },

@@ -38,7 +38,7 @@ function CanvasComponent(props: Props): JSX.Element {
         <NodeList
           toggle={props.toggleNode}
           state={props.nodeList}
-          linkListController={props.linkList}
+          linkList={props.linkList}
           selectNodes={props.selectNodes}
           onGestureDrug={onGestureDrag(props.controller, props.nodeList, props.transitionMoveNodes)}
         />

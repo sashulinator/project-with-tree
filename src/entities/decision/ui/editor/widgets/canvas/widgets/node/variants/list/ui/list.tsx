@@ -12,7 +12,7 @@ import { LinkListController } from '../../../../../../..'
 
 export interface ListProps {
   state: Controller
-  linkListController: LinkListController
+  linkList: LinkListController
   toggle: (id: Id) => void
   selectNodes: (ids: Id[]) => void
   onGestureDrug: (state: NodeState) => (event: GestureDragEvent) => void
@@ -30,8 +30,8 @@ export function ListComponent(props: ListProps): JSX.Element {
             key={node.id}
             state={node}
             selectNodes={props.selectNodes}
-            nodeListController={props.state}
-            linkListController={props.linkListController}
+            nodeList={props.state}
+            linkList={props.linkList}
             onGestureDrug={props.onGestureDrug(node)}
           />
         )
