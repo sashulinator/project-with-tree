@@ -8,7 +8,6 @@ import { AppearFrom } from '~/ui/animation'
 import { GhostButton } from '~/ui/button'
 import Chip from '~/ui/chip/ui/chip'
 import { Close } from '~/ui/icon'
-import Input, { useChangeOnBlurStrategy } from '~/ui/input'
 import Resizable, { ResizableProps } from '~/ui/resizable'
 import { Id, assertDefined, c } from '~/utils/core'
 import { useUpdate } from '~/utils/hooks'
@@ -33,21 +32,7 @@ function RightPanelComponent(props: Props): JSX.Element | null {
 
   // const [fullscreen, , , toogleFullscreen] = useBoolean(false)
 
-  const selection = props.nodeList.selection.value
-
-  const selectedNodeId = [...selection][0]
-  const nodeController = props.nodeList.find(selectedNodeId)
-
-  const inputProps = useChangeOnBlurStrategy({
-    value: nodeController?.title.value || '',
-    cannotBeEmpty: true,
-    transparent: true,
-    height: 'm',
-    placeholder: 'Описание',
-    onChange: (e) => nodeController?.title.set(e.currentTarget.value),
-  })
-
-  if (selection.length !== 1 && props.linkList.editingRuleSet.value === undefined) {
+  if (props.linkList.editingRuleSet.value === undefined) {
     return null
   }
 
@@ -78,14 +63,6 @@ function RightPanelComponent(props: Props): JSX.Element | null {
             <Close />
           </GhostButton>
         </Flex>
-        {selection.length === 1 && (
-          <>
-            <Input {...inputProps} />
-            {/* <SpacingWidthButton onClick={toogleFullscreen} round={true}>
-                <SpacingWidth />
-              </SpacingWidthButton> */}
-          </>
-        )}
         {props.linkList.editingRuleSet.value && (
           <>
             <Flex dir='column' width='100%'>
@@ -125,7 +102,6 @@ function RightPanelComponent(props: Props): JSX.Element | null {
   // Private
 
   function subscribeOnUpdates(update: () => void, uns: (() => void)[]): void {
-    uns.push(props.nodeList.on('selection', update))
     uns.push(props.linkList.on('editingRuleSet', update))
     uns.push(props.linkList.on('rules', update))
   }
