@@ -4,6 +4,7 @@ import { useMemo } from 'react'
 
 import { RulesRes } from '~/entities/rules/types/rules-type'
 import { Id, c } from '~/utils/core'
+import { isMetaCtrlKey } from '~/utils/dom-event'
 import { useEventListener } from '~/utils/hooks'
 import { toggle } from '~/utils/id-array'
 import { Required } from '~/utils/types/object'
@@ -120,7 +121,7 @@ export default function Editor(props: Props): JSX.Element {
 
   function onClick(e: MouseEvent): void {
     const el = e.target as HTMLElement
-    if (el.tagName !== 'svg') return
+    if (el.tagName !== 'svg' || isMetaCtrlKey(e)) return
     reset()
   }
 
