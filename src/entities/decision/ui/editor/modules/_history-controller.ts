@@ -1,11 +1,13 @@
 import { ActionHistory, Step, StepController } from '~/utils/action-history'
-import { Id } from '~/utils/core'
+import { Id, Position } from '~/utils/core'
+import { emptyFn } from '~/utils/function/empty-fn'
 import { Required } from '~/utils/types/object'
 
 import { CanvasController } from '..'
 import { Point, RuleSet } from '../../..'
-import { _addNode, _removeNode } from '../_private'
-import { LinkController, LinkListController, NodeListController } from '../widgets/canvas'
+import { _addNode } from '../_private'
+import { _calcColumnNodesPositions } from '../lib/_calc-column-nodes-positions'
+import { LinkController, LinkListController, NodeController, NodeListController, getColumnX } from '../widgets/canvas'
 
 interface Context {
   canvas: CanvasController
@@ -41,6 +43,13 @@ export type RemoveNodeItem = {
   undo: { point: Point }
 }
 
+export type MoveNodeItem = {
+  type: 'moveNodes'
+  historical: true
+  redo: Record<Id, Position>
+  undo: Record<Id, Position>
+}
+
 export type RemoveLinkItem = {
   type: 'removeLink'
   historical: true
@@ -48,7 +57,7 @@ export type RemoveLinkItem = {
   undo: { ruleSet: RuleSet; linkId: Id; sourceId: Id | undefined }
 }
 
-type StepItem = SelectNodesItem | AddNodeItem | RemoveNodeItem | RemoveLinkItem | SelectLinksItem
+type StepItem = SelectNodesItem | AddNodeItem | RemoveNodeItem | RemoveLinkItem | SelectLinksItem | MoveNodeItem
 
 export class _HistoryController extends ActionHistory<Step<StepItem>> {
   nodeList: NodeListController
@@ -72,6 +81,8 @@ export class _HistoryController extends ActionHistory<Step<StepItem>> {
   }
 
   factory = (item: Step<StepItem>): void => {
+    console.log(this.steps)
+
     item.list.forEach((event) => {
       if (event.type === 'selectNodes') {
         this.nodeList.selection.set(item.done ? event.undo.ids : event.redo.ids)
@@ -80,10 +91,17 @@ export class _HistoryController extends ActionHistory<Step<StepItem>> {
         this.linkList.selection.set(item.done ? event.undo.ids : event.redo.ids)
       }
       if (event.type === 'addNode') {
-        item.done ? _removeNode(this, event.undo.id) : _addNode(this, event.redo.point, { duration: 0 })
+        item.done ? this.nodeList.remove(event.undo.id) : _addNode(this, event.redo.point, emptyFn, { duration: 0 })
       }
       if (event.type === 'removeNodes') {
-        item.done ? _addNode(this, event.undo.point, { duration: 0 }) : _removeNode(this, event.redo.id)
+        item.done ? _addNode(this, event.undo.point, emptyFn, { duration: 0 }) : this.nodeList.remove(event.redo.id)
+      }
+      if (event.type === 'moveNodes') {
+        Object.entries(item.done ? event.undo : event.redo).forEach(([key, value]) => {
+          const node = this.nodeList.find(key)
+          if (!node) return
+          node.position.transitionMove(value)
+        }, {})
       }
       if (event.type === 'removeLink') {
         if (item.done) {
@@ -119,64 +137,158 @@ export class _HistoryController extends ActionHistory<Step<StepItem>> {
   /**
    * ADD NODE
    */
+  private itemifyCreateNode = (
+    point: Required<Partial<Point>, 'level'>,
+    onAdded: (node: NodeController) => void
+    // event?: (TransitionMoveEvent & Record<string, unknown>) | undefined
+  ): void => {
+    const newPoint = _addNode(this, point, onAdded)
+    this.step.add('addNode', { point: newPoint }, { id: newPoint.id }, true)
+  }
 
-  addNode = (
+  create = (
     point: Required<Partial<Point>, 'level'>
     // event?: (TransitionMoveEvent & Record<string, unknown>) | undefined
   ): void => {
-    const newPoint = _addNode(this, point)
-    const step = this.step.add('addNode', { point: newPoint }, { id: newPoint.id }, true).build()
-    this.add(step as Step<StepItem>)
+    this.itemifyCreateNode(point, (node) => {
+      this.itemifyMoveNodes([node.id])
+    })
+    this.addStep(this.step.build() as Step<StepItem>)
+    this.factory(this.steps[0])
   }
 
   /**
-   * REMOVE NODE
+   * TRANSITION MOVE NODES
    */
+  private itemifyMoveNodes = (ids: Id[]): void => {
+    const nodes = ids.map((id) => this.nodeList.find(id)).filter(Boolean) as NodeController[]
+    // Получаем словарь где key это x ноды, а value сама нода
+    const newXNodes = this.nodeList.getColumnNodes(true)
+    const oldXNodes = this.nodeList.getColumnNodes(false)
 
-  removeNodes = (ids: Id[]): void => {
+    // Получаем уникальные Иксы каждой колонки где были и будут перетаскиваемые ноды
+    const xs = nodes.reduce((acc, node) => {
+      acc.add(node.position.start.x)
+      acc.add(getColumnX(node.position.value.x))
+      return acc
+    }, new Set<number>())
+
+    // Получаем новые координаты каждой ноды колонок
+    const newNodesPositions = [...xs].reduce<Record<Id, Position>>((acc, x) => {
+      const nodes = newXNodes[x]
+      if (!nodes) return acc
+      return {
+        ...acc,
+        ..._calcColumnNodesPositions(this, nodes?.map((node) => node.id), x),
+      }
+    }, {})
+
+    // Получаем старык координаты каждой ноды колонок
+    const oldNodesPositions = [...xs].reduce<Record<Id, Position>>((acc, x) => {
+      const nodes = oldXNodes[x]
+      if (!nodes) return acc
+      return {
+        ...acc,
+        ...nodes.reduce<Record<Id, Position>>((acc, node) => {
+          acc[node.id] = node.position.start
+          return acc
+        }, {}),
+      }
+    }, {})
+
+    this.step.add('moveNodes', newNodesPositions, oldNodesPositions, true)
+  }
+
+  move = (nodeIds: Id[]): void => {
+    console.log('move')
+
+    this.itemifyMoveNodes(nodeIds)
+    this.addStep(this.step.build() as Step<StepItem>)
+    this.factory(this.steps[0])
+  }
+
+  /**
+   * REMOVE
+   */
+  private itemifyRemoveNodes = (ids: Id[]): void => {
     ids.forEach((id) => {
       const point = this.nodeList.get(id).deserialize()
-
       this.step.add('removeNodes', { id: point.id }, { point }, true)
-
-      this.linkList.values().forEach((iLink) => {
-        if (iLink.sourceId.value === id) {
-          this.step.add(
-            'removeLink',
-            { linkId: iLink.id },
-            { ruleSet: iLink.deserialize(), linkId: iLink.id, sourceId: id },
-            true
-          )
-          this.linkList.remove(iLink.id)
-        } else if (iLink.targetId.value === id) {
-          this.step.add(
-            'removeLink',
-            { linkId: iLink.id },
-            { ruleSet: iLink.deserialize(), linkId: iLink.id, sourceId: iLink.sourceId.value },
-            true
-          )
-          this.linkList.remove(iLink.id)
-        }
-      })
-
-      _removeNode(this, point.id)
-      this.add(this.step.build() as Step<StepItem>)
     })
 
-    const newSelectedIds = this.nodeList.selection.value.filter((sId) => !ids.includes(sId))
-    this.step.add('selectNodes', { ids: newSelectedIds }, { ids: [...this.nodeList.selection.value] }, false)
-    this.nodeList.selection.set(newSelectedIds)
+    const filteredSelectedIds = this.nodeList.selection.value.filter((sId) => !ids.includes(sId))
+    this.itemifySelectNodes(filteredSelectedIds)
+  }
+
+  private itemifyRemoveLinks = (ids: Id[]): void => {
+    ids.forEach((id) => {
+      const link = this.linkList.get(id)
+      this.step.add(
+        'removeLink',
+        { linkId: id },
+        { ruleSet: link.deserialize(), linkId: id, sourceId: link.sourceId.value },
+        true
+      )
+    })
+
+    const filteredSelectedIds = this.linkList.selection.value.filter((sId) => !ids.includes(sId))
+    this.itemifySelectLinks(filteredSelectedIds)
+  }
+
+  remove = (nodeIds: Id[], linkIds: Id[]): void => {
+    this.itemifyRemoveNodes(nodeIds)
+    const allAffectedNodesIds = new Set(nodeIds)
+    const allAffectedlinksIds = new Set(linkIds)
+
+    nodeIds.forEach((nodeId) => {
+      this.linkList.values().forEach((link) => {
+        if (link.sourceId.value !== nodeId && link.targetId.value !== nodeId) return
+        if (link.sourceId.value) allAffectedNodesIds.add(link.sourceId.value)
+        if (link.targetId.value) allAffectedNodesIds.add(link.targetId.value)
+        allAffectedlinksIds.add(link.id)
+      })
+    })
+
+    this.itemifyRemoveLinks([...allAffectedlinksIds])
+    this.itemifyMoveNodes([...allAffectedNodesIds].filter((id) => !nodeIds.includes(id)))
+    this.addStep(this.step.build() as Step<StepItem>)
+    this.factory(this.steps[0])
   }
 
   /**
    * SELECTION
    */
+  private itemifySelectNodes(ids: Id[]): void {
+    this.step.add('selectNodes', { ids }, { ids: [...this.nodeList.selection.value] }, false)
+  }
+
+  private itemifySelectLinks(ids: Id[]): void {
+    this.step.add('selectLinks', { ids }, { ids: [...this.linkList.selection.value] }, false)
+  }
 
   select = (nodeIds: Id[], linkIds: Id[]): void => {
-    this.step.add('selectNodes', { ids: nodeIds }, { ids: [...this.nodeList.selection.value] }, false)
-    this.step.add('selectLinks', { ids: linkIds }, { ids: [...this.linkList.selection.value] }, false)
-    this.add(this.step.build() as Step<StepItem>)
-    this.nodeList.selection.set(nodeIds)
-    this.linkList.selection.set(linkIds)
+    // Проверка на бессмысленный клик по уже выделенному элементу
+    if (
+      nodeIds.length === 1 &&
+      linkIds.length === 0 &&
+      this.nodeList.selection.value.length === 1 &&
+      nodeIds[0] === this.nodeList.selection.value[0] &&
+      this.linkList.selection.value.length === 0
+    )
+      return
+    // Проверка на бессмысленный клик по уже выделенному элементу
+    if (
+      linkIds.length === 1 &&
+      nodeIds.length === 0 &&
+      this.linkList.selection.value.length === 1 &&
+      linkIds[0] === this.linkList.selection.value[0] &&
+      this.nodeList.selection.value.length === 0
+    )
+      return
+
+    this.itemifySelectNodes(nodeIds)
+    this.itemifySelectLinks(linkIds)
+    this.addStep(this.step.build() as Step<StepItem>)
+    this.factory(this.steps[0])
   }
 }

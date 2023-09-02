@@ -14,6 +14,7 @@ export interface Props {
   controller: Controller
   linkList: LinkListController
   nodeList: NodeListController
+  transitionMoveNodes: (ids: Id[]) => void
   toggleLink: (id: Id) => void
   toggleNode: (id: Id) => void
   selectNodes: (ids: Id[]) => void
@@ -37,9 +38,9 @@ function CanvasComponent(props: Props): JSX.Element {
         <NodeList
           toggle={props.toggleNode}
           state={props.nodeList}
-          linkListController={props.linkList}
+          linkList={props.linkList}
           selectNodes={props.selectNodes}
-          onGestureDrug={onGestureDrag(props.controller, props.nodeList)}
+          onGestureDrug={onGestureDrag(props.controller, props.nodeList, props.transitionMoveNodes)}
         />
       </PaintingPanel>
     </Board>

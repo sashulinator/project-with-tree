@@ -44,7 +44,7 @@ export default {
           {...state}
           toggle={emptyFn}
           selectNodes={emptyFn}
-          listState={listState}
+          list={listState}
           state={nodeController}
           toolbar={
             <div style={{ display: 'flex', justifyContent: 'end', padding: 'var(--s)' }}>

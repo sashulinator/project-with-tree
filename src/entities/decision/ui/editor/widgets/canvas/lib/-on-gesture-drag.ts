@@ -1,7 +1,8 @@
 import { GestureDragEvent } from '~/ui/canvas'
+import { Id } from '~/utils/core'
 
 import { Controller } from '..'
-import { NodeController, NodeListController, getColumnX, getNodeMovement } from '../../..'
+import { NodeController, NodeListController, getNodeMovement } from '../../..'
 
 /**
  * Функция обработки драга ноды
@@ -10,7 +11,11 @@ import { NodeController, NodeListController, getColumnX, getNodeMovement } from 
  * @param {NodeController} nodeController
  * @param {GestureDragEvent} event событие библиотечки @use-gesture/react
  */
-export function onGestureDrag(state: Controller, nodeListController: NodeListController) {
+export function onGestureDrag(
+  state: Controller,
+  nodeListController: NodeListController,
+  transitionMoveNodes: (ids: Id[]) => void
+) {
   return (node: NodeController) =>
     (event: GestureDragEvent): void => {
       event.event.stopPropagation()
@@ -26,47 +31,41 @@ export function onGestureDrag(state: Controller, nodeListController: NodeListCon
         const x = node.position.start.x + movePosition.x
         const y = node.position.start.y + movePosition.y
 
-        !event.last
-          ? node.position.move({ x, y }, { last: false })
-          : node.position.transitionMove({ x: getColumnX(x), y })
+        event.last ? transitionMoveNodes([node.id]) : node.position.move({ x, y }, { last: false })
 
         return
       }
 
       if (event.event.shiftKey) {
-        const selectedNodeStates = [...nodeListController.selection.value].map((id) => nodeListController.get(id))
+        const selectedNodeStates = nodeListController.selection.value.map((id) => nodeListController.get(id))
 
         const x = node.position.start.x + movePosition.x
         const y = node.position.start.y + movePosition.y
 
-        !event.last
-          ? node.position.move({ x, y }, { last: false })
-          : node.position.transitionMove({ x: getColumnX(x), y })
+        event.last
+          ? transitionMoveNodes(nodeListController.selection.value)
+          : node.position.move({ x, y }, { last: false })
 
-        selectedNodeStates
-          .sort((a, b) => a.position.value.y - b.position.value.y)
-          .forEach((selectedNode, i) => {
-            !event.last
-              ? selectedNode.position.move(
+        event.last
+          ? transitionMoveNodes(nodeListController.selection.value)
+          : selectedNodeStates
+              .sort((a, b) => a.position.value.y - b.position.value.y)
+              .forEach((selectedNode, i) => {
+                selectedNode.position.move(
                   { x: node.position.value.x, y: node.position.value.y + i * 1 },
                   { last: false }
                 )
-              : selectedNode.position.transitionMove({
-                  x: getColumnX(node.position.value.x),
-                  y: node.position.value.y,
-                })
-          })
+              })
       } else {
-        const selectedNodes = [...nodeListController.selection.value, node.id].map((id) => nodeListController.get(id))
+        const selectedNodes = nodeListController.selection.value.map((id) => nodeListController.get(id))
 
-        selectedNodes.forEach((selectedNode) => {
-          const x = selectedNode.position.start.x + movePosition.x
-          const y = selectedNode.position.start.y + movePosition.y
-
-          !event.last
-            ? selectedNode.position.move({ x, y }, { last: false })
-            : selectedNode.position.transitionMove({ x: getColumnX(x), y })
-        })
+        event.last
+          ? transitionMoveNodes(nodeListController.selection.value)
+          : selectedNodes.forEach((selectedNode) => {
+              const x = selectedNode.position.start.x + movePosition.x
+              const y = selectedNode.position.start.y + movePosition.y
+              selectedNode.position.move({ x, y }, { last: false })
+            })
       }
     }
 }

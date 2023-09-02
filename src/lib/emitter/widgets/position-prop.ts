@@ -7,7 +7,7 @@ export interface PositionPropEvent {
   value: Position
 }
 
-export type TransitionMoveEvent = { duration?: number; onEnd?: () => void }
+export type TransitionMoveEvent = { duration?: number | undefined; onEnd?: () => void }
 
 /**
  * @final

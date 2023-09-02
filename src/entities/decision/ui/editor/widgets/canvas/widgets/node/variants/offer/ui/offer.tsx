@@ -19,22 +19,17 @@ export default function Filter(props: FactoryProps): JSX.Element {
     <Node
       toggle={props.toggle}
       selectNodes={emptyFn}
-      listState={props.nodeListController}
+      list={props.nodeList}
       state={props.state}
       onGestureDrug={props.onGestureDrug}
       className={Filter.displayName}
       title={<Title className='title' state={props.state} />}
       toolbar={
-        <Toolbar
-          toggle={props.toggle}
-          selectNodes={props.selectNodes}
-          listState={props.nodeListController}
-          state={props.state}
-        />
+        <Toolbar toggle={props.toggle} selectNodes={props.selectNodes} listState={props.nodeList} state={props.state} />
       }
       targetLinks={
         <TargetLinks
-          linkControllers={props.linkListController}
+          linkControllers={props.linkList}
           state={props.state}
           onNewJointClick={onNewJointClick('targetId')}
           onJointClick={onJointClick}
@@ -50,24 +45,24 @@ export default function Filter(props: FactoryProps): JSX.Element {
   }
 
   function onJointClick(linkId: Id): void {
-    if (props.linkListController.editingId.value) {
-      props.linkListController.finishEditing(linkId)
+    if (props.linkList.editingId.value) {
+      props.linkList.finishEditing(linkId)
     } else {
-      const linkController = props.linkListController.get(linkId)
+      const linkController = props.linkList.get(linkId)
       if (!linkController.targetId.value) {
-        props.linkListController.editingId.set(linkController.id)
+        props.linkList.editingId.set(linkController.id)
       } else {
-        props.linkListController.startEditing(linkId, props.state.id)
+        props.linkList.startEditing(linkId, props.state.id)
       }
     }
   }
 
   function onNewJointClick(startLinkType: 'targetId' | 'sourceId'): (newLinkId: Id) => void {
     return (newLinkId: Id) => {
-      if (props.linkListController.editingId.value) {
-        props.linkListController.finishNewLink(props.state.id)
+      if (props.linkList.editingId.value) {
+        props.linkList.finishNewLink(props.state.id)
       } else {
-        props.linkListController.startNewLink({ [startLinkType]: newLinkId, index: 0 })
+        props.linkList.startNewLink({ [startLinkType]: newLinkId, index: 0 })
       }
     }
   }

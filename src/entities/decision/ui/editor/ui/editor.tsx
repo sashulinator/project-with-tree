@@ -4,6 +4,7 @@ import { useMemo } from 'react'
 
 import { RulesRes } from '~/entities/rules/types/rules-type'
 import { Id, c } from '~/utils/core'
+import { isMetaCtrlKey } from '~/utils/dom-event'
 import { useEventListener } from '~/utils/hooks'
 import { toggle } from '~/utils/id-array'
 import { Required } from '~/utils/types/object'
@@ -75,7 +76,7 @@ export default function Editor(props: Props): JSX.Element {
       <Toolbar
         className='panel --toolbar'
         nodeList={nodeList}
-        addNode={history.addNode}
+        addNode={addNode}
         removeSelectedNodes={removeSelected}
         undo={undo}
         redo={redo}
@@ -99,6 +100,7 @@ export default function Editor(props: Props): JSX.Element {
         toggleNode={toggleNode}
         toggleLink={toggleLink}
         selectLinks={selectLinks}
+        transitionMoveNodes={transitionMoveNodes}
         selectNodes={selectNodes}
         controller={canvas}
         nodeList={nodeList}
@@ -120,7 +122,7 @@ export default function Editor(props: Props): JSX.Element {
 
   function onClick(e: MouseEvent): void {
     const el = e.target as HTMLElement
-    if (el.tagName !== 'svg') return
+    if (el.tagName !== 'svg' || isMetaCtrlKey(e)) return
     reset()
   }
 
@@ -130,6 +132,10 @@ export default function Editor(props: Props): JSX.Element {
 
   function redo(): void {
     history.redo()
+  }
+
+  function transitionMoveNodes(ids: Id[]): void {
+    history.move(ids)
   }
 
   function selectNodes(ids: Id[]): void {
@@ -157,12 +163,13 @@ export default function Editor(props: Props): JSX.Element {
   }
 
   function removeSelected(): void {
-    history.removeNodes(nodeList.selection.value)
+    history.remove(nodeList.selection.value, linkList.selection.value)
   }
 
   function reset(): void {
     linkList.editingId.set(undefined)
-    selectNodes([])
+    if (!linkList.selection.value.length && !nodeList.selection.value.length) return
+    history.select([], [])
   }
 
   function paste(): void {
@@ -170,7 +177,7 @@ export default function Editor(props: Props): JSX.Element {
   }
 
   function addNode(point: Required<Partial<Point>, 'level'>): void {
-    history.addNode(point)
+    history.create(point)
   }
 
   function centerNode(id: Id): void {

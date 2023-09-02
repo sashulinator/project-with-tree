@@ -1,3 +1,5 @@
+import { useEffect, useState } from 'react'
+
 import Flex from '~/abstract/flex/ui/flex'
 import { Config, Props } from '~/storybook/types'
 import { PrimaryButton } from '~/ui/button'
@@ -22,11 +24,26 @@ export default {
   },
 
   element: function Element(props: Props<State>): JSX.Element {
+    const [count, setCount] = useState(0)
+
+    useEffect(() => {
+      setTimeout(() => {
+        setCount(count + 1)
+      }, 1000)
+    }, [])
+
     const { state } = props
+
     return (
       <Flex dir='column' gap='xl' width='100%'>
         <Tooltip contents={'World'} {...state}>
-          <PrimaryButton>Hello</PrimaryButton>
+          <PrimaryButton onClick={(): void => setCount(count + 1)}>Rerender ({count})</PrimaryButton>
+        </Tooltip>
+
+        <Tooltip contents={'World'} {...state}>
+          <button ref={console.log} onClick={(): void => setCount(count + 1)}>
+            Rerender ({count})
+          </button>
         </Tooltip>
       </Flex>
     )
