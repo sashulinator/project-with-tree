@@ -1,7 +1,7 @@
 import { memo } from 'react'
 
 import { Board, PaintingPanel } from '~/ui/canvas'
-import { Id } from '~/utils/core'
+import { Id, Position } from '~/utils/core'
 import { useUpdate } from '~/utils/hooks'
 import { setRefs } from '~/utils/react'
 
@@ -14,6 +14,7 @@ export interface Props {
   controller: Controller
   linkList: LinkListController
   nodeList: NodeListController
+  transitionMoveNodes: (ids: Id[], position: Position) => void
   toggleLink: (id: Id) => void
   toggleNode: (id: Id) => void
   selectNodes: (ids: Id[]) => void
@@ -39,7 +40,7 @@ function CanvasComponent(props: Props): JSX.Element {
           state={props.nodeList}
           linkListController={props.linkList}
           selectNodes={props.selectNodes}
-          onGestureDrug={onGestureDrag(props.controller, props.nodeList)}
+          onGestureDrug={onGestureDrag(props.controller, props.nodeList, props.transitionMoveNodes)}
         />
       </PaintingPanel>
     </Board>
