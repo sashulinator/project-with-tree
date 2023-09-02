@@ -1,0 +1,21 @@
+.decision-Editor-w-Canvas-w-Link > .--link {
+  stroke: var(--color);
+
+  &.--selected {
+    stroke: var(--primary) !important;
+  }
+}
+
+.decision-Editor-w-Canvas-w-Link > .--overlay {
+  stroke: transparent;
+}
+
+/* Hover */
+.decision-Editor-w-Canvas-w-Link:hover > .--link {
+  stroke: var(--primary);
+  opacity: 0.5;
+}
+.decision-Editor-w-Canvas-w-Link:hover > .--selected.--link {
+  stroke: var(--primary);
+  opacity: 0.8;
+}

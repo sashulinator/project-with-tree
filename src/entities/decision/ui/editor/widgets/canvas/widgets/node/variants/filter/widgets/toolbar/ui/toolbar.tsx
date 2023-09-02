@@ -5,8 +5,8 @@ import { GhostButton } from '~/ui/button'
 import Checkbox from '~/ui/checkbox'
 import { Id, c } from '~/utils/core'
 import { stopPropagation } from '~/utils/dom-event'
+import { fns } from '~/utils/function'
 import { useUpdate } from '~/utils/hooks'
-import { toggle } from '~/utils/id-array'
 
 import { Controller, ListController } from '../../../../..'
 
@@ -17,6 +17,7 @@ export interface Props {
   listState: ListController
   className?: string
   selectNodes: (ids: Id[]) => void
+  toggle: () => void
 }
 
 const RU = {
@@ -38,12 +39,7 @@ export default function Toolbar(props: Props): JSX.Element {
        * и на нем применим stopPropagation
        */}
       <Flex mainAxis='center' crossAxis='center' onClick={stopPropagation}>
-        <Checkbox
-          round={true}
-          checked={checked}
-          className='selection'
-          onChange={(): void => props.selectNodes(toggle(props.state.id, props.listState.selection.value))}
-        />
+        <Checkbox round={true} checked={checked} className='selection' onChange={fns(stopPropagation, props.toggle)} />
       </Flex>
       <Flex>
         <GhostButton onClick={toogleComputation} style={{ fontSize: '0.6em' }}>

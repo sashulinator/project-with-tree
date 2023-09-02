@@ -42,6 +42,7 @@ export default {
       <svg width='100%' height='100%' style={{ border: '1px solid red' }}>
         <Node
           {...state}
+          toggle={emptyFn}
           selectNodes={emptyFn}
           listState={listState}
           state={nodeController}

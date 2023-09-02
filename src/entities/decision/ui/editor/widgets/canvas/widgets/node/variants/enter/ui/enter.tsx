@@ -16,6 +16,7 @@ export default function Enter(props: FactoryProps): JSX.Element {
 
   return (
     <Node
+      toggle={props.toggle}
       selectNodes={props.selectNodes}
       listState={props.nodeListController}
       onGestureDrug={props.onGestureDrug}

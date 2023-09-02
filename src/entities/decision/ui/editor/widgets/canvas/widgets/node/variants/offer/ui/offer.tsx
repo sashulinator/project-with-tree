@@ -17,13 +17,21 @@ export default function Filter(props: FactoryProps): JSX.Element {
 
   return (
     <Node
+      toggle={props.toggle}
       selectNodes={emptyFn}
       listState={props.nodeListController}
       state={props.state}
       onGestureDrug={props.onGestureDrug}
       className={Filter.displayName}
       title={<Title className='title' state={props.state} />}
-      toolbar={<Toolbar selectNodes={props.selectNodes} listState={props.nodeListController} state={props.state} />}
+      toolbar={
+        <Toolbar
+          toggle={props.toggle}
+          selectNodes={props.selectNodes}
+          listState={props.nodeListController}
+          state={props.state}
+        />
+      }
       targetLinks={
         <TargetLinks
           linkControllers={props.linkListController}

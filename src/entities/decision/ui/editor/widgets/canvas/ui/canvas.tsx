@@ -14,6 +14,8 @@ export interface Props {
   controller: Controller
   linkList: LinkListController
   nodeList: NodeListController
+  toggleLink: (id: Id) => void
+  toggleNode: (id: Id) => void
   selectNodes: (ids: Id[]) => void
   selectLinks: (ids: Id[]) => void
 }
@@ -26,12 +28,14 @@ function CanvasComponent(props: Props): JSX.Element {
       <PaintingPanel translate={props.controller.zoom.value} scale={props.controller.zoom.value.k}>
         <LinkList
           selectLinks={props.selectLinks}
+          toggle={props.toggleLink}
           state={props.linkList}
-          nodeListController={props.nodeList}
+          nodeList={props.nodeList}
           canvasTranslate={props.controller.zoom.value}
           scale={props.controller.zoom.value.k}
         />
         <NodeList
+          toggle={props.toggleNode}
           state={props.nodeList}
           linkListController={props.linkList}
           selectNodes={props.selectNodes}

@@ -9,10 +9,11 @@ import { NodeListController } from '../../../../../../..'
 
 export interface Props {
   state: Controller
-  nodeListController: NodeListController
+  nodeList: NodeListController
   canvasTranslate: Position
   scale: number
   selectLinks: (ids: Id[]) => void
+  toggle: (id: Id) => void
 }
 
 function ListComponent(props: Props): JSX.Element {
@@ -20,14 +21,15 @@ function ListComponent(props: Props): JSX.Element {
 
   return (
     <>
-      {props.state.values().map((linkController) => {
+      {props.state.values().map((link) => {
         return (
           <Link
-            key={linkController.id}
+            key={link.id}
+            toggle={(): void => props.toggle(link.id)}
             scale={props.scale}
             canvasTranslate={props.canvasTranslate}
-            nodeList={props.nodeListController}
-            state={linkController}
+            nodeList={props.nodeList}
+            state={link}
             listState={props.state}
             selectLinks={props.selectLinks}
           />

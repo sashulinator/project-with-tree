@@ -5,6 +5,7 @@ import { useMemo } from 'react'
 import { RulesRes } from '~/entities/rules/types/rules-type'
 import { Id, c } from '~/utils/core'
 import { useEventListener } from '~/utils/hooks'
+import { toggle } from '~/utils/id-array'
 import { Required } from '~/utils/types/object'
 
 import {
@@ -95,6 +96,8 @@ export default function Editor(props: Props): JSX.Element {
         nodeList={nodeList}
       />
       <Canvas
+        toggleNode={toggleNode}
+        toggleLink={toggleLink}
         selectLinks={selectLinks}
         selectNodes={selectNodes}
         controller={canvas}
@@ -117,7 +120,7 @@ export default function Editor(props: Props): JSX.Element {
 
   function onClick(e: MouseEvent): void {
     const el = e.target as HTMLElement
-    if (el.tagName !== 'path' && el.tagName !== 'svg') return
+    if (el.tagName !== 'svg') return
     reset()
   }
 
@@ -130,11 +133,19 @@ export default function Editor(props: Props): JSX.Element {
   }
 
   function selectNodes(ids: Id[]): void {
-    history.selectNodes(ids)
+    history.select(ids, [])
+  }
+
+  function toggleNode(id: Id): void {
+    history.select(toggle(id, nodeList.selection.value), linkList.selection.value)
+  }
+
+  function toggleLink(id: Id): void {
+    history.select(nodeList.selection.value, toggle(id, linkList.selection.value))
   }
 
   function selectLinks(ids: Id[]): void {
-    // history.select(ids)
+    history.select([], ids)
   }
 
   function cutSelected(): void {

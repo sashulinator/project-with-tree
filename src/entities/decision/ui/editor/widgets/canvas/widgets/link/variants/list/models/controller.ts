@@ -14,6 +14,7 @@ type Events = {
   // Уникальные события
   editingId: { value: Id }
   editingRuleSet: { value: Id }
+  selection: { value: Id[] }
   // События стейтов
   index: { value: number; item: LinkController }
   targetId: { value: Id; item: LinkController }
