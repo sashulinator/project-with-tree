@@ -14,7 +14,7 @@ LeftPanelComponent.displayName = 'decision-Editor-w-LeftPanel'
 
 export interface Props {
   className?: string
-  nodeListController: NodeListController
+  nodeList: NodeListController
   resizableProps: Omit<ResizableProps, 'direction'>
   rootProps?: React.HTMLAttributes<HTMLDivElement>
   centerNode: (id: Id) => void
@@ -23,7 +23,7 @@ export interface Props {
 
 function LeftPanelComponent(props: Props): JSX.Element | null {
   useUpdate(subscribeOnUpdates)
-  if (props.nodeListController.searchQuery.value === '') {
+  if (props.nodeList.searchQuery.value === '') {
     return null
   }
 
@@ -38,13 +38,13 @@ function LeftPanelComponent(props: Props): JSX.Element | null {
         selectNodes={props.selectNodes}
         className='nodeList'
         centerNode={props.centerNode}
-        nodeListController={props.nodeListController}
+        nodeListController={props.nodeList}
       />
     </AppearFrom>
   )
 
   function subscribeOnUpdates(update: () => void, uns: (() => void)[]): void {
-    uns.push(props.nodeListController.on('searchQuery', update))
+    uns.push(props.nodeList.on('searchQuery', update))
   }
 }
 

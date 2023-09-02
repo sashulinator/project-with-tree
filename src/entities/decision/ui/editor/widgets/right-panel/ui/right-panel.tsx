@@ -19,11 +19,11 @@ import { LinkListController, NodeListController } from '../../..'
 RightPanelComponent.displayName = 'decision-Editor-w-RightPanel'
 
 export interface Props {
-  rootProps?: React.HTMLAttributes<HTMLDivElement>
   className?: string
+  rootProps?: React.HTMLAttributes<HTMLDivElement>
   resizableProps: Omit<ResizableProps, 'direction'>
-  nodeListController: NodeListController
-  linkListController: LinkListController
+  nodeList: NodeListController
+  linkList: LinkListController
   ruleList: RulesRes[]
   selectNodes: (ids: Id[]) => void
 }
@@ -33,10 +33,10 @@ function RightPanelComponent(props: Props): JSX.Element | null {
 
   // const [fullscreen, , , toogleFullscreen] = useBoolean(false)
 
-  const selection = props.nodeListController.selection.value
+  const selection = props.nodeList.selection.value
 
   const selectedNodeId = [...selection][0]
-  const nodeController = props.nodeListController.find(selectedNodeId)
+  const nodeController = props.nodeList.find(selectedNodeId)
 
   const inputProps = useChangeOnBlurStrategy({
     value: nodeController?.title.value || '',
@@ -47,7 +47,7 @@ function RightPanelComponent(props: Props): JSX.Element | null {
     onChange: (e) => nodeController?.title.set(e.currentTarget.value),
   })
 
-  if (selection.length !== 1 && props.linkListController.editingRuleSet.value === undefined) {
+  if (selection.length !== 1 && props.linkList.editingRuleSet.value === undefined) {
     return null
   }
 
@@ -72,7 +72,7 @@ function RightPanelComponent(props: Props): JSX.Element | null {
             height='l'
             onClick={(): void => {
               props.selectNodes([])
-              props.linkListController.editingRuleSet.set(undefined)
+              props.linkList.editingRuleSet.set(undefined)
             }}
           >
             <Close />
@@ -86,17 +86,17 @@ function RightPanelComponent(props: Props): JSX.Element | null {
               </SpacingWidthButton> */}
           </>
         )}
-        {props.linkListController.editingRuleSet.value && (
+        {props.linkList.editingRuleSet.value && (
           <>
             <Flex dir='column' width='100%'>
-              {props.linkListController.getEditingRuleState().rules.value.map((rule) => {
+              {props.linkList.getEditingRuleState().rules.value.map((rule) => {
                 return (
                   <Chip
                     type='div'
                     height='s'
                     key={rule.id}
                     onClick={(): void => {
-                      const linkController = props.linkListController.getEditingRuleState()
+                      const linkController = props.linkList.getEditingRuleState()
                       linkController.rules.set(linkController.rules.value.filter((r) => r.id !== rule.id))
                     }}
                   >
@@ -107,13 +107,12 @@ function RightPanelComponent(props: Props): JSX.Element | null {
             </Flex>
             <RuleList
               list={props.ruleList.filter(
-                (ruleRes) =>
-                  !props.linkListController.getEditingRuleState().rules.value.some((r) => r.id === ruleRes.id)
+                (ruleRes) => !props.linkList.getEditingRuleState().rules.value.some((r) => r.id === ruleRes.id)
               )}
               onSelect={(id): void => {
                 const rule = props.ruleList.find((rule) => rule.id === id)
                 assertDefined(rule)
-                const linkController = props.linkListController.getEditingRuleState()
+                const linkController = props.linkList.getEditingRuleState()
                 linkController.rules.set([...linkController.rules.value, rule])
               }}
             />
@@ -126,9 +125,9 @@ function RightPanelComponent(props: Props): JSX.Element | null {
   // Private
 
   function subscribeOnUpdates(update: () => void, uns: (() => void)[]): void {
-    uns.push(props.nodeListController.on('selection', update))
-    uns.push(props.linkListController.on('editingRuleSet', update))
-    uns.push(props.linkListController.on('rules', update))
+    uns.push(props.nodeList.on('selection', update))
+    uns.push(props.linkList.on('editingRuleSet', update))
+    uns.push(props.linkList.on('rules', update))
   }
 }
 

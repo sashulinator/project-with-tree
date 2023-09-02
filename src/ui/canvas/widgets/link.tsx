@@ -4,7 +4,7 @@ import LinkMousePositionable from '~/abstract/canvas/widgets/link/features/mouse
 import AbstractLink from '~/abstract/canvas/widgets/link/ui/link'
 import { Offset, Position } from '~/utils/core'
 
-export interface LinkProps extends React.HTMLAttributes<SVGPathElement> {
+export interface LinkProps extends React.SVGAttributes<SVGPathElement> {
   scale: number
   canvasTranslate: Position
   sourcePosition: Position | undefined

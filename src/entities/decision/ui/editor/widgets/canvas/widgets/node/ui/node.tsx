@@ -8,7 +8,6 @@ import { Id, Position, c } from '~/utils/core'
 import { isMetaCtrlKey } from '~/utils/dom-event'
 import { fns } from '~/utils/function'
 import { useUpdate } from '~/utils/hooks'
-import { toggle } from '~/utils/id-array'
 
 import { ListController, Controller as NodeState } from '..'
 import { dark } from '../themes/dark'
@@ -29,6 +28,7 @@ export interface NodeProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'c
   onGestureDrug: (event: GestureDragEvent) => void
   onGestureClick?: (event: React.MouseEvent<HTMLDivElement>) => void
   selectNodes: (ids: Id[]) => void
+  toggle: () => void
 }
 
 /**
@@ -39,7 +39,8 @@ export default function Node(props: NodeProps): JSX.Element {
 
   const clickPositionRef = useRef<null | Position>(null)
 
-  const { title, toolbar, sourceLinks, listState, targetLinks, state, rootProps, selectNodes, ...itemProps } = props
+  const { title, toolbar, sourceLinks, listState, toggle, targetLinks, state, rootProps, selectNodes, ...itemProps } =
+    props
   const selected = listState.selection.isSelected(props.state.id)
   const cutted = listState.cutted.isSelected(props.state.id)
 
@@ -78,7 +79,7 @@ export default function Node(props: NodeProps): JSX.Element {
 
     if (mx < 5 && my < 5) {
       if (isMetaCtrlKey(event)) {
-        selectNodes(toggle(props.state.id, props.listState.selection.value))
+        toggle()
       } else {
         selectNodes([props.state.id])
       }

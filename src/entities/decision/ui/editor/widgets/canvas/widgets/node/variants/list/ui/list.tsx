@@ -13,7 +13,7 @@ import { LinkListController } from '../../../../../../..'
 export interface ListProps {
   state: Controller
   linkListController: LinkListController
-  remove: (id: Id) => void
+  toggle: (id: Id) => void
   selectNodes: (ids: Id[]) => void
   onGestureDrug: (state: NodeState) => (event: GestureDragEvent) => void
 }
@@ -23,15 +23,16 @@ export function ListComponent(props: ListProps): JSX.Element {
 
   return (
     <DndProvider backend={HTML5Backend}>
-      {props.state.values().map((nodeController) => {
+      {props.state.values().map((node) => {
         return (
           <Factory
-            key={nodeController.id}
-            state={nodeController}
+            toggle={(): void => props.toggle(node.id)}
+            key={node.id}
+            state={node}
             selectNodes={props.selectNodes}
             nodeListController={props.state}
             linkListController={props.linkListController}
-            onGestureDrug={props.onGestureDrug(nodeController)}
+            onGestureDrug={props.onGestureDrug(node)}
           />
         )
       })}

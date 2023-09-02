@@ -19,7 +19,7 @@ HeaderComponent.displayName = 'decision-Editor-w-Header'
 
 export interface Props {
   className?: string
-  editorController: Controller
+  editor: Controller
   nodeList: NodeListController
   submit: () => void
 }
@@ -48,9 +48,9 @@ function HeaderComponent(props: Props): JSX.Element {
             {...useChangeOnBlurStrategy({
               transparent: true,
               cannotBeEmpty: true,
-              value: props.editorController.name.value,
+              value: props.editor.name.value,
               placeholder: 'Имя',
-              onChange: (ev): void => props.editorController.name.set(ev.currentTarget.value),
+              onChange: (ev): void => props.editor.name.set(ev.currentTarget.value),
             })}
           />
         </div>
@@ -67,7 +67,7 @@ function HeaderComponent(props: Props): JSX.Element {
   )
 
   function subscribeOnUpdates(update: () => void, uns: (() => void)[]): void {
-    uns.push(props.editorController.on('name', update))
+    uns.push(props.editor.on('name', update))
     uns.push(props.nodeList.on('searchQuery', update))
   }
 }

@@ -34,8 +34,8 @@ export default function DecisionPage(): JSX.Element {
       {fetcher.data && (
         <Editor
           onSubmit={(states): void => {
-            const items = states.nodeListController.values().map((nodeController) => {
-              const links = states.linkListController.getLinksBySourceId(nodeController.point.id)
+            const items = states.nodeList.values().map((nodeController) => {
+              const links = states.linkList.getLinksBySourceId(nodeController.point.id)
               const point = nodeController.deserialize()
               point['children'] = links.map((l, i) => {
                 const ruleSet = l.deserialize()

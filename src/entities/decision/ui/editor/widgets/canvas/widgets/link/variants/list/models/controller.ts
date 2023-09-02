@@ -1,5 +1,6 @@
 import { Point } from '~/entities/decision'
 import { Rule } from '~/entities/rule'
+import { Selection } from '~/lib/emitter'
 import { Id, assertDefined, invariant } from '~/utils/core'
 import { Dictionary, Prop } from '~/utils/emitter'
 
@@ -13,6 +14,7 @@ type Events = {
   // Уникальные события
   editingId: { value: Id }
   editingRuleSet: { value: Id }
+  selection: { value: Id[] }
   // События стейтов
   index: { value: number; item: LinkController }
   targetId: { value: Id; item: LinkController }
@@ -25,6 +27,8 @@ export class Controller extends Dictionary<LinkController, Events> {
 
   editingRuleSet: Prop<'editingRuleSet', Id | undefined>
 
+  selection: Selection<'selection'>
+
   constructor(pointList: Point[]) {
     const linkControllers = pointList
       .flatMap((point) => {
@@ -36,6 +40,8 @@ export class Controller extends Dictionary<LinkController, Events> {
       .filter((t) => !!t) as LinkController[]
 
     super(linkControllers, (l) => l.id.toString())
+
+    this.selection = new Selection('selection', [] as Id[], this)
 
     this.editingId = new Prop<'editingId', Id | undefined>('editingId', undefined, this)
 

@@ -1,9 +1,10 @@
 import './link.css'
 
 import { ForwardedRef, forwardRef } from 'react'
-import { c, Position } from '~/utils/core'
 
-export interface LinkProps extends React.HTMLAttributes<SVGPathElement> {
+import { Position, c } from '~/utils/core'
+
+export interface LinkProps extends React.SVGAttributes<SVGPathElement> {
   sourcePosition: Position | null
   targetPosition: Position | null
 }

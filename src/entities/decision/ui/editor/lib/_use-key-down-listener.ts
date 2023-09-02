@@ -1,44 +1,34 @@
 import { isActiveInput, keyListener } from '~/utils/dom-event'
 import { useEventListener } from '~/utils/hooks'
 
-import { HistoryController } from '../_private'
-
 interface Actions {
-  removeSelectedNodes: () => void
-  resetAll: () => void
-  copySelectedNodes: () => void
-  cutSelectedNodes: () => void
+  removeSelected: () => void
+  reset: () => void
+  copySelected: () => void
+  cutSelected: () => void
   paste: () => void
+  redo: () => void
+  undo: () => void
 }
 
-export function useKeyDownListener(actions: Actions, history: HistoryController): void {
+export function _useKeyDownListener(actions: Actions): void {
   const previousHistoryConf = { key: 'z', metaCtrlKey: true, shiftKey: false }
-  useEventListener(
-    'keydown',
-    keyListener(previousHistoryConf, () => {
-      history.undo()
-    })
-  )
+  useEventListener('keydown', keyListener(previousHistoryConf, EmitAction('undo')))
 
   const nextHistoryConf = { key: 'z', metaCtrlKey: true, shiftKey: true }
-  useEventListener(
-    'keydown',
-    keyListener(nextHistoryConf, () => {
-      history.redo()
-    })
-  )
+  useEventListener('keydown', keyListener(nextHistoryConf, EmitAction('redo')))
 
   const resetSelectionConf = { key: 'Escape' }
-  useEventListener('keydown', keyListener(resetSelectionConf, EmitAction('resetAll')))
+  useEventListener('keydown', keyListener(resetSelectionConf, EmitAction('reset')))
 
   const removeSelectedNodesConf = { key: 'Backspace' }
-  useEventListener('keydown', keyListener(removeSelectedNodesConf, EmitAction('removeSelectedNodes')))
+  useEventListener('keydown', keyListener(removeSelectedNodesConf, EmitAction('removeSelected')))
 
   const copySelectedNodesConf = { key: 'c', metaCtrlKey: true }
-  useEventListener('keydown', keyListener(copySelectedNodesConf, EmitAction('copySelectedNodes')))
+  useEventListener('keydown', keyListener(copySelectedNodesConf, EmitAction('copySelected')))
 
   const cutConf = { key: 'x', metaCtrlKey: true }
-  useEventListener('keydown', keyListener(cutConf, EmitAction('cutSelectedNodes')))
+  useEventListener('keydown', keyListener(cutConf, EmitAction('cutSelected')))
 
   const pasteConf = { key: 'v', metaCtrlKey: true }
   useEventListener('keydown', keyListener(pasteConf, EmitAction('paste')))

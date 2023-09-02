@@ -78,6 +78,7 @@ export default {
             return (
               <FilterNode
                 {...props}
+                toggle={emptyFn}
                 nodeListController={states}
                 selectNodes={emptyFn}
                 key={state.id}

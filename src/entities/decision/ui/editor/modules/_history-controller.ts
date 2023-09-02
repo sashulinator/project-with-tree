@@ -4,13 +4,8 @@ import { Required } from '~/utils/types/object'
 
 import { CanvasController } from '..'
 import { Point, RuleSet } from '../../..'
-import { addNode, removeNode } from '../_private'
+import { _addNode, _removeNode } from '../_private'
 import { LinkController, LinkListController, NodeListController } from '../widgets/canvas'
-
-type Event<T> = {
-  previous: T
-  value: T
-}
 
 interface Props {
   canvas: CanvasController
@@ -18,11 +13,18 @@ interface Props {
   linkList: LinkListController
 }
 
-export type SelectionEvent = {
-  type: 'selection'
+export type SelectNodesEvent = {
+  type: 'selectNodes'
   historical: false
-  undo: { value: Id[] }
-  redo: { value: Id[] }
+  undo: { ids: Id[] }
+  redo: { ids: Id[] }
+}
+
+export type SelectLinksEvent = {
+  type: 'selectLinks'
+  historical: false
+  undo: { ids: Id[] }
+  redo: { ids: Id[] }
 }
 
 export type AddNodeEvent = {
@@ -44,9 +46,9 @@ export type RemoveLinkEvent = {
   undo: { ruleSet: RuleSet; linkId: Id; sourceId: Id | undefined }
 }
 
-type Events = SelectionEvent | AddNodeEvent | RemoveNodeEvent | RemoveLinkEvent
+type Events = SelectNodesEvent | AddNodeEvent | RemoveNodeEvent | RemoveLinkEvent | SelectLinksEvent
 
-export class HistoryController extends ActionHistory {
+export class _HistoryController extends ActionHistory {
   nodeList: NodeListController
 
   canvas: CanvasController
@@ -65,14 +67,17 @@ export class HistoryController extends ActionHistory {
 
   factory = (item: HistoryItem<Events>): void => {
     item.events.forEach((event) => {
-      if (event.type === 'selection') {
-        this.selectNodes(item.done ? event.undo.value : event.redo.value)
+      if (event.type === 'selectNodes') {
+        this.nodeList.selection.set(item.done ? event.undo.ids : event.redo.ids)
+      }
+      if (event.type === 'selectLinks') {
+        this.linkList.selection.set(item.done ? event.undo.ids : event.redo.ids)
       }
       if (event.type === 'addNode') {
-        item.done ? removeNode(this, event.undo.id) : addNode(this, event.redo.point, { duration: 0 })
+        item.done ? _removeNode(this, event.undo.id) : _addNode(this, event.redo.point, { duration: 0 })
       }
       if (event.type === 'removeNodes') {
-        item.done ? addNode(this, event.undo.point, { duration: 0 }) : removeNode(this, event.redo.id)
+        item.done ? _addNode(this, event.undo.point, { duration: 0 }) : _removeNode(this, event.redo.id)
       }
       if (event.type === 'removeLink') {
         console.log('item', item)
@@ -97,7 +102,8 @@ export class HistoryController extends ActionHistory {
 
   undo = (): void => {
     const current = this.findCurrent()
-    if (current) this.factory(current as HistoryItem<Events>)
+    if (!current) return
+    this.factory(current as HistoryItem<Events>)
   }
 
   redo = (): void => {
@@ -113,7 +119,7 @@ export class HistoryController extends ActionHistory {
     point: Required<Partial<Point>, 'level'>
     // event?: (TransitionMoveEvent & Record<string, unknown>) | undefined
   ): void => {
-    const newPoint = addNode(this, point)
+    const newPoint = _addNode(this, point)
 
     const historyItem: HistoryItem<AddNodeEvent> = {
       done: true,
@@ -135,7 +141,7 @@ export class HistoryController extends ActionHistory {
    */
 
   removeNodes = (ids: Id[]): void => {
-    const historyItem: HistoryItem<RemoveNodeEvent | RemoveLinkEvent | SelectionEvent> = {
+    const historyItem: HistoryItem<RemoveNodeEvent | RemoveLinkEvent | SelectNodesEvent> = {
       done: true,
       username: 'username',
       events: [],
@@ -171,16 +177,16 @@ export class HistoryController extends ActionHistory {
         }
       })
 
-      removeNode(this, point.id)
+      _removeNode(this, point.id)
       this.add(historyItem)
     })
 
     const newSelectedIds = this.nodeList.selection.value.filter((sId) => !ids.includes(sId))
     historyItem.events.push({
-      type: 'selection',
+      type: 'selectNodes',
       historical: false,
-      redo: { value: newSelectedIds },
-      undo: { value: [...this.nodeList.selection.value] },
+      redo: { ids: newSelectedIds },
+      undo: { ids: [...this.nodeList.selection.value] },
     })
     this.nodeList.selection.set(newSelectedIds)
   }
@@ -189,22 +195,28 @@ export class HistoryController extends ActionHistory {
    * SELECTION
    */
 
-  addNodeSelection = (event: Event<Id[]>): void => {
-    this.add({
+  select = (nodeIds: Id[], linkIds: Id[]): void => {
+    const selectHistoryItem: HistoryItem<SelectNodesEvent | SelectLinksEvent> = {
       done: true,
       username: 'username',
       events: [
         {
           historical: false,
-          type: 'selection',
-          redo: { value: event.value },
-          undo: { value: event.previous },
+          type: 'selectNodes',
+          redo: { ids: nodeIds },
+          undo: { ids: [...this.nodeList.selection.value] },
+        },
+        {
+          historical: false,
+          type: 'selectLinks',
+          redo: { ids: linkIds },
+          undo: { ids: [...this.linkList.selection.value] },
         },
       ],
-    })
-  }
+    }
 
-  selectNodes = (ids: Id[]): void => {
-    this.nodeList.selection.set(ids)
+    this.add(selectHistoryItem)
+    this.nodeList.selection.set(nodeIds)
+    this.linkList.selection.set(linkIds)
   }
 }

@@ -35,8 +35,8 @@ export default function Page(): JSX.Element {
     <main className='DecisionCreatePage'>
       <Editor
         onSubmit={(states): void => {
-          const items = states.nodeListController.values().map((nodeController) => {
-            const links = states.linkListController.getLinksBySourceId(nodeController.point.id)
+          const items = states.nodeList.values().map((nodeController) => {
+            const links = states.linkList.getLinksBySourceId(nodeController.point.id)
             const point = nodeController.deserialize()
             point['children'] = links.map((l, i) => {
               const ruleSet = l.deserialize()
@@ -47,7 +47,7 @@ export default function Page(): JSX.Element {
           })
 
           const decision: EditorDecision = {
-            name: states.editorController.name.value,
+            name: states.editor.name.value,
             decisionTree: items,
           }
 

@@ -13,6 +13,7 @@ export interface FactoryProps {
   linkListController: LinkListController
   nodeListController: NodeListController
   selectNodes: (ids: Id[]) => void
+  toggle: () => void
   onGestureDrug: (event: GestureDragEvent) => void
 }
 
