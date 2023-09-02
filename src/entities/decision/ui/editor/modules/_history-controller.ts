@@ -130,53 +130,68 @@ export class _HistoryController extends ActionHistory<Step<StepItem>> {
   }
 
   /**
-   * REMOVE NODE
+   * REMOVE
    */
-
-  removeNodes = (ids: Id[]): void => {
+  private removeNodes = (ids: Id[]): void => {
     ids.forEach((id) => {
       const point = this.nodeList.get(id).deserialize()
 
       this.step.add('removeNodes', { id: point.id }, { point }, true)
 
-      this.linkList.values().forEach((iLink) => {
-        if (iLink.sourceId.value === id) {
-          this.step.add(
-            'removeLink',
-            { linkId: iLink.id },
-            { ruleSet: iLink.deserialize(), linkId: iLink.id, sourceId: id },
-            true
-          )
-          this.linkList.remove(iLink.id)
-        } else if (iLink.targetId.value === id) {
-          this.step.add(
-            'removeLink',
-            { linkId: iLink.id },
-            { ruleSet: iLink.deserialize(), linkId: iLink.id, sourceId: iLink.sourceId.value },
-            true
-          )
-          this.linkList.remove(iLink.id)
-        }
-      })
-
       _removeNode(this, point.id)
-      this.add(this.step.build() as Step<StepItem>)
     })
 
-    const newSelectedIds = this.nodeList.selection.value.filter((sId) => !ids.includes(sId))
-    this.step.add('selectNodes', { ids: newSelectedIds }, { ids: [...this.nodeList.selection.value] }, false)
-    this.nodeList.selection.set(newSelectedIds)
+    const filteredSelectedIds = this.nodeList.selection.value.filter((sId) => !ids.includes(sId))
+    this.selectNodes(filteredSelectedIds)
+  }
+
+  private removeLinks = (ids: Id[]): void => {
+    ids.forEach((id) => {
+      const link = this.linkList.get(id)
+      this.step.add(
+        'removeLink',
+        { linkId: id },
+        { ruleSet: link.deserialize(), linkId: id, sourceId: link.sourceId.value },
+        true
+      )
+      this.linkList.remove(id)
+    })
+
+    const filteredSelectedIds = this.linkList.selection.value.filter((sId) => !ids.includes(sId))
+    this.selectLinks(filteredSelectedIds)
+  }
+
+  remove = (nodeIds: Id[], linkIds: Id[]): void => {
+    this.removeNodes(nodeIds)
+    const ids = new Set(linkIds)
+
+    nodeIds.forEach((nodeId) => {
+      this.linkList.values().forEach((link) => {
+        if (link.sourceId.value !== nodeId && link.targetId.value !== nodeId) return
+        ids.add(link.id)
+      })
+    })
+
+    this.removeLinks([...ids])
+    this.add(this.step.build() as Step<StepItem>)
   }
 
   /**
    * SELECTION
    */
+  private selectNodes(ids: Id[]): void {
+    this.step.add('selectNodes', { ids }, { ids: [...this.nodeList.selection.value] }, false)
+    this.nodeList.selection.set(ids)
+  }
+
+  private selectLinks(ids: Id[]): void {
+    this.step.add('selectLinks', { ids }, { ids: [...this.linkList.selection.value] }, false)
+    this.linkList.selection.set(ids)
+  }
 
   select = (nodeIds: Id[], linkIds: Id[]): void => {
-    this.step.add('selectNodes', { ids: nodeIds }, { ids: [...this.nodeList.selection.value] }, false)
-    this.step.add('selectLinks', { ids: linkIds }, { ids: [...this.linkList.selection.value] }, false)
+    this.selectNodes(nodeIds)
+    this.selectLinks(linkIds)
     this.add(this.step.build() as Step<StepItem>)
-    this.nodeList.selection.set(nodeIds)
-    this.linkList.selection.set(linkIds)
   }
 }

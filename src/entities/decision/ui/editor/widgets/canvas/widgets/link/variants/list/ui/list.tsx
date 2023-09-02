@@ -40,7 +40,7 @@ function ListComponent(props: Props): JSX.Element {
 
   function subscribeOnUpdates(update: () => void, uns: (() => void)[]): void {
     uns.push(props.state.on('add', () => setTimeout(update)))
-    uns.push(props.state.on('remove', () => setTimeout(update)))
+    uns.push(props.state.on('remove', update))
     uns.push(props.state.on('update', () => setTimeout(update)))
     uns.push(props.state.on('editingId', () => setTimeout(update)))
   }

@@ -158,7 +158,7 @@ export default function Editor(props: Props): JSX.Element {
   }
 
   function removeSelected(): void {
-    history.removeNodes(nodeList.selection.value)
+    history.remove(nodeList.selection.value, linkList.selection.value)
   }
 
   function reset(): void {
