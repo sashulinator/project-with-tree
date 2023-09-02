@@ -1,4 +1,4 @@
-import { Id } from '~/utils/core'
+import { Id, Position } from '~/utils/core'
 
 import { NODE_GAP, NodeListController } from '..'
 
@@ -6,10 +6,12 @@ interface Context {
   nodeList: NodeListController
 }
 
-export function _columnNodes(context: Context, ids: Id[], x: number): void {
+export function _calcColumnNodesPositions(context: Context, ids: Id[], x: number): Record<Id, Position> {
   const { nodeList } = context
-
-  const columnNodes = ids.map((id) => nodeList.get(id))
+  const ret: Record<Id, Position> = {}
+  const columnNodes = ids
+    .map((id) => nodeList.get(id))
+    .sort((nodeA, nodeB) => nodeA.position.value.y - nodeB.position.value.y)
 
   // Вычисляем сумму высот всех нод в колонке
   const nodesHeight = columnNodes.reduce((acc, node) => {
@@ -26,7 +28,9 @@ export function _columnNodes(context: Context, ids: Id[], x: number): void {
   // Двигаем все ноды колонки
   for (let i = 0, nextY = columnTopY; i < columnNodes.length; i++) {
     const node = columnNodes[i]
-    node.position.transitionMove({ x, y: nextY }, { isPositionColumn: true })
+    ret[node.id] = { x, y: nextY }
     nextY += node.size.height + NODE_GAP
   }
+
+  return ret
 }

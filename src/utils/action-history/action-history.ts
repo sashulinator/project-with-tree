@@ -8,7 +8,14 @@ export class ActionHistory<TStep extends Step = Step> {
     this.steps = steps || []
   }
 
-  add(item: Omit<TStep, 'id'> & { id?: Id }) {
+  addStep(item: Omit<TStep, 'id'> & { id?: Id }) {
+    const lastStep = this.steps[0]
+
+    if (lastStep && !lastStep.done) {
+      const index = this.steps.findIndex((step) => step.done)
+      this.steps = this.steps.slice(index)
+    }
+
     this.steps.unshift({ id: generateId(), ...item } as TStep)
   }
 

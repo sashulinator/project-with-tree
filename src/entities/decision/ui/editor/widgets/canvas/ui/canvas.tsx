@@ -1,7 +1,7 @@
 import { memo } from 'react'
 
 import { Board, PaintingPanel } from '~/ui/canvas'
-import { Id, Position } from '~/utils/core'
+import { Id } from '~/utils/core'
 import { useUpdate } from '~/utils/hooks'
 import { setRefs } from '~/utils/react'
 
@@ -14,7 +14,7 @@ export interface Props {
   controller: Controller
   linkList: LinkListController
   nodeList: NodeListController
-  transitionMoveNodes: (ids: Id[], position: Position) => void
+  transitionMoveNodes: (ids: Id[]) => void
   toggleLink: (id: Id) => void
   toggleNode: (id: Id) => void
   selectNodes: (ids: Id[]) => void

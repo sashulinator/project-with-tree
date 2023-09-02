@@ -4,7 +4,6 @@ export * from './lib/_copy'
 export * from './lib/_cut'
 export * from './lib/_paste-from-clipboard'
 export * from './lib/_paste'
-export * from './lib/_remove-node'
 export * from './lib/_use-key-down-listener'
 
 export * from './modules/_history-controller'

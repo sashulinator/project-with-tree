@@ -3,7 +3,7 @@ import './editor.scss'
 import { useMemo } from 'react'
 
 import { RulesRes } from '~/entities/rules/types/rules-type'
-import { Id, Position, c } from '~/utils/core'
+import { Id, c } from '~/utils/core'
 import { isMetaCtrlKey } from '~/utils/dom-event'
 import { useEventListener } from '~/utils/hooks'
 import { toggle } from '~/utils/id-array'
@@ -31,7 +31,6 @@ import {
   _pasteFromClipboard,
   _useKeyDownListener,
 } from '../_private'
-import { _transitionMoveNodes } from '../lib/_transition-move-nodes'
 
 Editor.displayName = 'decision-Editor'
 
@@ -77,7 +76,7 @@ export default function Editor(props: Props): JSX.Element {
       <Toolbar
         className='panel --toolbar'
         nodeList={nodeList}
-        addNode={history.addNode}
+        addNode={addNode}
         removeSelectedNodes={removeSelected}
         undo={undo}
         redo={redo}
@@ -135,8 +134,8 @@ export default function Editor(props: Props): JSX.Element {
     history.redo()
   }
 
-  function transitionMoveNodes(ids: Id[], position: Position): void {
-    _transitionMoveNodes({ nodeList }, ids, position)
+  function transitionMoveNodes(ids: Id[]): void {
+    history.move(ids)
   }
 
   function selectNodes(ids: Id[]): void {
@@ -177,7 +176,7 @@ export default function Editor(props: Props): JSX.Element {
   }
 
   function addNode(point: Required<Partial<Point>, 'level'>): void {
-    history.addNode(point)
+    history.create(point)
   }
 
   function centerNode(id: Id): void {

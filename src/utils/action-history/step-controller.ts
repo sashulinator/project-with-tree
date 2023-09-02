@@ -10,7 +10,7 @@ export class StepController {
   constructor() {
     this.id = generateId()
 
-    this.done = true
+    this.done = false
 
     this.username = 'username'
 

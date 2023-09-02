@@ -4,7 +4,7 @@ import { Id, Position, assertNotNull } from '~/utils/core'
 import { getStyle } from '~/utils/dom'
 import { DictionaryEvents, EmitterDictionary, Prop } from '~/utils/emitter'
 
-import { NODE_GAP } from '../../..'
+import { NODE_GAP, getColumnX } from '../../..'
 import { NodeController } from '../../../../../../..'
 
 export type Events = DictionaryEvents<NodeController> & {
@@ -46,6 +46,15 @@ export class Controller extends EmitterDictionary<NodeController, Events> {
     this.cutted = new Selection('cutted', [] as Id[], this)
 
     this.searchQuery = new Prop('searchQuery', '', this)
+  }
+
+  getColumnNodes = (isNew: boolean): Record<number, NodeController[]> => {
+    return this.values().reduce<Record<number, NodeController[]>>((acc, node) => {
+      const x = isNew ? getColumnX(node.position.value.x) : node.position.start.x
+      if (!acc[x]) acc[x] = []
+      acc[x].push(node)
+      return acc
+    }, {})
   }
 
   positionColumn(x: number): void {
