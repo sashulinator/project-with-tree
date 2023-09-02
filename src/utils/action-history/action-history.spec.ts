@@ -1,12 +1,13 @@
-import { ActionHistory, HistoryItem } from './action-history'
+import { ActionHistory } from './action-history'
 
 describe(ActionHistory.name, () => {
   it('basic', () => {
     const next = {
+      id: 'test',
       done: false,
       storeLocally: true,
       username: 'next',
-      events: [
+      list: [
         {
           historical: true,
           type: 'next',
@@ -16,15 +17,17 @@ describe(ActionHistory.name, () => {
       ],
     }
     const current = {
+      id: 'test',
       done: true,
       username: 'current',
-      events: [{ type: 'current', historical: true, redo: { test: 'current' }, undo: { test: 'current' } }],
+      list: [{ type: 'current', historical: true, redo: { test: 'current' }, undo: { test: 'current' } }],
     }
     const previous = {
+      id: 'test',
       done: true,
       storeLocally: true,
       username: 'previous',
-      events: [
+      list: [
         {
           historical: true,
           type: 'previous',
@@ -33,7 +36,7 @@ describe(ActionHistory.name, () => {
         },
       ],
     }
-    const items: HistoryItem[] = [next, current, previous]
+    const items = [next, current, previous]
     const h = new ActionHistory(items)
 
     expect(h.findCurrent()).toEqual(current)
@@ -43,10 +46,11 @@ describe(ActionHistory.name, () => {
 
   it('all false', () => {
     const item1 = {
+      id: 'test',
       done: false,
       storeLocally: true,
       username: 'item1',
-      events: [
+      list: [
         {
           historical: true,
           type: 'item1',
@@ -56,10 +60,11 @@ describe(ActionHistory.name, () => {
       ],
     }
     const item2 = {
+      id: 'test',
       done: false,
       storeLocally: true,
       username: 'item2',
-      events: [
+      list: [
         {
           historical: true,
           type: 'item2',
@@ -69,10 +74,11 @@ describe(ActionHistory.name, () => {
       ],
     }
     const item3 = {
+      id: 'test',
       done: false,
       storeLocally: true,
       username: 'item3',
-      events: [
+      list: [
         {
           historical: true,
           type: 'item3',
@@ -81,7 +87,7 @@ describe(ActionHistory.name, () => {
         },
       ],
     }
-    const items: HistoryItem[] = [item1, item2, item3]
+    const items = [item1, item2, item3]
     const h = new ActionHistory(items)
 
     expect(h.findCurrent()).toEqual(undefined)

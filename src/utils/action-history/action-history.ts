@@ -1,46 +1,28 @@
 import { Id, generateId } from '../core'
+import { Step } from './types/step'
 
-export interface HistoryItem<
-  TEvent extends {
-    type: string
-    redo: Record<string, unknown>
-    undo: Record<string, unknown>
-    historical: boolean
-  } = {
-    type: string
-    redo: Record<string, unknown>
-    undo: Record<string, unknown>
-    historical: boolean
-  },
-> {
-  id?: Id
-  done: boolean
-  username: string
-  events: TEvent[]
-}
+export class ActionHistory<TStep extends Step = Step> {
+  steps: TStep[]
 
-export class ActionHistory {
-  array: HistoryItem[]
-
-  constructor(array?: HistoryItem[]) {
-    this.array = array || []
+  constructor(steps?: TStep[]) {
+    this.steps = steps || []
   }
 
-  add(item: HistoryItem) {
-    this.array.unshift({ id: generateId(), ...item })
+  add(item: Omit<TStep, 'id'> & { id?: Id }) {
+    this.steps.unshift({ id: generateId(), ...item } as TStep)
   }
 
-  findCurrent(): HistoryItem | undefined {
-    return this.array.find((item, i) => {
+  findCurrent(): TStep | undefined {
+    return this.steps.find((item, i) => {
       return item.done
     })
   }
 
-  findNext(): HistoryItem | undefined {
-    for (let i = 0; i < this.array.length; i++) {
-      const item = this.array[i]
-      const nextItem = this.array[i + 1]
-      const isLast = i === this.array.length - 1
+  findNext(): TStep | undefined {
+    for (let i = 0; i < this.steps.length; i++) {
+      const item = this.steps[i]
+      const nextItem = this.steps[i + 1]
+      const isLast = i === this.steps.length - 1
       // Если первый и второй done то next не существует
       if (i === 0 && item?.done && nextItem?.done) return undefined
       // Если следующий done значит он current, а этот next
@@ -50,7 +32,7 @@ export class ActionHistory {
     }
   }
 
-  findPrevious(): HistoryItem | undefined {
-    return this.array.find((_, i) => this.array[i - 1]?.done)
+  findPrevious(): TStep | undefined {
+    return this.steps.find((_, i) => this.steps[i - 1]?.done)
   }
 }
