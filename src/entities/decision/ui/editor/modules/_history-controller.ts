@@ -78,11 +78,23 @@ export class _HistoryController extends ActionHistory<Step<StepItem>> {
     this.canvas = props.canvas
 
     this.step = new StepController()
+
+    this.subscribeToChanges()
+  }
+
+  undo = (): void => {
+    const current = this.findCurrent()
+    if (!current) return
+    this.factory(current)
+  }
+
+  redo = (): void => {
+    const next = this.findNext()
+    if (!next) return
+    this.factory(next)
   }
 
   factory = (item: Step<StepItem>): void => {
-    console.log(this.steps)
-
     item.list.forEach((event) => {
       if (event.type === 'selectNodes') {
         this.nodeList.selection.set(item.done ? event.undo.ids : event.redo.ids)
@@ -123,15 +135,22 @@ export class _HistoryController extends ActionHistory<Step<StepItem>> {
     item.done = !item.done
   }
 
-  undo = (): void => {
-    const current = this.findCurrent()
-    if (!current) return
-    this.factory(current)
+  stepify = (): void => {
+    const step = this.step.build()
+    this.addStep(step as Step<StepItem>)
+    this.factory(this.steps[0])
+    const importantStep = { ...step, list: step.list.filter((i) => i.historical) }
+    if (importantStep.list.length === 0) return
+    // emitChanges('collaboration', { type: 'addStep', data: importantStep, username: getUsername() })
   }
 
-  redo = (): void => {
-    const next = this.findNext()
-    if (next) this.factory(next)
+  private subscribeToChanges = (): void => {
+    // subscribeToChanges<Step<StepItem>>('collaboration', (data) => {
+    //   if (data.type === 'addStep') {
+    //     this.addStep(data.data)
+    //     this.factory(this.steps[0])
+    //   }
+    // })
   }
 
   /**
@@ -153,8 +172,8 @@ export class _HistoryController extends ActionHistory<Step<StepItem>> {
     this.itemifyCreateNode(point, (node) => {
       this.itemifyMoveNodes([node.id])
     })
-    this.addStep(this.step.build() as Step<StepItem>)
-    this.factory(this.steps[0])
+
+    this.stepify()
   }
 
   /**
@@ -200,11 +219,8 @@ export class _HistoryController extends ActionHistory<Step<StepItem>> {
   }
 
   move = (nodeIds: Id[]): void => {
-    console.log('move')
-
     this.itemifyMoveNodes(nodeIds)
-    this.addStep(this.step.build() as Step<StepItem>)
-    this.factory(this.steps[0])
+    this.stepify()
   }
 
   /**
@@ -251,8 +267,7 @@ export class _HistoryController extends ActionHistory<Step<StepItem>> {
 
     this.itemifyRemoveLinks([...allAffectedlinksIds])
     this.itemifyMoveNodes([...allAffectedNodesIds].filter((id) => !nodeIds.includes(id)))
-    this.addStep(this.step.build() as Step<StepItem>)
-    this.factory(this.steps[0])
+    this.stepify()
   }
 
   /**
