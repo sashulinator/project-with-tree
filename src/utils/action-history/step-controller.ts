@@ -1,3 +1,5 @@
+import { getUsername } from '~/shared/username'
+
 import { Id, generateId } from '../core'
 import { Item, Step } from './types/step'
 
@@ -12,7 +14,7 @@ export class StepController {
 
     this.done = false
 
-    this.username = 'username'
+    this.username = getUsername()
 
     this.list = []
   }
