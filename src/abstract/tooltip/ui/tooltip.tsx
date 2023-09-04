@@ -4,7 +4,7 @@ import { Dictionary, c } from '../../../utils/core'
 import { fns } from '../../../utils/function'
 import { useDebounceCallback } from '../../../utils/hooks'
 import { ReactElementWithRef, setRefs } from '../../../utils/react'
-import Popover, { Offset, Overflow, Point, arePointsEqual, toPoints } from '../../popover'
+import Popover, { Offset, Overflow, Point, arePointsEqual, placementToPoints } from '../../popover'
 
 Tooltip.displayName = 'a-Tooltip'
 
@@ -63,7 +63,7 @@ export default function Tooltip<C extends Dictionary>(props: Props<C>): JSX.Elem
 
   const [opened, setOpened] = useState(false)
   const [openWithDebounce, clearDebounce] = useDebounceCallback(() => setOpened(true), delay)
-  const points = toPoints(placement)
+  const points = placementToPoints(placement)
   const [adjustedPoints, setAdjustedPoints] = useState(points)
 
   return (
