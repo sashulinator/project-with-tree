@@ -1,6 +1,6 @@
 import './domain-list.css'
 
-import { DomainRes } from '~/entities/rules/types/rules-type'
+import { ParentDomainRes } from '~/api/domain/types/parent-domain-res'
 import { emitter } from '~/shared/emitter'
 import { c } from '~/utils/core'
 
@@ -8,7 +8,7 @@ import { themes } from '../../rules/themes'
 import { Domain } from '../widgets/domain'
 
 interface DomainListProps {
-  domains: DomainRes[]
+  domains: ParentDomainRes[]
   defaultExpanded?: boolean | undefined
   rootProps?: React.HTMLAttributes<HTMLDListElement>
 }
@@ -27,7 +27,7 @@ export function DomainList(props: DomainListProps): JSX.Element {
       {/* <InputSearch inputProps={{ onChange: (e) => setValue(e.target.value), value: value }} /> */}
       <ul className={c(DomainList.displayName, rootProps?.className)} {...rootProps}>
         {domains.map((item) => {
-          return <Domain key={item.id} domain={item} defaultExpanded={!!defaultExpanded} />
+          return <Domain key={item.domain.id} parentDomain={item} defaultExpanded={!!defaultExpanded} />
         })}
       </ul>
     </>

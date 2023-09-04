@@ -13,7 +13,7 @@ export type ResponseData = { total: number; items: ParentDomainRes[] }
 
 export type Response = AxiosResponse<ResponseData>
 
-export const url = `/api/v1/domain/domainAttribute`
+export const url = `/api/v1/domain/domainAttributes`
 
 export async function request(requestData: RequestData): Promise<Response> {
   // TODO validation

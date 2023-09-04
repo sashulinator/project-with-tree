@@ -1,12 +1,13 @@
 import { useMutation } from 'react-query'
 
+import { useFetchParentDomainList } from '~/api/domain/fetch-parent-domains'
 import { requestRule } from '~/api/rules/requests/create-rule'
 import { getReqForCreateRule } from '~/entities/rules/lib/get-request-for-create-rule'
 import { EditorValues } from '~/entities/rules/models/editorRulesValues'
 import { Editor } from '~/entities/rules/ui/editor'
 import { notify } from '~/shared/notify'
 
-import { domains } from '../../../entities/rules/ui/editor/widgets/domain-list/ui/data'
+// import { domains } from '../../../entities/rules/ui/editor/widgets/domain-list/ui/data'
 
 export default function RulesCreatePage(): JSX.Element {
   const mutation = useMutation(requestRule, {
@@ -14,9 +15,13 @@ export default function RulesCreatePage(): JSX.Element {
     onError: () => notify({ data: 'Ошибка', type: 'error' }),
   })
 
+  const fetcher = useFetchParentDomainList({ page: 1, limit: 2000 })
+
   return (
     <main>
-      <Editor rule={null} onSubmit={onSubmit} dataList={domains} />
+      {fetcher.isLoading && <div>загрузка</div>}
+      {fetcher.isError && <div>Ошибка</div>}
+      {fetcher.isSuccess && <Editor rule={null} onSubmit={onSubmit} dataList={fetcher.data.items} />}
     </main>
   )
 

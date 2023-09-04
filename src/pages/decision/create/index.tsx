@@ -26,10 +26,7 @@ export default function Page(): JSX.Element {
   })
 
   const ruleListFetcher = useFetchRulesList({ page: 1, limit: 1000 })
-  const filteredRuleList = useMemo(
-    () => ruleListFetcher.data?.items.filter((item) => item.editor) || [],
-    [ruleListFetcher.data]
-  )
+  const filteredRuleList = useMemo(() => ruleListFetcher.data?.items || [], [ruleListFetcher.data])
 
   return (
     <main className='DecisionCreatePage'>

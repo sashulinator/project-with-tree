@@ -53,8 +53,8 @@ export function Rules(props: RulesProps): JSX.Element {
   useLayoutEffect(() => {
     setLoading(false)
     try {
-      if (rule?.editor && rule?.name && rule?.keyName) {
-        setEditorValues(JSON.parse(rule.editor) as EditorValues[])
+      if (rule?.frontValue && rule?.name && rule?.keyName) {
+        setEditorValues(rule.frontValue)
         setTitle(`${rule.name} (${rule.keyName})`)
       } else {
         setEditorValues([
@@ -75,8 +75,8 @@ export function Rules(props: RulesProps): JSX.Element {
         },
       ])
     }
-  }, [rule?.editor])
-
+  }, [rule?.frontValue])
+  console.log(rule)
   // const versionNum = useRef(0)
   // const memoryRulesValues = useRef([editorValue])
   // const flag = useRef(false)
