@@ -1,7 +1,7 @@
 /**
  * lib
  */
-export { toPoints } from './lib/to-points'
+export { placementToPoints } from './lib/placement-to-points'
 
 /**
  * ui

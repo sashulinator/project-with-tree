@@ -4,11 +4,11 @@ import Flex from '~/abstract/flex/ui/flex'
 import { Config, Props } from '~/storybook/types'
 import { PrimaryButton } from '~/ui/button'
 import { H1 } from '~/ui/heading'
-import Tooltip, { TooltipProps } from '~/ui/tooltip'
+import Tooltip, { Point } from '~/ui/tooltip'
 
 interface State {
   delay: number
-  points: TooltipProps['placement']
+  points: Point | undefined
 }
 
 export default {

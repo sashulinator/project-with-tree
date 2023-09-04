@@ -1,10 +1,8 @@
 import { alignElement } from 'dom-align-ts'
 import type { Offset, Points } from 'dom-align-ts'
-import React, { useCallback, useLayoutEffect } from 'react'
+import React, { useLayoutEffect } from 'react'
 import { createPortal } from 'react-dom'
 
-// https://github.com/sashulinator/utils-core
-import { curry } from '../../../utils/core'
 // https://github.com/sashulinator/utils-dom
 import { listenParentScrolls, observeResize } from '../../../utils/dom'
 // https://github.com/sashulinator/utils-hooks
@@ -12,7 +10,7 @@ import { useEventListener, useLatest } from '../../../utils/hooks'
 // https://github.com/sashulinator/utils-react
 import { assertValidElement, setRefs } from '../../../utils/react'
 import type { ReactElementWithRef } from '../../../utils/react'
-import { _align } from '../_private'
+import { _align } from '../lib/_align'
 
 Align.displayName = 'a-Align'
 
@@ -132,8 +130,6 @@ export default function Align(props: Props): JSX.Element {
 
   assertValidElement(children)
 
-  const align = useCallback(() => curry(_align)({ targetElement, sourceElement, config, onAlignedRef }), alignDeps)
-
   useLayoutEffect(align, [alignDeps])
   useEventListener('resize', align, undefined, { passive: true })
   useLayoutEffect(() => listenParentScrolls(targetElement, align, { passive: true }), [alignDeps])
@@ -143,5 +139,14 @@ export default function Align(props: Props): JSX.Element {
 
   const clonedChildren = React.cloneElement(children, { ref: setRefs(children.ref, setSourceEl) })
 
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-argument, @typescript-eslint/no-explicit-any
   return createPortal(clonedChildren as any, containerElement || targetElement.ownerDocument.body)
+
+  /**
+   * Private
+   */
+
+  function align(): void {
+    _align({ targetElement, sourceElement, config, onAlignedRef })
+  }
 }

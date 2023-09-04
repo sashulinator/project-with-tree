@@ -1,8 +1,7 @@
 import React, { Ref, createElement } from 'react'
 
-import { Dictionary, c } from '~/utils/core'
-
-import { toPoints } from '..'
+// https://github.com/sashulinator/utils-core
+import { Dictionary, c } from '../../../utils/core'
 // https://github.com/sashulinator/utils-dom-events
 import { keyListener } from '../../../utils/dom-event'
 // https://github.com/sashulinator/utils-function
@@ -12,6 +11,7 @@ import { useEventListener, useOnClickOutside } from '../../../utils/hooks'
 import { type ReactElementWithRef, setRefs } from '../../../utils/react'
 // https://github.com/sashulinator/a-align
 import Align, { Offset, OnAligned, Overflow, Point, Points } from '../../align'
+import { placementToPoints } from '../lib/placement-to-points'
 
 Popover.displayName = 'a-Popover'
 
@@ -151,11 +151,13 @@ export default function Popover<T extends Dictionary, C extends Dictionary>(prop
     </>
   )
 
-  // Private
+  /**
+   * Private
+   */
 
   function _getPoints(): Points {
     if (points) return points
-    if (placement) return toPoints(placement)
+    if (placement) return placementToPoints(placement)
     return ['tc', 'bc']
   }
 }

@@ -1,12 +1,13 @@
 import { alignElement } from 'dom-align-ts'
 
-import { AlignProps, Config, adjustPoints } from '..'
+import { Config, OnAligned } from '../ui/align'
+import { adjustPoints } from './adjust-points'
 
 type Context = {
   config: Config
   targetElement: HTMLElement
   sourceElement: HTMLElement | null
-  onAlignedRef: { current: AlignProps['onAligned'] }
+  onAlignedRef: { current?: OnAligned | undefined }
 }
 
 export function _align(ctx: Context): void {
