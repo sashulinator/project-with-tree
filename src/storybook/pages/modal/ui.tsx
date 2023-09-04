@@ -1,7 +1,7 @@
 import Flex from '~/abstract/flex/ui/flex'
-import Modal from '~/abstract/new-modal'
 import { Config } from '~/storybook/types'
 import { H1 } from '~/ui/heading'
+import Modal from '~/ui/modal'
 import { useBoolean } from '~/utils/hooks'
 
 export default {
@@ -22,11 +22,10 @@ export default {
     return (
       <Flex dir='column' gap='xl' width='100%'>
         <button onClick={toggle}>Toggle</button>
-        <Modal style={{ background: 'red' }} onDismiss={toggle} containerElement={document.body} opened={opened}>
-          <div>
-            <button onClick={toggle}>Close</button>
-            <button>just button</button>
-          </div>
+        <Modal containerElement={document.body} opened={opened}>
+          <button>button1</button>
+          <div>Hello World</div>
+          <button>button2</button>
         </Modal>
       </Flex>
     )

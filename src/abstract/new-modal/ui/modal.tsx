@@ -1,8 +1,13 @@
 import './modal.css'
 
+import { useLayoutEffect, useRef } from 'react'
 import { createPortal } from 'react-dom'
 
+import { keyListener } from '~/utils/dom-event'
+import { getFirstFocusable } from '~/utils/dom-event/get-first-focusable'
+
 import { c } from '../../../utils/core'
+import { fns } from '../../../utils/function'
 
 Modal.displayName = 'na-Modal'
 
@@ -11,17 +16,52 @@ export interface Props extends React.HTMLAttributes<HTMLDivElement> {
   children: React.ReactNode
   containerElement: Element
   opened: boolean
+  onDismiss?:
+    | ((event: React.MouseEvent<HTMLDivElement, MouseEvent> | React.KeyboardEvent<HTMLDivElement>) => void)
+    | undefined
 }
 
 export default function Modal(props: Props): JSX.Element | null {
-  const { containerElement, children, opened, ...divProps } = props
+  const { containerElement, children, opened, onKeyDown, onDismiss, onClick, ...divProps } = props
+
+  const ref = useRef<HTMLDivElement>(null)
+
+  useLayoutEffect(() => {
+    if (ref.current === null) return
+    ref.current.focus()
+  })
 
   if (!opened) return null
 
   return createPortal(
-    <div {...divProps} className={c(props.className, Modal.displayName)}>
+    // eslint-disable-next-line jsx-a11y/no-static-element-interactions, jsx-a11y/click-events-have-key-events
+    <div
+      {...divProps}
+      ref={ref}
+      tabIndex={-1}
+      onKeyDown={fns(onKeyDown, _handleKeyDown)}
+      onClick={fns(onClick, (e) => e.target === ref.current && onDismiss?.(e))}
+      className={c(props.className, Modal.displayName)}
+    >
       {children}
     </div>,
     containerElement
   )
+
+  /**
+   * Private
+   */
+
+  function _handleKeyDown(e: React.KeyboardEvent<HTMLDivElement>): void {
+    console.log('e', e)
+
+    keyListener({ key: 'Escape' }, () => onDismiss?.(e))(e)
+    keyListener({ key: 'Tab' }, () => setTimeout(_returnFocus))(e)
+  }
+
+  function _returnFocus(): void {
+    if (ref.current === null) return
+    if (ref.current.contains(document.activeElement)) return
+    getFirstFocusable(ref.current)?.focus()
+  }
 }
