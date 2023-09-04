@@ -1,6 +1,6 @@
-import React, { ForwardedRef, FunctionComponentElement } from 'react'
+import React, { Ref, createElement } from 'react'
 
-import { c } from '~/utils/core'
+import { Any, Dictionary, c } from '~/utils/core'
 
 import { toPoints } from '..'
 // https://github.com/sashulinator/utils-dom-events
@@ -9,19 +9,16 @@ import { keyListener } from '../../../utils/dom-event'
 import { fns } from '../../../utils/function'
 import { useEventListener, useOnClickOutside } from '../../../utils/hooks'
 // https://github.com/sashulinator/utils-react
-import type { ReactElementWithRef } from '../../../utils/react'
+import { type ReactElementWithRef, setRefs } from '../../../utils/react'
 // https://github.com/sashulinator/a-align
 import Align, { Offset, OnAligned, Overflow, Point, Points } from '../../align'
 
 Popover.displayName = 'a-Popover'
 
-export type RenderProps = Props & { ref: React.ForwardedRef<HTMLElement> }
-export type Render = (props: RenderProps) => React.ReactNode
-
 /**
  * Props for the `Popover` component, which displays a content over a target element.
  */
-export interface Props {
+export interface Props<C extends Dictionary, T extends Dictionary> {
   /**
    * Classnames
    */
@@ -35,17 +32,22 @@ export interface Props {
   /**
    * Render target
    */
-  renderTarget: Render
-
-  /**
-   * The content to be displayed in the popover.
-   */
-  renderContent: Render
+  renderTarget: (props: T & { opened: boolean; points: Points; ref: Ref<HTMLElement> }) => React.ReactNode
 
   /**
    * Props will be passed to `renderContent`
    */
-  contentProps?: Record<string, unknown> | undefined
+  targetProps?: T | undefined
+
+  /**
+   * The content to be displayed in the popover.
+   */
+  renderContent: (props: C & { points: Points; className: string; ref: Ref<HTMLElement> }) => React.ReactNode
+
+  /**
+   * Props will be passed to `renderContent`
+   */
+  contentProps?: C | undefined
 
   /**
    * An Array that specifies the positioning of the popover relative to its trigger element.
@@ -104,32 +106,29 @@ export interface Props {
  * @param {Props} props - The props for the Popover component.
  * @returns {JSX.Element | null}
  */
-export default function Popover(props: Props): JSX.Element {
-  const points = _getPoints()
+export default function Popover<C extends Dictionary, T extends Dictionary>(props: Props<C, T>): JSX.Element {
+  const { points, placement, containerElement, ...alignProps } = props
+  const newPoints = _getPoints()
 
-  const sourceRef = React.useRef<null | HTMLElement>(null)
+  const [sourceElement, setSourceElement] = React.useState<null | Element>(null)
   const [targetElement, setTargetElement] = React.useState<null | HTMLElement>(null)
 
-  const className = c(props.className, Popover.displayName)
-  const content = _createElement(props.renderContent, sourceRef, { ...props, ...props.contentProps, className })
-  const target = _createElement(props.renderTarget, setTargetElement, undefined)
+  const className = c(props.className, props.contentProps?.className, Popover.displayName)
 
-  useOnClickOutside(sourceRef, fns(props.onClickOutside, props.onClose))
+  const content =
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+    createElement(props.renderContent, { ...props.contentProps, className, ref: setRefs(setSourceElement) } as Any)
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+  const target = createElement(props.renderTarget, { ...props.targetProps, ref: setRefs(setTargetElement) } as Any)
+
+  useOnClickOutside({ current: sourceElement }, fns(props.onClickOutside, props.onClose))
   useEventListener('keydown', keyListener({ key: 'Escape' }, fns(props.onEscKeyDown, props.onClose)))
 
   return (
     <>
       {target}
       {props.opened && targetElement && (
-        <Align
-          onAligned={fns(props.onAligned)}
-          targetElement={targetElement}
-          points={points}
-          overflow={props.overflow}
-          containerElement={props.containerElement}
-          deps={props.deps}
-          offset={props.offset}
-        >
+        <Align {...alignProps} targetElement={targetElement} containerElement={containerElement} points={newPoints}>
           {content as ReactElementWithRef<HTMLElement>}
         </Align>
       )}
@@ -139,16 +138,8 @@ export default function Popover(props: Props): JSX.Element {
   // Private
 
   function _getPoints(): Points {
-    if (props.points) return props.points
-    if (props.placement) return toPoints(props.placement)
+    if (points) return points
+    if (placement) return toPoints(placement)
     return ['tc', 'bc']
-  }
-
-  function _createElement(
-    render: Render,
-    ref: ForwardedRef<HTMLElement>,
-    compProps: Record<string, unknown> | undefined
-  ): FunctionComponentElement<RenderProps> {
-    return React.createElement(render, { ref, ...props, ...compProps })
   }
 }

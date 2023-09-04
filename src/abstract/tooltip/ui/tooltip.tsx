@@ -1,14 +1,14 @@
-import React, { forwardRef, useState } from 'react'
+import React, { ForwardedRef, forwardRef, useState } from 'react'
 
-import { c } from '../../../utils/core'
+import { Dictionary, c } from '../../../utils/core'
 import { fns } from '../../../utils/function'
 import { useDebounceCallback } from '../../../utils/hooks'
 import { ReactElementWithRef, setRefs } from '../../../utils/react'
-import Popover, { Offset, Overflow, Point, Render, arePointsEqual, toPoints } from '../../popover'
+import Popover, { Offset, Overflow, Point, arePointsEqual, toPoints } from '../../popover'
 
 Tooltip.displayName = 'a-Tooltip'
 
-export interface Props extends React.HTMLAttributes<HTMLElement> {
+export interface Props<C extends Dictionary> extends React.HTMLAttributes<HTMLElement> {
   /**
    * Target
    */
@@ -17,12 +17,12 @@ export interface Props extends React.HTMLAttributes<HTMLElement> {
   /**
    * Render Balloon
    */
-  renderBalloon: Render
+  renderBalloon: (props: C & { points: Point[] }) => React.ReactNode
 
   /**
    * Props will be passed to `renderContent`
    */
-  balloonProps?: Record<string, unknown> | undefined
+  balloonProps?: C | undefined
 
   /**
    * Delay before opening
@@ -58,7 +58,7 @@ export interface Props extends React.HTMLAttributes<HTMLElement> {
 /**
  * See README.md
  */
-export default function Tooltip(props: Props): JSX.Element {
+export default function Tooltip<C extends Dictionary>(props: Props<C>): JSX.Element {
   const { delay = 300, placement = 'tc', balloonProps, children, className, renderBalloon, ...popoverProps } = props
 
   const [opened, setOpened] = useState(false)
@@ -78,14 +78,28 @@ export default function Tooltip(props: Props): JSX.Element {
       onAligned={(result): void => {
         if (!arePointsEqual(result.adjustedPoints, adjustedPoints)) setAdjustedPoints(result.adjustedPoints)
       }}
-      renderTarget={forwardRef(function Element(_, ref) {
-        const { onMouseMoveCapture, onMouseLeave } = children.props
-        return React.cloneElement(children, {
-          onMouseMoveCapture: fns(onMouseMoveCapture, openWithDebounce),
-          onMouseLeave: fns(onMouseLeave, props.onClose as () => void, clearDebounce, () => setOpened(false)),
-          ref: setRefs(children.ref, ref),
-        })
-      })}
+      targetProps={{ children, onClose: props.onClose, openWithDebounce, clearDebounce, setOpened }}
+      renderTarget={Target}
     />
   )
 }
+
+// Private
+
+type TargetProps = {
+  children: ReactElementWithRef<HTMLElement, React.HTMLAttributes<HTMLElement>>
+  onClose?: ((e: MouseEvent | TouchEvent | KeyboardEvent) => void) | undefined
+  openWithDebounce: () => void
+  clearDebounce: () => void
+  setOpened: (value: boolean) => void
+}
+
+const Target = forwardRef(function Element(props: TargetProps, ref: ForwardedRef<HTMLElement>) {
+  const { onMouseMoveCapture, onMouseLeave } = props.children.props
+
+  return React.cloneElement(props.children, {
+    onMouseMoveCapture: fns(onMouseMoveCapture, props.openWithDebounce),
+    onMouseLeave: fns(onMouseLeave, props.onClose as () => void, props.clearDebounce, () => props.setOpened(false)),
+    ref: setRefs(props.children.ref, ref),
+  })
+})
