@@ -1,6 +1,6 @@
 import React, { Ref, createElement } from 'react'
 
-import { Any, Dictionary, c } from '~/utils/core'
+import { Dictionary, c } from '~/utils/core'
 
 import { toPoints } from '..'
 // https://github.com/sashulinator/utils-dom-events
@@ -15,10 +15,14 @@ import Align, { Offset, OnAligned, Overflow, Point, Points } from '../../align'
 
 Popover.displayName = 'a-Popover'
 
+export type ContentProps<P> = { points: Points; className: string; ref: Ref<HTMLElement> } & P
+
+export type TargetProps<P> = { opened: boolean; points: Points; ref: Ref<HTMLElement> } & P
+
 /**
  * Props for the `Popover` component, which displays a content over a target element.
  */
-export interface Props<C extends Dictionary, T extends Dictionary> {
+export interface Props<T extends Dictionary, C extends Dictionary> {
   /**
    * Classnames
    */
@@ -32,7 +36,7 @@ export interface Props<C extends Dictionary, T extends Dictionary> {
   /**
    * Render target
    */
-  renderTarget: (props: T & { opened: boolean; points: Points; ref: Ref<HTMLElement> }) => React.ReactNode
+  renderTarget: (props: TargetProps<T>) => React.ReactNode
 
   /**
    * Props will be passed to `renderContent`
@@ -42,7 +46,7 @@ export interface Props<C extends Dictionary, T extends Dictionary> {
   /**
    * The content to be displayed in the popover.
    */
-  renderContent: (props: C & { points: Points; className: string; ref: Ref<HTMLElement> }) => React.ReactNode
+  renderContent: (props: ContentProps<C>) => React.ReactNode
 
   /**
    * Props will be passed to `renderContent`
@@ -106,23 +110,35 @@ export interface Props<C extends Dictionary, T extends Dictionary> {
  * @param {Props} props - The props for the Popover component.
  * @returns {JSX.Element | null}
  */
-export default function Popover<C extends Dictionary, T extends Dictionary>(props: Props<C, T>): JSX.Element {
-  const { points, placement, containerElement, ...alignProps } = props
+export default function Popover<T extends Dictionary, C extends Dictionary>(props: Props<T, C>): JSX.Element {
+  const {
+    className,
+    points,
+    placement,
+    containerElement,
+    renderContent,
+    renderTarget,
+    onClickOutside,
+    onEscKeyDown,
+    onClose,
+    targetProps,
+    contentProps,
+    ...alignProps
+  } = props
   const newPoints = _getPoints()
 
-  const [sourceElement, setSourceElement] = React.useState<null | Element>(null)
+  const [contentElement, setContentElement] = React.useState<null | Element>(null)
   const [targetElement, setTargetElement] = React.useState<null | HTMLElement>(null)
 
-  const className = c(props.className, props.contentProps?.className, Popover.displayName)
+  const classNames = c(className, contentProps?.className, Popover.displayName)
 
-  const content =
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-    createElement(props.renderContent, { ...props.contentProps, className, ref: setRefs(setSourceElement) } as Any)
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-  const target = createElement(props.renderTarget, { ...props.targetProps, ref: setRefs(setTargetElement) } as Any)
+  const newContentProps = { ...contentProps, className: classNames, ref: setRefs(setContentElement) }
+  const newtargetProps = { ...targetProps, ref: setRefs(setTargetElement) }
+  const content = createElement(renderContent, newContentProps as ContentProps<C>)
+  const target = createElement(renderTarget, newtargetProps as TargetProps<T>)
 
-  useOnClickOutside({ current: sourceElement }, fns(props.onClickOutside, props.onClose))
-  useEventListener('keydown', keyListener({ key: 'Escape' }, fns(props.onEscKeyDown, props.onClose)))
+  useOnClickOutside({ current: contentElement }, fns(onClickOutside, onClose))
+  useEventListener('keydown', keyListener({ key: 'Escape' }, fns(onEscKeyDown, onClose)))
 
   return (
     <>
