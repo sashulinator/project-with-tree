@@ -12,6 +12,7 @@ export * from './is/null'
 export * from './is/undefined'
 
 export * from './types/any'
+export * from './types/dictionary'
 export * from './types/id'
 export * from './types/key'
 export * from './types/offset'

@@ -1,6 +1,6 @@
-import { forwardRef, useState } from 'react'
+import { ForwardedRef, forwardRef, useState } from 'react'
 
-import Popover, { Points, PopoverProps, arePointsEqual } from '~/abstract/popover'
+import Popover, { Points, arePointsEqual } from '~/abstract/popover'
 import { Config, Props } from '~/storybook/types'
 import ConfigLink from '~/storybook/ui/config-link/ui/config-link'
 import { H1 } from '~/ui/heading'
@@ -11,7 +11,7 @@ import aAlign from '../align/a'
 
 interface State {
   sourcePosition: 'fixed' | 'absolute'
-  points: PopoverProps['points']
+  points: Points
   portalSourceIntoContainer: boolean
   containerRelative: boolean
   opened: boolean
@@ -39,6 +39,12 @@ export default {
       state: { portalSourceIntoContainer, containerRelative, ...popoverProps },
     } = props
 
+    const [open, setOpen] = useState(false)
+
+    useState(() => {
+      setTimeout(() => setOpen(true), 1000)
+    })
+
     const [containerRef, setContainerRef] = useState<null | HTMLElement>()
     const [adjustedPoints, setAdjustedPoints] = useState<Points>(['tl', 'tc'])
 
@@ -57,29 +63,13 @@ export default {
             onAligned={(result): void => {
               if (!arePointsEqual(result.adjustedPoints, adjustedPoints)) setAdjustedPoints(result.adjustedPoints)
             }}
-            renderContent={forwardRef(function Element(props, ref) {
-              return (
-                <div
-                  ref={setRefs(ref)}
-                  style={{
-                    width: '400px',
-                    height: '100px',
-                    background: adjustedPoints[0] === 'cl' ? 'red' : 'blue',
-                  }}
-                >
-                  Points {adjustedPoints.join(' - ')}
-                </div>
-              )
-            })}
-            renderTarget={forwardRef(function Element(props, ref): JSX.Element {
-              return (
-                <button ref={setRefs(ref)} style={{ background: adjustedPoints[0] === 'cl' ? 'red' : 'blue' }}>
-                  Target
-                </button>
-              )
-            })}
+            renderContent={Content}
+            renderTarget={Target}
+            contentProps={{ adjustedPoints }}
+            targetProps={{ adjustedPoints }}
             containerElement={portalSourceIntoContainer ? containerRef : undefined}
             {...popoverProps}
+            opened={open}
           />
         </div>
       </div>
@@ -101,3 +91,32 @@ export default {
     { name: 'alwaysByViewport', path: ['overflow', 'alwaysByViewport'], input: 'checkbox', defaultValue: false },
   ],
 } satisfies Config<State>
+
+// Private
+
+type ContentProps = { adjustedPoints: Points }
+
+const Content = forwardRef(function Element(props: ContentProps, ref: ForwardedRef<HTMLElement>) {
+  return (
+    <div
+      ref={setRefs(ref)}
+      style={{
+        width: '400px',
+        height: '100px',
+        background: props.adjustedPoints[0] === 'cl' ? 'red' : 'blue',
+      }}
+    >
+      Points {props.adjustedPoints.join(' - ')}
+    </div>
+  )
+})
+
+type TargetProps = { adjustedPoints: Points }
+
+const Target = forwardRef(function Element(props: TargetProps, ref: ForwardedRef<HTMLElement>): JSX.Element {
+  return (
+    <button ref={setRefs(ref)} style={{ background: props.adjustedPoints[0] === 'cl' ? 'red' : 'blue' }}>
+      Target
+    </button>
+  )
+})

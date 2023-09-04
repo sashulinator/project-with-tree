@@ -1,5 +1,5 @@
-import { Any } from '~/utils/core'
-import { Dictionary, getPath, isObject, walk } from '~/utils/dictionary'
+import { Any, isObject } from '~/utils/core'
+import { Dictionary, getPath, walk } from '~/utils/dictionary'
 import { BaseError } from '~/utils/error'
 
 export function assertNoExcessiveTranslation(

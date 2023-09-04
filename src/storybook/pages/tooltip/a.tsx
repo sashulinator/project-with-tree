@@ -1,16 +1,15 @@
-import { forwardRef, useEffect, useState } from 'react'
+import { ForwardedRef, forwardRef, useEffect, useState } from 'react'
 
 import Balloon from '~/abstract/balloon'
 import Flex from '~/abstract/flex/ui/flex'
-import Tooltip, { TooltipProps } from '~/abstract/tooltip'
+import Tooltip, { Point } from '~/abstract/tooltip'
 import { Config, Props } from '~/storybook/types'
 import { H1 } from '~/ui/heading'
-import { c } from '~/utils/core'
 import { setRefs } from '~/utils/react'
 
 interface State {
   delay: number
-  placement: TooltipProps['placement']
+  placement: Point
 }
 
 export default {
@@ -40,49 +39,12 @@ export default {
       <Flex dir='column' gap='xl' width='100%'>
         <Tooltip
           offset={[0, -20]}
-          className='story-Tooltip'
-          renderBalloon={forwardRef(function Element(props, ref): JSX.Element {
-            const placement = state.placement
-            return (
-              <Balloon
-                className={c(props.className)}
-                placement={placement}
-                ref={setRefs(ref)}
-                contentProps={{
-                  style: {
-                    background: 'red',
-                    position: 'absolute',
-                    zIndex: 2,
-                  },
-                }}
-                renderArrow={forwardRef(function Element(props, ref): JSX.Element {
-                  return (
-                    <div
-                      ref={setRefs(ref)}
-                      style={{
-                        position: 'absolute',
-                        background: 'blue',
-                        width: '10px',
-                        height: '10px',
-                        transform: 'rotate(45deg)',
-                        zIndex: 1,
-                      }}
-                    />
-                  )
-                })}
-                // contentProps={{ style: { background: 'red' } }}
-              >
-                <div style={{ width: '200px', height: '200px' }}>Rerender ({count})</div>
-              </Balloon>
-            )
-          })}
+          balloonProps={{ placement: props.state.placement, count }}
+          renderBalloon={SBalloon}
           {...state}
         >
           <button onClick={(): void => setCount(count + 1)}>Count ({count})</button>
         </Tooltip>
-        <button ref={console.log} onClick={(): void => setCount(count + 1)}>
-          Count ({count})
-        </button>
       </Flex>
     )
   },
@@ -104,3 +66,45 @@ export default {
     },
   ],
 } satisfies Config<State>
+
+// Private
+
+interface BalloonProps {
+  placement: Point
+  count: number
+}
+
+const SBalloon = forwardRef(function Element(props: BalloonProps, ref: ForwardedRef<HTMLElement>): JSX.Element {
+  return (
+    <Balloon
+      className={'story-Tooltip'}
+      placement={props.placement}
+      ref={setRefs(ref)}
+      contentProps={{
+        style: {
+          background: 'red',
+          position: 'absolute',
+          zIndex: 2,
+        },
+      }}
+      renderArrow={forwardRef(function Element(props, ref): JSX.Element {
+        return (
+          <div
+            ref={setRefs(ref)}
+            style={{
+              position: 'absolute',
+              background: 'blue',
+              width: '10px',
+              height: '10px',
+              transform: 'rotate(45deg)',
+              zIndex: 1,
+            }}
+          />
+        )
+      })}
+      // contentProps={{ style: { background: 'red' } }}
+    >
+      <div style={{ width: '200px', height: '200px' }}>Rerender ({props.count})</div>
+    </Balloon>
+  )
+})

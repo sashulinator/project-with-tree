@@ -1,7 +1,7 @@
 import { ForwardedRef, forwardRef } from 'react'
 
 import ABalloon from '~/abstract/balloon'
-import { Point, RenderProps } from '~/abstract/popover'
+import { Point } from '~/abstract/popover'
 import { AppearFrom } from '~/ui/animation'
 import { c } from '~/utils/core'
 import { useMeasure } from '~/utils/hooks'
@@ -11,7 +11,8 @@ import { _getAnimationPosition } from '../_private'
 
 BalloonComponent.displayName = 'ui-Tooltip-w-Balloon'
 
-export interface Props extends RenderProps {
+export interface Props {
+  className: string
   contents: React.ReactNode
   placement: Point
 }
@@ -25,7 +26,7 @@ function BalloonComponent(props: Props, ref: ForwardedRef<HTMLElement>): JSX.Ele
         <ABalloon
           ref={setRefs(measureRef)}
           style={{ visibility: size.width ? 'visible' : 'hidden' }}
-          className={c(props.className)}
+          className={c(props.className, BalloonComponent.displayName)}
           placement={props.placement}
           contentProps={{ className: 'content', style: { position: 'absolute' } }}
           renderArrow={forwardRef(function Element(props, ref): JSX.Element {

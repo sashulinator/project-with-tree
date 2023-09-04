@@ -1,12 +1,12 @@
 import { forwardRef } from 'react'
 
-import Balloon, { BalloonProps } from '~/abstract/balloon'
+import Balloon, { Point } from '~/abstract/balloon'
 import { Config, Props } from '~/storybook/types'
 import { H1 } from '~/ui/heading'
 import { setRefs } from '~/utils/react'
 
 interface State {
-  placement: BalloonProps['placement']
+  placement: Point
 }
 
 export default {
