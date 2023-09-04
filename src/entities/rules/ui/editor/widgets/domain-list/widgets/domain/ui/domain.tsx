@@ -3,39 +3,38 @@ import './domain.css'
 import { memo } from 'react'
 import { useSetRecoilState } from 'recoil'
 
+import { ParentDomainRes } from '~/api/domain/types/parent-domain-res'
 import { draggableCardAtom } from '~/entities/rules/models/draggableCard'
-import { DomainRes } from '~/entities/rules/types/rules-type'
 import CollapseUI from '~/ui/collapse/ui/collapse'
 
 import Attribute from '../../attribute'
 
 interface DomainProps {
-  domain: DomainRes
+  parentDomain: ParentDomainRes
   defaultExpanded?: boolean
-
   pl?: number
 }
 
-function DomainComponent({ domain, pl = 0, ...props }: DomainProps): JSX.Element {
-  // const pLeft = pl
+function DomainComponent({ parentDomain, pl = 0, ...props }: DomainProps): JSX.Element {
+  const pLeft = pl
 
   const setDraggableCard = useSetRecoilState(draggableCardAtom)
 
   const dragStart = (e: React.DragEvent<HTMLParagraphElement>): void => {
     e.stopPropagation()
-    setDraggableCard({ id: domain.id, name: domain.name, type: 'domain' })
+    setDraggableCard({ id: parentDomain.domain.id, name: parentDomain.domain.name, type: 'domain' })
   }
 
   return (
     <div className='e-Rules-ui-DomainList-Item' draggable onDragStart={dragStart}>
       <CollapseUI
         defaultExpanded={props.defaultExpanded}
-        title={domain.name}
+        title={parentDomain.domain.name}
         rootProps={{ style: { paddingLeft: pl, marginBottom: '10px' } }}
       >
-        {domain.attributes.length > 0 ? (
+        {parentDomain.attributes.length > 0 ? (
           <ul style={{ padding: '10px' }}>
-            {domain.attributes.map((attribute) => (
+            {parentDomain.attributes.map((attribute) => (
               <Attribute key={attribute.id} attribute={attribute} />
             ))}
           </ul>
@@ -44,12 +43,10 @@ function DomainComponent({ domain, pl = 0, ...props }: DomainProps): JSX.Element
         )}
       </CollapseUI>
 
-      {/*
-      // Не удалять! 
-      {domain.childDomain !== null &&
-        domain.childDomain.map((item) => (
-          <Domain key={item.id} domain={item} defaultExpanded={!!defaultChildExpanded} pl={pLeft + 10} />
-        ))} */}
+      {parentDomain.childDomains.length > 0 &&
+        parentDomain.childDomains.map((item) => (
+          <Domain key={item.domain.id} parentDomain={item} defaultExpanded={true} pl={pLeft + 10} />
+        ))}
     </div>
   )
 }

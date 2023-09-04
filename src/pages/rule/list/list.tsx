@@ -11,7 +11,7 @@ import Button from '~/ui/button'
 
 export default function RuleListPage(): JSX.Element {
   const fetcher = useFetchRulesList({ page: 1, limit: 1000 })
-  const dataList = fetcher.data?.items.filter((item) => item.editor)
+  const dataList = fetcher.data?.items
 
   return (
     <main style={{ maxWidth: '1400px', margin: '0 auto', width: '100%' }}>
