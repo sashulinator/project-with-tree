@@ -14,13 +14,14 @@ import AttributeForDomain from '../widget/attribute/attribute-for-domain'
 interface Props {
   domainData: ParentDomainRes
   isExpanded?: boolean
-  handleModalOpen: (string) => void
+  handleAddDomainOpen: (string) => void
+  handleAddAttributeOpen: (string) => void
 }
 
 Domain.displayName = 'e-domain-ui-Domain'
 
 export function Domain(props: Props): JSX.Element {
-  const { domainData, isExpanded = true, handleModalOpen } = props
+  const { domainData, isExpanded = true, handleAddDomainOpen, handleAddAttributeOpen } = props
   const [expanded, , , toggleExpanded] = useBoolean(isExpanded)
 
   return (
@@ -35,16 +36,26 @@ export function Domain(props: Props): JSX.Element {
         <div>
           <Flex padding='10px' mainAxis='space-between'>
             <GhostButton
-              onClick={(): void => handleModalOpen(domainData.domain.id)}
+              onClick={(): void => handleAddDomainOpen(domainData.domain.id)}
               style={{ border: '1px solid slategrey' }}
             >
               Добавить дочерний домен
             </GhostButton>
-            <GhostButton style={{ border: '1px solid slategrey' }}>Добавить атрибут</GhostButton>
+            <GhostButton
+              onClick={(): void => handleAddAttributeOpen(domainData.domain.id)}
+              style={{ border: '1px solid slategrey' }}
+            >
+              Добавить атрибут
+            </GhostButton>
           </Flex>
           {!!domainData.childDomains.length &&
             domainData.childDomains.map((item) => (
-              <Domain handleModalOpen={handleModalOpen} key={item.domain.id} domainData={item} />
+              <Domain
+                handleAddAttributeOpen={handleAddAttributeOpen}
+                handleAddDomainOpen={handleAddDomainOpen}
+                key={item.domain.id}
+                domainData={item}
+              />
             ))}
           {domainData.attributes.length !== 0 ? (
             domainData.attributes.map((item) => <AttributeForDomain key={item.id} attribute={item} />)
