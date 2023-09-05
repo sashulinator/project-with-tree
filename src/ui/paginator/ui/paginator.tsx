@@ -21,8 +21,8 @@ export default function Paginator(props: PaginationProps): JSX.Element {
       <div className='info'>
         {!!props.total && (
           <>
-            <div>всего страниц: {totalPages}</div>
-            <div>всего элементов: {total}</div>
+            <div>Cтраниц: {totalPages}</div>
+            <div>Элементов: {total}</div>
           </>
         )}
       </div>
