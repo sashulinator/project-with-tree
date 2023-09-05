@@ -3,12 +3,12 @@
   justify-content: center;
   align-items: center;
 
-  & .wrapper {
+  & > .wrapper {
     position: relative;
     animation: opacity 0.33s normal forwards;
   }
 
-  & .wrapper > .closeButton {
+  & > .wrapper > .closeButton {
     position: absolute;
     right: 0;
     transform: translateX(calc(100% + var(--l)));
@@ -16,9 +16,17 @@
   }
 }
 
-.ui-Modal.--blured {
-  animation: blur 0.33s normal forwards;
+.ui-Modal.--opened.--blured {
+  animation: blur 0.3s normal forwards;
 }
+
+.ui-Modal.--closing.--blured {
+  animation: blurBackwards 0.3s normal forwards;
+}
+
+/**
+ * Animation
+ */
 
 @keyframes blur {
   from {
@@ -29,13 +37,11 @@
   }
 }
 
-@keyframes opacity {
+@keyframes blurBackwards {
   from {
-    opacity: 0;
-    transform: scale(0.1);
+    backdrop-filter: blur(17px);
   }
   to {
-    opacity: 1;
-    transform: scale(1);
+    backdrop-filter: blur(0px);
   }
 }
