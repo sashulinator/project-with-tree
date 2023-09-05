@@ -9,28 +9,30 @@ import { GhostButton } from '~/ui/button'
 export default function DomainListPage(): JSX.Element {
   const fetcher = useFetchParentDomainList({ page: 1, limit: 2000 })
 
-  const [isAddDomainActive, setAddDomainActive] = useState(false)
-  const [isAddAttributeActive, setAddAttributeActive] = useState(false)
-  const [parentId, setParentId] = useState('')
-  const [domainId, setDomainId] = useState('')
+  const [isAddDomainActive, setAddDomainActive] = useState({ isActive: false, parentId: '' })
+  const [isAddAttributeActive, setAddAttributeActive] = useState({ isActive: false, domainId: '' })
 
   return (
     <>
       <main style={{ maxWidth: '1400px', margin: '0 auto', width: '100%', padding: '10px' }}>
         <GhostButton onClick={(): void => handleAddDomainOpen('')}>Добавить домен</GhostButton>
 
-        <AddAttribute
-          opened={isAddAttributeActive}
-          fetcher={fetcher}
-          domainId={domainId}
-          handleAddAttributeClose={handleAddAttributeClose}
-        />
-        <AddDomain
-          opened={isAddDomainActive}
-          fetcher={fetcher}
-          parentId={parentId}
-          handleAddDomainClose={handleAddDomainClose}
-        />
+        {isAddAttributeActive.isActive && (
+          <AddAttribute
+            opened={isAddAttributeActive.isActive}
+            fetcher={fetcher}
+            domainId={isAddAttributeActive.domainId}
+            handleAddAttributeClose={handleAddAttributeClose}
+          />
+        )}
+        {isAddDomainActive.isActive && (
+          <AddDomain
+            opened={isAddDomainActive.isActive}
+            fetcher={fetcher}
+            parentId={isAddDomainActive.parentId}
+            handleAddDomainClose={handleAddDomainClose}
+          />
+        )}
         {fetcher.isSuccess &&
           fetcher.data.items.map((item) => (
             <Domain
@@ -47,22 +49,18 @@ export default function DomainListPage(): JSX.Element {
 
   // Private
   function handleAddDomainOpen(id: string): void {
-    setParentId(id)
-    setAddDomainActive(true)
+    setAddDomainActive({ isActive: true, parentId: id })
   }
 
   function handleAddDomainClose(): void {
-    setAddDomainActive(false)
-    setParentId('')
+    setAddDomainActive({ isActive: false, parentId: '' })
   }
 
   function handleAddAttributeOpen(id: string): void {
-    setDomainId(id)
-    setAddAttributeActive(true)
+    setAddAttributeActive({ isActive: true, domainId: id })
   }
 
   function handleAddAttributeClose(): void {
-    setAddAttributeActive(false)
-    setDomainId('')
+    setAddAttributeActive({ isActive: false, domainId: '' })
   }
 }

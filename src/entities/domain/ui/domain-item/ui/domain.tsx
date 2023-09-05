@@ -55,7 +55,14 @@ export function Domain(props: Props): JSX.Element {
             </GhostButton>
           </Flex>
           {domainData.attributes.length !== 0 ? (
-            domainData.attributes.map((item) => <Attribute fetcher={props.fetcher} key={item.id} attribute={item} />)
+            domainData.attributes.map((item) => (
+              <Attribute
+                wrapperProps={{ style: { marginBottom: '10px' } }}
+                fetcher={props.fetcher}
+                key={item.id}
+                attribute={item}
+              />
+            ))
           ) : (
             <div>Нет атрибутов</div>
           )}

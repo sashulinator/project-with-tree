@@ -11,5 +11,5 @@
   transition: transform 0.3s;
 }
 .ui-Accordion-v-Chevron > .header > button .arrow.--rotated {
-  transform: rotate(95deg);
+  transform: rotate(90deg);
 }

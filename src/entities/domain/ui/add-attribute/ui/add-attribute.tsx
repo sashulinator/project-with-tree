@@ -24,6 +24,7 @@ export function AddAttribute(props: Props): JSX.Element {
   const {
     register,
     handleSubmit,
+    reset,
     // watch,
     formState: { errors },
   } = useForm()
@@ -40,7 +41,7 @@ export function AddAttribute(props: Props): JSX.Element {
   return (
     <Modal opened={props.opened} onDismiss={props.handleAddAttributeClose}>
       {/* eslint-disable-next-line @typescript-eslint/no-misused-promises*/}
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form onSubmit={handleSubmit(onSubmit)} style={{ minWidth: '600px' }}>
         <label>
           Имя атрибута
           <Input
@@ -78,7 +79,7 @@ export function AddAttribute(props: Props): JSX.Element {
           {'Id домена'}
           <Input
             readOnly
-            value={props.domainId}
+            defaultValue={props.domainId}
             className={c('add-attribute-input', errors.parentId && '--error')}
             {...register('domainId', { required: true })}
           />
@@ -100,7 +101,8 @@ export function AddAttribute(props: Props): JSX.Element {
 
   //Private
   function onSubmit(data): void {
-    console.log(data)
     mutation.mutate(data as RequestAttribute)
+    reset()
+    props.handleAddAttributeClose()
   }
 }

@@ -25,6 +25,7 @@ export function AddDomain(props: Props): JSX.Element {
     register,
     handleSubmit,
     // watch,
+    reset,
     formState: { errors },
   } = useForm()
 
@@ -35,12 +36,12 @@ export function AddDomain(props: Props): JSX.Element {
     },
     onError: () => notify({ data: 'Ошибка', type: 'error' }),
   })
-
+  console.log(props.parentId)
   // console.log(watch('name'))
   return (
     <Modal opened={props.opened} onDismiss={props.handleAddDomainClose}>
       {/* eslint-disable-next-line @typescript-eslint/no-misused-promises*/}
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form onSubmit={handleSubmit(onSubmit)} style={{ minWidth: '600px' }}>
         <label>
           Имя домена
           <Input
@@ -111,5 +112,7 @@ export function AddDomain(props: Props): JSX.Element {
   // Private
   function onSubmit(data): void {
     mutation.mutate(data as RequestDomain)
+    reset()
+    props.handleAddDomainClose()
   }
 }
