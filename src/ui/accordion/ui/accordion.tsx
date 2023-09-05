@@ -1,10 +1,11 @@
 import './accordion.css'
 
 import AbstractAccordion, { AccordionProps as AbstractAccordionProps } from '~/abstract/accordion'
+import { emitter } from '~/shared/emitter'
 import { c } from '~/utils/core'
+
 import { dark } from '../themes/dark'
 import { light } from '../themes/light'
-import { emitter } from '~/shared/emitter'
 
 emitter.emit('addTheme', { dark, light })
 
