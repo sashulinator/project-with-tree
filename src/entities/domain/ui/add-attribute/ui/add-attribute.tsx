@@ -1,12 +1,12 @@
-import './add-domain.css'
+import './add-attribute.css'
 
 import { useForm } from 'react-hook-form'
 import { useMutation } from 'react-query'
 
 import { QueryResult } from '~/api/domain/fetch-parent-domains'
-import { requestDomain } from '~/api/domain/request/create-domain'
+import { requestAttribute } from '~/api/domain/request/create-attribute'
 import { ResponseData } from '~/api/domain/request/fetch-parent-domains'
-import { RequestDomain } from '~/api/domain/types/request-domain'
+import { RequestAttribute } from '~/api/domain/types/request-attribute'
 import { notify } from '~/shared/notify'
 import { PrimaryButton } from '~/ui/button'
 import Input from '~/ui/input'
@@ -14,91 +14,81 @@ import Modal from '~/ui/modal'
 import { c } from '~/utils/core'
 
 interface Props {
-  handleAddDomainClose: () => void
-  parentId: string
+  handleAddAttributeClose: () => void
+  domainId: string
   fetcher: QueryResult<ResponseData>
   opened: boolean
 }
 
-export function AddDomain(props: Props): JSX.Element {
+export function AddAttribute(props: Props): JSX.Element {
   const {
     register,
     handleSubmit,
-    // watch,
     reset,
+    // watch,
     formState: { errors },
   } = useForm()
 
-  const mutation = useMutation(requestDomain, {
+  const mutation = useMutation(requestAttribute, {
     onSuccess: () => {
       void props.fetcher.refetch()
       notify({ data: 'Сохранено', type: 'success' })
     },
     onError: () => notify({ data: 'Ошибка', type: 'error' }),
   })
-  console.log(props.parentId)
+
   // console.log(watch('name'))
   return (
-    <Modal opened={props.opened} onDismiss={props.handleAddDomainClose}>
+    <Modal opened={props.opened} onDismiss={props.handleAddAttributeClose}>
       {/* eslint-disable-next-line @typescript-eslint/no-misused-promises*/}
       <form onSubmit={handleSubmit(onSubmit)} style={{ minWidth: '600px' }}>
         <label>
-          Имя домена
+          Имя атрибута
           <Input
-            id='name'
-            className={c('add-domain-input', errors.name && '--error')}
+            className={c('add-attribute-input', errors.name && '--error')}
             {...register('name', { required: true })}
           />
           {errors.name && <span>Обязательное поле</span>}
         </label>
         <label>
-          keyName домена
+          keyName атрибута
           <Input
-            className={c('add-domain-input', errors.keyName && '--error')}
+            className={c('add-attribute-input', errors.keyName && '--error')}
             {...register('keyName', { required: true })}
           />
           {errors.keyName && <span>Обязательное поле</span>}
         </label>
         <label>
-          Описание домена
+          Описание атрибута
           <Input
-            className={c('add-domain-input', errors.description && '--error')}
+            className={c('add-attribute-input', errors.description && '--error')}
             {...register('description', { required: true })}
           />
           {errors.description && <span>Обязательное поле</span>}
         </label>
         <label>
-          Тип домена
+          Тип атрибута
           <Input
-            defaultValue={'комплексный'}
-            className={c('add-domain-input', errors.type && '--error')}
+            defaultValue={'string'}
+            className={c('add-attribute-input', errors.type && '--error')}
             {...register('type', { required: true })}
           />
           {errors.type && <span>Обязательное поле</span>}
         </label>
         <label>
-          {'parentId домена'}
+          {'Id домена'}
           <Input
             readOnly
-            defaultValue={props.parentId}
-            className={c('add-domain-input', errors.parentId && '--error')}
-            {...register('parentId')}
+            defaultValue={props.domainId}
+            className={c('add-attribute-input', errors.parentId && '--error')}
+            {...register('domainId', { required: true })}
           />
-        </label>
-        <label>
-          sourceSystemId домена
-          <Input
-            defaultValue={'1'}
-            className={c('add-domain-input', errors.sourceSystemId && '--error')}
-            {...register('sourceSystemId', { required: true })}
-          />
-          {errors.sourceSystemId && <span>Обязательное поле</span>}
         </label>
         <label>
           userId пользователя
           <Input
             defaultValue={'user@mail.ru'}
-            className={c('add-domain-input', errors.userId && '--error')}
+            className={c('add-attribute-input', errors.userId && '--error')}
             {...register('userId', { required: true })}
           />
           {errors.userId && <span>Обязательное поле</span>}
@@ -109,10 +99,10 @@ export function AddDomain(props: Props): JSX.Element {
     </Modal>
   )
 
-  // Private
+  //Private
   function onSubmit(data): void {
-    mutation.mutate(data as RequestDomain)
+    mutation.mutate(data as RequestAttribute)
     reset()
-    props.handleAddDomainClose()
+    props.handleAddAttributeClose()
   }
 }
