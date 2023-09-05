@@ -1,3 +1,4 @@
+import aAccordion from './pages/accordion/a'
 import aAlign from './pages/align/a'
 import aBaloon from './pages/balloon/a'
 import aCanvasWItem from './pages/canvas/a-w-item'
@@ -15,6 +16,7 @@ import aTooltip from './pages/tooltip/a'
 import uiTooltip from './pages/tooltip/ui'
 
 export const routes = [
+  ['Accordion', aAccordion],
   ['Align', aAlign],
   ['Balloon', aBaloon],
   ['Canvas', aCanvasWItem, decisionCanvasWNode, decisionCanvasWNodeWJoint, decisionCanvasWNodeVFilter],
