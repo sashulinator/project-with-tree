@@ -3,7 +3,6 @@ import './add-attribute.css'
 import { useForm } from 'react-hook-form'
 import { useMutation } from 'react-query'
 
-import Modal from '~/abstract/modal/ui/modal'
 import { QueryResult } from '~/api/domain/fetch-parent-domains'
 import { requestAttribute } from '~/api/domain/request/create-attribute'
 import { ResponseData } from '~/api/domain/request/fetch-parent-domains'
@@ -11,12 +10,14 @@ import { RequestAttribute } from '~/api/domain/types/request-attribute'
 import { notify } from '~/shared/notify'
 import { PrimaryButton } from '~/ui/button'
 import Input from '~/ui/input'
+import Modal from '~/ui/modal'
 import { c } from '~/utils/core'
 
 interface Props {
   handleAddAttributeClose: () => void
   domainId: string
   fetcher: QueryResult<ResponseData>
+  opened: boolean
 }
 
 export function AddAttribute(props: Props): JSX.Element {
@@ -37,7 +38,7 @@ export function AddAttribute(props: Props): JSX.Element {
 
   // console.log(watch('name'))
   return (
-    <Modal title='Добавить атрибут' onClose={props.handleAddAttributeClose}>
+    <Modal opened={props.opened} onDismiss={props.handleAddAttributeClose}>
       {/* eslint-disable-next-line @typescript-eslint/no-misused-promises*/}
       <form onSubmit={handleSubmit(onSubmit)}>
         <label>

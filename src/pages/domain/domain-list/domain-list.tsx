@@ -16,19 +16,21 @@ export default function DomainListPage(): JSX.Element {
 
   return (
     <>
-      <main style={{ maxWidth: '1400px', margin: '0 auto', width: '100%' }}>
+      <main style={{ maxWidth: '1400px', margin: '0 auto', width: '100%', padding: '10px' }}>
         <GhostButton onClick={(): void => handleAddDomainOpen('')}>Добавить домен</GhostButton>
-        {isAddDomainActive && (
-          <AddDomain
-            opened={isAddDomainActive}
-            fetcher={fetcher}
-            parentId={parentId}
-            handleAddDomainClose={handleAddDomainClose}
-          />
-        )}
-        {isAddAttributeActive && (
-          <AddAttribute fetcher={fetcher} domainId={domainId} handleAddAttributeClose={handleAddAttributeClose} />
-        )}
+
+        <AddAttribute
+          opened={isAddAttributeActive}
+          fetcher={fetcher}
+          domainId={domainId}
+          handleAddAttributeClose={handleAddAttributeClose}
+        />
+        <AddDomain
+          opened={isAddDomainActive}
+          fetcher={fetcher}
+          parentId={parentId}
+          handleAddDomainClose={handleAddDomainClose}
+        />
         {fetcher.isSuccess &&
           fetcher.data.items.map((item) => (
             <Domain
@@ -36,6 +38,7 @@ export default function DomainListPage(): JSX.Element {
               handleAddDomainOpen={handleAddDomainOpen}
               key={item.domain.id}
               domainData={item}
+              fetcher={fetcher}
             />
           ))}
       </main>
