@@ -1,0 +1,13 @@
+.ui-Button-v-Ordinary.ui-Button {
+  background: var(--ordinaryButton_bg);
+}
+.ui-Button-v-Ordinary.ui-Button:hover {
+  background: var(--ordinaryButton_bg__hovered);
+}
+.ui-Button-v-Ordinary.ui-Button.--disabled:hover {
+  background: transparent;
+}
+
+.ui-Button-v-Ordinary.ui-Button:active {
+  background: var(--ordinaryButton_bg__active);
+}
