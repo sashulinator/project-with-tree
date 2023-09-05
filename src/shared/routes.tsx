@@ -15,9 +15,6 @@ import SettingsPage from '~/pages/settings'
 import Header from '~/ui/header'
 import Nav from '~/ui/nav'
 
-const StorybookPage = lazy(() => import('~/pages/storybook'))
-const StorybookNav = lazy(() => import('~/pages/storybook/ui/nav/ui/nav'))
-
 const Story = lazy(() => import('~/storybook'))
 const StoryNav = lazy(() => import('~/storybook/ui/nav'))
 
@@ -126,23 +123,12 @@ export const routes = {
 
   storybook: {
     Header,
-    Nav: StorybookNav,
-    path: '/project-with-tree/storybook/*',
-    element: <StorybookPage />,
-    getName: () => 'storybook',
-    getURL(): string {
-      return '/project-with-tree/storybook'
-    },
-  },
-
-  story: {
-    Header,
     Nav: StoryNav,
-    path: '/project-with-tree/story/*',
+    path: '/project-with-tree/storybook/*',
     element: <Story />,
     getName: () => 'storybook',
     getURL(): string {
-      return '/project-with-tree/story'
+      return '/project-with-tree/storybook'
     },
   },
 

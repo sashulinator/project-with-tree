@@ -5,7 +5,7 @@ import { useSetRecoilState } from 'recoil'
 
 import { ParentDomainRes } from '~/api/domain/types/parent-domain-res'
 import { draggableCardAtom } from '~/entities/rules/models/draggableCard'
-import CollapseUI from '~/ui/collapse/ui/collapse'
+import { ChevronAccordion } from '~/ui/accordion'
 
 import Attribute from '../../attribute'
 
@@ -27,9 +27,9 @@ function DomainComponent({ parentDomain, pl = 0, ...props }: DomainProps): JSX.E
 
   return (
     <div className='e-Rules-ui-DomainList-Item' draggable onDragStart={dragStart}>
-      <CollapseUI
+      <ChevronAccordion
+        header={parentDomain.domain.name}
         defaultExpanded={props.defaultExpanded}
-        title={parentDomain.domain.name}
         rootProps={{ style: { paddingLeft: pl, marginBottom: '10px' } }}
       >
         {parentDomain.attributes.length > 0 ? (
@@ -41,7 +41,7 @@ function DomainComponent({ parentDomain, pl = 0, ...props }: DomainProps): JSX.E
         ) : (
           <div>Нет атрибутов...</div>
         )}
-      </CollapseUI>
+      </ChevronAccordion>
 
       {parentDomain.childDomains.length > 0 &&
         parentDomain.childDomains.map((item) => (

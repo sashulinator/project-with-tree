@@ -42,9 +42,10 @@ function InputComponent(props: InputProps, ref: ForwardedRef<HTMLInputElement>):
       right={right}
       renderField={Field}
       fieldProps={{
+        hidden: inputProps.hidden,
+        disabled: inputProps.disabled,
         height,
         isError,
-        hidden: inputProps.hidden,
         transparent,
         ...fieldProps,
         style: { width, ...props.fieldProps?.style },
@@ -55,4 +56,5 @@ function InputComponent(props: InputProps, ref: ForwardedRef<HTMLInputElement>):
 }
 
 const Input = forwardRef(InputComponent)
+Input.displayName = InputComponent.displayName
 export default Input
