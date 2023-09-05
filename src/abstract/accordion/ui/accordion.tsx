@@ -35,7 +35,7 @@ export default function Accordion<THeaderProps>(props: AccordionProps<THeaderPro
   const header = createElement(props.renderHeader, { ...props.headerProps, setExpanded, isExpanded })
 
   return (
-    <div {...props.rootProps} className={c(Accordion.displayName, props.className, props.rootProps?.className)}>
+    <div {...props.rootProps} className={c(props.className, Accordion.displayName, props.rootProps?.className)}>
       {header}
       <Collapse
         {...props.collapseProps}
