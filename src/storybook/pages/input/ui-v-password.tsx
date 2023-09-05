@@ -1,6 +1,6 @@
 import { Config, Props } from '~/storybook/types'
 import { H1 } from '~/ui/heading'
-import Input from '~/ui/input'
+import { Password } from '~/ui/input'
 
 interface State {
   isFocused: boolean
@@ -12,12 +12,12 @@ interface State {
 }
 
 export default {
-  getName: (): string => Input.displayName || '',
+  getName: (): string => Password.displayName || '',
 
   getDescription: function Description(): JSX.Element {
     return (
       <>
-        <H1>{Input.displayName}</H1>
+        <H1>{Password.displayName}</H1>
         Добавьте описание
       </>
     )
@@ -26,7 +26,7 @@ export default {
   element: function Element(props: Props<State>): JSX.Element {
     const { state } = props
 
-    return <Input {...state} />
+    return <Password {...state} />
   },
 
   controls: [

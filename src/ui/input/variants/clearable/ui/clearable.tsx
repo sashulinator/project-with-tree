@@ -26,7 +26,7 @@ function ClearableInputComponent(props: Props, ref: ForwardedRef<HTMLInputElemen
       right={
         <GhostButton
           round={true}
-          style={{ visibility: props.value ? 'visible' : 'hidden' }}
+          style={{ visibility: props.value && !props.disabled ? 'visible' : 'hidden' }}
           height='s'
           className='close'
           onClick={fns(

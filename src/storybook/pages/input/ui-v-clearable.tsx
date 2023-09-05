@@ -1,6 +1,8 @@
+import { useState } from 'react'
+
 import { Config, Props } from '~/storybook/types'
 import { H1 } from '~/ui/heading'
-import Input from '~/ui/input'
+import { Clearable } from '~/ui/input'
 
 interface State {
   isFocused: boolean
@@ -12,12 +14,12 @@ interface State {
 }
 
 export default {
-  getName: (): string => Input.displayName || '',
+  getName: (): string => Clearable.displayName || '',
 
   getDescription: function Description(): JSX.Element {
     return (
       <>
-        <H1>{Input.displayName}</H1>
+        <H1>{Clearable.displayName}</H1>
         Добавьте описание
       </>
     )
@@ -26,7 +28,9 @@ export default {
   element: function Element(props: Props<State>): JSX.Element {
     const { state } = props
 
-    return <Input {...state} />
+    const [value, setValue] = useState('')
+
+    return <Clearable {...state} value={value} onChange={(e): void => setValue(e.target.value)} />
   },
 
   controls: [
