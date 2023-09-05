@@ -17,7 +17,7 @@ export default function Nav(): JSX.Element {
         {isDev() && (
           <>
             <ol>
-              <Link to={routes.story.getURL()}>Storybook</Link>
+              <Link to={routes.storybook.getURL()}>Storybook</Link>
             </ol>
             <ol>
               <Link to={routes.storybook.getURL()}>Depricated Storybook</Link>
