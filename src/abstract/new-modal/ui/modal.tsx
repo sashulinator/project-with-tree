@@ -5,27 +5,35 @@ import { createPortal } from 'react-dom'
 
 import { keyListener } from '~/utils/dom-event'
 import { getFirstFocusable } from '~/utils/dom-event/get-first-focusable'
+import { useEventListener } from '~/utils/hooks'
 
 import { c } from '../../../utils/core'
-import { fns } from '../../../utils/function'
 
 Modal.displayName = 'na-Modal'
-
+ModalWrapper.displayName = Modal.displayName
 export interface Props extends React.HTMLAttributes<HTMLDivElement> {
   className?: string
   children: React.ReactNode
   containerElement: Element
   opened: boolean
   firstFocused?: boolean
-  onDismiss?:
-    | ((event: React.MouseEvent<HTMLDivElement, MouseEvent> | React.KeyboardEvent<HTMLDivElement>) => void)
-    | undefined
+  onDismiss?: ((event: MouseEvent | KeyboardEvent) => void) | undefined
 }
 
-export default function Modal(props: Props): JSX.Element | null {
-  const { containerElement, children, firstFocused, opened, onKeyDown, onDismiss, onClick, ...divProps } = props
+/**
+ * Делаем Wrapper так как без него происходит преждевременная подписка в useEventListener
+ */
+export default function ModalWrapper(props: Props): JSX.Element | null {
+  const { opened, ...modalProps } = props
+  if (!opened) return null
+  return <Modal {...modalProps} />
+}
 
-  const ref = useRef<HTMLDivElement>(null)
+function Modal(props: Omit<Props, 'opened'>): JSX.Element {
+  const { containerElement, children, firstFocused, onDismiss, ...divProps } = props
+
+  const ref = useRef<HTMLDivElement | null>(null)
+  const mouseDownRef = useRef<HTMLElement | null>(null)
 
   useLayoutEffect(() => {
     if (ref.current === null) return
@@ -33,18 +41,13 @@ export default function Modal(props: Props): JSX.Element | null {
     else ref.current.focus()
   })
 
-  if (!opened) return null
+  useEventListener('keydown', _handleKeyDown)
+  useEventListener('mousedown', (e) => (mouseDownRef.current = e.target as HTMLElement))
+  useEventListener('mouseup', (e) => ref.current !== null && mouseDownRef.current === ref.current && onDismiss?.(e))
 
   return createPortal(
     // eslint-disable-next-line jsx-a11y/no-static-element-interactions, jsx-a11y/click-events-have-key-events
-    <div
-      {...divProps}
-      ref={ref}
-      tabIndex={-1}
-      onKeyDown={fns(onKeyDown, _handleKeyDown)}
-      onClick={fns(onClick, (e) => e.target === ref.current && onDismiss?.(e))}
-      className={c(props.className, Modal.displayName)}
-    >
+    <div {...divProps} ref={ref} tabIndex={-1} className={c(props.className, Modal.displayName)}>
       {children}
     </div>,
     containerElement
@@ -54,9 +57,7 @@ export default function Modal(props: Props): JSX.Element | null {
    * Private
    */
 
-  function _handleKeyDown(e: React.KeyboardEvent<HTMLDivElement>): void {
-    console.log('e', e)
-
+  function _handleKeyDown(e: KeyboardEvent): void {
     keyListener({ key: 'Escape' }, () => onDismiss?.(e))(e)
     keyListener({ key: 'Tab' }, () => setTimeout(_returnFocus))(e)
   }
