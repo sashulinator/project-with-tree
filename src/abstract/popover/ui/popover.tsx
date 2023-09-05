@@ -1,27 +1,28 @@
-import React, { ForwardedRef, FunctionComponentElement } from 'react'
+import React, { Ref, createElement } from 'react'
 
-import { c } from '~/utils/core'
-
-import { toPoints } from '..'
+// https://github.com/sashulinator/utils-core
+import { Dictionary, c } from '../../../utils/core'
 // https://github.com/sashulinator/utils-dom-events
 import { keyListener } from '../../../utils/dom-event'
 // https://github.com/sashulinator/utils-function
 import { fns } from '../../../utils/function'
 import { useEventListener, useOnClickOutside } from '../../../utils/hooks'
 // https://github.com/sashulinator/utils-react
-import type { ReactElementWithRef } from '../../../utils/react'
+import { type ReactElementWithRef, setRefs } from '../../../utils/react'
 // https://github.com/sashulinator/a-align
 import Align, { Offset, OnAligned, Overflow, Point, Points } from '../../align'
+import { placementToPoints } from '../lib/placement-to-points'
 
 Popover.displayName = 'a-Popover'
 
-export type RenderProps = Props & { ref: React.ForwardedRef<HTMLElement> }
-export type Render = (props: RenderProps) => React.ReactNode
+export type ContentProps<P> = { points: Points; className: string; ref: Ref<HTMLElement> } & P
+
+export type TargetProps<P> = { opened: boolean; points: Points; ref: Ref<HTMLElement> } & P
 
 /**
  * Props for the `Popover` component, which displays a content over a target element.
  */
-export interface Props {
+export interface Props<T extends Dictionary, C extends Dictionary> {
   /**
    * Classnames
    */
@@ -35,17 +36,22 @@ export interface Props {
   /**
    * Render target
    */
-  renderTarget: Render
-
-  /**
-   * The content to be displayed in the popover.
-   */
-  renderContent: Render
+  renderTarget: (props: TargetProps<T>) => React.ReactNode
 
   /**
    * Props will be passed to `renderContent`
    */
-  contentProps?: Record<string, unknown> | undefined
+  targetProps?: T | undefined
+
+  /**
+   * The content to be displayed in the popover.
+   */
+  renderContent: (props: ContentProps<C>) => React.ReactNode
+
+  /**
+   * Props will be passed to `renderContent`
+   */
+  contentProps?: C | undefined
 
   /**
    * An Array that specifies the positioning of the popover relative to its trigger element.
@@ -104,51 +110,54 @@ export interface Props {
  * @param {Props} props - The props for the Popover component.
  * @returns {JSX.Element | null}
  */
-export default function Popover(props: Props): JSX.Element {
-  const points = _getPoints()
+export default function Popover<T extends Dictionary, C extends Dictionary>(props: Props<T, C>): JSX.Element {
+  const {
+    className,
+    points,
+    placement,
+    containerElement,
+    renderContent,
+    renderTarget,
+    onClickOutside,
+    onEscKeyDown,
+    onClose,
+    targetProps,
+    contentProps,
+    ...alignProps
+  } = props
+  const newPoints = _getPoints()
 
-  const sourceRef = React.useRef<null | HTMLElement>(null)
+  const [contentElement, setContentElement] = React.useState<null | Element>(null)
   const [targetElement, setTargetElement] = React.useState<null | HTMLElement>(null)
 
-  const className = c(props.className, Popover.displayName)
-  const content = _createElement(props.renderContent, sourceRef, { ...props, ...props.contentProps, className })
-  const target = _createElement(props.renderTarget, setTargetElement, undefined)
+  const classNames = c(className, contentProps?.className, Popover.displayName)
 
-  useOnClickOutside(sourceRef, fns(props.onClickOutside, props.onClose))
-  useEventListener('keydown', keyListener({ key: 'Escape' }, fns(props.onEscKeyDown, props.onClose)))
+  const newContentProps = { ...contentProps, className: classNames, ref: setRefs(setContentElement) }
+  const newtargetProps = { ...targetProps, ref: setRefs(setTargetElement) }
+  const content = createElement(renderContent, newContentProps as ContentProps<C>)
+  const target = createElement(renderTarget, newtargetProps as TargetProps<T>)
+
+  useOnClickOutside({ current: contentElement }, fns(onClickOutside, onClose))
+  useEventListener('keydown', keyListener({ key: 'Escape' }, fns(onEscKeyDown, onClose)))
 
   return (
     <>
       {target}
       {props.opened && targetElement && (
-        <Align
-          onAligned={fns(props.onAligned)}
-          targetElement={targetElement}
-          points={points}
-          overflow={props.overflow}
-          containerElement={props.containerElement}
-          deps={props.deps}
-          offset={props.offset}
-        >
+        <Align {...alignProps} targetElement={targetElement} containerElement={containerElement} points={newPoints}>
           {content as ReactElementWithRef<HTMLElement>}
         </Align>
       )}
     </>
   )
 
-  // Private
+  /**
+   * Private
+   */
 
   function _getPoints(): Points {
-    if (props.points) return props.points
-    if (props.placement) return toPoints(props.placement)
+    if (points) return points
+    if (placement) return placementToPoints(placement)
     return ['tc', 'bc']
-  }
-
-  function _createElement(
-    render: Render,
-    ref: ForwardedRef<HTMLElement>,
-    compProps: Record<string, unknown> | undefined
-  ): FunctionComponentElement<RenderProps> {
-    return React.createElement(render, { ref, ...props, ...compProps })
   }
 }

@@ -1,6 +1,6 @@
 import { Id } from '~/utils/core'
 
-import { DecisionItem } from './decision-item'
+import { Point } from './point'
 
 export interface Decision {
   id: Id
@@ -9,7 +9,7 @@ export interface Decision {
   updateDttm: string
   updatedBy: string
   createdBy: string
-  decisionTree: DecisionItem[]
+  decisionTree: Point[]
   keyName: string
   rev: string
 }

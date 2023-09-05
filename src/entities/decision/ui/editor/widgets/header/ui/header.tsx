@@ -4,10 +4,8 @@ import { memo } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 import Flex from '~/abstract/flex/ui/flex'
-import { Point } from '~/entities/point'
 import { routes } from '~/shared/routes'
 import { GhostButton, PrimaryButton } from '~/ui/button'
-import { Plus } from '~/ui/icon'
 import { ChevronLeft } from '~/ui/icon/variants/chevron-left'
 import Input, { useChangeOnBlurStrategy } from '~/ui/input'
 import ClearableInput from '~/ui/input/variants/clearable'
@@ -15,15 +13,14 @@ import ThemeDropdown from '~/ui/theme-dropdown'
 import { c } from '~/utils/core'
 import { useUpdate } from '~/utils/hooks'
 
-import { Manager, NodeListState } from '../../..'
+import { Controller, NodeListController } from '../../..'
 
 HeaderComponent.displayName = 'decision-Editor-w-Header'
 
 export interface Props {
   className?: string
-  editorManager: Manager
-  nodeList: NodeListState
-  addNode: (point: Partial<Point>) => void
+  editor: Controller
+  nodeList: NodeListController
   submit: () => void
 }
 
@@ -44,24 +41,6 @@ function HeaderComponent(props: Props): JSX.Element {
           onChange={(ev): void => props.nodeList.searchQuery.set(ev.currentTarget.value)}
           placeholder='Поиск'
         />
-        <Flex className='toolbar' crossAxis='center'>
-          <PrimaryButton
-            onClick={(): void => props.addNode({ level: 'offer', name: 'new_offer' })}
-            round={true}
-            height='s'
-            style={{ marginLeft: 'var(--l)' }}
-          >
-            <Plus /> O
-          </PrimaryButton>
-          <PrimaryButton
-            onClick={(): void => props.addNode({ level: 'decisionPoint', name: 'new_filter' })}
-            round={true}
-            height='s'
-            style={{ marginLeft: 'var(--l)' }}
-          >
-            <Plus /> F
-          </PrimaryButton>
-        </Flex>
       </Flex>
       <div className='center'>
         <div className='name'>
@@ -69,9 +48,9 @@ function HeaderComponent(props: Props): JSX.Element {
             {...useChangeOnBlurStrategy({
               transparent: true,
               cannotBeEmpty: true,
-              value: props.editorManager.name.value,
+              value: props.editor.name.value,
               placeholder: 'Имя',
-              onChange: (ev): void => props.editorManager.name.set(ev.currentTarget.value),
+              onChange: (ev): void => props.editor.name.set(ev.currentTarget.value),
             })}
           />
         </div>
@@ -88,7 +67,7 @@ function HeaderComponent(props: Props): JSX.Element {
   )
 
   function subscribeOnUpdates(update: () => void, uns: (() => void)[]): void {
-    uns.push(props.editorManager.on('name', update))
+    uns.push(props.editor.on('name', update))
     uns.push(props.nodeList.on('searchQuery', update))
   }
 }

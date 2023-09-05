@@ -1,28 +1,26 @@
 import './toolbar.scss'
 
 import Flex from '~/abstract/flex/ui/flex'
-import { GhostButton } from '~/ui/button'
 import Checkbox from '~/ui/checkbox'
-import { Trash } from '~/ui/icon'
-import { c } from '~/utils/core'
+import { Id, c } from '~/utils/core'
 import { stopPropagation } from '~/utils/dom-event'
 import { useUpdate } from '~/utils/hooks'
 
-import { ListState, State } from '../../../../..'
+import { Controller, ListController } from '../../../../..'
 
 Toolbar.displayName = 'decision-Editor-w-Canvas-w-Node-v-Filter-w-Toolbar'
 
 export interface Props {
-  state: State
-  listState: ListState
+  state: Controller
+  listState: ListController
   className?: string
-  remove: () => void
+  selectNodes: (ids: Id[]) => void
+  toggle: () => void
 }
 
 export default function Toolbar(props: Props): JSX.Element {
   useUpdate(subscribeOnUpdates)
 
-  const computation = props.state.computation.value
   const checked = props.listState.selection.isSelected(props.state.id)
 
   return (
@@ -33,17 +31,7 @@ export default function Toolbar(props: Props): JSX.Element {
        * и на нем применим stopPropagation
        */}
       <Flex mainAxis='center' crossAxis='center' onClick={stopPropagation}>
-        <Checkbox
-          round={true}
-          checked={checked}
-          className='selection'
-          onChange={(): void => props.listState.selection.toggle(props.state.id)}
-        />
-      </Flex>
-      <Flex>
-        <GhostButton round={true} onClick={props.remove}>
-          <Trash />
-        </GhostButton>
+        <Checkbox round={true} checked={checked} className='selection' onChange={props.toggle} />
       </Flex>
     </div>
   )
@@ -53,9 +41,5 @@ export default function Toolbar(props: Props): JSX.Element {
   function subscribeOnUpdates(update: () => void, uns: (() => void)[]): void {
     uns.push(props.state.on('computation', update))
     uns.push(props.listState.on('selection', update))
-  }
-
-  function toogleComputation(): void {
-    props.state.computation.set(computation === 'successively' ? 'parallel' : 'successively')
   }
 }

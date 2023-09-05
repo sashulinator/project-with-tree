@@ -1,9 +1,4 @@
 /**
- * lib
- */
-export * from './lib/-history-listener'
-
-/**
  * types
  */
 export type { Decision } from './types/decision'
@@ -11,8 +6,8 @@ export type { Decision } from './types/decision'
 /**
  * modules
  */
-export { Manager } from './modules/manager'
-export type { ManagerEvents } from './modules/manager'
+export { Controller } from './modules/controller'
+export type { Events as ControllerEvents } from './modules/controller'
 
 /**
  * theme
@@ -31,6 +26,9 @@ export type { Props as EditorProps } from './ui/editor'
 export { default as Header } from './widgets/header'
 export type { HeaderProps } from './widgets/header'
 
+export { default as Toolbar } from './widgets/toolbar'
+export type { ToolbarProps } from './widgets/toolbar'
+
 export { default as LeftPanel } from './widgets/left-panel'
 export type { LeftPanelProps } from './widgets/left-panel'
 
@@ -39,32 +37,31 @@ export type { RightPanelProps } from './widgets/right-panel'
 
 export {
   default as Canvas,
-  State as CanvasState,
+  Controller as CanvasController,
   Node,
   NodeList,
-  NodeState,
-  NodeListState,
+  NodeController as NodeController,
+  NodeListController as NodeListController,
   NodeJoint,
-  NodeVariantPicker,
+  NodeFactory,
   getNodeMovement,
   NODE_GAP,
   COLUMN_GAP,
   getColumnX,
+  Link,
+  LinkList,
+  LinkController,
+  LinkListController,
 } from './widgets/canvas'
 export type {
   CanvasProps,
   NodeListProps,
   NodeProps,
-  NodeStateProps,
-  NodeEvents,
+  NodeListControllerEvents as NodeEvents,
   NodeJointProps,
-  NodeVariantPickerProps,
-} from './widgets/canvas'
-
-export { default as Link, List as LinkList, State as LinkState, ListState as LinkListState } from './widgets/link'
-export type {
-  ListProps as LinkListProps,
+  NodeFactoryProps,
+  LinkListProps,
   LinkProps,
-  StateProps as LinkStateProps,
-  Events as LinkEvents,
-} from './widgets/link'
+  LinkControllerProps,
+  LinkControllerEvents,
+} from './widgets/canvas'

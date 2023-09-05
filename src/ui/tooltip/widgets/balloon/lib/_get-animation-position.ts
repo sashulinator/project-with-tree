@@ -6,24 +6,24 @@ export function _getAnimationPosition(placement: Point): { from: Position; to: P
   const to = { x: 0, y: 0 }
 
   if (placement.charAt(0) === 'b') {
-    from.y = -5
-    to.y = 5
+    from.y = -10
+    to.y = 10
     return { from, to }
   }
   if (placement.charAt(0) === 't') {
-    from.y = 5
-    to.y = -5
+    from.y = 10
+    to.y = -10
     return { from, to }
   }
   if (placement.charAt(1) === 'l') {
-    from.x = 5
-    to.x = -5
+    from.x = 10
+    to.x = -10
     return { from, to }
   }
 
   if (placement.charAt(1) === 'r') {
-    from.x = -5
-    to.x = 5
+    from.x = -10
+    to.x = 10
     return { from, to }
   }
 

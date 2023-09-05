@@ -2,7 +2,7 @@ import './tooltip.scss'
 
 import React from 'react'
 
-import ATooltip, { Render } from '~/abstract/tooltip'
+import ATooltip from '~/abstract/tooltip'
 import { c } from '~/utils/core'
 import { ReactElementWithRef } from '~/utils/react'
 
@@ -60,10 +60,9 @@ export default function Tooltip(props: Props): JSX.Element {
     <ATooltip
       {...tooltipProps}
       delay={delay}
-      className={c(className, Tooltip.displayName)}
       placement={placement}
-      renderBalloon={Balloon as unknown as Render}
-      balloonProps={{ contents, placement }}
+      balloonProps={{ contents, placement, className: c(className, Tooltip.displayName) }}
+      renderBalloon={Balloon}
     />
   )
 }

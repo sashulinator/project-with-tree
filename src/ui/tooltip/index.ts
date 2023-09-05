@@ -14,4 +14,4 @@ export type { BalloonProps } from './widgets/balloon'
  * reexports
  */
 export { flipPointHorizontally, flipPointVertically, adjustPoints } from '~/abstract/tooltip'
-export type { Overflow, Offset, Point, Points, OnAligned, Render, RenderProps } from '~/abstract/tooltip'
+export type { Overflow, Offset, Point, Points, OnAligned } from '~/abstract/tooltip'

@@ -1,4 +1,4 @@
-import { RefObject, useEffect } from 'react'
+import { RefObject, useLayoutEffect } from 'react'
 
 import { useLatest } from './latest'
 
@@ -7,15 +7,15 @@ import { useLatest } from './latest'
  * @param ref
  * @param callback
  */
-export function useOnClickOutside(ref: RefObject<HTMLElement>, handler: (e: MouseEvent | TouchEvent) => void) {
+export function useOnClickOutside(ref: RefObject<Element>, handler: (e: MouseEvent | TouchEvent) => void) {
   const handlerRef = useLatest(handler)
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     /** Подписка на клик за пределами */
     const listener = (event: MouseEvent | TouchEvent) => {
       // Do nothing if clicking ref's element or descendent elements
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      if (!ref.current || ref.current.contains(event?.target as HTMLElement)) {
+      if (!ref.current || ref.current.contains(event?.target as Element)) {
         return
       }
       handlerRef.current(event)

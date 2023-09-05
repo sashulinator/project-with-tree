@@ -1,9 +1,12 @@
+import './chevron.css'
+
 import { CollapseProps } from '~/abstract/collapse'
-import Accordion from '../../../'
-import { c } from '~/utils/core'
 import { GhostButton } from '~/ui/button'
 import { ChevronRight } from '~/ui/icon'
-import './chevron.css'
+import { c } from '~/utils/core'
+
+import Accordion from '../../../'
+
 ChevronAccordion.displayName = 'ui-Accordion-v-Chevron'
 
 export interface ChevronAccordionProps {

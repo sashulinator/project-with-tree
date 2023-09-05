@@ -4,12 +4,12 @@ import { ReactElement, cloneElement, useRef } from 'react'
 
 import { emitter } from '~/shared/emitter'
 import { GestureDragEvent, Item } from '~/ui/canvas'
-import { Position, c } from '~/utils/core'
+import { Id, Position, c } from '~/utils/core'
 import { isMetaCtrlKey } from '~/utils/dom-event'
 import { fns } from '~/utils/function'
 import { useUpdate } from '~/utils/hooks'
 
-import { ListState, State as NodeState } from '..'
+import { ListController, Controller as NodeState } from '..'
 import { dark } from '../themes/dark'
 import { light } from '../themes/light'
 
@@ -19,7 +19,7 @@ Node.displayName = 'decision-Editor-w-Canvas-w-Node'
 
 export interface NodeProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'children' | 'title'> {
   state: NodeState
-  listState: ListState
+  list: ListController
   title: ReactElement | null
   toolbar: ReactElement | null
   sourceLinks?: ReactElement | null
@@ -27,6 +27,8 @@ export interface NodeProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'c
   rootProps?: React.HTMLAttributes<SVGForeignObjectElement>
   onGestureDrug: (event: GestureDragEvent) => void
   onGestureClick?: (event: React.MouseEvent<HTMLDivElement>) => void
+  selectNodes: (ids: Id[]) => void
+  toggle: () => void
 }
 
 /**
@@ -37,9 +39,9 @@ export default function Node(props: NodeProps): JSX.Element {
 
   const clickPositionRef = useRef<null | Position>(null)
 
-  const { title, toolbar, sourceLinks, listState, targetLinks, state, rootProps, ...itemProps } = props
-  const selected = listState.selection.isSelected(props.state.id)
-  const cutted = listState.cutted.isSelected(props.state.id)
+  const { title, toolbar, sourceLinks, list, toggle, targetLinks, state, rootProps, selectNodes, ...itemProps } = props
+  const selected = list.selection.isSelected(props.state.id)
+  const cutted = list.cutted.isSelected(props.state.id)
 
   return (
     <Item
@@ -76,9 +78,9 @@ export default function Node(props: NodeProps): JSX.Element {
 
     if (mx < 5 && my < 5) {
       if (isMetaCtrlKey(event)) {
-        props.listState.selection.toggle(props.state.id)
+        toggle()
       } else {
-        props.listState.selection.set([props.state.id])
+        selectNodes([props.state.id])
       }
       props.onGestureClick?.(event)
     }
@@ -91,7 +93,7 @@ export default function Node(props: NodeProps): JSX.Element {
   }
 
   function subscribeOnUpdates(update: () => void, uns: (() => void)[]): void {
-    uns.push(listState.on('selection', update))
-    uns.push(listState.on('cutted', update))
+    uns.push(list.on('selection', update))
+    uns.push(list.on('cutted', update))
   }
 }

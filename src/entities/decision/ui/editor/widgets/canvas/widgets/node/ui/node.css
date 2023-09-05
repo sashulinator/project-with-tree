@@ -22,3 +22,16 @@
 .decision-Editor-w-Canvas-w-Node > .toolbar {
   height: 2.75rem;
 }
+
+.decision-Editor-w-Canvas-w-Node .selection {
+  visibility: hidden;
+  opacity: 0;
+  transition:
+    visibility 0.1s,
+    opacity 0.1s;
+}
+.decision-Editor-w-Canvas-w-Node:hover .selection,
+.decision-Editor-w-Canvas-w-Node.--selected .selection {
+  opacity: 1;
+  visibility: visible;
+}

@@ -1,13 +1,13 @@
 /**
  * lib
  */
-export { toPoints } from './lib/to-points'
+export { placementToPoints } from './lib/placement-to-points'
 
 /**
  * ui
  */
 export { default } from './ui/popover'
-export type { Props as PopoverProps, Render, RenderProps } from './ui/popover'
+export type { Props as PopoverProps } from './ui/popover'
 
 /**
  * reexports

@@ -6,7 +6,8 @@ export * from './lib/local-storage-zoom'
 /**
  * state
  */
-export { State } from './state/state'
+export { Controller } from './models/controller'
+export type { Events as ControllerEvents } from './models/controller'
 
 /**
  * ui
@@ -20,10 +21,10 @@ export type { Props as CanvasProps } from './ui/canvas'
 export {
   default as Node,
   List as NodeList,
-  State as NodeState,
-  ListState as NodeListState,
+  Controller as NodeController,
+  ListController as NodeListController,
   Joint as NodeJoint,
-  VariantPicker as NodeVariantPicker,
+  Factory as NodeFactory,
   getMovement as getNodeMovement,
   NODE_GAP,
   COLUMN_GAP,
@@ -32,8 +33,20 @@ export {
 export type {
   ListProps as NodeListProps,
   NodeProps,
-  StateProps as NodeStateProps,
-  ListEvents as NodeEvents,
+  ListControllerEvents as NodeListControllerEvents,
   JointProps as NodeJointProps,
-  VariantPickerProps as NodeVariantPickerProps,
+  FactoryProps as NodeFactoryProps,
 } from './widgets/node'
+
+export {
+  default as Link,
+  List as LinkList,
+  Controller as LinkController,
+  ListController as LinkListController,
+} from './widgets/link'
+export type {
+  ListProps as LinkListProps,
+  LinkProps,
+  ControllerProps as LinkControllerProps,
+  ControllerEvents as LinkControllerEvents,
+} from './widgets/link'

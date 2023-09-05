@@ -10,19 +10,19 @@ import { Offset, Point } from 'dom-align-ts'
 
 export function calcArrowOffset(placement: Point): Offset {
   if (placement === 'tl') {
-    return ['-100%', '-50%']
+    return ['-50%', '-50%']
   }
   if (placement === 'tr') {
-    return ['100%', '-50%']
+    return ['50%', '-50%']
   }
   if (placement === 'tc') {
     return [0, '-50%']
   }
   if (placement === 'bl') {
-    return ['-100%', '50%']
+    return ['-50%', '50%']
   }
   if (placement === 'br') {
-    return ['100%', '50%']
+    return ['50%', '50%']
   }
   if (placement === 'bc') {
     return [0, '50%']

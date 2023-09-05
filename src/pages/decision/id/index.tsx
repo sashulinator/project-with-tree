@@ -24,19 +24,16 @@ export default function DecisionPage(): JSX.Element {
   })
 
   const ruleListFetcher = useFetchRulesList({ page: 1, limit: 1000 })
-  const filteredRuleList = useMemo(
-    () => ruleListFetcher.data?.items.filter((item) => item.editor) || [],
-    [ruleListFetcher.data]
-  )
+  const filteredRuleList = useMemo(() => ruleListFetcher.data?.items || [], [ruleListFetcher.data])
 
   return (
     <main className='DecisionIdPage'>
       {fetcher.data && (
         <Editor
           onSubmit={(states): void => {
-            const items = states.nodeListState.values().map((nodeState) => {
-              const links = states.linkListState.getLinksBySourceId(nodeState.point.id)
-              const point = nodeState.deserialize()
+            const items = states.nodeList.values().map((nodeController) => {
+              const links = states.linkList.getLinksBySourceId(nodeController.point.id)
+              const point = nodeController.deserialize()
               point['children'] = links.map((l, i) => {
                 const ruleSet = l.deserialize()
                 ruleSet.index = ruleSet.index ?? i

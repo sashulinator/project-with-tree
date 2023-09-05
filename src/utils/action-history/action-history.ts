@@ -1,51 +1,45 @@
-import { History, HistoryProps } from '../history/history'
+import { Id, generateId } from '../core'
+import { Step } from './types/step'
 
-export interface HistoryItem {
-  redo: () => void
-  undo: () => void
-  done: boolean
-}
+export class ActionHistory<TStep extends Step = Step> {
+  steps: TStep[]
 
-export class ActionHistory {
-  history: History<HistoryItem>
-
-  constructor(props?: HistoryProps<HistoryItem>) {
-    this.history = new History<HistoryItem>(props)
+  constructor(steps?: TStep[]) {
+    this.steps = steps || []
   }
 
-  add(onRedo: () => void, onUndo: () => void): void {
-    function redo(): void {
-      onRedo()
-      item.done = true
-    }
-    function undo(): void {
-      onUndo()
-      item.done = false
+  addStep(item: Omit<TStep, 'id'> & { id?: Id }) {
+    const lastStep = this.steps[0]
+
+    if (lastStep && !lastStep.done) {
+      const index = this.steps.findIndex((step) => step.done)
+      this.steps = this.steps.slice(index)
     }
 
-    const isCurrentDone = this.history.getCurrent()?.done
-    const item: HistoryItem = { done: true, redo, undo }
+    this.steps.unshift({ id: generateId(), ...item } as TStep)
+  }
 
-    if (!isCurrentDone) {
-      this.history.previous()
+  findCurrent(): TStep | undefined {
+    return this.steps.find((item, i) => {
+      return item.done
+    })
+  }
+
+  findNext(): TStep | undefined {
+    for (let i = 0; i < this.steps.length; i++) {
+      const item = this.steps[i]
+      const nextItem = this.steps[i + 1]
+      const isLast = i === this.steps.length - 1
+      // Если первый и второй done то next не существует
+      if (i === 0 && item?.done && nextItem?.done) return undefined
+      // Если следующий done значит он current, а этот next
+      if (nextItem?.done) return item
+      // Если все элементы не done, то последний next
+      if (isLast) return item
     }
-
-    this.history.add(item)
   }
 
-  previous(): void {
-    const { done, undo } = this.history.getCurrent()
-    this.history.previous()
-    done ? undo() : this.history.getCurrent()?.undo()
-  }
-
-  next(): void {
-    const { done, redo } = this.history.getCurrent()
-    this.history.next()
-    done ? this.history.getCurrent()?.redo() : redo()
-  }
-
-  redo(): void {
-    this.history.getCurrent()?.redo()
+  findPrevious(): TStep | undefined {
+    return this.steps.find((_, i) => this.steps[i - 1]?.done)
   }
 }

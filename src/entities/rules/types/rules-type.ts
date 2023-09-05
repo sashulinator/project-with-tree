@@ -1,3 +1,5 @@
+import { EditorValues } from '../models/editorRulesValues'
+
 export interface DomainListResponse {
   id: string
   name: string
@@ -39,8 +41,7 @@ export interface RulesRes {
   name: string
   keyName: string
   value: string
-  frontValue: string
-  editor: string
+  frontValue: EditorValues[]
   level: string
   createDttm: string
   updateDttm: string

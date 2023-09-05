@@ -1,7 +1,8 @@
+import { EditorValues } from '~/entities/rules/models/editorRulesValues'
+
 export interface RequestData {
   name: string
   keyName: string
-  frontValue: string
-  editor: string
+  frontValue: EditorValues[]
   userId: string
 }

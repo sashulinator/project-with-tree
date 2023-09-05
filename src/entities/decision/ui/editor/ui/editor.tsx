@@ -1,37 +1,35 @@
 import './editor.scss'
 
-import { useEffect, useMemo } from 'react'
+import { useMemo } from 'react'
 
 import { RulesRes } from '~/entities/rules/types/rules-type'
-import { ActionHistory } from '~/utils/action-history'
-import { c } from '~/utils/core'
+import { Id, c } from '~/utils/core'
+import { isMetaCtrlKey } from '~/utils/dom-event'
 import { useEventListener } from '~/utils/hooks'
+import { toggle } from '~/utils/id-array'
+import { Required } from '~/utils/types/object'
 
 import {
   Canvas,
-  CanvasState,
+  CanvasController,
+  Controller,
   Decision,
   Header,
   LeftPanel,
-  LinkListState,
-  Manager,
-  NodeListState,
+  LinkListController,
+  NodeListController,
   RightPanel,
-  historyListener,
+  Toolbar,
 } from '../'
+import { Point } from '../../..'
 import {
-  addNode as addNodeBind,
-  centerNode as centerNodeBind,
-  copySelectedNodes as copySelectedNodesBind,
-  cutSelectedNodes as cutSelectedNodesBind,
-  nextHistory as nextHistoryBind,
-  paste as pasteBind,
-  pasteFromClipboard as pasteFromClipboardBind,
-  previousHistory as previousHistoryBind,
-  removeNode as removeNodeBind,
-  removeSelectedNodes as removeSelectedNodesBind,
-  resetAll as resetAllBind,
-  useKeyDownListener,
+  _HistoryController,
+  _centerNode,
+  _copy,
+  _cut,
+  _paste,
+  _pasteFromClipboard,
+  _useKeyDownListener,
 } from '../_private'
 
 Editor.displayName = 'decision-Editor'
@@ -39,92 +37,154 @@ Editor.displayName = 'decision-Editor'
 const resizeBarClassName = 'resizeBar'
 
 export interface Props {
-  decision: Decision
   className?: string
+  decision: Decision
   ruleList: RulesRes[]
   onSubmit: (states: {
-    editorManager: Manager
-    canvasState: CanvasState
-    nodeListState: NodeListState
-    linkListState: LinkListState
+    editor: Controller
+    canvas: CanvasController
+    nodeList: NodeListController
+    linkList: LinkListController
   }) => void
 }
 
 export default function Editor(props: Props): JSX.Element {
-  // const rules = props.decision.rules || []
-  const history = useMemo(() => new ActionHistory(), [])
+  const controller = useMemo(() => new Controller(props.decision), [props.decision.decisionTree])
+  const canvas = useMemo(() => new CanvasController(), [props.decision.decisionTree])
+  const nodeList = useMemo(() => new NodeListController(props.decision.decisionTree), [props.decision.decisionTree])
+  const linkList = useMemo(() => new LinkListController(props.decision.decisionTree), [props.decision.decisionTree])
 
-  const manager = useMemo(() => new Manager(props.decision), [])
-  const canvasState = useMemo(() => new CanvasState(), [])
-  const nodeListState = useMemo(() => new NodeListState(props.decision.decisionTree), [props.decision.decisionTree])
-  const linkListState = useMemo(() => new LinkListState(props.decision.decisionTree), [])
+  const history = useMemo(() => {
+    const props = { nodeList, canvas, linkList }
+    return new _HistoryController(props)
+  }, [props.decision.decisionTree])
 
-  const previousHistory = previousHistoryBind(history)
-  const nextHistory = nextHistoryBind(history)
-  const removeNode = removeNodeBind({ linkListState, nodeListState })
-  const addNode = addNodeBind({ canvasState, nodeListState })
-  const removeSelectedNodes = removeSelectedNodesBind({ nodeListState, removeNode })
-  const centerNode = centerNodeBind({ nodeListState, canvasState })
-  const copySelectedNodes = copySelectedNodesBind({ nodeListState })
-  const cutSelectedNodes = cutSelectedNodesBind({ nodeListState })
-  const pasteFromClipboard = pasteFromClipboardBind({ nodeListState, addNode })
-  const paste = pasteBind({ nodeListState, canvasState, pasteFromClipboard })
-  const resetAll = resetAllBind({ linkListState, nodeListState })
-
-  useKeyDownListener({
-    resetAll,
-    removeSelectedNodes,
-    previousHistory,
-    nextHistory,
-    copySelectedNodes,
+  _useKeyDownListener({
+    undo,
+    redo,
+    reset,
+    removeSelected,
+    copySelected,
     paste,
-    cutSelectedNodes,
+    cutSelected,
   })
   useEventListener('click', onClick)
 
-  useEffect(subscribeHistory, [history, manager, nodeListState, linkListState])
-
   return (
     <div className={c(props.className, Editor.displayName)}>
-      <Header
-        submit={submit}
-        nodeList={nodeListState}
+      <Header submit={submit} nodeList={nodeList} editor={controller} className='panel --header' />
+      <Toolbar
+        className='panel --toolbar'
+        nodeList={nodeList}
         addNode={addNode}
-        editorManager={manager}
-        className='panel --header'
+        removeSelectedNodes={removeSelected}
+        undo={undo}
+        redo={redo}
       />
       <LeftPanel
+        selectNodes={selectNodes}
         className='panel --left'
         resizableProps={{ className: resizeBarClassName, name: `${Editor.displayName}-panel__left`, defaultSize: 300 }}
         centerNode={centerNode}
-        nodeListState={nodeListState}
+        nodeList={nodeList}
       />
       <RightPanel
-        ruleList={props.ruleList}
-        linkListState={linkListState}
+        selectNodes={selectNodes}
         className='panel --right'
+        ruleList={props.ruleList}
+        linkList={linkList}
         resizableProps={{ className: resizeBarClassName, name: `${Editor.displayName}-panel__right`, defaultSize: 300 }}
-        nodeListState={nodeListState}
+        nodeList={nodeList}
       />
-      <Canvas removeNode={removeNode} state={canvasState} nodeListState={nodeListState} linkListState={linkListState} />
+      <Canvas
+        toggleNode={toggleNode}
+        toggleLink={toggleLink}
+        selectLinks={selectLinks}
+        transitionMoveNodes={transitionMoveNodes}
+        selectNodes={selectNodes}
+        controller={canvas}
+        nodeList={nodeList}
+        linkList={linkList}
+      />
     </div>
   )
 
   // Private
 
   function submit(): void {
-    props.onSubmit({ editorManager: manager, canvasState, nodeListState, linkListState })
-  }
-
-  function subscribeHistory(): void {
-    historyListener({ history, state: manager, nodeListState, linkListState })
+    props.onSubmit({
+      editor: controller,
+      canvas: canvas,
+      nodeList: nodeList,
+      linkList: linkList,
+    })
   }
 
   function onClick(e: MouseEvent): void {
     const el = e.target as HTMLElement
-    if (el.tagName === 'path' || el.tagName === 'svg') {
-      linkListState.editingId.set(undefined)
-      nodeListState.selection.set([])
-    }
+    if (el.tagName !== 'svg' || isMetaCtrlKey(e)) return
+    reset()
+  }
+
+  function undo(): void {
+    history.undo()
+  }
+
+  function redo(): void {
+    history.redo()
+  }
+
+  function transitionMoveNodes(ids: Id[]): void {
+    history.move(ids)
+  }
+
+  function selectNodes(ids: Id[]): void {
+    history.select(ids, [])
+  }
+
+  function toggleNode(id: Id): void {
+    history.select(toggle(id, nodeList.selection.value), linkList.selection.value)
+  }
+
+  function toggleLink(id: Id): void {
+    history.select(nodeList.selection.value, toggle(id, linkList.selection.value))
+  }
+
+  function selectLinks(ids: Id[]): void {
+    history.select([], ids)
+  }
+
+  function cutSelected(): void {
+    _cut({ nodeList }, nodeList.selection.value)
+  }
+
+  function copySelected(): void {
+    _copy({ nodeList }, nodeList.selection.value)
+  }
+
+  function removeSelected(): void {
+    history.remove(nodeList.selection.value, linkList.selection.value)
+  }
+
+  function reset(): void {
+    linkList.editingId.set(undefined)
+    if (!linkList.selection.value.length && !nodeList.selection.value.length) return
+    history.select([], [])
+  }
+
+  function paste(): void {
+    _paste({ nodeList, canvas, pasteFromClipboard })
+  }
+
+  function addNode(point: Required<Partial<Point>, 'level'>): void {
+    history.create(point)
+  }
+
+  function centerNode(id: Id): void {
+    _centerNode({ nodeList, canvas }, id)
+  }
+
+  function pasteFromClipboard(): void {
+    _pasteFromClipboard({ nodeList, addNode })
   }
 }

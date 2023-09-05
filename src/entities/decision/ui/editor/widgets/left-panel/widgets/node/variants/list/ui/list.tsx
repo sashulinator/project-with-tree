@@ -1,6 +1,6 @@
 import './list.css'
 
-import { NodeListState } from '~/entities/decision/ui/editor'
+import { NodeListController } from '~/entities/decision/ui/editor'
 import { Id, c } from '~/utils/core'
 import { useUpdate } from '~/utils/hooks'
 
@@ -9,15 +9,16 @@ import Node from '../../..'
 List.displayName = 'decision-Editor-w-LeftPanel-w-Node-v-List'
 
 export interface Props {
-  nodeListState: NodeListState
+  nodeListController: NodeListController
   className?: string
   centerNode: (id: Id) => void
+  selectNodes: (ids: Id[]) => void
 }
 
 export default function List(props: Props): JSX.Element {
-  const searchQuery = props.nodeListState.searchQuery.value
+  const searchQuery = props.nodeListController.searchQuery.value
 
-  const filtered = Object.values(props.nodeListState.items).filter((node) => {
+  const filtered = Object.values(props.nodeListController.items).filter((node) => {
     return node.point.level !== 'main' && node.point.name?.toUpperCase().indexOf(searchQuery.toUpperCase()) !== -1
   })
 
@@ -25,10 +26,15 @@ export default function List(props: Props): JSX.Element {
 
   return (
     <ul className={c(props.className, List.displayName)}>
-      {filtered.map((state) => {
+      {filtered.map((controller) => {
         return (
-          <li key={state.id}>
-            <Node nodeListState={props.nodeListState} state={state} centerNode={props.centerNode} />
+          <li key={controller.id}>
+            <Node
+              selectNodes={props.selectNodes}
+              nodeListController={props.nodeListController}
+              controller={controller}
+              centerNode={props.centerNode}
+            />
           </li>
         )
       })}
@@ -36,9 +42,9 @@ export default function List(props: Props): JSX.Element {
   )
 
   function subscribeOnUpdates(update: () => void, uns: (() => void)[]): void {
-    uns.push(props.nodeListState.on('update', update))
-    uns.push(props.nodeListState.on('remove', () => setTimeout(update)))
-    uns.push(props.nodeListState.on('add', update))
-    uns.push(props.nodeListState.on('searchQuery', update))
+    uns.push(props.nodeListController.on('update', update))
+    uns.push(props.nodeListController.on('remove', () => setTimeout(update)))
+    uns.push(props.nodeListController.on('add', update))
+    uns.push(props.nodeListController.on('searchQuery', update))
   }
 }

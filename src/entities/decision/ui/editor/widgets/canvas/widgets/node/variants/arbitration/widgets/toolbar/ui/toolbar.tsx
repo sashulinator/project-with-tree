@@ -1,22 +1,22 @@
 import './toolbar.css'
 
 import Flex from '~/abstract/flex/ui/flex'
-import { GhostButton } from '~/ui/button'
 import Checkbox from '~/ui/checkbox'
-import { Trash } from '~/ui/icon'
-import { c } from '~/utils/core'
+import { Id, c } from '~/utils/core'
 import { stopPropagation } from '~/utils/dom-event'
+import { fns } from '~/utils/function'
 import { useUpdate } from '~/utils/hooks'
 
-import { ListState, State } from '../../../../..'
+import { Controller, ListController } from '../../../../..'
 
 Toolbar.displayName = 'decision-Editor-w-Canvas-w-Node-v-Arbitration-w-Toolbar'
 
 export interface Props {
-  state: State
-  listState: ListState
+  state: Controller
+  listState: ListController
   className?: string
-  remove: () => void
+  selectNodes: (ids: Id[]) => void
+  toggle: () => void
 }
 
 export default function Toolbar(props: Props): JSX.Element {
@@ -32,17 +32,7 @@ export default function Toolbar(props: Props): JSX.Element {
        * и на нем применим stopPropagation
        */}
       <Flex mainAxis='center' crossAxis='center' onClick={stopPropagation}>
-        <Checkbox
-          round={true}
-          checked={checked}
-          className='selection'
-          onChange={(): void => props.listState.selection.toggle(props.state.id)}
-        />
-      </Flex>
-      <Flex>
-        <GhostButton round={true} onClick={props.remove}>
-          <Trash />
-        </GhostButton>
+        <Checkbox round={true} checked={checked} className='selection' onChange={fns(stopPropagation, props.toggle)} />
       </Flex>
     </div>
   )

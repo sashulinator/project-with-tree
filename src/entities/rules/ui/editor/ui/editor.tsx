@@ -3,10 +3,11 @@ import './editor.css'
 import { useEffect } from 'react'
 import { useSetRecoilState } from 'recoil'
 
+import { ParentDomainRes } from '~/api/domain/types/parent-domain-res'
 import { addDataMentions } from '~/entities/rules/lib/add-data-mentions'
 import { EditorValues } from '~/entities/rules/models/editorRulesValues'
 import { mentionsDataAtom } from '~/entities/rules/models/mentionsData'
-import { DomainRes, RulesRes } from '~/entities/rules/types/rules-type'
+import { RulesRes } from '~/entities/rules/types/rules-type'
 import { c } from '~/utils/core'
 
 import { DomainList } from '../widgets/domain-list'
@@ -15,7 +16,7 @@ import { Rules } from '../widgets/rules'
 Editor.displayName = 'ruleEditor'
 
 interface AddRulesProps {
-  dataList: DomainRes[]
+  dataList: ParentDomainRes[]
   onSubmit: (editorValue: EditorValues[], title: string) => void
   className?: string
   rule: RulesRes | null

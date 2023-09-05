@@ -1,72 +1,71 @@
 import { GestureDragEvent } from '~/ui/canvas'
+import { Id } from '~/utils/core'
 
-import { State } from '..'
-import { NodeListState, NodeState, getColumnX, getNodeMovement } from '../../..'
+import { Controller } from '..'
+import { NodeController, NodeListController, getNodeMovement } from '../../..'
 
 /**
  * Функция обработки драга ноды
  * `Gesture` в названии отсылает к библиотечке @use-gesture/react
- * @param {State} state
- * @param {NodeState} nodeState
+ * @param {Controller} state
+ * @param {NodeController} nodeController
  * @param {GestureDragEvent} event событие библиотечки @use-gesture/react
  */
-export function onGestureDrag(state: State, nodeListState: NodeListState) {
-  return (nodeState: NodeState) =>
+export function onGestureDrag(
+  state: Controller,
+  nodeListController: NodeListController,
+  transitionMoveNodes: (ids: Id[]) => void
+) {
+  return (node: NodeController) =>
     (event: GestureDragEvent): void => {
       event.event.stopPropagation()
 
-      const movePosition = getNodeMovement(event, state.scale.value)
+      const movePosition = getNodeMovement(event, state.zoom.value.k)
       if (movePosition === null) return
 
       // Начинаем двигать карточку только если movePosition больше 10
       // иначе карточка дергается при простом клике на нее
       if (Math.abs(movePosition.x) < 10 && Math.abs(movePosition.y) < 10) return
 
-      if (!nodeListState.selection.isSelected(nodeState.id)) {
-        const x = nodeState.position.start.x + movePosition.x
-        const y = nodeState.position.start.y + movePosition.y
+      if (!nodeListController.selection.isSelected(node.id)) {
+        const x = node.position.start.x + movePosition.x
+        const y = node.position.start.y + movePosition.y
 
-        !event.last
-          ? nodeState.position.move({ x, y }, { last: false })
-          : nodeState.position.transitionMove({ x: getColumnX(x), y })
+        event.last ? transitionMoveNodes([node.id]) : node.position.move({ x, y }, { last: false })
 
         return
       }
 
       if (event.event.shiftKey) {
-        const selectedNodeStates = [...nodeListState.selection.value].map((id) => nodeListState.get(id))
+        const selectedNodeStates = nodeListController.selection.value.map((id) => nodeListController.get(id))
 
-        const x = nodeState.position.start.x + movePosition.x
-        const y = nodeState.position.start.y + movePosition.y
+        const x = node.position.start.x + movePosition.x
+        const y = node.position.start.y + movePosition.y
 
-        !event.last
-          ? nodeState.position.move({ x, y }, { last: false })
-          : nodeState.position.transitionMove({ x: getColumnX(x), y })
+        event.last
+          ? transitionMoveNodes(nodeListController.selection.value)
+          : node.position.move({ x, y }, { last: false })
 
-        selectedNodeStates
-          .sort((a, b) => a.position.value.y - b.position.value.y)
-          .forEach((selectedNodeState, i) => {
-            !event.last
-              ? selectedNodeState.position.move(
-                  { x: nodeState.position.value.x, y: nodeState.position.value.y + i * 1 },
+        event.last
+          ? transitionMoveNodes(nodeListController.selection.value)
+          : selectedNodeStates
+              .sort((a, b) => a.position.value.y - b.position.value.y)
+              .forEach((selectedNode, i) => {
+                selectedNode.position.move(
+                  { x: node.position.value.x, y: node.position.value.y + i * 1 },
                   { last: false }
                 )
-              : selectedNodeState.position.transitionMove({
-                  x: getColumnX(nodeState.position.value.x),
-                  y: nodeState.position.value.y,
-                })
-          })
+              })
       } else {
-        const selectedNodeStates = [...nodeListState.selection.value, nodeState.id].map((id) => nodeListState.get(id))
+        const selectedNodes = nodeListController.selection.value.map((id) => nodeListController.get(id))
 
-        selectedNodeStates.forEach((selectedNodeState) => {
-          const x = selectedNodeState.position.start.x + movePosition.x
-          const y = selectedNodeState.position.start.y + movePosition.y
-
-          !event.last
-            ? selectedNodeState.position.move({ x, y }, { last: false })
-            : selectedNodeState.position.transitionMove({ x: getColumnX(x), y })
-        })
+        event.last
+          ? transitionMoveNodes(nodeListController.selection.value)
+          : selectedNodes.forEach((selectedNode) => {
+              const x = selectedNode.position.start.x + movePosition.x
+              const y = selectedNode.position.start.y + movePosition.y
+              selectedNode.position.move({ x, y }, { last: false })
+            })
       }
     }
 }

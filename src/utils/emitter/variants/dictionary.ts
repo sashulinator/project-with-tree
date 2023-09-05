@@ -36,20 +36,20 @@ export class Dictionary<TItem, E extends DictionaryEvents<TItem> = DictionaryEve
     return find(this.items, id)
   }
 
-  add = (item: TItem): void => {
+  add = (item: TItem, event?: Record<string, unknown>): void => {
     this.items[this.getKey(item)] = item
-    this.emit('add', { item })
+    this.emit('add', { item, ...event })
   }
 
-  update = (item: TItem): void => {
+  update = (item: TItem, event?: Record<string, unknown>): void => {
     this.items[this.getKey(item)] = item
-    this.emit('update', { item })
+    this.emit('update', { item, ...event })
   }
 
-  remove = (key: Key): void => {
+  remove = (key: Key, event?: Record<string, unknown>): void => {
     const item = this.get(key)
     this.items[this.getKey(item)] = item
     delete this.items[this.getKey(item)]
-    this.emit('remove', { item })
+    this.emit('remove', { item, ...event })
   }
 }

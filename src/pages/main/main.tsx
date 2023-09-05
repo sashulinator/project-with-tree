@@ -18,7 +18,7 @@ export default function MainPage(): JSX.Element {
     <Link key={0} to={routes.decisionList.getURL()}>
       Деревья
     </Link>,
-    <Link key={2} to={routes.decisionList.getURL()}>
+    <Link key={2} to={routes.domainList.getURL()}>
       Домены
     </Link>,
     <Link key={3} to={routes.decisionList.getURL()}>

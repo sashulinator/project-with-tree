@@ -2,11 +2,12 @@ import { useMemo } from 'react'
 import { DndProvider } from 'react-dnd'
 import { HTML5Backend } from 'react-dnd-html5-backend'
 
-import { LinkListState, NodeListState } from '~/entities/decision/ui/editor'
+import { Point } from '~/entities/decision'
+import { LinkListController, NodeListController } from '~/entities/decision/ui/editor'
 import { FilterNode } from '~/entities/decision/ui/editor/widgets/canvas/widgets/node'
-import { Point } from '~/entities/point'
 import { Config, Props } from '~/storybook/types'
 import { H1 } from '~/ui/heading'
+import { emptyFn } from '~/utils/function/empty-fn'
 
 const point1: Point = {
   id: 'id1',
@@ -39,10 +40,10 @@ export default {
   },
 
   element: function Element(props: Props<State>): JSX.Element {
-    const states = useMemo(() => new NodeListState([point1, point2]), [])
-    const linkStates = useMemo(
+    const states = useMemo(() => new NodeListController([point1, point2]), [])
+    const linkControllers = useMemo(
       () =>
-        new LinkListState([
+        new LinkListController([
           {
             id: 'id1',
             name: 'string',
@@ -77,11 +78,12 @@ export default {
             return (
               <FilterNode
                 {...props}
-                nodeListState={states}
+                toggle={emptyFn}
+                nodeList={states}
+                selectNodes={emptyFn}
                 key={state.id}
                 state={state}
-                linkListState={linkStates}
-                remove={(): void => console.log('remove!')}
+                linkList={linkControllers}
                 onGestureDrug={(event): void => {
                   const x = state.position.start.x + event.movement[0]
                   const y = state.position.start.y + event.movement[1]

@@ -12,8 +12,8 @@ export * from './lib/get-movement'
 /**
  * state
  */
-export { State } from './state/state'
-export type { StateProps, Events } from './state/state'
+export { Controller } from './models/constroller'
+export type { Events as ControllerEvents } from './models/constroller'
 
 /**
  * ui
@@ -24,11 +24,11 @@ export type { NodeProps } from './ui/node'
 /**
  * variants
  */
-export { State as ListState, default as List } from './variants/list'
-export type { ListProps as ListProps, Events as ListEvents } from './variants/list'
+export { Controller as ListController, default as List } from './variants/list'
+export type { ListProps as ListProps, ControllerEvents as ListControllerEvents } from './variants/list'
 
-export { default as VariantPicker } from './variants/variant-picker'
-export type { VariantPickerProps } from './variants/variant-picker'
+export { default as Factory } from './variants/factory'
+export type { FactoryProps } from './variants/factory'
 
 export { default as EnterNode } from './variants/enter'
 export { default as FilterNode } from './variants/filter'

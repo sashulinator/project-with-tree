@@ -1,15 +1,12 @@
+import Accordion from '~/abstract/accordion'
 import Flex from '~/abstract/flex/ui/flex'
-
 import { H2 } from '~/ui/heading'
-
+import { Ol } from '~/ui/list/variants/ol'
 import PageSection from '~/ui/page-section'
-
-import Section from '../../section'
+import Paragraph from '~/ui/paragraph'
 import { useBoolean } from '~/utils/hooks'
 
-import Paragraph from '~/ui/paragraph'
-import { Ol } from '~/ui/list/variants/ol'
-import Accordion from '~/abstract/accordion'
+import Section from '../../section'
 
 export function AbstractSection(): JSX.Element {
   const [expanded, , , toggleExpanded] = useBoolean(true)

@@ -8,15 +8,15 @@ import { UnstyledButton } from '~/abstract/button'
 import { Id, c, generateId } from '~/utils/core'
 import { useUpdate } from '~/utils/hooks'
 
-import { Joint, State } from '../../..'
-import { LinkListState, LinkState } from '../../../../../../..'
+import { Controller, Joint } from '../../..'
+import { LinkController, LinkListController } from '../../../../../../..'
 
 SourceLinks.displayName = 'decision-Editor-w-Canvas-w-Node-w-SourceLinks'
 
 export interface Props {
   className?: string
-  state: State
-  linkListState: LinkListState
+  state: Controller
+  linkListController: LinkListController
   hideNewLink?: boolean
   onNewJointClick: (newLinkId: Id) => void
   onJointClick: (linkId: Id) => void
@@ -27,12 +27,12 @@ export default function SourceLinks(props: Props): JSX.Element {
 
   useUpdate(subscribeOnUpdates)
 
-  const editingLinkState = props.linkListState.findEditingLinkState()
+  const editingLinkState = props.linkListController.findEditingLinkState()
   const isEditingThisNode =
     editingLinkState?.sourceId.value === props.state.id || editingLinkState?.targetId.value === props.state.id
   const isEditingHasSource = Boolean(editingLinkState?.sourceId.value)
 
-  const sourceLinkStates = props.linkListState
+  const sourceLinkStates = props.linkListController
     .getLinksBySourceId(props.state.id)
     .sort((a, b) => (a.index.value < b.index.value ? -1 : 1))
 
@@ -42,19 +42,19 @@ export default function SourceLinks(props: Props): JSX.Element {
 
   return (
     <div className={c(props.className, SourceLinks.displayName)}>
-      {sourceLinkStates.map((linkState, i) => {
-        if (linkState.id === newLinkId) return null
-        const isLinked = Boolean(linkState.targetId.value)
+      {sourceLinkStates.map((linkController, i) => {
+        if (linkController.id === newLinkId) return null
+        const isLinked = Boolean(linkController.targetId.value)
 
         return (
           <RuleSet
             index={i}
-            linkListState={props.linkListState}
+            linkListController={props.linkListController}
             nodeId={props.state.id}
             isEditingThisNode={isEditingThisNode}
             isLinked={isLinked}
-            key={linkState.id}
-            linkState={linkState}
+            key={linkController.id}
+            linkController={linkController}
             isEditingHasSource={isEditingHasSource}
             editingLinkState={editingLinkState}
             onJointClick={props.onJointClick}
@@ -75,12 +75,12 @@ export default function SourceLinks(props: Props): JSX.Element {
   // Private
 
   function subscribeOnUpdates(update: () => void, uns: (() => void)[]): void {
-    uns.push(props.linkListState.on('add', update))
-    uns.push(props.linkListState.on('remove', update))
-    uns.push(props.linkListState.on('index', update))
-    uns.push(props.linkListState.on('update', update))
-    uns.push(props.linkListState.on('targetId', () => setNewLinkId(generateId())))
-    uns.push(props.linkListState.on('rules', update))
+    uns.push(props.linkListController.on('add', update))
+    uns.push(props.linkListController.on('remove', update))
+    uns.push(props.linkListController.on('index', update))
+    uns.push(props.linkListController.on('update', update))
+    uns.push(props.linkListController.on('targetId', () => setNewLinkId(generateId())))
+    uns.push(props.linkListController.on('rules', update))
   }
 }
 
@@ -88,13 +88,13 @@ export default function SourceLinks(props: Props): JSX.Element {
 
 export interface RuleSetProps {
   nodeId: Id
-  linkState: LinkState
+  linkController: LinkController
   index: number
   isLinked: boolean
   isEditingThisNode: boolean
-  linkListState: LinkListState
+  linkListController: LinkListController
   isEditingHasSource: boolean
-  editingLinkState: LinkState | undefined
+  editingLinkState: LinkController | undefined
   onJointClick: (linkId: Id) => void
 }
 
@@ -155,7 +155,7 @@ export function RuleSet(props: RuleSetProps): JSX.Element {
       }
 
       // Time to actually perform the action
-      props.linkListState.swapSourceIndexes(props.nodeId, dragIndex, hoverIndex)
+      props.linkListController.swapSourceIndexes(props.nodeId, dragIndex, hoverIndex)
 
       // Note: we're mutating the monitor item here!
       // Generally it's better to avoid mutations,
@@ -168,7 +168,7 @@ export function RuleSet(props: RuleSetProps): JSX.Element {
   const [{ isDragging }, drag] = useDrag({
     type: `RuleSet-${props.nodeId}`,
     item: () => {
-      return { id: props.linkState.id, index: props.index }
+      return { id: props.linkController.id, index: props.index }
     },
     collect: (monitor) => ({
       isDragging: monitor.isDragging(),
@@ -180,20 +180,20 @@ export function RuleSet(props: RuleSetProps): JSX.Element {
   drag(drop(ref))
 
   return (
-    <div className='rule' key={props.linkState.id} ref={ref} style={{ opacity }} data-handler-id={handlerId}>
+    <div className='rule' key={props.linkController.id} ref={ref} style={{ opacity }} data-handler-id={handlerId}>
       <UnstyledButton
         className='editRule'
-        onClick={(): void => props.linkListState.editingRuleSet.set(props.linkState.id)}
+        onClick={(): void => props.linkListController.editingRuleSet.set(props.linkController.id)}
       >
-        {props.linkState.rules.value.map((rule) => rule.keyName || rule.name).join(', ')}
+        {props.linkController.rules.value.map((rule) => rule.keyName || rule.name).join(', ')}
       </UnstyledButton>
       <Joint
         disabled={
           props.isEditingThisNode || props.isEditingHasSource || (props.isLinked && Boolean(props.editingLinkState))
         }
         variant={props.isLinked ? 'linked' : 'unlinked'}
-        linkId={props.linkState.id}
-        onClick={(): void => props.onJointClick(props.linkState.id)}
+        linkId={props.linkController.id}
+        onClick={(): void => props.onJointClick(props.linkController.id)}
       />
     </div>
   )
