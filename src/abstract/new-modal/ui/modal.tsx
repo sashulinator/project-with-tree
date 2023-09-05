@@ -16,19 +16,21 @@ export interface Props extends React.HTMLAttributes<HTMLDivElement> {
   children: React.ReactNode
   containerElement: Element
   opened: boolean
+  firstFocused?: boolean
   onDismiss?:
     | ((event: React.MouseEvent<HTMLDivElement, MouseEvent> | React.KeyboardEvent<HTMLDivElement>) => void)
     | undefined
 }
 
 export default function Modal(props: Props): JSX.Element | null {
-  const { containerElement, children, opened, onKeyDown, onDismiss, onClick, ...divProps } = props
+  const { containerElement, children, firstFocused, opened, onKeyDown, onDismiss, onClick, ...divProps } = props
 
   const ref = useRef<HTMLDivElement>(null)
 
   useLayoutEffect(() => {
     if (ref.current === null) return
-    ref.current.focus()
+    if (firstFocused) getFirstFocusable(ref.current)?.focus()
+    else ref.current.focus()
   })
 
   if (!opened) return null

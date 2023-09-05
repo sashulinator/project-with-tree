@@ -22,7 +22,7 @@ export default {
     return (
       <Flex dir='column' gap='xl' width='100%'>
         <button onClick={toggle}>Toggle</button>
-        <Modal containerElement={document.body} opened={opened}>
+        <Modal firstFocused containerElement={document.body} onDismiss={toggle} opened={opened}>
           <button>button1</button>
           <div>Hello World</div>
           <button>button2</button>
