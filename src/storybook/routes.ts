@@ -8,6 +8,7 @@ import decisionCanvasWNode from './pages/canvas/decision-w-node'
 import decisionCanvasWNodeVFilter from './pages/canvas/decision-w-node-v-filter'
 import decisionCanvasWNodeWJoint from './pages/canvas/ui-w-node-w-joint'
 import uiCheckbox from './pages/checkbox/ui'
+import aCollapse from './pages/collapse/a'
 import uiField from './pages/field/ui'
 import uiInput from './pages/input/ui'
 import uiInputVClearable from './pages/input/ui-v-clearable'
@@ -27,6 +28,7 @@ export const routes = [
   ['Balloon', aBaloon],
   ['Canvas', aCanvasWItem, decisionCanvasWNode, decisionCanvasWNodeWJoint, decisionCanvasWNodeVFilter],
   ['Checkbox', uiCheckbox],
+  ['Collapse', aCollapse],
   ['Field', uiField],
   ['Labeled', uiLabeled],
   ['Input', uiInput, uiInputVClearable, uiInputVPassword],

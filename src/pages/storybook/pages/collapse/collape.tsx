@@ -1,13 +1,11 @@
 // import Callout, { top } from '~/ui/callout'
+import Collapse from '~/abstract/collapse/ui/collapse'
 import Flex from '~/abstract/flex/ui/flex'
-
 import { H1, H2 } from '~/ui/heading'
 import PageSection from '~/ui/page-section'
 import { useBoolean } from '~/utils/hooks'
 
 import Section from '../../section'
-import Collapse from '~/abstract/collapse/ui/collapse'
-import CollapseUI from '~/ui/collapse/ui/collapse'
 
 export default function CollapsePage(): JSX.Element {
   return (
@@ -20,9 +18,6 @@ export default function CollapsePage(): JSX.Element {
       </PageSection>
       <PageSection>
         <DefaultCollapseSection />
-      </PageSection>
-      <PageSection>
-        <CollapseUISection />
       </PageSection>
     </Flex>
   )
@@ -71,60 +66,6 @@ function DefaultCollapseSection(): JSX.Element {
           </>
         )}
       </Collapse>
-    </Section>
-  )
-}
-
-function CollapseUISection(): JSX.Element {
-  const [expanded, , , toggleExpanded] = useBoolean(true)
-  const [controlled, , , toggleControlled] = useBoolean(true)
-  const [content, , , toggleContent] = useBoolean(false)
-  const [animation, , , toggleAnimation] = useBoolean(false)
-
-  return (
-    <Section
-      header={
-        <>
-          <H2>Collapse UI</H2>
-
-          <Flex width='1rem' margin='1rem 0 0 0'>
-            <Flex>
-              <input type='checkbox' id='square' checked={expanded} onChange={toggleExpanded} />
-              expanded
-            </Flex>
-            <Flex>
-              <input type='checkbox' id='square' checked={controlled} onChange={toggleControlled} />
-              controlled
-            </Flex>
-            <Flex>
-              <input type='checkbox' id='square' checked={content} onChange={toggleContent} />
-              add_content
-            </Flex>
-            <Flex>
-              <input type='checkbox' id='square' checked={animation} onChange={toggleAnimation} />
-              cool_animation
-            </Flex>
-          </Flex>
-        </>
-      }
-    >
-      <CollapseUI
-        onExpandedChange={controlled ? toggleExpanded : undefined}
-        title={'нажми меня'}
-        isExpanded={controlled ? expanded : undefined}
-        from={animation ? { opacity: expanded ? 0 : 1, y: 0 } : undefined}
-        to={animation ? { opacity: expanded ? 1 : 0, y: expanded ? 0 : 20 } : undefined}
-      >
-        <p>Hello</p>
-        <p>World</p>
-        {content && (
-          <>
-            <p>How</p>
-            <p>Are</p>
-            <p>You</p>
-          </>
-        )}
-      </CollapseUI>
     </Section>
   )
 }
