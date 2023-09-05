@@ -13,10 +13,6 @@
     transform: translateX(calc(100% + var(--l)));
     top: 0;
   }
-
-  & .wrapper > .content {
-    background-color: red;
-  }
 }
 
 .ui-Modal.--blured {

@@ -1,8 +1,14 @@
 import Flex from '~/abstract/flex/ui/flex'
-import { Config } from '~/storybook/types'
+import { Config, Props } from '~/storybook/types'
+import { PrimaryButton } from '~/ui/button'
 import { H1 } from '~/ui/heading'
+import Input from '~/ui/input'
 import Modal from '~/ui/modal'
 import { useBoolean } from '~/utils/hooks'
+
+interface State {
+  firstFocused: boolean
+}
 
 export default {
   getName: (): string => Modal.displayName,
@@ -16,20 +22,23 @@ export default {
     )
   },
 
-  element: function Element(): JSX.Element {
+  element: function Element(props: Props<State>): JSX.Element {
+    const { state } = props
+
     const [opened, , , toggle] = useBoolean(false)
 
     return (
       <Flex dir='column' gap='xl' width='100%'>
         <button onClick={toggle}>Toggle</button>
-        <Modal firstFocused containerElement={document.body} onDismiss={toggle} opened={opened}>
-          <button>button1</button>
-          <div>Hello World</div>
-          <button>button2</button>
+        <Modal {...state} containerElement={document.body} onDismiss={toggle} opened={opened}>
+          <Flex padding='var(--l)' width='50vw' height='50vh' gap='m' dir='column' style={{ border: '2px solid blue' }}>
+            <Input />
+            <PrimaryButton>Hello</PrimaryButton>
+          </Flex>
         </Modal>
       </Flex>
     )
   },
 
-  controls: [],
-} satisfies Config<unknown>
+  controls: [{ name: 'firstFocused', input: 'checkbox', defaultValue: false }],
+} satisfies Config<State>
