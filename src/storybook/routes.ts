@@ -9,6 +9,7 @@ import decisionCanvasWNodeVFilter from './pages/canvas/decision-w-node-v-filter'
 import decisionCanvasWNodeWJoint from './pages/canvas/ui-w-node-w-joint'
 import uiCheckbox from './pages/checkbox/ui'
 import uiField from './pages/field/ui'
+import uiInput from './pages/input/ui'
 import uiLabeled from './pages/labeled/ui'
 import aModal from './pages/modal/a'
 import uiModal from './pages/modal/ui'
@@ -26,6 +27,7 @@ export const routes = [
   ['Checkbox', uiCheckbox],
   ['Field', uiField],
   ['Labeled', uiLabeled],
+  ['Input', uiInput],
   ['Modal', aModal, uiModal],
   ['Paginator', uiPaginator],
   ['Popover', aPopover],

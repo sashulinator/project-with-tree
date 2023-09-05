@@ -1,6 +1,6 @@
 import { Config, Props } from '~/storybook/types'
-import Field from '~/ui/field'
 import { H1 } from '~/ui/heading'
+import Input from '~/ui/input'
 
 interface State {
   isFocused: boolean
@@ -12,12 +12,12 @@ interface State {
 }
 
 export default {
-  getName: (): string => Field.displayName,
+  getName: (): string => Input.displayName || '',
 
   getDescription: function Description(): JSX.Element {
     return (
       <>
-        <H1>{Field.displayName}</H1>
+        <H1>{Input.displayName}</H1>
         Добавьте описание
       </>
     )
@@ -26,11 +26,10 @@ export default {
   element: function Element(props: Props<State>): JSX.Element {
     const { state } = props
 
-    return <Field {...state} style={{ maxWidth: '15rem' }} />
+    return <Input {...state} style={{ maxWidth: '15rem' }} />
   },
 
   controls: [
-    { name: 'isFocused', input: 'checkbox', defaultValue: false },
     { name: 'isError', input: 'checkbox', defaultValue: false },
     { name: 'hidden', input: 'checkbox', defaultValue: false },
     { name: 'disabled', input: 'checkbox', defaultValue: false },
