@@ -1,8 +1,14 @@
 import './add-attribute.css'
 
 import { useForm } from 'react-hook-form'
+import { useMutation } from 'react-query'
 
 import Modal from '~/abstract/modal/ui/modal'
+import { QueryResult } from '~/api/domain/fetch-parent-domains'
+import { requestAttribute } from '~/api/domain/request/create-attribute'
+import { ResponseData } from '~/api/domain/request/fetch-parent-domains'
+import { RequestAttribute } from '~/api/domain/types/request-attribute'
+import { notify } from '~/shared/notify'
 import { PrimaryButton } from '~/ui/button'
 import Input from '~/ui/input'
 import { c } from '~/utils/core'
@@ -10,6 +16,7 @@ import { c } from '~/utils/core'
 interface Props {
   handleAddAttributeClose: () => void
   domainId: string
+  fetcher: QueryResult<ResponseData>
 }
 
 export function AddAttribute(props: Props): JSX.Element {
@@ -20,7 +27,13 @@ export function AddAttribute(props: Props): JSX.Element {
     formState: { errors },
   } = useForm()
 
-  const onSubmit = (data): void => console.log(data)
+  const mutation = useMutation(requestAttribute, {
+    onSuccess: () => {
+      void props.fetcher.refetch()
+      notify({ data: 'Сохранено', type: 'success' })
+    },
+    onError: () => notify({ data: 'Ошибка', type: 'error' }),
+  })
 
   // console.log(watch('name'))
   return (
@@ -63,10 +76,10 @@ export function AddAttribute(props: Props): JSX.Element {
         <label>
           {'Id домена'}
           <Input
-            disabled
+            readOnly
             value={props.domainId}
             className={c('add-attribute-input', errors.parentId && '--error')}
-            {...register('parentId')}
+            {...register('domainId', { required: true })}
           />
         </label>
         <label>
@@ -83,4 +96,10 @@ export function AddAttribute(props: Props): JSX.Element {
       </form>
     </Modal>
   )
+
+  //Private
+  function onSubmit(data): void {
+    console.log(data)
+    mutation.mutate(data as RequestAttribute)
+  }
 }

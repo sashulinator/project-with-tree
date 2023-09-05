@@ -2,14 +2,7 @@ import { AxiosResponse } from 'axios'
 
 import api from '~/shared/axios'
 
-interface RequestData {
-  name: string
-  keyName: string
-  description: string
-  domainId: string
-  valueType: string
-  userId: string
-}
+import { RequestAttribute } from '../types/request-attribute'
 
 interface ResponseData {
   message: string
@@ -20,7 +13,7 @@ export type Response = AxiosResponse<ResponseData>
 
 export const url = `/api/v1/attribute/createAttribute`
 
-export async function requestAttribute(requestData: RequestData): Promise<Response> {
+export async function requestAttribute(requestData: RequestAttribute): Promise<Response> {
   // return {} as Promise<Response>
 
   // TODO validation

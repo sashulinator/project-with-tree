@@ -4,6 +4,7 @@ import { useFetchParentDomainList } from '~/api/domain/fetch-parent-domains'
 import { AddAttribute } from '~/entities/domain/ui/add-attribute/ui/add-attribute'
 import { AddDomain } from '~/entities/domain/ui/add-domain'
 import { Domain } from '~/entities/domain/ui/domain-item'
+import { GhostButton } from '~/ui/button'
 
 export default function DomainListPage(): JSX.Element {
   const fetcher = useFetchParentDomainList({ page: 1, limit: 2000 })
@@ -16,8 +17,18 @@ export default function DomainListPage(): JSX.Element {
   return (
     <>
       <main style={{ maxWidth: '1400px', margin: '0 auto', width: '100%' }}>
-        {isAddDomainActive && <AddDomain parentId={parentId} handleAddDomainClose={handleAddDomainClose} />}
-        {isAddAttributeActive && <AddAttribute domainId={domainId} handleAddAttributeClose={handleAddAttributeClose} />}
+        <GhostButton onClick={(): void => handleAddDomainOpen('')}>Добавить домен</GhostButton>
+        {isAddDomainActive && (
+          <AddDomain
+            opened={isAddDomainActive}
+            fetcher={fetcher}
+            parentId={parentId}
+            handleAddDomainClose={handleAddDomainClose}
+          />
+        )}
+        {isAddAttributeActive && (
+          <AddAttribute fetcher={fetcher} domainId={domainId} handleAddAttributeClose={handleAddAttributeClose} />
+        )}
         {fetcher.isSuccess &&
           fetcher.data.items.map((item) => (
             <Domain
