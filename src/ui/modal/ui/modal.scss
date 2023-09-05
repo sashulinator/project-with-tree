@@ -1,0 +1,47 @@
+.ui-Modal {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  & > .wrapper {
+    position: relative;
+    animation: opacity 0.33s normal forwards;
+  }
+
+  & > .wrapper > .closeButton {
+    position: absolute;
+    right: 0;
+    transform: translateX(calc(100% + var(--l)));
+    top: 0;
+  }
+}
+
+.ui-Modal.--opened.--blured {
+  animation: blur 0.3s normal forwards;
+}
+
+.ui-Modal.--closing.--blured {
+  animation: blurBackwards 0.3s normal forwards;
+}
+
+/**
+ * Animation
+ */
+
+@keyframes blur {
+  from {
+    backdrop-filter: blur(0px);
+  }
+  to {
+    backdrop-filter: blur(17px);
+  }
+}
+
+@keyframes blurBackwards {
+  from {
+    backdrop-filter: blur(17px);
+  }
+  to {
+    backdrop-filter: blur(0px);
+  }
+}

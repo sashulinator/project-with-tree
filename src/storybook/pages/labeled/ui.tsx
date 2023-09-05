@@ -26,10 +26,10 @@ export default {
 
     return (
       <Flex dir='column' gap='xl' width='100%'>
-        <Labeled htmlFor='test2' label='Long name' {...state}>
+        <Labeled label='Long name and without `htmlFor` prop at all' {...state}>
           <Input placeholder='Please enter your long name' />
         </Labeled>
-        <Labeled htmlFor='test' label='Test' {...state}>
+        <Labeled htmlFor='test' label='with `htmlFor="test"` prop' {...state}>
           <Input placeholder='Test' />
         </Labeled>
       </Flex>
