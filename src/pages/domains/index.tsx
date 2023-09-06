@@ -1,9 +1,9 @@
 import { useState } from 'react'
 
 import { useFetchParentDomainList } from '~/api/domain/fetch-parent-domains'
+import { List } from '~/entities/domain'
 import { AddAttribute } from '~/entities/domain/ui/add-attribute/ui/add-attribute'
 import { AddDomain } from '~/entities/domain/ui/add-domain'
-import { Domain } from '~/entities/domain/ui/item'
 import { GhostButton } from '~/ui/button'
 
 export default function DomainListPage(): JSX.Element {
@@ -34,16 +34,14 @@ export default function DomainListPage(): JSX.Element {
             handleAddDomainClose={handleAddDomainClose}
           />
         )}
-        {fetcher.isSuccess &&
-          fetcher.data.items.map((item) => (
-            <Domain
-              handleAddAttributeOpen={handleAddAttributeOpen}
-              handleAddDomainOpen={handleAddDomainOpen}
-              key={item.domain.id}
-              domainData={item}
-              fetcher={fetcher}
-            />
-          ))}
+        {fetcher.isSuccess && (
+          <List
+            handleAddAttributeOpen={handleAddAttributeOpen}
+            handleAddDomainOpen={handleAddDomainOpen}
+            list={fetcher.data.items}
+            fetcher={fetcher}
+          />
+        )}
       </main>
     </>
   )

@@ -16,7 +16,7 @@ import { ChevronRight, Close } from '~/ui/icon'
 import { c } from '~/utils/core'
 import { useBoolean } from '~/utils/hooks'
 
-interface Props {
+export interface Props {
   domainData: ParentDomainRes
   isExpanded?: boolean
   handleAddDomainOpen: (string) => void
@@ -24,16 +24,16 @@ interface Props {
   fetcher: QueryResult<ResponseData>
 }
 
-Domain.displayName = 'e-domain-ui-Domain'
+Item.displayName = 'e-domain-ui-Domain'
 
-export function Domain(props: Props): JSX.Element {
+export default function Item(props: Props): JSX.Element {
   const { domainData, isExpanded = false, handleAddDomainOpen, handleAddAttributeOpen, fetcher } = props
   const [expanded, , , toggleExpanded] = useBoolean(isExpanded)
 
   return (
     <>
       <Accordion
-        className={c(Domain.displayName)}
+        className={c(Item.displayName)}
         onExpandedChange={toggleExpanded}
         isExpanded={expanded}
         renderHeader={Header}
@@ -68,7 +68,7 @@ export function Domain(props: Props): JSX.Element {
           )}
           {!!domainData.childDomains.length &&
             domainData.childDomains.map((item) => (
-              <Domain
+              <Item
                 handleAddAttributeOpen={handleAddAttributeOpen}
                 handleAddDomainOpen={handleAddDomainOpen}
                 key={item.domain.id}
@@ -103,7 +103,7 @@ function Header(props: HeaderProps): JSX.Element {
 
   return (
     <Flex>
-      <Flex className={c(Domain.displayName, '--header')}>
+      <Flex className={c(Item.displayName, '--header')}>
         {props.title || 'нет имени домена'}
         <Flex>
           <Button onClick={onExpanded}>
