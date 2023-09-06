@@ -19,6 +19,7 @@ export default function DomainListPage(): JSX.Element {
 
         {isAddAttributeActive.isActive && (
           <AddAttribute
+            key={isAddDomainActive.parentId}
             opened={isAddAttributeActive.isActive}
             fetcher={fetcher}
             domainId={isAddAttributeActive.domainId}
