@@ -1,3 +1,4 @@
+import { Domain } from 'domain'
 import { useState } from 'react'
 
 import { useCreateAttribute } from '~/api/attribute/create'
@@ -7,12 +8,12 @@ import { useCreateDomain } from '~/api/domain/create'
 import { useFetchParentDomainList } from '~/api/domain/fetch-parent-domains'
 import { useRemoveDomain } from '~/api/domain/remove'
 import { CreateDomain } from '~/api/domain/requests/create'
-import { List } from '~/entities/domain'
+import { Form, List } from '~/entities/domain'
 import { AddAttribute } from '~/entities/domain/ui/add-attribute/ui/add-attribute'
-import { AddDomain } from '~/entities/domain/ui/add-domain'
 import { notify } from '~/shared/notify'
 import { GhostButton } from '~/ui/button'
-import { Id } from '~/utils/core'
+import Modal from '~/ui/modal'
+import { Id, has } from '~/utils/core'
 
 export default function DomainListPage(): JSX.Element {
   const fetcher = useFetchParentDomainList({ page: 1, limit: 2000 })
@@ -66,13 +67,19 @@ export default function DomainListPage(): JSX.Element {
           create={createAttribute}
           domainId={addAttributeDomainId}
         />
-        <AddDomain
-          key={addDomainParentId}
+        <Modal
+          firstFocused={true}
           opened={addDomainParentId !== null}
-          create={createDomain}
-          parentId={addDomainParentId}
-          close={(): void => setAddDomainParentId(null)}
-        />
+          onDismiss={(): void => setAddDomainParentId(null)}
+        >
+          <Form
+            key={addDomainParentId}
+            onSubmit={createDomain}
+            domain={{
+              parentId: addDomainParentId || '',
+            }}
+          />
+        </Modal>
         {fetcher.isSuccess && (
           <List
             setAddAttributeDomainId={setAddAttributeDomainId}
@@ -94,8 +101,12 @@ export default function DomainListPage(): JSX.Element {
     createAttributeMutation.mutate({ attribute })
   }
 
-  function createDomain(domain: CreateDomain): void {
-    createDomainMutation.mutate({ domain })
+  function createDomain(domain: Domain | CreateDomain): void {
+    if (has(domain, 'id')) {
+      // updateDomainMutation.mutate({ domain: domain as Domain })
+    } else {
+      createDomainMutation.mutate({ domain: domain as CreateDomain })
+    }
   }
 
   function removeAttribute(id: Id): void {

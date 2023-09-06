@@ -2,9 +2,8 @@ import { AxiosResponse } from 'axios'
 
 import { Domain } from '~/entities/domain'
 import api from '~/shared/axios'
-import { Id } from '~/utils/core'
 
-export type CreateDomain = Omit<Domain, 'id' | 'rev' | 'createdBy' | 'updatedBy'> & { userId: Id }
+export type CreateDomain = Omit<Domain, 'id' | 'rev' | 'createdBy' | 'updatedBy'>
 
 export type RequestData = {
   domain: CreateDomain

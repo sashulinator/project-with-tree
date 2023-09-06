@@ -62,4 +62,6 @@ export interface Domain {
    * Кем обновлено
    */
   updatesBy: string
+
+  userId: Id
 }
