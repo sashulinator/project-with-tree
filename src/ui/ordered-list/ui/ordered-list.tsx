@@ -60,7 +60,6 @@ export default function OrderedList(props: Props): JSX.Element {
     const curCol = clamp(Math.round((origCol * 200 + x) / 200), 1, 3)
 
     const curItem = (curRow - 1) * 3 + curCol - 1
-    console.log('curItem', curItem)
 
     const newOrder = move(order.current, curIndex, curItem)
     api.start(fn(newOrder, active, originalIndex as number, curIndex, y, x)) // Feed springs new style data, they'll animate the view without causing a single render
@@ -71,7 +70,7 @@ export default function OrderedList(props: Props): JSX.Element {
   })
 
   return (
-    <div className={c(props.className, styles.content)} style={{ height: items.length * 200 }}>
+    <div className={c(props.className, styles.content)} style={{ height: (items.length / 3) * 200 }}>
       {springs.map(({ zIndex, shadow, y, x, scale }, i) => (
         <animated.div
           {...bind(i)}
