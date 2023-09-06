@@ -1,7 +1,8 @@
 import './layout.css'
 
 import Scrollbar from 'react-custom-scrollbars'
-import { Route as RRRoute, Routes, matchPath, useLocation } from 'react-router'
+import { matchPath } from 'react-router'
+import { useLocation } from 'react-router-dom'
 
 import { emitter } from '~/shared/emitter'
 import { Route, routes } from '~/shared/routes'
@@ -9,7 +10,11 @@ import { useUpdate } from '~/utils/hooks'
 
 Layout.displayName = 'app-Layout'
 
-export default function Layout(): null | JSX.Element {
+interface LayoutProps {
+  children?: React.ReactNode
+}
+
+export default function Layout(props: LayoutProps): null | JSX.Element {
   useUpdate(subscribeOnUpdates)
 
   const location = useLocation()
@@ -21,11 +26,7 @@ export default function Layout(): null | JSX.Element {
       <div className={createLayoutClass(currentRoute)}>
         {currentRoute?.Header && <currentRoute.Header />}
         {currentRoute?.Nav && <currentRoute.Nav />}
-        <Routes>
-          {routeList.map((route) => {
-            return <RRRoute key={route.path} path={route.path} element={route.element} />
-          })}
-        </Routes>
+        {props.children}
       </div>
     </Scrollbar>
   )
