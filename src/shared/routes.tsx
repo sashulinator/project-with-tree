@@ -1,16 +1,16 @@
 import { FC, lazy } from 'react'
 import { RouteProps } from 'react-router-dom'
 
-import DecisionListPage from '~/pages/decision'
-import DecisionCreatePage from '~/pages/decision/create'
-import DecisionIdPage from '~/pages/decision/id'
-import DomainListPage from '~/pages/domain'
+import DecisionListPage from '~/pages/decisions'
+import DecisionCreatePage from '~/pages/decisions/create'
+import DecisionIdPage from '~/pages/decisions/id'
+import DomainListPage from '~/pages/domains'
 import LoginPage from '~/pages/login'
 import MainPage from '~/pages/main'
 import NotFoundPage from '~/pages/not-found'
-import RuleCreatePage from '~/pages/rule/create/create'
-import RuleListPage from '~/pages/rule/list/list'
-import RuleUpdatePage from '~/pages/rule/update/update'
+import RuleCreatePage from '~/pages/rules/create/create'
+import RuleListPage from '~/pages/rules/list/list'
+import RuleUpdatePage from '~/pages/rules/update/update'
 import SettingsPage from '~/pages/settings'
 import Header from '~/ui/header'
 import Nav from '~/ui/nav'
@@ -68,7 +68,7 @@ export const routes = {
   ruleList: {
     Header,
     getName: () => 'Rules',
-    path: '/rule',
+    path: '/rules',
     element: <RuleListPage />,
     getURL(): string {
       return this.path
