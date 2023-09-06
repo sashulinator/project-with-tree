@@ -1,7 +1,6 @@
 import { AxiosResponse } from 'axios'
 
 import { Decision } from '~/entities/decision'
-import { addGHPagesUrl } from '~/lib/gh-pages/add-gh-pages-url'
 import api from '~/shared/axios'
 import { Id } from '~/utils/core'
 
@@ -13,7 +12,7 @@ export type ResponseData = Decision
 
 export type Response = AxiosResponse<ResponseData>
 
-export const url = addGHPagesUrl(`/mocks/decision`)
+export const url = `/mocks/decision`
 
 export async function request(requestData: RequestData): Promise<Response> {
   // TODO validation
