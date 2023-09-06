@@ -12,7 +12,7 @@ AddDomain.displayName = 'domain-AddDomain'
 
 interface Props {
   className?: string
-  parentId: Id
+  parentId: Id | null
   opened: boolean
   close: () => void
   create: (domain: CreateDomain) => void

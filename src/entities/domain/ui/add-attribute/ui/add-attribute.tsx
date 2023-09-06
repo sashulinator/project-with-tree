@@ -9,7 +9,7 @@ import Modal from '~/ui/modal'
 import { Id, c } from '~/utils/core'
 
 interface Props {
-  domainId: Id
+  domainId: Id | null
   opened: boolean
   close: () => void
   create: (attribute: CreateAttribute) => void

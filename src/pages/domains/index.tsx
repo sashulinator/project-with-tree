@@ -57,24 +57,22 @@ export default function DomainListPage(): JSX.Element {
   return (
     <>
       <main style={{ maxWidth: '1400px', margin: '0 auto', width: '100%', padding: '10px' }}>
-        <GhostButton onClick={(): void => setAddAttributeDomainId(null)}>Добавить домен</GhostButton>
+        <GhostButton onClick={(): void => setAddDomainParentId('')}>Добавить домен</GhostButton>
 
-        {addAttributeDomainId && (
-          <AddAttribute
-            close={(): void => setAddAttributeDomainId(null)}
-            opened={!!addAttributeDomainId}
-            create={createAttribute}
-            domainId={addAttributeDomainId}
-          />
-        )}
-        {addDomainParentId && (
-          <AddDomain
-            opened={!!addDomainParentId}
-            create={createDomain}
-            parentId={addDomainParentId}
-            close={(): void => setAddDomainParentId(null)}
-          />
-        )}
+        <AddAttribute
+          key={addAttributeDomainId}
+          close={(): void => setAddAttributeDomainId(null)}
+          opened={addAttributeDomainId !== null}
+          create={createAttribute}
+          domainId={addAttributeDomainId}
+        />
+        <AddDomain
+          key={addDomainParentId}
+          opened={addDomainParentId !== null}
+          create={createDomain}
+          parentId={addDomainParentId}
+          close={(): void => setAddDomainParentId(null)}
+        />
         {fetcher.isSuccess && (
           <List
             setAddAttributeDomainId={setAddAttributeDomainId}
