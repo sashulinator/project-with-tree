@@ -35,6 +35,7 @@ export default defineConfig(({ mode }) => {
         '/api/v1/tree': env.DECISIONS_URL,
         '/api/v1/attribute': env.ATTRIBUTES_URL,
         '/api/v1/rule': env.RULES_URL,
+        '/api/v1/domain': env.DOMAINS_URL,
       },
     },
   }

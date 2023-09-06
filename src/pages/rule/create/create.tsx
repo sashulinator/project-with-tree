@@ -2,9 +2,9 @@ import { useMutation } from 'react-query'
 
 import { useFetchParentDomainList } from '~/api/domain/fetch-parent-domains'
 import { requestRule } from '~/api/rules/requests/create-rule'
-import { getReqForCreateRule } from '~/entities/rules/lib/get-request-for-create-rule'
-import { EditorValues } from '~/entities/rules/models/editorRulesValues'
-import { Editor } from '~/entities/rules/ui/editor'
+import { getReqForCreateRule } from '~/entities/rule/lib/get-request-for-create-rule'
+import { EditorValues } from '~/entities/rule/models/editorRulesValues'
+import { Editor } from '~/entities/rule/ui/editor'
 import { notify } from '~/shared/notify'
 
 // import { domains } from '../../../entities/rules/ui/editor/widgets/domain-list/ui/data'

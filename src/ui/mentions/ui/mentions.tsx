@@ -1,9 +1,11 @@
 import { useState } from 'react'
-import { MentionsInput, Mention } from 'react-mentions'
-import defaultStyle from './defaultStyle'
-import defaultMentionStyle from './defaultMentionStyle'
+import { Mention, MentionsInput } from 'react-mentions'
+
 import Field, { FieldProps } from '~/abstract/field/ui/field'
-import { MentionsItem } from '~/entities/rules/ui/editor/widgets/rules/widgets/item/widgets/input/ui/input'
+import { MentionsItem } from '~/entities/rule/ui/editor/widgets/rules/widgets/item/widgets/input/ui/input'
+
+import defaultMentionStyle from './defaultMentionStyle'
+import defaultStyle from './defaultStyle'
 
 interface Props extends FieldProps {
   data: MentionsItem[]

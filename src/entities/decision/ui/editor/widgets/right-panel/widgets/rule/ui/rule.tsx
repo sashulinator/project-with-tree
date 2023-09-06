@@ -1,5 +1,5 @@
 import { UnstyledButton } from '~/abstract/button'
-import { RulesRes } from '~/entities/rules/types/rules-type'
+import { RulesRes } from '~/entities/rule/types/rules-type'
 import { Id, c } from '~/utils/core'
 
 Rule.displayName = 'Rule'
