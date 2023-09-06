@@ -1,33 +1,28 @@
 import './item.css'
 
-import { useMutation } from 'react-query'
-
 import Accordion from '~/abstract/accordion'
 import Button from '~/abstract/button'
 import Flex from '~/abstract/flex'
-import { QueryResult } from '~/api/domain/fetch-parent-domains'
-import { requestDomainDelete } from '~/api/domain/request/delete-domain'
-import { ResponseData } from '~/api/domain/request/fetch-parent-domains'
 import { ParentDomainRes } from '~/api/domain/types/parent-domain-res'
 import Attribute from '~/entities/attribute/ui/attribute'
-import { notify } from '~/shared/notify'
 import { GhostButton } from '~/ui/button'
 import { ChevronRight, Close } from '~/ui/icon'
-import { c } from '~/utils/core'
+import { Id, c } from '~/utils/core'
 import { useBoolean } from '~/utils/hooks'
 
 export interface Props {
   domainData: ParentDomainRes
   isExpanded?: boolean
-  handleAddDomainOpen: (string) => void
-  handleAddAttributeOpen: (string) => void
-  fetcher: QueryResult<ResponseData>
+  removeDomain: (id: Id) => void
+  removeAttribute: (id: Id) => void
+  handleAddDomainOpen: (id: Id) => void
+  handleAddAttributeOpen: (id: Id) => void
 }
 
 Item.displayName = 'e-domain-ui-Domain'
 
 export default function Item(props: Props): JSX.Element {
-  const { domainData, isExpanded = false, handleAddDomainOpen, handleAddAttributeOpen, fetcher } = props
+  const { domainData, isExpanded = false, handleAddDomainOpen, handleAddAttributeOpen } = props
   const [expanded, , , toggleExpanded] = useBoolean(isExpanded)
 
   return (
@@ -37,7 +32,7 @@ export default function Item(props: Props): JSX.Element {
         onExpandedChange={toggleExpanded}
         isExpanded={expanded}
         renderHeader={Header}
-        headerProps={{ title: domainData.domain.name, id: domainData.domain.id, fetcher: fetcher }}
+        headerProps={{ title: domainData.domain.name, id: domainData.domain.id, removeDomain: props.removeDomain }}
       >
         <div>
           <Flex padding='10px' mainAxis='space-between'>
@@ -58,7 +53,7 @@ export default function Item(props: Props): JSX.Element {
             domainData.attributes.map((item) => (
               <Attribute
                 wrapperProps={{ style: { marginBottom: '10px' } }}
-                fetcher={props.fetcher}
+                removeAttribute={props.removeAttribute}
                 key={item.id}
                 attribute={item}
               />
@@ -73,7 +68,8 @@ export default function Item(props: Props): JSX.Element {
                 handleAddDomainOpen={handleAddDomainOpen}
                 key={item.domain.id}
                 domainData={item}
-                fetcher={props.fetcher}
+                removeDomain={props.removeDomain}
+                removeAttribute={props.removeAttribute}
               />
             ))}
         </div>
@@ -85,22 +81,14 @@ export default function Item(props: Props): JSX.Element {
 // Private
 
 interface HeaderProps {
+  id: string
   title: string
   isExpanded: boolean
   setExpanded: (isExpanded: boolean) => void
-  id: string
-  fetcher: QueryResult<ResponseData>
+  removeDomain: (id: Id) => void
 }
 
 function Header(props: HeaderProps): JSX.Element {
-  const mutation = useMutation(() => requestDomainDelete(props.id), {
-    onSuccess: () => {
-      void props.fetcher.refetch()
-      notify({ data: 'Удалено', type: 'success' })
-    },
-    onError: () => notify({ data: 'Ошибка', type: 'error' }),
-  })
-
   return (
     <Flex>
       <Flex className={c(Item.displayName, '--header')}>
@@ -113,7 +101,7 @@ function Header(props: HeaderProps): JSX.Element {
           </Button>
         </Flex>
       </Flex>
-      <GhostButton onClick={(): void => mutation.mutate()}>
+      <GhostButton onClick={(): void => props.removeDomain(props.id)}>
         <Close />
       </GhostButton>
     </Flex>

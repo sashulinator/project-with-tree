@@ -1,7 +1,5 @@
-import { QueryResult } from '~/api/domain/fetch-parent-domains'
-import { ResponseData } from '~/api/domain/request/fetch-parent-domains'
 import { ParentDomainRes } from '~/api/domain/types/parent-domain-res'
-import { c } from '~/utils/core'
+import { Id, c } from '~/utils/core'
 
 import Item from '../../../ui/item'
 
@@ -10,10 +8,11 @@ List.displayName = 'domain-Item-v-List'
 export interface Props {
   className?: string
   isExpanded?: boolean
-  handleAddDomainOpen: (string) => void
-  handleAddAttributeOpen: (string) => void
-  fetcher: QueryResult<ResponseData>
   list: ParentDomainRes[]
+  removeDomain: (id: Id) => void
+  removeAttribute: (id: Id) => void
+  handleAddDomainOpen: (id: Id) => void
+  handleAddAttributeOpen: (id: Id) => void
 }
 
 export default function List(props: Props): JSX.Element {
@@ -26,7 +25,8 @@ export default function List(props: Props): JSX.Element {
             handleAddDomainOpen={props.handleAddDomainOpen}
             key={item.domain.id}
             domainData={item}
-            fetcher={props.fetcher}
+            removeAttribute={props.removeAttribute}
+            removeDomain={props.removeDomain}
           />
         )
       })}

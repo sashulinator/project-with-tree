@@ -4,18 +4,18 @@ import { useForm } from 'react-hook-form'
 import { useMutation } from 'react-query'
 
 import { QueryResult } from '~/api/domain/fetch-parent-domains'
-import { requestAttribute } from '~/api/domain/request/create-attribute'
-import { ResponseData } from '~/api/domain/request/fetch-parent-domains'
+import { requestAttribute } from '~/api/domain/requests/create-attribute'
+import { ResponseData } from '~/api/domain/requests/fetch-parent-domains'
 import { RequestAttribute } from '~/api/domain/types/request-attribute'
 import { notify } from '~/shared/notify'
 import { PrimaryButton } from '~/ui/button'
 import Input from '~/ui/input'
 import Modal from '~/ui/modal'
-import { c } from '~/utils/core'
+import { Id, c } from '~/utils/core'
 
 interface Props {
   handleAddAttributeClose: () => void
-  domainId: string
+  domainId: Id
   fetcher: QueryResult<ResponseData>
   opened: boolean
 }
