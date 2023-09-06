@@ -3,7 +3,7 @@ import { useState } from 'react'
 import { useFetchParentDomainList } from '~/api/domain/fetch-parent-domains'
 import { AddAttribute } from '~/entities/domain/ui/add-attribute/ui/add-attribute'
 import { AddDomain } from '~/entities/domain/ui/add-domain'
-import { Domain } from '~/entities/domain/ui/domain-item'
+import { Domain } from '~/entities/domain/ui/item'
 import { GhostButton } from '~/ui/button'
 
 export default function DomainListPage(): JSX.Element {

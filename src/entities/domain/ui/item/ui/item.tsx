@@ -1,4 +1,4 @@
-import './domain.css'
+import './item.css'
 
 import { useMutation } from 'react-query'
 
