@@ -1,9 +1,13 @@
 import { AxiosResponse } from 'axios'
 
+import { Domain } from '~/entities/domain'
 import api from '~/shared/axios'
 
-import { RequestDomain } from '../types/request-domain'
+export type CreateDomain = Omit<Domain, 'id' | 'rev' | 'createdBy' | 'updatedBy'>
 
+export type RequestData = {
+  domain: CreateDomain
+}
 interface ResponseData {
   message: string
   response_code: '200'
@@ -13,11 +17,11 @@ export type Response = AxiosResponse<ResponseData>
 
 export const url = `/api/v1/domain/createDomain`
 
-export async function requestDomain(requestData: RequestDomain): Promise<Response> {
+export async function request(requestData: RequestData): Promise<Response> {
   // return {} as Promise<Response>
 
   // TODO validation
-  const response = await api.post<ResponseData>(`${url}`, requestData)
+  const response = await api.post<ResponseData>(`${url}`, requestData.domain)
   // TODO validation
   return response
 }

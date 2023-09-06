@@ -19,9 +19,19 @@ export interface Attribute {
   name: string
 
   /**
+   * Описание
+   */
+  description: string
+
+  /**
+   * Тип
+   */
+  type: string
+
+  /**
    * Cистемное название
    */
-  keyname: string
+  keyName: string
 
   /**
    * Описание
@@ -51,5 +61,5 @@ export interface Attribute {
   /**
    * Кем обновлено
    */
-  updatesBy: string
+  updatedBy: string
 }
