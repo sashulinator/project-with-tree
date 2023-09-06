@@ -4,7 +4,7 @@ import { RouteProps } from 'react-router-dom'
 import DecisionListPage from '~/pages/decision'
 import DecisionCreatePage from '~/pages/decision/create'
 import DecisionIdPage from '~/pages/decision/id'
-import DomainListPage from '~/pages/domain/domain-list/domain-list'
+import DomainListPage from '~/pages/domain'
 import LoginPage from '~/pages/login'
 import MainPage from '~/pages/main'
 import NotFoundPage from '~/pages/not-found'
@@ -30,7 +30,7 @@ export const routes = {
   main: {
     Header,
     Nav,
-    path: '/project-with-tree/main',
+    path: '/',
     element: <MainPage />,
     getName: () => 'Main',
     getURL(): string {
@@ -40,9 +40,9 @@ export const routes = {
   decisionList: {
     Header,
     Nav,
-    path: '/project-with-tree/decision',
+    path: '/decisions',
     element: <DecisionListPage />,
-    getName: () => 'Decision List',
+    getName: () => 'Decisions',
     getURL(): string {
       return this.path
     },
@@ -50,7 +50,7 @@ export const routes = {
   ruleCreate: {
     Header,
     getName: () => 'Create rule',
-    path: '/project-with-tree/rule/create',
+    path: '/rule/create',
     element: <RuleCreatePage />,
     getURL(): string {
       return this.path
@@ -58,8 +58,8 @@ export const routes = {
   },
   ruleUpdate: {
     Header,
-    getName: () => 'Create rule',
-    path: '/project-with-tree/rule/update/:id',
+    getName: () => 'Create Rule',
+    path: '/rule/:id',
     element: <RuleUpdatePage />,
     getURL(): string {
       return this.path
@@ -67,8 +67,8 @@ export const routes = {
   },
   ruleList: {
     Header,
-    getName: () => 'List rule',
-    path: '/project-with-tree/rule/list',
+    getName: () => 'Rules',
+    path: '/rule',
     element: <RuleListPage />,
     getURL(): string {
       return this.path
@@ -76,23 +76,23 @@ export const routes = {
   },
   domainList: {
     Header,
-    getName: () => 'List rule',
-    path: '/project-with-tree/domain/list',
+    getName: () => 'Domains',
+    path: '/domains',
     element: <DomainListPage />,
     getURL(): string {
       return this.path
     },
   },
   decisionCreate: {
-    path: '/project-with-tree/decision/create',
+    path: '/decision/create',
     element: <DecisionCreatePage />,
-    getName: () => 'Decision',
+    getName: () => 'Create Decision',
     getURL(): string {
       return this.path
     },
   },
   decisionId: {
-    path: '/project-with-tree/decision/:id',
+    path: '/decision/:id',
     element: <DecisionIdPage />,
     getName: () => 'Decision',
     getURL(): string {
@@ -103,7 +103,7 @@ export const routes = {
   settings: {
     Header,
     Nav,
-    path: '/project-with-tree/settings',
+    path: '/settings',
     element: <SettingsPage />,
     getName: () => 'Settings',
     getURL(): string {
@@ -113,7 +113,7 @@ export const routes = {
   login: {
     // Header,
     // Nav,
-    path: '/project-with-tree/login',
+    path: '/login',
     element: <LoginPage />,
     getName: () => 'Login',
     getURL(): string {
@@ -124,22 +124,22 @@ export const routes = {
   storybook: {
     Header,
     Nav: StoryNav,
-    path: '/project-with-tree/storybook/*',
+    path: '/storybook/*',
     element: <Story />,
-    getName: () => 'storybook',
+    getName: () => 'Storybook',
     getURL(): string {
-      return '/project-with-tree/storybook'
+      return '/storybook'
     },
   },
 
   notFound: {
     Header,
     Nav,
-    path: '/project-with-tree/*',
+    path: '/*',
     element: <NotFoundPage />,
     getName: () => 'notFound',
     getURL(): string {
-      return '/project-with-tree'
+      return ''
     },
   },
 } as const
