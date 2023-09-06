@@ -1,6 +1,5 @@
 .DecisionListPage {
   overflow: hidden;
   overscroll-behavior: none;
-  padding-top: var(--xxxl);
-  padding-bottom: 30vh;
+  padding: var(--xxxl) var(--xxxl) 30vh 0;
 }
