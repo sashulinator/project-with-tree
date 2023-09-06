@@ -1,6 +1,6 @@
 import { AxiosResponse } from 'axios'
 
-import { DomainListResponse } from '~/entities/rules/types/rules-type'
+import { DomainListResponse } from '~/entities/rule/types/rules-type'
 import { addGHPagesUrl } from '~/lib/gh-pages/add-gh-pages-url'
 import api from '~/shared/axios'
 

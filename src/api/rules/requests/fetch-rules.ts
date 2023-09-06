@@ -1,6 +1,6 @@
 import { AxiosResponse } from 'axios'
 
-import { RulesRes } from '~/entities/rules/types/rules-type'
+import { RulesRes } from '~/entities/rule/types/rules-type'
 import api from '~/shared/axios'
 
 export interface RequestData {

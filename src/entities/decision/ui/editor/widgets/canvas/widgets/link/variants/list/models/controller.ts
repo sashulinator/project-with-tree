@@ -1,5 +1,4 @@
 import { Point } from '~/entities/decision'
-import { Rule } from '~/entities/rule'
 import { Selection } from '~/lib/emitter'
 import { Id, assertDefined, invariant } from '~/utils/core'
 import { Dictionary, Prop } from '~/utils/emitter'
@@ -19,7 +18,7 @@ type Events = {
   index: { value: number; item: LinkController }
   targetId: { value: Id; item: LinkController }
   sourceId: { value: Id; item: LinkController }
-  rules: { value: Rule; item: LinkController }
+  rules: { value: Id[]; item: LinkController }
 }
 
 export class Controller extends Dictionary<LinkController, Events> {
