@@ -9,7 +9,7 @@ import { c } from '~/utils/core'
 import { dark } from '../themes/dark'
 import { light } from '../themes/light'
 
-emitter.emit('addTheme', { dark, light })
+emitter.emit('addThemes', { dark, light })
 
 ButtonComponent.displayName = 'ui-Button'
 

@@ -12,17 +12,12 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import { RecoilRoot } from 'recoil'
 
 import '~/shared/dayjs'
-import { emitter } from '~/shared/emitter'
 import { queryClient } from '~/shared/react-query'
 import { routes } from '~/shared/routes'
-import { DARK as dark } from '~/shared/theme/dark'
-import { LIGHT as light } from '~/shared/theme/light'
 import { Container } from '~/ui/toast'
 
 import DocumentTitle from './document-title'
 import Layout from './layout'
-
-emitter.emit('addTheme', { dark, light })
 
 export default function App(): JSX.Element {
   // prettier-ignore

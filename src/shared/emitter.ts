@@ -1,16 +1,16 @@
-import { onAddTheme } from '~/lib/theme/on-add-theme'
-import { ToStringable } from '~/utils/core'
+import { onThemesAdd } from '~/lib/theme/on-themes-add'
 import { Emitter } from '~/utils/emitter'
+import { Themes } from '~/utils/theme'
 
 import { Route } from './routes'
+import { DARK, LIGHT } from './theme'
 
 export type Events = {
-  addTheme: { [themeName: string]: { [varName: string]: ToStringable } }
+  addThemes: Themes
   addRoutes: Record<string, Route>
 }
 
-const emitter = new Emitter<Events>()
+export const emitter = new Emitter<Events>()
 
-emitter.on('addTheme', onAddTheme)
-
-export { emitter }
+emitter.on('addThemes', onThemesAdd)
+emitter.emit('addThemes', { dark: DARK, light: LIGHT })

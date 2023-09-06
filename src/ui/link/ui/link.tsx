@@ -8,7 +8,7 @@ import { c } from '~/utils/core'
 import { dark } from '../_themes/dark'
 import { light } from '../_themes/light'
 
-emitter.emit('addTheme', { dark, light })
+emitter.emit('addThemes', { dark, light })
 
 Link.displayName = 'ui-Link'
 
