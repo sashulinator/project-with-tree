@@ -1,4 +1,4 @@
-import { EditorValues } from '~/entities/rules/models/editorRulesValues'
+import { EditorValues } from '~/entities/rule/models/editorRulesValues'
 
 export interface RequestData {
   name: string

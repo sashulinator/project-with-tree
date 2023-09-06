@@ -3,7 +3,7 @@ import './right-panel.scss'
 import { memo } from 'react'
 
 import Flex from '~/abstract/flex/ui/flex'
-import { RulesRes } from '~/entities/rules/types/rules-type'
+import { RulesRes } from '~/entities/rule/types/rules-type'
 import { AppearFrom } from '~/ui/animation'
 import { GhostButton } from '~/ui/button'
 import Chip from '~/ui/chip/ui/chip'

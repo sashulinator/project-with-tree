@@ -2,7 +2,7 @@ import './list.scss'
 
 import { useState } from 'react'
 
-import { RulesRes } from '~/entities/rules/types/rules-type'
+import { RulesRes } from '~/entities/rule/types/rules-type'
 import Input from '~/ui/input/ui/input'
 import { Id, c } from '~/utils/core'
 
