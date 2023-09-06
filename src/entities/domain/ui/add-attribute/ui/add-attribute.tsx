@@ -1,45 +1,30 @@
 import './add-attribute.css'
 
 import { useForm } from 'react-hook-form'
-import { useMutation } from 'react-query'
 
-import { QueryResult } from '~/api/domain/fetch-parent-domains'
-import { requestAttribute } from '~/api/domain/requests/create-attribute'
-import { ResponseData } from '~/api/domain/requests/fetch-parent-domains'
-import { RequestAttribute } from '~/api/domain/types/request-attribute'
-import { notify } from '~/shared/notify'
+import { CreateAttribute } from '~/api/attribute/requests/create'
 import { PrimaryButton } from '~/ui/button'
 import Input from '~/ui/input'
 import Modal from '~/ui/modal'
 import { Id, c } from '~/utils/core'
 
 interface Props {
-  handleAddAttributeClose: () => void
   domainId: Id
-  fetcher: QueryResult<ResponseData>
   opened: boolean
+  close: () => void
+  create: (attribute: CreateAttribute) => void
 }
 
 export function AddAttribute(props: Props): JSX.Element {
   const {
     register,
     handleSubmit,
-    reset,
     // watch,
     formState: { errors },
-  } = useForm()
+  } = useForm<CreateAttribute>()
 
-  const mutation = useMutation(requestAttribute, {
-    onSuccess: () => {
-      void props.fetcher.refetch()
-      notify({ data: 'Сохранено', type: 'success' })
-    },
-    onError: () => notify({ data: 'Ошибка', type: 'error' }),
-  })
-
-  // console.log(watch('name'))
   return (
-    <Modal opened={props.opened} onDismiss={props.handleAddAttributeClose}>
+    <Modal opened={props.opened} onDismiss={props.close}>
       {/* eslint-disable-next-line @typescript-eslint/no-misused-promises*/}
       <form onSubmit={handleSubmit(onSubmit)} style={{ minWidth: '600px' }}>
         <label>
@@ -80,7 +65,7 @@ export function AddAttribute(props: Props): JSX.Element {
           <Input
             readOnly
             defaultValue={props.domainId}
-            className={c('add-attribute-input', errors.parentId && '--error')}
+            className={c('add-attribute-input', errors.domainId && '--error')}
             {...register('domainId', { required: true })}
           />
         </label>
@@ -100,9 +85,7 @@ export function AddAttribute(props: Props): JSX.Element {
   )
 
   //Private
-  function onSubmit(data): void {
-    mutation.mutate(data as RequestAttribute)
-    reset()
-    props.handleAddAttributeClose()
+  function onSubmit(data: CreateAttribute): void {
+    props.create(data)
   }
 }

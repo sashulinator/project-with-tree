@@ -1,23 +1,21 @@
 import './add-domain.css'
 
 import { useForm } from 'react-hook-form'
-import { useMutation } from 'react-query'
 
-import { QueryResult } from '~/api/domain/fetch-parent-domains'
-import { requestDomain } from '~/api/domain/requests/create-domain'
-import { ResponseData } from '~/api/domain/requests/fetch-parent-domains'
-import { RequestDomain } from '~/api/domain/types/request-domain'
-import { notify } from '~/shared/notify'
+import { CreateDomain } from '~/api/domain/requests/create'
 import { PrimaryButton } from '~/ui/button'
 import Input from '~/ui/input'
 import Modal from '~/ui/modal'
 import { Id, c } from '~/utils/core'
 
+AddDomain.displayName = 'domain-AddDomain'
+
 interface Props {
-  handleAddDomainClose: () => void
+  className?: string
   parentId: Id
-  fetcher: QueryResult<ResponseData>
   opened: boolean
+  close: () => void
+  create: (domain: CreateDomain) => void
 }
 
 export function AddDomain(props: Props): JSX.Element {
@@ -25,25 +23,16 @@ export function AddDomain(props: Props): JSX.Element {
     register,
     handleSubmit,
     // watch,
-    reset,
+    // reset,
     formState: { errors },
-  } = useForm()
+  } = useForm<CreateDomain>()
 
-  const mutation = useMutation(requestDomain, {
-    onSuccess: () => {
-      void props.fetcher.refetch()
-      notify({ data: 'Сохранено', type: 'success' })
-    },
-    onError: () => notify({ data: 'Ошибка', type: 'error' }),
-  })
-  console.log(props.parentId)
-  // console.log(watch('name'))
   return (
-    <Modal opened={props.opened} onDismiss={props.handleAddDomainClose}>
+    <Modal className={c(props.className, AddDomain.displayName)} opened={props.opened} onDismiss={props.close}>
       {/* eslint-disable-next-line @typescript-eslint/no-misused-promises*/}
-      <form onSubmit={handleSubmit(onSubmit)} style={{ minWidth: '600px' }}>
+      <form onSubmit={handleSubmit(props.create)} style={{ minWidth: '600px' }}>
         <label>
-          Имя домена
+          Имя
           <Input
             id='name'
             className={c('add-domain-input', errors.name && '--error')}
@@ -52,7 +41,7 @@ export function AddDomain(props: Props): JSX.Element {
           {errors.name && <span>Обязательное поле</span>}
         </label>
         <label>
-          keyName домена
+          keyName
           <Input
             className={c('add-domain-input', errors.keyName && '--error')}
             {...register('keyName', { required: true })}
@@ -60,7 +49,7 @@ export function AddDomain(props: Props): JSX.Element {
           {errors.keyName && <span>Обязательное поле</span>}
         </label>
         <label>
-          Описание домена
+          Описание
           <Input
             className={c('add-domain-input', errors.description && '--error')}
             {...register('description', { required: true })}
@@ -68,7 +57,7 @@ export function AddDomain(props: Props): JSX.Element {
           {errors.description && <span>Обязательное поле</span>}
         </label>
         <label>
-          Тип домена
+          Тип
           <Input
             defaultValue={'комплексный'}
             className={c('add-domain-input', errors.type && '--error')}
@@ -77,7 +66,7 @@ export function AddDomain(props: Props): JSX.Element {
           {errors.type && <span>Обязательное поле</span>}
         </label>
         <label>
-          {'parentId домена'}
+          {'parentId'}
           <Input
             readOnly
             defaultValue={props.parentId}
@@ -103,16 +92,8 @@ export function AddDomain(props: Props): JSX.Element {
           />
           {errors.userId && <span>Обязательное поле</span>}
         </label>
-
         <PrimaryButton type='submit'>Создать</PrimaryButton>
       </form>
     </Modal>
   )
-
-  // Private
-  function onSubmit(data): void {
-    mutation.mutate(data as RequestDomain)
-    reset()
-    props.handleAddDomainClose()
-  }
 }

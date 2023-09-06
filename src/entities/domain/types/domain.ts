@@ -21,7 +21,7 @@ export interface Domain {
   /**
    * Cистемное название
    */
-  keyname: string
+  keyName: string
 
   /**
    * Описание

@@ -11,8 +11,8 @@ export interface Props {
   list: ParentDomainRes[]
   removeDomain: (id: Id) => void
   removeAttribute: (id: Id) => void
-  handleAddDomainOpen: (id: Id) => void
-  handleAddAttributeOpen: (id: Id) => void
+  setAddDomainParentId: (id: Id) => void
+  setAddAttributeDomainId: (id: Id) => void
 }
 
 export default function List(props: Props): JSX.Element {
@@ -21,8 +21,8 @@ export default function List(props: Props): JSX.Element {
       {props.list.map((item) => {
         return (
           <Item
-            handleAddAttributeOpen={props.handleAddAttributeOpen}
-            handleAddDomainOpen={props.handleAddDomainOpen}
+            handleAddAttributeOpen={props.setAddAttributeDomainId}
+            handleAddDomainOpen={props.setAddDomainParentId}
             key={item.domain.id}
             domainData={item}
             removeAttribute={props.removeAttribute}
