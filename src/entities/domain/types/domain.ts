@@ -21,7 +21,7 @@ export interface Domain {
   /**
    * Cистемное название
    */
-  keyname: string
+  keyName: string
 
   /**
    * Описание
@@ -62,4 +62,6 @@ export interface Domain {
    * Кем обновлено
    */
   updatesBy: string
+
+  userId: Id
 }

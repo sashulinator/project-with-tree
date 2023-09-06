@@ -39,7 +39,7 @@ function Modal(props: Omit<Props, 'opened'>): JSX.Element {
     if (ref.current === null) return
     if (firstFocused) getFirstFocusable(ref.current)?.focus()
     else ref.current.focus()
-  })
+  }, [])
 
   useEventListener('keydown', _handleKeyDown)
   useEventListener('mousedown', (e) => (mouseDownRef.current = e.target as HTMLElement))

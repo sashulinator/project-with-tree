@@ -33,7 +33,7 @@ export default function Modal(props: Props): JSX.Element {
   useLayoutEffect(() => {
     if (contentRef.current === null) return
     if (firstFocused) getFirstFocusable(contentRef.current)?.focus()
-  })
+  }, [])
 
   useEffect(() => {
     if (props.opened !== opened) {

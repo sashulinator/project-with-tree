@@ -2,7 +2,7 @@ import { UseQueryOptions, UseQueryResult, useQuery } from 'react-query'
 
 import { QueryError } from '~/shared/types'
 
-import { RequestData, Response, ResponseData, request, url } from './request/fetch-parent-domains'
+import { RequestData, Response, ResponseData, request, url } from './requests/fetch-parent-domains'
 
 export type Keys = [string, string, RequestData]
 export type Options<TData = ResponseData> = UseQueryOptions<Response, QueryError, TData, Keys>

@@ -1,6 +1,11 @@
 import { AxiosResponse } from 'axios'
 
 import api from '~/shared/axios'
+import { Id } from '~/utils/core'
+
+export type RequestData = {
+  id: Id
+}
 
 export type ResponseData = {
   message: 'Rule created successfully'
@@ -11,11 +16,11 @@ export type Response = AxiosResponse<ResponseData>
 
 export const url = `/api/v1/domain`
 
-export async function requestDomainDelete(id): Promise<Response> {
+export async function request(requestData: RequestData): Promise<Response> {
   // return {} as Promise<Response>
 
   // TODO validation
-  const response = await api.delete<ResponseData>(`${url}/${id}`)
+  const response = await api.delete<ResponseData>(`${url}/${requestData.id}`)
   // TODO validation
   return response
 }
