@@ -1,5 +1,5 @@
 import { FC, lazy } from 'react'
-import { RouteProps } from 'react-router-dom'
+import { RouteObject } from 'react-router-dom'
 
 import DecisionListPage from '~/pages/decisions'
 import DecisionCreatePage from '~/pages/decisions/create'
@@ -18,118 +18,96 @@ import Nav from '~/ui/nav'
 const Story = lazy(() => import('~/storybook'))
 const StoryNav = lazy(() => import('~/storybook/ui/nav'))
 
-export type Route = Omit<RouteProps, 'path'> & {
+export type Route = Omit<RouteObject, 'children' | 'path'> & {
+  path: string
   Header?: FC
   Nav?: FC
-  path: string
   getName: () => string
   getURL: () => string
 }
 
 export const routes = {
   main: {
+    path: '/',
+    getURL: (): string => routes.main.path,
+    getName: (): string => 'Main',
+    element: <MainPage />,
     Header,
     Nav,
-    path: '/',
-    element: <MainPage />,
-    getName: () => 'Main',
-    getURL(): string {
-      return this.path
-    },
   },
   decisionList: {
+    path: '/decisions',
+    getURL: (): string => routes.decisionList.path,
+    getName: (): string => 'Decisions',
+    element: <DecisionListPage />,
     Header,
     Nav,
-    path: '/decisions',
-    element: <DecisionListPage />,
-    getName: () => 'Decisions',
-    getURL(): string {
-      return this.path
-    },
   },
   ruleCreate: {
-    Header,
-    getName: () => 'Create rule',
     path: '/rule/create',
+    getURL: (): string => routes.ruleCreate.path,
+    getName: (): string => 'Create rule',
     element: <RuleCreatePage />,
-    getURL(): string {
-      return this.path
-    },
+    Header,
   },
   ruleUpdate: {
-    Header,
-    getName: () => 'Create Rule',
     path: '/rule/:id',
+    getURL: (): string => routes.ruleUpdate.path,
+    getName: (): string => 'Create Rule',
     element: <RuleUpdatePage />,
-    getURL(): string {
-      return this.path
-    },
+    Header,
   },
   ruleList: {
-    Header,
-    getName: () => 'Rules',
     path: '/rules',
+    getURL: (): string => routes.ruleList.path,
+    getName: (): string => 'Rules',
     element: <RuleListPage />,
-    getURL(): string {
-      return this.path
-    },
+    Header,
   },
   domainList: {
-    Header,
-    getName: () => 'Domains',
     path: '/domains',
+    getName: (): string => 'Domains',
+    getURL: (): string => routes.domainList.path,
     element: <DomainListPage />,
-    getURL(): string {
-      return this.path
-    },
+    Header,
   },
   decisionCreate: {
     path: '/decision/create',
+    getURL: (): string => routes.decisionCreate.path,
+    getName: (): string => 'Create Decision',
     element: <DecisionCreatePage />,
-    getName: () => 'Create Decision',
-    getURL(): string {
-      return this.path
-    },
   },
   decisionId: {
     path: '/decision/:id',
+    getURL: (): string => routes.decisionId.path,
+    getName: (): string => 'Decision',
     element: <DecisionIdPage />,
-    getName: () => 'Decision',
-    getURL(): string {
-      return this.path
-    },
   },
   // Other
   settings: {
+    path: '/settings',
+    getURL: (): string => routes.settings.path,
+    getName: (): string => 'Settings',
+    element: <SettingsPage />,
     Header,
     Nav,
-    path: '/settings',
-    element: <SettingsPage />,
-    getName: () => 'Settings',
-    getURL(): string {
-      return this.path
-    },
   },
   login: {
+    path: '/login',
+    getURL: (): string => routes.login.path,
+    getName: (): string => 'Login',
+    element: <LoginPage />,
     // Header,
     // Nav,
-    path: '/login',
-    element: <LoginPage />,
-    getName: () => 'Login',
-    getURL(): string {
-      return this.path
-    },
   },
 
   storybook: {
+    path: '/storybook/*',
+    getName: (): string => 'Storybook',
     Header,
     Nav: StoryNav,
-    path: '/storybook/*',
     element: <Story />,
-    getName: () => 'Storybook',
-    getURL(): string {
-      return '/storybook'
-    },
+    getURL: (): string => '/storybook',
   },
 
   notFound: {
@@ -137,12 +115,7 @@ export const routes = {
     Nav,
     path: '/*',
     element: <NotFoundPage />,
-    getName: () => 'notFound',
-    getURL(): string {
-      return ''
-    },
+    getName: (): string => 'notFound',
+    getURL: (): string => '',
   },
-} as const
-
-// eslint-disable-next-line import/no-unused-modules
-export default routes as Record<string, Route>
+} satisfies Record<string, Route>

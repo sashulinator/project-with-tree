@@ -8,7 +8,7 @@ import { light } from '../themes/light'
 
 Joint.displayName = 'decision-Editor-w-Canvas-w-Node-w-Joint'
 
-emitter.emit('addTheme', { dark, light })
+emitter.emit('addThemes', { dark, light })
 
 export interface Props extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   linkId: Id

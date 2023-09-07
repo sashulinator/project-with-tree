@@ -13,7 +13,7 @@ import { ListController, Controller as NodeState } from '..'
 import { dark } from '../themes/dark'
 import { light } from '../themes/light'
 
-emitter.emit('addTheme', { dark, light })
+emitter.emit('addThemes', { dark, light })
 
 Node.displayName = 'decision-Editor-w-Canvas-w-Node'
 

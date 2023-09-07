@@ -15,7 +15,7 @@ interface DomainListProps {
 
 DomainList.displayName = 'e-Rules-ui-DomainList'
 
-emitter.emit('addTheme', themes)
+emitter.emit('addThemes', themes)
 
 export function DomainList(props: DomainListProps): JSX.Element {
   const { domains, defaultExpanded, rootProps } = props

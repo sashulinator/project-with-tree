@@ -4,7 +4,7 @@ import { Themes } from '~/utils/theme/types/themes'
 
 import { getCurrentThemeName } from './get-current-theme-name'
 
-export function onAddTheme(newThemes: Themes): void {
+export function onThemesAdd(newThemes: Themes): void {
   const themeNames = Object.keys(newThemes)
 
   setCSSVars(newThemes[getCurrentThemeName()])

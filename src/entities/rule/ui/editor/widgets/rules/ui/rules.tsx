@@ -28,7 +28,7 @@ import SplitBtn from '../widgets/item/widgets/split-btn'
 
 Rules.displayName = 'ruleEditor-w-Rules'
 
-emitter.emit('addTheme', themes)
+emitter.emit('addThemes', themes)
 
 interface RulesProps {
   onSubmit: (editorValue: EditorValues[], title: string) => void
