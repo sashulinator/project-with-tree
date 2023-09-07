@@ -14,7 +14,8 @@ import uiInput from './pages/input/ui'
 import uiInputVClearable from './pages/input/ui-v-clearable'
 import uiInputVPassword from './pages/input/ui-v-password'
 import uiLabeled from './pages/labeled/ui'
-import uiMensions from './pages/mensions/ui'
+import aList from './pages/list/a'
+import uiMentions from './pages/mensions/ui'
 import aModal from './pages/modal/a'
 import uiModal from './pages/modal/ui'
 import uiOrderedList from './pages/ordered-list/ui'
@@ -31,9 +32,10 @@ export const routes = [
   ['Checkbox', uiCheckbox],
   ['Collapse', aCollapse],
   ['Field', uiField],
-  ['Labeled', uiLabeled],
   ['Input', uiInput, uiInputVClearable, uiInputVPassword],
-  ['Mensions', uiMensions],
+  ['Labeled', uiLabeled],
+  ['List', aList],
+  ['Mentions', uiMentions],
   ['Modal', aModal, uiModal],
   ['Paginator', uiPaginator],
   ['Popover', aPopover],
