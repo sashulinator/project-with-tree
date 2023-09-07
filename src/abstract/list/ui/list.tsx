@@ -1,33 +1,36 @@
-import { c, Id } from '~/utils/core'
-import { State } from '../models/state'
 import { createElement, useMemo } from 'react'
+
+import { Dictionary, Id, c } from '~/utils/core'
+
+import { Controller } from '../models/controller'
 
 List.displayName = 'a-List'
 
-export interface ItemProps<TItem> {
+export type ItemProps<TItem, P extends Dictionary> = {
   item: TItem
-  state: State<TItem>
+  controller: Controller<TItem>
   id: Id
-}
+} & P
 
-export interface ListProps<TItem> extends React.HTMLAttributes<HTMLUListElement> {
-  items: TItem[]
-  state?: State<TItem>
+export interface ListProps<TItem, P extends Dictionary> extends React.HTMLAttributes<HTMLUListElement> {
+  itemProps: P
+  list: TItem[]
+  controller?: Controller<TItem>
   getItemId: (item: TItem) => Id
-  renderItem: (props: ItemProps<TItem>) => JSX.Element | null
+  renderItem: (props: ItemProps<TItem, P>) => JSX.Element | null
 }
 
-export default function List<TItem>(props: ListProps<TItem>): JSX.Element {
-  const { state: propState, items, getItemId, renderItem, ...listProps } = props
+export default function List<TItem, P extends Dictionary>(props: ListProps<TItem, P>): JSX.Element {
+  const { controller: propController, itemProps, list, getItemId, renderItem, ...listProps } = props
 
-  const state = useMemo(() => propState || new State({ getItemId }), [props.state, items])
+  const controller = useMemo(() => propController || new Controller(list, getItemId), [props.controller, list])
 
   const children = useMemo(() => {
-    return items.map((item) => {
+    return list.map((item) => {
       const id = getItemId(item)
-      return createElement(renderItem, { state, item, id, key: id })
+      return createElement(renderItem, { ...itemProps, controller, item, id, key: id })
     })
-  }, [props.state, items])
+  }, [props.controller, list])
 
   return (
     <ul {...listProps} className={c(props.className, List.displayName)}>
