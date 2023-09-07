@@ -12,10 +12,7 @@ export interface Props {
 
 export default function ConfigLink(props: Props): JSX.Element {
   return (
-    <Link
-      className={c(props.className, ConfigLink.displayName)}
-      to={`/project-with-tree/storybook/${configToPath(props.config)}`}
-    >
+    <Link className={c(props.className, ConfigLink.displayName)} to={`/storybook/${configToPath(props.config)}`}>
       {props.config.getName()}
     </Link>
   )
