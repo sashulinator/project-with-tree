@@ -6,7 +6,7 @@ import { c } from '~/utils/core'
 
 Mention.displayName = 'ui-Mentions-w-Mention'
 
-export interface MentionProps {
+export interface Props {
   onAdd?: ((id: string | number, display: string) => void) | undefined
   renderSuggestion?:
     | ((
@@ -31,7 +31,7 @@ export interface MentionProps {
   display?: undefined
 }
 
-export function Mention(props: MentionProps): JSX.Element {
+export function Mention(props: Props): JSX.Element {
   const { display } = props
   return (
     <strong className={c(props.className, Mention.displayName)}>

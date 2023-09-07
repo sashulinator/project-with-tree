@@ -3,7 +3,7 @@ import { Mention } from 'react-mentions'
 
 import { Config, Props } from '~/storybook/types'
 import { H1 } from '~/ui/heading'
-import MentionsInput from '~/ui/mention-input'
+import { Input } from '~/ui/mentions'
 
 import { data } from './data'
 
@@ -16,12 +16,12 @@ interface State {
 }
 
 export default {
-  getName: (): string => MentionsInput.displayName || '',
+  getName: (): string => 'ui-Mentions',
 
   getDescription: function Description(): JSX.Element {
     return (
       <>
-        <H1>{MentionsInput.displayName}</H1>
+        <H1>{Input.displayName}</H1>
         Добавьте описание
       </>
     )
@@ -33,7 +33,7 @@ export default {
     const [value, setValue] = useState<string>('')
 
     return (
-      <MentionsInput
+      <Input
         {...state}
         value={value}
         onChange={(_, v): void => {
@@ -41,7 +41,7 @@ export default {
         }}
       >
         <Mention trigger='@' data={data} />
-      </MentionsInput>
+      </Input>
     )
   },
 
