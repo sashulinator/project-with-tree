@@ -12,7 +12,6 @@ import RuleCreatePage from '~/pages/rules/create/create'
 import RuleListPage from '~/pages/rules/list/list'
 import RuleUpdatePage from '~/pages/rules/update/update'
 import SettingsPage from '~/pages/settings'
-import TreePage from '~/pages/tree'
 import Header from '~/ui/header'
 import Nav from '~/ui/nav'
 
@@ -70,13 +69,6 @@ export const routes = {
     getName: (): string => 'Domains',
     getURL: (): string => routes.domainList.path,
     element: <DomainListPage />,
-    Header,
-  },
-  tree: {
-    path: '/tree',
-    getName: (): string => 'Tree',
-    getURL: (): string => routes.tree.path,
-    element: <TreePage />,
     Header,
   },
   decisionCreate: {

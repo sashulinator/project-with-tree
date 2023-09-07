@@ -1,3 +1,5 @@
+import './index.css'
+
 import { Domain } from 'domain'
 import { useState } from 'react'
 
@@ -14,6 +16,8 @@ import { notify } from '~/shared/notify'
 import { GhostButton } from '~/ui/button'
 import Modal from '~/ui/modal'
 import { Id, has } from '~/utils/core'
+
+DomainListPage.displayName = 'DomainListPage'
 
 export default function DomainListPage(): JSX.Element {
   const fetcher = useFetchParentDomainList({ page: 1, limit: 2000 })
@@ -57,7 +61,7 @@ export default function DomainListPage(): JSX.Element {
 
   return (
     <>
-      <main style={{ maxWidth: '1400px', margin: '0 auto', width: '100%', padding: '10px' }}>
+      <main className={DomainListPage.displayName}>
         <GhostButton onClick={(): void => setAddDomainParentId('')}>Добавить домен</GhostButton>
 
         <AddAttribute

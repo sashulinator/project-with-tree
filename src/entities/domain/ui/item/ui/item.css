@@ -1,12 +1,10 @@
 .e-domain-ui-Domain {
-  padding: 10px;
-  border: 1px solid slategrey;
-  margin-bottom: 10px;
-  width: 100%;
+  margin-bottom: 0.25rem;
 }
 
+.e-domain-ui-Domain .do-not-attributes {
+  text-align: center;
+  margin-bottom: 0;
+}
 .e-domain-ui-Domain .--header {
-  padding: 10px;
-  display: flex;
-  justify-content: space-between;
 }

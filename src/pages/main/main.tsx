@@ -33,16 +33,13 @@ export default function MainPage(): JSX.Element {
     <Link key={5} to={routes.decisionList.getURL()}>
       Админ
     </Link>,
-    <Link key={6} to={routes.tree.getURL()}>
-      AtlasTree
-    </Link>,
   ]
 
   const order = getJSON<number[]>('mainListOrder')
 
   const orderMap: number[] = []
   const orderedItems = useMemo(() => {
-    return (order?.length === items.length ? order : [0, 1, 2, 3, 4, 5, 6]).map((index) => {
+    return (order?.length === items.length ? order : [0, 1, 2, 3, 4, 5]).map((index) => {
       orderMap.push(index)
       return items[index] as React.ReactNode
     })

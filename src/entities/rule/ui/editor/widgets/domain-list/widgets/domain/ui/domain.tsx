@@ -42,7 +42,6 @@ function DomainComponent({ parentDomain, pl = 0, ...props }: DomainProps): JSX.E
           <div>Нет атрибутов...</div>
         )}
       </ChevronAccordion>
-
       {parentDomain.childDomains.length > 0 &&
         parentDomain.childDomains.map((item) => (
           <Domain key={item.domain.id} parentDomain={item} defaultExpanded={true} pl={pLeft + 10} />
