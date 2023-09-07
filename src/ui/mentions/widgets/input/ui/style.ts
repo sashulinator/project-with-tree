@@ -10,7 +10,12 @@ export default {
 
   suggestions: {
     margin: '22px 0 0 0',
-    list: {},
     item: {},
+    list: {
+      maxHeight: 200,
+      width: 300,
+      overflow: 'auto',
+      position: 'absolute',
+    },
   },
 }

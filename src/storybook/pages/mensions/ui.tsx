@@ -1,9 +1,9 @@
 import { useState } from 'react'
+import { Mention } from 'react-mentions'
 
 import { Config, Props } from '~/storybook/types'
 import { H1 } from '~/ui/heading'
-import Input from '~/ui/input'
-import MentionsInput, { Mention } from '~/ui/mention-input'
+import { Input } from '~/ui/mentions'
 
 import { data } from './data'
 
@@ -16,7 +16,7 @@ interface State {
 }
 
 export default {
-  getName: (): string => Input.displayName || '',
+  getName: (): string => 'ui-Mentions',
 
   getDescription: function Description(): JSX.Element {
     return (
@@ -29,18 +29,13 @@ export default {
 
   element: function Element(props: Props<State>): JSX.Element {
     const { state } = props
+
     const [value, setValue] = useState<string>('')
 
     return (
-      <MentionsInput
-        {...state}
-        value={value}
-        onChange={(_, v): void => {
-          setValue(v)
-        }}
-      >
+      <Input {...state} value={value} onChange={(_, v): void => setValue(v)}>
         <Mention trigger='@' data={data} />
-      </MentionsInput>
+      </Input>
     )
   },
 
@@ -51,7 +46,3 @@ export default {
     { name: 'transparent', input: 'checkbox', defaultValue: false },
   ],
 } satisfies Config<State>
-
-/**
- * Private
- */
