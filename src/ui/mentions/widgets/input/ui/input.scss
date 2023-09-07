@@ -36,4 +36,12 @@
   .input__suggestions__item--focused {
     background-color: #cee4e5;
   }
+
+  .input__suggestions__list {
+    background-color: var(--bgSecondary);
+  }
+
+  .input__suggestions__item--focused {
+    background-color: var(--bg);
+  }
 }
