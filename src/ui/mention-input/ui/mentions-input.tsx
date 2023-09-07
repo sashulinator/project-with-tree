@@ -19,12 +19,19 @@ export interface MentionsInputProps extends IMentionsInputProps {
 }
 
 export default function MentionsInput(props: MentionsInputProps): JSX.Element {
-  const { fieldProps, isError, ...mentionInputProps } = props
+  const { fieldProps, isError, transparent, ...mentionInputProps } = props
 
   const [isFocused, focus, blur] = useBoolean(false)
 
   return (
-    <Field isError={isError} isFocused={isFocused} disabled={mentionInputProps.disabled} {...fieldProps} height={null}>
+    <Field
+      transparent={transparent}
+      isError={isError}
+      isFocused={isFocused}
+      disabled={mentionInputProps.disabled}
+      {...fieldProps}
+      height={null}
+    >
       <RMMentionsInput
         {...mentionInputProps}
         onFocus={fns(props.onFocus, focus)}

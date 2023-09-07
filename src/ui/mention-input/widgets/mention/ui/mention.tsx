@@ -1,5 +1,7 @@
 import './mention.css'
+
 import { DataFunc, DisplayTransformFunc, SuggestionDataItem } from 'react-mentions'
+
 import { c } from '~/utils/core'
 
 Mention.displayName = 'ui-Mentions-w-Mention'
