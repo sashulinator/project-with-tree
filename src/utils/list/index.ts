@@ -1,4 +1,5 @@
 export * from './add'
+export * from './find-next'
 export * from './get'
 export * from './to-dictionary'
 export * from './remove'
