@@ -21,6 +21,7 @@
     "postpack": "pinst --enable"
   },
   "dependencies": {
+    "@atlaskit/tree": "8.8.6",
     "@react-spring/web": "9.7.3",
     "@use-gesture/react": "10.2.27",
     "axios": "1.4.0",
