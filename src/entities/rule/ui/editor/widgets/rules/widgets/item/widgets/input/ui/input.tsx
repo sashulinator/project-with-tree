@@ -13,7 +13,7 @@ import { draggableCardAtom } from '~/entities/rule/models/draggableCard'
 import { draggableItemAtom } from '~/entities/rule/models/draggableItem'
 import { SelectValue, editorRulesValuesAtom } from '~/entities/rule/models/editorRulesValues'
 import { mentionsDataAtom } from '~/entities/rule/models/mentionsData'
-import MentionsInput from '~/ui/mention-input'
+import { Input as MentionsInput } from '~/ui/mentions'
 import { c } from '~/utils/core'
 
 export interface MentionsItem {
@@ -81,13 +81,7 @@ export default function Input(props: EditorInputProps): JSX.Element {
       ></div>
 
       <MentionsInput value={value} onChange={handleChangeMention} inputRef={inputRef}>
-        <Mention
-          trigger='@'
-          data={mentionsData}
-          style={{
-            backgroundColor: 'var(--mentionItem_bg)',
-          }}
-        />
+        <Mention trigger='@' data={mentionsData} style={{ backgroundColor: 'var(--mentionItem_bg)' }} />
       </MentionsInput>
     </div>
   )
