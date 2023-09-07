@@ -6,7 +6,7 @@ import { GhostButton, GhostButtonProps } from '~/ui/button'
 import { Close } from '~/ui/icon'
 import { Id, c } from '~/utils/core'
 
-export interface AttributeProps {
+export interface Props {
   attribute: AttributeRes
   wrapperProps?: FlexProps
   titleProps?: React.HTMLAttributes<HTMLElement>
@@ -15,16 +15,8 @@ export interface AttributeProps {
 }
 
 Item.displayName = 'e-Attribute-ui-Item'
-/**
- * attribute: AttributeRes
- *
- * wrapperProps?: React.HTMLAttributes<HTMLElement>
- *
- * titleProps?: React.HTMLAttributes<HTMLElement>
- *
- * closeButtonProps?: GhostButtonProps
- */
-export default function Item(props: AttributeProps): JSX.Element {
+
+export default function Item(props: Props): JSX.Element {
   const { attribute } = props
 
   return (
@@ -34,8 +26,12 @@ export default function Item(props: AttributeProps): JSX.Element {
       {...props.wrapperProps}
       className={c(props.wrapperProps?.className, Item.displayName)}
     >
-      <div {...props.titleProps}>{attribute?.name || 'нет имени'}</div>
-      <GhostButton onClick={(): void => props.removeAttribute(props.attribute.id)} {...props.closeButtonProps}>
+      <Flex crossAxis='center' gap='xxl'>
+        <span className='dots'></span>
+        <div {...props.titleProps}>{attribute?.name || 'нет имени'}</div>
+      </Flex>
+
+      <GhostButton square onClick={(): void => props.removeAttribute(props.attribute.id)} {...props.closeButtonProps}>
         <Close />
       </GhostButton>
     </Flex>

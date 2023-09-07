@@ -1,10 +1,11 @@
 .e-domain-ui-Domain {
   margin-bottom: 0.25rem;
+  transition: all 0.3s ease;
 }
 
 .e-domain-ui-Domain .do-not-attributes {
   text-align: center;
-  margin-bottom: 0;
 }
-.e-domain-ui-Domain .--header {
+.e-domain-ui-Domain .--header:hover {
+  background: var(--ghostButton_bg__hovered);
 }

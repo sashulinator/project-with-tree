@@ -1,12 +1,10 @@
 import './item.css'
 
 import Accordion from '~/abstract/accordion'
-import Button from '~/abstract/button'
 import Flex from '~/abstract/flex'
 import { ParentDomainRes } from '~/api/domain/types/parent-domain-res'
-import Attribute from '~/entities/attribute/ui/item'
+import AttributeItem from '~/entities/attribute/ui/item'
 import { GhostButton } from '~/ui/button'
-import { H2 } from '~/ui/heading'
 import { ChevronRight, Close, Plus } from '~/ui/icon'
 import { Id, c } from '~/utils/core'
 import { useBoolean } from '~/utils/hooks'
@@ -24,7 +22,7 @@ export interface Props {
 Item.displayName = 'e-domain-ui-Domain'
 
 export default function Item(props: Props): JSX.Element {
-  const { domainData, isExpanded = false, pLeft = 0, handleAddDomainOpen, handleAddAttributeOpen } = props
+  const { domainData, isExpanded = true, pLeft = 0, handleAddDomainOpen, handleAddAttributeOpen } = props
   const [expanded, , , toggleExpanded] = useBoolean(isExpanded)
   const pl = pLeft
   return (
@@ -46,7 +44,7 @@ export default function Item(props: Props): JSX.Element {
         <div>
           {domainData.attributes.length !== 0 ? (
             domainData.attributes.map((item) => (
-              <Attribute
+              <AttributeItem
                 wrapperProps={{ style: { marginBottom: '10px' } }}
                 removeAttribute={props.removeAttribute}
                 key={item.id}
@@ -54,7 +52,7 @@ export default function Item(props: Props): JSX.Element {
               />
             ))
           ) : (
-            <H2 className='do-not-attributes'>Нет атрибутов</H2>
+            <div className='do-not-attributes'>Нет атрибутов</div>
           )}
           {!!domainData.childDomains.length &&
             domainData.childDomains.map((item) => (
@@ -66,6 +64,7 @@ export default function Item(props: Props): JSX.Element {
                 domainData={item}
                 removeDomain={props.removeDomain}
                 removeAttribute={props.removeAttribute}
+                isExpanded={false}
               />
             ))}
         </div>
@@ -89,13 +88,13 @@ interface HeaderProps {
 function Header(props: HeaderProps): JSX.Element {
   return (
     <Flex gap='xxxl' crossAxis='center' mainAxis='space-between' className={c(Item.displayName, '--header')}>
-      <Flex gap='xl'>
-        <Button onClick={onExpanded}>
+      <Flex gap='xl' crossAxis='center'>
+        <GhostButton square onClick={onExpanded}>
           <div style={{ transform: props.isExpanded ? 'rotate(90deg)' : '' }}>
             <ChevronRight />
           </div>
-        </Button>
-        <H2 style={{ marginBottom: 0 }}>{props.title || 'нет имени домена'}</H2>
+        </GhostButton>
+        {props.title || 'нет имени домена'}
       </Flex>
       <Flex gap='xl'>
         <GhostButton onClick={(): void => props.handleAddDomainOpen(props.id)}>
@@ -106,7 +105,7 @@ function Header(props: HeaderProps): JSX.Element {
           <Plus />
           <span>атрибут</span>
         </GhostButton>
-        <GhostButton onClick={(): void => props.removeDomain(props.id)}>
+        <GhostButton square onClick={(): void => props.removeDomain(props.id)}>
           <Close />
         </GhostButton>
       </Flex>

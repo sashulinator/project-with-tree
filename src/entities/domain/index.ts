@@ -6,8 +6,8 @@ export type { Type, Domain } from './types/domain'
 /**
  * ui
  */
-export { default as Item, List } from './ui/item'
-export type { ListProps, ItemProps } from './ui/item'
+export { default as DomainItem, List as DomainList } from './ui/item'
+export type { ListProps as DomainListProps, ItemProps as DomainItemProps } from './ui/item'
 
-export { default as Form } from './ui/form'
-export type { FormProps } from './ui/form'
+export { default as DomainForm } from './ui/form'
+export type { FormProps as DomainFormProps } from './ui/form'

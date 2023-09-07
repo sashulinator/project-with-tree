@@ -15,7 +15,7 @@ interface Props {
   create: (attribute: CreateAttribute) => void
 }
 
-export function AddAttribute(props: Props): JSX.Element | null {
+export function AddModal(props: Props): JSX.Element | null {
   const {
     register,
     handleSubmit,

@@ -10,8 +10,8 @@ import { useCreateDomain } from '~/api/domain/create'
 import { useFetchParentDomainList } from '~/api/domain/fetch-parent-domains'
 import { useRemoveDomain } from '~/api/domain/remove'
 import { CreateDomain } from '~/api/domain/requests/create'
-import { Form, List } from '~/entities/domain'
-import { AddAttribute } from '~/entities/domain/ui/add-attribute/ui/add-attribute'
+import { AttributeForm } from '~/entities/attribute'
+import { DomainForm, DomainList } from '~/entities/domain'
 import { notify } from '~/shared/notify'
 import { GhostButton } from '~/ui/button'
 import Modal from '~/ui/modal'
@@ -64,19 +64,25 @@ export default function DomainListPage(): JSX.Element {
       <main className={DomainListPage.displayName}>
         <GhostButton onClick={(): void => setAddDomainParentId('')}>Добавить домен</GhostButton>
 
-        <AddAttribute
-          key={addAttributeDomainId}
-          close={(): void => setAddAttributeDomainId(null)}
+        <Modal
+          firstFocused={true}
           opened={addAttributeDomainId !== null}
-          create={createAttribute}
-          domainId={addAttributeDomainId}
-        />
+          onDismiss={(): void => setAddAttributeDomainId(null)}
+        >
+          <AttributeForm
+            key={addDomainParentId}
+            onSubmit={createAttribute}
+            attribute={{
+              domainId: addAttributeDomainId || '',
+            }}
+          />
+        </Modal>
         <Modal
           firstFocused={true}
           opened={addDomainParentId !== null}
           onDismiss={(): void => setAddDomainParentId(null)}
         >
-          <Form
+          <DomainForm
             key={addDomainParentId}
             onSubmit={createDomain}
             domain={{
@@ -85,7 +91,7 @@ export default function DomainListPage(): JSX.Element {
           />
         </Modal>
         {fetcher.isSuccess && (
-          <List
+          <DomainList
             setAddAttributeDomainId={setAddAttributeDomainId}
             setAddDomainParentId={setAddDomainParentId}
             list={fetcher.data.items}

@@ -3,4 +3,5 @@
  */
 export type { ValueType, Attribute } from './types/attribute'
 
-export { default } from './ui/item'
+export { default as AttributeItem } from './ui/item'
+export { default as AttributeForm } from './ui/form'
