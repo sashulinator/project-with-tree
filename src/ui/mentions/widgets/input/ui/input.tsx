@@ -1,4 +1,4 @@
-import './input.css'
+import './input.scss'
 
 import { MentionsInputProps as IMentionsInputProps, MentionsInput as RMMentionsInput } from 'react-mentions'
 
@@ -19,7 +19,7 @@ export interface Props extends IMentionsInputProps {
 }
 
 export default function Input(props: Props): JSX.Element {
-  const { fieldProps, isError, transparent, ...mentionInputProps } = props
+  const { fieldProps, isError, transparent, className, ...mentionInputProps } = props
 
   const [isFocused, focus, blur] = useBoolean(false)
 
@@ -30,13 +30,14 @@ export default function Input(props: Props): JSX.Element {
       isFocused={isFocused}
       disabled={mentionInputProps.disabled}
       {...fieldProps}
+      className={c(className, Input.displayName)}
       height={null}
     >
       <RMMentionsInput
         {...mentionInputProps}
         onFocus={fns(props.onFocus, focus)}
         onBlur={fns(props.onBlur, blur)}
-        className={c(props.className, Input.displayName)}
+        className={c('input')}
         style={style}
       />
     </Field>

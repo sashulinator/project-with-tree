@@ -33,13 +33,7 @@ export default {
     const [value, setValue] = useState<string>('')
 
     return (
-      <Input
-        {...state}
-        value={value}
-        onChange={(_, v): void => {
-          setValue(v)
-        }}
-      >
+      <Input {...state} value={value} onChange={(_, v): void => setValue(v)}>
         <Mention trigger='@' data={data} />
       </Input>
     )
