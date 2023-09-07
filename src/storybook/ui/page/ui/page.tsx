@@ -1,7 +1,9 @@
 import './page.scss'
 
-import { createElement, useState } from 'react'
+import { createElement, useEffect, useState } from 'react'
+import { useLocation } from 'react-router-dom'
 
+import { emitter } from '~/shared/emitter'
 import type { Config } from '~/storybook/types'
 import { GhostButton } from '~/ui/button'
 import { SpacingWidth } from '~/ui/icon'
@@ -16,6 +18,9 @@ Page.displayName = 'story-Page'
 export type Props = Config<Record<string, unknown>>
 
 export default function Page(props: Props): JSX.Element {
+  const location = useLocation()
+  useEffect(() => emitter.emit('setDocumentTitle', ['Storybook', props.getName()]), [location])
+
   const [state, setState] = useState(buildState())
   const [isDescriptionFullHeight, , , toggleDescriptionFullHeight] = useBoolean(false)
 

@@ -9,7 +9,7 @@ import Button, { ButtonProps } from '../../../ui/button'
 import { dark } from '../_themes/dark'
 import { light } from '../_themes/light'
 
-emitter.emit('addTheme', { dark, light })
+emitter.emit('addThemes', { dark, light })
 
 PrimaryButtonComponent.displayName = 'ui-Button-v-Primary'
 
