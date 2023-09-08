@@ -1,9 +1,12 @@
 import './item.css'
 
+import { useSetRecoilState } from 'recoil'
+
 import Accordion from '~/abstract/accordion'
 import Flex from '~/abstract/flex'
 import { ParentDomainRes } from '~/api/domain/types/parent-domain-res'
-import AttributeItem from '~/entities/attribute/ui/item'
+import { AttributeItem } from '~/entities/attribute'
+import { draggableCardAtom } from '~/models/draggableCard'
 import { GhostButton } from '~/ui/button'
 import { ChevronRight, Close, Plus } from '~/ui/icon'
 import { Id, c } from '~/utils/core'
@@ -11,16 +14,14 @@ import { useBoolean } from '~/utils/hooks'
 
 export interface Props {
   domainData: ParentDomainRes
+  isDraggable?: boolean
   isExpanded?: boolean
   pLeft?: number
   isRightToEdit?: boolean
-  isDraggable?: boolean
-  removeDomain: (id: Id) => void
-  removeAttribute: (id: Id) => void
-  handleAddDomainOpen: (id: Id) => void
-  handleAddAttributeOpen: (id: Id) => void
-  dragStartDomain?: (e: React.DragEvent<HTMLElement>) => void
-  dragStartAttribute?: (e: React.DragEvent<HTMLElement>) => void
+  removeDomain?: (id: Id) => void
+  removeAttribute?: (id: Id) => void
+  handleAddDomainOpen?: (id: Id) => void
+  handleAddAttributeOpen?: (id: Id) => void
 }
 
 Item.displayName = 'e-domain-ui-Domain'
@@ -29,22 +30,31 @@ export default function Item(props: Props): JSX.Element {
   const {
     domainData,
     isExpanded = true,
+    isDraggable = false,
     pLeft = 0,
     isRightToEdit,
-    handleAddDomainOpen,
-    handleAddAttributeOpen,
-    dragStartDomain = (): void => {},
-    dragStartAttribute = (): void => {},
+    handleAddDomainOpen = (): void => {},
+    handleAddAttributeOpen = (): void => {},
+    removeDomain = (): void => {},
+    removeAttribute = (): void => {},
   } = props
   const [expanded, , , toggleExpanded] = useBoolean(isExpanded)
   const pl = pLeft
+
+  const setDraggableCard = useSetRecoilState(draggableCardAtom)
+
+  const dragStart = (e: React.DragEvent<HTMLElement>): void => {
+    e.stopPropagation()
+    setDraggableCard({ id: domainData.domain.id, name: domainData.domain.name, type: 'domain' })
+  }
+
   return (
     <>
       <Accordion
         rootProps={{
           style: { paddingLeft: pl },
-          draggable: !!props.isDraggable,
-          onDragStart: !!props.dragStartDomain ? props.dragStartDomain : (): void => {},
+          draggable: isDraggable,
+          onDrag: dragStart,
         }}
         className={c(Item.displayName)}
         onExpandedChange={toggleExpanded}
@@ -53,10 +63,10 @@ export default function Item(props: Props): JSX.Element {
         headerProps={{
           title: domainData.domain.name,
           id: domainData.domain.id,
-          removeDomain: props.removeDomain,
+          isRightToEdit: !!isRightToEdit,
+          removeDomain: removeDomain,
           handleAddDomainOpen: handleAddDomainOpen,
           handleAddAttributeOpen: handleAddAttributeOpen,
-          isRightToEdit: !!isRightToEdit,
         }}
       >
         <div>
@@ -64,12 +74,11 @@ export default function Item(props: Props): JSX.Element {
             domainData.attributes.map((item) => (
               <AttributeItem
                 wrapperProps={{ style: { marginBottom: '10px' } }}
-                removeAttribute={props.removeAttribute}
+                removeAttribute={removeAttribute}
                 key={item.id}
                 attribute={item}
-                isDraggable={!!props.isDraggable}
                 isRightToEdit={!!props.isRightToEdit}
-                dragStartAttribute={dragStartAttribute}
+                isDraggable={isDraggable}
               />
             ))
           ) : (
@@ -79,16 +88,14 @@ export default function Item(props: Props): JSX.Element {
             domainData.childDomains.map((item) => (
               <Item
                 pLeft={pl + 10}
-                handleAddAttributeOpen={handleAddAttributeOpen}
-                handleAddDomainOpen={handleAddDomainOpen}
                 key={item.domain.id}
                 domainData={item}
-                removeDomain={props.removeDomain}
-                removeAttribute={props.removeAttribute}
                 isExpanded={false}
-                isDraggable={!!props.isDraggable}
-                dragStartDomain={dragStartDomain}
-                dragStartAttribute={dragStartAttribute}
+                handleAddAttributeOpen={handleAddAttributeOpen}
+                handleAddDomainOpen={handleAddDomainOpen}
+                removeAttribute={removeAttribute}
+                removeDomain={removeDomain}
+                isDraggable={isDraggable}
               />
             ))}
         </div>
@@ -100,7 +107,7 @@ export default function Item(props: Props): JSX.Element {
 // Private
 
 interface HeaderProps {
-  id: string
+  id: Id
   title: string
   isExpanded: boolean
   setExpanded: (isExpanded: boolean) => void

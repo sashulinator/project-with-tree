@@ -8,34 +8,37 @@ List.displayName = 'domain-Item-v-List'
 export interface Props {
   className?: string
   isExpanded?: boolean
-  list: ParentDomainRes[]
-  removeDomain: (id: Id) => void
-  removeAttribute: (id: Id) => void
-  setAddDomainParentId: (id: Id) => void
-  setAddAttributeDomainId: (id: Id) => void
-  isRightToEdit?: boolean
   isDraggable?: boolean
-  dragStartDomain?: (e: React.DragEvent<HTMLElement>) => void
-  dragStartAttribute?: (e: React.DragEvent<HTMLElement>) => void
+  list: ParentDomainRes[]
+  isRightToEdit?: boolean
+  removeDomain?: (id: Id) => void
+  removeAttribute?: (id: Id) => void
+  setAddDomainParentId?: (id: Id) => void
+  setAddAttributeDomainId?: (id: Id) => void
 }
 
 export default function List(props: Props): JSX.Element {
-  const { dragStartDomain = (): void => {}, dragStartAttribute = (): void => {} } = props
+  const {
+    isDraggable = false,
+    removeDomain = (): void => {},
+    removeAttribute = (): void => {},
+    setAddAttributeDomainId = (): void => {},
+    setAddDomainParentId = (): void => {},
+  } = props
+
   return (
     <div className={c(props.className, List.displayName)}>
       {props.list.map((item) => {
         return (
           <Item
-            handleAddAttributeOpen={props.setAddAttributeDomainId}
-            handleAddDomainOpen={props.setAddDomainParentId}
             key={item.domain.id}
-            domainData={item}
-            removeAttribute={props.removeAttribute}
-            removeDomain={props.removeDomain}
             isRightToEdit={!!props.isRightToEdit}
-            isDraggable={!!props.isDraggable}
-            dragStartDomain={dragStartDomain}
-            dragStartAttribute={dragStartAttribute}
+            domainData={item}
+            isDraggable={isDraggable}
+            handleAddAttributeOpen={setAddAttributeDomainId}
+            handleAddDomainOpen={setAddDomainParentId}
+            removeAttribute={removeAttribute}
+            removeDomain={removeDomain}
           />
         )
       })}
