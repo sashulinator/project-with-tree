@@ -13,9 +13,14 @@ export interface Props {
   removeAttribute: (id: Id) => void
   setAddDomainParentId: (id: Id) => void
   setAddAttributeDomainId: (id: Id) => void
+  isRightToEdit?: boolean
+  isDraggable?: boolean
+  dragStartDomain?: (e: React.DragEvent<HTMLElement>) => void
+  dragStartAttribute?: (e: React.DragEvent<HTMLElement>) => void
 }
 
 export default function List(props: Props): JSX.Element {
+  const { dragStartDomain = (): void => {}, dragStartAttribute = (): void => {} } = props
   return (
     <div className={c(props.className, List.displayName)}>
       {props.list.map((item) => {
@@ -27,6 +32,10 @@ export default function List(props: Props): JSX.Element {
             domainData={item}
             removeAttribute={props.removeAttribute}
             removeDomain={props.removeDomain}
+            isRightToEdit={!!props.isRightToEdit}
+            isDraggable={!!props.isDraggable}
+            dragStartDomain={dragStartDomain}
+            dragStartAttribute={dragStartAttribute}
           />
         )
       })}

@@ -62,7 +62,14 @@ export default function DomainListPage(): JSX.Element {
   return (
     <>
       <main className={DomainListPage.displayName}>
-        <GhostButton onClick={(): void => setAddDomainParentId('')}>Добавить домен</GhostButton>
+        <GhostButton
+          height={'l'}
+          padding={'l'}
+          className='add-domain-button'
+          onClick={(): void => setAddDomainParentId('')}
+        >
+          Добавить домен
+        </GhostButton>
 
         <Modal
           firstFocused={true}
@@ -97,6 +104,7 @@ export default function DomainListPage(): JSX.Element {
             list={fetcher.data.items}
             removeAttribute={removeAttribute}
             removeDomain={removeDomain}
+            isRightToEdit={true}
           />
         )}
       </main>

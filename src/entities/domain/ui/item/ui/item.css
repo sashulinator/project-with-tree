@@ -4,7 +4,8 @@
 }
 
 .e-domain-ui-Domain .do-not-attributes {
-  text-align: center;
+  opacity: 0.5;
+  margin-left: 3rem;
 }
 .e-domain-ui-Domain .--header:hover {
   background: var(--ghostButton_bg__hovered);

@@ -12,23 +12,40 @@ import { useBoolean } from '~/utils/hooks'
 export interface Props {
   domainData: ParentDomainRes
   isExpanded?: boolean
+  pLeft?: number
+  isRightToEdit?: boolean
+  isDraggable?: boolean
   removeDomain: (id: Id) => void
   removeAttribute: (id: Id) => void
   handleAddDomainOpen: (id: Id) => void
   handleAddAttributeOpen: (id: Id) => void
-  pLeft?: number
+  dragStartDomain?: (e: React.DragEvent<HTMLElement>) => void
+  dragStartAttribute?: (e: React.DragEvent<HTMLElement>) => void
 }
 
 Item.displayName = 'e-domain-ui-Domain'
 
 export default function Item(props: Props): JSX.Element {
-  const { domainData, isExpanded = true, pLeft = 0, handleAddDomainOpen, handleAddAttributeOpen } = props
+  const {
+    domainData,
+    isExpanded = true,
+    pLeft = 0,
+    isRightToEdit,
+    handleAddDomainOpen,
+    handleAddAttributeOpen,
+    dragStartDomain = (): void => {},
+    dragStartAttribute = (): void => {},
+  } = props
   const [expanded, , , toggleExpanded] = useBoolean(isExpanded)
   const pl = pLeft
   return (
     <>
       <Accordion
-        rootProps={{ style: { paddingLeft: pl } }}
+        rootProps={{
+          style: { paddingLeft: pl },
+          draggable: !!props.isDraggable,
+          onDragStart: !!props.dragStartDomain ? props.dragStartDomain : (): void => {},
+        }}
         className={c(Item.displayName)}
         onExpandedChange={toggleExpanded}
         isExpanded={expanded}
@@ -39,6 +56,7 @@ export default function Item(props: Props): JSX.Element {
           removeDomain: props.removeDomain,
           handleAddDomainOpen: handleAddDomainOpen,
           handleAddAttributeOpen: handleAddAttributeOpen,
+          isRightToEdit: !!isRightToEdit,
         }}
       >
         <div>
@@ -49,6 +67,9 @@ export default function Item(props: Props): JSX.Element {
                 removeAttribute={props.removeAttribute}
                 key={item.id}
                 attribute={item}
+                isDraggable={!!props.isDraggable}
+                isRightToEdit={!!props.isRightToEdit}
+                dragStartAttribute={dragStartAttribute}
               />
             ))
           ) : (
@@ -65,6 +86,9 @@ export default function Item(props: Props): JSX.Element {
                 removeDomain={props.removeDomain}
                 removeAttribute={props.removeAttribute}
                 isExpanded={false}
+                isDraggable={!!props.isDraggable}
+                dragStartDomain={dragStartDomain}
+                dragStartAttribute={dragStartAttribute}
               />
             ))}
         </div>
@@ -83,6 +107,7 @@ interface HeaderProps {
   removeDomain: (id: Id) => void
   handleAddDomainOpen: (id: Id) => void
   handleAddAttributeOpen: (id: Id) => void
+  isRightToEdit: boolean
 }
 
 function Header(props: HeaderProps): JSX.Element {
@@ -96,19 +121,21 @@ function Header(props: HeaderProps): JSX.Element {
         </GhostButton>
         {props.title || 'нет имени домена'}
       </Flex>
-      <Flex gap='xl'>
-        <GhostButton onClick={(): void => props.handleAddDomainOpen(props.id)}>
-          <Plus />
-          <span>домен</span>
-        </GhostButton>
-        <GhostButton onClick={(): void => props.handleAddAttributeOpen(props.id)} style={{ marginRight: '50px' }}>
-          <Plus />
-          <span>атрибут</span>
-        </GhostButton>
-        <GhostButton square onClick={(): void => props.removeDomain(props.id)}>
-          <Close />
-        </GhostButton>
-      </Flex>
+      {props.isRightToEdit && (
+        <Flex gap='xl'>
+          <GhostButton onClick={(): void => props.handleAddDomainOpen(props.id)}>
+            <Plus />
+            <span>домен</span>
+          </GhostButton>
+          <GhostButton onClick={(): void => props.handleAddAttributeOpen(props.id)} style={{ marginRight: '50px' }}>
+            <Plus />
+            <span>атрибут</span>
+          </GhostButton>
+          <GhostButton square onClick={(): void => props.removeDomain(props.id)}>
+            <Close />
+          </GhostButton>
+        </Flex>
+      )}
     </Flex>
   )
 
