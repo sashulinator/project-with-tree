@@ -34,13 +34,16 @@ export default function RuleItem(props: Props): JSX.Element {
   return (
     <div className={c(props.className, RuleItem.displayName)}>
       <Flex mainAxis='space-between' crossAxis='center' className='nameCell'>
-        <Link to={routes.ruleUpdate.path.replace(':id', props.item?.id.toString() || '')}>{props.item?.name}</Link>
-        <GhostButton onClick={onDelete}>
-          <Close></Close>
-        </GhostButton>
+        <Link
+          to={routes.ruleUpdate.path.replace(':id', props.item?.id.toString() || '')}
+        >{`${props.item?.name} (${props.item.keyName})`}</Link>
+        <Flex gap='xxl' crossAxis='center'>
+          <div>{props.item?.updatedBy}</div>
+          <GhostButton onClick={onDelete}>
+            <Close></Close>
+          </GhostButton>
+        </Flex>
       </Flex>
-
-      <div className={c('statusCell', `--${props.item?.rev.toLowerCase()}`)}>{props.item?.updatedBy}</div>
     </div>
   )
 
