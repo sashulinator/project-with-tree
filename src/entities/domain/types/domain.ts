@@ -31,7 +31,8 @@ export interface Domain {
   /**
    * Тип
    */
-  type: Type
+  // type: Type
+  type: string //временно
 
   /**
    * Родительский домен

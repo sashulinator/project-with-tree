@@ -1,4 +1,6 @@
+import { UpdateAttribute } from '~/api/attribute/requests/update'
 import { ParentDomainRes } from '~/api/domain/types/parent-domain-res'
+import { Domain } from '~/entities/domain/types/domain'
 import { Id, c } from '~/utils/core'
 
 import Item from '../../../ui/item'
@@ -13,8 +15,12 @@ export interface Props {
   isRightToEdit?: boolean
   removeDomain?: (id: Id) => void
   removeAttribute?: (id: Id) => void
+  updateDomain?: (id: Id) => void
+  updateAttribute?: (id: Id) => void
   setAddDomainParentId?: (id: Id) => void
   setAddAttributeDomainId?: (id: Id) => void
+  setUpdateDomain?: (domain: Domain) => void
+  setUpdateAttribute?: (attribute: UpdateAttribute) => void
 }
 
 export default function List(props: Props): JSX.Element {
@@ -23,7 +29,11 @@ export default function List(props: Props): JSX.Element {
     removeDomain = (): void => {},
     removeAttribute = (): void => {},
     setAddAttributeDomainId = (): void => {},
+    setUpdateDomain = (): void => {},
+    setUpdateAttribute = (): void => {},
     setAddDomainParentId = (): void => {},
+    updateDomain = (): void => {},
+    updateAttribute = (): void => {},
   } = props
 
   return (
@@ -39,6 +49,10 @@ export default function List(props: Props): JSX.Element {
             handleAddDomainOpen={setAddDomainParentId}
             removeAttribute={removeAttribute}
             removeDomain={removeDomain}
+            updateAttribute={updateAttribute}
+            updateDomain={updateDomain}
+            handleUpdateDomainOpen={setUpdateDomain}
+            handleUpdateAttributeOpen={setUpdateAttribute}
           />
         )
       })}

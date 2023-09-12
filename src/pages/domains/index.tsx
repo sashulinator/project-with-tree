@@ -1,15 +1,19 @@
 import './index.css'
 
-import { Domain } from 'domain'
 import { useState } from 'react'
 
 import { useCreateAttribute } from '~/api/attribute/create'
 import { useRemoveAttribute } from '~/api/attribute/remove'
 import { CreateAttribute } from '~/api/attribute/requests/create'
+import { UpdateAttribute } from '~/api/attribute/requests/update'
+import { useUpdateAttribute } from '~/api/attribute/update'
 import { useCreateDomain } from '~/api/domain/create'
 import { useFetchParentDomainList } from '~/api/domain/fetch-parent-domains'
 import { useRemoveDomain } from '~/api/domain/remove'
 import { CreateDomain } from '~/api/domain/requests/create'
+import { UpdateDomain } from '~/api/domain/requests/update'
+import { useUpdateDomain } from '~/api/domain/update'
+
 import { AttributeForm } from '~/entities/attribute'
 import { DomainForm, DomainList } from '~/entities/domain'
 import { notify } from '~/shared/notify'
@@ -24,6 +28,8 @@ export default function DomainListPage(): JSX.Element {
 
   const [addAttributeDomainId, setAddAttributeDomainId] = useState<Id | null>(null)
   const [addDomainParentId, setAddDomainParentId] = useState<Id | null>(null)
+  const [updateDomain, setUpdateDomain] = useState<UpdateDomain | null>(null)
+  const [updateAttribute, setUpdateAttribute] = useState<UpdateAttribute | null>(null)
 
   const createDomainMutation = useCreateDomain({
     onSuccess: () => {
@@ -39,6 +45,24 @@ export default function DomainListPage(): JSX.Element {
       void fetcher.refetch()
       setAddAttributeDomainId(null)
       notify({ data: 'Создано', type: 'success' })
+    },
+    onError: () => notify({ data: 'Ошибка', type: 'error' }),
+  })
+
+  const updateDomainMutation = useUpdateDomain({
+    onSuccess: () => {
+      void fetcher.refetch()
+      setUpdateDomain(null)
+      notify({ data: 'Изменено', type: 'success' })
+    },
+    onError: () => notify({ data: 'Ошибка', type: 'error' }),
+  })
+
+  const updateAttributeMutation = useUpdateAttribute({
+    onSuccess: () => {
+      void fetcher.refetch()
+      setUpdateAttribute(null)
+      notify({ data: 'Изменено', type: 'success' })
     },
     onError: () => notify({ data: 'Ошибка', type: 'error' }),
   })
@@ -71,6 +95,16 @@ export default function DomainListPage(): JSX.Element {
           Добавить домен
         </GhostButton>
 
+        {/*Редактирование атрибута*/}
+        <Modal firstFocused={true} opened={updateAttribute !== null} onDismiss={(): void => setUpdateAttribute(null)}>
+          <AttributeForm
+            key={`${(updateAttribute?.id, updateAttribute?.name)}`}
+            onSubmit={createUpdateAttribute}
+            attribute={updateAttribute !== null ? updateAttribute : {}}
+          />
+        </Modal>
+
+        {/*Создание атрибута*/}
         <Modal
           firstFocused={true}
           opened={addAttributeDomainId !== null}
@@ -78,12 +112,14 @@ export default function DomainListPage(): JSX.Element {
         >
           <AttributeForm
             key={addDomainParentId}
-            onSubmit={createAttribute}
+            onSubmit={createUpdateAttribute}
             attribute={{
               domainId: addAttributeDomainId || '',
             }}
           />
         </Modal>
+
+        {/*Редактирование домена*/}
         <Modal
           firstFocused={true}
           opened={addDomainParentId !== null}
@@ -91,20 +127,31 @@ export default function DomainListPage(): JSX.Element {
         >
           <DomainForm
             key={addDomainParentId}
-            onSubmit={createDomain}
+            onSubmit={createUpdateDomain}
             domain={{
               parentId: addDomainParentId || '',
             }}
           />
         </Modal>
+
+        {/*Создание домена*/}
+        <Modal firstFocused={true} opened={updateDomain !== null} onDismiss={(): void => setUpdateDomain(null)}>
+          <DomainForm
+            key={`${updateDomain?.id}${updateDomain?.keyName}`}
+            onSubmit={createUpdateDomain}
+            domain={updateDomain !== null ? updateDomain : {}}
+          />
+        </Modal>
         {fetcher.isSuccess && (
           <DomainList
+            isRightToEdit={true}
+            list={fetcher.data.items}
             setAddAttributeDomainId={setAddAttributeDomainId}
             setAddDomainParentId={setAddDomainParentId}
-            list={fetcher.data.items}
             removeAttribute={removeAttribute}
             removeDomain={removeDomain}
-            isRightToEdit={true}
+            setUpdateDomain={setUpdateDomain}
+            setUpdateAttribute={setUpdateAttribute}
           />
         )}
       </main>
@@ -115,15 +162,19 @@ export default function DomainListPage(): JSX.Element {
     removeDomainMutation.mutate({ id })
   }
 
-  function createAttribute(attribute: CreateAttribute): void {
-    createAttributeMutation.mutate({ attribute })
+  function createUpdateAttribute(attribute: CreateAttribute | UpdateAttribute): void {
+    if (has(attribute, 'id')) {
+      updateAttributeMutation.mutate({ attribute })
+    } else {
+      createAttributeMutation.mutate({ attribute })
+    }
   }
 
-  function createDomain(domain: Domain | CreateDomain): void {
+  function createUpdateDomain(domain: CreateDomain | UpdateDomain): void {
     if (has(domain, 'id')) {
-      // updateDomainMutation.mutate({ domain: domain as Domain })
+      updateDomainMutation.mutate({ domain })
     } else {
-      createDomainMutation.mutate({ domain: domain as CreateDomain })
+      createDomainMutation.mutate({ domain })
     }
   }
 
