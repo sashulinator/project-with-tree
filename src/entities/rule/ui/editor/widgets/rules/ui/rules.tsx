@@ -19,6 +19,7 @@ import { GhostButton } from '~/ui/button'
 // import { ArrowLeft, ArrowRight } from '~/ui/icon'
 import { Save } from '~/ui/icon/variants/save'
 import Input from '~/ui/input'
+import Labeled from '~/ui/labeled'
 import { c } from '~/utils/core'
 
 import { themes } from '../themes'
@@ -31,7 +32,7 @@ Rules.displayName = 'ruleEditor-w-Rules'
 emitter.emit('addThemes', themes)
 
 interface RulesProps {
-  onSubmit: (editorValue: EditorValues[], title: string) => void
+  onSubmit: (editorValue: EditorValues[], name: string, keyName: string) => void
   rule: RulesRes | null
 }
 
@@ -46,7 +47,8 @@ export function Rules(props: RulesProps): JSX.Element {
   const [overHeader, setOverHeader] = useRecoilState(dragOverHeaderAtom)
   const [overHeaderItemId, setOverHeaderItemId] = useRecoilState(dragOverItemHeaderIdAtom)
 
-  const [title, setTitle] = useState('')
+  const [name, setName] = useState('')
+  const [keyName, setKeyName] = useState('')
 
   const [loading, setLoading] = useState(false)
 
@@ -55,7 +57,8 @@ export function Rules(props: RulesProps): JSX.Element {
     try {
       if (rule?.frontValue && rule?.name && rule?.keyName) {
         setEditorValues(rule.frontValue)
-        setTitle(`${rule.name} (${rule.keyName})`)
+        setName(rule.name)
+        setKeyName(rule.keyName)
       } else {
         setEditorValues([
           {
@@ -115,7 +118,7 @@ export function Rules(props: RulesProps): JSX.Element {
             className={c('header', overHeader && '--dragOver')}
             gap='xl'
             mainAxis='space-between'
-            crossAxis='center'
+            crossAxis='start'
           >
             {/* <Flex gap='xl'>
               <GhostButton height={'l'} padding={'s'} onClick={back}>
@@ -126,13 +129,24 @@ export function Rules(props: RulesProps): JSX.Element {
               </GhostButton>
             </Flex> */}
             <Flex style={{ width: '100%' }} dir='column'>
-              <Input
-                value={title}
-                onChange={(e): void => setTitle(e.target.value)}
-                style={{ paddingTop: '20px', textAlign: 'center' }}
-                height={'l'}
-                placeholder='Заголовок правила (id правила)'
-              />
+              <Labeled label={'name: '} style={{ marginBottom: '10px' }}>
+                <Input
+                  value={name}
+                  onChange={(e): void => setName(e.target.value)}
+                  style={{ paddingTop: '20px', textAlign: 'center' }}
+                  height={'l'}
+                  placeholder='Заголовок правила (id правила)'
+                />
+              </Labeled>
+              <Labeled label={'keyName: '}>
+                <Input
+                  value={keyName}
+                  onChange={(e): void => setKeyName(e.target.value)}
+                  style={{ paddingTop: '20px', textAlign: 'center' }}
+                  height={'l'}
+                  placeholder='id правила'
+                />
+              </Labeled>
             </Flex>
             <Flex mainAxis='end' gap='xl'>
               <GhostButton height={'l'} padding={'s'} onClick={onSubmitFun}>
@@ -194,7 +208,7 @@ export function Rules(props: RulesProps): JSX.Element {
 
   // Private
   function onSubmitFun(): void {
-    onSubmit(editorValue, title)
+    onSubmit(editorValue, name, keyName)
   }
 
   function dragOver(e: React.DragEvent<HTMLElement>, parentId: string | null = null): void {
