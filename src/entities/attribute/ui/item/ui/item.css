@@ -1,0 +1,19 @@
+.e-Attribute-ui-Item {
+  margin-bottom: 0.2rem;
+  margin-left: 2rem;
+  padding-left: 1rem;
+  transition: all 0.3s ease;
+  border-radius: 5px;
+}
+
+.e-Attribute-ui-Item .dots {
+  width: 0.25rem;
+  height: 0.25rem;
+  border-radius: 100%;
+  background: #000;
+  margin-top: 0.15rem;
+}
+
+.e-Attribute-ui-Item:hover {
+  background: var(--ghostButton_bg__hovered);
+}

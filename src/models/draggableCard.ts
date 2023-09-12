@@ -1,7 +1,9 @@
 import { atom } from 'recoil'
 
+import { Id } from '~/utils/core'
+
 export type DraggableCard = {
-  id: string
+  id: Id
   name: string
   type: 'domain' | 'attribute'
 }

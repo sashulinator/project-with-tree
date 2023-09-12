@@ -1,0 +1,11 @@
+.DomainListPage {
+  max-width: 1400px;
+  margin: 0 auto;
+  width: 100%;
+  padding: 10px;
+}
+
+.DomainListPage > .add-domain-button {
+  margin-left: auto;
+  margin-bottom: 1rem;
+}
