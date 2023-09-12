@@ -1,8 +1,8 @@
-import { AttributeRes } from './attribute'
-import { DomainRes } from './domain'
+import { Attribute } from '~/entities/attribute'
+import { Domain } from '~/entities/domain'
 
 export interface ParentDomainRes {
-  domain: DomainRes
-  attributes: AttributeRes[]
+  domain: Domain
+  attributes: Attribute[]
   childDomains: ParentDomainRes[]
 }

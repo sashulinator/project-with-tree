@@ -9,6 +9,7 @@ import decisionCanvasWNodeVFilter from './pages/canvas/decision-w-node-v-filter'
 import decisionCanvasWNodeWJoint from './pages/canvas/ui-w-node-w-joint'
 import uiCheckbox from './pages/checkbox/ui'
 import aCollapse from './pages/collapse/a'
+import uiDndCanvas from './pages/dnd-canvas/ui'
 import uiField from './pages/field/ui'
 import uiInput from './pages/input/ui'
 import uiInputVClearable from './pages/input/ui-v-clearable'
@@ -41,4 +42,5 @@ export const routes = [
   ['Popover', aPopover],
   ['Tooltip', aTooltip, uiTooltip],
   ['OrderedList', uiOrderedList],
+  ['DndCanvas', uiDndCanvas],
 ] as const

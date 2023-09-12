@@ -1,4 +1,4 @@
-import { DraggableCard } from '../models/draggableCard'
+import { DraggableCard } from '../../../models/draggableCard'
 import { EditorValues } from '../models/editorRulesValues'
 
 export function onDropTextarea(array: EditorValues[], draggableCard: DraggableCard, id: string): EditorValues[] {

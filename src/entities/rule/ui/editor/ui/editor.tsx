@@ -4,13 +4,13 @@ import { useEffect } from 'react'
 import { useSetRecoilState } from 'recoil'
 
 import { ParentDomainRes } from '~/api/domain/types/parent-domain-res'
+import { DomainList } from '~/entities/domain'
 import { addDataMentions } from '~/entities/rule/lib/add-data-mentions'
 import { EditorValues } from '~/entities/rule/models/editorRulesValues'
 import { mentionsDataAtom } from '~/entities/rule/models/mentionsData'
 import { RulesRes } from '~/entities/rule/types/rules-type'
 import { c } from '~/utils/core'
 
-import { DomainList } from '../widgets/domain-list'
 import { Rules } from '../widgets/rules'
 
 Editor.displayName = 'ruleEditor'
@@ -32,7 +32,7 @@ export function Editor(props: AddRulesProps): JSX.Element {
   return (
     <div className={c(props.className, Editor.displayName)}>
       <div className='list'>
-        <DomainList domains={dataList} defaultExpanded={true} />
+        <DomainList list={dataList} isDraggable={true} />
       </div>
       <Rules rule={rule} onSubmit={onSubmit} />
     </div>

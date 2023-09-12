@@ -76,7 +76,7 @@ export function Rules(props: RulesProps): JSX.Element {
       ])
     }
   }, [rule?.frontValue])
-  console.log(rule)
+
   // const versionNum = useRef(0)
   // const memoryRulesValues = useRef([editorValue])
   // const flag = useRef(false)
