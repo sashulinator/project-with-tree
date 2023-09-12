@@ -6,10 +6,6 @@
   margin: 0 auto;
 }
 
-.ruleEditor > .list {
-  max-width: 300px;
-}
-
 .ruleEditor .input {
   margin-bottom: 25px;
 }

@@ -26,7 +26,7 @@ export default function RulesCreatePage(): JSX.Element {
   )
 
   // Private
-  function onSubmit(editorValue: EditorValues[], title: string): void {
-    mutation.mutate(getReqForCreateRule(editorValue, title))
+  function onSubmit(editorValue: EditorValues[], name: string, keyName: string): void {
+    mutation.mutate(getReqForCreateRule(editorValue, name, keyName))
   }
 }

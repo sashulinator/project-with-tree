@@ -81,7 +81,7 @@ export default function Input(props: EditorInputProps): JSX.Element {
       ></div>
 
       <MentionsInput value={value} onChange={handleChangeMention} inputRef={inputRef}>
-        <Mention trigger='@' data={mentionsData} style={{ backgroundColor: 'var(--mentionItem_bg)' }} />
+        <Mention data={mentionsData} style={{ backgroundColor: 'var(--mentionItem_bg)' }} trigger={'@'} />
       </MentionsInput>
     </div>
   )

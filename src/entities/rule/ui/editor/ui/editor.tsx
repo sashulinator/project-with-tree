@@ -18,7 +18,7 @@ Editor.displayName = 'ruleEditor'
 
 interface AddRulesProps {
   dataList: ParentDomainRes[]
-  onSubmit: (editorValue: EditorValues[], title: string) => void
+  onSubmit: (editorValue: EditorValues[], name: string, keyName: string) => void
   className?: string
   rule: RulesRes | null
 }
@@ -45,9 +45,6 @@ export function Editor(props: AddRulesProps): JSX.Element {
         </Scrollbars>
       </nav>
 
-      {/* <div className='list'>
-        <DomainList list={dataList} isDraggable={true} />
-      </div> */}
       <Rules rule={rule} onSubmit={onSubmit} />
     </div>
   )
