@@ -35,7 +35,7 @@ export function _addNode(
     node,
     fns(onAdded, () => {
       node.position.transitionMove(
-        { x: getColumnX(node.position.value.x), y: node.position.value.y },
+        { x: getColumnX(node.position.value.x), y: canvas.getPointPosition('cc').y },
         { duration: 0, ...event }
       )
     })
