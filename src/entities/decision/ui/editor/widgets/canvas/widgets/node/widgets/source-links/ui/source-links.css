@@ -16,10 +16,13 @@
 }
 
 .decision-Editor-w-Canvas-w-Node-w-SourceLinks > .rule > .editRule {
-  width: 100%;
-  height: 100%;
-  display: flex;
+  width: 210px;
+  height: 30px;
   align-items: center;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-wrap: nowrap;
+  flex-direction: row;
 }
 
 .decision-Editor-w-Canvas-w-Node-w-SourceLinks > .rule:hover {
