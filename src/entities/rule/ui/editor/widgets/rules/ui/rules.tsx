@@ -129,16 +129,16 @@ export function Rules(props: RulesProps): JSX.Element {
               </GhostButton>
             </Flex> */}
             <Flex style={{ width: '100%' }} dir='column'>
-              <Labeled label={'name: '} style={{ marginBottom: '10px' }}>
+              <Labeled label={'Наименование: '} style={{ marginBottom: '10px' }}>
                 <Input
                   value={name}
                   onChange={(e): void => setName(e.target.value)}
                   style={{ paddingTop: '20px', textAlign: 'center' }}
                   height={'l'}
-                  placeholder='Заголовок правила (id правила)'
+                  placeholder='Заголовок правила'
                 />
               </Labeled>
-              <Labeled label={'keyName: '}>
+              <Labeled label={'Ключевое имя: '}>
                 <Input
                   value={keyName}
                   onChange={(e): void => setKeyName(e.target.value)}

@@ -20,6 +20,7 @@ export interface Props {
   className?: string
   item: RulesRes
   fetcher: QueryResult<ResponseData>
+  handleCopyRuleOpen: (data: RulesRes) => void
 }
 
 export default function RuleItem(props: Props): JSX.Element {
@@ -39,7 +40,8 @@ export default function RuleItem(props: Props): JSX.Element {
         >{`${props.item?.name} (${props.item.keyName})`}</Link>
         <Flex gap='xxl' crossAxis='center'>
           <div>{props.item?.updatedBy}</div>
-          <GhostButton onClick={onDelete}>
+          <GhostButton onClick={(): void => props.handleCopyRuleOpen(props.item)}>Копировать</GhostButton>
+          <GhostButton square onClick={onDelete}>
             <Close></Close>
           </GhostButton>
         </Flex>

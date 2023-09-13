@@ -1,15 +1,22 @@
 import { AxiosResponse } from 'axios'
 
+import { EditorValues } from '~/entities/rule/models/editorRulesValues'
 import api from '~/shared/axios'
 
-import { RequestData } from '../types/RequestRule'
 import { ResponseData } from '../types/response-data'
 
 export type Response = AxiosResponse<ResponseData>
 
+export interface RequestData {
+  name: string
+  keyName: string
+  frontValue: EditorValues[]
+  userId: string
+}
+
 export const url = `/api/v1/rule/createRule`
 
-export async function requestRule(requestData: RequestData): Promise<Response> {
+export async function request(requestData: RequestData): Promise<Response> {
   // return {} as Promise<Response>
 
   // TODO validation
