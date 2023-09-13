@@ -5,6 +5,7 @@ import { useUpdate } from '~/utils/hooks'
 
 import { Toolbar } from '..'
 import Node, { FactoryProps, SourceLinks, Title } from '../../..'
+import { LinkController } from '../../../../..'
 
 Enter.displayName = 'decisionCanvas-w-Node-v-Enter'
 
@@ -28,8 +29,9 @@ export default function Enter(props: FactoryProps): JSX.Element {
         <SourceLinks
           linkListController={props.linkList}
           state={props.state}
-          onNewJointClick={onNewJointClick('sourceId')}
-          onJointClick={onJointClick}
+          startLinkCreating={onNewJointClick('sourceId')}
+          startLinkEditing={onJointClick}
+          addLink={addLink}
         />
       }
     />
@@ -39,6 +41,17 @@ export default function Enter(props: FactoryProps): JSX.Element {
 
   function subscribeOnUpdates(update: () => void, uns: (() => void)[]): void {
     uns.push(props.state.on('position', update))
+  }
+
+  function addLink(): void {
+    props.linkList.add(
+      new LinkController({
+        sourceId: props.state.id,
+        targetId: undefined,
+        rules: [],
+        index: props.linkList.getLinksBySourceId(props.state.id).length,
+      })
+    )
   }
 
   function onJointClick(linkId: Id): void {
