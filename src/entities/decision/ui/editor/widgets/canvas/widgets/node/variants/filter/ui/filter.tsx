@@ -5,6 +5,7 @@ import { useUpdate } from '~/utils/hooks'
 
 import { Toolbar } from '..'
 import Node, { FactoryProps, SourceLinks, TargetLinks, Title } from '../../..'
+import { LinkController } from '../../../../..'
 
 Filter.displayName = 'decision-Editor-w-Canvas-w-Node-v-Filter'
 
@@ -30,16 +31,17 @@ export default function Filter(props: FactoryProps): JSX.Element {
         <SourceLinks
           linkListController={props.linkList}
           state={props.state}
-          onNewJointClick={onNewJointClick('sourceId')}
-          onJointClick={onJointClick}
+          startLinkCreating={startLinkCreating('sourceId')}
+          startLinkEditing={startLinkEditing}
+          addLink={addLink}
         />
       }
       targetLinks={
         <TargetLinks
           linkControllers={props.linkList}
           state={props.state}
-          onNewJointClick={onNewJointClick('targetId')}
-          onJointClick={onJointClick}
+          onNewJointClick={startLinkCreating('targetId')}
+          onJointClick={startLinkEditing}
         />
       }
     />
@@ -51,7 +53,18 @@ export default function Filter(props: FactoryProps): JSX.Element {
     uns.push(props.state.on('position', update))
   }
 
-  function onJointClick(linkId: Id): void {
+  function addLink(): void {
+    props.linkList.add(
+      new LinkController({
+        sourceId: props.state.id,
+        targetId: undefined,
+        rules: [],
+        index: props.linkList.getLinksBySourceId(props.state.id).length,
+      })
+    )
+  }
+
+  function startLinkEditing(linkId: Id): void {
     if (props.linkList.editingId.value) {
       props.linkList.finishEditing(linkId)
     } else {
@@ -64,7 +77,7 @@ export default function Filter(props: FactoryProps): JSX.Element {
     }
   }
 
-  function onNewJointClick(startLinkType: 'targetId' | 'sourceId'): (newLinkId: Id) => void {
+  function startLinkCreating(startLinkType: 'targetId' | 'sourceId'): (newLinkId: Id) => void {
     return (newLinkId: Id) => {
       if (props.linkList.editingId.value) {
         props.linkList.finishNewLink(props.state.id)

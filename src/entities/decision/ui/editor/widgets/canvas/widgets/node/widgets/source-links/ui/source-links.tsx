@@ -5,6 +5,9 @@ import { useRef, useState } from 'react'
 import { useDrag, useDrop } from 'react-dnd'
 
 import { UnstyledButton } from '~/abstract/button'
+import Flex from '~/abstract/flex'
+import { GhostButton } from '~/ui/button'
+import { Plus } from '~/ui/icon'
 import { Id, c, generateId } from '~/utils/core'
 import { useUpdate } from '~/utils/hooks'
 
@@ -18,8 +21,9 @@ export interface Props {
   state: Controller
   linkListController: LinkListController
   hideNewLink?: boolean
-  onNewJointClick: (newLinkId: Id) => void
-  onJointClick: (linkId: Id) => void
+  startLinkCreating: (newLinkId: Id) => void
+  startLinkEditing: (linkId: Id) => void
+  addLink: () => void
 }
 
 export default function SourceLinks(props: Props): JSX.Element {
@@ -57,17 +61,22 @@ export default function SourceLinks(props: Props): JSX.Element {
             linkController={linkController}
             isEditingHasSource={isEditingHasSource}
             editingLinkState={editingLinkState}
-            onJointClick={props.onJointClick}
+            onJointClick={props.startLinkEditing}
           />
         )
       })}
       {!props.hideNewLink && (
-        <Joint
-          onClick={(): void => props.onNewJointClick(newLinkId)}
-          disabled={isEditingThisNode || isEditingHasSource}
-          variant='new'
-          linkId={newLinkId}
-        />
+        <Flex mainAxis='center' crossAxis='center'>
+          <GhostButton onClick={props.addLink} round={true}>
+            <Plus />
+          </GhostButton>
+          <Joint
+            onClick={(): void => props.startLinkCreating(newLinkId)}
+            disabled={isEditingThisNode || isEditingHasSource}
+            variant='new'
+            linkId={newLinkId}
+          />
+        </Flex>
       )}
     </div>
   )

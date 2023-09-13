@@ -5,6 +5,7 @@ import { useUpdate } from '~/utils/hooks'
 
 import { Toolbar } from '..'
 import Node, { FactoryProps, SourceLinks, TargetLinks, Title } from '../../..'
+import { LinkController } from '../../../../..'
 
 Filter.displayName = 'decision-Editor-w-Canvas-w-Node-v-ControlGroup'
 
@@ -30,8 +31,9 @@ export default function Filter(props: FactoryProps): JSX.Element {
         <SourceLinks
           linkListController={props.linkList}
           state={props.state}
-          onNewJointClick={onNewJointClick('sourceId')}
-          onJointClick={onJointClick}
+          startLinkCreating={onNewJointClick('sourceId')}
+          startLinkEditing={onJointClick}
+          addLink={addLink}
         />
       }
       targetLinks={
@@ -49,6 +51,17 @@ export default function Filter(props: FactoryProps): JSX.Element {
 
   function subscribeOnUpdates(update: () => void, uns: (() => void)[]): void {
     uns.push(props.state.on('position', update))
+  }
+
+  function addLink(): void {
+    props.linkList.add(
+      new LinkController({
+        sourceId: props.state.id,
+        targetId: undefined,
+        rules: [],
+        index: props.linkList.getLinksBySourceId(props.state.id).length,
+      })
+    )
   }
 
   function onJointClick(linkId: Id): void {
