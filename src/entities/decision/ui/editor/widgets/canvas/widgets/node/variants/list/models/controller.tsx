@@ -1,10 +1,16 @@
 import { Point } from '~/entities/decision'
 import { Selection } from '~/lib/emitter'
-import { Id, Position, assertNotNull } from '~/utils/core'
-import { getStyle } from '~/utils/dom'
+import {
+  Id,
+  Position, // assertNotNull
+} from '~/utils/core'
+// import { getStyle } from '~/utils/dom'
 import { DictionaryEvents, EmitterDictionary, Prop } from '~/utils/emitter'
 
-import { NODE_GAP, getColumnX } from '../../..'
+import {
+  //  NODE_GAP,
+  getColumnX,
+} from '../../..'
 import { NodeController } from '../../../../../../..'
 
 export type Events = DictionaryEvents<NodeController> & {
@@ -69,30 +75,30 @@ export class Controller extends EmitterDictionary<NodeController, Events> {
     }, {})
   }
 
-  positionColumn(x: number): void {
-    const columnNodes = this.values()
-      .filter((state) => state.position.value.x === x)
-      .sort((a, b) => a.position.value.y - b.position.value.y)
+  // positionColumn(x: number): void {
+  //   const columnNodes = this.values()
+  //     .filter((state) => state.position.value.x === x)
+  //     .sort((a, b) => a.position.value.y - b.position.value.y)
 
-    const nodesHeight = columnNodes.reduce((acc, state) => {
-      const style = getStyle(state.ref.value)
-      assertNotNull(style)
-      const height = parseInt(style.height, 10)
-      acc += height
-      return acc
-    }, 0)
+  //   const nodesHeight = columnNodes.reduce((acc, state) => {
+  //     const style = getStyle(state.ref.value)
+  //     assertNotNull(style)
+  //     const height = parseInt(style.height, 10)
+  //     acc += height
+  //     return acc
+  //   }, 0)
 
-    const depthHeight = nodesHeight + columnNodes.length * NODE_GAP
-    const depthTop = depthHeight / -2
+  //   const depthHeight = nodesHeight + columnNodes.length * NODE_GAP
+  //   const depthTop = depthHeight / -2
 
-    let nextY = depthTop
+  //   let nextY = depthTop
 
-    columnNodes.forEach((state) => {
-      state.position.transitionMove({ x: state.position.value.x, y: nextY }, { isPositionColumn: true })
-      const style = getStyle(state.ref.value)
-      assertNotNull(style)
-      const height = parseInt(style.height, 10)
-      nextY += height + NODE_GAP
-    })
-  }
+  //   columnNodes.forEach((state) => {
+  //     state.position.transitionMove({ x: state.position.value.x, y: nextY }, { isPositionColumn: true })
+  //     const style = getStyle(state.ref.value)
+  //     assertNotNull(style)
+  //     const height = parseInt(style.height, 10)
+  //     nextY += height + NODE_GAP
+  //   })
+  // }
 }

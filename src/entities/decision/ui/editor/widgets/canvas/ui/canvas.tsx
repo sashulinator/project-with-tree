@@ -53,28 +53,28 @@ function CanvasComponent(props: Props): JSX.Element {
 
     props.nodeList.on('position', (event) => {
       if (!event.last || event.isPositionColumn) return
-      props.nodeList.positionColumn(event.value.x)
+      // props.nodeList.positionColumn(event.value.x)
       if (event.value.x === event.previousStart.x) return
-      props.nodeList.positionColumn(event.previousStart.x)
+      // props.nodeList.positionColumn(event.previousStart.x)
     })
 
-    props.linkList.on('targetId', (event) => {
-      setTimeout(() => {
-        const sNodeState = props.nodeList.find(event.item.sourceId.value)
-        const tNodeState = props.nodeList.find(event.item.targetId.value)
-        tNodeState && props.nodeList.positionColumn(tNodeState?.position.value.x)
-        sNodeState && props.nodeList.positionColumn(sNodeState?.position.value.x)
-      })
-    })
+    // props.linkList.on('targetId', (event) => {
+    //   setTimeout(() => {
+    //     const sNodeState = props.nodeList.find(event.item.sourceId.value)
+    //     const tNodeState = props.nodeList.find(event.item.targetId.value)
+    //     tNodeState && props.nodeList.positionColumn(tNodeState?.position.value.x)
+    //     sNodeState && props.nodeList.positionColumn(sNodeState?.position.value.x)
+    //   })
+    // })
 
-    props.linkList.on('sourceId', (event) => {
-      setTimeout(() => {
-        const sNodeState = props.nodeList.find(event.item.sourceId.value)
-        const tNodeState = props.nodeList.find(event.item.targetId.value)
-        tNodeState && props.nodeList.positionColumn(tNodeState?.position.value.x)
-        sNodeState && props.nodeList.positionColumn(sNodeState?.position.value.x)
-      })
-    })
+    // props.linkList.on('sourceId', (event) => {
+    //   setTimeout(() => {
+    //     const sNodeState = props.nodeList.find(event.item.sourceId.value)
+    //     const tNodeState = props.nodeList.find(event.item.targetId.value)
+    //     tNodeState && props.nodeList.positionColumn(tNodeState?.position.value.x)
+    //     sNodeState && props.nodeList.positionColumn(sNodeState?.position.value.x)
+    //   })
+    // })
   }
 }
 
