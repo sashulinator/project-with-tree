@@ -1,5 +1,5 @@
 .rules-e-ui-list {
   display: flex;
   flex-direction: column;
-  gap: var(--m);
+  gap: var(--l);
 }

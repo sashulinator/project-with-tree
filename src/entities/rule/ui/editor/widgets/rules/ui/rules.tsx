@@ -133,18 +133,16 @@ export function Rules(props: RulesProps): JSX.Element {
                 <Input
                   value={name}
                   onChange={(e): void => setName(e.target.value)}
-                  style={{ paddingTop: '20px', textAlign: 'center' }}
                   height={'l'}
-                  placeholder='Заголовок правила'
+                  placeholder='Наименование'
                 />
               </Labeled>
               <Labeled label={'Ключевое имя: '}>
                 <Input
                   value={keyName}
                   onChange={(e): void => setKeyName(e.target.value)}
-                  style={{ paddingTop: '20px', textAlign: 'center' }}
                   height={'l'}
-                  placeholder='id правила'
+                  placeholder='Ключевое имя'
                 />
               </Labeled>
             </Flex>

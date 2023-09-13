@@ -48,6 +48,7 @@ function InputComponent<TFieldProps extends object>(
     </>
   )
 
+  // eslint-disable-next-line react/no-children-prop
   return <>{createElement(renderField, { ...fieldProps, isFocused, children })}</>
 }
 
