@@ -14,6 +14,7 @@ export interface Props {
   className?: string
   list: RulesRes[]
   fetcher: QueryResult<ResponseData>
+  handleCopyRuleOpen: (data: RulesRes) => void
 }
 
 export default function ListRules(props: Props): JSX.Element {
@@ -22,7 +23,7 @@ export default function ListRules(props: Props): JSX.Element {
       {props.list.map((item: RulesRes, i) => {
         return (
           <AppearFrom key={item.id} from={{ y: 10 }} delay={i * 30}>
-            <RuleItem fetcher={props.fetcher} item={item} />
+            <RuleItem handleCopyRuleOpen={props.handleCopyRuleOpen} fetcher={props.fetcher} item={item} />
           </AppearFrom>
         )
       })}

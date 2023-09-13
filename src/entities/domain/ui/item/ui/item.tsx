@@ -3,7 +3,6 @@ import './item.css'
 import { useSetRecoilState } from 'recoil'
 
 import Accordion from '~/abstract/accordion'
-
 import { UpdateAttribute } from '~/api/attribute/requests/update'
 import { ParentDomainRes } from '~/api/domain/types/parent-domain-res'
 import { AttributeItem } from '~/entities/attribute'

@@ -4,9 +4,7 @@ import { useForm } from 'react-hook-form'
 
 import Flex from '~/abstract/flex'
 import { CreateDomain } from '~/api/domain/requests/create'
-
 import { UpdateDomain } from '~/api/domain/requests/update'
-
 import { Domain } from '~/entities/domain/types/domain'
 import { PrimaryButton } from '~/ui/button'
 import Input from '~/ui/input'
@@ -19,7 +17,6 @@ export interface Props {
   className?: string
   domain: Partial<Domain>
   onSubmit: (domain: CreateDomain | UpdateDomain) => void
-
 }
 
 export default function Form(props: Props): JSX.Element | null {
@@ -28,7 +25,6 @@ export default function Form(props: Props): JSX.Element | null {
     handleSubmit,
     formState: { errors },
   } = useForm<CreateDomain | UpdateDomain>({ defaultValues: props.domain })
-
 
   return (
     <Flex width='25rem' dir='column'>

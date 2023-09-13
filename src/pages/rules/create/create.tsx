@@ -1,8 +1,5 @@
-import { useMutation } from 'react-query'
-
 import { useFetchParentDomainList } from '~/api/domain/fetch-parent-domains'
-import { requestRule } from '~/api/rules/requests/create-rule'
-import { getReqForCreateRule } from '~/entities/rule/lib/get-request-for-create-rule'
+import { useCreateRule } from '~/api/rules/create'
 import { EditorValues } from '~/entities/rule/models/editorRulesValues'
 import { Editor } from '~/entities/rule/ui/editor'
 import { notify } from '~/shared/notify'
@@ -10,12 +7,14 @@ import { notify } from '~/shared/notify'
 // import { domains } from '../../../entities/rules/ui/editor/widgets/domain-list/ui/data'
 
 export default function RulesCreatePage(): JSX.Element {
-  const mutation = useMutation(requestRule, {
-    onSuccess: () => notify({ data: 'Сохранено', type: 'success' }),
+  const fetcher = useFetchParentDomainList({ page: 1, limit: 2000 })
+
+  const createRuleMutation = useCreateRule({
+    onSuccess: () => {
+      notify({ data: 'Создано', type: 'success' })
+    },
     onError: () => notify({ data: 'Ошибка', type: 'error' }),
   })
-
-  const fetcher = useFetchParentDomainList({ page: 1, limit: 2000 })
 
   return (
     <main>
@@ -27,6 +26,11 @@ export default function RulesCreatePage(): JSX.Element {
 
   // Private
   function onSubmit(editorValue: EditorValues[], name: string, keyName: string): void {
-    mutation.mutate(getReqForCreateRule(editorValue, name, keyName))
+    createRuleMutation.mutate({
+      name: name,
+      keyName: keyName,
+      frontValue: editorValue,
+      userId: 'user@mail.ru',
+    })
   }
 }
