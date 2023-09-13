@@ -28,7 +28,7 @@ export interface Props {
 }
 
 function RightPanelComponent(props: Props): JSX.Element | null {
-  useUpdate(subscribeOnUpdates)
+  useUpdate(subscribeOnUpdates, [props.linkList.editingRuleSet.value])
 
   // const [fullscreen, , , toogleFullscreen] = useBoolean(false)
 
@@ -74,7 +74,8 @@ function RightPanelComponent(props: Props): JSX.Element | null {
                     key={rule.id}
                     onClick={(): void => {
                       const linkController = props.linkList.getEditingRuleState()
-                      linkController.rules.set(linkController.rules.value.filter((r) => r.id !== rule.id))
+                      const newRules = linkController.rules.value.filter((r) => r.id !== rule.id)
+                      linkController.rules.set(newRules)
                     }}
                   >
                     {rule.keyName || rule.name}
