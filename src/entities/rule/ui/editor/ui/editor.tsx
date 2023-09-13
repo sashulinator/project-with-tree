@@ -1,6 +1,7 @@
 import './editor.css'
 
 import { useEffect } from 'react'
+import Scrollbars from 'react-custom-scrollbars'
 import { useSetRecoilState } from 'recoil'
 
 import { ParentDomainRes } from '~/api/domain/types/parent-domain-res'
@@ -31,9 +32,22 @@ export function Editor(props: AddRulesProps): JSX.Element {
 
   return (
     <div className={c(props.className, Editor.displayName)}>
-      <div className='list'>
+      <nav
+        className='list'
+        style={{
+          borderRight: '1px solid var(--bgSecondary)',
+          height: 'calc(100vh - var(--header-height) * 1px)',
+          width: '400px',
+        }}
+      >
+        <Scrollbars autoHide autoHideTimeout={1000} autoHideDuration={500}>
+          <DomainList list={dataList} isDraggable={true} />
+        </Scrollbars>
+      </nav>
+
+      {/* <div className='list'>
         <DomainList list={dataList} isDraggable={true} />
-      </div>
+      </div> */}
       <Rules rule={rule} onSubmit={onSubmit} />
     </div>
   )
