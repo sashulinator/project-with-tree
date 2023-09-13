@@ -21,6 +21,8 @@
     "postpack": "pinst --enable"
   },
   "dependencies": {
+    "@atlaskit/tree": "8.8.6",
+    "@dnd-kit/core": "6.0.8",
     "@react-spring/web": "9.7.3",
     "@use-gesture/react": "10.2.27",
     "axios": "1.4.0",
@@ -35,6 +37,7 @@
     "mitt": "3.0.0",
     "qs": "6.10.3",
     "react": "18.2.0",
+    "react-custom-scrollbars": "4.2.1",
     "react-dnd": "16.0.1",
     "react-dnd-html5-backend": "16.0.1",
     "react-dom": "18.2.0",
@@ -54,6 +57,7 @@
     "@types/jest": "29.5.3",
     "@types/qs": "6.9.7",
     "@types/react": "18.2.20",
+    "@types/react-custom-scrollbars": "4.0.10",
     "@types/react-dom": "18.2.7",
     "@types/react-mentions": "4.1.8",
     "@types/recoil": "0.0.9",

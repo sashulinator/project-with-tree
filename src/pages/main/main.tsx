@@ -18,27 +18,28 @@ export default function MainPage(): JSX.Element {
     <Link key={0} to={routes.decisionList.getURL()}>
       Деревья
     </Link>,
-    <Link key={2} to={routes.domainList.getURL()}>
+    <Link key={1} to={routes.domainList.getURL()}>
       Домены
     </Link>,
-    <Link key={3} to={routes.decisionList.getURL()}>
+    <Link key={2} to={routes.decisionList.getURL()}>
       Атрибуты
     </Link>,
-    <Link key={4} to={routes.ruleList.getURL()}>
+    <Link key={3} to={routes.ruleList.getURL()}>
       Правила
     </Link>,
-    <Link key={5} to={routes.decisionList.getURL()}>
+    <Link key={4} to={routes.decisionList.getURL()}>
       Системы источники
     </Link>,
-    <Link key={6} to={routes.decisionList.getURL()}>
+    <Link key={5} to={routes.decisionList.getURL()}>
       Админ
     </Link>,
   ]
 
   const order = getJSON<number[]>('mainListOrder')
+
   const orderMap: number[] = []
   const orderedItems = useMemo(() => {
-    return (order || [0, 1, 2, 3, 4, 5]).map((index) => {
+    return (order?.length === items.length ? order : [0, 1, 2, 3, 4, 5]).map((index) => {
       orderMap.push(index)
       return items[index] as React.ReactNode
     })

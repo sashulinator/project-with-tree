@@ -1,0 +1,47 @@
+.ui-Mentions-w-Input {
+  .input {
+    background: transparent;
+    font-size: transparent;
+    border: transparent;
+    outline: transparent;
+    min-height: '400px';
+  }
+
+  .input__input {
+    color: inherit;
+    border: transparent;
+    outline: transparent;
+    padding: 4px 8px;
+  }
+
+  .input__input:focus {
+    border: transparent;
+    outline: transparent;
+  }
+
+  .input__highlighter {
+    padding: 4px 8px;
+  }
+
+  .input__suggestions__list {
+    background-color: white;
+    border: 1px solid rgba(0, 0, 0, 0.15);
+  }
+
+  .input__suggestions__item {
+    padding: 5px 15px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.15);
+  }
+
+  .input__suggestions__item--focused {
+    background-color: #cee4e5;
+  }
+
+  .input__suggestions__list {
+    background-color: var(--bgSecondary);
+  }
+
+  .input__suggestions__item--focused {
+    background-color: var(--bg);
+  }
+}

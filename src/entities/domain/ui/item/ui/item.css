@@ -1,0 +1,11 @@
+.e-domain-ui-Domain {
+  padding: 0.25rem;
+  margin-bottom: 0.25rem;
+  transition: all 0.3s ease;
+}
+
+.e-domain-ui-Domain .do-not-attributes {
+  opacity: 0.5;
+  margin-left: 3rem;
+}
+

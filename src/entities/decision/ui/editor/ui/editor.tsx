@@ -2,7 +2,7 @@ import './editor.scss'
 
 import { useMemo } from 'react'
 
-import { RulesRes } from '~/entities/rules/types/rules-type'
+import { RulesRes } from '~/entities/rule/types/rules-type'
 import { Id, c } from '~/utils/core'
 import { isMetaCtrlKey } from '~/utils/dom-event'
 import { useEventListener } from '~/utils/hooks'

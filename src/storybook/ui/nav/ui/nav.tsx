@@ -1,4 +1,5 @@
 import { Fragment } from 'react'
+import { Scrollbars } from 'react-custom-scrollbars'
 
 import Flex from '~/abstract/flex'
 import getRootElement from '~/lib/dom/get-root-element'
@@ -19,36 +20,37 @@ export default function Nav(): JSX.Element {
       style={{
         borderRight: '1px solid var(--bgSecondary)',
         height: 'calc(100vh - var(--header-height) * 1px)',
-        overflow: 'scroll',
       }}
     >
-      <Flex gap='xxxl' dir='column' padding='var(--xxxl)'>
-        <ThemeDropdown />
-        <ul style={{ width: '100%' }}>
-          <Flex gap='m' dir='column'>
-            <ul>
-              {routes.flatMap(([name, ...configs]) => {
-                return (
-                  <Fragment key={name}>
-                    <li style={{ marginTop: 'var(--l)' }}>{name}</li>
-                    <ul>
-                      {configs.map((c: unknown) => {
-                        const config = c as Config<Any>
-                        const path = configToPath(config)
-                        return (
-                          <li key={path} style={{ marginTop: 'var(--m)' }}>
-                            <ConfigLink config={config} />
-                          </li>
-                        )
-                      })}
-                    </ul>
-                  </Fragment>
-                )
-              })}
-            </ul>
-          </Flex>
-        </ul>
-      </Flex>
+      <Scrollbars autoHide autoHideTimeout={1000} autoHideDuration={500}>
+        <Flex gap='xxxl' dir='column' padding='var(--xxxl)'>
+          <ThemeDropdown />
+          <ul style={{ width: '100%' }}>
+            <Flex gap='m' dir='column'>
+              <ul>
+                {routes.flatMap(([name, ...configs]) => {
+                  return (
+                    <Fragment key={name}>
+                      <li style={{ marginTop: 'var(--l)' }}>{name}</li>
+                      <ul>
+                        {configs.map((c: unknown) => {
+                          const config = c as Config<Any>
+                          const path = configToPath(config)
+                          return (
+                            <li key={path} style={{ marginTop: 'var(--m)' }}>
+                              <ConfigLink config={config} />
+                            </li>
+                          )
+                        })}
+                      </ul>
+                    </Fragment>
+                  )
+                })}
+              </ul>
+            </Flex>
+          </ul>
+        </Flex>
+      </Scrollbars>
     </nav>
   )
 }

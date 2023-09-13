@@ -9,11 +9,14 @@ import decisionCanvasWNodeVFilter from './pages/canvas/decision-w-node-v-filter'
 import decisionCanvasWNodeWJoint from './pages/canvas/ui-w-node-w-joint'
 import uiCheckbox from './pages/checkbox/ui'
 import aCollapse from './pages/collapse/a'
+import uiDndCanvas from './pages/dnd-canvas/ui'
 import uiField from './pages/field/ui'
 import uiInput from './pages/input/ui'
 import uiInputVClearable from './pages/input/ui-v-clearable'
 import uiInputVPassword from './pages/input/ui-v-password'
 import uiLabeled from './pages/labeled/ui'
+import aList from './pages/list/a'
+import uiMentions from './pages/mensions/ui'
 import aModal from './pages/modal/a'
 import uiModal from './pages/modal/ui'
 import uiOrderedList from './pages/ordered-list/ui'
@@ -30,11 +33,14 @@ export const routes = [
   ['Checkbox', uiCheckbox],
   ['Collapse', aCollapse],
   ['Field', uiField],
-  ['Labeled', uiLabeled],
   ['Input', uiInput, uiInputVClearable, uiInputVPassword],
+  ['Labeled', uiLabeled],
+  ['List', aList],
+  ['Mentions', uiMentions],
   ['Modal', aModal, uiModal],
   ['Paginator', uiPaginator],
   ['Popover', aPopover],
   ['Tooltip', aTooltip, uiTooltip],
   ['OrderedList', uiOrderedList],
+  ['DndCanvas', uiDndCanvas],
 ] as const

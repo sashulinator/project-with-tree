@@ -19,9 +19,6 @@ export default function Nav(): JSX.Element {
             <ol>
               <Link to={routes.storybook.getURL()}>Storybook</Link>
             </ol>
-            <ol>
-              <Link to={routes.storybook.getURL()}>Depricated Storybook</Link>
-            </ol>
           </>
         )}
       </ul>

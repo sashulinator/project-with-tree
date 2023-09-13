@@ -3,7 +3,7 @@ import './right-panel.scss'
 import { memo } from 'react'
 
 import Flex from '~/abstract/flex/ui/flex'
-import { RulesRes } from '~/entities/rules/types/rules-type'
+import { RulesRes } from '~/entities/rule/types/rules-type'
 import { AppearFrom } from '~/ui/animation'
 import { GhostButton } from '~/ui/button'
 import Chip from '~/ui/chip/ui/chip'
@@ -28,7 +28,7 @@ export interface Props {
 }
 
 function RightPanelComponent(props: Props): JSX.Element | null {
-  useUpdate(subscribeOnUpdates)
+  useUpdate(subscribeOnUpdates, [props.linkList.editingRuleSet.value])
 
   // const [fullscreen, , , toogleFullscreen] = useBoolean(false)
 
@@ -74,7 +74,8 @@ function RightPanelComponent(props: Props): JSX.Element | null {
                     key={rule.id}
                     onClick={(): void => {
                       const linkController = props.linkList.getEditingRuleState()
-                      linkController.rules.set(linkController.rules.value.filter((r) => r.id !== rule.id))
+                      const newRules = linkController.rules.value.filter((r) => r.id !== rule.id)
+                      linkController.rules.set(newRules)
                     }}
                   >
                     {rule.keyName || rule.name}

@@ -21,7 +21,7 @@ export interface Domain {
   /**
    * Cистемное название
    */
-  keyname: string
+  keyName: string
 
   /**
    * Описание
@@ -31,7 +31,8 @@ export interface Domain {
   /**
    * Тип
    */
-  type: Type
+  // type: Type
+  type: string //временно
 
   /**
    * Родительский домен
@@ -62,4 +63,6 @@ export interface Domain {
    * Кем обновлено
    */
   updatesBy: string
+
+  userId: Id
 }

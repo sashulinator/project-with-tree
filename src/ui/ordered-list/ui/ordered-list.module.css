@@ -1,6 +1,7 @@
 .content {
   width: 630px;
   user-select: none;
+  height: 180px;
 }
 
 .content > div {
