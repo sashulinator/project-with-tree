@@ -13,7 +13,6 @@ import { useRemoveDomain } from '~/api/domain/remove'
 import { CreateDomain } from '~/api/domain/requests/create'
 import { UpdateDomain } from '~/api/domain/requests/update'
 import { useUpdateDomain } from '~/api/domain/update'
-
 import { AttributeForm } from '~/entities/attribute'
 import { DomainForm, DomainList } from '~/entities/domain'
 import { notify } from '~/shared/notify'

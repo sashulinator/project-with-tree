@@ -1,9 +1,9 @@
 import './item.css'
 
+import { useEffect } from 'react'
 import { useSetRecoilState } from 'recoil'
 
 import Accordion from '~/abstract/accordion'
-
 import { UpdateAttribute } from '~/api/attribute/requests/update'
 import { ParentDomainRes } from '~/api/domain/types/parent-domain-res'
 import { AttributeItem } from '~/entities/attribute'
@@ -35,7 +35,7 @@ Item.displayName = 'e-domain-ui-Domain'
 export default function Item(props: Props): JSX.Element {
   const {
     domainData,
-    isExpanded = true,
+    isExpanded = false,
     isDraggable = false,
     pLeft = 0,
     isRightToEdit,
@@ -50,6 +50,9 @@ export default function Item(props: Props): JSX.Element {
   } = props
   const [expanded, , , toggleExpanded] = useBoolean(isExpanded)
   const pl = pLeft
+  useEffect(() => {
+    if (isExpanded !== expanded) toggleExpanded()
+  }, [isExpanded])
 
   const setDraggableCard = useSetRecoilState(draggableCardAtom)
 
@@ -103,7 +106,7 @@ export default function Item(props: Props): JSX.Element {
                 pLeft={pl + 10}
                 key={item.domain.id}
                 domainData={item}
-                isExpanded={false}
+                isExpanded={isExpanded}
                 handleAddAttributeOpen={handleAddAttributeOpen}
                 handleAddDomainOpen={handleAddDomainOpen}
                 removeAttribute={removeAttribute}

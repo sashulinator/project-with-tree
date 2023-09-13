@@ -36,12 +36,24 @@ export default function Header(props: HeaderProps): JSX.Element {
           <GhostButton onClick={(): void => props.handleUpdateDomainOpen(props.domain)}>
             <span>редактировать домен</span>
           </GhostButton>
-          <GhostButton onClick={(): void => props.handleAddDomainOpen(props.domain.id)}>
+          <GhostButton
+            onClick={(): void => {
+              if (!props.isExpanded) {
+                onExpanded()
+              }
+              props.handleAddDomainOpen(props.domain.id)
+            }}
+          >
             <Plus />
             <span>домен</span>
           </GhostButton>
           <GhostButton
-            onClick={(): void => props.handleAddAttributeOpen(props.domain.id)}
+            onClick={(): void => {
+              if (!props.isExpanded) {
+                onExpanded()
+              }
+              props.handleAddAttributeOpen(props.domain.id)
+            }}
             style={{ marginRight: '50px' }}
           >
             <Plus />

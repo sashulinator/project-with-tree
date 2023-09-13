@@ -1,11 +1,13 @@
 import './index.css'
 
 import { useMemo } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 import { useCreateDecision } from '~/api/decision/create'
 import { useFetchRulesList } from '~/api/rules/fetch-rules'
 import { Editor, EditorDecision } from '~/entities/decision'
 import { notify } from '~/shared/notify'
+import { routes } from '~/shared/routes'
 
 const decision: EditorDecision = {
   name: 'new_tree',
@@ -20,8 +22,13 @@ const decision: EditorDecision = {
 }
 
 export default function Page(): JSX.Element {
+  const navigate = useNavigate()
+
   const mutator = useCreateDecision({
-    onSuccess: () => notify({ data: 'Сохранено', type: 'success' }),
+    onSuccess: (data) => {
+      notify({ data: 'Сохранено', type: 'success' })
+      navigate(routes.decisionId.getURL(data.data.id || ''))
+    },
     onError: () => notify({ data: 'Ошибка', type: 'error' }),
   })
 

@@ -14,6 +14,7 @@ import RuleUpdatePage from '~/pages/rules/update/update'
 import SettingsPage from '~/pages/settings'
 import Header from '~/ui/header'
 import Nav from '~/ui/nav'
+import { Any, Id } from '~/utils/core'
 
 const Story = lazy(() => import('~/storybook'))
 const StoryNav = lazy(() => import('~/storybook/ui/nav'))
@@ -23,7 +24,7 @@ export type Route = Omit<RouteObject, 'children' | 'path'> & {
   Header?: FC
   Nav?: FC
   getName: () => string
-  getURL: () => string
+  getURL: (...a: Any[]) => string
 }
 
 export const routes = {
@@ -79,7 +80,7 @@ export const routes = {
   },
   decisionId: {
     path: '/decision/:id',
-    getURL: (): string => routes.decisionId.path,
+    getURL: (id: Id): string => routes.decisionId.path.replace(':id', id.toString()),
     getName: (): string => 'Decision',
     element: <DecisionIdPage />,
   },
