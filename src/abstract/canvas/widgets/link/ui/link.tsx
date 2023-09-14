@@ -25,8 +25,12 @@ function LinkComponent(props: LinkProps, ref: ForwardedRef<SVGPathElement>): JSX
 
   function drawPath(): string | null {
     if (s === null || t === null) return null
+    const start = s
+    const end = t
+    const startLine = { x: start.x + 30, y: start.y }
+    const endLine = { x: end.x - 30, y: end.y }
 
-    return `M${s.x},${s.y}L${t.x},${t.y}`
+    return `M ${start.x} ${start.y} L ${startLine.x} ${startLine.y} L ${endLine.x} ${endLine.y} L ${end.x} ${end.y}`
   }
 }
 
