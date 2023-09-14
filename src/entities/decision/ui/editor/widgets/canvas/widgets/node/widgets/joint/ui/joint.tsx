@@ -1,4 +1,5 @@
-import './joint.css'
+import './joint.scss'
+import './theme.scss'
 
 import { Id, c } from '~/utils/core'
 
@@ -18,8 +19,6 @@ export default function Joint(props: Props): JSX.Element {
       data-link-id={linkId}
       disabled={disabled}
       className={c(Joint.displayName, `--${props.variant}`, disabled && `--disabled`, props.className)}
-    >
-      <div />
-    </button>
+    />
   )
 }

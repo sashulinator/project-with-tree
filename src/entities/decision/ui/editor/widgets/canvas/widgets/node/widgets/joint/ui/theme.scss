@@ -1,0 +1,22 @@
+.decision-Editor-w-Canvas-w-Node-w-Joint {
+  height: var(--button_height__s);
+  width: var(--button_height__s);
+  background-color: var(--canvasNode_bg);
+
+  &:hover,
+  &:focus {
+    box-shadow: 0px 0px 0px var(--button_outlineWidth) var(--button_outlineColor);
+  }
+
+  &.--unlinked {
+    border: 6px solid var(--decision-Editor-joint_color__unlinked);
+  }
+
+  &.--linked {
+    border: 6px solid var(--decision-Editor-joint_color__linked);
+  }
+
+  &.--new {
+    border: 6px solid var(--decision-Editor-joint_color__new);
+  }
+}
