@@ -1,7 +1,12 @@
 import { Id, Offset } from '~/utils/core'
 import { getOffsetInElement } from '~/utils/dom'
 
-export function getOffset(linkId: Id | undefined, nodeEl: Element | null | undefined): Offset | null {
+export function getOffset(
+  linkId: Id | undefined,
+  nodeEl: Element | null | undefined,
+  scale: number,
+  offsetX: number
+): Offset | null {
   if (!linkId) return null
 
   const jointEl = nodeEl?.querySelector(`[data-link-id="${linkId.toString()}"]`) as HTMLElement
@@ -12,8 +17,8 @@ export function getOffset(linkId: Id | undefined, nodeEl: Element | null | undef
   const jointRect = jointEl?.getBoundingClientRect() || { height: 0 }
 
   const ret = {
-    left: OffsetInElement.left + jointRect.width / 2,
-    top: OffsetInElement.top + jointRect.height / 2,
+    left: OffsetInElement.left + jointRect.width / 2 / scale + offsetX,
+    top: OffsetInElement.top + jointRect.height / 2 / scale,
   }
 
   return ret

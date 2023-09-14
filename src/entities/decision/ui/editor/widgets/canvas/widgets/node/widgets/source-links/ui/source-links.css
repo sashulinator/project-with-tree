@@ -28,3 +28,7 @@
   background-color: var(--field_bg__hover);
   border-radius: 1rem;
 }
+
+.decision-Editor-w-Canvas-w-Node-w-SourceLinks .joint {
+  transform: translateX(23px);
+}

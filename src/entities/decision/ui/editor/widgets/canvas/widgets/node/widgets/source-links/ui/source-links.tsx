@@ -71,6 +71,7 @@ export default function SourceLinks(props: Props): JSX.Element {
             <Plus />
           </GhostButton>
           <Joint
+            className='joint'
             onClick={(): void => props.startLinkCreating(newLinkId)}
             disabled={isEditingThisNode || isEditingHasSource}
             variant='new'
@@ -197,6 +198,7 @@ export function RuleSet(props: RuleSetProps): JSX.Element {
         {props.linkController.rules.value.map((rule) => rule.keyName || rule.name).join(', ')}
       </UnstyledButton>
       <Joint
+        className='joint'
         disabled={
           props.isEditingThisNode || props.isEditingHasSource || (props.isLinked && Boolean(props.editingLinkState))
         }

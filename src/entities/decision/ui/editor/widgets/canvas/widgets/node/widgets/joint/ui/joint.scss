@@ -1,0 +1,13 @@
+.decision-Editor-w-Canvas-w-Node-w-Joint {
+  border: 0;
+  margin: 0;
+  border-radius: 50%;
+  background-color: blue;
+  background: transparent;
+  outline: none;
+  cursor: pointer;
+
+  &.--disabled {
+    filter: grayscale(100%);
+  }
+}
