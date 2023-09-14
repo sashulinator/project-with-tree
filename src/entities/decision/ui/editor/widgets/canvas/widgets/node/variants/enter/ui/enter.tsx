@@ -27,7 +27,7 @@ export default function Enter(props: FactoryProps): JSX.Element {
       toolbar={<Toolbar state={props.state} />}
       sourceLinks={
         <SourceLinks
-          linkListController={props.linkList}
+          linkList={props.linkList}
           state={props.state}
           startLinkCreating={onNewJointClick('sourceId')}
           startLinkEditing={onJointClick}
