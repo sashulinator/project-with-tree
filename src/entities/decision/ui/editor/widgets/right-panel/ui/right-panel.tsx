@@ -1,16 +1,17 @@
 import './right-panel.scss'
 
-import { memo } from 'react'
+import { memo, useRef } from 'react'
 
 import Flex from '~/abstract/flex/ui/flex'
 import { RulesRes } from '~/entities/rule/types/rules-type'
 import { AppearFrom } from '~/ui/animation'
 import { GhostButton } from '~/ui/button'
-import Chip from '~/ui/chip/ui/chip'
 import { Close } from '~/ui/icon'
 import Resizable, { ResizableProps } from '~/ui/resizable'
+import Tooltip from '~/ui/tooltip'
 import { Id, assertDefined, c } from '~/utils/core'
 import { useUpdate } from '~/utils/hooks'
+import { setRefs } from '~/utils/react'
 
 import { RuleList } from '..'
 import { LinkListController, NodeListController } from '../../..'
@@ -29,6 +30,8 @@ export interface Props {
 
 function RightPanelComponent(props: Props): JSX.Element | null {
   useUpdate(subscribeOnUpdates, [props.linkList.editingRuleSet.value])
+
+  const tooltipContainerRef = useRef<HTMLElement>(null)
 
   // const [fullscreen, , , toogleFullscreen] = useBoolean(false)
 
@@ -65,21 +68,40 @@ function RightPanelComponent(props: Props): JSX.Element | null {
         </Flex>
         {props.linkList.editingRuleSet.value && (
           <>
-            <Flex dir='column' width='100%'>
+            <Flex dir='column' width='100%' gap='l'>
               {props.linkList.getEditingRuleState().rules.value.map((rule) => {
                 return (
-                  <Chip
-                    type='div'
-                    height='s'
+                  <div
                     key={rule.id}
-                    onClick={(): void => {
-                      const linkController = props.linkList.getEditingRuleState()
-                      const newRules = linkController.rules.value.filter((r) => r.id !== rule.id)
-                      linkController.rules.set(newRules)
+                    ref={setRefs(tooltipContainerRef)}
+                    style={{
+                      display: 'flex',
+                      overflow: 'hidden',
+                      width: '100%',
+                      flexDirection: 'row',
+                      justifyContent: 'space-between',
+                      alignItems: 'center',
                     }}
                   >
-                    {rule.keyName || rule.name}
-                  </Chip>
+                    <div style={{ width: '85%' }}>
+                      <Tooltip placement='tl' containerElement={tooltipContainerRef.current} contents={rule.name}>
+                        <div style={{ overflow: 'hidden', width: '90%', whiteSpace: 'nowrap' }}>{rule.name}</div>
+                      </Tooltip>
+                      <Tooltip placement='tl' containerElement={tooltipContainerRef.current} contents={rule.keyName}>
+                        <div style={{ overflow: 'hidden', width: '90%', opacity: '0.7' }}>{rule.keyName}</div>
+                      </Tooltip>
+                    </div>
+                    <GhostButton
+                      round={true}
+                      onClick={(): void => {
+                        const linkController = props.linkList.getEditingRuleState()
+                        const newRules = linkController.rules.value.filter((r) => r.id !== rule.id)
+                        linkController.rules.set(newRules)
+                      }}
+                    >
+                      <Close />
+                    </GhostButton>
+                  </div>
                 )
               })}
             </Flex>

@@ -15,8 +15,29 @@ export default function Rule(props: Props): JSX.Element {
     <UnstyledButton
       className={c(props.className, Rule.displayName)}
       onClick={(): void => props.onSelect(props.rule.id)}
+      style={{
+        width: '100%',
+        display: 'flex',
+        flexDirection: 'column',
+      }}
     >
-      {props.rule.keyName}
+      <div
+        style={{
+          width: '100%',
+          display: 'flex',
+        }}
+      >
+        {props.rule.name}
+      </div>
+      <div
+        style={{
+          width: '100%',
+          display: 'flex',
+          opacity: '0.7',
+        }}
+      >
+        {props.rule.keyName}
+      </div>
     </UnstyledButton>
   )
 }
