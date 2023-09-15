@@ -1,6 +1,8 @@
 .decision-Editor-w-Canvas-w-Node-v-Filter-w-Toolbar {
   display: flex;
   justify-content: space-between;
+  overflow: hidden;
+  border-radius: var(--xl);
 }
 
 .decision-Editor-w-Canvas-w-Node-v-Filter-w-Toolbar .selection {

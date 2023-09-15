@@ -46,7 +46,7 @@ export default function Link(props: LinkProps): JSX.Element | null {
         sourceOffset={getOffset(props.state.id, sourceState?.ref.value, scale, 23)}
         targetOffset={getOffset(props.state.id, targetState?.ref.value, scale, -23)}
         canvasTranslate={canvasTranslate}
-        strokeWidth={2}
+        strokeWidth={4}
         sourcePosition={sourceState?.position.value}
         targetPosition={targetState?.position.value}
         onClick={fns(pathProps.onClick, (e) => (isMetaCtrlKey(e) ? toggle() : selectLinks([props.state.id])))}
