@@ -67,7 +67,7 @@ export default function SourceLinks(props: Props): JSX.Element {
       })}
       {!props.hideNewLink && (
         <Flex mainAxis='center' crossAxis='center'>
-          <GhostButton onClick={props.addLink} round={true}>
+          <GhostButton className='plusButton' onClick={props.addLink} round={true}>
             <Plus />
           </GhostButton>
           <Joint

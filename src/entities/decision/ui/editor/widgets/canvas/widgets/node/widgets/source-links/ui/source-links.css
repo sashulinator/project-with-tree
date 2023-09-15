@@ -29,6 +29,7 @@
   border-radius: 1rem;
 }
 
-.decision-Editor-w-Canvas-w-Node-w-SourceLinks .joint {
+.decision-Editor-w-Canvas-w-Node-w-SourceLinks .joint,
+.decision-Editor-w-Canvas-w-Node-w-SourceLinks .plusButton {
   transform: translateX(23px);
 }
