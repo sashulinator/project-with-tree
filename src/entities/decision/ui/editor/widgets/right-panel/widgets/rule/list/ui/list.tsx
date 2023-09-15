@@ -25,7 +25,7 @@ export default function List(props: Props): JSX.Element {
   return (
     <div className={c(props.className, List.displayName)}>
       <Input value={query} onChange={(e): void => setQuery(e.currentTarget.value)} />
-      <ul className='list'>
+      <ul className='list' style={{ display: 'flex', gap: 'var(--l)', overflow: 'scroll' }}>
         {filteredList.map((rule) => {
           return (
             <li key={rule.id}>
