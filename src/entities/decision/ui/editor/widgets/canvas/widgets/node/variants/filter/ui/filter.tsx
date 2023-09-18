@@ -29,7 +29,7 @@ export default function Filter(props: FactoryProps): JSX.Element {
       }
       sourceLinks={
         <SourceLinks
-          linkListController={props.linkList}
+          linkList={props.linkList}
           state={props.state}
           startLinkCreating={startLinkCreating('sourceId')}
           startLinkEditing={startLinkEditing}

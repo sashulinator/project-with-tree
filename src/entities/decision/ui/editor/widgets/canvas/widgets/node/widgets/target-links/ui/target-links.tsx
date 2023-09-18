@@ -36,6 +36,7 @@ export default function TargetLink(props: Props): JSX.Element {
         const isLinked = Boolean(linkController.sourceId.value)
         return (
           <Joint
+            className='joint'
             key={linkController.id}
             disabled={isEditingThisNode || isEditingHasTarget || (isLinked && Boolean(editingLinkState))}
             variant={isLinked ? 'linked' : 'unlinked'}
@@ -45,6 +46,7 @@ export default function TargetLink(props: Props): JSX.Element {
         )
       })}
       <Joint
+        className='joint'
         onClick={(): void => props.onNewJointClick(newLinkId)}
         disabled={isEditingThisNode || isEditingHasTarget}
         variant='new'

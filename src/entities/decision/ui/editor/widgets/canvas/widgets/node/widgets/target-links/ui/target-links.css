@@ -4,3 +4,7 @@
   padding: var(--m);
   gap: var(--m);
 }
+
+.decision-Editor-w-Canvas-w-Node-w-TargetLink .joint {
+  transform: translateX(-23px);
+}

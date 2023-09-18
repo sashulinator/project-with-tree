@@ -20,5 +20,5 @@ export const DARK = {
   errorColor: clr('#d2302f'),
 
   focus: primary,
-  focusAlt: clr('#7ed321'),
+  focusAlt: clr('violet'),
 } satisfies RequiredVars

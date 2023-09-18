@@ -43,10 +43,10 @@ export default function Link(props: LinkProps): JSX.Element | null {
         {...pathProps}
         className={c(pathProps.className, '--link', isSelected && '--selected')}
         scale={scale}
-        sourceOffset={getOffset(props.state.id, sourceState?.ref.value)}
-        targetOffset={getOffset(props.state.id, targetState?.ref.value)}
+        sourceOffset={getOffset(props.state.id, sourceState?.ref.value, scale, 23)}
+        targetOffset={getOffset(props.state.id, targetState?.ref.value, scale, -23)}
         canvasTranslate={canvasTranslate}
-        strokeWidth={2}
+        strokeWidth={4}
         sourcePosition={sourceState?.position.value}
         targetPosition={targetState?.position.value}
         onClick={fns(pathProps.onClick, (e) => (isMetaCtrlKey(e) ? toggle() : selectLinks([props.state.id])))}
@@ -55,8 +55,8 @@ export default function Link(props: LinkProps): JSX.Element | null {
         {...pathProps}
         className={c(pathProps.className, '--overlay', isSelected && '--selected')}
         scale={scale}
-        sourceOffset={getOffset(props.state.id, sourceState?.ref.value)}
-        targetOffset={getOffset(props.state.id, targetState?.ref.value)}
+        sourceOffset={getOffset(props.state.id, sourceState?.ref.value, scale, 23)}
+        targetOffset={getOffset(props.state.id, targetState?.ref.value, scale, -23)}
         canvasTranslate={canvasTranslate}
         strokeWidth={25}
         sourcePosition={sourceState?.position.value}
