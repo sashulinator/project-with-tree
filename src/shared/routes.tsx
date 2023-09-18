@@ -4,6 +4,7 @@ import { RouteObject } from 'react-router-dom'
 import DecisionListPage from '~/pages/decisions'
 import DecisionCreatePage from '~/pages/decisions/create'
 import DecisionIdPage from '~/pages/decisions/id'
+import DndPage from '~/pages/dnd'
 import DomainListPage from '~/pages/domains'
 import LoginPage from '~/pages/login'
 import MainPage from '~/pages/main'
@@ -41,6 +42,14 @@ export const routes = {
     getURL: (): string => routes.decisionList.path,
     getName: (): string => 'Decisions',
     element: <DecisionListPage />,
+    Header,
+    Nav,
+  },
+  dnd: {
+    path: '/dnd',
+    getURL: (): string => routes.dnd.path,
+    getName: (): string => 'Dnd',
+    element: <DndPage />,
     Header,
     Nav,
   },
