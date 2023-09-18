@@ -4,5 +4,9 @@
   > .list {
     display: flex;
     flex-direction: column;
+
+    > li:hover {
+      background-color: var(--field_bg__hover);
+    }
   }
 }
