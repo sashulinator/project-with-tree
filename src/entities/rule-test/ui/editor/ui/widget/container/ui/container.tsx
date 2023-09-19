@@ -12,6 +12,7 @@ import { CSS } from '@dnd-kit/utilities'
 
 import { useMemo } from 'react'
 
+import Flex from '~/abstract/flex'
 import { RuleContainer, RuleItem } from '~/entities/rule-test/types/type'
 import { GhostButton } from '~/ui/button'
 import { Close, Plus } from '~/ui/icon'
@@ -21,10 +22,12 @@ import Item from '../widget/item/ui/item'
 
 interface Props {
   container: RuleContainer
+  rulesForContainer: RuleItem[]
   rules: RuleItem[]
   deleteContainer?: (id: Id) => void
   createRule?: (id: Id) => void
   deleteRule?: (id: Id) => void
+  setRules?: (rulesForContainer: RuleItem[]) => void
 }
 
 Container.displayName = 'e-Rule-Editor-Container'
@@ -32,15 +35,17 @@ Container.displayName = 'e-Rule-Editor-Container'
 function Container(props: Props): JSX.Element {
   const {
     container,
+    rulesForContainer,
     rules,
     deleteContainer = (): void => {},
     createRule = (): void => {},
     deleteRule = (): void => {},
+    setRules = (): void => {},
   } = props
 
   const rulesIds = useMemo(() => {
-    return rules.map((task) => task.id)
-  }, [rules])
+    return rulesForContainer.map((item) => item.id)
+  }, [rulesForContainer])
 
   const { setNodeRef, attributes, listeners, transform, transition, isDragging } = useSortable({
     id: container.id,
@@ -55,25 +60,29 @@ function Container(props: Props): JSX.Element {
     transform: CSS.Transform.toString(transform),
   }
 
-  if (isDragging) {
-    return <div style={{ ...style, opacity: 0.6 }} ref={setNodeRef} className={c(Container.displayName)}></div>
-  }
-
   return (
-    <div style={style} ref={setNodeRef} className={c(Container.displayName)}>
-      <div {...attributes} {...listeners} className='header'>
-        <h2>{container.title}</h2>
+    <div
+      {...attributes}
+      {...listeners}
+      style={{ ...style, opacity: isDragging ? 0.3 : 1 }}
+      ref={setNodeRef}
+      className={c(Container.displayName)}
+    >
+      <div className='header'>
+        <GhostButton onClick={(): void => createRule(container.id)}>
+          <Flex gap='l' crossAxis='center'>
+            <Plus></Plus>
+            Добавить правило
+          </Flex>
+        </GhostButton>
         <GhostButton square onClick={(): void => deleteContainer(container.id)}>
           <Close />
         </GhostButton>
       </div>
       <div className='body'>
-        <GhostButton square onClick={(): void => createRule(container.id)}>
-          <Plus></Plus>
-        </GhostButton>
         <SortableContext items={rulesIds}>
-          {rules.map((item) => (
-            <Item deleteRule={deleteRule} key={item.id} rule={item} />
+          {rulesForContainer.map((item) => (
+            <Item rules={rules} setRules={setRules} deleteRule={deleteRule} key={item.id} rule={item} />
           ))}
         </SortableContext>
       </div>

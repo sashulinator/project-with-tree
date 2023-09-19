@@ -22,6 +22,7 @@ import { createPortal } from 'react-dom'
 
 import Flex from '~/abstract/flex'
 import { RuleContainer, RuleItem } from '~/entities/rule-test'
+import { EditorValues } from '~/pages/dnd'
 import { GhostButton } from '~/ui/button'
 import { Plus } from '~/ui/icon'
 import { Id, c, generateId } from '~/utils/core'
@@ -31,16 +32,40 @@ import Item from './widget/container/widget/item/ui/item'
 
 Editor.displayName = 'e-Rule-Editor'
 
-export interface Props {}
+export interface Props {
+  initialData: EditorValues[]
+}
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 function Editor(props: Props): JSX.Element {
-  const [containerList, setActiveContainerList] = useState<RuleContainer[]>([])
+  const { initialData } = props
+
+  // export const data: EditorValues[] = [
+  //   {
+  //     id: '5',
+  //     valueArr: [{ id: '3', value: '', condition: SelectValue.and }],
+  //     condition: SelectValue.and,
+  //   },
+  // ]
+
+  const newContainerList = initialData.map((item) => {
+    return { id: item.id }
+  })
+
+  const newRulesList: RuleItem[] = []
+  initialData.forEach((arr) => {
+    arr.valueArr.forEach((item) => {
+      newRulesList.push({ id: item.id, content: item.value, containerId: arr.id })
+    })
+  })
+
+  const [containerList, setActiveContainerList] = useState<RuleContainer[]>(newContainerList)
   const [activeContainer, setActiveContainer] = useState<RuleContainer | null>(null)
   const columnsId = useMemo(() => containerList.map((item) => item.id), [containerList])
 
-  const [rules, setTasks] = useState<RuleItem[]>([])
+  const [rules, setRules] = useState<RuleItem[]>(newRulesList)
   const [activeItem, setActiveItem] = useState<RuleItem | null>(null)
+
   const sensors = useSensors(
     useSensor(PointerSensor, {
       activationConstraint: {
@@ -48,23 +73,28 @@ function Editor(props: Props): JSX.Element {
       },
     })
   )
-  console.log(activeContainer)
+
   return (
     <DndContext sensors={sensors} onDragStart={onDragStart} onDragEnd={onDragEnd} onDragOver={onDragOver}>
       <div className={c(Editor.displayName)}>
-        <Flex gap='xxxl' dir='column' crossAxis='center'>
-          <GhostButton square onClick={createContainer}>
-            <Plus></Plus>
+        <Flex gap='xxxl' dir='column'>
+          <GhostButton onClick={createContainer}>
+            <Flex gap='l' crossAxis='center'>
+              <Plus></Plus>
+              Добавить контейнер
+            </Flex>
           </GhostButton>
           <SortableContext items={columnsId}>
             {containerList.map((item) => (
               <Container
+                rules={rules}
                 key={item.id}
                 container={item}
-                rules={rules.filter((task) => task.containerId === item.id)}
+                rulesForContainer={rules.filter((rule) => rule.containerId === item.id)}
                 deleteRule={deleteRule}
                 createRule={createRule}
                 deleteContainer={deleteContainer}
+                setRules={setRules}
               />
             ))}
           </SortableContext>
@@ -74,10 +104,8 @@ function Editor(props: Props): JSX.Element {
         <DragOverlay>
           {activeContainer && (
             <Container
-              deleteRule={deleteRule}
-              createRule={createRule}
-              deleteContainer={deleteContainer}
-              rules={rules.filter((task) => task.containerId === activeContainer.id)}
+              rules={rules}
+              rulesForContainer={rules.filter((rule) => rule.containerId === activeContainer.id)}
               container={activeContainer}
             />
           )}
@@ -88,6 +116,8 @@ function Editor(props: Props): JSX.Element {
     </DndContext>
   )
 
+  // Private
+
   function onDragStart(e: DragStartEvent): void {
     if (e.active.data.current?.type === 'Container') {
       // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
@@ -96,7 +126,7 @@ function Editor(props: Props): JSX.Element {
 
     if (e.active.data.current?.type === 'RuleItem') {
       // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-      setActiveItem(e.active.data.current.task)
+      setActiveItem(e.active.data.current.rule)
       return
     }
   }
@@ -117,7 +147,7 @@ function Editor(props: Props): JSX.Element {
 
     // Im dropping a RuleItem over another RuleItem
     if (isActiveATask && isOverATask) {
-      setTasks((rules) => {
+      setRules((rules) => {
         const activeIndex = rules.findIndex((t) => t.id === activeId)
         const overIndex = rules.findIndex((t) => t.id === overId)
 
@@ -134,7 +164,7 @@ function Editor(props: Props): JSX.Element {
 
     // Im dropping a RuleItem over a column
     if (isActiveATask && isOverAColumn) {
-      setTasks((rules) => {
+      setRules((rules) => {
         const activeIndex = rules.findIndex((t) => t.id === activeId)
 
         rules[activeIndex].containerId = overId
@@ -149,8 +179,6 @@ function Editor(props: Props): JSX.Element {
 
     const { active, over } = event
 
-    console.log('active', active)
-    console.log('over', over)
     if (!over) return
 
     const activeId = active.id
@@ -159,7 +187,7 @@ function Editor(props: Props): JSX.Element {
     if (activeId === overId) return
 
     const isActiveAContainer = active.data.current?.type === 'Container'
-    console.log('isActiveAContainer', active.data.current?.type)
+
     if (!isActiveAContainer) return
 
     setActiveContainerList((containerList) => {
@@ -172,7 +200,7 @@ function Editor(props: Props): JSX.Element {
   }
 
   function createContainer(): void {
-    const containerToAdd: RuleContainer = { id: generateId(), title: `Container ${containerList.length + 1}` }
+    const containerToAdd: RuleContainer = { id: generateId() }
     setActiveContainerList((containerList) => [...containerList, containerToAdd])
   }
 
@@ -180,7 +208,7 @@ function Editor(props: Props): JSX.Element {
     setActiveContainerList((containerList) => containerList.filter((item) => item.id !== id))
 
     const newTask = rules.filter((t) => t.containerId !== id)
-    setTasks(newTask)
+    setRules(newTask)
   }
 
   function createRule(containerId: Id): void {
@@ -190,11 +218,11 @@ function Editor(props: Props): JSX.Element {
       content: `RuleItem ${rules.length + 1}`,
     }
 
-    setTasks([...rules, newTask])
+    setRules([...rules, newTask])
   }
 
   function deleteRule(id: Id): void {
-    setTasks((rules) => rules.filter((item) => item.id !== id))
+    setRules((rules) => rules.filter((item) => item.id !== id))
   }
 }
 
