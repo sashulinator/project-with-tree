@@ -250,7 +250,7 @@ export class _HistoryController extends ActionHistory<Step<StepItem>> {
       this.step.add(
         'removeLink',
         { linkId: id },
-        { ruleSet: link.deserialize(), linkId: id, sourceId: link.sourceId.value },
+        { ruleSet: link.serialize(), linkId: id, sourceId: link.sourceId.value },
         true
       )
     })

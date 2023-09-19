@@ -35,7 +35,7 @@ export default function DecisionPage(): JSX.Element {
               const links = states.linkList.getLinksBySourceId(nodeController.point.id)
               const point = nodeController.deserialize()
               point['children'] = links.map((l, i) => {
-                const ruleSet = l.deserialize()
+                const ruleSet = l.toRuleSet()
                 ruleSet.index = ruleSet.index ?? i
                 return ruleSet
               })

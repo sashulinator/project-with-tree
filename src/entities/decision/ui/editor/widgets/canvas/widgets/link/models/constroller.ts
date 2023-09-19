@@ -9,6 +9,14 @@ export type Events = {
   index: { value: number }
 }
 
+interface Serialized {
+  id: Id
+  rules: Rule[]
+  targetId: Id | undefined
+  sourceId: Id | undefined
+  index: number
+}
+
 export interface Props {
   id?: Id | undefined
   sourceId?: Id | undefined
@@ -42,10 +50,20 @@ export class Controller extends Emitter<Events> {
     this.index = new Prop('index', props.index, this)
   }
 
-  deserialize(): RuleSet {
+  serialize(): Serialized {
     return {
+      id: this.id,
+      targetId: this.targetId.value,
+      sourceId: this.sourceId.value,
       rules: this.rules.value,
+      index: this.index.value,
+    }
+  }
+
+  toRuleSet(): RuleSet {
+    return {
       id: this.targetId.value,
+      rules: this.rules.value,
       index: this.index.value,
     }
   }

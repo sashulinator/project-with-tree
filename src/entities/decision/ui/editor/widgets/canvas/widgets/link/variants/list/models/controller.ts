@@ -1,4 +1,5 @@
 import { Point, Rule } from '~/entities/decision'
+import { _createLink } from '~/entities/decision/ui/editor/lib/_create-link'
 import { Selection } from '~/lib/emitter'
 import { Id, assertDefined, invariant } from '~/utils/core'
 import { EmitterDictionary, Prop } from '~/utils/emitter'
@@ -31,9 +32,16 @@ export class Controller extends EmitterDictionary<LinkController, Events> {
   constructor(pointList: Point[]) {
     const linkControllers = pointList
       .flatMap((point) => {
-        return point.children?.map(
-          (ruleSet) =>
-            new LinkController({ sourceId: point.id, targetId: ruleSet.id, rules: ruleSet.rules, index: ruleSet.index })
+        return point.children?.map((ruleSet) =>
+          _createLink(
+            {},
+            {
+              sourceId: point.id,
+              targetId: ruleSet.id,
+              rules: ruleSet.rules,
+              index: ruleSet.index,
+            }
+          )
         )
       })
       .filter((t) => !!t) as LinkController[]
