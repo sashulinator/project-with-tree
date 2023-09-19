@@ -32,7 +32,7 @@ DndCanvas.displayName = 'ui-DndCanvas'
 function DndCanvas(): JSX.Element {
   const [columns, setColumns] = useState<Column[]>([])
   const [activeColumn, setActiveColumn] = useState<Column | null>(null)
-
+  console.log(columns)
   const columnsId = useMemo(() => columns.map((item) => item.id), [columns])
 
   const [tasks, setTasks] = useState<Task[]>([])
@@ -69,15 +69,9 @@ function DndCanvas(): JSX.Element {
       {createPortal(
         <DragOverlay>
           {activeColumn && (
-            <ColumnContainer
-              deleteTask={deleteTask}
-              tasks={tasks.filter((task) => task.columnId === activeColumn.id)}
-              createTask={createTask}
-              deleteColumn={deleteColumn}
-              column={activeColumn}
-            />
+            <ColumnContainer tasks={tasks.filter((task) => task.columnId === activeColumn.id)} column={activeColumn} />
           )}
-          {activeTask && <TaskCard card={activeTask} deleteTask={deleteTask} />}
+          {activeTask && <TaskCard card={activeTask} />}
         </DragOverlay>,
         document.body
       )}

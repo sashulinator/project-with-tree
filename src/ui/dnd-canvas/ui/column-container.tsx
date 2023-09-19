@@ -21,27 +21,35 @@ import { Column, Task } from './type'
 
 interface Props {
   column: Column
-  deleteColumn: (id: Id) => void
-  createTask: (id: Id) => void
-  deleteTask: (id: Id) => void
   tasks: Task[]
+  deleteColumn?: (id: Id) => void
+  createTask?: (id: Id) => void
+  deleteTask?: (id: Id) => void
 }
 
 ColumnContainer.displayName = 'ColumnContainer'
 
 function ColumnContainer(props: Props): JSX.Element {
+  const {
+    column,
+    tasks,
+    deleteColumn = (): void => {},
+    createTask = (): void => {},
+    deleteTask = (): void => {},
+  } = props
+
   const tasksIds = useMemo(() => {
-    return props.tasks.map((task) => task.id)
-  }, [props.tasks])
+    return tasks.map((task) => task.id)
+  }, [tasks])
 
   const { setNodeRef, attributes, listeners, transform, transition, isDragging } = useSortable({
-    id: props.column.id,
+    id: column.id,
     data: {
       type: 'Column',
-      column: props.column,
+      column: column,
     },
   })
-
+  console.log('task', tasks)
   const style = {
     transition,
     transform: CSS.Transform.toString(transform),
@@ -54,18 +62,18 @@ function ColumnContainer(props: Props): JSX.Element {
   return (
     <div style={style} ref={setNodeRef} className={c(ColumnContainer.displayName)}>
       <div {...attributes} {...listeners} className='header'>
-        <h2>{props.column.title}</h2>
-        <GhostButton square onClick={(): void => props.deleteColumn(props.column.id)}>
+        <h2>{column.title}</h2>
+        <GhostButton square onClick={(): void => deleteColumn(column.id)}>
           <Close />
         </GhostButton>
       </div>
       <div className='body'>
-        <GhostButton square onClick={(): void => props.createTask(props.column.id)}>
+        <GhostButton square onClick={(): void => createTask(column.id)}>
           <Plus></Plus>
         </GhostButton>
         <SortableContext items={tasksIds}>
-          {props.tasks.map((item) => (
-            <TaskCard deleteTask={props.deleteTask} key={item.id} card={item} />
+          {tasks.map((item) => (
+            <TaskCard deleteTask={deleteTask} key={item.id} card={item} />
           ))}
         </SortableContext>
       </div>

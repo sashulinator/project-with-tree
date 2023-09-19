@@ -5,33 +5,34 @@
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
+import './item.css'
+
 import { useSortable } from '@dnd-kit/sortable'
 import { CSS } from '@dnd-kit/utilities'
 
-import React, { useState } from 'react'
+import { useState } from 'react'
 
+import { RuleItem } from '~/entities/rule-test/types/type'
 import { GhostButton } from '~/ui/button'
 import { Close } from '~/ui/icon'
 import { Id, c } from '~/utils/core'
 
-import { Task } from './type'
-
 interface Props {
-  card: Task
-  deleteTask?: (id: Id) => void
+  rule: RuleItem
+  deleteRule?: (id: Id) => void
 }
 
-TaskCard.displayName = 'TaskCard'
+Item.displayName = 'e-Rule-Editor-w-Item'
 
-function TaskCard(props: Props): JSX.Element {
-  const { card, deleteTask = (): void => {} } = props
+function Item(props: Props): JSX.Element {
+  const { rule, deleteRule = (): void => {} } = props
   const [mouseIsOver, setMouseIsOver] = useState(false)
 
   const { setNodeRef, attributes, listeners, transform, transition, isDragging } = useSortable({
-    id: card.id,
+    id: rule.id,
     data: {
-      type: 'Task',
-      task: card,
+      type: 'RuleItem',
+      task: rule,
     },
   })
 
@@ -41,7 +42,7 @@ function TaskCard(props: Props): JSX.Element {
   }
 
   if (isDragging) {
-    return <div ref={setNodeRef} style={{ ...style, opacity: 0.6 }} className={c(TaskCard.displayName)}></div>
+    return <div ref={setNodeRef} style={{ ...style, opacity: 0.6 }} className={c(Item.displayName)}></div>
   }
 
   return (
@@ -52,11 +53,11 @@ function TaskCard(props: Props): JSX.Element {
       {...listeners}
       onMouseEnter={(): void => setMouseIsOver(true)}
       onMouseLeave={(): void => setMouseIsOver(false)}
-      className={c(TaskCard.displayName)}
+      className={c(Item.displayName)}
     >
-      {card.content}
+      {rule.content}
       {mouseIsOver && (
-        <GhostButton square onClick={(): void => deleteTask(card.id)}>
+        <GhostButton square onClick={(): void => deleteRule(rule.id)}>
           <Close />
         </GhostButton>
       )}
@@ -64,4 +65,4 @@ function TaskCard(props: Props): JSX.Element {
   )
 }
 
-export default TaskCard
+export default Item
