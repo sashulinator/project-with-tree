@@ -7,6 +7,8 @@ import { CanvasController } from '..'
 import { Point, RuleSet } from '../../..'
 import { _addNode } from '../_private'
 import { _calcColumnNodesPositions } from '../lib/_calc-column-nodes-positions'
+import { _createNode } from '../lib/_create-node'
+import { _createPoint } from '../lib/_create-point'
 import { LinkController, LinkListController, NodeController, NodeListController, getColumnX } from '../widgets/canvas'
 
 interface Context {
@@ -103,10 +105,14 @@ export class _HistoryController extends ActionHistory<Step<StepItem>> {
         this.linkList.selection.set(item.done ? event.undo.ids : event.redo.ids)
       }
       if (event.type === 'addNode') {
-        item.done ? this.nodeList.remove(event.undo.id) : _addNode(this, event.redo.point, emptyFn, { duration: 0 })
+        item.done
+          ? this.nodeList.remove(event.undo.id)
+          : _addNode(this, _createNode(this, event.redo.point), emptyFn, { duration: 0 })
       }
       if (event.type === 'removeNodes') {
-        item.done ? _addNode(this, event.undo.point, emptyFn, { duration: 0 }) : this.nodeList.remove(event.redo.id)
+        item.done
+          ? _addNode(this, _createNode(this, event.undo.point), emptyFn, { duration: 0 })
+          : this.nodeList.remove(event.redo.id)
       }
       if (event.type === 'moveNodes') {
         Object.entries(item.done ? event.undo : event.redo).forEach(([key, value]) => {
@@ -161,8 +167,10 @@ export class _HistoryController extends ActionHistory<Step<StepItem>> {
     onAdded: (node: NodeController) => void
     // event?: (TransitionMoveEvent & Record<string, unknown>) | undefined
   ): void => {
-    const newPoint = _addNode(this, point, onAdded)
-    this.step.add('addNode', { point: newPoint }, { id: newPoint.id }, true)
+    const createdPoint = _createPoint(this, point)
+    const createdNode = _createNode(this, createdPoint)
+    _addNode(this, createdNode, onAdded)
+    this.step.add('addNode', { point: createdPoint }, { id: createdPoint.id }, true)
   }
 
   create = (
