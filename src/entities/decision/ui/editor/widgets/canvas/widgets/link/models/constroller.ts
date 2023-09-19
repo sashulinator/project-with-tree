@@ -9,7 +9,7 @@ export type Events = {
   index: { value: number }
 }
 
-interface Serialized {
+export interface Serialized {
   id: Id
   rules: Rule[]
   targetId: Id | undefined

@@ -4,12 +4,13 @@ import { emptyFn } from '~/utils/function/empty-fn'
 import { Required } from '~/utils/types/object'
 
 import { CanvasController } from '..'
-import { Point, RuleSet } from '../../..'
+import { Point } from '../../..'
 import { _addNode } from '../_private'
 import { _calcColumnNodesPositions } from '../lib/_calc-column-nodes-positions'
+import { _createLink } from '../lib/_create-link'
 import { _createNode } from '../lib/_create-node'
 import { _createPoint } from '../lib/_create-point'
-import { LinkController, LinkListController, NodeController, NodeListController, getColumnX } from '../widgets/canvas'
+import { LinkListController, NodeController, NodeListController, SerializedLink, getColumnX } from '../widgets/canvas'
 
 interface Context {
   canvas: CanvasController
@@ -56,7 +57,7 @@ export type RemoveLinkItem = {
   type: 'removeLink'
   historical: true
   redo: { linkId: Id }
-  undo: { ruleSet: RuleSet; linkId: Id; sourceId: Id | undefined }
+  undo: { serialized: SerializedLink }
 }
 
 type StepItem = SelectNodesItem | AddNodeItem | RemoveNodeItem | RemoveLinkItem | SelectLinksItem | MoveNodeItem
@@ -123,15 +124,7 @@ export class _HistoryController extends ActionHistory<Step<StepItem>> {
       }
       if (event.type === 'removeLink') {
         if (item.done) {
-          this.linkList.add(
-            new LinkController({
-              id: event.undo.linkId,
-              sourceId: event.undo.sourceId,
-              targetId: event.undo.ruleSet.id,
-              rules: event.undo.ruleSet.rules,
-              index: event.undo.ruleSet.index,
-            })
-          )
+          this.linkList.add(_createLink(this, event.undo.serialized))
         } else {
           this.linkList.remove(event.redo.linkId)
         }
@@ -247,12 +240,7 @@ export class _HistoryController extends ActionHistory<Step<StepItem>> {
   private itemifyRemoveLinks = (ids: Id[]): void => {
     ids.forEach((id) => {
       const link = this.linkList.get(id)
-      this.step.add(
-        'removeLink',
-        { linkId: id },
-        { ruleSet: link.serialize(), linkId: id, sourceId: link.sourceId.value },
-        true
-      )
+      this.step.add('removeLink', { linkId: id }, { serialized: link.serialize() }, true)
     })
 
     const filteredSelectedIds = this.linkList.selection.value.filter((sId) => !ids.includes(sId))

@@ -7,7 +7,11 @@ export * from './lib/get-offset'
  * state
  */
 export { Controller } from './models/constroller'
-export type { Props as ControllerProps, Events as ControllerEvents } from './models/constroller'
+export type {
+  Props as ControllerProps,
+  Events as ControllerEvents,
+  Serialized as SerializedLink,
+} from './models/constroller'
 
 /**
  * ui
