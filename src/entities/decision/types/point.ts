@@ -2,7 +2,7 @@
 import { Any, Id } from '~/utils/core'
 import { Dictionary } from '~/utils/dictionary'
 
-import { RuleSet } from './rule-set'
+import { Rule } from './rule'
 
 export interface Point<P = Dictionary<Any>> {
   id: Id
@@ -12,5 +12,11 @@ export interface Point<P = Dictionary<Any>> {
   componentName?: string
   computation?: 'parallel' | 'successively'
   props?: P
-  children?: RuleSet[]
+  children?: Link[]
+}
+
+export interface Link {
+  id?: Id | undefined
+  rules?: Rule[]
+  index: number
 }

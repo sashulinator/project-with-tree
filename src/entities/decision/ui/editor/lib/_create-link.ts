@@ -1,5 +1,5 @@
 import { LinkController, LinkControllerProps, LinkListController } from '../widgets/canvas'
-import { _calcNextRulesetIndex } from './_calc-next-ruleset-index'
+import { _calcNextLinkIndex } from './_calc-next-link-index'
 
 interface Context {
   linkList: LinkListController
@@ -13,7 +13,7 @@ interface Context {
  * @returns {LinkController}
  */
 export function _createLink(context: Context, props: LinkControllerProps): LinkController {
-  const index = props.index || _calcNextRulesetIndex(context, props.sourceId)
+  const index = props.index || _calcNextLinkIndex(context, props.sourceId)
 
   return new LinkController({ ...props, index })
 }

@@ -2,7 +2,8 @@ import { LinkController as UiController, LinkEvents as UiEvents } from '~/ui/can
 import { Id } from '~/utils/core'
 import { Prop } from '~/utils/emitter'
 
-import { Rule, RuleSet } from '../../../../../../../'
+import { Link as PointLink } from '../../../../../../../types/point'
+import { Rule } from '../../../../../../../types/rule'
 
 export type Events = UiEvents & {
   index: { value: number }
@@ -37,12 +38,12 @@ export class Controller extends UiController<Events> {
     this.rules = new Prop('rules', props.rules ?? [], this)
   }
 
-  static fromRuleSet = (ruleSet: RuleSet, sourceId: Id): Controller => {
+  static fromLink = (pointLink: PointLink, sourceId: Id): Controller => {
     return new Controller({
       sourceId,
-      targetId: ruleSet.id,
-      rules: ruleSet.rules,
-      index: ruleSet.index,
+      targetId: pointLink.id,
+      rules: pointLink.rules,
+      index: pointLink.index,
     })
   }
 
@@ -56,7 +57,7 @@ export class Controller extends UiController<Events> {
     }
   }
 
-  toRuleSet(): RuleSet {
+  toLink(): PointLink {
     return {
       id: this.targetId.value,
       index: this.index.value,

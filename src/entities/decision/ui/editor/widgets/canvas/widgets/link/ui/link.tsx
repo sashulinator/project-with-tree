@@ -31,7 +31,7 @@ export default function Link(props: LinkProps): JSX.Element | null {
   useUpdate(subscribeOnUpdates, [sourceState, targetState])
   useOnMount(useForceUpdate())
 
-  const isCurrentEditing = listState.editingId.value === state.id
+  const isCurrentEditing = listState.jointEditingId.value === state.id
 
   if ((!sourceState || !targetState) && !isCurrentEditing) return null
 
@@ -70,7 +70,7 @@ export default function Link(props: LinkProps): JSX.Element | null {
 
   function subscribeOnUpdates(update: () => void, uns: (() => void)[]): void {
     // Запускаем update с timeout для того чтобы обновить сначала Node
-    uns.push(listState.on('editingId', () => setTimeout(update)))
+    uns.push(listState.on('jointEditingId', () => setTimeout(update)))
     uns.push(listState.on('targetId', () => setTimeout(update)))
     uns.push(listState.on('sourceId', () => setTimeout(update)))
     uns.push(listState.on('index', () => setTimeout(update)))

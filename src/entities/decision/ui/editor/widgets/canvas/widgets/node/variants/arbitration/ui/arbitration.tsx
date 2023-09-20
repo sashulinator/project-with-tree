@@ -59,31 +59,31 @@ export default function Filter(props: FactoryProps): JSX.Element {
         sourceId: props.state.id,
         targetId: undefined,
         rules: [],
-        index: props.linkList.getLinksBySourceId(props.state.id).length,
+        index: props.linkList.getBySourceId(props.state.id).length,
       })
     )
   }
 
   function onJointClick(linkId: Id): void {
-    if (props.linkList.editingId.value) {
-      props.linkList.finishEditing(linkId)
+    if (props.linkList.jointEditingId.value) {
+      props.linkList.finishJointEditing(linkId)
     } else {
       const linkController = props.linkList.get(linkId)
       if (!linkController.targetId.value) {
-        props.linkList.editingId.set(linkController.id)
+        props.linkList.jointEditingId.set(linkController.id)
       } else {
-        props.linkList.startEditing(linkId, props.state.id)
+        props.linkList.startJointEditing(linkId, props.state.id)
       }
     }
   }
 
   function onNewJointClick(startLinkType: 'targetId' | 'sourceId'): (newLinkId: Id) => void {
     return (newLinkId: Id) => {
-      if (props.linkList.editingId.value) {
-        props.linkList.finishNewLink(props.state.id)
+      if (props.linkList.jointEditingId.value) {
+        props.linkList.finishNew(props.state.id)
       } else {
         // console.log(startLinkType, newLinkId, props.state.id)
-        props.linkList.startNewLink({ [startLinkType]: props.state.id, id: newLinkId, index: 0 })
+        props.linkList.startNew({ [startLinkType]: props.state.id, id: newLinkId, index: 0 })
       }
     }
   }

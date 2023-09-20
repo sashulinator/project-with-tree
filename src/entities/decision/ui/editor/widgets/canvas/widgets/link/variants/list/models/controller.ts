@@ -12,8 +12,8 @@ type Events = {
   update: { item: LinkController }
   remove: { item: LinkController }
   // Уникальные события
-  editingId: { value: Id }
-  editingRuleSet: { value: Id }
+  jointEditingId: { value: Id }
+  rulesEditingId: { value: Id }
   selection: { value: Id[] }
   // События стейтов
   index: { value: number; item: LinkController }
@@ -23,114 +23,123 @@ type Events = {
 }
 
 export class Controller extends EmitterDictionary<LinkController, Events> {
-  editingId: Prop<'editingId', Id | undefined>
+  /**
+   * Id Линки которая находится в режиме редактирования Joint т.е. sourceId или targetId
+   */
+  jointEditingId: Prop<'jointEditingId', Id | undefined>
 
-  editingRuleSet: Prop<'editingRuleSet', Id | undefined>
+  /**
+   * Id Линки которая находится в режиме редактирования Rules
+   */
+  rulesEditingId: Prop<'rulesEditingId', Id | undefined>
 
+  /**
+   * Ids выделенных Линков
+   */
   selection: Selection<'selection'>
 
   constructor(pointList: Point[]) {
-    const linkControllers = pointList
-      .flatMap((point) => point.children?.map((ruleset) => LinkController.fromRuleSet(ruleset, point.id)))
+    const linkList = pointList
+      .flatMap((point) => point.children?.map((pointLink) => LinkController.fromLink(pointLink, point.id)))
       .filter((t) => !!t) as LinkController[]
 
-    super(linkControllers, (l) => l.id.toString())
+    super(linkList, (l) => l.id.toString())
 
     this.selection = new Selection('selection', [] as Id[], this)
 
-    this.editingId = new Prop<'editingId', Id | undefined>('editingId', undefined, this)
+    this.jointEditingId = new Prop('jointEditingId', undefined as Id | undefined, this)
 
-    this.editingRuleSet = new Prop('editingRuleSet', undefined as Id | undefined, this)
+    this.rulesEditingId = new Prop('rulesEditingId', undefined as Id | undefined, this)
   }
 
-  getEditingLinkState = (): LinkController => {
-    return this.get(this.editingId.value)
+  getJointEditingLink = (): LinkController => {
+    return this.get(this.jointEditingId.value)
   }
 
-  getEditingRuleState = (): LinkController => {
-    return this.get(this.editingRuleSet.value)
+  getRulesEditingLink = (): LinkController => {
+    return this.get(this.rulesEditingId.value)
   }
 
-  findEditingLinkState = (): LinkController | undefined => {
-    return this.find(this.editingId.value)
+  findJointEditingLink = (): LinkController | undefined => {
+    return this.find(this.jointEditingId.value)
   }
 
-  getLinksBySourceId = (id: Id): LinkController[] => {
+  getBySourceId = (id: Id): LinkController[] => {
     return this.values().filter((state) => state.sourceId.value === id)
   }
 
-  getLinksByTargetId = (id: Id): LinkController[] => {
+  getByTargetId = (id: Id): LinkController[] => {
     return this.values().filter((state) => state.targetId.value === id)
   }
 
-  startNewLink(props: LinkControllerProps): void {
-    const editingLinkState = this.findEditingLinkState()
+  startNew(props: LinkControllerProps): void {
+    const editingLinkState = this.findJointEditingLink()
     invariant(!editingLinkState, 'You cannot start new Link while editing')
     const newLink = new LinkController(props)
     this.add(newLink)
     if (!props.sourceId && !props.targetId) throw new Error('`sourceId` or `targetId` must be passed')
-    this.editingId.value = newLink.id
+    this.jointEditingId.value = newLink.id
   }
 
-  finishNewLink(nodeId: Id): void {
-    const editingLinkState = this.findEditingLinkState()
-    assertDefined(editingLinkState)
-    assertDefined(editingLinkState?.sourceId.value || editingLinkState?.targetId.value)
-    const isTargetExists = !!editingLinkState?.targetId.value
+  finishNew(nodeId: Id): void {
+    const editingLink = this.findJointEditingLink()
+    assertDefined(editingLink)
+    assertDefined(editingLink?.sourceId.value || editingLink?.targetId.value)
+    const isTargetExists = !!editingLink?.targetId.value
     // Если target уже существует, значит поместим nodeId в sourceId
-    editingLinkState?.[isTargetExists ? 'sourceId' : 'targetId'].set(nodeId)
+    editingLink?.[isTargetExists ? 'sourceId' : 'targetId'].set(nodeId)
 
-    const sourceId = editingLinkState?.sourceId.value
+    const sourceId = editingLink?.sourceId.value
     assertDefined(sourceId, 'SourceId does not exists')
 
-    const sourceLinksStates = this.getLinksBySourceId(sourceId)
-    editingLinkState?.index.set(sourceLinksStates.length - 1)
+    const sourceLinks = this.getBySourceId(sourceId)
+    editingLink?.index.set(sourceLinks.length - 1)
 
-    this.editingId.value = undefined
+    this.jointEditingId.value = undefined
   }
 
-  startEditing(linkId: Id, nodeId: Id): void {
-    const editingLinkState = this.findEditingLinkState()
+  startJointEditing(linkId: Id, nodeId: Id): void {
+    const editingLinkState = this.findJointEditingLink()
 
     invariant(!editingLinkState, 'You are already in the middle of editing')
 
-    const linkController = this.get(linkId)
+    const link = this.get(linkId)
 
-    if (linkController.targetId.value !== nodeId && linkController.sourceId.value !== nodeId) {
+    if (link.targetId.value !== nodeId && link.sourceId.value !== nodeId) {
       throw new Error('nodeId is neither targetId nor sourceId')
     }
 
-    const isSourceEditing = linkController.sourceId.value === nodeId
+    const isSourceEditing = link.sourceId.value === nodeId
 
     if (isSourceEditing) {
-      const newState = new LinkController({ index: 0, targetId: linkController.targetId.value })
+      const newState = new LinkController({ index: 0, targetId: link.targetId.value })
       this.add(newState)
-      this.editingId.value = newState.id
+      this.jointEditingId.value = newState.id
     } else {
-      this.editingId.value = linkId
+      this.jointEditingId.value = linkId
     }
 
-    linkController.targetId.value = undefined
+    link.targetId.value = undefined
   }
 
-  finishEditing(linkId: Id): void {
-    const editingLinkState = this.findEditingLinkState()
+  finishJointEditing(linkId: Id): void {
+    const editingLink = this.findJointEditingLink()
 
-    assertDefined(editingLinkState)
+    assertDefined(editingLink)
 
-    this.editingId.value = undefined
+    this.jointEditingId.value = undefined
 
-    if (editingLinkState.targetId.value === undefined && editingLinkState.sourceId.value === undefined) {
+    if (editingLink.targetId.value === undefined && editingLink.sourceId.value === undefined) {
       throw new Error('state has no targetId and no sourceId')
     }
 
     const linkController = this.get(linkId)
-    linkController.targetId.value = editingLinkState.targetId.value
-    this.remove(editingLinkState.id)
+    linkController.targetId.value = editingLink.targetId.value
+    this.remove(editingLink.id)
   }
 
   swapSourceIndexes(nodeId: Id, dragIndex: number, hoverIndex: number): void {
-    const linkControllers = this.getLinksBySourceId(nodeId)
+    const linkControllers = this.getBySourceId(nodeId)
     const dragState = linkControllers.find((s) => s.index.value === dragIndex)
     const hoverState = linkControllers.find((s) => s.index.value === hoverIndex)
     assertDefined(dragState)

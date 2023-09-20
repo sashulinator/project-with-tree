@@ -2,9 +2,8 @@
  * types
  */
 export type { Decision } from './types/decision'
-export type { Point } from './types/point'
+export type { Point, Link as PointLink } from './types/point'
 export type { Rule } from './types/rule'
-export type { RuleSet } from './types/rule-set'
 
 /**
  * Editor
