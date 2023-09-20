@@ -37,6 +37,15 @@ export class Controller extends UiController<Events> {
     this.rules = new Prop('rules', props.rules ?? [], this)
   }
 
+  static fromRuleSet = (ruleSet: RuleSet, sourceId: Id): Controller => {
+    return new Controller({
+      sourceId,
+      targetId: ruleSet.id,
+      rules: ruleSet.rules,
+      index: ruleSet.index,
+    })
+  }
+
   serialize(): Serialized {
     return {
       id: this.id,

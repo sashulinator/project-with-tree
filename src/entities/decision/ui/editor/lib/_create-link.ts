@@ -1,10 +1,19 @@
-import { LinkController, LinkControllerProps } from '../widgets/canvas'
+import { LinkController, LinkControllerProps, LinkListController } from '../widgets/canvas'
+import { _calcNextRulesetIndex } from './_calc-next-ruleset-index'
 
-interface Context {}
+interface Context {
+  linkList: LinkListController
+}
 
+/**
+ * Функция обертка по созданию Линки
+ *
+ * @param {Context} context Контекст компонента Editor
+ * @param {LinkController} props Пропсы создания LinkController
+ * @returns {LinkController}
+ */
 export function _createLink(context: Context, props: LinkControllerProps): LinkController {
-  const {} = context
+  const index = props.index || _calcNextRulesetIndex(context, props.sourceId)
 
-  // TODO вычислить index
-  return new LinkController(props)
+  return new LinkController({ ...props, index })
 }

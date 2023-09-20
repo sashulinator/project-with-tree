@@ -1,10 +1,10 @@
-import { Point, Rule } from '~/entities/decision'
-import { _createLink } from '~/entities/decision/ui/editor/lib/_create-link'
 import { Selection } from '~/lib/emitter'
 import { Id, assertDefined, invariant } from '~/utils/core'
 import { EmitterDictionary, Prop } from '~/utils/emitter'
 
-import { ControllerProps, Controller as LinkController } from '../../..'
+import { Point } from '../../../../../../../../../types/point'
+import { Rule } from '../../../../../../../../../types/rule'
+import { Controller as LinkController, Props as LinkControllerProps } from '../../../models/constroller'
 
 type Events = {
   // Наследуемые события
@@ -31,19 +31,7 @@ export class Controller extends EmitterDictionary<LinkController, Events> {
 
   constructor(pointList: Point[]) {
     const linkControllers = pointList
-      .flatMap((point) => {
-        return point.children?.map((ruleSet) =>
-          _createLink(
-            {},
-            {
-              sourceId: point.id,
-              targetId: ruleSet.id,
-              rules: ruleSet.rules,
-              index: ruleSet.index,
-            }
-          )
-        )
-      })
+      .flatMap((point) => point.children?.map((ruleset) => LinkController.fromRuleSet(ruleset, point.id)))
       .filter((t) => !!t) as LinkController[]
 
     super(linkControllers, (l) => l.id.toString())
@@ -75,7 +63,7 @@ export class Controller extends EmitterDictionary<LinkController, Events> {
     return this.values().filter((state) => state.targetId.value === id)
   }
 
-  startNewLink(props: ControllerProps): void {
+  startNewLink(props: LinkControllerProps): void {
     const editingLinkState = this.findEditingLinkState()
     invariant(!editingLinkState, 'You cannot start new Link while editing')
     const newLink = new LinkController(props)
