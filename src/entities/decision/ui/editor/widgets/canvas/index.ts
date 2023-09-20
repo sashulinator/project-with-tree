@@ -46,6 +46,7 @@ export {
 } from './widgets/link'
 export type {
   ListProps as LinkListProps,
+  SerializedLink,
   LinkProps,
   ControllerProps as LinkControllerProps,
   ControllerEvents as LinkControllerEvents,

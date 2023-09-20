@@ -45,24 +45,24 @@ export default function Filter(props: FactoryProps): JSX.Element {
   }
 
   function onJointClick(linkId: Id): void {
-    if (props.linkList.editingId.value) {
-      props.linkList.finishEditing(linkId)
+    if (props.linkList.jointEditingId.value) {
+      props.linkList.finishJointEditing(linkId)
     } else {
       const linkController = props.linkList.get(linkId)
       if (!linkController.targetId.value) {
-        props.linkList.editingId.set(linkController.id)
+        props.linkList.jointEditingId.set(linkController.id)
       } else {
-        props.linkList.startEditing(linkId, props.state.id)
+        props.linkList.startJointEditing(linkId, props.state.id)
       }
     }
   }
 
   function onNewJointClick(startLinkType: 'targetId' | 'sourceId'): (newLinkId: Id) => void {
     return (newLinkId: Id) => {
-      if (props.linkList.editingId.value) {
-        props.linkList.finishNewLink(props.state.id)
+      if (props.linkList.jointEditingId.value) {
+        props.linkList.finishNew(props.state.id)
       } else {
-        props.linkList.startNewLink({ [startLinkType]: newLinkId, index: 0 })
+        props.linkList.startNew({ [startLinkType]: newLinkId, index: 0 })
       }
     }
   }

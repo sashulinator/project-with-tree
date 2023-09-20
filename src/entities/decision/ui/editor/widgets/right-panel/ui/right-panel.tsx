@@ -6,7 +6,7 @@ import Flex from '~/abstract/flex/ui/flex'
 import { RulesRes } from '~/entities/rule/types/rules-type'
 import { AppearFrom } from '~/ui/animation'
 import { GhostButton } from '~/ui/button'
-import { Close } from '~/ui/icon'
+import { Close, Trash } from '~/ui/icon'
 import Resizable, { ResizableProps } from '~/ui/resizable'
 import Tooltip from '~/ui/tooltip'
 import { Id, assertDefined, c } from '~/utils/core'
@@ -15,6 +15,7 @@ import { setRefs } from '~/utils/react'
 
 import { RuleList } from '..'
 import { LinkListController, NodeListController } from '../../..'
+import { _removeLink } from '../../../lib/_remove-link'
 
 RightPanelComponent.displayName = 'decision-Editor-w-RightPanel'
 
@@ -29,13 +30,13 @@ export interface Props {
 }
 
 function RightPanelComponent(props: Props): JSX.Element | null {
-  useUpdate(subscribeOnUpdates, [props.linkList.editingRuleSet.value])
+  useUpdate(subscribeOnUpdates, [props.linkList.rulesEditingId.value])
 
   const tooltipContainerRef = useRef<HTMLElement>(null)
 
   // const [fullscreen, , , toogleFullscreen] = useBoolean(false)
 
-  if (props.linkList.editingRuleSet.value === undefined) {
+  if (props.linkList.rulesEditingId.value === undefined) {
     return null
   }
 
@@ -53,23 +54,34 @@ function RightPanelComponent(props: Props): JSX.Element | null {
       from={{ x: 33 }}
     >
       <Resizable {...props.resizableProps} direction='right' />
-      <Flex dir='column' className='header' gap='m' crossAxis='center' mainAxis='space-between' width='100%'>
-        <Flex className='buttons' gap='m' crossAxis='center'>
+      <Flex dir='column' gap='m' crossAxis='center' mainAxis='space-between' width='100%'>
+        <Flex margin='0 0 30px 0' width='100%' className='header' gap='m' crossAxis='center' mainAxis='space-between'>
+          <GhostButton
+            round={true}
+            height='l'
+            onClick={(): void => {
+              assertDefined(props.linkList.rulesEditingId.value)
+              _removeLink(props, props.linkList.rulesEditingId.value)
+              props.linkList.rulesEditingId.set(undefined)
+            }}
+          >
+            <Trash />
+          </GhostButton>
           <GhostButton
             round={true}
             height='l'
             onClick={(): void => {
               props.selectNodes([])
-              props.linkList.editingRuleSet.set(undefined)
+              props.linkList.rulesEditingId.set(undefined)
             }}
           >
             <Close />
           </GhostButton>
         </Flex>
-        {props.linkList.editingRuleSet.value && (
+        {props.linkList.rulesEditingId.value && (
           <>
             <Flex dir='column' width='100%' gap='l'>
-              {props.linkList.getEditingRuleState().rules.value.map((rule) => {
+              {props.linkList.getRulesEditingLink().rules.value.map((rule) => {
                 return (
                   <div
                     key={rule.id}
@@ -81,6 +93,7 @@ function RightPanelComponent(props: Props): JSX.Element | null {
                       flexDirection: 'row',
                       justifyContent: 'space-between',
                       alignItems: 'center',
+                      padding: 'var(--l) 0 var(--l) var(--l)',
                     }}
                   >
                     <div style={{ width: '85%' }}>
@@ -94,7 +107,7 @@ function RightPanelComponent(props: Props): JSX.Element | null {
                     <GhostButton
                       round={true}
                       onClick={(): void => {
-                        const linkController = props.linkList.getEditingRuleState()
+                        const linkController = props.linkList.getRulesEditingLink()
                         const newRules = linkController.rules.value.filter((r) => r.id !== rule.id)
                         linkController.rules.set(newRules)
                       }}
@@ -107,12 +120,12 @@ function RightPanelComponent(props: Props): JSX.Element | null {
             </Flex>
             <RuleList
               list={props.ruleList.filter(
-                (ruleRes) => !props.linkList.getEditingRuleState().rules.value.some((r) => r.id === ruleRes.id)
+                (ruleRes) => !props.linkList.getRulesEditingLink().rules.value.some((r) => r.id === ruleRes.id)
               )}
               onSelect={(id): void => {
                 const rule = props.ruleList.find((rule) => rule.id === id)
                 assertDefined(rule)
-                const linkController = props.linkList.getEditingRuleState()
+                const linkController = props.linkList.getRulesEditingLink()
                 linkController.rules.set([...linkController.rules.value, rule])
               }}
             />
@@ -125,7 +138,7 @@ function RightPanelComponent(props: Props): JSX.Element | null {
   // Private
 
   function subscribeOnUpdates(update: () => void, uns: (() => void)[]): void {
-    uns.push(props.linkList.on('editingRuleSet', update))
+    uns.push(props.linkList.on('rulesEditingId', update))
     uns.push(props.linkList.on('rules', update))
   }
 }

@@ -31,13 +31,13 @@ export default function SourceLinks(props: Props): JSX.Element {
 
   useUpdate(subscribeOnUpdates)
 
-  const editingLinkState = props.linkList.findEditingLinkState()
+  const editingLinkState = props.linkList.findJointEditingLink()
   const isEditingThisNode =
     editingLinkState?.sourceId.value === props.state.id || editingLinkState?.targetId.value === props.state.id
   const isEditingHasSource = Boolean(editingLinkState?.sourceId.value)
 
   const sourceLinkStates = props.linkList
-    .getLinksBySourceId(props.state.id)
+    .getBySourceId(props.state.id)
     .sort((a, b) => (a.index.value < b.index.value ? -1 : 1))
 
   // if (props.state.id === 'id2') {
@@ -191,7 +191,7 @@ export function RuleSet(props: RuleSetProps): JSX.Element {
 
   return (
     <div className='rule' key={props.link.id} ref={ref} style={{ opacity }} data-handler-id={handlerId}>
-      <UnstyledButton className='editRule' onClick={(): void => props.linkList.editingRuleSet.set(props.link.id)}>
+      <UnstyledButton className='editRule' onClick={(): void => props.linkList.rulesEditingId.set(props.link.id)}>
         {props.link.rules.value.map((rule) => rule.keyName || rule.name).join(', ')}
       </UnstyledButton>
       <Joint

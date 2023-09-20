@@ -62,6 +62,7 @@ export type {
   NodeFactoryProps,
   LinkListProps,
   LinkProps,
+  SerializedLink,
   LinkControllerProps,
   LinkControllerEvents,
 } from './widgets/canvas'

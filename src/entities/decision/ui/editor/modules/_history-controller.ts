@@ -4,10 +4,16 @@ import { emptyFn } from '~/utils/function/empty-fn'
 import { Required } from '~/utils/types/object'
 
 import { CanvasController } from '..'
-import { Point, RuleSet } from '../../..'
+import { Point } from '../../..'
 import { _addNode } from '../_private'
+import { _addLink } from '../lib/_add-link'
 import { _calcColumnNodesPositions } from '../lib/_calc-column-nodes-positions'
-import { LinkController, LinkListController, NodeController, NodeListController, getColumnX } from '../widgets/canvas'
+import { _createLink } from '../lib/_create-link'
+import { _createNode } from '../lib/_create-node'
+import { _createPoint } from '../lib/_create-point'
+import { _removeLink } from '../lib/_remove-link'
+import { _removeNode } from '../lib/_remove-node'
+import { LinkListController, NodeController, NodeListController, SerializedLink, getColumnX } from '../widgets/canvas'
 
 interface Context {
   canvas: CanvasController
@@ -54,7 +60,7 @@ export type RemoveLinkItem = {
   type: 'removeLink'
   historical: true
   redo: { linkId: Id }
-  undo: { ruleSet: RuleSet; linkId: Id; sourceId: Id | undefined }
+  undo: { serialized: SerializedLink }
 }
 
 type StepItem = SelectNodesItem | AddNodeItem | RemoveNodeItem | RemoveLinkItem | SelectLinksItem | MoveNodeItem
@@ -103,10 +109,14 @@ export class _HistoryController extends ActionHistory<Step<StepItem>> {
         this.linkList.selection.set(item.done ? event.undo.ids : event.redo.ids)
       }
       if (event.type === 'addNode') {
-        item.done ? this.nodeList.remove(event.undo.id) : _addNode(this, event.redo.point, emptyFn, { duration: 0 })
+        item.done
+          ? this.nodeList.remove(event.undo.id)
+          : _addNode(this, _createNode(this, event.redo.point), emptyFn, { duration: 0 })
       }
       if (event.type === 'removeNodes') {
-        item.done ? _addNode(this, event.undo.point, emptyFn, { duration: 0 }) : this.nodeList.remove(event.redo.id)
+        item.done
+          ? _addNode(this, _createNode(this, event.undo.point), emptyFn, { duration: 0 })
+          : _removeNode(this, event.redo.id)
       }
       if (event.type === 'moveNodes') {
         Object.entries(item.done ? event.undo : event.redo).forEach(([key, value]) => {
@@ -117,17 +127,9 @@ export class _HistoryController extends ActionHistory<Step<StepItem>> {
       }
       if (event.type === 'removeLink') {
         if (item.done) {
-          this.linkList.add(
-            new LinkController({
-              id: event.undo.linkId,
-              sourceId: event.undo.sourceId,
-              targetId: event.undo.ruleSet.id,
-              rules: event.undo.ruleSet.rules,
-              index: event.undo.ruleSet.index,
-            })
-          )
+          _addLink(this, _createLink(this, event.undo.serialized))
         } else {
-          this.linkList.remove(event.redo.linkId)
+          _removeLink(this, event.redo.linkId)
         }
       }
     })
@@ -161,8 +163,10 @@ export class _HistoryController extends ActionHistory<Step<StepItem>> {
     onAdded: (node: NodeController) => void
     // event?: (TransitionMoveEvent & Record<string, unknown>) | undefined
   ): void => {
-    const newPoint = _addNode(this, point, onAdded)
-    this.step.add('addNode', { point: newPoint }, { id: newPoint.id }, true)
+    const createdPoint = _createPoint(this, point)
+    const createdNode = _createNode(this, createdPoint)
+    _addNode(this, createdNode, onAdded)
+    this.step.add('addNode', { point: createdPoint }, { id: createdPoint.id }, true)
   }
 
   create = (
@@ -239,12 +243,7 @@ export class _HistoryController extends ActionHistory<Step<StepItem>> {
   private itemifyRemoveLinks = (ids: Id[]): void => {
     ids.forEach((id) => {
       const link = this.linkList.get(id)
-      this.step.add(
-        'removeLink',
-        { linkId: id },
-        { ruleSet: link.deserialize(), linkId: id, sourceId: link.sourceId.value },
-        true
-      )
+      this.step.add('removeLink', { linkId: id }, { serialized: link.serialize() }, true)
     })
 
     const filteredSelectedIds = this.linkList.selection.value.filter((sId) => !ids.includes(sId))
