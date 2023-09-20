@@ -28,7 +28,7 @@ export default function List(props: Props): JSX.Element {
   })
   return (
     <div className={c(props.className, List.displayName)}>
-      <Flex width='100%' margin='var(--l) 0'>
+      <Flex width='100%' margin='0 0 var(--l) 0'>
         <Input value={query} onChange={(e): void => setQuery(e.currentTarget.value)} />
       </Flex>
       <ul className='list' style={{ display: 'flex', gap: 'var(--l)', overflow: 'scroll' }}>
