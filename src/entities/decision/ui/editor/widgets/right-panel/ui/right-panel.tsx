@@ -6,7 +6,7 @@ import Flex from '~/abstract/flex/ui/flex'
 import { RulesRes } from '~/entities/rule/types/rules-type'
 import { AppearFrom } from '~/ui/animation'
 import { GhostButton } from '~/ui/button'
-import { Close } from '~/ui/icon'
+import { Close, Trash } from '~/ui/icon'
 import Resizable, { ResizableProps } from '~/ui/resizable'
 import Tooltip from '~/ui/tooltip'
 import { Id, assertDefined, c } from '~/utils/core'
@@ -15,6 +15,7 @@ import { setRefs } from '~/utils/react'
 
 import { RuleList } from '..'
 import { LinkListController, NodeListController } from '../../..'
+import { _removeLink } from '../../../lib/_remove-link'
 
 RightPanelComponent.displayName = 'decision-Editor-w-RightPanel'
 
@@ -53,8 +54,19 @@ function RightPanelComponent(props: Props): JSX.Element | null {
       from={{ x: 33 }}
     >
       <Resizable {...props.resizableProps} direction='right' />
-      <Flex dir='column' className='header' gap='m' crossAxis='center' mainAxis='space-between' width='100%'>
-        <Flex className='buttons' gap='m' crossAxis='center'>
+      <Flex dir='column' gap='m' crossAxis='center' mainAxis='space-between' width='100%'>
+        <Flex margin='0 0 30px 0' width='100%' className='header' gap='m' crossAxis='center' mainAxis='space-between'>
+          <GhostButton
+            round={true}
+            height='l'
+            onClick={(): void => {
+              assertDefined(props.linkList.rulesEditingId.value)
+              _removeLink(props, props.linkList.rulesEditingId.value)
+              props.linkList.rulesEditingId.set(undefined)
+            }}
+          >
+            <Trash />
+          </GhostButton>
           <GhostButton
             round={true}
             height='l'
@@ -81,6 +93,7 @@ function RightPanelComponent(props: Props): JSX.Element | null {
                       flexDirection: 'row',
                       justifyContent: 'space-between',
                       alignItems: 'center',
+                      padding: 'var(--l) 0 var(--l) var(--l)',
                     }}
                   >
                     <div style={{ width: '85%' }}>
