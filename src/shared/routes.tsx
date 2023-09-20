@@ -4,11 +4,11 @@ import { RouteObject } from 'react-router-dom'
 import DecisionListPage from '~/pages/decisions'
 import DecisionCreatePage from '~/pages/decisions/create'
 import DecisionIdPage from '~/pages/decisions/id'
-import DndPage from '~/pages/dnd'
 import DomainListPage from '~/pages/domains'
 import LoginPage from '~/pages/login'
 import MainPage from '~/pages/main'
 import NotFoundPage from '~/pages/not-found'
+import RuleTestPage from '~/pages/rules-test'
 import RuleCreatePage from '~/pages/rules/create/create'
 import RuleListPage from '~/pages/rules/list/list'
 import RuleUpdatePage from '~/pages/rules/update/update'
@@ -45,13 +45,12 @@ export const routes = {
     Header,
     Nav,
   },
-  dnd: {
+  ruleTest: {
     path: '/dnd',
-    getURL: (): string => routes.dnd.path,
+    getURL: (): string => routes.ruleTest.path,
     getName: (): string => 'Dnd',
-    element: <DndPage />,
+    element: <RuleTestPage />,
     Header,
-    Nav,
   },
   ruleCreate: {
     path: '/rule/create',

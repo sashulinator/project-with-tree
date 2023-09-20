@@ -17,12 +17,13 @@ import {
 } from '@dnd-kit/core'
 import { SortableContext, arrayMove } from '@dnd-kit/sortable'
 
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { createPortal } from 'react-dom'
 
 import Flex from '~/abstract/flex'
+import { ParentDomainRes } from '~/api/domain/types/parent-domain-res'
 import { RuleContainer, RuleItem } from '~/entities/rule-test'
-import { EditorValues } from '~/pages/dnd'
+import { EditorValues, MentionsItem, SelectValue } from '~/entities/rule-test/types/type'
 import { GhostButton } from '~/ui/button'
 import { Plus } from '~/ui/icon'
 import { Id, c, generateId } from '~/utils/core'
@@ -34,19 +35,11 @@ Editor.displayName = 'e-Rule-Editor'
 
 export interface Props {
   initialData: EditorValues[]
+  dataList: ParentDomainRes[]
 }
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 function Editor(props: Props): JSX.Element {
-  const { initialData } = props
-
-  // export const data: EditorValues[] = [
-  //   {
-  //     id: '5',
-  //     valueArr: [{ id: '3', value: '', condition: SelectValue.and }],
-  //     condition: SelectValue.and,
-  //   },
-  // ]
+  const { initialData, dataList } = props
 
   const newContainerList = initialData.map((item) => {
     return { id: item.id }
@@ -55,9 +48,13 @@ function Editor(props: Props): JSX.Element {
   const newRulesList: RuleItem[] = []
   initialData.forEach((arr) => {
     arr.valueArr.forEach((item) => {
-      newRulesList.push({ id: item.id, content: item.value, containerId: arr.id })
+      newRulesList.push({ id: item.id, value: item.value, containerId: arr.id, condition: item.condition })
     })
   })
+
+  const [mentionsData, setMentionsData] = useState(addDataMentions(dataList))
+
+  useEffect(() => setMentionsData(addDataMentions(dataList)), [dataList])
 
   const [containerList, setActiveContainerList] = useState<RuleContainer[]>(newContainerList)
   const [activeContainer, setActiveContainer] = useState<RuleContainer | null>(null)
@@ -95,6 +92,7 @@ function Editor(props: Props): JSX.Element {
                 createRule={createRule}
                 deleteContainer={deleteContainer}
                 setRules={setRules}
+                mentionsData={mentionsData}
               />
             ))}
           </SortableContext>
@@ -109,12 +107,28 @@ function Editor(props: Props): JSX.Element {
               container={activeContainer}
             />
           )}
-          {activeItem && <Item rule={activeItem} />}
+          {activeItem && <Item showSelect={false} rule={activeItem} />}
         </DragOverlay>,
         document.body
       )}
     </DndContext>
   )
+  // test
+
+  function addDataMentions(arr: ParentDomainRes[]): MentionsItem[] {
+    let result: MentionsItem[] = []
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    arr.forEach(({ domain, attributes, childDomains }) => {
+      result.push({ id: `domain, ${domain.id}`, display: domain.name })
+      attributes.forEach(({ id, name }) => {
+        result.push({ id: `attribute, ${id}`, display: name })
+      })
+      if (childDomains.length > 0) {
+        result = [...result, ...addDataMentions(childDomains)]
+      }
+    })
+    return result
+  }
 
   // Private
 
@@ -151,6 +165,11 @@ function Editor(props: Props): JSX.Element {
         const activeIndex = rules.findIndex((t) => t.id === activeId)
         const overIndex = rules.findIndex((t) => t.id === overId)
 
+        const rulesOverCondition = rules[overIndex].condition
+        const rulesActiveCondition = rules[activeIndex].condition
+
+        rules[overIndex].condition = rulesActiveCondition
+        rules[activeIndex].condition = rulesOverCondition
         if (rules[activeIndex].containerId != rules[overIndex].containerId) {
           rules[activeIndex].containerId = rules[overIndex].containerId
           return arrayMove(rules, activeIndex, overIndex - 1)
@@ -215,7 +234,8 @@ function Editor(props: Props): JSX.Element {
     const newTask: RuleItem = {
       id: generateId(),
       containerId,
-      content: `RuleItem ${rules.length + 1}`,
+      value: '',
+      condition: SelectValue.and,
     }
 
     setRules([...rules, newTask])

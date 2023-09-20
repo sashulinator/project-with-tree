@@ -13,23 +13,35 @@ import { CSS } from '@dnd-kit/utilities'
 import { useRef } from 'react'
 import { Mention } from 'react-mentions'
 
-import { RuleItem } from '~/entities/rule-test/types/type'
+import { MentionsItem, RuleItem, SelectValue } from '~/entities/rule-test/types/type'
 import { GhostButton } from '~/ui/button'
 import { Close } from '~/ui/icon'
 import { Input as MentionsInput } from '~/ui/mentions'
 import { Id, c } from '~/utils/core'
+
+import Select from '../widget/select'
 
 interface Props {
   rule: RuleItem
   deleteRule?: (id: Id) => void
   setRules?: (rules: RuleItem[]) => void
   rules?: RuleItem[]
+  mentionsData?: MentionsItem[]
+  showSelect?: boolean
 }
 
 Item.displayName = 'e-Rule-Editor-w-Item'
 
 function Item(props: Props): JSX.Element {
-  const { rule, deleteRule = (): void => {}, setRules = (): void => {}, rules } = props
+  const {
+    rule,
+    deleteRule = (): void => {},
+    setRules = (): void => {},
+    rules,
+    mentionsData = [],
+    showSelect = true,
+  } = props
+
   const inputRef = useRef<HTMLInputElement | null>(null)
 
   const { setNodeRef, attributes, listeners, transform, transition, isDragging } = useSortable({
@@ -46,31 +58,43 @@ function Item(props: Props): JSX.Element {
   }
 
   return (
-    <div
-      ref={setNodeRef}
-      style={{ ...style, opacity: isDragging ? 0.3 : 1 }}
-      {...attributes}
-      {...listeners}
-      className={c(Item.displayName)}
-    >
-      <MentionsInput value={rule.content} onChange={handleChangeMention} inputRef={inputRef}>
-        <Mention data={[{ display: 'test', id: 'test-id' }]} trigger={'@'} />
-      </MentionsInput>
+    <>
+      <div
+        ref={setNodeRef}
+        style={{ ...style, opacity: isDragging ? 0.3 : 1 }}
+        {...attributes}
+        {...listeners}
+        className={c(Item.displayName)}
+      >
+        <MentionsInput value={rule.value} onChange={handleChangeMention} inputRef={inputRef}>
+          <Mention data={mentionsData} trigger={'@'} />
+        </MentionsInput>
 
-      <GhostButton square onClick={(): void => deleteRule(rule.id)}>
-        <Close />
-      </GhostButton>
-    </div>
+        <GhostButton square onClick={(): void => deleteRule(rule.id)}>
+          <Close />
+        </GhostButton>
+      </div>
+      {showSelect && <Select handleChangeSelect={handleChangeSelect} rule={rule} />}
+    </>
   )
 
   function handleChangeMention(_: unknown, v: string): void {
     if (rules) {
       const newRules = rules.map((item) => {
-        if (item.id === rule.id) return { ...item, content: v }
+        if (item.id === rule.id) return { ...item, value: v }
         return item
       })
       setRules(newRules)
-      console.log(rules)
+    }
+  }
+
+  function handleChangeSelect(options: SelectValue): void {
+    if (rules) {
+      const newRules = rules.map((item) => {
+        if (item.id === rule.id) return { ...item, condition: options }
+        return item
+      })
+      setRules(newRules)
     }
   }
 }

@@ -13,7 +13,7 @@ import { CSS } from '@dnd-kit/utilities'
 import { useMemo } from 'react'
 
 import Flex from '~/abstract/flex'
-import { RuleContainer, RuleItem } from '~/entities/rule-test/types/type'
+import { MentionsItem, RuleContainer, RuleItem } from '~/entities/rule-test/types/type'
 import { GhostButton } from '~/ui/button'
 import { Close, Plus } from '~/ui/icon'
 import { Id, c } from '~/utils/core'
@@ -28,6 +28,7 @@ interface Props {
   createRule?: (id: Id) => void
   deleteRule?: (id: Id) => void
   setRules?: (rulesForContainer: RuleItem[]) => void
+  mentionsData?: MentionsItem[]
 }
 
 Container.displayName = 'e-Rule-Editor-Container'
@@ -41,6 +42,7 @@ function Container(props: Props): JSX.Element {
     createRule = (): void => {},
     deleteRule = (): void => {},
     setRules = (): void => {},
+    mentionsData = [],
   } = props
 
   const rulesIds = useMemo(() => {
@@ -81,8 +83,16 @@ function Container(props: Props): JSX.Element {
       </div>
       <div className='body'>
         <SortableContext items={rulesIds}>
-          {rulesForContainer.map((item) => (
-            <Item rules={rules} setRules={setRules} deleteRule={deleteRule} key={item.id} rule={item} />
+          {rulesForContainer.map((item, i, arr) => (
+            <Item
+              mentionsData={mentionsData}
+              rules={rules}
+              setRules={setRules}
+              deleteRule={deleteRule}
+              key={item.id}
+              rule={item}
+              showSelect={i !== arr.length - 1}
+            />
           ))}
         </SortableContext>
       </div>

@@ -33,8 +33,8 @@ export default function MainPage(): JSX.Element {
     <Link key={5} to={routes.decisionList.getURL()}>
       Админ
     </Link>,
-    <Link key={6} to={routes.dnd.getURL()}>
-      dnd
+    <Link key={6} to={routes.ruleTest.getURL()}>
+      RuleTest
     </Link>,
   ]
 
