@@ -18,6 +18,7 @@ import {
 import { SortableContext, arrayMove } from '@dnd-kit/sortable'
 
 import { useEffect, useMemo, useState } from 'react'
+import Scrollbars from 'react-custom-scrollbars'
 import { createPortal } from 'react-dom'
 
 import Flex from '~/abstract/flex'
@@ -30,6 +31,7 @@ import { Id, c, generateId } from '~/utils/core'
 
 import Container from './widget/container/ui/container'
 import Item from './widget/container/widget/item/ui/item'
+import DomainList from './widget/domain-list/ui/domain-list'
 
 Editor.displayName = 'e-Rule-Editor'
 
@@ -73,31 +75,46 @@ function Editor(props: Props): JSX.Element {
 
   return (
     <DndContext sensors={sensors} onDragStart={onDragStart} onDragEnd={onDragEnd} onDragOver={onDragOver}>
-      <div className={c(Editor.displayName)}>
-        <Flex gap='xxxl' dir='column'>
-          <GhostButton onClick={createContainer}>
-            <Flex gap='l' crossAxis='center'>
-              <Plus></Plus>
-              Добавить контейнер
-            </Flex>
-          </GhostButton>
-          <SortableContext items={columnsId}>
-            {containerList.map((item) => (
-              <Container
-                rules={rules}
-                key={item.id}
-                container={item}
-                rulesForContainer={rules.filter((rule) => rule.containerId === item.id)}
-                deleteRule={deleteRule}
-                createRule={createRule}
-                deleteContainer={deleteContainer}
-                setRules={setRules}
-                mentionsData={mentionsData}
-              />
-            ))}
-          </SortableContext>
-        </Flex>
-      </div>
+      <Flex gap='xxxl' mainAxis='space-between' width='100%' padding='20px'>
+        <nav
+          className='list'
+          style={{
+            borderRight: '1px solid var(--bgSecondary)',
+            height: 'calc(100vh - var(--header-height) * 1px)',
+            width: '400px',
+          }}
+        >
+          <Scrollbars autoHide autoHideTimeout={1000} autoHideDuration={500}>
+            <DomainList list={dataList} />
+          </Scrollbars>
+        </nav>
+        <div className={c(Editor.displayName)}>
+          <Flex gap='xxxl' dir='column'>
+            <GhostButton onClick={createContainer}>
+              <Flex gap='l' crossAxis='center'>
+                <Plus></Plus>
+                Добавить контейнер
+              </Flex>
+            </GhostButton>
+            <SortableContext items={columnsId}>
+              {containerList.map((item) => (
+                <Container
+                  rules={rules}
+                  key={item.id}
+                  container={item}
+                  rulesForContainer={rules.filter((rule) => rule.containerId === item.id)}
+                  deleteRule={deleteRule}
+                  createRule={createRule}
+                  deleteContainer={deleteContainer}
+                  setRules={setRules}
+                  mentionsData={mentionsData}
+                />
+              ))}
+            </SortableContext>
+          </Flex>
+        </div>
+      </Flex>
+
       {createPortal(
         <DragOverlay>
           {activeContainer && (

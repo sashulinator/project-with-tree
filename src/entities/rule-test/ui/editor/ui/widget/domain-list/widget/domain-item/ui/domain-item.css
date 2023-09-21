@@ -1,0 +1,10 @@
+.e-rule-ui-DomainList-Item {
+  padding: 0.25rem;
+  margin-bottom: 0.25rem;
+  transition: all 0.3s ease;
+}
+
+.e-rule-ui-DomainList-Item .do-not-attributes {
+  opacity: 0.5;
+  margin-left: 3rem;
+}

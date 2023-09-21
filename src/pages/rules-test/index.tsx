@@ -1,11 +1,6 @@
 import './index.css'
 
-// eslint-disable-next-line import/no-named-as-default
-import Scrollbars from 'react-custom-scrollbars'
-
-import Flex from '~/abstract/flex'
 import { useFetchParentDomainList } from '~/api/domain/fetch-parent-domains'
-import { DomainList } from '~/entities/domain'
 import { RuleEditor } from '~/entities/rule-test'
 import { EditorValues, SelectValue } from '~/entities/rule-test/types/type'
 
@@ -37,24 +32,7 @@ function RuleTestPage(): JSX.Element {
     <main>
       {fetcher.isLoading && <div>загрузка</div>}
       {fetcher.isError && <div>Ошибка</div>}
-      {fetcher.isSuccess && (
-        <Flex gap='xxxl' mainAxis='space-between' width='100%' padding='20px'>
-          <nav
-            className='list'
-            style={{
-              borderRight: '1px solid var(--bgSecondary)',
-              height: 'calc(100vh - var(--header-height) * 1px)',
-              width: '400px',
-            }}
-          >
-            <Scrollbars autoHide autoHideTimeout={1000} autoHideDuration={500}>
-              <DomainList list={fetcher.data.items} isDraggable={true} />
-            </Scrollbars>
-          </nav>
-
-          <RuleEditor initialData={data} dataList={fetcher.data.items} />
-        </Flex>
-      )}
+      {fetcher.isSuccess && <RuleEditor initialData={data} dataList={fetcher.data.items} />}
     </main>
   )
 }
