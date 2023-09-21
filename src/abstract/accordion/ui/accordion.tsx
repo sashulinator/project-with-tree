@@ -1,12 +1,12 @@
 import './accordion.css'
 
-import { createElement } from 'react'
+import { ForwardedRef, createElement, forwardRef } from 'react'
 
 import Collapse, { CollapseProps } from '~/abstract/collapse'
 import { c } from '~/utils/core'
 import { useControlledState } from '~/utils/hooks'
 
-Accordion.displayName = 'a-Accordion'
+AccordionComponent.displayName = 'a-Accordion'
 
 export interface HeaderProps {
   isExpanded: boolean
@@ -25,7 +25,10 @@ export interface AccordionProps<THeaderProps> {
   renderHeader: (props: THeaderProps & HeaderProps) => JSX.Element | null
 }
 
-export default function Accordion<THeaderProps>(props: AccordionProps<THeaderProps>): JSX.Element {
+function AccordionComponent<THeaderProps>(
+  props: AccordionProps<THeaderProps>,
+  ref: ForwardedRef<HTMLDivElement>
+): JSX.Element {
   const [isExpanded, setExpanded] = useControlledState(
     props.defaultExpanded || false,
     props.isExpanded,
@@ -35,7 +38,11 @@ export default function Accordion<THeaderProps>(props: AccordionProps<THeaderPro
   const header = createElement(props.renderHeader, { ...props.headerProps, setExpanded, isExpanded })
 
   return (
-    <div {...props.rootProps} className={c(props.className, Accordion.displayName, props.rootProps?.className)}>
+    <div
+      {...props.rootProps}
+      className={c(props.className, AccordionComponent.displayName, props.rootProps?.className)}
+      ref={ref}
+    >
       {header}
       <Collapse
         {...props.collapseProps}
@@ -47,3 +54,9 @@ export default function Accordion<THeaderProps>(props: AccordionProps<THeaderPro
     </div>
   )
 }
+
+const Accordion = forwardRef(AccordionComponent) as (<THeaderProps>(
+  props: AccordionProps<THeaderProps> & { ref?: ForwardedRef<HTMLDivElement> }
+) => JSX.Element) & { displayName: string }
+Accordion.displayName = AccordionComponent.displayName
+export default Accordion

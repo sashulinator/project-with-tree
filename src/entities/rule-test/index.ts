@@ -1,7 +1,7 @@
 /**
  * Type
  */
-export type { RuleContainer, RuleItem } from './types/type'
+export type { RuleContainer, RuleItem, DomainItem } from './types/type'
 
 /**
  * ui

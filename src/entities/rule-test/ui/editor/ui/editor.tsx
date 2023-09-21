@@ -23,6 +23,7 @@ import { createPortal } from 'react-dom'
 
 import Flex from '~/abstract/flex'
 import { ParentDomainRes } from '~/api/domain/types/parent-domain-res'
+import { Attribute } from '~/entities/attribute'
 import { RuleContainer, RuleItem } from '~/entities/rule-test'
 import { EditorValues, MentionsItem, SelectValue } from '~/entities/rule-test/types/type'
 import { GhostButton } from '~/ui/button'
@@ -32,6 +33,8 @@ import { Id, c, generateId } from '~/utils/core'
 import Container from './widget/container/ui/container'
 import Item from './widget/container/widget/item/ui/item'
 import DomainList from './widget/domain-list/ui/domain-list'
+import DomainItem from './widget/domain-list/widget/domain-item/ui/domain-item'
+import AttributeItem from './widget/domain-list/widget/domain-item/widget/attribute-item/ui/attribute-item'
 
 Editor.displayName = 'e-Rule-Editor'
 
@@ -60,10 +63,13 @@ function Editor(props: Props): JSX.Element {
 
   const [containerList, setActiveContainerList] = useState<RuleContainer[]>(newContainerList)
   const [activeContainer, setActiveContainer] = useState<RuleContainer | null>(null)
+
   const columnsId = useMemo(() => containerList.map((item) => item.id), [containerList])
 
   const [rules, setRules] = useState<RuleItem[]>(newRulesList)
   const [activeItem, setActiveItem] = useState<RuleItem | null>(null)
+  const [activeDomain, setActiveDomain] = useState<ParentDomainRes | null>(null)
+  const [activeAttribute, setActiveAttribute] = useState<Attribute | null>(null)
 
   const sensors = useSensors(
     useSensor(PointerSensor, {
@@ -125,6 +131,8 @@ function Editor(props: Props): JSX.Element {
             />
           )}
           {activeItem && <Item showSelect={false} rule={activeItem} />}
+          {activeDomain && <DomainItem domainData={activeDomain} />}
+          {activeAttribute && <AttributeItem attribute={activeAttribute} />}
         </DragOverlay>,
         document.body
       )}
@@ -160,6 +168,18 @@ function Editor(props: Props): JSX.Element {
       setActiveItem(e.active.data.current.rule)
       return
     }
+
+    if (e.active.data.current?.type === 'Attribute') {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+      setActiveAttribute(e.active.data.current.attribute)
+      return
+    }
+
+    if (e.active.data.current?.type === 'Domain') {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+      setActiveDomain(e.active.data.current.domain)
+      return
+    }
   }
 
   function onDragOver(event: DragOverEvent): void {
@@ -168,6 +188,14 @@ function Editor(props: Props): JSX.Element {
 
     const activeId = active.id
     const overId = over.id
+    // Потом добавить ховер стили
+    // if (
+    //   (active.data.current?.type === 'Domain' || active.data.current?.type === 'Attribute') &&
+    //   over.data.current?.type === 'RuleItem'
+    // ) {
+    //   console.log(active.data.current)
+    //   console.log(over.data.current)
+    // }
 
     if (activeId === overId) return
 
@@ -212,13 +240,46 @@ function Editor(props: Props): JSX.Element {
   function onDragEnd(event: DragEndEvent): void {
     setActiveContainer(null)
     setActiveItem(null)
+    setActiveAttribute(null)
+    setActiveDomain(null)
 
     const { active, over } = event
 
     if (!over) return
 
+    const ActiveData = active.data.current
+    const OverData = over.data.current
+
     const activeId = active.id
     const overId = over.id
+
+    if (ActiveData?.type === 'Domain' && OverData?.type === 'RuleItem') {
+      setRules((rules) =>
+        rules.map((item) => {
+          if (item.id === overId) {
+            return {
+              ...item,
+              // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+              value: `${item.value}@[${ActiveData.domain.domain.name}](domain, ${ActiveData.domain.domain.id})`,
+            }
+          }
+          return item
+        })
+      )
+    } else if (ActiveData?.type === 'Attribute' && OverData?.type === 'RuleItem') {
+      setRules((rules) =>
+        rules.map((item) => {
+          if (item.id === overId) {
+            return {
+              ...item,
+              // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+              value: `${item.value}@[${ActiveData.attribute.name}](attribute, ${ActiveData.attribute.id})`,
+            }
+          }
+          return item
+        })
+      )
+    }
 
     if (activeId === overId) return
 

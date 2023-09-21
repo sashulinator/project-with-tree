@@ -1,5 +1,8 @@
 import './attribute-item.css'
 
+import { useSortable } from '@dnd-kit/sortable'
+import { CSS } from '@dnd-kit/utilities'
+
 import Flex, { FlexProps } from '~/abstract/flex'
 import { Attribute } from '~/entities/attribute'
 import { c } from '~/utils/core'
@@ -16,10 +19,25 @@ AttributeItem.displayName = 'e-Rule-w-AttributeItem'
 export default function AttributeItem(props: Props): JSX.Element {
   const { attribute } = props
 
+  const { setNodeRef, attributes, listeners, transform, transition } = useSortable({
+    id: attribute.id,
+    data: {
+      type: 'Attribute',
+      attribute: attribute,
+    },
+  })
+
+  const style = {
+    transition,
+    transform: CSS.Transform.toString(transform),
+  }
+
   return (
-    <Flex
-      crossAxis='center'
-      mainAxis='space-between'
+    <div
+      ref={setNodeRef}
+      {...listeners}
+      {...attributes}
+      style={style}
       {...props.wrapperProps}
       className={c(props.wrapperProps?.className, AttributeItem.displayName)}
     >
@@ -27,6 +45,6 @@ export default function AttributeItem(props: Props): JSX.Element {
         <span className='dots'></span>
         <div {...props.titleProps}>{attribute?.name || 'нет имени'}</div>
       </Flex>
-    </Flex>
+    </div>
   )
 }

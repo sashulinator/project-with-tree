@@ -1,3 +1,4 @@
+import { Domain } from '~/entities/domain/types/domain'
 import { Id } from '~/utils/core'
 
 export type RuleContainer = {
@@ -9,6 +10,11 @@ export type RuleItem = {
   containerId: Id
   value: string
   condition: SelectValue
+}
+
+export type DomainItem = {
+  id: Id
+  domain: Domain
 }
 
 export enum SelectValue {

@@ -67,7 +67,7 @@ function Item(props: Props): JSX.Element {
         className={c(Item.displayName)}
       >
         <MentionsInput value={rule.value} onChange={handleChangeMention} inputRef={inputRef}>
-          <Mention data={mentionsData} trigger={'@'} />
+          <Mention style={{ backgroundColor: 'var(--mentionItem_bg)' }} data={mentionsData} trigger={'@'} />
         </MentionsInput>
 
         <GhostButton square onClick={(): void => deleteRule(rule.id)}>
