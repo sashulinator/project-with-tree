@@ -1,12 +1,13 @@
-import { LinkEvents as UiEvents } from '~/ui/canvas'
 import { Id, generateId } from '~/utils/core'
 import { Emitter, Prop } from '~/utils/emitter'
 
 import { Link as PointLink } from '../../../../../../../types/point'
 import { Rule } from '../../../../../../../types/rule'
 
-export type Events = UiEvents & {
+export type Events = {
   index: { value: number }
+  targetId: { value: Id }
+  sourceId: { value: Id }
 }
 
 export interface Serialized {

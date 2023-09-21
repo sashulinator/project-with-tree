@@ -8,5 +8,5 @@ export type { PaintingPanelProps } from '~/abstract/canvas'
 /**
  * widgets
  */
-export { default as Link, Controller as LinkController } from './widgets/link'
-export type { LinkProps, ControllerProps as LinkControllerProps, Events as LinkEvents } from './widgets/link'
+export { default as Link } from './widgets/link'
+export type { LinkProps } from './widgets/link'
