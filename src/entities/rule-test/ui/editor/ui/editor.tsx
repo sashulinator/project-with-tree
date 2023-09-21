@@ -25,9 +25,11 @@ import Flex from '~/abstract/flex'
 import { ParentDomainRes } from '~/api/domain/types/parent-domain-res'
 import { Attribute } from '~/entities/attribute'
 import { RuleContainer, RuleItem } from '~/entities/rule-test'
-import { EditorValues, MentionsItem, SelectValue } from '~/entities/rule-test/types/type'
+import { EditorValues, MentionsItem, RulesRes, SelectValue } from '~/entities/rule-test/types/type'
 import { GhostButton } from '~/ui/button'
-import { Plus } from '~/ui/icon'
+import { Plus, Save } from '~/ui/icon'
+import Input from '~/ui/input'
+import Labeled from '~/ui/labeled'
 import { Id, c, generateId } from '~/utils/core'
 
 import Container from './widget/container/ui/container'
@@ -39,37 +41,52 @@ import AttributeItem from './widget/domain-list/widget/domain-item/widget/attrib
 Editor.displayName = 'e-Rule-Editor'
 
 export interface Props {
-  initialData: EditorValues[]
+  rule: RulesRes | null
   dataList: ParentDomainRes[]
+  onSubmit: (editorValue: EditorValues[], name: string, keyName: string) => void
 }
 
 function Editor(props: Props): JSX.Element {
-  const { initialData, dataList } = props
+  const { rule, dataList } = props
 
-  const newContainerList = initialData.map((item) => {
+  const initialValue = rule
+    ? rule.frontValue
+    : [
+        {
+          id: '5',
+          valueArr: [{ id: '3', value: '', condition: SelectValue.and }],
+          condition: SelectValue.and,
+        },
+      ]
+
+  const newContainerList = initialValue.map((item) => {
     return { id: item.id }
   })
 
   const newRulesList: RuleItem[] = []
-  initialData.forEach((arr) => {
+
+  initialValue.forEach((arr) => {
     arr.valueArr.forEach((item) => {
       newRulesList.push({ id: item.id, value: item.value, containerId: arr.id, condition: item.condition })
     })
   })
 
-  const [mentionsData, setMentionsData] = useState(addDataMentions(dataList))
+  const [name, setName] = useState(rule ? rule.name : '')
+  const [keyName, setKeyName] = useState(rule ? rule.keyName : '')
 
-  useEffect(() => setMentionsData(addDataMentions(dataList)), [dataList])
+  const [mentionsData, setMentionsData] = useState(addDataMentions(dataList))
 
   const [containerList, setActiveContainerList] = useState<RuleContainer[]>(newContainerList)
   const [activeContainer, setActiveContainer] = useState<RuleContainer | null>(null)
-
-  const columnsId = useMemo(() => containerList.map((item) => item.id), [containerList])
 
   const [rules, setRules] = useState<RuleItem[]>(newRulesList)
   const [activeItem, setActiveItem] = useState<RuleItem | null>(null)
   const [activeDomain, setActiveDomain] = useState<ParentDomainRes | null>(null)
   const [activeAttribute, setActiveAttribute] = useState<Attribute | null>(null)
+
+  const columnsId = useMemo(() => containerList.map((item) => item.id), [containerList])
+
+  useEffect(() => setMentionsData(addDataMentions(dataList)), [dataList])
 
   const sensors = useSensors(
     useSensor(PointerSensor, {
@@ -96,12 +113,47 @@ function Editor(props: Props): JSX.Element {
         </nav>
         <div className={c(Editor.displayName)}>
           <Flex gap='xxxl' dir='column'>
-            <GhostButton onClick={createContainer}>
-              <Flex gap='l' crossAxis='center'>
-                <Plus></Plus>
-                Добавить контейнер
+            <Flex mainAxis='space-between' width='100%' gap='xxxl'>
+              <Flex width='100%' gap='l' dir='column'>
+                <Labeled label={'Наименование: '} style={{ marginBottom: '10px' }}>
+                  <Input
+                    value={name}
+                    onChange={(e): void => setName(e.target.value)}
+                    height={'l'}
+                    placeholder='Наименование'
+                  />
+                </Labeled>
+                <Labeled label={'Ключевое имя: '}>
+                  <Input
+                    value={keyName}
+                    onChange={(e): void => setKeyName(e.target.value)}
+                    height={'l'}
+                    placeholder='Ключевое имя'
+                  />
+                </Labeled>
               </Flex>
-            </GhostButton>
+
+              <GhostButton
+                height={'l'}
+                padding={'s'}
+                onClick={(): void => {
+                  const result: EditorValues[] = []
+                  containerList.forEach((container) => {
+                    result.push({
+                      id: container.id,
+                      condition: SelectValue.and, // добавь нужный селект вэлью
+                      valueArr: rules
+                        .filter((rule) => rule.containerId === container.id)
+                        .map((item) => ({ id: item.id, value: item.value, condition: item.condition })),
+                    })
+                  })
+                  console.log(result)
+                }}
+              >
+                <Save width={'30px'} height={'30px'} />
+              </GhostButton>
+            </Flex>
+
             <SortableContext items={columnsId}>
               {containerList.map((item) => (
                 <Container
@@ -117,6 +169,12 @@ function Editor(props: Props): JSX.Element {
                 />
               ))}
             </SortableContext>
+            <GhostButton onClick={createContainer}>
+              <Flex gap='l' crossAxis='center'>
+                <Plus></Plus>
+                Добавить группу условий
+              </Flex>
+            </GhostButton>
           </Flex>
         </div>
       </Flex>

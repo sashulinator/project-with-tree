@@ -1,5 +1,7 @@
 import { atom } from 'recoil'
 
+import { Id } from '~/utils/core'
+
 export enum SelectValue {
   and = 'and',
   or = 'or',
@@ -8,13 +10,13 @@ export enum SelectValue {
 }
 
 export type EditorItem = {
-  id: string
+  id: Id
   value: string
   condition: SelectValue
 }
 
 export type EditorValues = {
-  id: string
+  id: Id
   valueArr: EditorItem[]
   condition: SelectValue
 }

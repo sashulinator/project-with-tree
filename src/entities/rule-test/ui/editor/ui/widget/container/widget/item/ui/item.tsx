@@ -15,7 +15,7 @@ import { Mention } from 'react-mentions'
 
 import { MentionsItem, RuleItem, SelectValue } from '~/entities/rule-test/types/type'
 import { GhostButton } from '~/ui/button'
-import { Close } from '~/ui/icon'
+import { Trash } from '~/ui/icon'
 import { Input as MentionsInput } from '~/ui/mentions'
 import { Id, c } from '~/utils/core'
 
@@ -71,7 +71,7 @@ function Item(props: Props): JSX.Element {
         </MentionsInput>
 
         <GhostButton square onClick={(): void => deleteRule(rule.id)}>
-          <Close />
+          <Trash />
         </GhostButton>
       </div>
       {showSelect && <Select handleChangeSelect={handleChangeSelect} rule={rule} />}

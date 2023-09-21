@@ -4,11 +4,12 @@ import { useRecoilState } from 'recoil'
 
 import { getSelectArr } from '~/entities/rule/lib/get-select-arr'
 import { SelectValue, editorRulesValuesAtom } from '~/entities/rule/models/editorRulesValues'
+import { Id } from '~/utils/core'
 
 interface SelectProps {
-  id: string
+  id: Id
   condition: SelectValue
-  parentId: string
+  parentId: Id
 }
 
 Select.displayName = 'ruleEditor-w-Rules-w-Select'

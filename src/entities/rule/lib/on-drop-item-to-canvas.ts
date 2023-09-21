@@ -1,4 +1,4 @@
-import { generateId } from '~/utils/core'
+import { Id, generateId } from '~/utils/core'
 
 import { DraggableItem } from '../models/draggableItem'
 import { EditorValues, SelectValue } from '../models/editorRulesValues'
@@ -6,7 +6,7 @@ import { EditorValues, SelectValue } from '../models/editorRulesValues'
 export function onDropItemToCanvas(
   editorRulesValues: EditorValues[],
   draggableItem: DraggableItem,
-  parentId: string | null = null,
+  parentId: Id | null = null,
   direction: 'down' | 'up' = 'down'
 ): EditorValues[] {
   const result = editorRulesValues.map((arr) => {

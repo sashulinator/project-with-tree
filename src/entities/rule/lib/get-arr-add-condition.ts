@@ -1,8 +1,8 @@
-import { generateId } from '~/utils/core'
+import { Id, generateId } from '~/utils/core'
 
 import { EditorValues, SelectValue } from '../models/editorRulesValues'
 
-export function getArrAddCondition(editorRulesValues: EditorValues[], id: string, parentId: string): EditorValues[] {
+export function getArrAddCondition(editorRulesValues: EditorValues[], id: Id, parentId: Id): EditorValues[] {
   const index = editorRulesValues.findIndex((item) => item.id === id)
 
   let result: EditorValues[] = []

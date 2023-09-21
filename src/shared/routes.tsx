@@ -8,7 +8,9 @@ import DomainListPage from '~/pages/domains'
 import LoginPage from '~/pages/login'
 import MainPage from '~/pages/main'
 import NotFoundPage from '~/pages/not-found'
-import RuleTestPage from '~/pages/rules-test'
+import RuleTestCreatePage from '~/pages/rules-test/create/create'
+import RuleTestListPage from '~/pages/rules-test/list/list'
+import RuleTestUpdatePage from '~/pages/rules-test/update/update'
 import RuleCreatePage from '~/pages/rules/create/create'
 import RuleListPage from '~/pages/rules/list/list'
 import RuleUpdatePage from '~/pages/rules/update/update'
@@ -45,11 +47,25 @@ export const routes = {
     Header,
     Nav,
   },
-  ruleTest: {
-    path: '/dnd',
-    getURL: (): string => routes.ruleTest.path,
+  ruleTestCreate: {
+    path: '/rule-test/create',
+    getURL: (): string => routes.ruleTestCreate.path,
     getName: (): string => 'Dnd',
-    element: <RuleTestPage />,
+    element: <RuleTestCreatePage />,
+    Header,
+  },
+  ruleTestUpdate: {
+    path: '/rule-test/:id',
+    getURL: (): string => routes.ruleTestUpdate.path,
+    getName: (): string => 'Dnd',
+    element: <RuleTestUpdatePage />,
+    Header,
+  },
+  ruleTestList: {
+    path: '/rules-test',
+    getURL: (): string => routes.ruleTestList.path,
+    getName: (): string => 'Rules',
+    element: <RuleTestListPage />,
     Header,
   },
   ruleCreate: {

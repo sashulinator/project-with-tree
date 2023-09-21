@@ -1,6 +1,8 @@
 import { atom } from 'recoil'
 
-export const dragOverItemIdAtom = atom<string | null>({
+import { Id } from '~/utils/core'
+
+export const dragOverItemIdAtom = atom<Id | null>({
   key: 'dragOverItemIdAtom',
   default: null,
 })

@@ -15,7 +15,7 @@ import { useMemo } from 'react'
 import Flex from '~/abstract/flex'
 import { MentionsItem, RuleContainer, RuleItem } from '~/entities/rule-test/types/type'
 import { GhostButton } from '~/ui/button'
-import { Close, Plus } from '~/ui/icon'
+import { Plus, Trash } from '~/ui/icon'
 import { Id, c } from '~/utils/core'
 
 import Item from '../widget/item/ui/item'
@@ -71,14 +71,8 @@ function Container(props: Props): JSX.Element {
       className={c(Container.displayName)}
     >
       <div className='header'>
-        <GhostButton onClick={(): void => createRule(container.id)}>
-          <Flex gap='l' crossAxis='center'>
-            <Plus></Plus>
-            Добавить правило
-          </Flex>
-        </GhostButton>
         <GhostButton square onClick={(): void => deleteContainer(container.id)}>
-          <Close />
+          <Trash />
         </GhostButton>
       </div>
       <div className='body'>
@@ -95,6 +89,12 @@ function Container(props: Props): JSX.Element {
             />
           ))}
         </SortableContext>
+        <GhostButton onClick={(): void => createRule(container.id)}>
+          <Flex gap='l' crossAxis='center'>
+            <Plus></Plus>
+            Добавить условие
+          </Flex>
+        </GhostButton>
       </div>
     </div>
   )

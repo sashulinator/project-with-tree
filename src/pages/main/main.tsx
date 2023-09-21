@@ -25,7 +25,7 @@ export default function MainPage(): JSX.Element {
       Атрибуты
     </Link>,
     <Link key={3} to={routes.ruleList.getURL()}>
-      Правила
+      Старые Правила
     </Link>,
     <Link key={4} to={routes.decisionList.getURL()}>
       Системы источники
@@ -33,8 +33,8 @@ export default function MainPage(): JSX.Element {
     <Link key={5} to={routes.decisionList.getURL()}>
       Админ
     </Link>,
-    <Link key={6} to={routes.ruleTest.getURL()}>
-      RuleTest
+    <Link key={6} to={routes.ruleTestList.getURL()}>
+      Новые Правила
     </Link>,
   ]
 
