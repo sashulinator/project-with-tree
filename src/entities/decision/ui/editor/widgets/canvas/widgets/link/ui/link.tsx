@@ -1,68 +1,70 @@
 import './link.scss'
 
 import { Link as UILink } from '~/ui/canvas'
-import { Id, Position, c } from '~/utils/core'
+import { Id, c } from '~/utils/core'
 import { isMetaCtrlKey } from '~/utils/dom-event'
 import { fns } from '~/utils/function'
 import { useForceUpdate, useOnMount, useUpdate } from '~/utils/hooks'
 
 import { Controller, ListController, getOffset } from '..'
-import { NodeListController } from '../../../../..'
+import { CanvasController, NodeListController } from '../../../../..'
 
 Link.displayName = 'decision-Editor-w-Canvas-w-Link'
 
 export interface LinkProps extends React.HTMLAttributes<SVGPathElement> {
   scale: number
-  canvasTranslate: Position
   state: Controller
+  canvas: CanvasController
   nodeList: NodeListController
   toggle: () => void
   selectLinks: (ids: Id[]) => void
-  // TODO не ничего не должен знать о Листе
   listState: ListController
 }
 
 export default function Link(props: LinkProps): JSX.Element | null {
-  const { scale, state, canvasTranslate, listState, nodeList, toggle, selectLinks, ...pathProps } = props
+  const { scale, canvas, state, listState, nodeList, toggle, selectLinks, ...pathProps } = props
 
-  const sourceState = nodeList.find(state.sourceId.value)
-  const targetState = nodeList.find(state.targetId.value)
+  const sourceNode = nodeList.find(state.sourceId.value)
+  const targetNode = nodeList.find(state.targetId.value)
 
-  useUpdate(subscribeOnUpdates, [sourceState, targetState])
+  useUpdate(subscribeOnUpdates, [sourceNode, targetNode])
   useOnMount(useForceUpdate())
 
   const isCurrentEditing = listState.jointEditingId.value === state.id
 
-  if ((!sourceState || !targetState) && !isCurrentEditing) return null
+  if ((!sourceNode || !targetNode) && !isCurrentEditing) return null
 
   const isSelected = listState.selection.isSelected(state.id)
+
+  const sourceOffset = sourceNode ? getOffset(props.state.id, sourceNode?.ref.value, scale, 23) : null
+  const targetOffset = targetNode ? getOffset(props.state.id, targetNode?.ref.value, scale, -23) : null
+
+  const sourcePosition = sourceNode?.position.value ?? canvas.mousePosition.value
+  const targetPosition = targetNode?.position.value ?? canvas.mousePosition.value
 
   return (
     <g className={c(Link.displayName)}>
       <UILink
         {...pathProps}
         className={c(pathProps.className, '--link', isSelected && '--selected')}
-        scale={scale}
-        sourceOffset={getOffset(props.state.id, sourceState?.ref.value, scale, 23)}
-        targetOffset={getOffset(props.state.id, targetState?.ref.value, scale, -23)}
-        canvasTranslate={canvasTranslate}
         strokeWidth={4}
-        sourcePosition={sourceState?.position.value}
-        targetPosition={targetState?.position.value}
-        onClick={fns(pathProps.onClick, (e) => (isMetaCtrlKey(e) ? toggle() : selectLinks([props.state.id])))}
+        sourceOffset={sourceOffset}
+        targetOffset={targetOffset}
+        sourcePosition={sourcePosition}
+        targetPosition={targetPosition}
       />
-      <UILink
-        {...pathProps}
-        className={c(pathProps.className, '--overlay', isSelected && '--selected')}
-        scale={scale}
-        sourceOffset={getOffset(props.state.id, sourceState?.ref.value, scale, 23)}
-        targetOffset={getOffset(props.state.id, targetState?.ref.value, scale, -23)}
-        canvasTranslate={canvasTranslate}
-        strokeWidth={25}
-        sourcePosition={sourceState?.position.value}
-        targetPosition={targetState?.position.value}
-        onClick={fns(pathProps.onClick, (e) => (isMetaCtrlKey(e) ? toggle() : selectLinks([props.state.id])))}
-      />
+      {sourceNode && targetNode && (
+        <UILink
+          {...pathProps}
+          className={c(pathProps.className, '--overlay', isSelected && '--selected')}
+          sourceOffset={sourceOffset}
+          targetOffset={targetOffset}
+          strokeWidth={25}
+          sourcePosition={sourcePosition}
+          targetPosition={targetPosition}
+          onClick={fns(pathProps.onClick, (e) => (isMetaCtrlKey(e) ? toggle() : selectLinks([props.state.id])))}
+        />
+      )}
     </g>
   )
 
@@ -75,13 +77,16 @@ export default function Link(props: LinkProps): JSX.Element | null {
     uns.push(listState.on('sourceId', () => setTimeout(update)))
     uns.push(listState.on('index', () => setTimeout(update)))
     uns.push(listState.on('selection', () => update))
-    if (targetState) {
-      uns.push(targetState?.on('position', update))
-      uns.push(targetState?.on('ref', update))
+    if (targetNode) {
+      uns.push(targetNode?.on('position', update))
+      uns.push(targetNode?.on('ref', update))
     }
-    if (sourceState) {
-      uns.push(sourceState?.on('position', update))
-      uns.push(sourceState?.on('ref', update))
+    if (sourceNode) {
+      uns.push(sourceNode?.on('position', update))
+      uns.push(sourceNode?.on('ref', update))
+    }
+    if (!sourceNode || !targetNode) {
+      uns.push(props.canvas?.on('mousePosition', update))
     }
   }
 }
