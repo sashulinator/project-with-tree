@@ -33,19 +33,9 @@ export default function RulesTestUpdatePage(): JSX.Element {
   )
 
   // Private
-  // function onSubmit(editorValue: EditorValues[], name: string, keyName: string): void {
-  //   updateRuleMutation.mutate({
-  //     id: id as string,
-  //     name: name,
-  //     keyName: keyName,
-  //     frontValue: editorValue,
-  //     userId: 'user@mail.ru',
-  //   })
-  // }
-
   function onSubmit(editorValue: EditorValues[], name: string, keyName: string): void {
-    console.log({
-      id: id,
+    updateRuleMutation.mutate({
+      id: id as string,
       name: name,
       keyName: keyName,
       frontValue: editorValue,

@@ -74,7 +74,7 @@ function Item(props: Props): JSX.Element {
           <Trash />
         </GhostButton>
       </div>
-      {showSelect && <Select handleChangeSelect={handleChangeSelect} rule={rule} />}
+      {showSelect && <Select handleChangeSelect={handleChangeSelect} item={rule} />}
     </>
   )
 

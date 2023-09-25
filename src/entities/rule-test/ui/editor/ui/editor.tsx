@@ -47,7 +47,7 @@ export interface Props {
 }
 
 function Editor(props: Props): JSX.Element {
-  const { rule, dataList } = props
+  const { rule, dataList, onSubmit } = props
 
   const initialValue = rule
     ? rule.frontValue
@@ -60,7 +60,7 @@ function Editor(props: Props): JSX.Element {
       ]
 
   const newContainerList = initialValue.map((item) => {
-    return { id: item.id }
+    return { id: item.id, condition: item.condition }
   })
 
   const newRulesList: RuleItem[] = []
@@ -141,13 +141,13 @@ function Editor(props: Props): JSX.Element {
                   containerList.forEach((container) => {
                     result.push({
                       id: container.id,
-                      condition: SelectValue.and, // добавь нужный селект вэлью
+                      condition: container.condition,
                       valueArr: rules
                         .filter((rule) => rule.containerId === container.id)
                         .map((item) => ({ id: item.id, value: item.value, condition: item.condition })),
                     })
                   })
-                  console.log(result)
+                  onSubmit(result, name, keyName)
                 }}
               >
                 <Save width={'30px'} height={'30px'} />
@@ -155,8 +155,10 @@ function Editor(props: Props): JSX.Element {
             </Flex>
 
             <SortableContext items={columnsId}>
-              {containerList.map((item) => (
+              {containerList.map((item, i, arr) => (
                 <Container
+                  containerList={containerList}
+                  setActiveContainerList={setActiveContainerList}
                   rules={rules}
                   key={item.id}
                   container={item}
@@ -166,6 +168,7 @@ function Editor(props: Props): JSX.Element {
                   deleteContainer={deleteContainer}
                   setRules={setRules}
                   mentionsData={mentionsData}
+                  showSelect={i !== arr.length - 1}
                 />
               ))}
             </SortableContext>
@@ -183,6 +186,7 @@ function Editor(props: Props): JSX.Element {
         <DragOverlay>
           {activeContainer && (
             <Container
+              showSelect={false}
               rules={rules}
               rulesForContainer={rules.filter((rule) => rule.containerId === activeContainer.id)}
               container={activeContainer}
@@ -246,19 +250,31 @@ function Editor(props: Props): JSX.Element {
 
     const activeId = active.id
     const overId = over.id
-    // Потом добавить ховер стили
-    // if (
-    //   (active.data.current?.type === 'Domain' || active.data.current?.type === 'Attribute') &&
-    //   over.data.current?.type === 'RuleItem'
-    // ) {
-    //   console.log(active.data.current)
-    //   console.log(over.data.current)
-    // }
 
     if (activeId === overId) return
 
     const isActiveATask = active.data.current?.type === 'RuleItem'
     const isOverATask = over.data.current?.type === 'RuleItem'
+
+    const isOverAColumn = over.data.current?.type === 'Container'
+    const isActiveAColumn = active.data.current?.type === 'Container'
+
+    if (isOverAColumn && isActiveAColumn) {
+      console.log('lf')
+      setActiveContainerList((containerList) => {
+        const activeContainerIndex = containerList.findIndex((item) => item.id === activeId)
+
+        const overContainerIndex = containerList.findIndex((item) => item.id === overId)
+
+        const containerOverCondition = containerList[overContainerIndex].condition
+        const containerActiveCondition = containerList[activeContainerIndex].condition
+
+        containerList[overContainerIndex].condition = containerActiveCondition
+        containerList[activeContainerIndex].condition = containerOverCondition
+
+        return arrayMove(containerList, activeContainerIndex, overContainerIndex)
+      })
+    }
 
     if (!isActiveATask) return
 
@@ -281,8 +297,6 @@ function Editor(props: Props): JSX.Element {
         return arrayMove(rules, activeIndex, overIndex)
       })
     }
-
-    const isOverAColumn = over.data.current?.type === 'Container'
 
     // Im dropping a RuleItem over a column
     if (isActiveATask && isOverAColumn) {
@@ -355,7 +369,7 @@ function Editor(props: Props): JSX.Element {
   }
 
   function createContainer(): void {
-    const containerToAdd: RuleContainer = { id: generateId() }
+    const containerToAdd: RuleContainer = { id: generateId(), condition: SelectValue.and }
     setActiveContainerList((containerList) => [...containerList, containerToAdd])
   }
 

@@ -1,10 +1,10 @@
 import './select.css'
 
-import { RuleItem } from '~/entities/rule-test/types/type'
+import { RuleContainer, RuleItem } from '~/entities/rule-test/types/type'
 import { SelectValue } from '~/entities/rule/models/editorRulesValues'
 
 interface SelectProps {
-  rule: RuleItem
+  item: RuleItem | RuleContainer
   handleChangeSelect: (option: SelectValue) => void
 }
 
@@ -18,14 +18,14 @@ export default function Select(props: SelectProps): JSX.Element {
     { value: SelectValue.xor, title: 'ИЛИ НЕ' },
   ]
 
-  const { rule, handleChangeSelect } = props
+  const { item, handleChangeSelect } = props
 
   return (
     <select
-      value={rule.condition}
+      value={item.condition}
       onChange={(e): void => handleChangeSelect(e.target.value as SelectValue)}
       className={Select.displayName}
-      title={`or-and-not${rule.id}`}
+      title={`or-and-not${item.id}`}
     >
       {options.map((option) => {
         return (

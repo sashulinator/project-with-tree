@@ -3,6 +3,7 @@ import { Id } from '~/utils/core'
 
 export type RuleContainer = {
   id: Id
+  condition: SelectValue
 }
 
 export type RuleItem = {
