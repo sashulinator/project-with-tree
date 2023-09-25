@@ -1,4 +1,4 @@
-import './link.css'
+import './edge.css'
 
 import { ForwardedRef, forwardRef } from 'react'
 

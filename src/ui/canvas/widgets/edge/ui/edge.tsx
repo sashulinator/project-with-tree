@@ -1,6 +1,6 @@
 import React from 'react'
 
-import AbstractLink from '~/abstract/canvas/widgets/link/ui/link'
+import AbstractLink from '~/abstract/canvas/widgets/edge/ui/edge'
 import { Offset, Position } from '~/utils/core'
 
 export interface Props extends React.SVGAttributes<SVGPathElement> {
