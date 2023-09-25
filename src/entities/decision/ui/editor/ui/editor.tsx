@@ -1,6 +1,6 @@
 import './editor.scss'
 
-import { useMemo } from 'react'
+import { useLayoutEffect, useMemo } from 'react'
 
 import { RulesRes } from '~/entities/rule/types/rules-type'
 import { Id, c } from '~/utils/core'
@@ -58,6 +58,11 @@ export default function Editor(props: Props): JSX.Element {
     const props = { nodeList, canvas, linkList }
     return new _HistoryController(props)
   }, [props.decision.decisionTree])
+
+  useLayoutEffect(() => {
+    canvas.mousePosition.subscribe()
+    return canvas.mousePosition.unsubscribe()
+  }, [])
 
   _useKeyDownListener({
     undo,

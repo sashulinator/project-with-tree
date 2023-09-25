@@ -1,12 +1,13 @@
-import { LinkController as UiController, LinkEvents as UiEvents } from '~/ui/canvas'
-import { Id } from '~/utils/core'
-import { Prop } from '~/utils/emitter'
+import { Id, generateId } from '~/utils/core'
+import { Emitter, Prop } from '~/utils/emitter'
 
 import { Link as PointLink } from '../../../../../../../types/point'
 import { Rule } from '../../../../../../../types/rule'
 
-export type Events = UiEvents & {
+export type Events = {
   index: { value: number }
+  targetId: { value: Id }
+  sourceId: { value: Id }
 }
 
 export interface Serialized {
@@ -25,13 +26,25 @@ export interface Props {
   rules?: Rule[] | undefined
 }
 
-export class Controller extends UiController<Events> {
+export class Controller extends Emitter<Events> {
+  id: Id
+
+  targetId: Prop<'targetId', Id | undefined>
+
+  sourceId: Prop<'sourceId', Id | undefined>
+
   rules: Prop<'rules', Rule[]>
 
   index: Prop<'index', number>
 
   constructor(props: Props) {
-    super({ sourceId: props.sourceId, targetId: props.targetId, id: props.id })
+    super()
+
+    this.id = props.id || generateId()
+
+    this.sourceId = new Prop('sourceId', props.sourceId, this)
+
+    this.targetId = new Prop('targetId', props.targetId, this)
 
     this.index = new Prop('index', props.index ?? 0, this)
 

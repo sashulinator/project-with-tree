@@ -1,10 +1,10 @@
-import './link.css'
+import './edge.css'
 
 import { ForwardedRef, forwardRef } from 'react'
 
 import { Position, c } from '~/utils/core'
 
-export interface LinkProps extends React.SVGAttributes<SVGPathElement> {
+export interface Props extends React.SVGAttributes<SVGPathElement> {
   sourcePosition: Position | null
   targetPosition: Position | null
 }
@@ -12,7 +12,7 @@ export interface LinkProps extends React.SVGAttributes<SVGPathElement> {
 /**
  * Отрисовывает path если sourcePosition и targetPosition переданы, иначе вернет null
  */
-function LinkComponent(props: LinkProps, ref: ForwardedRef<SVGPathElement>): JSX.Element | null {
+function LinkComponent(props: Props, ref: ForwardedRef<SVGPathElement>): JSX.Element | null {
   const { sourcePosition: s, targetPosition: t, ...pathProp } = props
 
   const path = drawPath()
@@ -35,5 +35,5 @@ function LinkComponent(props: LinkProps, ref: ForwardedRef<SVGPathElement>): JSX
 }
 
 const Link = forwardRef(LinkComponent)
-Link.displayName = 'AbstarctCanvasLink'
+Link.displayName = 'AbstractCanvasLink'
 export default Link

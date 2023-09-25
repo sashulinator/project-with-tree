@@ -32,7 +32,7 @@ function CanvasComponent(props: Props): JSX.Element {
           toggle={props.toggleLink}
           state={props.linkList}
           nodeList={props.nodeList}
-          canvasTranslate={props.controller.zoom.value}
+          canvas={props.controller}
           scale={props.controller.zoom.value.k}
         />
         <NodeList

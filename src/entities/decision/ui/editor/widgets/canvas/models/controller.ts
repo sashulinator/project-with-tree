@@ -1,4 +1,4 @@
-import { Zoom, ZoomProp } from '~/lib/emitter'
+import { MousePositionProp, Zoom, ZoomProp } from '~/lib/emitter'
 import { Position, assertNotNull } from '~/utils/core'
 import { getElementSize } from '~/utils/dom'
 import { isMetaCtrlKey } from '~/utils/dom-event'
@@ -10,10 +10,13 @@ import { getLocalStorageZoom, setZoomLocalStorage } from '../lib/local-storage-z
 export type Events = {
   zoom: { value: Zoom }
   ref: { element: SVGSVGElement }
+  mousePosition: { value: Position }
 }
 
 export class Controller extends Emitter<Events> {
   ref: Prop<'ref', null | SVGSVGElement>
+
+  mousePosition: MousePositionProp<'mousePosition'>
 
   zoom: ZoomProp<'zoom'>
 
@@ -23,6 +26,15 @@ export class Controller extends Emitter<Events> {
     super()
 
     this.ref = new Prop('ref', null as null | SVGSVGElement, this)
+
+    this.mousePosition = new MousePositionProp(
+      'mousePosition',
+      {
+        getScale: (): number => this.zoom.value.k,
+        getTranslate: (): Position => this.zoom.value,
+      },
+      this
+    )
 
     this.highlight = new Prop('highlight', null as (Position & Size) | null, this)
 

@@ -27,7 +27,7 @@ export default function DecisionPage(): JSX.Element {
   const filteredRuleList = useMemo(() => ruleListFetcher.data?.items || [], [ruleListFetcher.data])
 
   return (
-    <main className='DecisionIdPage'>
+    <main key={String(fetcher.isFetching)} className='DecisionIdPage'>
       {fetcher.data && (
         <Editor
           onSubmit={(states): void => {
