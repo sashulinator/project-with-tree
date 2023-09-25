@@ -20,7 +20,7 @@ import { GhostButton } from '~/ui/button'
 import { Save } from '~/ui/icon/variants/save'
 import Input from '~/ui/input'
 import Labeled from '~/ui/labeled'
-import { c } from '~/utils/core'
+import { Id, c } from '~/utils/core'
 
 import { themes } from '../themes'
 import { Item } from '../widgets/item'
@@ -209,7 +209,7 @@ export function Rules(props: RulesProps): JSX.Element {
     onSubmit(editorValue, name, keyName)
   }
 
-  function dragOver(e: React.DragEvent<HTMLElement>, parentId: string | null = null): void {
+  function dragOver(e: React.DragEvent<HTMLElement>, parentId: Id | null = null): void {
     e.preventDefault()
     e.stopPropagation()
 
@@ -235,7 +235,7 @@ export function Rules(props: RulesProps): JSX.Element {
     if (!overHeader) setOverHeader(true)
   }
 
-  function dropToBoard(e: React.DragEvent<HTMLElement>, parentId: string | null = null): void {
+  function dropToBoard(e: React.DragEvent<HTMLElement>, parentId: Id | null = null): void {
     e.preventDefault()
     e.stopPropagation()
     if (overHeaderItemId) {
@@ -272,7 +272,7 @@ export function Rules(props: RulesProps): JSX.Element {
     if (overHeader) setOverHeader(false)
   }
 
-  function dropItemToItem(e: React.DragEvent<HTMLElement>, id: string): void {
+  function dropItemToItem(e: React.DragEvent<HTMLElement>, id: Id): void {
     e.preventDefault()
     e.stopPropagation()
 
@@ -290,7 +290,7 @@ export function Rules(props: RulesProps): JSX.Element {
     if (overHeader) setOverHeader(false)
   }
 
-  function dropItemToHeaderItem(e: React.DragEvent<HTMLElement>, id: string): void {
+  function dropItemToHeaderItem(e: React.DragEvent<HTMLElement>, id: Id): void {
     e.preventDefault()
     e.stopPropagation()
     if (draggableItem) {

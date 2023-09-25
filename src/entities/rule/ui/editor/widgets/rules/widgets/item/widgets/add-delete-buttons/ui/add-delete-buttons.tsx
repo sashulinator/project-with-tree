@@ -8,13 +8,13 @@ import { getArrDeleteCondition } from '~/entities/rule/lib/get-arr-delete-condit
 import { SelectValue, editorRulesValuesAtom } from '~/entities/rule/models/editorRulesValues'
 import { GhostButton } from '~/ui/button'
 import { Close, Plus } from '~/ui/icon'
-import { c } from '~/utils/core'
+import { Id, c } from '~/utils/core'
 
 import Select from '../../select/ui/select'
 
 interface ButtonsProps {
-  itemId: string
-  parentId: string
+  itemId: Id
+  parentId: Id
   flexProps?: FlexProps
   rootProps?: React.HTMLAttributes<HTMLDivElement>
   isDragOver: boolean

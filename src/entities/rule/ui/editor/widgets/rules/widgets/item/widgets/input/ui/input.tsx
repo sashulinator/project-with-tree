@@ -14,7 +14,7 @@ import { SelectValue, editorRulesValuesAtom } from '~/entities/rule/models/edito
 import { mentionsDataAtom } from '~/entities/rule/models/mentionsData'
 import { draggableCardAtom } from '~/models/draggableCard'
 import { Input as MentionsInput } from '~/ui/mentions'
-import { c } from '~/utils/core'
+import { Id, c } from '~/utils/core'
 
 export interface MentionsItem {
   display: string
@@ -23,8 +23,8 @@ export interface MentionsItem {
 
 interface EditorInputProps {
   value: string
-  id: string
-  parentId: string
+  id: Id
+  parentId: Id
   condition: SelectValue
 }
 

@@ -1,6 +1,8 @@
+import { Id } from '~/utils/core'
+
 import { EditorValues } from '../models/editorRulesValues'
 
-export function getArrDeleteCondition(editorRulesValues: EditorValues[], id: string, parentId: string): EditorValues[] {
+export function getArrDeleteCondition(editorRulesValues: EditorValues[], id: Id, parentId: Id): EditorValues[] {
   let result: EditorValues[] = []
 
   if (parentId === id) {
