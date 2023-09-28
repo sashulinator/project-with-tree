@@ -20,6 +20,7 @@ import { SortableContext, arrayMove } from '@dnd-kit/sortable'
 import { useEffect, useMemo, useState } from 'react'
 import Scrollbars from 'react-custom-scrollbars'
 import { createPortal } from 'react-dom'
+import { FieldValues, useForm } from 'react-hook-form'
 
 import Flex from '~/abstract/flex'
 import { ParentDomainRes } from '~/api/domain/types/parent-domain-res'
@@ -54,9 +55,6 @@ function Editor(props: Props): JSX.Element {
 
   const [newContainerList, newRulesList] = useMemo(() => getInitialData(rule ? rule : null), [rule])
 
-  const [name, setName] = useState(rule ? rule.name : '')
-  const [keyName, setKeyName] = useState(rule ? rule.keyName : '')
-
   const [mentionsData, setMentionsData] = useState(addDataMentions(dataList))
 
   const [containerList, setActiveContainerList] = useState<RuleContainer[]>(newContainerList)
@@ -79,6 +77,13 @@ function Editor(props: Props): JSX.Element {
     })
   )
 
+  const {
+    register,
+    handleSubmit,
+    // watch,
+    formState: { errors },
+  } = useForm()
+
   return (
     <DndContext sensors={sensors} onDragStart={onDragStart} onDragEnd={onDragEnd} onDragOver={onDragOver}>
       <Flex gap='xxxl' mainAxis='space-between' width='100%' padding='20px'>
@@ -96,22 +101,35 @@ function Editor(props: Props): JSX.Element {
         </nav>
         <div className={c(Editor.displayName)}>
           <Flex gap='xxxl' dir='column'>
-            <Flex mainAxis='space-between' width='100%' gap='xxxl'>
+            <Flex
+              as='form'
+              // eslint-disable-next-line @typescript-eslint/no-misused-promises
+              onSubmit={handleSubmit((e: FieldValues): void =>
+                onSubmit(getEditorValue(containerList, rules), e.name as string, e.keyName as string)
+              )}
+              mainAxis='space-between'
+              width='100%'
+              gap='xxxl'
+            >
               <Flex width='100%' gap='l' dir='column'>
                 <Labeled label={'Наименование: '} style={{ marginBottom: '10px' }}>
                   <Input
-                    value={name}
-                    onChange={(e): void => setName(e.target.value)}
+                    defaultValue={rule ? rule.name : ''}
+                    // onChange={(e): void => setName(e.target.value)}
                     height={'l'}
                     placeholder='Наименование'
+                    className={c(errors.name && '--error')}
+                    {...register('name', { required: true })}
                   />
                 </Labeled>
                 <Labeled label={'Ключевое имя: '}>
                   <Input
-                    value={keyName}
-                    onChange={(e): void => setKeyName(e.target.value)}
+                    defaultValue={rule ? rule.keyName : ''}
+                    // onChange={(e): void => setKeyName(e.target.value)}
                     height={'l'}
                     placeholder='Ключевое имя'
+                    className={c(errors.keyName && '--error')}
+                    {...register('keyName', { required: true })}
                   />
                 </Labeled>
               </Flex>
@@ -119,7 +137,9 @@ function Editor(props: Props): JSX.Element {
               <GhostButton
                 height={'l'}
                 padding={'s'}
-                onClick={(): void => onSubmit(getEditorValue(containerList, rules), name, keyName)}
+                type='submit'
+                // eslint-disable-next-line @typescript-eslint/no-misused-promises
+                // onClick={handleSubmit((): void => onSubmit(getEditorValue(containerList, rules), name, keyName))}
               >
                 <Save width={'30px'} height={'30px'} />
               </GhostButton>
