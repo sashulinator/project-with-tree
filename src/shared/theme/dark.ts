@@ -18,7 +18,7 @@ export const DARK = {
   outlineColor: primary.alpha(0.5),
   borderColor: clr('#265d97'),
   errorColor: clr('#d2302f'),
-
+  boxShadow: '0px 0px 8px 0px rgba(255, 255, 255, 0.1)',
   focus: primary,
   focusAlt: clr('violet'),
 } satisfies RequiredVars

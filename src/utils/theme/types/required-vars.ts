@@ -28,6 +28,9 @@ export type RequiredVars = {
   /* primary color */
   borderColor: ToStringable
 
+  /* box-shadow */
+  boxShadow: ToStringable
+
   /* error color */
   errorColor: ToStringable
 

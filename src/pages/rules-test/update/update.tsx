@@ -14,6 +14,7 @@ export default function RulesTestUpdatePage(): JSX.Element {
   const updateRuleMutation = useUpdateRule({
     onSuccess: () => {
       notify({ data: 'Создано', type: 'success' })
+      void data.refetch()
     },
     onError: () => notify({ data: 'Ошибка', type: 'error' }),
   })

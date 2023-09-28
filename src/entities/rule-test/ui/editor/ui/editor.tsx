@@ -20,12 +20,16 @@ import { SortableContext, arrayMove } from '@dnd-kit/sortable'
 import { useEffect, useMemo, useState } from 'react'
 import Scrollbars from 'react-custom-scrollbars'
 import { createPortal } from 'react-dom'
+import { FieldValues, useForm } from 'react-hook-form'
 
 import Flex from '~/abstract/flex'
 import { ParentDomainRes } from '~/api/domain/types/parent-domain-res'
 import { Attribute } from '~/entities/attribute'
 import { RuleContainer, RuleItem } from '~/entities/rule-test'
-import { EditorValues, MentionsItem, RulesRes, SelectValue } from '~/entities/rule-test/types/type'
+import { addDataMentions } from '~/entities/rule-test/lib/addDataMentions'
+import { getEditorValue } from '~/entities/rule-test/lib/getEditorValue'
+import { getInitialData } from '~/entities/rule-test/lib/getInitialData'
+import { EditorValues, RulesRes, SelectValue } from '~/entities/rule-test/types/type'
 import { GhostButton } from '~/ui/button'
 import { Plus, Save } from '~/ui/icon'
 import Input from '~/ui/input'
@@ -49,37 +53,14 @@ export interface Props {
 function Editor(props: Props): JSX.Element {
   const { rule, dataList, onSubmit } = props
 
-  const initialValue = rule
-    ? rule.frontValue
-    : [
-        {
-          id: '5',
-          valueArr: [{ id: '3', value: '', condition: SelectValue.and }],
-          condition: SelectValue.and,
-        },
-      ]
-
-  const newContainerList = initialValue.map((item) => {
-    return { id: item.id, condition: item.condition }
-  })
-
-  const newRulesList: RuleItem[] = []
-
-  initialValue.forEach((arr) => {
-    arr.valueArr.forEach((item) => {
-      newRulesList.push({ id: item.id, value: item.value, containerId: arr.id, condition: item.condition })
-    })
-  })
-
-  const [name, setName] = useState(rule ? rule.name : '')
-  const [keyName, setKeyName] = useState(rule ? rule.keyName : '')
+  const [newContainerList, newRulesList] = useMemo(() => getInitialData(rule ? rule : null), [rule])
 
   const [mentionsData, setMentionsData] = useState(addDataMentions(dataList))
 
   const [containerList, setActiveContainerList] = useState<RuleContainer[]>(newContainerList)
-  const [activeContainer, setActiveContainer] = useState<RuleContainer | null>(null)
-
   const [rules, setRules] = useState<RuleItem[]>(newRulesList)
+
+  const [activeContainer, setActiveContainer] = useState<RuleContainer | null>(null)
   const [activeItem, setActiveItem] = useState<RuleItem | null>(null)
   const [activeDomain, setActiveDomain] = useState<ParentDomainRes | null>(null)
   const [activeAttribute, setActiveAttribute] = useState<Attribute | null>(null)
@@ -95,6 +76,13 @@ function Editor(props: Props): JSX.Element {
       },
     })
   )
+
+  const {
+    register,
+    handleSubmit,
+    // watch,
+    formState: { errors },
+  } = useForm()
 
   return (
     <DndContext sensors={sensors} onDragStart={onDragStart} onDragEnd={onDragEnd} onDragOver={onDragOver}>
@@ -113,22 +101,35 @@ function Editor(props: Props): JSX.Element {
         </nav>
         <div className={c(Editor.displayName)}>
           <Flex gap='xxxl' dir='column'>
-            <Flex mainAxis='space-between' width='100%' gap='xxxl'>
+            <Flex
+              as='form'
+              // eslint-disable-next-line @typescript-eslint/no-misused-promises
+              onSubmit={handleSubmit((e: FieldValues): void =>
+                onSubmit(getEditorValue(containerList, rules), e.name as string, e.keyName as string)
+              )}
+              mainAxis='space-between'
+              width='100%'
+              gap='xxxl'
+            >
               <Flex width='100%' gap='l' dir='column'>
                 <Labeled label={'Наименование: '} style={{ marginBottom: '10px' }}>
                   <Input
-                    value={name}
-                    onChange={(e): void => setName(e.target.value)}
+                    defaultValue={rule ? rule.name : ''}
+                    // onChange={(e): void => setName(e.target.value)}
                     height={'l'}
                     placeholder='Наименование'
+                    className={c(errors.name && '--error')}
+                    {...register('name', { required: true })}
                   />
                 </Labeled>
                 <Labeled label={'Ключевое имя: '}>
                   <Input
-                    value={keyName}
-                    onChange={(e): void => setKeyName(e.target.value)}
+                    defaultValue={rule ? rule.keyName : ''}
+                    // onChange={(e): void => setKeyName(e.target.value)}
                     height={'l'}
                     placeholder='Ключевое имя'
+                    className={c(errors.keyName && '--error')}
+                    {...register('keyName', { required: true })}
                   />
                 </Labeled>
               </Flex>
@@ -136,19 +137,9 @@ function Editor(props: Props): JSX.Element {
               <GhostButton
                 height={'l'}
                 padding={'s'}
-                onClick={(): void => {
-                  const result: EditorValues[] = []
-                  containerList.forEach((container) => {
-                    result.push({
-                      id: container.id,
-                      condition: container.condition,
-                      valueArr: rules
-                        .filter((rule) => rule.containerId === container.id)
-                        .map((item) => ({ id: item.id, value: item.value, condition: item.condition })),
-                    })
-                  })
-                  onSubmit(result, name, keyName)
-                }}
+                type='submit'
+                // eslint-disable-next-line @typescript-eslint/no-misused-promises
+                // onClick={handleSubmit((): void => onSubmit(getEditorValue(containerList, rules), name, keyName))}
               >
                 <Save width={'30px'} height={'30px'} />
               </GhostButton>
@@ -200,22 +191,6 @@ function Editor(props: Props): JSX.Element {
       )}
     </DndContext>
   )
-  // test
-
-  function addDataMentions(arr: ParentDomainRes[]): MentionsItem[] {
-    let result: MentionsItem[] = []
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    arr.forEach(({ domain, attributes, childDomains }) => {
-      result.push({ id: `domain, ${domain.id}`, display: domain.name })
-      attributes.forEach(({ id, name }) => {
-        result.push({ id: `attribute, ${id}`, display: name })
-      })
-      if (childDomains.length > 0) {
-        result = [...result, ...addDataMentions(childDomains)]
-      }
-    })
-    return result
-  }
 
   // Private
 
@@ -369,8 +344,9 @@ function Editor(props: Props): JSX.Element {
   }
 
   function createContainer(): void {
-    const containerToAdd: RuleContainer = { id: generateId(), condition: SelectValue.and }
-    setActiveContainerList((containerList) => [...containerList, containerToAdd])
+    const containerId = generateId()
+    setActiveContainerList((containerList) => [...containerList, { id: containerId, condition: SelectValue.and }])
+    setRules((rules) => [...rules, { id: generateId(), value: '', containerId, condition: SelectValue.and }])
   }
 
   function deleteContainer(id: Id): void {
