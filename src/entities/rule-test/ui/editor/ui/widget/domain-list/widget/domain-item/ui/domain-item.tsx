@@ -63,9 +63,7 @@ export default function DomainItem(props: Props): JSX.Element {
     >
       <div>
         {domainData.attributes.length !== 0 ? (
-          domainData.attributes.map((item) => (
-            <AttributeItem wrapperProps={{ style: { marginBottom: '10px' } }} key={item.id} attribute={item} />
-          ))
+          domainData.attributes.map((item) => <AttributeItem key={item.id} attribute={item} />)
         ) : (
           <div className='do-not-attributes'>Нет атрибутов</div>
         )}

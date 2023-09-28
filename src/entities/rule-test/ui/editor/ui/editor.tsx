@@ -324,8 +324,9 @@ function Editor(props: Props): JSX.Element {
   }
 
   function createContainer(): void {
-    const containerToAdd: RuleContainer = { id: generateId(), condition: SelectValue.and }
-    setActiveContainerList((containerList) => [...containerList, containerToAdd])
+    const containerId = generateId()
+    setActiveContainerList((containerList) => [...containerList, { id: containerId, condition: SelectValue.and }])
+    setRules((rules) => [...rules, { id: generateId(), value: '', containerId, condition: SelectValue.and }])
   }
 
   function deleteContainer(id: Id): void {

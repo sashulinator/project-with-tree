@@ -1,8 +1,8 @@
 .e-rule-ui-DomainList-Item {
   padding: 0.25rem;
   cursor: grab;
-  margin-bottom: 0.25rem;
   transition: all 0.3s ease;
+  margin-bottom: 0;
 }
 
 .e-rule-ui-DomainList-Item .do-not-attributes {
