@@ -32,8 +32,8 @@ function Dialog(props: Props): JSX.Element {
       >
         <h2>{props.text}</h2>
         <Flex gap='l' crossAxis='center' mainAxis='end'>
-          <PrimaryButton type='submit'>Да</PrimaryButton>
           <GhostButton onClick={props.onDismiss}>Нет</GhostButton>
+          <PrimaryButton type='submit'>Да</PrimaryButton>
         </Flex>
       </Flex>
     </Modal>

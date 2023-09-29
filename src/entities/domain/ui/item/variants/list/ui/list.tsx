@@ -17,8 +17,7 @@ export interface Props {
   isDraggable?: boolean
   list: ParentDomainRes[]
   isRightToEdit?: boolean
-  removeDomain?: (id: Id) => void
-  removeAttribute?: (id: Id) => void
+  openModalDialog?: (obj: { id: Id; name: string }) => void
   updateDomain?: (id: Id) => void
   updateAttribute?: (id: Id) => void
   setAddDomainParentId?: (id: Id) => void
@@ -30,8 +29,7 @@ export interface Props {
 export default function List(props: Props): JSX.Element {
   const {
     isDraggable = false,
-    removeDomain = (): void => {},
-    removeAttribute = (): void => {},
+    openModalDialog = (): void => {},
     setAddAttributeDomainId = (): void => {},
     setUpdateDomain = (): void => {},
     setUpdateAttribute = (): void => {},
@@ -61,8 +59,7 @@ export default function List(props: Props): JSX.Element {
             isDraggable={isDraggable}
             handleAddAttributeOpen={setAddAttributeDomainId}
             handleAddDomainOpen={setAddDomainParentId}
-            removeAttribute={removeAttribute}
-            removeDomain={removeDomain}
+            openModalDialog={openModalDialog}
             updateAttribute={updateAttribute}
             updateDomain={updateDomain}
             handleUpdateDomainOpen={setUpdateDomain}

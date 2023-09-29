@@ -30,7 +30,7 @@ export default function DomainListPage(): JSX.Element {
   const [addDomainParentId, setAddDomainParentId] = useState<Id | null>(null)
   const [updateDomain, setUpdateDomain] = useState<UpdateDomain | null>(null)
   const [updateAttribute, setUpdateAttribute] = useState<UpdateAttribute | null>(null)
-  const [deleteDomain, setDeleteDomain] = useState<boolean>(true)
+  const [deleteModal, setDeleteModal] = useState<{ id: Id; name: string } | null>(null)
 
   const createDomainMutation = useCreateDomain({
     onSuccess: () => {
@@ -146,10 +146,18 @@ export default function DomainListPage(): JSX.Element {
         {/* Удаление домена */}
         <Dialog
           firstFocused={true}
-          text='Вы уверены что хотите удалить этот домен?'
-          onSubmit={(): void => console.log('уверен')}
-          opened={deleteDomain}
-          onDismiss={(): void => setDeleteDomain(false)}
+          text={`Вы уверены что хотите удалить домен: ${deleteModal?.name}?`}
+          onSubmit={removeDomain}
+          opened={deleteModal}
+          onDismiss={(): void => setDeleteModal(null)}
+        />
+        {/* Удаление атрибута */}
+        <Dialog
+          firstFocused={true}
+          text={`Вы уверены что хотите удалить атрибут: ${deleteModal?.name}?`}
+          onSubmit={removeAttribute}
+          opened={deleteModal}
+          onDismiss={(): void => setDeleteModal(null)}
         />
         {fetcher.isSuccess && (
           <DomainList
@@ -157,8 +165,7 @@ export default function DomainListPage(): JSX.Element {
             list={fetcher.data.items}
             setAddAttributeDomainId={setAddAttributeDomainId}
             setAddDomainParentId={setAddDomainParentId}
-            removeAttribute={removeAttribute}
-            removeDomain={removeDomain}
+            openModalDialog={openModalDialog}
             setUpdateDomain={setUpdateDomain}
             setUpdateAttribute={setUpdateAttribute}
           />
@@ -167,8 +174,22 @@ export default function DomainListPage(): JSX.Element {
     </>
   )
 
-  function removeDomain(id: Id): void {
-    removeDomainMutation.mutate({ id })
+  function openModalDialog(obj: { id: Id; name: string }): void {
+    setDeleteModal({ id: obj.id, name: obj.name })
+  }
+
+  function removeDomain(): void {
+    if (deleteModal) {
+      removeDomainMutation.mutate({ id: deleteModal.id })
+      setDeleteModal(null)
+    }
+  }
+
+  function removeAttribute(): void {
+    if (deleteModal) {
+      removeAttributeMutation.mutate({ id: deleteModal.id })
+      setDeleteModal(null)
+    }
   }
 
   function createUpdateAttribute(attribute: CreateAttribute | UpdateAttribute): void {
@@ -185,9 +206,5 @@ export default function DomainListPage(): JSX.Element {
     } else {
       createDomainMutation.mutate({ domain })
     }
-  }
-
-  function removeAttribute(id: Id): void {
-    removeAttributeMutation.mutate({ id })
   }
 }

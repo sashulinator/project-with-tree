@@ -27,6 +27,14 @@ export default function RuleTestListPage(): JSX.Element {
     onError: () => notify({ data: 'Ошибка', type: 'error' }),
   })
 
+  // const mutation = useMutation(() => requestRuleDelete(props.item?.id.toString()), {
+  //   onSuccess: () => {
+  //     void fetcher.refetch()
+  //     notify({ data: 'Удалено', type: 'success' })
+  //   },
+  //   onError: () => notify({ data: 'Ошибка', type: 'error' }),
+  // })
+
   return (
     <main style={{ maxWidth: '1400px', margin: '0 auto', width: '100%' }}>
       <Button style={{ marginBottom: '20px' }}>
@@ -37,6 +45,14 @@ export default function RuleTestListPage(): JSX.Element {
       <Modal firstFocused={true} opened={ruleCopy !== null} onDismiss={(): void => setRuleCopy(null)}>
         <RuleCopyForm ruleCopy={ruleCopy !== null ? ruleCopy : {}} onSubmit={copyRule} />
       </Modal>
+      {/* Удаление правила */}
+      {/* <Dialog
+        firstFocused={true}
+        text={`Вы уверены что хотите удалить атрибут: ${deleteModal?.name}?`}
+        onSubmit={removeAttribute}
+        opened={deleteModal}
+        onDismiss={(): void => setDeleteModal(null)}
+      /> */}
       {fetcher.isError && <div>error...</div>}
       {fetcher.isLoading && <div>loading...</div>}
       {fetcher.isSuccess && <ListRules handleCopyRuleOpen={setRuleCopy} fetcher={fetcher} list={dataList || []} />}
