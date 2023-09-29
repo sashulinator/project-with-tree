@@ -18,6 +18,7 @@ import { DomainForm, DomainList } from '~/entities/domain'
 import { notify } from '~/shared/notify'
 import { GhostButton } from '~/ui/button'
 import Modal from '~/ui/modal'
+import Dialog from '~/ui/modal/variants/dialog/ui/dialog'
 import { Id, has } from '~/utils/core'
 
 DomainListPage.displayName = 'DomainListPage'
@@ -29,6 +30,7 @@ export default function DomainListPage(): JSX.Element {
   const [addDomainParentId, setAddDomainParentId] = useState<Id | null>(null)
   const [updateDomain, setUpdateDomain] = useState<UpdateDomain | null>(null)
   const [updateAttribute, setUpdateAttribute] = useState<UpdateAttribute | null>(null)
+  const [deleteDomain, setDeleteDomain] = useState<boolean>(true)
 
   const createDomainMutation = useCreateDomain({
     onSuccess: () => {
@@ -141,6 +143,14 @@ export default function DomainListPage(): JSX.Element {
             domain={updateDomain !== null ? updateDomain : {}}
           />
         </Modal>
+        {/* Удаление домена */}
+        <Dialog
+          firstFocused={true}
+          text='Вы уверены что хотите удалить этот домен?'
+          onSubmit={(): void => console.log('уверен')}
+          opened={deleteDomain}
+          onDismiss={(): void => setDeleteDomain(false)}
+        />
         {fetcher.isSuccess && (
           <DomainList
             isRightToEdit={true}
