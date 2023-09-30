@@ -2,7 +2,7 @@ import { createElement, memo } from 'react'
 
 import { GestureDragEvent } from '~/ui/canvas'
 
-import { ArbitrationNode, ControlGroupNode, Controller, FilterNode, MainNode, OfferNode } from '../../..'
+import { ArbitrationNode, ControlGroupNode, Controller, DecisionPointNode, MainNode, OfferNode } from '../../..'
 import { LinkListController } from '../../../../../../..'
 import { Controller as ListController } from '../../list'
 
@@ -21,7 +21,7 @@ function FactoryComponent(props: FactoryProps): JSX.Element {
   let Component: (props: FactoryProps) => JSX.Element
 
   if (props.controller.point.level === 'decisionPoint') {
-    Component = FilterNode
+    Component = DecisionPointNode
   } else if (props.controller.point.level === 'offer') {
     Component = OfferNode
   } else if (props.controller.point.level === 'controlGroup') {

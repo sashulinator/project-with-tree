@@ -1,4 +1,4 @@
-import './filter.scss'
+import './decision-point.scss'
 
 import { Id } from '~/utils/core'
 import { useUpdate } from '~/utils/hooks'
@@ -7,12 +7,12 @@ import { Toolbar } from '..'
 import Node, { FactoryProps, SourceLinks, TargetLinks, Title } from '../../..'
 import { LinkController } from '../../../../..'
 
-Filter.displayName = 'decision-Editor-w-Canvas-w-Node-v-Filter'
+DecisionPoint.displayName = 'decision-Editor-w-Canvas-w-Node-v-DecisionPoint'
 
 /**
  * Node вариант filter
  */
-export default function Filter(props: FactoryProps): JSX.Element {
+export default function DecisionPoint(props: FactoryProps): JSX.Element {
   useUpdate(subscribeOnUpdates)
 
   return (
@@ -22,7 +22,7 @@ export default function Filter(props: FactoryProps): JSX.Element {
       list={props.list}
       controller={props.controller}
       onGestureDrag={props.onGestureDrag}
-      className={Filter.displayName}
+      className={DecisionPoint.displayName}
       title={<Title className='title' controller={props.controller} />}
       toolbar={<Toolbar toggle={props.toggle} select={props.select} list={props.list} controller={props.controller} />}
       sourceLinks={

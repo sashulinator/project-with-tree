@@ -4,7 +4,7 @@ import { HTML5Backend } from 'react-dnd-html5-backend'
 
 import { Point } from '~/entities/decision'
 import { LinkListController, NodeListController } from '~/entities/decision/ui/editor'
-import { FilterNode } from '~/entities/decision/ui/editor/widgets/canvas/widgets/node'
+import { DecisionPointNode } from '~/entities/decision/ui/editor/widgets/canvas/widgets/node'
 import { Config, Props } from '~/storybook/types'
 import { H1 } from '~/ui/heading'
 import { emptyFn } from '~/utils/function/empty-fn'
@@ -28,12 +28,12 @@ const point2: Point = {
 interface State {}
 
 export default {
-  getName: (): string => FilterNode.displayName || '',
+  getName: (): string => DecisionPointNode.displayName || '',
 
   getDescription: function Description(): JSX.Element {
     return (
       <>
-        <H1>{FilterNode.displayName}</H1>
+        <H1>{DecisionPointNode.displayName}</H1>
         Добавьте описание
       </>
     )
@@ -76,7 +76,7 @@ export default {
         <DndProvider backend={HTML5Backend}>
           {states.values().map((state) => {
             return (
-              <FilterNode
+              <DecisionPointNode
                 {...props}
                 toggle={emptyFn}
                 list={states}

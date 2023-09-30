@@ -9,7 +9,7 @@ import { useUpdate } from '~/utils/hooks'
 import { Controller } from '../../../../../models/constroller'
 import { Controller as ListController } from '../../../../../variants/list'
 
-Toolbar.displayName = 'decision-Editor-w-Canvas-w-Node-v-Filter-w-Toolbar'
+Toolbar.displayName = 'decision-Editor-w-Canvas-w-Node-v-DecisionPoint-w-Toolbar'
 
 export interface Props {
   className?: string

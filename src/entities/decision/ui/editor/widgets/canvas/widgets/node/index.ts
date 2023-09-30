@@ -31,7 +31,7 @@ export { default as Factory } from './variants/factory'
 export type { FactoryProps } from './variants/factory'
 
 export { default as MainNode } from './variants/main'
-export { default as FilterNode } from './variants/filter'
+export { default as DecisionPointNode } from './variants/decision-point'
 export { default as OfferNode } from './variants/offer'
 export { default as ControlGroupNode } from './variants/control-group'
 export { default as ArbitrationNode } from './variants/arbitration'
