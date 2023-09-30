@@ -1,27 +1,30 @@
-import './link.scss'
+import './edge.scss'
 
-import { Link as UILink } from '~/ui/canvas'
+import { Edge as UiEdge } from '~/ui/canvas'
 import { Id, c } from '~/utils/core'
 import { isMetaCtrlKey } from '~/utils/dom-event'
 import { fns } from '~/utils/function'
 import { useForceUpdate, useOnMount, useUpdate } from '~/utils/hooks'
 
-import { Controller, ListController, getOffset } from '..'
-import { CanvasController, NodeListController } from '../../../../..'
+import { Controller as CanvasController } from '../../../models/controller'
+import { ListController as NodeListController } from '../../node'
+import { getOffset } from '../lib/get-offset'
+import { Controller } from '../models/constroller'
+import { Controller as ListController } from '../variants/list'
 
-Link.displayName = 'decision-Editor-w-Canvas-w-Link'
+Edge.displayName = 'decision-Editor-w-Canvas-w-Edge'
 
-export interface LinkProps extends React.HTMLAttributes<SVGPathElement> {
+export interface Props extends React.HTMLAttributes<SVGPathElement> {
   scale: number
   state: Controller
   canvas: CanvasController
   nodeList: NodeListController
+  listState: ListController
   toggle: () => void
   selectLinks: (ids: Id[]) => void
-  listState: ListController
 }
 
-export default function Link(props: LinkProps): JSX.Element | null {
+export default function Edge(props: Props): JSX.Element | null {
   const { scale, canvas, state, listState, nodeList, toggle, selectLinks, ...pathProps } = props
 
   const sourceNode = nodeList.find(state.sourceId.value)
@@ -43,8 +46,8 @@ export default function Link(props: LinkProps): JSX.Element | null {
   const targetPosition = targetNode?.position.value ?? canvas.mousePosition.value
 
   return (
-    <g className={c(Link.displayName)}>
-      <UILink
+    <g className={c(Edge.displayName)}>
+      <UiEdge
         {...pathProps}
         className={c(pathProps.className, '--link', isSelected && '--selected')}
         strokeWidth={4}
@@ -54,7 +57,7 @@ export default function Link(props: LinkProps): JSX.Element | null {
         targetPosition={targetPosition}
       />
       {sourceNode && targetNode && (
-        <UILink
+        <UiEdge
           {...pathProps}
           className={c(pathProps.className, '--overlay', isSelected && '--selected')}
           sourceOffset={sourceOffset}

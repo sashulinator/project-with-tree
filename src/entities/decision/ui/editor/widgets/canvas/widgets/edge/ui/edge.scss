@@ -1,4 +1,4 @@
-.decision-Editor-w-Canvas-w-Link > .--link {
+.decision-Editor-w-Canvas-w-Edge > .--link {
   stroke: var(--decision-Editor-joint_color__linked);
 
   &.--selected {
@@ -6,16 +6,16 @@
   }
 }
 
-.decision-Editor-w-Canvas-w-Link > .--overlay {
+.decision-Editor-w-Canvas-w-Edge > .--overlay {
   stroke: transparent;
 }
 
 /* Hover */
-.decision-Editor-w-Canvas-w-Link:hover > .--link {
+.decision-Editor-w-Canvas-w-Edge:hover > .--link {
   stroke: violet;
   opacity: 0.5;
 }
-.decision-Editor-w-Canvas-w-Link:hover > .--selected.--link {
+.decision-Editor-w-Canvas-w-Edge:hover > .--selected.--link {
   stroke: violet;
   opacity: 0.8;
 }

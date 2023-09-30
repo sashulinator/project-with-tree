@@ -10,14 +10,14 @@ export { Controller } from './models/constroller'
 export type {
   Props as ControllerProps,
   Events as ControllerEvents,
-  Serialized as SerializedLink,
+  Serialized as SerializedEdge,
 } from './models/constroller'
 
 /**
  * ui
  */
-export { default } from './ui/link'
-export type { LinkProps } from './ui/link'
+export { default } from './ui/edge'
+export type { Props as EdgeProps } from './ui/edge'
 
 /**
  * variants

@@ -2,14 +2,14 @@ import { Id, Offset } from '~/utils/core'
 import { getOffsetInElement } from '~/utils/dom'
 
 export function getOffset(
-  linkId: Id | undefined,
+  edgeId: Id | undefined,
   nodeEl: Element | null | undefined,
   scale: number,
   offsetX: number
 ): Offset | null {
-  if (!linkId) return null
+  if (!edgeId) return null
 
-  const jointEl = nodeEl?.querySelector(`[data-link-id="${linkId.toString()}"]`) as HTMLElement
+  const jointEl = nodeEl?.querySelector(`[data-edge-id="${edgeId.toString()}"]`) as HTMLElement
 
   if (!jointEl || !nodeEl) return null
 
