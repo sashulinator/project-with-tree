@@ -11,11 +11,11 @@ import { Factory, Controller as NodeState } from '../../..'
 import { LinkListController } from '../../../../../../..'
 
 export interface ListProps {
-  state: Controller
+  controller: Controller
   linkList: LinkListController
   toggle: (id: Id) => void
-  selectNodes: (ids: Id[]) => void
-  onGestureDrug: (state: NodeState) => (event: GestureDragEvent) => void
+  select: (ids: Id[]) => void
+  onGestureDrag: (state: NodeState) => (event: GestureDragEvent) => void
 }
 
 export function ListComponent(props: ListProps): JSX.Element {
@@ -23,16 +23,16 @@ export function ListComponent(props: ListProps): JSX.Element {
 
   return (
     <DndProvider backend={HTML5Backend}>
-      {props.state.values().map((node) => {
+      {props.controller.values().map((node) => {
         return (
           <Factory
             toggle={(): void => props.toggle(node.id)}
             key={node.id}
-            state={node}
-            selectNodes={props.selectNodes}
-            nodeList={props.state}
+            controller={node}
+            select={(): void => props.select([node.id])}
+            list={props.controller}
             linkList={props.linkList}
-            onGestureDrug={props.onGestureDrug(node)}
+            onGestureDrag={props.onGestureDrag(node)}
           />
         )
       })}
@@ -40,9 +40,9 @@ export function ListComponent(props: ListProps): JSX.Element {
   )
 
   function subscribeOnUpdates(update: () => void, uns: (() => void)[]): void {
-    uns.push(props.state.on('update', update))
-    uns.push(props.state.on('add', update))
-    uns.push(props.state.on('remove', () => setTimeout(update)))
+    uns.push(props.controller.on('update', update))
+    uns.push(props.controller.on('add', update))
+    uns.push(props.controller.on('remove', () => setTimeout(update)))
   }
 }
 

@@ -9,7 +9,7 @@ Toolbar.displayName = 'decision-Editor-w-Canvas-w-Node-v-Enter-w-Toolbar'
 
 export interface Props {
   className?: string
-  state: Controller
+  controller: Controller
 }
 
 export default function Toolbar(props: Props): JSX.Element {
@@ -21,6 +21,6 @@ export default function Toolbar(props: Props): JSX.Element {
   // Private
 
   function subscribeOnUpdates(update: () => void, uns: (() => void)[]): void {
-    uns.push(props.state.on('computation', update))
+    uns.push(props.controller.on('computation', update))
   }
 }

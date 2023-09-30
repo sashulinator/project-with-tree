@@ -30,7 +30,7 @@ export type { ListProps as ListProps, ControllerEvents as ListControllerEvents }
 export { default as Factory } from './variants/factory'
 export type { FactoryProps } from './variants/factory'
 
-export { default as EnterNode } from './variants/enter'
+export { default as MainNode } from './variants/main'
 export { default as FilterNode } from './variants/filter'
 export { default as OfferNode } from './variants/offer'
 export { default as ControlGroupNode } from './variants/control-group'

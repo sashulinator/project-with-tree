@@ -4,8 +4,9 @@ import { Id } from '~/utils/core'
 import { emptyFn } from '~/utils/function/empty-fn'
 import { useUpdate } from '~/utils/hooks'
 
-import { Toolbar } from '..'
-import Node, { FactoryProps, TargetLinks, Title } from '../../..'
+import { FactoryProps, TargetLinks, Title } from '../../..'
+import Node from '../../../ui/node'
+import Toolbar from '../widgets/toolbar'
 
 Filter.displayName = 'decisionCanvas-w-Node-v-Offer'
 
@@ -18,19 +19,17 @@ export default function Filter(props: FactoryProps): JSX.Element {
   return (
     <Node
       toggle={props.toggle}
-      selectNodes={emptyFn}
-      list={props.nodeList}
-      state={props.state}
-      onGestureDrug={props.onGestureDrug}
+      select={emptyFn}
+      list={props.list}
+      controller={props.controller}
+      onGestureDrag={props.onGestureDrag}
       className={Filter.displayName}
-      title={<Title className='title' state={props.state} />}
-      toolbar={
-        <Toolbar toggle={props.toggle} selectNodes={props.selectNodes} listState={props.nodeList} state={props.state} />
-      }
+      title={<Title className='title' controller={props.controller} />}
+      toolbar={<Toolbar toggle={props.toggle} select={props.select} list={props.list} controller={props.controller} />}
       targetLinks={
         <TargetLinks
           linkControllers={props.linkList}
-          state={props.state}
+          state={props.controller}
           onNewJointClick={onNewJointClick('targetId')}
           onJointClick={onJointClick}
         />
@@ -41,7 +40,7 @@ export default function Filter(props: FactoryProps): JSX.Element {
   // Private
 
   function subscribeOnUpdates(update: () => void, uns: (() => void)[]): void {
-    uns.push(props.state.on('position', update))
+    uns.push(props.controller.on('position', update))
   }
 
   function onJointClick(linkId: Id): void {
@@ -52,7 +51,7 @@ export default function Filter(props: FactoryProps): JSX.Element {
       if (!linkController.targetId.value) {
         props.linkList.jointEditingId.set(linkController.id)
       } else {
-        props.linkList.startJointEditing(linkId, props.state.id)
+        props.linkList.startJointEditing(linkId, props.controller.id)
       }
     }
   }
@@ -60,7 +59,7 @@ export default function Filter(props: FactoryProps): JSX.Element {
   function onNewJointClick(startLinkType: 'targetId' | 'sourceId'): (newLinkId: Id) => void {
     return (newLinkId: Id) => {
       if (props.linkList.jointEditingId.value) {
-        props.linkList.finishNew(props.state.id)
+        props.linkList.finishNew(props.controller.id)
       } else {
         props.linkList.startNew({ [startLinkType]: newLinkId, index: 0 })
       }

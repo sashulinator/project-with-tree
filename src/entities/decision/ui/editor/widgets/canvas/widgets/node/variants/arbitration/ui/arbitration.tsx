@@ -5,7 +5,7 @@ import { useUpdate } from '~/utils/hooks'
 
 import { Toolbar } from '..'
 import Node, { FactoryProps, SourceLinks, TargetLinks, Title } from '../../..'
-import { LinkController } from '../../../../..'
+import { Controller as LinkController } from '../../../../edge'
 
 Filter.displayName = 'decision-Editor-w-Canvas-w-Node-v-Arbitration'
 
@@ -17,20 +17,15 @@ export default function Filter(props: FactoryProps): JSX.Element {
 
   return (
     <Node
-      toggle={props.toggle}
-      selectNodes={props.selectNodes}
-      list={props.nodeList}
-      state={props.state}
-      onGestureDrug={props.onGestureDrug}
       className={Filter.displayName}
-      title={<Title className='title' state={props.state} />}
-      toolbar={
-        <Toolbar toggle={props.toggle} selectNodes={props.selectNodes} listState={props.nodeList} state={props.state} />
-      }
+      controller={props.controller}
+      list={props.list}
+      title={<Title className='title' controller={props.controller} />}
+      toolbar={<Toolbar toggle={props.toggle} select={props.select} list={props.list} controller={props.controller} />}
       sourceLinks={
         <SourceLinks
           linkList={props.linkList}
-          state={props.state}
+          controller={props.controller}
           startLinkCreating={onNewJointClick('sourceId')}
           startLinkEditing={onJointClick}
           addLink={addLink}
@@ -39,27 +34,30 @@ export default function Filter(props: FactoryProps): JSX.Element {
       targetLinks={
         <TargetLinks
           linkControllers={props.linkList}
-          state={props.state}
+          state={props.controller}
           onNewJointClick={onNewJointClick('targetId')}
           onJointClick={onJointClick}
         />
       }
+      toggle={props.toggle}
+      select={props.select}
+      onGestureDrag={props.onGestureDrag}
     />
   )
 
   // Private
 
   function subscribeOnUpdates(update: () => void, uns: (() => void)[]): void {
-    uns.push(props.state.on('position', update))
+    uns.push(props.controller.on('position', update))
   }
 
   function addLink(): void {
     props.linkList.add(
       new LinkController({
-        sourceId: props.state.id,
+        sourceId: props.controller.id,
         targetId: undefined,
         rules: [],
-        index: props.linkList.getBySourceId(props.state.id).length,
+        index: props.linkList.getBySourceId(props.controller.id).length,
       })
     )
   }
@@ -72,7 +70,7 @@ export default function Filter(props: FactoryProps): JSX.Element {
       if (!linkController.targetId.value) {
         props.linkList.jointEditingId.set(linkController.id)
       } else {
-        props.linkList.startJointEditing(linkId, props.state.id)
+        props.linkList.startJointEditing(linkId, props.controller.id)
       }
     }
   }
@@ -80,10 +78,10 @@ export default function Filter(props: FactoryProps): JSX.Element {
   function onNewJointClick(startLinkType: 'targetId' | 'sourceId'): (newLinkId: Id) => void {
     return (newLinkId: Id) => {
       if (props.linkList.jointEditingId.value) {
-        props.linkList.finishNew(props.state.id)
+        props.linkList.finishNew(props.controller.id)
       } else {
         // console.log(startLinkType, newLinkId, props.state.id)
-        props.linkList.startNew({ [startLinkType]: props.state.id, id: newLinkId, index: 0 })
+        props.linkList.startNew({ [startLinkType]: props.controller.id, id: newLinkId, index: 0 })
       }
     }
   }

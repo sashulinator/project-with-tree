@@ -10,7 +10,7 @@ Title.displayName = 'decision-Editor-w-Canvas-w-Node-w-Title'
 
 export interface Props {
   className?: string
-  state: Controller
+  controller: Controller
 }
 
 export default function Title(props: Props): JSX.Element {
@@ -21,12 +21,12 @@ export default function Title(props: Props): JSX.Element {
       {...useChangeOnBlurStrategy({
         className: c(props.className, Title.displayName),
         inputClassname: 'input',
-        value: props.state.title.value,
+        value: props.controller.title.value,
         cannotBeEmpty: true,
         transparent: true,
         height: 'm',
         placeholder: 'Описание',
-        onChange: (e) => props.state.title.set(e.currentTarget.value),
+        onChange: (e) => props.controller.title.set(e.currentTarget.value),
       })}
     />
   )
@@ -34,6 +34,6 @@ export default function Title(props: Props): JSX.Element {
   // Private
 
   function subscribeOnUpdates(update: () => void, uns: (() => void)[]): void {
-    uns.push(props.state.on('title', update))
+    uns.push(props.controller.on('title', update))
   }
 }

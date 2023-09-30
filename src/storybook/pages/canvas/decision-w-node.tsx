@@ -43,9 +43,9 @@ export default {
         <Node
           {...state}
           toggle={emptyFn}
-          selectNodes={emptyFn}
+          select={emptyFn}
           list={listState}
-          state={nodeController}
+          controller={nodeController}
           toolbar={
             <div style={{ display: 'flex', justifyContent: 'end', padding: 'var(--s)' }}>
               <GhostButton height='s' style={{ padding: 'var(--l)' }}>
@@ -80,7 +80,7 @@ export default {
               </div>
             </Flex>
           }
-          onGestureDrug={(event): void => {
+          onGestureDrag={(event): void => {
             const x = nodeController.position.start.x + event.movement[0]
             const y = nodeController.position.start.y + event.movement[1]
             nodeController.position.move({ x, y }, event)

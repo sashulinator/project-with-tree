@@ -4,12 +4,12 @@ import { ReactElement, cloneElement, useRef } from 'react'
 
 import { emitter } from '~/shared/emitter'
 import { GestureDragEvent, Item } from '~/ui/canvas'
-import { Id, Position, c } from '~/utils/core'
+import { Position, c } from '~/utils/core'
 import { isMetaCtrlKey } from '~/utils/dom-event'
 import { fns } from '~/utils/function'
 import { useUpdate } from '~/utils/hooks'
 
-import { ListController, Controller as NodeState } from '..'
+import { Controller, ListController } from '..'
 import { dark } from '../themes/dark'
 import { light } from '../themes/light'
 
@@ -18,16 +18,16 @@ emitter.emit('addThemes', { dark, light })
 Node.displayName = 'decision-Editor-w-Canvas-w-Node'
 
 export interface NodeProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'children' | 'title'> {
-  state: NodeState
+  controller: Controller
   list: ListController
   title: ReactElement | null
   toolbar: ReactElement | null
   sourceLinks?: ReactElement | null
   targetLinks?: ReactElement | null
   rootProps?: React.HTMLAttributes<SVGForeignObjectElement>
-  onGestureDrug: (event: GestureDragEvent) => void
+  onGestureDrag: (event: GestureDragEvent) => void
   onGestureClick?: (event: React.MouseEvent<HTMLDivElement>) => void
-  selectNodes: (ids: Id[]) => void
+  select: () => void
   toggle: () => void
 }
 
@@ -39,17 +39,18 @@ export default function Node(props: NodeProps): JSX.Element {
 
   const clickPositionRef = useRef<null | Position>(null)
 
-  const { title, toolbar, sourceLinks, list, toggle, targetLinks, state, rootProps, selectNodes, ...itemProps } = props
-  const selected = list.selection.isSelected(props.state.id)
-  const cutted = list.cutted.isSelected(props.state.id)
+  const { controller, list, title, toolbar, sourceLinks, targetLinks, rootProps, select, toggle, ...itemProps } = props
+
+  const selected = list.selection.isSelected(props.controller.id)
+  const cutted = list.cutted.isSelected(props.controller.id)
 
   return (
     <Item
       {...itemProps}
-      dataId={state.id}
-      ref={props.state.ref.set}
-      x={state.position.value.x}
-      y={state.position.value.y}
+      dataId={controller.id}
+      ref={props.controller.ref.set}
+      x={controller.position.value.x}
+      y={controller.position.value.y}
       onMouseDown={fns(props.onMouseDown, handleMouseDown)}
       onMouseUp={fns(props.onMouseUp, handleMouseUp)}
       className={c(props.className, Node.displayName, selected && '--selected', cutted && '--cutted')}
@@ -77,11 +78,7 @@ export default function Node(props: NodeProps): JSX.Element {
     const my = Math.abs(event.pageY - clickPositionRef.current.y)
 
     if (mx < 5 && my < 5) {
-      if (isMetaCtrlKey(event)) {
-        toggle()
-      } else {
-        selectNodes([props.state.id])
-      }
+      isMetaCtrlKey(event) ? toggle() : select()
       props.onGestureClick?.(event)
     }
 
