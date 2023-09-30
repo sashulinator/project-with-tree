@@ -1,7 +1,7 @@
 import './edge.scss'
 
 import { Edge as UiEdge } from '~/ui/canvas'
-import { Id, c } from '~/utils/core'
+import { c } from '~/utils/core'
 import { isMetaCtrlKey } from '~/utils/dom-event'
 import { fns } from '~/utils/function'
 import { useForceUpdate, useOnMount, useUpdate } from '~/utils/hooks'
@@ -15,32 +15,35 @@ import { Controller as ListController } from '../variants/list'
 Edge.displayName = 'decision-Editor-w-Canvas-w-Edge'
 
 export interface Props extends React.HTMLAttributes<SVGPathElement> {
-  scale: number
-  state: Controller
+  controller: Controller
   canvas: CanvasController
   nodeList: NodeListController
-  listState: ListController
+  list: ListController
   toggle: () => void
-  selectLinks: (ids: Id[]) => void
+  select: () => void
 }
 
 export default function Edge(props: Props): JSX.Element | null {
-  const { scale, canvas, state, listState, nodeList, toggle, selectLinks, ...pathProps } = props
+  const { canvas, controller, list, nodeList, toggle, select, ...pathProps } = props
 
-  const sourceNode = nodeList.find(state.sourceId.value)
-  const targetNode = nodeList.find(state.targetId.value)
+  const sourceNode = nodeList.find(controller.sourceId.value)
+  const targetNode = nodeList.find(controller.targetId.value)
 
   useUpdate(subscribeOnUpdates, [sourceNode, targetNode])
   useOnMount(useForceUpdate())
 
-  const isCurrentEditing = listState.jointEditingId.value === state.id
+  const isCurrentEditing = list.jointEditingId.value === controller.id
 
   if ((!sourceNode || !targetNode) && !isCurrentEditing) return null
 
-  const isSelected = listState.selection.isSelected(state.id)
+  const isSelected = list.selection.isSelected(controller.id)
 
-  const sourceOffset = sourceNode ? getOffset(props.state.id, sourceNode?.ref.value, scale, 23) : null
-  const targetOffset = targetNode ? getOffset(props.state.id, targetNode?.ref.value, scale, -23) : null
+  const sourceOffset = sourceNode
+    ? getOffset(props.controller.id, sourceNode?.ref.value, canvas.zoom.value.k, 23)
+    : null
+  const targetOffset = targetNode
+    ? getOffset(props.controller.id, targetNode?.ref.value, canvas.zoom.value.k, -23)
+    : null
 
   const sourcePosition = sourceNode?.position.value ?? canvas.mousePosition.value
   const targetPosition = targetNode?.position.value ?? canvas.mousePosition.value
@@ -65,7 +68,7 @@ export default function Edge(props: Props): JSX.Element | null {
           strokeWidth={25}
           sourcePosition={sourcePosition}
           targetPosition={targetPosition}
-          onClick={fns(pathProps.onClick, (e) => (isMetaCtrlKey(e) ? toggle() : selectLinks([props.state.id])))}
+          onClick={fns(pathProps.onClick, (e) => (isMetaCtrlKey(e) ? toggle() : select()))}
         />
       )}
     </g>
@@ -75,11 +78,11 @@ export default function Edge(props: Props): JSX.Element | null {
 
   function subscribeOnUpdates(update: () => void, uns: (() => void)[]): void {
     // Запускаем update с timeout для того чтобы обновить сначала Node
-    uns.push(listState.on('jointEditingId', () => setTimeout(update)))
-    uns.push(listState.on('targetId', () => setTimeout(update)))
-    uns.push(listState.on('sourceId', () => setTimeout(update)))
-    uns.push(listState.on('index', () => setTimeout(update)))
-    uns.push(listState.on('selection', () => update))
+    uns.push(list.on('jointEditingId', () => setTimeout(update)))
+    uns.push(list.on('targetId', () => setTimeout(update)))
+    uns.push(list.on('sourceId', () => setTimeout(update)))
+    uns.push(list.on('index', () => setTimeout(update)))
+    uns.push(list.on('selection', () => update))
     if (targetNode) {
       uns.push(targetNode?.on('position', update))
       uns.push(targetNode?.on('ref', update))

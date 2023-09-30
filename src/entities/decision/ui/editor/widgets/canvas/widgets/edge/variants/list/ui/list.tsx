@@ -3,16 +3,16 @@ import { memo } from 'react'
 import { Id } from '~/utils/core'
 import { useUpdate } from '~/utils/hooks'
 
-import { Controller } from '..'
-import Link from '../../..'
-import { CanvasController, NodeListController } from '../../../../../../..'
+import { Controller as CanvasController } from '../../../../../../canvas/models/controller'
+import { ListController as NodeListController } from '../../../../../widgets/node'
+import Edge from '../../../ui/edge'
+import { Controller } from '../models/controller'
 
 export interface Props {
-  state: Controller
+  controller: Controller
   nodeList: NodeListController
   canvas: CanvasController
-  scale: number
-  selectLinks: (ids: Id[]) => void
+  select: (ids: Id[]) => void
   toggle: (id: Id) => void
 }
 
@@ -21,17 +21,16 @@ function ListComponent(props: Props): JSX.Element {
 
   return (
     <>
-      {props.state.values().map((link) => {
+      {props.controller.values().map((link) => {
         return (
-          <Link
-            canvas={props.canvas}
+          <Edge
             key={link.id}
-            toggle={(): void => props.toggle(link.id)}
-            scale={props.scale}
+            controller={link}
+            canvas={props.canvas}
             nodeList={props.nodeList}
-            state={link}
-            listState={props.state}
-            selectLinks={props.selectLinks}
+            list={props.controller}
+            toggle={(): void => props.toggle(link.id)}
+            select={(): void => props.select([link.id])}
           />
         )
       })}
@@ -39,10 +38,10 @@ function ListComponent(props: Props): JSX.Element {
   )
 
   function subscribeOnUpdates(update: () => void, uns: (() => void)[]): void {
-    uns.push(props.state.on('add', () => setTimeout(update)))
-    uns.push(props.state.on('remove', () => setTimeout(update)))
-    uns.push(props.state.on('update', () => setTimeout(update)))
-    uns.push(props.state.on('jointEditingId', () => setTimeout(update)))
+    uns.push(props.controller.on('add', () => setTimeout(update)))
+    uns.push(props.controller.on('remove', () => setTimeout(update)))
+    uns.push(props.controller.on('update', () => setTimeout(update)))
+    uns.push(props.controller.on('jointEditingId', () => setTimeout(update)))
   }
 }
 
