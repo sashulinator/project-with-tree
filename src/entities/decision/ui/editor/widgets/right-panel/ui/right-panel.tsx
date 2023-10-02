@@ -16,6 +16,7 @@ import { setRefs } from '~/utils/react'
 import { RuleList } from '..'
 import { LinkListController, NodeListController } from '../../..'
 import { _removeLink } from '../../../lib/_remove-link'
+import ArbitrationProps from '../widgets/arbitration-props'
 import ControlGroupProps from '../widgets/control-group-props'
 
 RightPanelComponent.displayName = 'decision-Editor-w-RightPanel'
@@ -40,10 +41,11 @@ function RightPanelComponent(props: Props): JSX.Element | null {
 
   const isControlGroupProps =
     props.nodeList.selection.value.length === 1 && selectedNode?.point.level === 'controlGroup'
+  const isArbitrationProps = props.nodeList.selection.value.length === 1 && selectedNode?.point.level === 'arbitration'
 
   // const [fullscreen, , , toogleFullscreen] = useBoolean(false)
 
-  if (props.linkList.rulesEditingId.value === undefined && !isControlGroupProps) {
+  if (props.linkList.rulesEditingId.value === undefined && !isControlGroupProps && !isArbitrationProps) {
     return null
   }
 
@@ -87,6 +89,7 @@ function RightPanelComponent(props: Props): JSX.Element | null {
           </GhostButton>
         </Flex>
         {isControlGroupProps && <ControlGroupProps controller={selectedNode} />}
+        {isArbitrationProps && <ArbitrationProps controller={selectedNode} />}
         {props.linkList.rulesEditingId.value && !isControlGroupProps && (
           <>
             <Flex dir='column' width='100%' gap='l'>

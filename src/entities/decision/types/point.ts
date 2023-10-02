@@ -26,3 +26,9 @@ export interface ControlGroupProps {
   partitionTypeId: Id
   percentCg: number
 }
+
+export interface ArbitrationProps {
+  maxOffers: number
+  arbFormula: Id
+  sortDesc: string
+}
