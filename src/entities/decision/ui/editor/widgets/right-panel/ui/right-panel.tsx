@@ -16,7 +16,7 @@ import { setRefs } from '~/utils/react'
 import { RuleList } from '..'
 import { LinkListController, NodeListController } from '../../..'
 import { _removeLink } from '../../../lib/_remove-link'
-import ArbitrationProps from '../widgets/arbitration-props/ui/arbitration-props'
+import ControlGroupProps from '../widgets/control-group-props'
 
 RightPanelComponent.displayName = 'decision-Editor-w-RightPanel'
 
@@ -38,11 +38,12 @@ function RightPanelComponent(props: Props): JSX.Element | null {
   const selectedNode =
     props.nodeList.selection.value.length === 1 ? props.nodeList.get(props.nodeList.selection.value[0]) : null
 
-  const isArbitrationProps = props.nodeList.selection.value.length === 1 && selectedNode?.point.level === 'arbitration'
+  const isControlGroupProps =
+    props.nodeList.selection.value.length === 1 && selectedNode?.point.level === 'controlGroup'
 
   // const [fullscreen, , , toogleFullscreen] = useBoolean(false)
 
-  if (props.linkList.rulesEditingId.value === undefined && !isArbitrationProps) {
+  if (props.linkList.rulesEditingId.value === undefined && !isControlGroupProps) {
     return null
   }
 
@@ -85,8 +86,8 @@ function RightPanelComponent(props: Props): JSX.Element | null {
             <Close />
           </GhostButton>
         </Flex>
-        {isArbitrationProps && <ArbitrationProps controller={selectedNode} />}
-        {props.linkList.rulesEditingId.value && !isArbitrationProps && (
+        {isControlGroupProps && <ControlGroupProps controller={selectedNode} />}
+        {props.linkList.rulesEditingId.value && !isControlGroupProps && (
           <>
             <Flex dir='column' width='100%' gap='l'>
               {props.linkList.getRulesEditingLink().rules.value.map((rule) => {
