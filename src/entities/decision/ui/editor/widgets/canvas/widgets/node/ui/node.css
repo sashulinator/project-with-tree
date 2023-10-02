@@ -18,6 +18,14 @@
   display: flex;
 }
 
+.decision-Editor-w-Canvas-w-Node:hover > .links .--new {
+  opacity: 1;
+}
+.decision-Editor-w-Canvas-w-Node > .links .--new {
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
 .decision-Editor-w-Canvas-w-Node > .toolbar {
   height: 2.75rem;
 }

@@ -85,8 +85,8 @@ function RightPanelComponent(props: Props): JSX.Element | null {
             <Close />
           </GhostButton>
         </Flex>
-        {props.nodeList.selection.value.length === 1 && props.nodeList.selection.value[0] && <ArbitrationProps />}
-        {props.linkList.rulesEditingId.value && (
+        {isArbitrationProps && <ArbitrationProps controller={selectedNode} />}
+        {props.linkList.rulesEditingId.value && !isArbitrationProps && (
           <>
             <Flex dir='column' width='100%' gap='l'>
               {props.linkList.getRulesEditingLink().rules.value.map((rule) => {

@@ -1,6 +1,6 @@
 import { ItemEvents, ItemState } from '~/abstract/canvas'
 import { Point } from '~/entities/decision'
-import { assertNotNull, generateId } from '~/utils/core'
+import { Any, Dictionary, assertNotNull, generateId } from '~/utils/core'
 import { getElementSize } from '~/utils/dom'
 import { Size } from '~/utils/dom/types/size'
 import { Prop } from '~/utils/emitter'
@@ -17,6 +17,8 @@ export class Controller extends ItemState<Events> {
 
   computation: Prop<'computation', 'parallel' | 'successively' | undefined>
 
+  props: Prop<'props', Dictionary<Any>>
+
   constructor(point: Point) {
     super({ id: point.id, position: { x: point.xy[0], y: point.xy[1] } })
 
@@ -26,6 +28,8 @@ export class Controller extends ItemState<Events> {
     this.title = new Prop('title', point.name || 'ВХОД', this)
 
     this.computation = new Prop('computation', point.computation, this)
+
+    this.props = new Prop('props', point.props || {}, this)
   }
 
   copy = (point?: Point): Controller => {
@@ -52,6 +56,7 @@ export class Controller extends ItemState<Events> {
 
       xy: [this.position.value.x, this.position.value.y],
       // computation: this.computation.value || 'parallel',
+      props: this.props.value,
     }
 
     if (this.computation.value) {
