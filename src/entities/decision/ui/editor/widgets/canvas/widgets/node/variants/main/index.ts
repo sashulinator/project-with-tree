@@ -1,7 +1,7 @@
 /**
  * ui
  */
-export { default } from './ui/enter'
+export { default } from './ui/main'
 
 /**
  * widgets

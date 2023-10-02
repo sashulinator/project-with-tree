@@ -8,5 +8,5 @@ export type { PaintingPanelProps } from '~/abstract/canvas'
 /**
  * widgets
  */
-export { default as Link } from './widgets/edge'
+export { default as Edge } from './widgets/edge'
 export type { EdgeProps } from './widgets/edge'

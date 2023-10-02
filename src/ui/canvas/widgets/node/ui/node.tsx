@@ -18,7 +18,7 @@ export interface NodeProps extends React.HTMLAttributes<HTMLDivElement> {
   left?: React.ReactNode
   right?: React.ReactNode
   children: React.ReactNode
-  onGestureDrug: (event: GestureDragEvent) => void
+  onGestureDrag: (event: GestureDragEvent) => void
 }
 
 /**

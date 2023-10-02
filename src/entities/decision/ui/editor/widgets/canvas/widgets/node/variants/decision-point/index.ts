@@ -1,7 +1,7 @@
 /**
  * ui
  */
-export { default } from './ui/filter'
+export { default } from './ui/decision-point'
 
 /**
  * widgets

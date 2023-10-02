@@ -28,19 +28,18 @@ function CanvasComponent(props: Props): JSX.Element {
     <Board ref={setRefs(props.controller.ref.set, props.controller.zoom.setRef)}>
       <PaintingPanel translate={props.controller.zoom.value} scale={props.controller.zoom.value.k}>
         <LinkList
-          selectLinks={props.selectLinks}
+          select={props.selectLinks}
           toggle={props.toggleLink}
-          state={props.linkList}
+          controller={props.linkList}
           nodeList={props.nodeList}
           canvas={props.controller}
-          scale={props.controller.zoom.value.k}
         />
         <NodeList
-          toggle={props.toggleNode}
-          state={props.nodeList}
+          controller={props.nodeList}
           linkList={props.linkList}
-          selectNodes={props.selectNodes}
-          onGestureDrug={onGestureDrag(props.controller, props.nodeList, props.transitionMoveNodes)}
+          select={props.selectNodes}
+          toggle={props.toggleNode}
+          onGestureDrag={onGestureDrag(props.controller, props.nodeList, props.transitionMoveNodes)}
         />
       </PaintingPanel>
     </Board>

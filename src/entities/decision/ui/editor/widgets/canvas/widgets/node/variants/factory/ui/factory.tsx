@@ -1,35 +1,35 @@
 import { createElement, memo } from 'react'
 
 import { GestureDragEvent } from '~/ui/canvas'
-import { Id } from '~/utils/core'
 
-import { ArbitrationNode, ControlGroupNode, EnterNode, FilterNode, Controller as NodeState, OfferNode } from '../../..'
-import { LinkListController, NodeListController } from '../../../../../../..'
+import { ArbitrationNode, ControlGroupNode, Controller, DecisionPointNode, MainNode, OfferNode } from '../../..'
+import { LinkListController } from '../../../../../../..'
+import { Controller as ListController } from '../../list'
 
 FactoryComponent.displayName = 'decision-Editor-w-Node-v-Factory'
 
 export interface FactoryProps {
-  state: NodeState
+  controller: Controller
+  list: ListController
   linkList: LinkListController
-  nodeList: NodeListController
-  selectNodes: (ids: Id[]) => void
+  onGestureDrag: (event: GestureDragEvent) => void
+  select: () => void
   toggle: () => void
-  onGestureDrug: (event: GestureDragEvent) => void
 }
 
 function FactoryComponent(props: FactoryProps): JSX.Element {
   let Component: (props: FactoryProps) => JSX.Element
 
-  if (props.state.point.level === 'decisionPoint') {
-    Component = FilterNode
-  } else if (props.state.point.level === 'offer') {
+  if (props.controller.point.level === 'decisionPoint') {
+    Component = DecisionPointNode
+  } else if (props.controller.point.level === 'offer') {
     Component = OfferNode
-  } else if (props.state.point.level === 'controlGroup') {
+  } else if (props.controller.point.level === 'controlGroup') {
     Component = ControlGroupNode
-  } else if (props.state.point.level === 'arbitration') {
+  } else if (props.controller.point.level === 'arbitration') {
     Component = ArbitrationNode
   } else {
-    Component = EnterNode
+    Component = MainNode
   }
 
   return createElement(Component, props)

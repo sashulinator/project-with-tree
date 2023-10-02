@@ -18,7 +18,7 @@ SourceLinks.displayName = 'decision-Editor-w-Canvas-w-Node-w-SourceLinks'
 
 export interface Props {
   className?: string
-  state: Controller
+  controller: Controller
   linkList: LinkListController
   hideNewLink?: boolean
   startLinkCreating: (newLinkId: Id) => void
@@ -33,11 +33,11 @@ export default function SourceLinks(props: Props): JSX.Element {
 
   const editingLinkState = props.linkList.findJointEditingLink()
   const isEditingThisNode =
-    editingLinkState?.sourceId.value === props.state.id || editingLinkState?.targetId.value === props.state.id
+    editingLinkState?.sourceId.value === props.controller.id || editingLinkState?.targetId.value === props.controller.id
   const isEditingHasSource = Boolean(editingLinkState?.sourceId.value)
 
   const sourceLinkStates = props.linkList
-    .getBySourceId(props.state.id)
+    .getBySourceId(props.controller.id)
     .sort((a, b) => (a.index.value < b.index.value ? -1 : 1))
 
   // if (props.state.id === 'id2') {
@@ -54,7 +54,7 @@ export default function SourceLinks(props: Props): JSX.Element {
           <RuleSet
             index={i}
             linkList={props.linkList}
-            nodeId={props.state.id}
+            nodeId={props.controller.id}
             isEditingThisNode={isEditingThisNode}
             isLinked={isLinked}
             key={linkController.id}

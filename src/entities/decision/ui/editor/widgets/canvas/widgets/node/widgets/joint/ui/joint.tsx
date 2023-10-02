@@ -16,7 +16,7 @@ export default function Joint(props: Props): JSX.Element {
   return (
     <button
       {...divProps}
-      data-link-id={linkId}
+      data-edge-id={linkId}
       disabled={disabled}
       className={c(Joint.displayName, `--${props.variant}`, disabled && `--disabled`, props.className)}
     />

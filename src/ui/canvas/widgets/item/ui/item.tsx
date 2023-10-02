@@ -11,17 +11,17 @@ import { GestureDragEvent } from '../types/gesture-drag-event'
 Component.displayName = 'ui-Canvas-w-Item'
 
 export interface Props extends AbstractItemProps {
-  onGestureDrug: (event: GestureDragEvent) => void
+  onGestureDrag: (event: GestureDragEvent) => void
 }
 
 /**
  * Элемент Canvas с фичами
- * 1. onGestureDrug
+ * 1. onGestureDrag
  */
 export function Component(props: Props, ref: ForwardedRef<HTMLDivElement>): JSX.Element {
-  const { onGestureDrug, ...canvasItemProps } = props
+  const { onGestureDrag, ...canvasItemProps } = props
 
-  const draggableProps = useDrag(onGestureDrug)()
+  const draggableProps = useDrag(onGestureDrag)()
 
   return (
     <AbstractItem
