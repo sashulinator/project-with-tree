@@ -8,7 +8,7 @@ import { ResponseData } from '~/api/rules/requests/fetch-rules'
 import { AppearFrom } from '~/ui/animation'
 import Input from '~/ui/input'
 import Labeled from '~/ui/labeled'
-import { c } from '~/utils/core'
+import { Id, c } from '~/utils/core'
 
 import { RulesRes } from '../../types/type'
 import RuleItem from './widget/rule-item/rule-item'
@@ -20,6 +20,7 @@ export interface Props {
   list: RulesRes[]
   fetcher: QueryResult<ResponseData>
   handleCopyRuleOpen: (data: RulesRes) => void
+  openDeleteModal: (data: { name: string; id: Id }) => void
 }
 
 export default function ListRules(props: Props): JSX.Element {
@@ -42,7 +43,12 @@ export default function ListRules(props: Props): JSX.Element {
       {data.map((item: RulesRes, i) => {
         return (
           <AppearFrom key={item.id} from={{ y: 10 }} delay={i * 30}>
-            <RuleItem handleCopyRuleOpen={props.handleCopyRuleOpen} fetcher={props.fetcher} item={item} />
+            <RuleItem
+              openDeleteModal={props.openDeleteModal}
+              handleCopyRuleOpen={props.handleCopyRuleOpen}
+              fetcher={props.fetcher}
+              item={item}
+            />
           </AppearFrom>
         )
       })}
