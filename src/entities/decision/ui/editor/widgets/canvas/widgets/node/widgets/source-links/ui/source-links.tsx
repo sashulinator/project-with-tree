@@ -20,7 +20,8 @@ export interface Props {
   className?: string
   controller: Controller
   linkList: LinkListController
-  hideNewLink?: boolean
+  hideNewLink?: boolean | undefined
+  hideRules?: boolean | undefined
   startLinkCreating: (newLinkId: Id) => void
   startLinkEditing: (linkId: Id) => void
   addLink: () => void
@@ -53,6 +54,7 @@ export default function SourceLinks(props: Props): JSX.Element {
         return (
           <RuleSet
             index={i}
+            hideRules={props.hideRules}
             linkList={props.linkList}
             nodeId={props.controller.id}
             isEditingThisNode={isEditingThisNode}
@@ -67,9 +69,11 @@ export default function SourceLinks(props: Props): JSX.Element {
       })}
       {!props.hideNewLink && (
         <Flex mainAxis='center' crossAxis='center'>
-          <GhostButton className='plusButton' onClick={props.addLink} round={true}>
-            <Plus />
-          </GhostButton>
+          {!props.hideRules && (
+            <GhostButton className='plusButton' onClick={props.addLink} round={true}>
+              <Plus />
+            </GhostButton>
+          )}
           <Joint
             className='joint'
             onClick={(): void => props.startLinkCreating(newLinkId)}
@@ -101,6 +105,7 @@ export interface RuleSetProps {
   link: LinkController
   index: number
   isLinked: boolean
+  hideRules?: boolean | undefined
   isEditingThisNode: boolean
   linkList: LinkListController
   isEditingHasSource: boolean
@@ -191,9 +196,11 @@ export function RuleSet(props: RuleSetProps): JSX.Element {
 
   return (
     <div className='rule' key={props.link.id} ref={ref} style={{ opacity }} data-handler-id={handlerId}>
-      <UnstyledButton className='editRule' onClick={(): void => props.linkList.rulesEditingId.set(props.link.id)}>
-        {props.link.rules.value.map((rule) => rule.keyName || rule.name).join(', ')}
-      </UnstyledButton>
+      {!props.hideRules && (
+        <UnstyledButton className='editRule' onClick={(): void => props.linkList.rulesEditingId.set(props.link.id)}>
+          {props.link.rules.value.map((rule) => rule.keyName || rule.name).join(', ')}
+        </UnstyledButton>
+      )}
       <Joint
         className='joint'
         disabled={
