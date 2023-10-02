@@ -16,6 +16,7 @@ import { setRefs } from '~/utils/react'
 import { RuleList } from '..'
 import { LinkListController, NodeListController } from '../../..'
 import { _removeLink } from '../../../lib/_remove-link'
+import ArbitrationProps from '../widgets/arbitration-props/ui/arbitration-props'
 
 RightPanelComponent.displayName = 'decision-Editor-w-RightPanel'
 
@@ -34,9 +35,14 @@ function RightPanelComponent(props: Props): JSX.Element | null {
 
   const tooltipContainerRef = useRef<HTMLElement>(null)
 
+  const selectedNode =
+    props.nodeList.selection.value.length === 1 ? props.nodeList.get(props.nodeList.selection.value[0]) : null
+
+  const isArbitrationProps = props.nodeList.selection.value.length === 1 && selectedNode?.point.level === 'arbitration'
+
   // const [fullscreen, , , toogleFullscreen] = useBoolean(false)
 
-  if (props.linkList.rulesEditingId.value === undefined) {
+  if (props.linkList.rulesEditingId.value === undefined && !isArbitrationProps) {
     return null
   }
 
@@ -73,11 +79,13 @@ function RightPanelComponent(props: Props): JSX.Element | null {
             onClick={(): void => {
               props.selectNodes([])
               props.linkList.rulesEditingId.set(undefined)
+              props.nodeList.selection.set([])
             }}
           >
             <Close />
           </GhostButton>
         </Flex>
+        {props.nodeList.selection.value.length === 1 && props.nodeList.selection.value[0] && <ArbitrationProps />}
         {props.linkList.rulesEditingId.value && (
           <>
             <Flex dir='column' width='100%' gap='l'>
@@ -140,6 +148,7 @@ function RightPanelComponent(props: Props): JSX.Element | null {
   function subscribeOnUpdates(update: () => void, uns: (() => void)[]): void {
     uns.push(props.linkList.on('rulesEditingId', update))
     uns.push(props.linkList.on('rules', update))
+    uns.push(props.nodeList.on('selection', update))
   }
 }
 
