@@ -1,12 +1,12 @@
 import { ItemEvents, ItemState } from '~/abstract/canvas'
-import { Point } from '~/entities/decision'
+import { Arbitration, DecisionPoint, Point } from '~/entities/decision'
 import { Any, Dictionary, assertNotNull, generateId } from '~/utils/core'
 import { getElementSize } from '~/utils/dom'
 import { Size } from '~/utils/dom/types/size'
 import { Prop } from '~/utils/emitter'
 
 export type Events = ItemEvents & {
-  computation: { value: Point['computation'] }
+  computation: { value: DecisionPoint['computation'] | undefined }
   title: { value: string }
 }
 
@@ -24,16 +24,20 @@ export class Controller extends ItemState<Events> {
 
     this.point = point
 
-    // TODO убрать ВХОД после демо
-    this.title = new Prop('title', point.name || 'ВХОД', this)
+    this.title = new Prop('title', (point as DecisionPoint).name || '', this)
 
-    this.computation = new Prop('computation', point.computation, this)
+    this.computation = new Prop(
+      'computation',
+      (point as DecisionPoint).computation as DecisionPoint['computation'] | undefined,
+      this
+    )
 
-    this.props = new Prop('props', point.props || {}, this)
+    this.props = new Prop('props', (point as Arbitration).props || {}, this)
   }
 
   copy = (point?: Point): Controller => {
-    return new Controller({ ...this.serialize(), ...point, id: generateId() })
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+    return new Controller({ ...this.serialize(), ...point, id: generateId() } as Any)
   }
 
   get size(): Size {
@@ -42,11 +46,16 @@ export class Controller extends ItemState<Events> {
   }
 
   serialize = (): Point => {
-    return {
+    const point = {
       ...this.point,
       name: this.title.value,
-      computation: this.computation.value || 'parallel',
     }
+
+    if (this.computation.value !== undefined) {
+      ;(point as DecisionPoint).computation = this.computation.value
+    }
+
+    return point
   }
 
   deserialize(): Point {

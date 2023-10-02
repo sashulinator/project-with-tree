@@ -1,4 +1,4 @@
-import { Point } from '~/entities/decision'
+import { DecisionPoint, Point } from '~/entities/decision'
 import { Selection } from '~/lib/emitter'
 import {
   Id,
@@ -21,7 +21,7 @@ export type Events = DictionaryEvents<NodeController> & {
   searchQuery: { value: string }
 
   // События стейтов
-  computation: { value: Point['computation']; item: NodeController }
+  computation: { value: DecisionPoint['computation']; item: NodeController }
   title: { value: string; item: NodeController }
   position: {
     value: Position

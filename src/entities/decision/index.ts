@@ -2,7 +2,7 @@
  * types
  */
 export type { Decision } from './types/decision'
-export type { Point, Link as PointLink } from './types/point'
+export type * from './types/point'
 export type { Rule } from './types/rule'
 
 /**

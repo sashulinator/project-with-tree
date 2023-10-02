@@ -1,5 +1,5 @@
 import Flex from '~/abstract/flex/ui/flex'
-import { ControlGroupProps as IControlGroupProps } from '~/entities/decision/types/point'
+import { ControlGroup } from '~/entities/decision'
 import Input from '~/ui/input'
 import Labeled from '~/ui/labeled/ui/labeled'
 import { c } from '~/utils/core'
@@ -18,13 +18,13 @@ export interface Props {
 export default function ControlGroupProps(props: Props): JSX.Element {
   useUpdate(subscribeToChanges)
 
-  const controlGrouProps = props.controller?.props as unknown as Prop<'props', IControlGroupProps>
+  const controlGrouProps = props.controller?.props as unknown as Prop<'props', ControlGroup['props']>
 
   return (
     <Flex className={c(props.className, ControlGroupProps.displayName)} width='100%' dir='column' gap='xl'>
       <Labeled label='Тип разбиения'>
         <Input
-          value={controlGrouProps.value.partitionType || ''}
+          value={controlGrouProps.value?.partitionType || ''}
           onChange={(ev): void => {
             controlGrouProps.set({ ...controlGrouProps.value, partitionType: ev.target.value })
           }}
@@ -32,7 +32,7 @@ export default function ControlGroupProps(props: Props): JSX.Element {
       </Labeled>
       <Labeled label='Id разбиения'>
         <Input
-          value={controlGrouProps.value.partitionTypeId || ''}
+          value={controlGrouProps.value?.partitionTypeId || ''}
           onChange={(ev): void => {
             controlGrouProps.set({ ...controlGrouProps.value, partitionTypeId: ev.target.value })
           }}
@@ -41,7 +41,7 @@ export default function ControlGroupProps(props: Props): JSX.Element {
       <Labeled label='Размер контрольной группы '>
         <Input
           type='number'
-          value={controlGrouProps.value.percentCg || ''}
+          value={controlGrouProps.value?.percentCg || ''}
           onChange={(ev): void => {
             controlGrouProps.set({ ...controlGrouProps.value, percentCg: parseInt(ev.target.value) })
           }}

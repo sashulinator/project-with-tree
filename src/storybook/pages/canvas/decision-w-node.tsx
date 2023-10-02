@@ -1,7 +1,7 @@
 import { useMemo } from 'react'
 
 import Flex from '~/abstract/flex/ui/flex'
-import { Point } from '~/entities/decision'
+import { DecisionPoint } from '~/entities/decision'
 import { Node, NodeController, NodeJoint, NodeListController } from '~/entities/decision/ui/editor'
 import { Config, Props } from '~/storybook/types'
 import { GhostButton } from '~/ui/button'
@@ -10,7 +10,7 @@ import { Trash } from '~/ui/icon'
 import Input from '~/ui/input'
 import { emptyFn } from '~/utils/function/empty-fn'
 
-const point1: Point = {
+const point1: DecisionPoint = {
   id: 'id1',
   name: 'name1',
   level: 'decisionPoint',
