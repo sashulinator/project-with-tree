@@ -10,10 +10,14 @@ import { LinkController } from '../../../../..'
 Main.displayName = 'decisionCanvas-w-Node-v-Main'
 
 /**
- * Node вариант filter
+ * Node вариант Main
  */
 export default function Main(props: FactoryProps): JSX.Element {
   useUpdate(subscribeOnUpdates)
+
+  const sourceLinkStates = props.linkList.getBySourceId(props.controller.id)
+
+  console.log('props.linkList.jointEditingId.value', props.linkList.jointEditingId.value, sourceLinkStates?.[0]?.id)
 
   return (
     <Node
@@ -27,6 +31,8 @@ export default function Main(props: FactoryProps): JSX.Element {
       toolbar={<Toolbar controller={props.controller} />}
       sourceLinks={
         <SourceLinks
+          hideNewLink={sourceLinkStates.length > 0 && props.linkList.jointEditingId.value !== sourceLinkStates?.[0]?.id}
+          hideRules={true}
           linkList={props.linkList}
           controller={props.controller}
           startLinkCreating={onNewJointClick('sourceId')}
@@ -41,6 +47,7 @@ export default function Main(props: FactoryProps): JSX.Element {
 
   function subscribeOnUpdates(update: () => void, uns: (() => void)[]): void {
     uns.push(props.controller.on('position', update))
+    uns.push(props.linkList.on('*', update))
   }
 
   function addLink(): void {
