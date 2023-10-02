@@ -14,7 +14,6 @@ const decision: EditorDecision = {
   decisionTree: [
     {
       id: 'main',
-      name: 'ВХОД',
       xy: [0, -84],
       level: 'main',
     },

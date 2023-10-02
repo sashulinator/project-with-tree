@@ -2,7 +2,7 @@ import { Selection } from '~/lib/emitter'
 import { Id, assertDefined, invariant } from '~/utils/core'
 import { EmitterDictionary, Prop } from '~/utils/emitter'
 
-import { Point } from '../../../../../../../../../types/point'
+import { DecisionPoint, Point } from '../../../../../../../../../types/point'
 import { Rule } from '../../../../../../../../../types/rule'
 import { Controller as LinkController, Props as LinkControllerProps } from '../../../models/constroller'
 
@@ -40,7 +40,9 @@ export class Controller extends EmitterDictionary<LinkController, Events> {
 
   constructor(pointList: Point[]) {
     const linkList = pointList
-      .flatMap((point) => point.children?.map((pointLink) => LinkController.fromLink(pointLink, point.id)))
+      .flatMap(
+        (point) => (point as DecisionPoint).children?.map((pointLink) => LinkController.fromLink(pointLink, point.id))
+      )
       .filter((t) => !!t) as LinkController[]
 
     super(linkList, (l) => l.id.toString())

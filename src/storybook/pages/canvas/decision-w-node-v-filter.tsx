@@ -49,7 +49,6 @@ export default {
             name: 'string',
             level: 'decisionPoint',
             xy: [0, 1],
-            componentName: 'string',
             computation: 'successively',
             children: [
               {

@@ -1,5 +1,5 @@
 import Flex from '~/abstract/flex/ui/flex'
-import { ArbitrationProps as IArbitrationProps } from '~/entities/decision/types/point'
+import { Arbitration } from '~/entities/decision/types/point'
 import Input from '~/ui/input'
 import Labeled from '~/ui/labeled/ui/labeled'
 import { c } from '~/utils/core'
@@ -18,14 +18,14 @@ export interface Props {
 export default function ArbitrationProps(props: Props): JSX.Element {
   useUpdate(subscribeToChanges)
 
-  const arbitrationProps = props.controller?.props as unknown as Prop<'props', IArbitrationProps>
+  const arbitrationProps = props.controller?.props as unknown as Prop<'props', Arbitration['props']>
 
   return (
     <Flex className={c(props.className, ArbitrationProps.displayName)} width='100%' dir='column' gap='xl'>
       <Labeled label='Максимум предложений'>
         <Input
           type='number'
-          value={arbitrationProps.value.maxOffers || ''}
+          value={arbitrationProps.value?.maxOffers || ''}
           onChange={(ev): void => {
             arbitrationProps.set({ ...arbitrationProps.value, maxOffers: parseInt(ev.target.value) })
           }}
@@ -33,7 +33,7 @@ export default function ArbitrationProps(props: Props): JSX.Element {
       </Labeled>
       <Labeled label='Формула'>
         <Input
-          value={arbitrationProps.value.arbFormula || ''}
+          value={arbitrationProps.value?.arbFormula || ''}
           onChange={(ev): void => {
             arbitrationProps.set({ ...arbitrationProps.value, arbFormula: ev.target.value })
           }}
@@ -41,7 +41,7 @@ export default function ArbitrationProps(props: Props): JSX.Element {
       </Labeled>
       <Labeled label='Сортировка'>
         <Input
-          value={arbitrationProps.value.sortDesc || ''}
+          value={arbitrationProps.value?.sortDesc || ''}
           onChange={(ev): void => {
             arbitrationProps.set({ ...arbitrationProps.value, sortDesc: ev.target.value })
           }}

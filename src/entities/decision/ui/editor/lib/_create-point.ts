@@ -13,12 +13,12 @@ export function _createPoint(context: Context, point: Required<Partial<Point>, '
 
   const position = canvas.getPointPosition('bc')
 
-  const newPoint: Point = {
+  const newPoint = {
     name: 'new',
     xy: [position.x, position.y],
     ...point,
     id: point?.id ?? generateId(),
   }
 
-  return newPoint
+  return newPoint as Point
 }
