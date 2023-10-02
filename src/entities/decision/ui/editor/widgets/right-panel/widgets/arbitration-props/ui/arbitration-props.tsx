@@ -22,28 +22,28 @@ export default function ArbitrationProps(props: Props): JSX.Element {
 
   return (
     <Flex className={c(props.className, ArbitrationProps.displayName)} width='100%' dir='column' gap='xl'>
-      <Labeled label='Тип разбиения'>
-        <Input
-          value={arbitrationProps.value.partitionType || ''}
-          onChange={(ev): void => {
-            arbitrationProps.set({ ...arbitrationProps.value, partitionType: ev.target.value })
-          }}
-        />
-      </Labeled>
-      <Labeled label='Id разбиения'>
-        <Input
-          value={arbitrationProps.value.partitionTypeId || ''}
-          onChange={(ev): void => {
-            arbitrationProps.set({ ...arbitrationProps.value, partitionTypeId: ev.target.value })
-          }}
-        />
-      </Labeled>
-      <Labeled label='Размер контрольной группы '>
+      <Labeled label='Максимум предложений'>
         <Input
           type='number'
-          value={arbitrationProps.value.percentCg || ''}
+          value={arbitrationProps.value.maxOffers || ''}
           onChange={(ev): void => {
-            arbitrationProps.set({ ...arbitrationProps.value, percentCg: parseInt(ev.target.value) })
+            arbitrationProps.set({ ...arbitrationProps.value, maxOffers: parseInt(ev.target.value) })
+          }}
+        />
+      </Labeled>
+      <Labeled label='Формула'>
+        <Input
+          value={arbitrationProps.value.arbFormula || ''}
+          onChange={(ev): void => {
+            arbitrationProps.set({ ...arbitrationProps.value, arbFormula: ev.target.value })
+          }}
+        />
+      </Labeled>
+      <Labeled label='Сортировка'>
+        <Input
+          value={arbitrationProps.value.sortDesc || ''}
+          onChange={(ev): void => {
+            arbitrationProps.set({ ...arbitrationProps.value, sortDesc: ev.target.value })
           }}
         />
       </Labeled>
