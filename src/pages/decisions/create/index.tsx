@@ -8,6 +8,7 @@ import { useFetchRulesList } from '~/api/rules/fetch-rules'
 import { Editor, EditorDecision } from '~/entities/decision'
 import { notify } from '~/shared/notify'
 import { routes } from '~/shared/routes'
+import { Id } from '~/utils/core'
 
 const decision: EditorDecision = {
   name: 'new_tree',
@@ -42,17 +43,18 @@ export default function Page(): JSX.Element {
           const items = states.nodeList.values().map((nodeController) => {
             const links = states.linkList.getBySourceId(nodeController.point.id)
             const point = nodeController.deserialize()
-            point['children'] = links.map((l, i) => {
+            const children = links.map((l, i) => {
               const link = l.toLink()
               link.index = link.index ?? i
-              return link
+              return { ...link, rules: link.rules?.map((r): Id => r.id) }
             })
-            return point
+            return { ...point, children }
           })
 
           const decision: EditorDecision = {
             name: states.editor.name.value,
-            decisionTree: items,
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-assignment
+            decisionTree: items as any,
           }
 
           mutator.mutate({ editorDecision: decision })

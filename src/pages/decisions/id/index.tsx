@@ -9,7 +9,7 @@ import { useUpdateDecision } from '~/api/decision/update'
 import { useFetchRulesList } from '~/api/rules/fetch-rules'
 import { Decision, Editor } from '~/entities/decision'
 import { notify } from '~/shared/notify'
-import { assertDefined } from '~/utils/core'
+import { Id, assertDefined } from '~/utils/core'
 
 export default function DecisionPage(): JSX.Element {
   const { id } = useParams<{ id: string }>()
@@ -34,17 +34,18 @@ export default function DecisionPage(): JSX.Element {
             const items = states.nodeList.values().map((nodeController) => {
               const links = states.linkList.getBySourceId(nodeController.point.id)
               const point = nodeController.deserialize()
-              point['children'] = links.map((l, i) => {
+              const children = links.map((l, i) => {
                 const link = l.toLink()
                 link.index = link.index ?? i
-                return link
+                return { ...link, rules: link.rules?.map((r): Id => r.id) }
               })
-              return point
+              return { ...point, children }
             })
 
             const decision: Decision = {
               ...fetcher.data,
-              decisionTree: items,
+              // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-assignment
+              decisionTree: items as any,
             }
 
             mutator.mutate({ editorDecision: decision })
