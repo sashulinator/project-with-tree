@@ -71,7 +71,7 @@ function ToolbarComponent(props: Props): JSX.Element {
       <Line />
       <Tooltip delay={300} containerElement={headerElement} contents='Принятие решения' placement='tc'>
         <PrimaryButton
-          onClick={(): void => props.addNode({ level: 'decisionPoint', name: 'new_filter' })}
+          onClick={(): void => props.addNode({ level: 'decisionPoint', name: 'new_decisionPoint' })}
           square={true}
           height='s'
         >
@@ -89,7 +89,7 @@ function ToolbarComponent(props: Props): JSX.Element {
       </Tooltip>
       <Tooltip delay={300} containerElement={headerElement} contents='Арбитраж' placement='tc'>
         <GhostButton
-          onClick={(): void => props.addNode({ level: 'arbitration', name: 'new_offer' })}
+          onClick={(): void => props.addNode({ level: 'arbitration', name: 'new_arbitration' })}
           square={true}
           height='s'
         >
@@ -98,7 +98,7 @@ function ToolbarComponent(props: Props): JSX.Element {
       </Tooltip>
       <Tooltip delay={300} containerElement={headerElement} contents='Контрольная группа' placement='tc'>
         <GhostButton
-          onClick={(): void => props.addNode({ level: 'controlGroup', name: 'new_offer' })}
+          onClick={(): void => props.addNode({ level: 'controlGroup', name: 'new_controlGroup' })}
           square={true}
           height='s'
         >

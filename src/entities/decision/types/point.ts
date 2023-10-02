@@ -20,3 +20,9 @@ export interface Link {
   rules?: Rule[]
   index: number
 }
+
+export interface ArbitrationProps {
+  partitionType: string
+  partitionTypeId: Id
+  percentCg: number
+}

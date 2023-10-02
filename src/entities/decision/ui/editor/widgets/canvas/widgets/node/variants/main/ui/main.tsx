@@ -17,8 +17,6 @@ export default function Main(props: FactoryProps): JSX.Element {
 
   const sourceLinkStates = props.linkList.getBySourceId(props.controller.id)
 
-  console.log('props.linkList.jointEditingId.value', props.linkList.jointEditingId.value, sourceLinkStates?.[0]?.id)
-
   return (
     <Node
       toggle={props.toggle}
