@@ -1,10 +1,8 @@
 import './rule-item.scss'
 
-import { useMutation } from 'react-query'
-
 import Flex from '~/abstract/flex/ui/flex'
 import { QueryResult } from '~/api/rules/fetch-rules'
-import { requestRuleDelete } from '~/api/rules/requests/delete-rule'
+import { useRemoveRule } from '~/api/rules/remove'
 import { ResponseData } from '~/api/rules/requests/fetch-rules'
 import { RulesRes } from '~/entities/rule/types/rules-type'
 import { notify } from '~/shared/notify'
@@ -24,7 +22,7 @@ export interface Props {
 }
 
 export default function RuleItem(props: Props): JSX.Element {
-  const mutation = useMutation(() => requestRuleDelete(props.item?.id.toString()), {
+  const mutation = useRemoveRule({
     onSuccess: () => {
       void props.fetcher.refetch()
       notify({ data: 'Удалено', type: 'success' })
@@ -50,6 +48,6 @@ export default function RuleItem(props: Props): JSX.Element {
   )
 
   function onDelete(): void {
-    mutation.mutate()
+    mutation.mutate({ id: props.item.id })
   }
 }

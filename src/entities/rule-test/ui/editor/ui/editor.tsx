@@ -17,7 +17,7 @@ import {
 } from '@dnd-kit/core'
 import { SortableContext, arrayMove } from '@dnd-kit/sortable'
 
-import { useEffect, useMemo, useState } from 'react'
+import { Dispatch, SetStateAction, useEffect, useMemo, useState } from 'react'
 import Scrollbars from 'react-custom-scrollbars'
 import { createPortal } from 'react-dom'
 import { FieldValues, useForm } from 'react-hook-form'
@@ -47,11 +47,11 @@ Editor.displayName = 'e-Rule-Editor'
 export interface Props {
   rule: RulesRes | null
   dataList: ParentDomainRes[]
-  onSubmit: (editorValue: EditorValues[], name: string, keyName: string) => void
+  handleOpenModal: Dispatch<SetStateAction<{ editorValue: EditorValues[]; name: string; keyName: string } | null>>
 }
 
 function Editor(props: Props): JSX.Element {
-  const { rule, dataList, onSubmit } = props
+  const { rule, dataList, handleOpenModal } = props
 
   const [newContainerList, newRulesList] = useMemo(() => getInitialData(rule ? rule : null), [rule])
 
@@ -105,7 +105,11 @@ function Editor(props: Props): JSX.Element {
               as='form'
               // eslint-disable-next-line @typescript-eslint/no-misused-promises
               onSubmit={handleSubmit((e: FieldValues): void =>
-                onSubmit(getEditorValue(containerList, rules), e.name as string, e.keyName as string)
+                handleOpenModal({
+                  editorValue: getEditorValue(containerList, rules),
+                  name: e.name as string,
+                  keyName: e.keyName as string,
+                })
               )}
               mainAxis='space-between'
               width='100%'

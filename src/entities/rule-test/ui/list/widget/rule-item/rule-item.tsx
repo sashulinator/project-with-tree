@@ -1,18 +1,14 @@
 import './rule-item.scss'
 
-import { useMutation } from 'react-query'
-
 import Flex from '~/abstract/flex/ui/flex'
 import { QueryResult } from '~/api/rules/fetch-rules'
-import { requestRuleDelete } from '~/api/rules/requests/delete-rule'
 import { ResponseData } from '~/api/rules/requests/fetch-rules'
 import { RulesRes } from '~/entities/rule-test/types/type'
-import { notify } from '~/shared/notify'
 import { routes } from '~/shared/routes'
 import { GhostButton } from '~/ui/button'
 import { Close } from '~/ui/icon'
 import Link from '~/ui/link'
-import { c } from '~/utils/core'
+import { Id, c } from '~/utils/core'
 
 RuleItem.displayName = 'rule-Item'
 
@@ -21,17 +17,10 @@ export interface Props {
   item: RulesRes
   fetcher: QueryResult<ResponseData>
   handleCopyRuleOpen: (data: RulesRes) => void
+  openDeleteModal: (data: { name: string; id: Id }) => void
 }
 
 export default function RuleItem(props: Props): JSX.Element {
-  const mutation = useMutation(() => requestRuleDelete(props.item?.id.toString()), {
-    onSuccess: () => {
-      void props.fetcher.refetch()
-      notify({ data: 'Удалено', type: 'success' })
-    },
-    onError: () => notify({ data: 'Ошибка', type: 'error' }),
-  })
-
   return (
     <div className={c(props.className, RuleItem.displayName)}>
       <Flex mainAxis='space-between' crossAxis='center' className='nameCell'>
@@ -41,15 +30,11 @@ export default function RuleItem(props: Props): JSX.Element {
         <Flex gap='xxl' crossAxis='center'>
           <div>{props.item?.updatedBy}</div>
           <GhostButton onClick={(): void => props.handleCopyRuleOpen(props.item)}>Копировать</GhostButton>
-          <GhostButton square onClick={onDelete}>
+          <GhostButton square onClick={(): void => props.openDeleteModal({ name: props.item.name, id: props.item.id })}>
             <Close></Close>
           </GhostButton>
         </Flex>
       </Flex>
     </div>
   )
-
-  function onDelete(): void {
-    mutation.mutate()
-  }
 }

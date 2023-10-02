@@ -12,7 +12,7 @@ Item.displayName = 'decision-Item'
 export interface Props {
   className?: string
   item: Decision
-  remove: (id: Id) => void
+  handleOpenModalRemove: (data: { name: string; id: Id }) => void
 }
 
 export default function Item(props: Props): JSX.Element {
@@ -21,7 +21,10 @@ export default function Item(props: Props): JSX.Element {
       <NameCell {...props} />
       {/* <VersionCell {...props} /> */}
       <StatusCell {...props} />
-      <GhostButton round={true} onClick={(): void => props.remove(props.item.id)}>
+      <GhostButton
+        round={true}
+        onClick={(): void => props.handleOpenModalRemove({ id: props.item.id, name: props.item.name })}
+      >
         <Close />
       </GhostButton>
     </div>

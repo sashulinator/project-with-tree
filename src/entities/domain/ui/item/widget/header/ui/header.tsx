@@ -13,7 +13,7 @@ interface HeaderProps {
   domain: Domain
   isRightToEdit: boolean
   setExpanded: (isExpanded: boolean) => void
-  removeDomain: (id: Id) => void
+  openModalDialog: (domain: { id: Id; name: string }) => void
   handleAddDomainOpen: (id: Id) => void
   handleUpdateDomainOpen: (domain: Domain) => void
   handleAddAttributeOpen: (id: Id) => void
@@ -59,7 +59,10 @@ export default function Header(props: HeaderProps): JSX.Element {
             <Plus />
             <span>атрибут</span>
           </GhostButton>
-          <GhostButton square onClick={(): void => props.removeDomain(props.domain.id)}>
+          <GhostButton
+            square
+            onClick={(): void => props.openModalDialog({ id: props.domain.id, name: props.domain.name })}
+          >
             <Close />
           </GhostButton>
         </Flex>
