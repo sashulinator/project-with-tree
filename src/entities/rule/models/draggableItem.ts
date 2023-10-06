@@ -1,11 +1,13 @@
 import { atom } from 'recoil'
 
+import { Id } from '~/utils/core'
+
 import { SelectValue } from './editorRulesValues'
 
 export type DraggableItem = {
-  id: string
+  id: Id
   value: string
-  parentId: string
+  parentId: Id
   condition: SelectValue
 }
 

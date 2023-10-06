@@ -1,8 +1,0 @@
-.decisionCanvas-w-Node-v-Enter {
-  border-radius: var(--xxl);
-}
-
-.decisionCanvas-w-Node-v-Enter .toolbar {
-  display: flex;
-  justify-content: right;
-}

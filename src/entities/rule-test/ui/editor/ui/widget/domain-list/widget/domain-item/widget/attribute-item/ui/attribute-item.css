@@ -1,0 +1,19 @@
+.e-Rule-w-AttributeItem {
+  padding: 0.25rem 0.25rem 0.25rem 1rem;
+  transition: all 0.3s ease;
+  border-radius: 5px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.e-Rule-w-AttributeItem .dots {
+  width: 0.25rem;
+  height: 0.25rem;
+  border-radius: 100%;
+  background: #000;
+}
+
+.e-Rule-w-AttributeItem:hover {
+  background: var(--ghostButton_bg__hovered);
+}

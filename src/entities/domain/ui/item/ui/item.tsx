@@ -20,7 +20,7 @@ export interface Props {
   isExpanded?: boolean
   pLeft?: number
   isRightToEdit?: boolean
-  removeDomain?: (id: Id) => void
+  openModalDialog?: (domain: { id: Id; name: string }) => void
   removeAttribute?: (id: Id) => void
   handleAddDomainOpen?: (id: Id) => void
   handleUpdateDomainOpen?: (domain: Domain) => void
@@ -42,14 +42,16 @@ export default function Item(props: Props): JSX.Element {
     handleAddDomainOpen = (): void => {},
     handleUpdateDomainOpen = (): void => {},
     updateDomain = (): void => {},
-    removeDomain = (): void => {},
-    removeAttribute = (): void => {},
+    openModalDialog = (): void => {},
     // updateAttribute = (): void => {},
     handleUpdateAttributeOpen = (): void => {},
     handleAddAttributeOpen = (): void => {},
   } = props
+
   const [expanded, , , toggleExpanded] = useBoolean(isExpanded)
+
   const pl = pLeft
+
   useEffect(() => {
     if (isExpanded !== expanded) toggleExpanded()
   }, [isExpanded])
@@ -76,7 +78,7 @@ export default function Item(props: Props): JSX.Element {
         headerProps={{
           domain: domainData.domain,
           isRightToEdit: !!isRightToEdit,
-          removeDomain: removeDomain,
+          openModalDialog: openModalDialog,
           handleAddDomainOpen: handleAddDomainOpen,
           handleAddAttributeOpen: handleAddAttributeOpen,
           handleUpdateDomainOpen: handleUpdateDomainOpen,
@@ -88,7 +90,7 @@ export default function Item(props: Props): JSX.Element {
             domainData.attributes.map((item) => (
               <AttributeItem
                 wrapperProps={{ style: { marginBottom: '10px' } }}
-                removeAttribute={removeAttribute}
+                openModalDialog={openModalDialog}
                 key={item.id}
                 attribute={item}
                 isRightToEdit={!!props.isRightToEdit}
@@ -109,8 +111,7 @@ export default function Item(props: Props): JSX.Element {
                 isExpanded={isExpanded}
                 handleAddAttributeOpen={handleAddAttributeOpen}
                 handleAddDomainOpen={handleAddDomainOpen}
-                removeAttribute={removeAttribute}
-                removeDomain={removeDomain}
+                openModalDialog={openModalDialog}
                 isDraggable={isDraggable}
                 updateDomain={updateDomain}
                 handleUpdateDomainOpen={handleUpdateDomainOpen}

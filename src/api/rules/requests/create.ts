@@ -3,7 +3,10 @@ import { AxiosResponse } from 'axios'
 import { EditorValues } from '~/entities/rule/models/editorRulesValues'
 import api from '~/shared/axios'
 
-import { ResponseData } from '../types/response-data'
+export type ResponseData = {
+  message: 'Rule created successfully'
+  response_code: '200'
+}
 
 export type Response = AxiosResponse<ResponseData>
 

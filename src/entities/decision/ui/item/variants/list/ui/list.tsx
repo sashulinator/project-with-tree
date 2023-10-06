@@ -11,7 +11,7 @@ List.displayName = 'decision-Item-v-List'
 export interface Props {
   className?: string
   list: Decision[]
-  remove: (id: Id) => void
+  handleOpenModalRemove: (data: { name: string; id: Id }) => void
 }
 
 export default function List(props: Props): JSX.Element {
@@ -20,7 +20,7 @@ export default function List(props: Props): JSX.Element {
       {props.list.map((item: Decision, i) => {
         return (
           <AppearFrom key={item.id} from={{ y: 10 }} delay={i * 30}>
-            <Item item={item} remove={props.remove} />
+            <Item item={item} handleOpenModalRemove={props.handleOpenModalRemove} />
           </AppearFrom>
         )
       })}

@@ -2,14 +2,14 @@ import './item.css'
 
 import Flex, { FlexProps } from '~/abstract/flex/ui/flex'
 import { EditorItem, SelectValue } from '~/entities/rule/models/editorRulesValues'
-import { c } from '~/utils/core'
+import { Id, c } from '~/utils/core'
 
 import AddDeleteButtons from '../widgets/add-delete-buttons/ui/add-delete-buttons'
 import Input from '../widgets/input'
 
 interface Props {
   values: EditorItem[]
-  id: string
+  id: Id
   rootProps?: FlexProps
   condition: SelectValue
 }

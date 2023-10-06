@@ -43,10 +43,11 @@ export {
   List as LinkList,
   Controller as LinkController,
   ListController as LinkListController,
-} from './widgets/link'
+} from './widgets/edge'
 export type {
   ListProps as LinkListProps,
-  LinkProps,
+  SerializedEdge as SerializedLink,
+  EdgeProps as LinkProps,
   ControllerProps as LinkControllerProps,
   ControllerEvents as LinkControllerEvents,
-} from './widgets/link'
+} from './widgets/edge'

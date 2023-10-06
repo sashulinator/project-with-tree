@@ -1,10 +1,12 @@
+import { Id } from '~/utils/core'
+
 import { DraggableItem } from '../models/draggableItem'
 import { EditorValues } from '../models/editorRulesValues'
 
 export function onDropItemToItem(
   editorValue: EditorValues[],
-  parentId: string,
-  id: string | null,
+  parentId: Id,
+  id: Id | null,
   draggableItem: DraggableItem,
   direction: 'up' | 'down' = 'down'
 ): EditorValues[] {

@@ -23,8 +23,8 @@ export default function TargetLink(props: Props): JSX.Element {
 
   useUpdate(subscribeOnUpdates)
 
-  const sourceLinkStates = props.linkControllers.getLinksByTargetId(props.state.id)
-  const editingLinkState = props.linkControllers.findEditingLinkState()
+  const sourceLinkStates = props.linkControllers.getByTargetId(props.state.id)
+  const editingLinkState = props.linkControllers.findJointEditingLink()
   const isEditingThisNode =
     editingLinkState?.sourceId.value === props.state.id || editingLinkState?.targetId.value === props.state.id
   const isEditingHasTarget = Boolean(editingLinkState?.targetId.value)
@@ -63,7 +63,7 @@ export default function TargetLink(props: Props): JSX.Element {
     props.linkControllers.on('index', update)
     props.linkControllers.on('update', update)
     props.linkControllers.on('targetId', update)
-    props.linkControllers.on('editingId', update)
+    props.linkControllers.on('jointEditingId', update)
     props.linkControllers.on('sourceId', () => setNewLinkId(generateId()))
   }
 }

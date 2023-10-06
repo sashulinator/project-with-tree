@@ -2,26 +2,27 @@ import './toolbar.scss'
 
 import Flex from '~/abstract/flex/ui/flex'
 import Checkbox from '~/ui/checkbox'
-import { Id, c } from '~/utils/core'
+import { c } from '~/utils/core'
 import { stopPropagation } from '~/utils/dom-event'
 import { useUpdate } from '~/utils/hooks'
 
-import { Controller, ListController } from '../../../../..'
+import { Controller } from '../../../../../models/constroller'
+import { Controller as ListController } from '../../../../../variants/list'
 
-Toolbar.displayName = 'decision-Editor-w-Canvas-w-Node-v-Filter-w-Toolbar'
+Toolbar.displayName = 'decision-Editor-w-Canvas-w-Node-v-DecisionPoint-w-Toolbar'
 
 export interface Props {
-  state: Controller
-  listState: ListController
   className?: string
-  selectNodes: (ids: Id[]) => void
+  controller: Controller
+  list: ListController
+  select: () => void
   toggle: () => void
 }
 
 export default function Toolbar(props: Props): JSX.Element {
   useUpdate(subscribeOnUpdates)
 
-  const checked = props.listState.selection.isSelected(props.state.id)
+  const checked = props.list.selection.isSelected(props.controller.id)
 
   return (
     <div className={c(props.className, Toolbar.displayName)}>
@@ -39,7 +40,7 @@ export default function Toolbar(props: Props): JSX.Element {
   // Private
 
   function subscribeOnUpdates(update: () => void, uns: (() => void)[]): void {
-    uns.push(props.state.on('computation', update))
-    uns.push(props.listState.on('selection', update))
+    uns.push(props.controller.on('computation', update))
+    uns.push(props.list.on('selection', update))
   }
 }

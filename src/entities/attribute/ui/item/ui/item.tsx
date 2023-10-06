@@ -16,14 +16,14 @@ export interface Props {
   wrapperProps?: FlexProps
   titleProps?: React.HTMLAttributes<HTMLElement>
   isRightToEdit?: boolean
-  removeAttribute?: (id: Id) => void
+  openModalDialog?: (attribute: { id: Id; name: string }) => void
   handleUpdateAttributeOpen?: (attribute: UpdateAttribute) => void
 }
 
 Item.displayName = 'e-Attribute-ui-Item'
 
 export default function Item(props: Props): JSX.Element {
-  const { attribute, removeAttribute = (): void => {}, handleUpdateAttributeOpen = (): void => {} } = props
+  const { attribute, openModalDialog = (): void => {}, handleUpdateAttributeOpen = (): void => {} } = props
 
   const setDraggableCard = useSetRecoilState(draggableCardAtom)
 
@@ -53,7 +53,10 @@ export default function Item(props: Props): JSX.Element {
           >
             <span>Редактировать атрибут</span>
           </GhostButton>
-          <GhostButton square onClick={(): void => removeAttribute(props.attribute.id)}>
+          <GhostButton
+            square
+            onClick={(): void => openModalDialog({ id: props.attribute.id, name: props.attribute.name })}
+          >
             <Close />
           </GhostButton>
         </Flex>

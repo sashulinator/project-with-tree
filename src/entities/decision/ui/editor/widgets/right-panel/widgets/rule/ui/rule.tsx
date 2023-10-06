@@ -25,6 +25,7 @@ export default function Rule(props: Props): JSX.Element {
         style={{
           width: '100%',
           display: 'flex',
+          textAlign: 'start',
         }}
       >
         {props.rule.name}
@@ -34,6 +35,7 @@ export default function Rule(props: Props): JSX.Element {
           width: '100%',
           display: 'flex',
           opacity: '0.7',
+          textAlign: 'start',
         }}
       >
         {props.rule.keyName}

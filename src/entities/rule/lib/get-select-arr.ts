@@ -1,10 +1,12 @@
+import { Id } from '~/utils/core'
+
 import { EditorValues, SelectValue } from '../models/editorRulesValues'
 
 export function getSelectArr(
   editorValue: EditorValues[],
   targetValue: SelectValue,
-  parentId: string,
-  id: string
+  parentId: Id,
+  id: Id
 ): EditorValues[] {
   const result = editorValue.map((arr) => {
     if (parentId === id) {

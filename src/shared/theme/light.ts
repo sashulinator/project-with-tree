@@ -33,7 +33,7 @@ export const LIGHT = {
   outlineColor: primary.alpha(0.5),
   borderColor: clr('#cdd2d6'),
   errorColor: clr('#d2302f'),
-
+  boxShadow: '0px 0px 8px 0px rgba(0, 0, 0, 0.1)',
   focus: primary,
   focusAlt: clr('#7ed321'),
 } satisfies RequiredVars
