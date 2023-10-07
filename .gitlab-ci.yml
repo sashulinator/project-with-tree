@@ -1,56 +1,59 @@
+include:
+  - local: '/.gitlab/docker-vars.yml'
+  - local: '/.gitlab/build-main.yml'
+  - local: '/.gitlab/build-release-from-main.yml'
+  - local: '/.gitlab/test-main.yml'
+  - local: '/.gitlab/test-release.yml'
+  - local: '/.gitlab/deploy-main.yml'
+  - local: '/.gitlab/deploy-release.yml'
+  - local: '/.gitlab/backup.yml'
+
 variables:
-  VERSION: "0.3"
-  DOCKER_HOST: "tcp://docker:2376"
-  DOCKER_TLS_CERTDIR: "/certs"
-  DOCKER_TLS_VERIFY: 1
-  DOCKER_CERT_PATH: "$DOCKER_TLS_CERTDIR/client"
-  PROJECT_SHORT_NAME: "project-with-tree"
-  PROJECT_NAME: "colibri-develop/$PROJECT_SHORT_NAME"
-build-job:
+  VERSION: "0.$CI_PIPELINE_IID"
+  NAMESPACE: "rtm"
+  DOCKERFILE: "Dockerfile"
+  ## FOR RELEASE VERSION
+  NAMESPACE_RELEASE: "rtm-stable"
+  VERSION_RELEASE: "release"
+  # BACKUP
+  BACKUP_SERVER: "gitlab.inno.tech"
+  BACKUP_PATH: "colibri"
+  BACKUP_BRANCH_NAME: "backup_branch"
+
+.default_rules:
+  rules:
+    - if: $CI_PROJECT_URL =~ /https:\/\/gitlab.colibriproject.ru\/.*/
+ 
+commit-job:
   stage: build
-  image: docker:20.10.7
+  image: docker:24.0.4
   services:
-    - name: docker:20.10.7-dind
-      command: ["--mtu=1450"]
+    - name: docker:24.0.4-dind
   before_script:
-    - sleep 3
-    - docker info
-    - echo "$DOCKER_REGISTRY_PASS" | docker login $CI_REGISTRY --username $DOCKER_REGISTRY_USER --password-stdin
+    - 'command -v ssh-agent >/dev/null || ( apk update && apk add openssh-client )'
+    - eval $(ssh-agent -s)
+    - chmod 400 "$SSH_PRIVATE_KEY"
+    - ssh-add "$SSH_PRIVATE_KEY"
+    - mkdir -p ~/.ssh
+    - chmod 700 ~/.ssh
+    - echo $HOST_K >> ~/.ssh/known_hosts
+    - '[[ -f /.dockerinit ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
+    #- echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
   script:
-    #- sleep 1
-    - docker build . -t $CI_REGISTRY/${PROJECT_NAME}/${PROJECT_SHORT_NAME}:$VERSION
-    - docker push $CI_REGISTRY/${PROJECT_NAME}/${PROJECT_SHORT_NAME}:$VERSION
-
-test-job1:
-  stage: test
-  script:
-    - echo "This job tests something"
-
-test-job2:
-  stage: test
-  script:
-    - echo "This job tests something, but takes more time than test-job1."
-    - sleep 1
-
-deploy-prod:
-  stage: deploy
-  image:
-    name: bitnami/kubectl:latest
-    entrypoint: ['']
-  before_script:
-    - kubectl config get-contexts
-    #- kubectl get pods
-  script:
-    - kubectl config use-context colibri-develop/project-with-tree:main-agent
-    ### Insecure after changing context TBD
-    #- kubectl --insecure-skip-tls-verify=true get deployment -A
-    - kubectl --insecure-skip-tls-verify=true rollout restart deployment/rtm-front --namespace rtm
-
-backup:
-  stage: .post
-  image: alpine/git
-  script:
-    - git remote add backup https://${PERS_NAME}:${PERS_TOKEN}@gitlab.inno.tech/colibri/${PROJECT_SHORT_NAME}.git
-    - git checkout -b backup_branch
-    - git push -f backup backup_branch
+    - apk update
+    - apk add git
+    - git fetch origin
+    - git reset --hard origin/mainline
+    - git remote -v
+    - git branch
+    - git branch | grep -v "*" | xargs git branch -D || true
+    - git remote add commitN [git@10.4.87.16:9418]:colibri-develop/dummy-ext.git || git remote set-url commitN [git@10.4.87.16:9418]:colibri-develop/dummy-ext.git
+    - git checkout -b main
+    - git push -f commitN main
+  rules:
+    - if: $CI_PROJECT_URL =~ /https:\/\/gitlab.inno.tech\/.*/
+  tags:
+    - dind
+  only:
+    - master
 

@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dummy-service
+  namespace: rtm
+spec:
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      run: dummy
+  template:
+    metadata:
+      labels:
+        run: dummy
+    spec:
+      containers:
+        - name: dummy-service
+          image: registry.colibriproject.ru/colibri-develop/dummy-service/dummy-service:0.3
+          imagePullPolicy: Always
+          ports:
+            - name: http
+              containerPort: 65000
+              protocol: TCP
+

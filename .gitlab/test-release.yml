@@ -1,0 +1,7 @@
+test-release:
+  stage: test
+  script:
+    - echo "This job tests all for release."
+  only:
+    - /^release.*$/
+

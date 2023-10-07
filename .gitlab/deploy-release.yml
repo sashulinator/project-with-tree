@@ -1,0 +1,15 @@
+deploy-prod:
+  stage: deploy
+  image:
+    name: $DEPLOY_IMAGE
+    entrypoint: ['']
+  before_script:
+    - kubectl config get-contexts
+  script:
+    - kubectl config use-context $CI_PROJECT_PATH:main-agent-config
+    # Simple restart deploy as now we have new version of release tag
+    - kubectl --insecure-skip-tls-verify=true rollout restart deployment/${CI_PROJECT_NAME} --namespace ${NAMESPACE_RELEASE}
+  only:
+    - /^release.*$/
+  needs: ["deploy-test"]
+
