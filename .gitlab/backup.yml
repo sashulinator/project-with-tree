@@ -1,0 +1,8 @@
+backup:
+  stage: .post
+  image: alpine/git
+  script:
+    - git remote add backup https://${PERS_NAME}:${PERS_TOKEN}@${BACKUP_SERVER}/${BACKUP_PATH}/${CI_PROJECT_NAME}.git
+    - git checkout -b $BACKUP_BRANCH_NAME
+    - git push -f backup $BACKUP_BRANCH_NAME
+

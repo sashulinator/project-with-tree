@@ -1,0 +1,12 @@
+deploy-test:
+  stage: deploy
+  image:
+    name: $DEPLOY_IMAGE
+    entrypoint: ['']
+  before_script:
+    - kubectl config get-contexts
+  script:
+    - kubectl config use-context $CI_PROJECT_PATH:main-agent-config
+    # need to patch deployment as we have new version number of tag
+    - kubectl --insecure-skip-tls-verify=true patch deployment ${CI_PROJECT_NAME} --namespace ${NAMESPACE} -p "{\"spec\":{\"template\":{\"spec\":{\"containers\":[{\"name\":\"$CI_PROJECT_NAME\",\"image\":\"$CI_REGISTRY/$CI_PROJECT_PATH/$CI_PROJECT_NAME:$VERSION\"}]}}}}"
+

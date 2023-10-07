@@ -1,0 +1,17 @@
+build-release:
+  stage: build
+  image: $DIND_IMAGE
+  services:
+    - name: $DIND_SERVICE
+      command: ["--mtu=1450"]
+  before_script:
+    - sleep 1
+    - docker info
+    - echo "$DOCKER_REGISTRY_PASS" | docker login $CI_REGISTRY --username $DOCKER_REGISTRY_USER --password-stdin
+  script:
+    - docker manifest create --amend --insecure $CI_REGISTRY/$CI_PROJECT_PATH/${CI_PROJECT_NAME}:$VERSION_RELEASE $CI_REGISTRY/$CI_PROJECT_PATH/${CI_PROJECT_NAME}:$VERSION
+    - docker manifest push --insecure $CI_REGISTRY/$CI_PROJECT_PATH/${CI_PROJECT_NAME}:$VERSION_RELEASE
+  only:
+    - /^release.*$/
+  needs: ["build-job"]
+

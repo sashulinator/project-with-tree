@@ -1,0 +1,18 @@
+build-job:
+  stage: build
+  image: $DIND_IMAGE
+  services:
+    - name: $DIND_SERVICE
+      command: ["--mtu=1450"]
+  before_script:
+    - sleep 3
+    - docker info
+    - echo "$DOCKER_REGISTRY_PASS" | docker login $CI_REGISTRY --username $DOCKER_REGISTRY_USER --password-stdin
+  script:
+    #- sleep 1
+    - docker build . -f $DOCKERFILE -t $CI_REGISTRY/$CI_PROJECT_PATH/${CI_PROJECT_NAME}:$VERSION
+    - docker push $CI_REGISTRY/$CI_PROJECT_PATH/${CI_PROJECT_NAME}:$VERSION
+    #- echo $CI_PROJECT_NAME
+    #- echo $CI_PROJECT_TITLE
+    - echo $CI_PROJECT_URL
+
